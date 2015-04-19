@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ColorVertexSample.Model;
+using SharpGL.SceneGraph;
 
 namespace ColorVertexSample.Model
 {
@@ -46,10 +47,10 @@ namespace ColorVertexSample.Model
                     if (z < zmin) zmin = z;
                     if (z > zmax) zmax = z;
 
-                    Point3D* centers = colorVertexes.Centers;
-                    centers[i].x = x;
-                    centers[i].y = y;
-                    centers[i].z = z;
+                    Vertex* centers = colorVertexes.Centers;
+                    centers[i].X = x;
+                    centers[i].Y = y;
+                    centers[i].Z = z;
 
                     Color* colors = colorVertexes.Colors;
                     colors[i].red = (byte)colorRandom.Next(0, 256);
@@ -57,10 +58,7 @@ namespace ColorVertexSample.Model
                     colors[i].blue = (byte)colorRandom.Next(0, 256);
 
                 }
-                Point3D location;
-                location.x = xmin;
-                location.y = ymin;
-                location.z = zmin;
+                Vertex location = new Vertex(xmin, ymin, zmin);
 
                 Size3D size;
                 size.x = (xmax - xmin);

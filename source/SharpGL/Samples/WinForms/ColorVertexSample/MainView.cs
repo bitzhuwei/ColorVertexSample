@@ -88,8 +88,8 @@ namespace ColorVertexSample
             {
                 unsafe
                 {
-                    Point3D p = particles.Centers[i];
-                    System.Console.WriteLine(String.Format("P({0},{1},{2})",p.x,p.y,p.z));
+                    Vertex p = particles.Centers[i];
+                    System.Console.WriteLine(String.Format("P({0},{1},{2})",p.X,p.Y,p.Z));
                 }
 
             }

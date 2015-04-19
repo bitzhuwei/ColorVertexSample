@@ -4,16 +4,17 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using SharpGL.SceneGraph;
 
 namespace ColorVertexSample.Model
 {
-    public unsafe struct Point3D
-    {
-        public float x;
-        public float y;
-        public float z;
+    //public unsafe struct Point3D
+    //{
+    //    public float x;
+    //    public float y;
+    //    public float z;
 
-    }
+    //}
 
     public unsafe struct Color
     {
@@ -31,17 +32,17 @@ namespace ColorVertexSample.Model
 
     public unsafe struct Rect3D
     {
-        public Point3D location;
+        public Vertex location;
         public Size3D size3D;
 
-        public Rect3D(Point3D location, Size3D size3D)
+        public Rect3D(Vertex location, Size3D size3D)
         {
             this.location = location;
             this.size3D = size3D;
         }
 
 
-        public Point3D Location
+        public Vertex Location
         {
             get
             {
@@ -62,7 +63,7 @@ namespace ColorVertexSample.Model
         {
             get
             {
-                return location.x;
+                return location.X;
             }
         }
 
@@ -70,7 +71,7 @@ namespace ColorVertexSample.Model
         {
             get
             {
-                return location.y;
+                return location.Y;
             }
         }
 
@@ -79,7 +80,7 @@ namespace ColorVertexSample.Model
         {
             get
             {
-                return location.z;
+                return location.Z;
             }
         }
 
@@ -131,14 +132,15 @@ namespace ColorVertexSample.Model
         {
             if (size <= 0)
                 throw new ArgumentException("size can not less equal to zero");
+            unsafe
+            {
+                long bytes = sizeof(Vertex) * (size);
+                if (bytes >= int.MaxValue)
+                    throw new ArgumentException("size exceed");
 
-            long bytes = Marshal.SizeOf(new Point3D()) * (size);
-            if (bytes >= int.MaxValue)
-                throw new ArgumentException("size exceed");
-
-            IntPtr ptrBytes = new IntPtr(bytes);
-            _pointHeader = Marshal.AllocHGlobal(ptrBytes);
-
+                IntPtr ptrBytes = new IntPtr(bytes);
+                _pointHeader = Marshal.AllocHGlobal(ptrBytes);
+            }
             unsafe
             {
                 long colorBytes = sizeof(Color) * size;
@@ -160,11 +162,11 @@ namespace ColorVertexSample.Model
 
 
 
-        public unsafe Point3D* Centers
+        public unsafe Vertex* Centers
         {
             get
             {
-                Point3D* centers = (Point3D*)this._pointHeader;
+                Vertex* centers = (Vertex*)this._pointHeader;
                 return centers;
             }
         }
