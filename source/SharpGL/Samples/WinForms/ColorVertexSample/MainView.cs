@@ -167,7 +167,7 @@ namespace ColorVertexSample
             */
 
             var folder = new Folder() { Name = "Lights" };
-            folder.AddChild(light1);
+            //folder.AddChild(light1);
             //folder.AddChild(light2);
             //folder.AddChild(light3);
             scene.SceneContainer.AddChild(folder);
@@ -181,7 +181,7 @@ namespace ColorVertexSample
             //  Specify the scene attributes.
             sceneAttributes.EnableAttributes.EnableDepthTest = true;
             sceneAttributes.EnableAttributes.EnableNormalize = true;
-            sceneAttributes.EnableAttributes.EnableLighting = true;
+            //sceneAttributes.EnableAttributes.EnableLighting = true;
             sceneAttributes.EnableAttributes.EnableTexture2D = true;
             sceneAttributes.EnableAttributes.EnableBlend = true;
             sceneAttributes.ColorBufferAttributes.BlendingSourceFactor = BlendingSourceFactor.SourceAlpha;
