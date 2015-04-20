@@ -13,8 +13,8 @@ namespace ColorVertexSample
         private Point downPosition;
         private Size bound;
         private bool isDown = false;
-        private float horizontalRotation = 4;
-        private float verticalRotation = 4;
+        private float horizontalRotationFactor = 4;
+        private float verticalRotationFactor = 4;
         private SharpGL.SceneGraph.Vertex up;
         private SharpGL.SceneGraph.Vertex back;
         private SharpGL.SceneGraph.Vertex right;
@@ -41,7 +41,7 @@ namespace ColorVertexSample
             if (this.isDown)
             {
                 {
-                    var deltaX = -horizontalRotation * (x - downPosition.X) / this.bound.Width;
+                    var deltaX = -horizontalRotationFactor * (x - downPosition.X) / this.bound.Width;
                     var cos = (float)Math.Cos(deltaX);
                     var sin = (float)Math.Sin(deltaX);
                     var newBack = new Vertex(
@@ -54,7 +54,7 @@ namespace ColorVertexSample
                     this.right.Normalize();
                 }
                 {
-                    var deltaY = verticalRotation * (y - downPosition.Y) / this.bound.Height;
+                    var deltaY = verticalRotationFactor * (y - downPosition.Y) / this.bound.Height;
                     var cos = (float)Math.Cos(deltaY);
                     var sin = (float)Math.Sin(deltaY);
                     var newBack = new Vertex(
