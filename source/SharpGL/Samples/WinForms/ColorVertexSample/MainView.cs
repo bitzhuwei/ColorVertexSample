@@ -255,8 +255,6 @@ namespace ColorVertexSample
              
                 visualElement.AddEffect(this.arcBallEffect);
                 
-                
-
                 this.sceneControl1.Invalidate();
                
             }
