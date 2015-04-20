@@ -25,6 +25,8 @@ namespace ColorVertexSample
 
         private ArcBallEffect arcBallEffect = new ArcBallEffect();
 
+        float? lookIncrement;
+
         public MainView()
         {
             InitializeComponent();
@@ -40,8 +42,8 @@ namespace ColorVertexSample
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            LookAtCamera camera = this.sceneControl1.Scene.CurrentCamera as LookAtCamera;
-            
+
+            this.sceneControl1.Scene.SceneContainer.Children.Clear();
  
             this.sceneControl1.MouseWheel+=sceneControl1_MouseWheel;
             this.sceneControl1.MouseDown+=sceneControl1_MouseDown;
@@ -56,20 +58,41 @@ namespace ColorVertexSample
 
         private void sceneControl1_MouseMove(object sender, MouseEventArgs e)
         {
-            arcBallEffect.ArcBall.SetBounds(sceneControl1.Width, sceneControl1.Height);
-            arcBallEffect.ArcBall.MouseMove(e.X, e.Y);
-            this.sceneControl1.Invalidate();
+            if (e.Button == MouseButtons.Left)
+            {
+                arcBallEffect.ArcBall.SetBounds(sceneControl1.Width, sceneControl1.Height);
+                arcBallEffect.ArcBall.MouseMove(e.X, e.Y);
+                this.sceneControl1.Invalidate();
+            }
         }
 
         private void sceneControl1_MouseDown(object sender, MouseEventArgs e)
         {
-            arcBallEffect.ArcBall.SetBounds(sceneControl1.Width, sceneControl1.Height);
-            arcBallEffect.ArcBall.MouseDown(e.X, e.Y);
+
+            if (e.Button == MouseButtons.Left)
+            {
+                int width = sceneControl1.Width;
+                int height = sceneControl1.Height;
+                arcBallEffect.ArcBall.SetBounds(width, height);
+                arcBallEffect.ArcBall.MouseDown(e.X,e.Y);
+
+            }
         }
 
         private void sceneControl1_MouseWheel(object sender, MouseEventArgs e)
         {
-            
+              if(!this.lookIncrement.HasValue)
+                  return ;
+
+              //scale by move the camera position
+              float moveDirection = e.Delta > 0 ?1:-1;  
+              var camera = this.sceneControl1.Scene.CurrentCamera as LookAtCamera;
+              Vertex direction = camera.Target - camera.Position;
+              direction.Normalize();
+              Vertex distance = direction * (moveDirection * this.lookIncrement.Value);
+              camera.Position +=  distance;
+              this.sceneControl1.Invalidate();
+
         }
 
 
@@ -114,14 +137,18 @@ namespace ColorVertexSample
             float centerZ = rect3D.Z + rect3D.Size.z / 2.0f;
 
 
+            float size = Math.Max(Math.Max(rect3D.Size.x, rect3D.Size.y), rect3D.Size.z);
+
+
             //scene.CreateInContext(scenContor);
 
             Vertex center = new Vertex(centerX, centerY,centerZ);
-            Vertex position = center + new Vertex(0.0f, 0.0f, 1.0f) * (rect3D.Size.z*2);
+            Vertex position = center + new Vertex(0.0f, 0.0f, 1.0f) * (size*2);
           
-            Vertex PositionNear = center + new Vertex(0.0f, 0.0f, 1.0f) * (rect3D.Size.z*0.52f);
+            Vertex PositionNear = center + new Vertex(0.0f, 0.0f, 1.0f) *(size*0.5f);
             //arcBallEffect.
 
+            this.lookIncrement = size*0.1f;
 
             var lookAtCamera = new LookAtCamera()
             {
@@ -130,23 +157,24 @@ namespace ColorVertexSample
                 UpVector = new Vertex(0f, 1f, 0f),
                 FieldOfView = 60,
                 AspectRatio = 1.0f,
-                Near = (PositionNear - center).Z,
+                
+                Near = (PositionNear - center).Magnitude(),
                 Far = float.MaxValue
             };
-           
-
             scene.CurrentCamera = lookAtCamera;
-
-
-
+           
+            /*
             Vertex lightPosition = center;
             Light light1 = new Light()
             {
                 Name = "Light 1",
                 On = true,
                 Position = lightPosition,
+                Ambient = System.Drawing.Color.White,
                 GLCode = OpenGL.GL_LIGHT0
             };
+            */
+         
 
             /*
             Light light2 = new Light()
@@ -181,12 +209,13 @@ namespace ColorVertexSample
             //  Specify the scene attributes.
             sceneAttributes.EnableAttributes.EnableDepthTest = true;
             sceneAttributes.EnableAttributes.EnableNormalize = true;
-            //sceneAttributes.EnableAttributes.EnableLighting = true;
+            sceneAttributes.EnableAttributes.EnableLighting = false;
             sceneAttributes.EnableAttributes.EnableTexture2D = true;
             sceneAttributes.EnableAttributes.EnableBlend = true;
             sceneAttributes.ColorBufferAttributes.BlendingSourceFactor = BlendingSourceFactor.SourceAlpha;
             sceneAttributes.ColorBufferAttributes.BlendingDestinationFactor = BlendingDestinationFactor.OneMinusSourceAlpha;
             sceneAttributes.LightingAttributes.TwoSided = true;
+            sceneAttributes.LightingAttributes.AmbientLight = new GLColor(1, 1, 1, 1);
             scene.SceneContainer.AddEffect(sceneAttributes);
 
             sceneControl.OpenGL.SetDimensions(sceneControl.Width, sceneControl.Height);
