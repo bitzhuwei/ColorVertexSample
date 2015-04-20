@@ -23,7 +23,8 @@ namespace ColorVertexSample
     public partial class MainView : Form
     {
 
-        private ArcBallEffect arcBallEffect = new ArcBallEffect();
+        //private ArcBallEffect arcBallEffect = new ArcBallEffect();
+        private CameraRotation cameraTransform;
 
         float? lookIncrement;
 
@@ -49,19 +50,35 @@ namespace ColorVertexSample
             this.sceneControl1.MouseDown+=sceneControl1_MouseDown;
             this.sceneControl1.MouseMove+=sceneControl1_MouseMove;
             this.sceneControl1.MouseUp +=sceneControl1_MouseUp;
+            this.sceneControl1.SizeChanged += sceneControl1_SizeChanged;
+            Application.Idle += Application_Idle;
+        }
+
+        void sceneControl1_SizeChanged(object sender, EventArgs e)
+        {
+            this.cameraTransform.SetBounds(sceneControl1.Width, sceneControl1.Height);
+        }
+
+        void Application_Idle(object sender, EventArgs e)
+        {
+            //var cameraTransform = this.cameraTransform;
+            //if (cameraTransform == null) { return; }
+            //this.lblDebugInfo.Text = cameraTransform.ToString();
         }
 
         private void sceneControl1_MouseUp(object sender, MouseEventArgs e)
         {
-            arcBallEffect.ArcBall.MouseUp(e.X, e.Y);
+            //arcBallEffect.ArcBall.MouseUp(e.X, e.Y);
+            cameraTransform.MouseUp(e.X, e.Y);
         }
 
         private void sceneControl1_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
-                arcBallEffect.ArcBall.SetBounds(sceneControl1.Width, sceneControl1.Height);
-                arcBallEffect.ArcBall.MouseMove(e.X, e.Y);
+                //arcBallEffect.ArcBall.SetBounds(sceneControl1.Width, sceneControl1.Height);
+                //arcBallEffect.ArcBall.MouseMove(e.X, e.Y);
+                cameraTransform.MouseMove(e.X, e.Y);
                 this.sceneControl1.Invalidate();
             }
         }
@@ -73,9 +90,10 @@ namespace ColorVertexSample
             {
                 int width = sceneControl1.Width;
                 int height = sceneControl1.Height;
-                arcBallEffect.ArcBall.SetBounds(width, height);
-                arcBallEffect.ArcBall.MouseDown(e.X,e.Y);
-
+                //arcBallEffect.ArcBall.SetBounds(width, height);
+                //arcBallEffect.ArcBall.MouseDown(e.X,e.Y);
+                cameraTransform.MouseDown(e.X, e.Y);
+                cameraTransform.SetBounds(width, height);
             }
         }
 
@@ -129,7 +147,7 @@ namespace ColorVertexSample
         }
 
 
-        private void InitializeModelScene(Scene scene, Rect3D rect3D, OpenGLControl sceneControl,ArcBallEffect arcBallEffect)
+        private void InitializeModelScene(Scene scene, Rect3D rect3D, OpenGLControl sceneControl)//,ArcBallEffect arcBallEffect)
         {
 
             float centerX = rect3D.X + rect3D.Size.x / 2.0f;
@@ -162,7 +180,7 @@ namespace ColorVertexSample
                 Far = float.MaxValue
             };
             scene.CurrentCamera = lookAtCamera;
-           
+            this.cameraTransform = new CameraRotation(lookAtCamera);
             /*
             Vertex lightPosition = center;
             Light light1 = new Light()
@@ -246,14 +264,14 @@ namespace ColorVertexSample
                 //output(particles);
                 Rect3D rect3D = colorVertexes.Bounds;
                 Scene scene = new Scene();
-                this.arcBallEffect = new ArcBallEffect();
+                //this.arcBallEffect = new ArcBallEffect();
                 //initialize Scene3D
-                InitializeModelScene(scene, colorVertexes.Bounds, this.sceneControl1,this.arcBallEffect);
+                InitializeModelScene(scene, colorVertexes.Bounds, this.sceneControl1);//,this.arcBallEffect);
                 this.sceneControl1.Scene = scene;
                 scene.SceneContainer.AddChild(visualElement);
                
              
-                visualElement.AddEffect(this.arcBallEffect);
+                //visualElement.AddEffect(this.arcBallEffect);
                 
                 this.sceneControl1.Invalidate();
                

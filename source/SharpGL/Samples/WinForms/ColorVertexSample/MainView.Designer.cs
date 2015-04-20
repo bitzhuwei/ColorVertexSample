@@ -44,6 +44,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.tbNX = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.lblDebugInfo = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sceneControl1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -82,6 +83,7 @@
             // panel1
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.panel1, 2);
+            this.panel1.Controls.Add(this.lblDebugInfo);
             this.panel1.Controls.Add(this.tbRangeMax);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.tbRangeMin);
@@ -213,6 +215,17 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "NX";
             // 
+            // lblDebugInfo
+            // 
+            this.lblDebugInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblDebugInfo.Location = new System.Drawing.Point(453, 35);
+            this.lblDebugInfo.Name = "lblDebugInfo";
+            this.lblDebugInfo.Size = new System.Drawing.Size(201, 39);
+            this.lblDebugInfo.TabIndex = 17;
+            this.lblDebugInfo.Text = "debug info";
+            // 
             // MainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -247,6 +260,7 @@
         private System.Windows.Forms.TextBox tbRangeMin;
         private System.Windows.Forms.TextBox tbRangeMax;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblDebugInfo;
     }
 }
 
