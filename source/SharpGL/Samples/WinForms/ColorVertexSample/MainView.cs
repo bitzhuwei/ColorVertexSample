@@ -17,6 +17,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ColorVertexSample.Model;
 using ColorVertexSample.Visual;
+using SharpGL.SceneGraph.Assets;
+using SharpGL.SceneGraph.Quadrics;
 
 namespace ColorVertexSample
 {
@@ -24,21 +26,22 @@ namespace ColorVertexSample
     {
 
         //private ArcBallEffect arcBallEffect = new ArcBallEffect();
-        private ArcBallEffect2 arcBallEffect = new ArcBallEffect2();
-        //private CameraRotation cameraTransform;
+        private CameraRotation cameraTransform;
 
         float? lookIncrement;
+        private AxisRotation axisRotation;
+        private AxisTranslation axisTranslation;
 
         public MainView()
         {
             InitializeComponent();
-            
+
         }
 
         private int ToInt(TextBox tb)
         {
-          int value= System.Convert.ToInt32(tb.Text);
-          return value;
+            int value = System.Convert.ToInt32(tb.Text);
+            return value;
         }
 
         protected override void OnLoad(EventArgs e)
@@ -46,19 +49,18 @@ namespace ColorVertexSample
             base.OnLoad(e);
 
             this.sceneControl1.Scene.SceneContainer.Children.Clear();
- 
-            this.sceneControl1.MouseWheel+=sceneControl1_MouseWheel;
-            this.sceneControl1.MouseDown+=sceneControl1_MouseDown;
-            this.sceneControl1.MouseMove+=sceneControl1_MouseMove;
-            this.sceneControl1.MouseUp +=sceneControl1_MouseUp;
+
+            this.sceneControl1.MouseWheel += sceneControl1_MouseWheel;
+            this.sceneControl1.MouseDown += sceneControl1_MouseDown;
+            this.sceneControl1.MouseMove += sceneControl1_MouseMove;
+            this.sceneControl1.MouseUp += sceneControl1_MouseUp;
             this.sceneControl1.SizeChanged += sceneControl1_SizeChanged;
             Application.Idle += Application_Idle;
         }
 
         void sceneControl1_SizeChanged(object sender, EventArgs e)
         {
-            //this.cameraTransform.SetBounds(sceneControl1.Width, sceneControl1.Height);
-            this.arcBallEffect.ArcBall.SetBounds(sceneControl1.Width, sceneControl1.Height);
+            this.cameraTransform.SetBounds(sceneControl1.Width, sceneControl1.Height);
         }
 
         void Application_Idle(object sender, EventArgs e)
@@ -70,15 +72,17 @@ namespace ColorVertexSample
 
         private void sceneControl1_MouseUp(object sender, MouseEventArgs e)
         {
-            arcBallEffect.ArcBall.MouseUp(e.X, e.Y);
+            //arcBallEffect.ArcBall.MouseUp(e.X, e.Y);
+            cameraTransform.MouseUp(e.X, e.Y);
         }
 
         private void sceneControl1_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
-                arcBallEffect.ArcBall.SetBounds(sceneControl1.Width, sceneControl1.Height);
-                arcBallEffect.ArcBall.MouseMove(e.X, e.Y);
+                //arcBallEffect.ArcBall.SetBounds(sceneControl1.Width, sceneControl1.Height);
+                //arcBallEffect.ArcBall.MouseMove(e.X, e.Y);
+                cameraTransform.MouseMove(e.X, e.Y);
                 this.sceneControl1.Invalidate();
             }
         }
@@ -90,24 +94,26 @@ namespace ColorVertexSample
             {
                 int width = sceneControl1.Width;
                 int height = sceneControl1.Height;
-                arcBallEffect.ArcBall.SetBounds(width, height);
-                arcBallEffect.ArcBall.MouseDown(e.X, e.Y);
+                //arcBallEffect.ArcBall.SetBounds(width, height);
+                //arcBallEffect.ArcBall.MouseDown(e.X,e.Y);
+                cameraTransform.MouseDown(e.X, e.Y);
+                cameraTransform.SetBounds(width, height);
             }
         }
 
         private void sceneControl1_MouseWheel(object sender, MouseEventArgs e)
         {
-              if(!this.lookIncrement.HasValue)
-                  return ;
+            if (!this.lookIncrement.HasValue)
+                return;
 
-              //scale by move the camera position
-              float moveDirection = e.Delta > 0 ?1:-1;  
-              var camera = this.sceneControl1.Scene.CurrentCamera as LookAtCamera;
-              Vertex direction = camera.Target - camera.Position;
-              direction.Normalize();
-              Vertex distance = direction * (moveDirection * this.lookIncrement.Value);
-              camera.Position +=  distance;
-              this.sceneControl1.Invalidate();
+            //scale by move the camera position
+            float moveDirection = e.Delta > 0 ? 1 : -1;
+            var camera = this.sceneControl1.Scene.CurrentCamera as LookAtCamera;
+            Vertex direction = camera.Target - camera.Position;
+            direction.Normalize();
+            Vertex distance = direction * (moveDirection * this.lookIncrement.Value);
+            camera.Position += distance;
+            this.sceneControl1.Invalidate();
 
         }
 
@@ -128,7 +134,7 @@ namespace ColorVertexSample
                 unsafe
                 {
                     Vertex p = particles.Centers[i];
-                    System.Console.WriteLine(String.Format("P({0},{1},{2})",p.X,p.Y,p.Z));
+                    System.Console.WriteLine(String.Format("P({0},{1},{2})", p.X, p.Y, p.Z));
                 }
 
             }
@@ -145,77 +151,45 @@ namespace ColorVertexSample
         }
 
 
-        private void InitializeModelScene(Scene scene, Rect3D rect3D, OpenGLControl sceneControl)//,ArcBallEffect arcBallEffect)
+        private void Create3DObject(object sender, EventArgs e)
         {
-
-            float centerX = rect3D.X + rect3D.Size.x / 2.0f;
-            float centerY = rect3D.Y + rect3D.Size.y / 2.0f;
-            float centerZ = rect3D.Z + rect3D.Size.z / 2.0f;
-
-
-            float size = Math.Max(Math.Max(rect3D.Size.x, rect3D.Size.y), rect3D.Size.z);
-
-
-            //scene.CreateInContext(scenContor);
-
-            Vertex center = new Vertex(centerX, centerY,centerZ);
-            Vertex position = center + new Vertex(0.0f, 0.0f, 1.0f) * (size*2);
-          
-            Vertex PositionNear = center + new Vertex(0.0f, 0.0f, 1.0f) *(size*0.5f);
-            //arcBallEffect.
-
-            this.lookIncrement = size*0.1f;
-
-            var lookAtCamera = new LookAtCamera()
+            try
             {
-                Position = position,
-                Target =  center,
-                UpVector = new Vertex(0f, 1f, 0f),
-                FieldOfView = 60,
-                AspectRatio = 1.0f,
-                
-                Near = (PositionNear - center).Magnitude(),
-                Far = float.MaxValue
-            };
-            scene.CurrentCamera = lookAtCamera;
+                int nx = this.ToInt(this.tbNX);
+                int ny = this.ToInt(this.tbNY);
+                int nz = this.ToInt(this.tbNZ);
+                float radius = this.ToFloat(this.tbRadius);
+                float minValue = this.ToFloat(this.tbRangeMin);
+                float maxValue = this.ToFloat(this.tbRangeMax);
+                if (minValue >= maxValue)
+                    throw new ArgumentException("min value equal or equal to maxValue");
 
-            /*
-            Vertex lightPosition = center;
-            Light light1 = new Light()
+                ClearScene();
+
+                var root = this.sceneControl1.Scene.SceneContainer;
+
+                var colorVertexes = InitializeColorVertexesModel(nx, ny, nz, radius, minValue, maxValue, root);
+
+                var camera = InitializeCamera(colorVertexes);
+                this.sceneControl1.Scene.CurrentCamera = camera;
+
+                var axis = InitializeAxis(root);
+
+                var attr = InitializeAttributes(root);
+
+                this.sceneControl1.Scene.RenderBoundingVolumes = false;
+
+                this.sceneControl1.Invalidate();
+
+            }
+            catch (Exception error)
             {
-                Name = "Light 1",
-                On = true,
-                Position = lightPosition,
-                Ambient = System.Drawing.Color.White,
-                GLCode = OpenGL.GL_LIGHT0
-            };
-            */
-         
+                MessageBox.Show(error.Message);
+            }
+        }
 
-            /*
-            Light light2 = new Light()
-            {
-                Name = "Light 2",
-                On = true,
-                Position = center + new Vertex(1.0f,0.0f,0.0f)* rect3D.Size.x,
-                GLCode = OpenGL.GL_LIGHT1
-            };
-
-            Light light3 = new Light()
-            {
-                Name = "Light 3",
-                On = true,
-                Position = center + new Vertex(0.0f,1.0f,0.0f)*rect3D.Size.y,
-                GLCode = OpenGL.GL_LIGHT2
-            };
-            */
-
-            var folder = new Folder() { Name = "Lights" };
-            //folder.AddChild(light1);
-            //folder.AddChild(light2);
-            //folder.AddChild(light3);
-            scene.SceneContainer.AddChild(folder);
-
+        private OpenGLAttributesEffect InitializeAttributes(SceneElement parent)
+        {
             //  Create a set of scene attributes.
             OpenGLAttributesEffect sceneAttributes = new OpenGLAttributesEffect()
             {
@@ -232,52 +206,179 @@ namespace ColorVertexSample
             sceneAttributes.ColorBufferAttributes.BlendingDestinationFactor = BlendingDestinationFactor.OneMinusSourceAlpha;
             sceneAttributes.LightingAttributes.TwoSided = true;
             sceneAttributes.LightingAttributes.AmbientLight = new GLColor(1, 1, 1, 1);
-            scene.SceneContainer.AddEffect(sceneAttributes);
+            parent.AddEffect(sceneAttributes);
 
-            sceneControl.OpenGL.SetDimensions(sceneControl.Width, sceneControl.Height);
-            scene.Resize(sceneControl.Width, sceneControl.Height);
+            return sceneAttributes;
         }
 
-        private void Create3DObject(object sender, EventArgs e)
+        /// <summary>
+        /// 初始化坐标系 
+        /// </summary>
+        private SceneElement InitializeAxis(SceneElement parent)
         {
-            try
+            var axisRoot = new SharpGL.SceneGraph.Primitives.Folder() { Name = "axis root" };
+            parent.AddChild(axisRoot);
+
+            //  Create light
+            Light light1 = new Light()
             {
-                int nx = this.ToInt(this.tbNX);
-                int ny = this.ToInt(this.tbNY);
-                int nz = this.ToInt(this.tbNZ);
-                float radius = this.ToFloat(this.tbRadius);
-                float minValue = this.ToFloat(this.tbRangeMin);
-                float maxValue = this.ToFloat(this.tbRangeMax);
-                if (minValue >= maxValue)
-                    throw new ArgumentException("min value equal or equal to maxValue");
+                Name = "Light 1",
+                On = true,
+                Position = new Vertex(-9, -9, 11),
+                GLCode = OpenGL.GL_LIGHT0
+            };
 
-                
-                //生成需要画的模型
-                ColorVertexes colorVertexes  = ColorVertexesFactory.Create(nx, ny, nz, radius, minValue, maxValue);
-               
+            axisRoot.AddChild(light1);
+            // this light only light up the axis
+            DoInitAxis(light1);
 
-                ColorVertexesElement visualElement = new ColorVertexesElement(colorVertexes);
-               
+            this.axisRotation = new AxisRotation(axisRoot);
+            this.axisTranslation = new AxisTranslation(axisRoot);
 
-                //output(particles);
-                Rect3D rect3D = colorVertexes.Bounds;
-                Scene scene = new Scene();
-                //initialize Scene3D
-                InitializeModelScene(scene, colorVertexes.Bounds, this.sceneControl1);//,this.arcBallEffect);
-                this.sceneControl1.Scene = scene;
-                scene.SceneContainer.AddChild(visualElement);
+            return axisRoot;
+        }
 
-                this.arcBallEffect.ArcBall.SetCamera(scene.CurrentCamera
-                    as LookAtCamera);
-                visualElement.AddEffect(this.arcBallEffect);
-                
-                this.sceneControl1.Invalidate();
-               
+        private void DoInitAxis(SceneElement parent)
+        {
+            const float factor = 100;
+            // X轴
+            Material red = new Material();
+            red.Emission = System.Drawing.Color.Red;
+            red.Diffuse = System.Drawing.Color.Red;
+
+            Cylinder x1 = new Cylinder() { Name = "X1" };
+            x1.BaseRadius = 0.05 * factor;
+            x1.TopRadius = 0.05 * factor;
+            x1.Height = 1.5 * factor;
+            x1.Transformation.RotateY = 90f;
+            x1.Material = red;
+            parent.AddChild(x1);
+
+            Cylinder x2 = new Cylinder() { Name = "X2" };
+            x2.BaseRadius = 0.1 * factor;
+            x2.TopRadius = 0 * factor;
+            x2.Height = 0.2 * factor;
+            x2.Transformation.TranslateX = 1.5f * factor;
+            x2.Transformation.RotateY = 90f;
+            x2.Material = red;
+            parent.AddChild(x2);
+
+            // Y轴
+            Material green = new Material();
+            green.Emission = System.Drawing.Color.Green;
+            green.Diffuse = System.Drawing.Color.Green;
+
+            Cylinder y1 = new Cylinder() { Name = "Y1" };
+            y1.BaseRadius = 0.05 * factor;
+            y1.TopRadius = 0.05 * factor;
+            y1.Height = 1.5 * factor;
+            y1.Transformation.RotateX = -90f;
+            y1.Material = green;
+            parent.AddChild(y1);
+
+            Cylinder y2 = new Cylinder() { Name = "Y2" };
+            y2.BaseRadius = 0.1 * factor;
+            y2.TopRadius = 0 * factor;
+            y2.Height = 0.2 * factor;
+            y2.Transformation.TranslateY = 1.5f * factor;
+            y2.Transformation.RotateX = -90f;
+            y2.Material = green;
+            parent.AddChild(y2);
+
+            // Z轴
+            Material blue = new Material();
+            blue.Emission = System.Drawing.Color.Blue;
+            blue.Diffuse = System.Drawing.Color.Blue;
+
+            Cylinder z1 = new Cylinder() { Name = "Z1" };
+            z1.BaseRadius = 0.05 * factor;
+            z1.TopRadius = 0.05 * factor;
+            z1.Height = 1.5 * factor;
+            z1.Material = blue;
+            parent.AddChild(z1);
+
+            Cylinder z2 = new Cylinder() { Name = "Z2" };
+            z2.BaseRadius = 0.1 * factor;
+            z2.TopRadius = 0 * factor;
+            z2.Height = 0.2 * factor;
+            z2.Transformation.TranslateZ = 1.5f * factor;
+            z2.Material = blue;
+            parent.AddChild(z2);
+        }
+
+        /// <summary>
+        /// 生成需要画的模型
+        /// </summary>
+        /// <param name="nx"></param>
+        /// <param name="ny"></param>
+        /// <param name="nz"></param>
+        /// <param name="radius"></param>
+        /// <param name="minValue"></param>
+        /// <param name="maxValue"></param>
+        private ColorVertexes InitializeColorVertexesModel(int nx, int ny, int nz, float radius, float minValue, float maxValue, SceneElement parent)
+        {
+            var colorVertexes = ColorVertexesFactory.Create(nx, ny, nz, radius, minValue, maxValue);
+
+            var visualElement = new ColorVertexesElement(colorVertexes);
+
+            parent.AddChild(visualElement);
+
+            return colorVertexes;
+        }
+
+        private void ClearScene()
+        {
+            var elements = new SceneElement[this.sceneControl1.Scene.SceneContainer.Children.Count];
+            this.sceneControl1.Scene.SceneContainer.Children.CopyTo(elements, 0);
+            foreach (var item in elements)
+            {
+                this.sceneControl1.Scene.SceneContainer.RemoveChild(item);
             }
-            catch (Exception error)
+            var effects = new Effect[this.sceneControl1.Scene.SceneContainer.Effects.Count];
+            foreach (var item in effects)
             {
-                MessageBox.Show(error.Message);
+                this.sceneControl1.Scene.SceneContainer.RemoveEffect(item);
             }
         }
+
+        private Camera InitializeCamera(ColorVertexes colorVertexes)
+        {
+            var rect3D = colorVertexes.Bounds;
+            float centerX = rect3D.X + rect3D.Size.x / 2.0f;
+            float centerY = rect3D.Y + rect3D.Size.y / 2.0f;
+            float centerZ = rect3D.Z + rect3D.Size.z / 2.0f;
+
+            float size = Math.Max(Math.Max(rect3D.Size.x, rect3D.Size.y), rect3D.Size.z);
+
+            Vertex center = new Vertex(centerX, centerY, centerZ);
+            Vertex position = center + new Vertex(0.0f, 0.0f, 1.0f) * (size * 2);
+            //Vertex PositionNear = center + new Vertex(0.0f, 0.0f, 1.0f) * (size * 0.5f);
+
+            this.lookIncrement = size * 0.1f;
+
+            var lookAtCamera = new LookAtCamera()
+            {
+                Position = position,
+                Target = center,
+                UpVector = new Vertex(0f, 1f, 0f),
+                FieldOfView = 60,
+                AspectRatio = 1.0f,
+
+                Near = 0.01,//(PositionNear - center).Magnitude(),
+                Far = float.MaxValue
+            };
+
+            this.cameraTransform = new CameraRotation(lookAtCamera);
+
+            return lookAtCamera;
+        }
+
+
+        private void lblDebugInfo_Click(object sender, EventArgs e)
+        {
+            this.tbRangeMin.Text = "-1000";
+            this.tbRangeMax.Text = "2000";
+        }
+
     }
 }

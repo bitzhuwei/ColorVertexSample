@@ -31,6 +31,7 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.sceneControl1 = new SharpGL.SceneControl();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lblDebugInfo = new System.Windows.Forms.Label();
             this.tbRangeMax = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.tbRangeMin = new System.Windows.Forms.TextBox();
@@ -44,7 +45,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.tbNX = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.lblDebugInfo = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sceneControl1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -102,6 +102,18 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(664, 74);
             this.panel1.TabIndex = 1;
+            // 
+            // lblDebugInfo
+            // 
+            this.lblDebugInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblDebugInfo.Location = new System.Drawing.Point(453, 35);
+            this.lblDebugInfo.Name = "lblDebugInfo";
+            this.lblDebugInfo.Size = new System.Drawing.Size(201, 39);
+            this.lblDebugInfo.TabIndex = 17;
+            this.lblDebugInfo.Text = "debug info";
+            this.lblDebugInfo.Click += new System.EventHandler(this.lblDebugInfo_Click);
             // 
             // tbRangeMax
             // 
@@ -214,17 +226,6 @@
             this.label1.Size = new System.Drawing.Size(17, 12);
             this.label1.TabIndex = 0;
             this.label1.Text = "NX";
-            // 
-            // lblDebugInfo
-            // 
-            this.lblDebugInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblDebugInfo.Location = new System.Drawing.Point(453, 35);
-            this.lblDebugInfo.Name = "lblDebugInfo";
-            this.lblDebugInfo.Size = new System.Drawing.Size(201, 39);
-            this.lblDebugInfo.TabIndex = 17;
-            this.lblDebugInfo.Text = "debug info";
             // 
             // MainView
             // 

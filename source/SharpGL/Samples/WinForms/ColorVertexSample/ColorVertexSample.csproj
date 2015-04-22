@@ -50,6 +50,8 @@
   <ItemGroup>
     <Compile Include="ArcBall2.cs" />
     <Compile Include="ArcBallEffect2.cs" />
+    <Compile Include="AxisRotation.cs" />
+    <Compile Include="AxisTranslation.cs" />
     <Compile Include="CameraRotation.cs" />
     <Compile Include="MainView.cs">
       <SubType>Form</SubType>
