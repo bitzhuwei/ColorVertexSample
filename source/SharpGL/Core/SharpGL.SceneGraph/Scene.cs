@@ -176,12 +176,13 @@ namespace SharpGL.SceneGraph
 
             //  Push each effect.
             foreach (var effect in sceneElement.Effects)
-                if(effect.IsEnabled)
+                if (effect.IsEnabled)
                     effect.Push(gl, sceneElement);
 
             //  If the element can be bound, bind it.
             if (sceneElement is IBindable)
-                ((IBindable)sceneElement).Bind(gl);
+                ((IBindable)sceneElement).Push(gl);
+            //((IBindable)sceneElement).Bind(gl);
 
             //  If the element has an object space, transform into it.
             if (sceneElement is IHasObjectSpace)
@@ -211,9 +212,14 @@ namespace SharpGL.SceneGraph
             if (sceneElement is IHasObjectSpace)
                 ((IHasObjectSpace)sceneElement).PopObjectSpace(gl);
 
+            //  If the element can be bound, bind it.
+            if (sceneElement is IBindable)
+                ((IBindable)sceneElement).Pop(gl);
+            //((IBindable)sceneElement).Bind(gl);
+
             //  Pop each effect.
             for (int i = sceneElement.Effects.Count - 1; i >= 0; i--)
-                if(sceneElement.Effects[i].IsEnabled)
+                if (sceneElement.Effects[i].IsEnabled)
                     sceneElement.Effects[i].Pop(gl, sceneElement);
         }
 

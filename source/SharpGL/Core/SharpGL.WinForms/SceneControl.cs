@@ -52,6 +52,9 @@ namespace SharpGL
 			// 
 			this.Name = "OpenGLCtrl";
 
+            // force 'glA' pointing to 'glB'
+            // check https://github.com/dwmkerr/sharpgl/issues/105
+            this.scene.OpenGL = this.OpenGL;
 		}
 		#endregion
 
@@ -127,7 +130,7 @@ namespace SharpGL
 		public Scene Scene 
 		{
 			get {return scene;}
-			set {scene = value;}
+			protected set {scene = value;}
 		}
 	}
 }
