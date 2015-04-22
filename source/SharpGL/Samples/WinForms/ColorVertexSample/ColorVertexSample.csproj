@@ -63,6 +63,7 @@
     <Compile Include="Model\Geometry.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AxisTransformEffect.cs" />
     <Compile Include="Visual\ColorVertexesElement.cs" />
     <EmbeddedResource Include="MainView.resx">
       <DependentUpon>MainView.cs</DependentUpon>
