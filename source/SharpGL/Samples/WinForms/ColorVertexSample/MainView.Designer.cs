@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.sceneControl1 = new SharpGL.SceneControl();
+            this.sceneControl = new SharpGL.SceneControl();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblDebugInfo = new System.Windows.Forms.Label();
             this.tbRangeMax = new System.Windows.Forms.TextBox();
@@ -46,7 +46,7 @@
             this.tbNX = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.sceneControl1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sceneControl)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,7 +55,7 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.87556F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.12444F));
-            this.tableLayoutPanel1.Controls.Add(this.sceneControl1, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.sceneControl, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
@@ -67,18 +67,18 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(670, 468);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // sceneControl1
+            // sceneControl
             // 
-            this.tableLayoutPanel1.SetColumnSpan(this.sceneControl1, 2);
-            this.sceneControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.sceneControl1.DrawFPS = false;
-            this.sceneControl1.Location = new System.Drawing.Point(3, 83);
-            this.sceneControl1.Name = "sceneControl1";
-            this.sceneControl1.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
-            this.sceneControl1.RenderContextType = SharpGL.RenderContextType.FBO;
-            this.sceneControl1.RenderTrigger = SharpGL.RenderTrigger.Manual;
-            this.sceneControl1.Size = new System.Drawing.Size(664, 382);
-            this.sceneControl1.TabIndex = 0;
+            this.tableLayoutPanel1.SetColumnSpan(this.sceneControl, 2);
+            this.sceneControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.sceneControl.DrawFPS = false;
+            this.sceneControl.Location = new System.Drawing.Point(3, 83);
+            this.sceneControl.Name = "sceneControl";
+            this.sceneControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
+            this.sceneControl.RenderContextType = SharpGL.RenderContextType.FBO;
+            this.sceneControl.RenderTrigger = SharpGL.RenderTrigger.Manual;
+            this.sceneControl.Size = new System.Drawing.Size(664, 382);
+            this.sceneControl.TabIndex = 0;
             // 
             // panel1
             // 
@@ -236,7 +236,7 @@
             this.Name = "MainView";
             this.Text = "Form1";
             this.tableLayoutPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.sceneControl1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sceneControl)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
@@ -246,7 +246,7 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private SharpGL.SceneControl sceneControl1;
+        private SharpGL.SceneControl sceneControl;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TextBox tbNZ;
         private System.Windows.Forms.Label label3;

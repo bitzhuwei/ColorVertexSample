@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using SharpGL;
+using SharpGL.SceneGraph;
+using SharpGL.SceneGraph.Cameras;
 using SharpGL.SceneGraph.Core;
 using SharpGL.SceneGraph.Effects;
 
@@ -11,6 +13,16 @@ namespace ColorVertexSample
 {
     class ArcBallEffect2 : Effect
     {
+        public ArcBallEffect2(LookAtCamera camera)
+        {
+            this.arcBall.SetCamera(camera);
+        }
+
+        public ArcBallEffect2(Vertex position, Vertex target, Vertex up)
+        {
+            this.arcBall.SetCamera(position, target, up);
+        }
+
         /// <summary>
         /// Pushes the effect onto the specified parent element.
         /// </summary>

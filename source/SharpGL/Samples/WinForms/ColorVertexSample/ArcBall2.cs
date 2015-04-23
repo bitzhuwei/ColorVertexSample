@@ -159,6 +159,12 @@ namespace ColorVertexSample
                 lookAtCamera.UpVector.X, lookAtCamera.UpVector.Y, lookAtCamera.UpVector.Z);
         }
 
+        internal void SetCamera(Vertex position, Vertex target, Vertex up)
+        {
+            SetCamera(position.X, position.Y, position.Z,
+                target.X, target.Y, target.Z, up.X, up.Y, up.Z);
+        }
+
         public void GoUp(float interval)
         {
             this._translateX += this._up.X * interval;
@@ -241,6 +247,6 @@ namespace ColorVertexSample
             this.originalRotation = mat4.identity();
         }
 
-     
+
     }
 }

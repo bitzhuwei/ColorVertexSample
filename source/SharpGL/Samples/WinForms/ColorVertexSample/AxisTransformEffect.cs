@@ -11,6 +11,9 @@ using SharpGL.SceneGraph.Transformations;
 
 namespace ColorVertexSample
 {
+    /// <summary>
+    /// Show axis at the left bottom of screen wherever the camera is
+    /// </summary>
     class AxisTransformEffect : Effect
     {
         /// <summary>

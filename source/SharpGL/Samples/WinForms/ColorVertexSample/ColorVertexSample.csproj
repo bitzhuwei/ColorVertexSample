@@ -50,8 +50,6 @@
   <ItemGroup>
     <Compile Include="ArcBall2.cs" />
     <Compile Include="ArcBallEffect2.cs" />
-    <Compile Include="AxisRotation.cs" />
-    <Compile Include="AxisTranslation.cs" />
     <Compile Include="CameraRotation.cs" />
     <Compile Include="MainView.cs">
       <SubType>Form</SubType>
@@ -61,10 +59,13 @@
     </Compile>
     <Compile Include="Model\ColorVertexesFactory.cs" />
     <Compile Include="Model\Geometry.cs" />
+    <Compile Include="Model\PointModel.cs" />
+    <Compile Include="Model\PointModelFactory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AxisTransformEffect.cs" />
     <Compile Include="Visual\ColorVertexesElement.cs" />
+    <Compile Include="Visual\PointModelElement.cs" />
     <EmbeddedResource Include="MainView.resx">
       <DependentUpon>MainView.cs</DependentUpon>
     </EmbeddedResource>

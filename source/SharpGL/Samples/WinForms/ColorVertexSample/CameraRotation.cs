@@ -7,6 +7,9 @@ using SharpGL.SceneGraph;
 
 namespace ColorVertexSample
 {
+    /// <summary>
+    /// rotate and translate camera on a sphere, whose center is camera's target
+    /// </summary>
     class CameraRotation
     {
         private SharpGL.SceneGraph.Cameras.LookAtCamera lookAtCamera;
