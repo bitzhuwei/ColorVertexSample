@@ -25,8 +25,6 @@ namespace ColorVertexSample
     public partial class FormFixedCamera : Form
     {
         private ArcBallEffect2 modelTransform;
-        //private ArcBallEffect2 axisRotation;
-        //private ViewportEffect axisViewportEffect;
 
         public FormFixedCamera()
         {
@@ -50,19 +48,6 @@ namespace ColorVertexSample
             this.axisSceneControl.MouseDown += sceneControl_MouseDown;
             this.axisSceneControl.MouseMove += sceneControl_MouseMove;
             this.axisSceneControl.MouseUp += sceneControl_MouseUp;
-            // TODO: this won't work. reason unknown.
-            this.axisSceneControl.SizeChanged += sceneControl_SizeChanged;
-            this.SizeChanged += MainView_SizeChanged;
-        }
-
-        void MainView_SizeChanged(object sender, EventArgs e)
-        {
-            sceneControl_SizeChanged(sender, e);
-        }
-
-        void sceneControl_SizeChanged(object sender, EventArgs e)
-        {
-            //UpdateAxisViewportEffect(this.axisViewportEffect);
         }
 
         private void sceneControl_MouseUp(object sender, MouseEventArgs e)
@@ -70,7 +55,6 @@ namespace ColorVertexSample
             if (modelTransform == null) { return; }
 
             modelTransform.ArcBall.MouseUp(e.X, e.Y);
-            //axisRotation.ArcBall.MouseUp(e.X, e.Y);
         }
 
         private void sceneControl_MouseMove(object sender, MouseEventArgs e)
@@ -80,13 +64,12 @@ namespace ColorVertexSample
             if (e.Button == MouseButtons.Left)
             {
                 modelTransform.ArcBall.MouseMove(e.X, e.Y);
-                //axisRotation.ArcBall.MouseMove(e.X, e.Y);
 
                 ManualRender(this.axisSceneControl);
             }
         }
 
-        private void ManualRender(Control control)
+        private void ManualRender(SceneControl control)
         {
             control.Invalidate();
         }
@@ -101,8 +84,6 @@ namespace ColorVertexSample
                 int height = axisSceneControl.Height;
                 modelTransform.ArcBall.SetBounds(width, height);
                 modelTransform.ArcBall.MouseDown(e.X, e.Y);
-                //axisRotation.ArcBall.SetBounds(width, height);
-                //axisRotation.ArcBall.MouseDown(e.X, e.Y);
             }
         }
 
