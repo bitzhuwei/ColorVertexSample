@@ -50,6 +50,9 @@
   <ItemGroup>
     <Compile Include="ArcBall2.cs" />
     <Compile Include="ArcBallEffect2.cs" />
+    <Compile Include="AxiesSceneControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="CameraRotation.cs" />
     <Compile Include="FormFixedCamera.cs">
       <SubType>Form</SubType>
@@ -73,6 +76,9 @@
     <Compile Include="ViewportEffect.cs" />
     <Compile Include="Visual\ColorVertexesElement.cs" />
     <Compile Include="Visual\PointModelElement.cs" />
+    <EmbeddedResource Include="AxiesSceneControl.resx">
+      <DependentUpon>AxiesSceneControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormFixedCamera.resx">
       <DependentUpon>FormFixedCamera.cs</DependentUpon>
     </EmbeddedResource>

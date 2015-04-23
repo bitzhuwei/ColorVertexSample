@@ -25,8 +25,8 @@ namespace ColorVertexSample
     public partial class FormFixedCamera : Form
     {
         private ArcBallEffect2 modelTransform;
-        private ArcBallEffect2 axisRotation;
-        private ViewportEffect axisViewportEffect;
+        //private ArcBallEffect2 axisRotation;
+        //private ViewportEffect axisViewportEffect;
 
         public FormFixedCamera()
         {
@@ -44,14 +44,14 @@ namespace ColorVertexSample
         {
             base.OnLoad(e);
 
-            this.sceneControl.Scene.SceneContainer.Children.Clear();
+            this.axisSceneControl.Scene.SceneContainer.Children.Clear();
 
-            this.sceneControl.MouseWheel += sceneControl_MouseWheel;
-            this.sceneControl.MouseDown += sceneControl_MouseDown;
-            this.sceneControl.MouseMove += sceneControl_MouseMove;
-            this.sceneControl.MouseUp += sceneControl_MouseUp;
+            this.axisSceneControl.MouseWheel += sceneControl_MouseWheel;
+            this.axisSceneControl.MouseDown += sceneControl_MouseDown;
+            this.axisSceneControl.MouseMove += sceneControl_MouseMove;
+            this.axisSceneControl.MouseUp += sceneControl_MouseUp;
             // TODO: this won't work. reason unknown.
-            this.sceneControl.SizeChanged += sceneControl_SizeChanged;
+            this.axisSceneControl.SizeChanged += sceneControl_SizeChanged;
             this.SizeChanged += MainView_SizeChanged;
         }
 
@@ -62,23 +62,27 @@ namespace ColorVertexSample
 
         void sceneControl_SizeChanged(object sender, EventArgs e)
         {
-            UpdateAxisViewportEffect(this.axisViewportEffect);
+            //UpdateAxisViewportEffect(this.axisViewportEffect);
         }
 
         private void sceneControl_MouseUp(object sender, MouseEventArgs e)
         {
+            if (modelTransform == null) { return; }
+
             modelTransform.ArcBall.MouseUp(e.X, e.Y);
-            axisRotation.ArcBall.MouseUp(e.X, e.Y);
+            //axisRotation.ArcBall.MouseUp(e.X, e.Y);
         }
 
         private void sceneControl_MouseMove(object sender, MouseEventArgs e)
         {
+            if (modelTransform == null) { return; }
+
             if (e.Button == MouseButtons.Left)
             {
                 modelTransform.ArcBall.MouseMove(e.X, e.Y);
-                axisRotation.ArcBall.MouseMove(e.X, e.Y);
+                //axisRotation.ArcBall.MouseMove(e.X, e.Y);
 
-                ManualRender(this.sceneControl);
+                ManualRender(this.axisSceneControl);
             }
         }
 
@@ -89,24 +93,28 @@ namespace ColorVertexSample
 
         private void sceneControl_MouseDown(object sender, MouseEventArgs e)
         {
+            if (modelTransform == null) { return; }
+
             if (e.Button == MouseButtons.Left)
             {
-                int width = sceneControl.Width;
-                int height = sceneControl.Height;
+                int width = axisSceneControl.Width;
+                int height = axisSceneControl.Height;
                 modelTransform.ArcBall.SetBounds(width, height);
                 modelTransform.ArcBall.MouseDown(e.X, e.Y);
-                axisRotation.ArcBall.SetBounds(width, height);
-                axisRotation.ArcBall.MouseDown(e.X, e.Y);
+                //axisRotation.ArcBall.SetBounds(width, height);
+                //axisRotation.ArcBall.MouseDown(e.X, e.Y);
             }
         }
 
         private void sceneControl_MouseWheel(object sender, MouseEventArgs e)
         {
+            if (modelTransform == null) { return; }
+
             modelTransform.ArcBall.Scale += e.Delta * 0.001f;
             if (modelTransform.ArcBall.Scale < 0.01f)
             { modelTransform.ArcBall.Scale = 0.01f; }
 
-            ManualRender(this.sceneControl);
+            ManualRender(this.axisSceneControl);
         }
 
         private float ToFloat(TextBox tb)
@@ -128,7 +136,7 @@ namespace ColorVertexSample
                 if (minValue >= maxValue)
                     throw new ArgumentException("min value equal or equal to maxValue");
 
-                var root = this.sceneControl.Scene.SceneContainer;
+                var root = this.axisSceneControl.Scene.SceneContainer;
 
                 ClearChildren(root);
 
@@ -136,30 +144,20 @@ namespace ColorVertexSample
 
                 var element = InitializeElement(nx, ny, nz, radius, minValue, maxValue, root);
 
-                var camera = InitializeCamera(element, this.sceneControl);
-                this.sceneControl.Scene.CurrentCamera = camera;
+                var camera = InitializeCamera(element, this.axisSceneControl);
+                this.axisSceneControl.Scene.CurrentCamera = camera;
 
                 this.modelTransform = new ArcBallEffect2(camera);
                 this.modelTransform.ArcBall.Translate = element.Model.translateVector;
                 element.AddEffect(this.modelTransform);
 
-                var axis = InitializeAxis(root);
-
-                this.axisRotation = new ArcBallEffect2(camera);
-                var toward = camera.Target - camera.Position;
-                toward.Normalize();
-                this.axisRotation.ArcBall.Translate = camera.Position + toward * 10;
-                axis.AddEffect(this.axisRotation);
-                
-                this.axisViewportEffect = new ViewportEffect(Rectangle.Empty, Rectangle.Empty);
-                UpdateAxisViewportEffect(this.axisViewportEffect);
-                axis.AddEffect(this.axisViewportEffect);
-
                 var attr = InitializeAttributes(root);
 
-                this.sceneControl.Scene.RenderBoundingVolumes = false;
+                this.axisSceneControl.Scene.RenderBoundingVolumes = false;
 
-                ManualRender(this.sceneControl);
+                this.axisSceneControl.ResetAxisRotation();
+
+                ManualRender(this.axisSceneControl);
             }
             catch (Exception error)
             {
@@ -171,9 +169,9 @@ namespace ColorVertexSample
         {
             const int factor = 5;
             var viewport = new Rectangle(0, 0,
-                this.sceneControl.Width / factor,
-                this.sceneControl.Height / factor);
-            var fullViewport = this.sceneControl.ClientRectangle;
+                this.axisSceneControl.Width / factor,
+                this.axisSceneControl.Height / factor);
+            var fullViewport = this.axisSceneControl.ClientRectangle;
             viewportEffect.viewport = viewport;
             viewportEffect.fullViewport = fullViewport;
         }

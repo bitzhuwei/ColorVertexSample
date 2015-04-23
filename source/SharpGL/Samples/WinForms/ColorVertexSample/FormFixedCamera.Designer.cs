@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.sceneControl = new SharpGL.SceneControl();
+            this.axisSceneControl = new ColorVertexSample.AxiesSceneControl();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblDebugInfo = new System.Windows.Forms.Label();
             this.tbRangeMax = new System.Windows.Forms.TextBox();
@@ -46,7 +46,7 @@
             this.tbNX = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.sceneControl)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.axisSceneControl)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,7 +55,7 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.87556F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.12444F));
-            this.tableLayoutPanel1.Controls.Add(this.sceneControl, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.axisSceneControl, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
@@ -64,21 +64,21 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 17.30769F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 82.69231F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(670, 468);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(699, 468);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // sceneControl
             // 
-            this.tableLayoutPanel1.SetColumnSpan(this.sceneControl, 2);
-            this.sceneControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.sceneControl.DrawFPS = false;
-            this.sceneControl.Location = new System.Drawing.Point(3, 83);
-            this.sceneControl.Name = "sceneControl";
-            this.sceneControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
-            this.sceneControl.RenderContextType = SharpGL.RenderContextType.FBO;
-            this.sceneControl.RenderTrigger = SharpGL.RenderTrigger.Manual;
-            this.sceneControl.Size = new System.Drawing.Size(664, 382);
-            this.sceneControl.TabIndex = 0;
+            this.tableLayoutPanel1.SetColumnSpan(this.axisSceneControl, 2);
+            this.axisSceneControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.axisSceneControl.DrawFPS = false;
+            this.axisSceneControl.Location = new System.Drawing.Point(3, 83);
+            this.axisSceneControl.Name = "sceneControl";
+            this.axisSceneControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
+            this.axisSceneControl.RenderContextType = SharpGL.RenderContextType.FBO;
+            this.axisSceneControl.RenderTrigger = SharpGL.RenderTrigger.Manual;
+            this.axisSceneControl.Size = new System.Drawing.Size(693, 382);
+            this.axisSceneControl.TabIndex = 0;
             // 
             // panel1
             // 
@@ -100,7 +100,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(664, 74);
+            this.panel1.Size = new System.Drawing.Size(693, 74);
             this.panel1.TabIndex = 1;
             // 
             // lblDebugInfo
@@ -110,7 +110,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblDebugInfo.Location = new System.Drawing.Point(453, 35);
             this.lblDebugInfo.Name = "lblDebugInfo";
-            this.lblDebugInfo.Size = new System.Drawing.Size(201, 39);
+            this.lblDebugInfo.Size = new System.Drawing.Size(238, 39);
             this.lblDebugInfo.TabIndex = 17;
             this.lblDebugInfo.Text = "debug info";
             this.lblDebugInfo.Click += new System.EventHandler(this.lblDebugInfo_Click);
@@ -182,7 +182,7 @@
             this.tbNZ.Name = "tbNZ";
             this.tbNZ.Size = new System.Drawing.Size(100, 21);
             this.tbNZ.TabIndex = 5;
-            this.tbNZ.Text = "10";
+            this.tbNZ.Text = "100";
             // 
             // label3
             // 
@@ -199,7 +199,7 @@
             this.tbNY.Name = "tbNY";
             this.tbNY.Size = new System.Drawing.Size(100, 21);
             this.tbNY.TabIndex = 3;
-            this.tbNY.Text = "10";
+            this.tbNY.Text = "100";
             // 
             // label2
             // 
@@ -216,7 +216,7 @@
             this.tbNX.Name = "tbNX";
             this.tbNX.Size = new System.Drawing.Size(95, 21);
             this.tbNX.TabIndex = 1;
-            this.tbNX.Text = "10";
+            this.tbNX.Text = "100";
             // 
             // label1
             // 
@@ -227,16 +227,16 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "NX";
             // 
-            // MainView
+            // FormFixedCamera
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(670, 468);
+            this.ClientSize = new System.Drawing.Size(699, 468);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "MainView";
+            this.Name = "FormFixedCamera";
             this.Text = "Form1";
             this.tableLayoutPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.sceneControl)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.axisSceneControl)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
@@ -246,7 +246,6 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private SharpGL.SceneControl sceneControl;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TextBox tbNZ;
         private System.Windows.Forms.Label label3;
@@ -262,6 +261,7 @@
         private System.Windows.Forms.TextBox tbRangeMax;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label lblDebugInfo;
+        private AxiesSceneControl axisSceneControl;
     }
 }
 

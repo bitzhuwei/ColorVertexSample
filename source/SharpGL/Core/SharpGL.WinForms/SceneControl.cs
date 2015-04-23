@@ -113,6 +113,7 @@ namespace SharpGL
 		protected override void OnSizeChanged(EventArgs e)
 		{
 			//  Don't call the base- we handle sizing ourselves.
+            base.OnSizeChanged(e);
 
 			//	OpenGL needs to resize the viewport.
             OpenGL.SetDimensions(Width, Height);
