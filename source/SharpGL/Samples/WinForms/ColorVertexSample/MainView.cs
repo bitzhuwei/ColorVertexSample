@@ -362,6 +362,7 @@ namespace ColorVertexSample
         private static void ClearEffects(SceneElement target)
         {
             var effects = new Effect[target.Effects.Count];
+            target.Effects.CopyTo(effects, 0);
             foreach (var item in effects)
             {
                 target.RemoveEffect(item);
