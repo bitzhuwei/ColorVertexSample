@@ -140,7 +140,7 @@ namespace ColorVertexSample
                 this.sceneControl.Scene.CurrentCamera = camera;
 
                 this.modelTransform = new ArcBallEffect2(camera);
-                this.modelTransform.ArcBall.SetTranslate(element.Model.translateVector);
+                this.modelTransform.ArcBall.Translate = element.Model.translateVector;
                 element.AddEffect(this.modelTransform);
 
                 var axis = InitializeAxis(root);
@@ -148,7 +148,7 @@ namespace ColorVertexSample
                 this.axisRotation = new ArcBallEffect2(camera);
                 var toward = camera.Target - camera.Position;
                 toward.Normalize();
-                this.axisRotation.ArcBall.SetTranslate(camera.Position + toward * 10);
+                this.axisRotation.ArcBall.Translate = camera.Position + toward * 10;
                 axis.AddEffect(this.axisRotation);
                 
                 this.axisViewportEffect = new ViewportEffect(Rectangle.Empty, Rectangle.Empty);

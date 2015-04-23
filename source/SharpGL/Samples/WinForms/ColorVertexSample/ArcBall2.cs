@@ -86,8 +86,8 @@ namespace ColorVertexSample
                 System.Threading.Interlocked.Exchange(ref _angle, 0);
             }
             var scale = glm.scale(mat4.identity(), new vec3(Scale));
-            var translate = glm.translate(mat4.identity(), new vec3(TranslateX,
-                TranslateY, TranslateZ));
+            var translate = glm.translate(mat4.identity(), new vec3(Translate.X,
+                Translate.Y, Translate.Z));
             //result = translate * originalRotation * scale;//rotate good
             //result = translate * scale * originalRotation;//rotate reversed
             //result = originalRotation * translate * scale;//rotate reversed
@@ -117,7 +117,7 @@ namespace ColorVertexSample
             gl.MultMatrix(_lastRotation);
             gl.GetFloat(SharpGL.Enumerations.GetTarget.ModelviewMatix, _lastRotation);
             gl.PopMatrix();
-            gl.Translate(TranslateX, TranslateY, TranslateZ);
+            gl.Translate(Translate.X, Translate.Y, Translate.Z);
             gl.MultMatrix(_lastRotation);
             gl.Scale(Scale, Scale, Scale);
         }
@@ -167,35 +167,22 @@ namespace ColorVertexSample
 
         public void GoUp(float interval)
         {
-            this.TranslateX += this._up.X * interval;
-            this.TranslateY += this._up.Y * interval;
-            this.TranslateZ += this._up.Z * interval;
+            this.Translate += this._up * interval;
         }
         public void GoDown(float interval)
         {
-            this.TranslateX -= this._up.X * interval;
-            this.TranslateY -= this._up.Y * interval;
-            this.TranslateZ -= this._up.Z * interval;
+            this.Translate -= this._up * interval;
         }
         public void GoLeft(float interval)
         {
-            this.TranslateX -= this._right.X * interval;
-            this.TranslateY -= this._right.Y * interval;
-            this.TranslateZ -= this._right.Z * interval;
+            this.Translate -= this._right * interval;
         }
         public void GoRight(float interval)
         {
-            this.TranslateX += this._right.X * interval;
-            this.TranslateY += this._right.Y * interval;
-            this.TranslateZ += this._right.Z * interval;
+            this.Translate += this._right * interval;
         }
 
-
-        public float TranslateZ { get; set; }
-
-        public float TranslateY { get; set; }
-
-        public float TranslateX { get; set; }
+        public Vertex Translate { get; set; }
 
         float _scale = 1.0f;
      
@@ -205,38 +192,20 @@ namespace ColorVertexSample
             set { _scale = value; }
         }
 
-
-        public void SetTranslate(double x, double y, double z)
-        {
-            this.TranslateX = (float)x;
-            this.TranslateY = (float)y;
-            this.TranslateZ = (float)z;
-        }
-
         public void GoFront(int interval)
         {
-            this.TranslateX -= this._back.X * interval;
-            this.TranslateY -= this._back.Y * interval;
-            this.TranslateZ -= this._back.Z * interval;
+            this.Translate -= this._back * interval;
         }
+
         public void GoBack(int interval)
         {
-            this.TranslateX += this._back.X * interval;
-            this.TranslateY += this._back.Y * interval;
-            this.TranslateZ += this._back.Z * interval;
+            this.Translate += this._back * interval;
         }
 
         public void ResetRotation()
         {
             this._lastRotation = new float[16] { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 };
             this.originalRotation = mat4.identity();
-        }
-
-
-
-        public void SetTranslate(Vertex vertex)
-        {
-            SetTranslate(vertex.X, vertex.Y, vertex.Z);
         }
     }
 }
