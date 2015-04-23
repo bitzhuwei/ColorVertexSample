@@ -28,6 +28,21 @@ namespace ColorVertexSample.Model
         public float x;
         public float y;
         public float z;
+
+        public Size3D(float x, float y, float z)
+        {
+            this.x = x; this.y = y; this.z = z;
+        }
+
+        public static implicit operator Size3D(Vertex size)
+        {
+            return new Size3D(size.X, size.Y, size.Z);
+        }
+
+        public static implicit operator Vertex(Size3D size)
+        {
+            return new Vertex(size.x, size.y, size.z);
+        }
     }
 
     public unsafe struct Rect3D

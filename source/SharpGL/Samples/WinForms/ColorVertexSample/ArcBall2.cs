@@ -117,7 +117,7 @@ namespace ColorVertexSample
             gl.MultMatrix(_lastRotation);
             gl.GetFloat(SharpGL.Enumerations.GetTarget.ModelviewMatix, _lastRotation);
             gl.PopMatrix();
-            gl.Translate(_translateX, _translateY, _translateZ);
+            gl.Translate(TranslateX, TranslateY, TranslateZ);
             gl.MultMatrix(_lastRotation);
             gl.Scale(Scale, Scale, Scale);
         }
@@ -167,50 +167,35 @@ namespace ColorVertexSample
 
         public void GoUp(float interval)
         {
-            this._translateX += this._up.X * interval;
-            this._translateY += this._up.Y * interval;
-            this._translateZ += this._up.Z * interval;
+            this.TranslateX += this._up.X * interval;
+            this.TranslateY += this._up.Y * interval;
+            this.TranslateZ += this._up.Z * interval;
         }
         public void GoDown(float interval)
         {
-            this._translateX -= this._up.X * interval;
-            this._translateY -= this._up.Y * interval;
-            this._translateZ -= this._up.Z * interval;
+            this.TranslateX -= this._up.X * interval;
+            this.TranslateY -= this._up.Y * interval;
+            this.TranslateZ -= this._up.Z * interval;
         }
         public void GoLeft(float interval)
         {
-            this._translateX -= this._right.X * interval;
-            this._translateY -= this._right.Y * interval;
-            this._translateZ -= this._right.Z * interval;
+            this.TranslateX -= this._right.X * interval;
+            this.TranslateY -= this._right.Y * interval;
+            this.TranslateZ -= this._right.Z * interval;
         }
         public void GoRight(float interval)
         {
-            this._translateX += this._right.X * interval;
-            this._translateY += this._right.Y * interval;
-            this._translateZ += this._right.Z * interval;
+            this.TranslateX += this._right.X * interval;
+            this.TranslateY += this._right.Y * interval;
+            this.TranslateZ += this._right.Z * interval;
         }
 
-        float _translateZ;
 
-        public float TranslateZ
-        {
-            get { return _translateZ; }
-            set { _translateZ = value; }
-        }
-        float _translateY;
+        public float TranslateZ { get; set; }
 
-        public float TranslateY
-        {
-            get { return _translateY; }
-            set { _translateY = value; }
-        }
-        float _translateX;
+        public float TranslateY { get; set; }
 
-        public float TranslateX
-        {
-            get { return _translateX; }
-            set { _translateX = value; }
-        }
+        public float TranslateX { get; set; }
 
         float _scale = 1.0f;
      
@@ -223,22 +208,22 @@ namespace ColorVertexSample
 
         public void SetTranslate(double x, double y, double z)
         {
-            this._translateX = (float)x;
-            this._translateY = (float)y;
-            this._translateZ = (float)z;
+            this.TranslateX = (float)x;
+            this.TranslateY = (float)y;
+            this.TranslateZ = (float)z;
         }
 
         public void GoFront(int interval)
         {
-            this._translateX -= this._back.X * interval;
-            this._translateY -= this._back.Y * interval;
-            this._translateZ -= this._back.Z * interval;
+            this.TranslateX -= this._back.X * interval;
+            this.TranslateY -= this._back.Y * interval;
+            this.TranslateZ -= this._back.Z * interval;
         }
         public void GoBack(int interval)
         {
-            this._translateX += this._back.X * interval;
-            this._translateY += this._back.Y * interval;
-            this._translateZ += this._back.Z * interval;
+            this.TranslateX += this._back.X * interval;
+            this.TranslateY += this._back.Y * interval;
+            this.TranslateZ += this._back.Z * interval;
         }
 
         public void ResetRotation()
@@ -248,5 +233,10 @@ namespace ColorVertexSample
         }
 
 
+
+        public void SetTranslate(Vertex vertex)
+        {
+            SetTranslate(vertex.X, vertex.Y, vertex.Z);
+        }
     }
 }

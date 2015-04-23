@@ -51,6 +51,12 @@
     <Compile Include="ArcBall2.cs" />
     <Compile Include="ArcBallEffect2.cs" />
     <Compile Include="CameraRotation.cs" />
+    <Compile Include="FormFixedCamera.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormFixedCamera.Designer.cs">
+      <DependentUpon>FormFixedCamera.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -66,6 +72,9 @@
     <Compile Include="AxisTransformEffect.cs" />
     <Compile Include="Visual\ColorVertexesElement.cs" />
     <Compile Include="Visual\PointModelElement.cs" />
+    <EmbeddedResource Include="FormFixedCamera.resx">
+      <DependentUpon>FormFixedCamera.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainView.resx">
       <DependentUpon>MainView.cs</DependentUpon>
     </EmbeddedResource>

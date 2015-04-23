@@ -1,0 +1,386 @@
+﻿using SharpGL;
+using SharpGL.Enumerations;
+using SharpGL.SceneGraph;
+using SharpGL.SceneGraph.Cameras;
+using SharpGL.SceneGraph.Core;
+using SharpGL.SceneGraph.Effects;
+using SharpGL.SceneGraph.Lighting;
+using SharpGL.SceneGraph.Primitives;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using ColorVertexSample.Model;
+using ColorVertexSample.Visual;
+using SharpGL.SceneGraph.Assets;
+using SharpGL.SceneGraph.Quadrics;
+
+namespace ColorVertexSample
+{
+    public partial class FormFixedCamera : Form
+    {
+
+        private ArcBallEffect2 arcBallEffect;
+        //float? lookIncrement;
+        private AxisTransformEffect axisTransform = new AxisTransformEffect();
+        private float scaleIncreament = 1;
+
+        public FormFixedCamera()
+        {
+            InitializeComponent();
+
+        }
+
+        private int ToInt(TextBox tb)
+        {
+            int value = System.Convert.ToInt32(tb.Text);
+            return value;
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+
+            this.sceneControl.Scene.SceneContainer.Children.Clear();
+
+            this.sceneControl.MouseWheel += sceneControl_MouseWheel;
+            this.sceneControl.MouseDown += sceneControl_MouseDown;
+            this.sceneControl.MouseMove += sceneControl_MouseMove;
+            this.sceneControl.MouseUp += sceneControl_MouseUp;
+            this.sceneControl.SizeChanged += sceneControl_SizeChanged;
+            this.SizeChanged += MainView_SizeChanged;
+            Application.Idle += Application_Idle;
+        }
+
+        void MainView_SizeChanged(object sender, EventArgs e)
+        {
+            sceneControl_SizeChanged(sender, e);
+        }
+
+        void sceneControl_SizeChanged(object sender, EventArgs e)
+        {
+            //this.cameraTransform.SetBounds(sceneControl.Width, sceneControl.Height);
+            /*
+              this.axisArcBallEffect.ArcBall.SetBounds(this.sceneControl.Width, this.sceneControl.Height);
+            var gl = this.sceneControl.OpenGL;
+            var axis = gl.UnProject(50, 50, 0.1);
+            axisArcBallEffect.ArcBall.SetTranslate(axis[0], axis[1], axis[2]);
+            axisArcBallEffect.ArcBall.Scale = 0.02f;
+             */
+            //UpdateAxisTransform();
+        }
+
+        void Application_Idle(object sender, EventArgs e)
+        {
+            //var cameraTransform = this.cameraTransform;
+            //if (cameraTransform == null) { return; }
+            //this.lblDebugInfo.Text = cameraTransform.ToString();
+            //UpdateAxisTransform();
+        }
+
+        private void sceneControl_MouseUp(object sender, MouseEventArgs e)
+        {
+            arcBallEffect.ArcBall.MouseUp(e.X, e.Y);
+        }
+
+        private void sceneControl_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                //arcBallEffect.ArcBall.SetBounds(sceneControl.Width, sceneControl.Height);
+                arcBallEffect.ArcBall.MouseMove(e.X, e.Y);
+
+                //UpdateAxisTransform();
+
+                ManualRender(this.sceneControl);
+            }
+        }
+
+        private void ManualRender(Control control)
+        {
+            control.Invalidate();
+        }
+
+        private void sceneControl_MouseDown(object sender, MouseEventArgs e)
+        {
+
+            if (e.Button == MouseButtons.Left)
+            {
+                int width = sceneControl.Width;
+                int height = sceneControl.Height;
+                arcBallEffect.ArcBall.SetBounds(width, height);
+                arcBallEffect.ArcBall.MouseDown(e.X, e.Y);
+            }
+        }
+
+        private void sceneControl_MouseWheel(object sender, MouseEventArgs e)
+        {
+            //if (!this.lookIncrement.HasValue)
+            //    return;
+
+            ////scale by move the camera position
+            //float moveDirection = e.Delta > 0 ? 1 : -1;
+            //var camera = this.sceneControl.Scene.CurrentCamera as LookAtCamera;
+            //Vertex direction = camera.Target - camera.Position;
+            //direction.Normalize();
+            //Vertex distance = direction * (moveDirection * this.lookIncrement.Value);
+            //camera.Position += distance;
+            var increament = this.scaleIncreament;
+            arcBallEffect.ArcBall.Scale += e.Delta * 0.001f * increament;
+            if (arcBallEffect.ArcBall.Scale < 0.01f)
+            { arcBallEffect.ArcBall.Scale = 0.01f; }
+
+            ManualRender(this.sceneControl);
+        }
+
+
+
+        private float ToFloat(TextBox tb)
+        {
+            float value = System.Convert.ToSingle(tb.Text);
+            return value;
+        }
+
+        private void Create3DObject(object sender, EventArgs e)
+        {
+            try
+            {
+                int nx = this.ToInt(this.tbNX);
+                int ny = this.ToInt(this.tbNY);
+                int nz = this.ToInt(this.tbNZ);
+                float radius = this.ToFloat(this.tbRadius);
+                float minValue = this.ToFloat(this.tbRangeMin);
+                float maxValue = this.ToFloat(this.tbRangeMax);
+                if (minValue >= maxValue)
+                    throw new ArgumentException("min value equal or equal to maxValue");
+
+                var root = this.sceneControl.Scene.SceneContainer;
+
+                ClearChildren(root);
+
+                ClearEffects(root);
+
+                var element = InitializeElement(nx, ny, nz, radius, minValue, maxValue, root);
+
+                var camera = InitializeCamera(element, this.sceneControl);
+                this.sceneControl.Scene.CurrentCamera = camera;
+                this.arcBallEffect = new ArcBallEffect2(camera);
+                this.arcBallEffect.ArcBall.SetTranslate(element.Model.translateVector);
+                element.AddEffect(this.arcBallEffect);
+
+                var axis = InitializeAxis(root);
+
+                var attr = InitializeAttributes(root);
+
+                this.sceneControl.Scene.RenderBoundingVolumes = false;
+
+                ManualRender(this.sceneControl);
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show(error.ToString());
+            }
+        }
+
+        private OpenGLAttributesEffect InitializeAttributes(SceneElement parent)
+        {
+            //  Create a set of scene attributes.
+            OpenGLAttributesEffect sceneAttributes = new OpenGLAttributesEffect()
+            {
+                Name = "Scene Attributes"
+            };
+
+            //  Specify the scene attributes.
+            sceneAttributes.EnableAttributes.EnableDepthTest = true;
+            sceneAttributes.EnableAttributes.EnableNormalize = true;
+            sceneAttributes.EnableAttributes.EnableLighting = false;
+            sceneAttributes.EnableAttributes.EnableTexture2D = true;
+            sceneAttributes.EnableAttributes.EnableBlend = true;
+            sceneAttributes.ColorBufferAttributes.BlendingSourceFactor = BlendingSourceFactor.SourceAlpha;
+            sceneAttributes.ColorBufferAttributes.BlendingDestinationFactor = BlendingDestinationFactor.OneMinusSourceAlpha;
+            sceneAttributes.LightingAttributes.TwoSided = true;
+            sceneAttributes.LightingAttributes.AmbientLight = new GLColor(1, 1, 1, 1);
+            parent.AddEffect(sceneAttributes);
+
+            return sceneAttributes;
+        }
+
+        /// <summary>
+        /// 初始化坐标系 
+        /// </summary>
+        private SceneElement InitializeAxis(SceneElement parent)
+        {
+            var axisRoot = new SharpGL.SceneGraph.Primitives.Folder() { Name = "axis root" };
+            parent.AddChild(axisRoot);
+
+            //  Create light
+            Light light1 = new Light()
+            {
+                Name = "Light 1",
+                On = true,
+                Position = new Vertex(-9, -9, 11),
+                GLCode = OpenGL.GL_LIGHT0
+            };
+
+            axisRoot.AddChild(light1);
+            // this light only light up the axis
+            DoInitAxis(light1);
+
+            //this.axisRotation = new AxisRotation(axisRoot);
+            //this.axisTranslation = new AxisTranslation(axisRoot);
+            axisRoot.AddEffect(this.axisTransform);
+
+            return axisRoot;
+        }
+
+        private void DoInitAxis(SceneElement parent)
+        {
+            const float factor = 1;
+            // X轴
+            Material red = new Material();
+            red.Emission = System.Drawing.Color.Red;
+            red.Diffuse = System.Drawing.Color.Red;
+
+            Cylinder x1 = new Cylinder() { Name = "X1" };
+            x1.BaseRadius = 0.05 * factor;
+            x1.TopRadius = 0.05 * factor;
+            x1.Height = 1.5 * factor;
+            x1.Transformation.RotateY = 90f;
+            x1.Material = red;
+            parent.AddChild(x1);
+
+            Cylinder x2 = new Cylinder() { Name = "X2" };
+            x2.BaseRadius = 0.1 * factor;
+            x2.TopRadius = 0 * factor;
+            x2.Height = 0.2 * factor;
+            x2.Transformation.TranslateX = 1.5f * factor;
+            x2.Transformation.RotateY = 90f;
+            x2.Material = red;
+            parent.AddChild(x2);
+
+            // Y轴
+            Material green = new Material();
+            green.Emission = System.Drawing.Color.Green;
+            green.Diffuse = System.Drawing.Color.Green;
+
+            Cylinder y1 = new Cylinder() { Name = "Y1" };
+            y1.BaseRadius = 0.05 * factor;
+            y1.TopRadius = 0.05 * factor;
+            y1.Height = 1.5 * factor;
+            y1.Transformation.RotateX = -90f;
+            y1.Material = green;
+            parent.AddChild(y1);
+
+            Cylinder y2 = new Cylinder() { Name = "Y2" };
+            y2.BaseRadius = 0.1 * factor;
+            y2.TopRadius = 0 * factor;
+            y2.Height = 0.2 * factor;
+            y2.Transformation.TranslateY = 1.5f * factor;
+            y2.Transformation.RotateX = -90f;
+            y2.Material = green;
+            parent.AddChild(y2);
+
+            // Z轴
+            Material blue = new Material();
+            blue.Emission = System.Drawing.Color.Blue;
+            blue.Diffuse = System.Drawing.Color.Blue;
+
+            Cylinder z1 = new Cylinder() { Name = "Z1" };
+            z1.BaseRadius = 0.05 * factor;
+            z1.TopRadius = 0.05 * factor;
+            z1.Height = 1.5 * factor;
+            z1.Material = blue;
+            parent.AddChild(z1);
+
+            Cylinder z2 = new Cylinder() { Name = "Z2" };
+            z2.BaseRadius = 0.1 * factor;
+            z2.TopRadius = 0 * factor;
+            z2.Height = 0.2 * factor;
+            z2.Transformation.TranslateZ = 1.5f * factor;
+            z2.Material = blue;
+            parent.AddChild(z2);
+        }
+
+        private LookAtCamera InitializeCamera(PointModelElement element, SceneControl control)
+        {
+            var model = element.Model;
+            var rect3D = model.Bounds;
+            Vertex center = model.WorldCoordCenter();
+
+            float size = Math.Max(Math.Max(rect3D.Size.x, rect3D.Size.y), rect3D.Size.z);
+
+            Vertex position = center + new Vertex(0.0f, 0.0f, 1.0f) * (size * 2);
+            //Vertex PositionNear = center + new Vertex(0.0f, 0.0f, 1.0f) * (size * 0.5f);
+
+            this.scaleIncreament = size * 0.0001f;
+
+            var lookAtCamera = new LookAtCamera()
+            {
+                Position = position,
+                Target = center,
+                UpVector = new Vertex(0f, 1f, 0f),
+                FieldOfView = 60,
+                AspectRatio = (double)control.Width / (double)control.Height,//1.0f,
+                Near = 0.001,//(PositionNear - center).Magnitude(),
+                Far = float.MaxValue
+            };
+
+            
+
+            return lookAtCamera;
+        }
+
+        /// <summary>
+        /// 生成需要画的模型
+        /// </summary>
+        /// <param name="nx"></param>
+        /// <param name="ny"></param>
+        /// <param name="nz"></param>
+        /// <param name="radius"></param>
+        /// <param name="minValue"></param>
+        /// <param name="maxValue"></param>
+        private PointModelElement InitializeElement(int nx, int ny, int nz, float radius, float minValue, float maxValue, SceneElement parent)
+        {
+            var model = PointModelFactory.Create(nx, ny, nz, radius, minValue, maxValue);
+
+            var element = new PointModelElement(model);
+
+            parent.AddChild(element);
+
+            return element;
+        }
+
+        private void ClearChildren(SceneElement target)
+        {
+            var elements = new SceneElement[target.Children.Count];
+            target.Children.CopyTo(elements, 0);
+            foreach (var item in elements)
+            {
+                target.RemoveChild(item);
+            }
+        }
+
+        private static void ClearEffects(SceneElement target)
+        {
+            var effects = new Effect[target.Effects.Count];
+            target.Effects.CopyTo(effects, 0);
+            foreach (var item in effects)
+            {
+                target.RemoveEffect(item);
+            }
+        }
+
+
+        private void lblDebugInfo_Click(object sender, EventArgs e)
+        {
+            this.tbRangeMin.Text = "-1000";
+            this.tbRangeMax.Text = "2000";
+        }
+
+    }
+}
