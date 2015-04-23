@@ -206,7 +206,7 @@ namespace ColorVertexSample
             }
             catch (Exception error)
             {
-                MessageBox.Show(error.Message);
+                MessageBox.Show(error.ToString());
             }
         }
 
