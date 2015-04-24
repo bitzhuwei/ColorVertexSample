@@ -38,9 +38,9 @@ namespace ColorVertexSample
 
             CreateOpenGL(axisScene);
 
-            InitAxis(this.axisScene);
+            InitParallelCamera(axisScene);
 
-            InitParallelCamera();
+            InitAxis(this.axisScene);
 
             this.pens = new Pen[] { new Pen(Color.Red), new Pen(Color.Green), new Pen(Color.Blue) };
 
@@ -50,15 +50,13 @@ namespace ColorVertexSample
             this.GDIDraw += AxiesSceneControl_GDIDraw;
         }
 
-        private void InitParallelCamera()
+        private void InitParallelCamera(Scene scene)
         {
+            parallelCamera = new LookAtCamera();
             parallelCamera.AspectRatio = (double)axisWidth / (double)axisHeight;
             parallelCamera.Near = 0.001f;
             parallelCamera.Far = float.MaxValue;
-        }
 
-        void AxiesSceneControl_GDIDraw(object sender, RenderEventArgs args)
-        {
             var modelSceneCamera = this.Scene.CurrentCamera as LookAtCamera;
             if (modelSceneCamera != null)
             {
@@ -67,10 +65,31 @@ namespace ColorVertexSample
                 parallelCamera.Position = position * 7;
                 parallelCamera.UpVector = modelSceneCamera.UpVector;
                 parallelCamera.FieldOfView = modelSceneCamera.FieldOfView;
-                this.rotationEffect.ArcBall.SetCamera(parallelCamera);
+            }
+            else
+            {
+                parallelCamera.Position = new Vertex(0f, 0f, 7f);
+                parallelCamera.UpVector = new Vertex(0f, 1f, 0f);
+                parallelCamera.FieldOfView = 60;
             }
 
-            // update data in this.axisSpy.projectedAxisVertexes
+            scene.CurrentCamera = this.parallelCamera;
+        }
+
+        /// <summary>
+        /// Draw axis at corner of view.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        void AxiesSceneControl_GDIDraw(object sender, RenderEventArgs args)
+        {
+            var modelSceneCamera = this.Scene.CurrentCamera as LookAtCamera;
+            if (modelSceneCamera != null)
+            {
+                UpdateParallelCamera(modelSceneCamera);
+            }
+
+            // update data of this.axisSpy.projectedAxisVertexes
             this.axisScene.OpenGL.MakeCurrent();
             this.axisScene.Draw();
 
@@ -81,6 +100,16 @@ namespace ColorVertexSample
                     targets[0].X, this.Height - targets[0].Y,
                     targets[i].X, this.Height - targets[i].Y);
             }
+        }
+
+        private void UpdateParallelCamera(LookAtCamera modelSceneCamera)
+        {
+            var position = modelSceneCamera.Position - modelSceneCamera.Target;
+            position.Normalize();
+            parallelCamera.Position = position * 7;
+            parallelCamera.UpVector = modelSceneCamera.UpVector;
+            parallelCamera.FieldOfView = modelSceneCamera.FieldOfView;
+            this.rotationEffect.ArcBall.SetCamera(parallelCamera);
         }
 
         private void CreateOpenGL(Scene scene)
@@ -102,39 +131,10 @@ namespace ColorVertexSample
 
         private void InitAxis(SharpGL.SceneGraph.Scene scene)
         {
-            this.parallelCamera = new LookAtCamera()
-            {
-                Position = new Vertex(0f, 0f, 7f),
-                Target = new Vertex(0f, 0f, 0f),
-                UpVector = new Vertex(0f, 1f, 0f)
-            };
-
-            scene.CurrentCamera = this.parallelCamera;
-
-            var folder = new Folder() { Name = "Axis Folder" };
-            scene.SceneContainer.AddChild(folder);
-            this.rotationEffect = new ArcBallEffect2(this.parallelCamera);
-            folder.AddEffect(this.rotationEffect);
-
             this.axisSpy = new AxisSpy();
-            folder.AddChild(this.axisSpy);
-
-            //  Create a set of scene attributes.
-            var sceneAttributes = new OpenGLAttributesEffect()
-            {
-                Name = "Scene Attributes"
-            };
-
-            //  Specify the scene attributes.
-            sceneAttributes.EnableAttributes.EnableDepthTest = true;
-            sceneAttributes.EnableAttributes.EnableNormalize = true;
-            sceneAttributes.EnableAttributes.EnableLighting = false;
-            sceneAttributes.EnableAttributes.EnableTexture2D = true;
-            sceneAttributes.EnableAttributes.EnableBlend = true;
-            sceneAttributes.ColorBufferAttributes.BlendingSourceFactor = BlendingSourceFactor.SourceAlpha;
-            sceneAttributes.ColorBufferAttributes.BlendingDestinationFactor = BlendingDestinationFactor.OneMinusSourceAlpha;
-            sceneAttributes.LightingAttributes.TwoSided = true;
-            scene.SceneContainer.AddEffect(sceneAttributes);
+            this.rotationEffect = new ArcBallEffect2(this.parallelCamera);
+            scene.SceneContainer.AddChild(this.axisSpy);
+            scene.SceneContainer.AddEffect(this.rotationEffect);
         }
 
         void AxiesSceneControl_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
