@@ -25,7 +25,7 @@ namespace ColorVertexSample
         Vertex _back;
         Vertex _up;
         Vertex _right;
-        private mat4 originalRotation = mat4.identity();
+        private mat4 currentRotation = mat4.identity();
 
         public void SetBounds(int width, int height)
         {
@@ -80,49 +80,47 @@ namespace ColorVertexSample
 
         public mat4 GetTransformMat4()
         {
-            if (_angle != 0)
-            {
-                var angle = (float)(_angle * Math.PI / 180.0f);
-                var rotation = glm.rotate(angle, new vec3(_normalVector.X, _normalVector.Y, _normalVector.Z));
-                rotation = rotation * originalRotation;
-                originalRotation = rotation;
-                System.Threading.Interlocked.Exchange(ref _angle, 0);
-            }
+            var rotation = GetRotation();
             var scale = glm.scale(mat4.identity(), new vec3(Scale));
             var translate = glm.translate(mat4.identity(), new vec3(Translate.X,
                 Translate.Y, Translate.Z));
-            //result = translate * originalRotation * scale;//rotate good
-            //result = translate * scale * originalRotation;//rotate reversed
-            //result = originalRotation * translate * scale;//rotate reversed
-            //result = originalRotation * scale * translate;
-            //result = scale * translate * originalRotation;
-            var result = scale * originalRotation * translate;//rotate good
+            //result = translate * rotation * scale;//rotate good
+            //result = translate * scale * rotation;//rotate reversed
+            //result = rotation * translate * scale;//rotate reversed
+            //result = rotation * scale * translate;
+            //result = scale * translate * rotation;
+            var result = scale * rotation * translate;//rotate good
             return result;
         }
         public mat4 GetRotation()
         {
-            if (_angle == 0)
-            { return originalRotation; }
+            return currentRotation;
+        }
 
+        private void UpdateRotation()
+        {
             var angle = (float)(_angle * Math.PI / 180.0f);
             var rotation = glm.rotate(angle, new vec3(_normalVector.X, _normalVector.Y, _normalVector.Z));
-            rotation = rotation * originalRotation;
-            originalRotation = rotation;
-            System.Threading.Interlocked.Exchange(ref _angle, 0);
-            return rotation;
+            currentRotation = rotation * currentRotation;
         }
+
         public void TransformMatrix(OpenGL gl)
         {
             if(!isCameraSet)
             { throw new Exception("Camera is not set by using SetCamera(..)"); }
 
-            gl.PushMatrix();
-            gl.LoadIdentity();
-            gl.Rotate(2 * _angle, _normalVector.X, _normalVector.Y, _normalVector.Z);
-            System.Threading.Interlocked.Exchange(ref _angle, 0);
-            gl.MultMatrix(_lastRotation);
-            gl.GetFloat(SharpGL.Enumerations.GetTarget.ModelviewMatix, _lastRotation);
-            gl.PopMatrix();
+            if (_angle != 0)
+            {
+                gl.PushMatrix();
+                gl.LoadIdentity();
+                gl.Rotate(2 * _angle, _normalVector.X, _normalVector.Y, _normalVector.Z);
+                gl.MultMatrix(_lastRotation);
+                gl.GetFloat(SharpGL.Enumerations.GetTarget.ModelviewMatix, _lastRotation);
+                gl.PopMatrix();
+                UpdateRotation();
+                System.Threading.Interlocked.Exchange(ref _angle, 0);
+            }
+
             gl.Translate(Translate.X, Translate.Y, Translate.Z);
             gl.MultMatrix(_lastRotation);
             gl.Scale(Scale, Scale, Scale);
@@ -211,7 +209,7 @@ namespace ColorVertexSample
         public void ResetRotation()
         {
             this._lastRotation = new float[16] { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 };
-            this.originalRotation = mat4.identity();
+            this.currentRotation = mat4.identity();
         }
     }
 }
