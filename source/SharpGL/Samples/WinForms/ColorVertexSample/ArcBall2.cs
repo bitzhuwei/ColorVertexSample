@@ -101,6 +101,9 @@ namespace ColorVertexSample
         }
         public mat4 GetRotation()
         {
+            if (_angle == 0)
+            { return originalRotation; }
+
             var angle = (float)(_angle * Math.PI / 180.0f);
             var rotation = glm.rotate(angle, new vec3(_normalVector.X, _normalVector.Y, _normalVector.Z));
             rotation = rotation * originalRotation;
