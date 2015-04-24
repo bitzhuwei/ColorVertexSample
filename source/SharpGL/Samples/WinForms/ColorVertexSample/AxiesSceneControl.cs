@@ -75,7 +75,7 @@ namespace ColorVertexSample
         private void CreateOpenGL(Scene scene)
         {
             OpenGL gl = new OpenGL();
-            gl.Create(this.OpenGLVersion, this.renderContextType, 
+            gl.Create(this.OpenGLVersion, SharpGL.RenderContextType.FBO, 
                 bmpAxis.Width, bmpAxis.Height, 32, null);
             //  Set the most basic OpenGL styles.
             gl.ShadeModel(OpenGL.GL_SMOOTH);
