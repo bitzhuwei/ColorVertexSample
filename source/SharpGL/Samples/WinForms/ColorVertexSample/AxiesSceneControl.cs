@@ -17,6 +17,7 @@ namespace ColorVertexSample
         private Scene axisScene = new Scene();
         private ArcBallEffect2 rotationEffect;
         private Bitmap bmpAxis = new Bitmap(80, 80);
+        private LookAtCamera parallelCamera = new LookAtCamera();
 
         public void SetAxisSize(int width, int height)
         {
@@ -31,19 +32,38 @@ namespace ColorVertexSample
 
             this.InitAxis(this.axisScene);
 
+            InitParallelCamera();
+
             this.MouseDown += AxiesSceneControl_MouseDown;
             this.MouseMove += AxiesSceneControl_MouseMove;
             this.MouseUp += AxiesSceneControl_MouseUp;
             this.GDIDraw += AxiesSceneControl_GDIDraw;
         }
 
+        private void InitParallelCamera()
+        {
+            parallelCamera.AspectRatio = (double)bmpAxis.Width / (double)bmpAxis.Height;
+            parallelCamera.Near = 0.001f;
+            parallelCamera.Far = float.MaxValue;
+        }
 
         void AxiesSceneControl_GDIDraw(object sender, RenderEventArgs args)
         {
+            var modelSceneCamera = this.Scene.CurrentCamera as LookAtCamera;
+            if (modelSceneCamera != null)
+            {
+                var position = modelSceneCamera.Position - modelSceneCamera.Target;
+                position.Normalize();
+                parallelCamera.Position = position * 7;
+                parallelCamera.UpVector = modelSceneCamera.UpVector;
+                parallelCamera.FieldOfView = modelSceneCamera.FieldOfView; //60;
+                parallelCamera.AspectRatio = (double)bmpAxis.Width / (double)bmpAxis.Height;
+            }
+
             using (var graphics = Graphics.FromImage(bmpAxis))
             {
                 this.axisScene.OpenGL.MakeCurrent();
-                this.axisScene.Draw();
+                this.axisScene.Draw(modelSceneCamera != null ? parallelCamera : null);
                 var handleDeviceContext = graphics.GetHdc();
                 this.axisScene.OpenGL.Blit(handleDeviceContext);
                 graphics.ReleaseHdc(handleDeviceContext);
