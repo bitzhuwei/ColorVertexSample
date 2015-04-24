@@ -9,6 +9,9 @@ using SharpGL.SceneGraph;
 
 namespace ColorVertexSample
 {
+    /// <summary>
+    /// The ArcBall camera supports arcball projection, making it ideal for use with a mouse.
+    /// </summary>
     class ArcBall2
     {
         private bool isCameraSet = false;

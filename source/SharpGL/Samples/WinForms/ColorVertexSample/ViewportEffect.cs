@@ -7,6 +7,9 @@ using SharpGL.SceneGraph.Effects;
 
 namespace ColorVertexSample
 {
+    /// <summary>
+    /// show the binded element in a specifed viewport.
+    /// </summary>
     class ViewportEffect:Effect
     {
         public System.Drawing.Rectangle viewport;

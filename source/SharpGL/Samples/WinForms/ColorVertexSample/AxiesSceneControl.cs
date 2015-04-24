@@ -12,6 +12,9 @@ using SharpGL.SceneGraph.Primitives;
 
 namespace ColorVertexSample
 {
+    /// <summary>
+    /// SceneControl with an 3D axis shown at the corner of view.
+    /// </summary>
     public class AxiesSceneControl : SceneControl
     {
         private Scene axisScene = new Scene();

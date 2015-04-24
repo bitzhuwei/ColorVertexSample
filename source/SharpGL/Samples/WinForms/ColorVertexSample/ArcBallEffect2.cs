@@ -11,6 +11,9 @@ using SharpGL.SceneGraph.Effects;
 
 namespace ColorVertexSample
 {
+    /// <summary>
+    /// The ArcBall camera supports arcball projection, making it ideal for use with a mouse.
+    /// </summary>
     class ArcBallEffect2 : Effect
     {
         public ArcBallEffect2(LookAtCamera camera)
