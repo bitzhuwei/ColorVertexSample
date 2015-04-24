@@ -19,12 +19,12 @@ namespace ColorVertexSample
     {
         private Scene axisScene = new Scene();
         private ArcBallEffect2 rotationEffect;
-        private Bitmap bmpAxis = new Bitmap(80, 80);
+        private Image imgAxis = new Bitmap(80, 80);
         private LookAtCamera parallelCamera = new LookAtCamera();
 
         public void SetAxisSize(int width, int height)
         {
-            this.bmpAxis = new Bitmap(width, height);
+            this.imgAxis = new Bitmap(width, height);
         }
 
         protected override void OnLoad(EventArgs e)
@@ -45,7 +45,7 @@ namespace ColorVertexSample
 
         private void InitParallelCamera()
         {
-            parallelCamera.AspectRatio = (double)bmpAxis.Width / (double)bmpAxis.Height;
+            parallelCamera.AspectRatio = (double)imgAxis.Width / (double)imgAxis.Height;
             parallelCamera.Near = 0.001f;
             parallelCamera.Far = float.MaxValue;
         }
@@ -60,10 +60,10 @@ namespace ColorVertexSample
                 parallelCamera.Position = position * 7;
                 parallelCamera.UpVector = modelSceneCamera.UpVector;
                 parallelCamera.FieldOfView = modelSceneCamera.FieldOfView; //60;
-                parallelCamera.AspectRatio = (double)bmpAxis.Width / (double)bmpAxis.Height;
+                parallelCamera.AspectRatio = (double)imgAxis.Width / (double)imgAxis.Height;
             }
 
-            using (var graphics = Graphics.FromImage(bmpAxis))
+            using (var graphics = Graphics.FromImage(imgAxis))
             {
                 this.axisScene.OpenGL.MakeCurrent();
                 this.axisScene.Draw(modelSceneCamera != null ? parallelCamera : null);
@@ -72,14 +72,14 @@ namespace ColorVertexSample
                 graphics.ReleaseHdc(handleDeviceContext);
             }
 
-            args.Graphics.DrawImage(bmpAxis, 0, this.Height - bmpAxis.Height);
+            args.Graphics.DrawImage(imgAxis, 0, this.Height - imgAxis.Height);
         }
 
         private void CreateOpenGL(Scene scene)
         {
             OpenGL gl = new OpenGL();
             gl.Create(this.OpenGLVersion, SharpGL.RenderContextType.FBO, 
-                bmpAxis.Width, bmpAxis.Height, 32, null);
+                imgAxis.Width, imgAxis.Height, 32, null);
             //  Set the most basic OpenGL styles.
             gl.ShadeModel(OpenGL.GL_SMOOTH);
             gl.ClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -87,8 +87,8 @@ namespace ColorVertexSample
             gl.Enable(OpenGL.GL_DEPTH_TEST);
             gl.DepthFunc(OpenGL.GL_LEQUAL);
             gl.Hint(OpenGL.GL_PERSPECTIVE_CORRECTION_HINT, OpenGL.GL_NICEST);
-            gl.SetDimensions(bmpAxis.Width, bmpAxis.Height);
-            gl.Viewport(0, 0, bmpAxis.Width, bmpAxis.Height);
+            gl.SetDimensions(imgAxis.Width, imgAxis.Height);
+            gl.Viewport(0, 0, imgAxis.Width, imgAxis.Height);
             scene.OpenGL = gl; 
         }
 
