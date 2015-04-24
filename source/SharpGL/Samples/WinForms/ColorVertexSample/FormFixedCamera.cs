@@ -235,6 +235,15 @@ namespace ColorVertexSample
 
             parent.AddChild(element);
 
+            var axies = new Axies();
+            var effect = new LinearTransformationEffect();
+            var length = maxValue - minValue;
+            effect.LinearTransformation.ScaleX = length;
+            effect.LinearTransformation.ScaleY = length;
+            effect.LinearTransformation.ScaleZ = length;
+            axies.AddEffect(effect);
+            element.AddChild(axies);
+
             return element;
         }
 

@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.axisSceneControl = new ColorVertexSample.AxiesSceneControl();
+            this.axisSceneControl = new DrawAxiesSceneControl();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblDebugInfo = new System.Windows.Forms.Label();
             this.tbRangeMax = new System.Windows.Forms.TextBox();
@@ -261,7 +261,7 @@
         private System.Windows.Forms.TextBox tbRangeMax;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label lblDebugInfo;
-        private AxiesSceneControl axisSceneControl;
+        private DrawAxiesSceneControl axisSceneControl;
     }
 }
 
