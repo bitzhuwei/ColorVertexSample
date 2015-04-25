@@ -16,20 +16,42 @@ namespace ColorVertexSample
     /// <summary>
     /// SceneControl with an 3D axis shown at the corner of view.
     /// </summary>
-    public class DrawAxiesSceneControl : SceneControl
+    public class DrawAxisSceneControl : SceneControl
     {
-        private int axisWidth = 80;
-        private int axisHeight = 80;
+        public int AxisWidth { get; set; }
+        public int AxisHeight { get; set; }
+        public float PenWidth
+        {
+            get { return _penWidth; }
+            set
+            {
+                if (this.pens == null)
+                {
+                    this.pens = new Pen[] { new Pen(Color.Red, value), new Pen(Color.Green, value), new Pen(Color.Blue, value) };
+                }
+                else
+                {
+                    foreach (var item in this.pens)
+                    {
+                        item.Width = value;
+                    }
+                }
+                this._penWidth = value;
+            }
+        }
+
+        private float _penWidth = 2;
         private Scene axisScene = new Scene();
         private ArcBallEffect2 rotationEffect;
         private LookAtCamera parallelCamera;
         private Pen[] pens;
         private AxisSpy axisSpy;
 
-        public void SetAxisSize(int width, int height)
+        public DrawAxisSceneControl()
         {
-            axisWidth = width;
-            axisHeight = height;
+            AxisWidth = 80;
+            AxisHeight = 80;
+            PenWidth = 2;
         }
 
         protected override void OnLoad(EventArgs e)
@@ -42,8 +64,6 @@ namespace ColorVertexSample
 
             InitAxis(this.axisScene);
 
-            this.pens = new Pen[] { new Pen(Color.Red), new Pen(Color.Green), new Pen(Color.Blue) };
-
             this.MouseDown += AxiesSceneControl_MouseDown;
             this.MouseMove += AxiesSceneControl_MouseMove;
             this.MouseUp += AxiesSceneControl_MouseUp;
@@ -53,7 +73,7 @@ namespace ColorVertexSample
         private void InitParallelCamera(Scene scene)
         {
             parallelCamera = new LookAtCamera();
-            parallelCamera.AspectRatio = (double)axisWidth / (double)axisHeight;
+            parallelCamera.AspectRatio = (double)AxisWidth / (double)AxisHeight;
             parallelCamera.Near = 0.001f;
             parallelCamera.Far = float.MaxValue;
 
@@ -116,7 +136,7 @@ namespace ColorVertexSample
         {
             OpenGL gl = new OpenGL();
             gl.Create(this.OpenGLVersion, SharpGL.RenderContextType.FBO,
-                axisWidth, axisHeight, 32, null);
+                AxisWidth, AxisHeight, 32, null);
             //  Set the most basic OpenGL styles.
             gl.ShadeModel(OpenGL.GL_SMOOTH);
             gl.ClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -124,8 +144,8 @@ namespace ColorVertexSample
             gl.Enable(OpenGL.GL_DEPTH_TEST);
             gl.DepthFunc(OpenGL.GL_LEQUAL);
             gl.Hint(OpenGL.GL_PERSPECTIVE_CORRECTION_HINT, OpenGL.GL_NICEST);
-            gl.SetDimensions(axisWidth, axisHeight);
-            gl.Viewport(0, 0, axisWidth, axisHeight);
+            gl.SetDimensions(AxisWidth, AxisHeight);
+            gl.Viewport(0, 0, AxisWidth, AxisHeight);
             scene.OpenGL = gl;
         }
 
