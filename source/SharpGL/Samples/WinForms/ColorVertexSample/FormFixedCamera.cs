@@ -19,18 +19,27 @@ using ColorVertexSample.Model;
 using ColorVertexSample.Visual;
 using SharpGL.SceneGraph.Assets;
 using SharpGL.SceneGraph.Quadrics;
+using Utility;
 
 namespace ColorVertexSample
 {
     public partial class FormFixedCamera : Form
     {
         private ArcBallEffect2 modelTransform;
-        AxisAttachment axisAttachment = new AxisAttachment();
+        AxisAttachment axisAttachment;
+        ColorIndicatorAttachment colorIndicatorAttachment;
 
         public FormFixedCamera()
         {
             InitializeComponent();
+
+            this.axisAttachment = new AxisAttachment();
             this.axisAttachment.AttachTo(this.axisSceneControl);
+
+            var rainBow = ColorTemplateFactory.CreateRainbow();
+            rainBow.Margin.Left = this.axisAttachment.AxisWidth + 10;
+            this.colorIndicatorAttachment = new ColorIndicatorAttachment(rainBow);
+            this.colorIndicatorAttachment.AttachTo(this.axisSceneControl);
         }
 
         private int ToInt(TextBox tb)

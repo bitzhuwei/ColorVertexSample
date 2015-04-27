@@ -54,6 +54,9 @@
     <Compile Include="ArcBallEffect2.cs" />
     <Compile Include="AxisAttachment.cs" />
     <Compile Include="AxisSpy.cs" />
+    <Compile Include="ColorIndicator.cs" />
+    <Compile Include="ColorIndicatorAttachment.cs" />
+    <Compile Include="ColorMapHelper.cs" />
     <Compile Include="DrawAxisSceneControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
