@@ -148,6 +148,7 @@ namespace ColorVertexSample
 
                 //this.axisSceneControl.ResetAxisRotation();
                 this.axisAttachment.ResetAxisRotation();
+                this.colorIndicatorAttachment.SetBound(minValue, maxValue);
 
                 ManualRender(this.axisSceneControl);
             }

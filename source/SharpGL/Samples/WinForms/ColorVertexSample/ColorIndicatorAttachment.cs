@@ -16,22 +16,21 @@ namespace ColorVertexSample
     {
         private SceneControl control;
         private ColorTemplate colorTemplate;
-        private Pen[] rectPens;
         private Pen whitePen = new Pen(Color.White);
+        private Brush whiteBrush = new SolidBrush(Color.White);
+        private Font font = new Font("宋体", 10);
         private RenderEventHandler renderEventHandler;
+        private float minValue;
+        private float maxValue;
         public ColorTemplate ColorTemplate
         {
             get { return colorTemplate; }
             set
             {
-                this.colorTemplate = value;
-                if (value == null) { return; }
+                if(value == null)
+                { throw new ArgumentNullException(); }
 
-                //this.rectPens = new Pen[value.Colors.Length - 1];
-                //for (int i = 0; i < value.Colors.Length -1 ; i++)
-                //{
-                //    this.rectPens[i]=new Pen(new LinearGradientBrush())
-                //}
+                this.colorTemplate = value;
             }
         }
 
@@ -81,10 +80,9 @@ namespace ColorVertexSample
             //draw rectangles
             for (int i = 0; i < colorTemplate.Colors.Length - 1; i++)
             {
-                var rect = new Rectangle(
-                  colorTemplate.Margin.Left + i * blockWidth,
-                  control.Height - colorTemplate.Height - colorTemplate.Margin.Bottom,
-                  blockWidth, height);
+                var x = colorTemplate.Margin.Left + i * blockWidth;
+                var y = control.Height - (colorTemplate.Height + colorTemplate.Margin.Bottom);
+                var rect = new Rectangle(x, y, blockWidth, height);
                 var brush = new LinearGradientBrush(rect,
                     colorTemplate.Colors[i], colorTemplate.Colors[i + 1],
                      LinearGradientMode.Horizontal);
@@ -92,6 +90,22 @@ namespace ColorVertexSample
                 g.FillRectangle(brush, rect);
                 g.DrawRectangle(whitePen, rect);
             }
+            //draw numbers
+            for (int i = 0; i < colorTemplate.Colors.Length; i++)
+            {
+                var value = (minValue * (double)(colorTemplate.Colors.Length - 1 - i) / (colorTemplate.Colors.Length - 1)
+                    + maxValue * (double)i / (colorTemplate.Colors.Length - 1)).ToString();
+                var size = g.MeasureString(value, font);
+                var x = colorTemplate.Margin.Left + i * blockWidth - size.Width / 2;
+                var y = control.Height - (colorTemplate.Margin.Bottom - 3);
+                g.DrawString(value, font, whiteBrush, x, y);
+            }
+        }
+
+        public void SetBound(float minValue, float maxValue)
+        {
+            this.minValue = minValue;
+            this.maxValue = maxValue;
         }
     }
 }
