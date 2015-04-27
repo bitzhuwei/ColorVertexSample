@@ -25,11 +25,12 @@ namespace ColorVertexSample
     public partial class FormFixedCamera : Form
     {
         private ArcBallEffect2 modelTransform;
+        AxisAttachment axisAttachment = new AxisAttachment();
 
         public FormFixedCamera()
         {
             InitializeComponent();
-
+            this.axisAttachment.AttachTo(this.axisSceneControl);
         }
 
         private int ToInt(TextBox tb)
@@ -136,7 +137,8 @@ namespace ColorVertexSample
 
                 this.axisSceneControl.Scene.RenderBoundingVolumes = false;
 
-                this.axisSceneControl.ResetAxisRotation();
+                //this.axisSceneControl.ResetAxisRotation();
+                this.axisAttachment.ResetAxisRotation();
 
                 ManualRender(this.axisSceneControl);
             }
@@ -178,19 +180,6 @@ namespace ColorVertexSample
             parent.AddEffect(sceneAttributes);
 
             return sceneAttributes;
-        }
-
-        /// <summary>
-        /// 初始化坐标系 
-        /// </summary>
-        private SceneElement InitializeAxis(SceneElement parent)
-        {
-            var axisRoot = new SharpGL.SceneGraph.Primitives.Folder() { Name = "axis root" };
-            parent.AddChild(axisRoot);
-            var axis = new Axies();
-            axisRoot.AddChild(axis);
-
-            return axisRoot;
         }
 
         private LookAtCamera InitializeCamera(PointModelElement element, SceneControl control)

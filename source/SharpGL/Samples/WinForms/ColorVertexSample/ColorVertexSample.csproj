@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="ArcBall2.cs" />
     <Compile Include="ArcBallEffect2.cs" />
+    <Compile Include="AxisAttachment.cs" />
     <Compile Include="AxisSpy.cs" />
     <Compile Include="DrawAxisSceneControl.cs">
       <SubType>UserControl</SubType>
