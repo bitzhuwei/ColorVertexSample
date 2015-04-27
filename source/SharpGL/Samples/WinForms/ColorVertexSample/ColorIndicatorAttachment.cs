@@ -90,6 +90,13 @@ namespace ColorVertexSample
                 g.FillRectangle(brush, rect);
                 g.DrawRectangle(whitePen, rect);
             }
+            //draw dropping lines
+            for (int i = 0; i < colorTemplate.Colors.Length; i++)
+            {
+                var x = colorTemplate.Margin.Left + i * blockWidth;
+                var y = control.Height - (colorTemplate.Margin.Bottom);
+                g.DrawLine(whitePen, x, y, x, y + 6);
+            }
             //draw numbers
             for (int i = 0; i < colorTemplate.Colors.Length; i++)
             {
@@ -97,7 +104,7 @@ namespace ColorVertexSample
                     + maxValue * (double)i / (colorTemplate.Colors.Length - 1)).ToString();
                 var size = g.MeasureString(value, font);
                 var x = colorTemplate.Margin.Left + i * blockWidth - size.Width / 2;
-                var y = control.Height - (colorTemplate.Margin.Bottom - 3);
+                var y = control.Height - (colorTemplate.Margin.Bottom - 9);
                 g.DrawString(value, font, whiteBrush, x, y);
             }
         }

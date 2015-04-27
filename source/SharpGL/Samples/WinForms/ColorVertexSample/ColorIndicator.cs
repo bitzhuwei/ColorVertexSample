@@ -12,7 +12,6 @@ namespace Utility
 
         private GLColor[] colors;
         public System.Windows.Forms.Padding Margin = new System.Windows.Forms.Padding(3, 3, 30, 40);
-        public System.Windows.Forms.AnchorStyles Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right | System.Windows.Forms.AnchorStyles.Bottom;
         public int Width = 100;
         public int Height = 40;
 
