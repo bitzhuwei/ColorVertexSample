@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace ColorVertexSample
+namespace _2DOverlaySample
 {
     static class Program
     {
@@ -15,8 +15,7 @@ namespace ColorVertexSample
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new MainView());
-            Application.Run(new MainView());
+            Application.Run(new SharpGLForm());
         }
     }
 }
