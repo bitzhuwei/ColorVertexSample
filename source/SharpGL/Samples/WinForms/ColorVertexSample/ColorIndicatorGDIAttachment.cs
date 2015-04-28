@@ -12,7 +12,10 @@ using Utility;
 
 namespace ColorVertexSample
 {
-    public class ColorIndicatorAttachment
+    /// <summary>
+    /// Draw color indicator to SceneControl with GDI+
+    /// </summary>
+    public class ColorIndicatorGDIAttachment
     {
         private SceneControl control;
         private ColorTemplate colorTemplate;
@@ -34,7 +37,7 @@ namespace ColorVertexSample
             }
         }
 
-        public ColorIndicatorAttachment(ColorTemplate colorTemplate)
+        public ColorIndicatorGDIAttachment(ColorTemplate colorTemplate)
         {
             if (colorTemplate == null)
             { throw new ArgumentNullException("colorTemplate"); }

@@ -26,19 +26,19 @@ namespace ColorVertexSample
     public partial class FormFixedCamera : Form
     {
         private ArcBallEffect2 modelTransform;
-        AxisAttachment axisAttachment;
-        ColorIndicatorAttachment colorIndicatorAttachment;
+        AxisGDIAttachment axisAttachment;
+        ColorIndicatorGDIAttachment colorIndicatorAttachment;
 
         public FormFixedCamera()
         {
             InitializeComponent();
 
-            this.axisAttachment = new AxisAttachment();
+            this.axisAttachment = new AxisGDIAttachment();
             this.axisAttachment.AttachTo(this.axisSceneControl);
 
             var rainBow = ColorTemplateFactory.CreateRainbow();
             rainBow.Margin.Left = this.axisAttachment.AxisWidth + 10;
-            this.colorIndicatorAttachment = new ColorIndicatorAttachment(rainBow);
+            this.colorIndicatorAttachment = new ColorIndicatorGDIAttachment(rainBow);
             this.colorIndicatorAttachment.AttachTo(this.axisSceneControl);
         }
 

@@ -1,22 +1,19 @@
-﻿using System;
+﻿using SharpGL;
+using SharpGL.SceneGraph;
+using SharpGL.SceneGraph.Cameras;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using SharpGL;
-using SharpGL.Enumerations;
-using SharpGL.SceneGraph;
-using SharpGL.SceneGraph.Cameras;
-using SharpGL.SceneGraph.Effects;
-using SharpGL.SceneGraph.Primitives;
-using GlmNet;
+using System.Windows.Forms;
 
 namespace ColorVertexSample
 {
     /// <summary>
-    /// SceneControl with an 3D axis shown at the corner of view.
+    /// Draw axis on SceneControl with GDI+
     /// </summary>
-    public class DrawAxisSceneControl : SceneControl
+    public class AxisGDIAttachment
     {
         public int AxisWidth { get; set; }
         public int AxisHeight { get; set; }
@@ -46,38 +43,64 @@ namespace ColorVertexSample
         private LookAtCamera parallelCamera;
         private Pen[] pens;
         private AxisSpy axisSpy;
+        private SceneControl control;
+        private MouseEventHandler mouseDownEventHandler;
+        private MouseEventHandler mouseMoveEventHandler;
+        private MouseEventHandler mouseUpEventHandler;
+        private RenderEventHandler renderEventHandler;
 
-        public DrawAxisSceneControl()
+        public AxisGDIAttachment()
         {
             AxisWidth = 80;
             AxisHeight = 80;
             PenWidth = 2;
+            this.mouseDownEventHandler = new MouseEventHandler(SceneControl_MouseDown);
+            this.mouseMoveEventHandler = new MouseEventHandler(SceneControl_MouseMove);
+            this.mouseUpEventHandler = new MouseEventHandler(SceneControl_MouseUp);
+            this.renderEventHandler = new RenderEventHandler(SceneControl_GDIDraw);
         }
 
-        protected override void OnLoad(EventArgs e)
+        public void AttachTo(SceneControl control)
         {
-            base.OnLoad(e);
+            if (control == null)
+            { throw new ArgumentNullException("control"); }
 
-            CreateOpenGL(axisScene);
 
-            InitParallelCamera(axisScene);
+            CreateOpenGL(axisScene, control);
 
-            InitAxis(this.axisScene);
+            InitParallelCamera(axisScene, control);
 
-            this.MouseDown += AxiesSceneControl_MouseDown;
-            this.MouseMove += AxiesSceneControl_MouseMove;
-            this.MouseUp += AxiesSceneControl_MouseUp;
-            this.GDIDraw += AxiesSceneControl_GDIDraw;
+            InitAxis(this.axisScene, control);
+
+            control.MouseDown += this.mouseDownEventHandler;
+            control.MouseMove += this.mouseMoveEventHandler;
+            control.MouseUp += this.mouseUpEventHandler;
+            control.GDIDraw += this.renderEventHandler;
+
+            this.control = control;
         }
 
-        private void InitParallelCamera(Scene scene)
+        public void Dettach()
+        {
+            var control = this.control;
+            if (control == null) { return; }
+
+            control.MouseDown -= this.mouseDownEventHandler;
+            control.MouseMove -= this.mouseMoveEventHandler;
+            control.MouseUp -= this.mouseUpEventHandler;
+            control.GDIDraw -= this.renderEventHandler;
+
+            this.control = null;
+        }
+
+        private void InitParallelCamera(Scene scene, SceneControl control)
         {
             parallelCamera = new LookAtCamera();
             parallelCamera.AspectRatio = (double)AxisWidth / (double)AxisHeight;
             parallelCamera.Near = 0.001f;
             parallelCamera.Far = float.MaxValue;
 
-            var modelSceneCamera = this.Scene.CurrentCamera as LookAtCamera;
+            var modelSceneCamera = control.Scene.CurrentCamera as LookAtCamera;
             if (modelSceneCamera != null)
             {
                 var position = modelSceneCamera.Position - modelSceneCamera.Target;
@@ -101,9 +124,12 @@ namespace ColorVertexSample
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        void AxiesSceneControl_GDIDraw(object sender, RenderEventArgs args)
+        void SceneControl_GDIDraw(object sender, RenderEventArgs args)
         {
-            var modelSceneCamera = this.Scene.CurrentCamera as LookAtCamera;
+            var control = this.control;
+            if (control == null) { return; }
+
+            var modelSceneCamera = control.Scene.CurrentCamera as LookAtCamera;
             if (modelSceneCamera != null)
             {
                 UpdateParallelCamera(modelSceneCamera);
@@ -117,8 +143,8 @@ namespace ColorVertexSample
             for (int i = 1; i < targets.Length; i++)
             {
                 args.Graphics.DrawLine(this.pens[i - 1],
-                    targets[0].X, this.Height - targets[0].Y,
-                    targets[i].X, this.Height - targets[i].Y);
+                    targets[0].X, control.Height - targets[0].Y,
+                    targets[i].X, control.Height - targets[i].Y);
             }
         }
 
@@ -132,10 +158,10 @@ namespace ColorVertexSample
             this.rotationEffect.ArcBall.SetCamera(parallelCamera);
         }
 
-        private void CreateOpenGL(Scene scene)
+        private void CreateOpenGL(Scene scene, SceneControl control)
         {
             OpenGL gl = new OpenGL();
-            gl.Create(this.OpenGLVersion, SharpGL.RenderContextType.FBO,
+            gl.Create(control.OpenGLVersion, SharpGL.RenderContextType.FBO,
                 AxisWidth, AxisHeight, 32, null);
             //  Set the most basic OpenGL styles.
             gl.ShadeModel(OpenGL.GL_SMOOTH);
@@ -149,7 +175,7 @@ namespace ColorVertexSample
             scene.OpenGL = gl;
         }
 
-        private void InitAxis(SharpGL.SceneGraph.Scene scene)
+        private void InitAxis(SharpGL.SceneGraph.Scene scene, SceneControl control)
         {
             this.axisSpy = new AxisSpy();
             this.rotationEffect = new ArcBallEffect2(this.parallelCamera);
@@ -157,31 +183,40 @@ namespace ColorVertexSample
             scene.SceneContainer.AddEffect(this.rotationEffect);
         }
 
-        void AxiesSceneControl_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
+        void SceneControl_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
         {
+            var control = this.control;
+            if (control == null) { return; }
+
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
                 this.rotationEffect.ArcBall.MouseUp(e.X, e.Y);
-                this.Invalidate();
+                control.Invalidate();
             }
         }
 
-        void AxiesSceneControl_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
+        void SceneControl_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
         {
+            var control = this.control;
+            if (control == null) { return; }
+
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
                 this.rotationEffect.ArcBall.MouseMove(e.X, e.Y);
-                this.Invalidate();
+                control.Invalidate();
             }
         }
 
-        void AxiesSceneControl_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+        void SceneControl_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
+            var control = this.control;
+            if (control == null) { return; }
+
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                this.rotationEffect.ArcBall.SetBounds(this.Width, this.Height);
+                this.rotationEffect.ArcBall.SetBounds(control.Width, control.Height);
                 this.rotationEffect.ArcBall.MouseDown(e.X, e.Y);
-                this.Invalidate();
+                control.Invalidate();
             }
         }
 
