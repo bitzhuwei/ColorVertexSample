@@ -16,7 +16,7 @@ namespace ColorVertexSample
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new MainView());
-            Application.Run(new MainView());
+            Application.Run(new FormFixedCamera());
         }
     }
 }

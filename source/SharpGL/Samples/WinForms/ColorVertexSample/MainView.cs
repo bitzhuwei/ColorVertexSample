@@ -19,6 +19,7 @@ using ColorVertexSample.Model;
 using ColorVertexSample.Visual;
 using SharpGL.SceneGraph.Assets;
 using SharpGL.SceneGraph.Quadrics;
+using SharpGL.SceneComponent;
 
 namespace ColorVertexSample
 {
