@@ -13,9 +13,16 @@ namespace _2DOverlaySample
         [STAThread]
         static void Main()
         {
+            Application.ThreadException += Application_ThreadException;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new SharpGLForm());
+            Application.Run(new FormScene());
+            //Application.Run(new SharpGLForm());
+        }
+
+        static void Application_ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)
+        {
+            MessageBox.Show(e.Exception.ToString());
         }
     }
 }

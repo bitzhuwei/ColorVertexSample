@@ -50,6 +50,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormFreeCamera.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormFreeCamera.Designer.cs">
+      <DependentUpon>FormFreeCamera.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormFixedCamera.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -70,6 +76,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Visual\ColorVertexesElement.cs" />
     <Compile Include="Visual\PointModelElement.cs" />
+    <EmbeddedResource Include="FormFreeCamera.resx">
+      <DependentUpon>FormFreeCamera.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormFixedCamera.resx">
       <DependentUpon>FormFixedCamera.cs</DependentUpon>
     </EmbeddedResource>

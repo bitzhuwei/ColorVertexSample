@@ -155,7 +155,7 @@ namespace SharpGL.SceneComponent
             parallelCamera.Position = position * 7;
             parallelCamera.UpVector = modelSceneCamera.UpVector;
             parallelCamera.FieldOfView = modelSceneCamera.FieldOfView;
-            this.rotationEffect.ArcBall.SetCamera(parallelCamera);
+            this.rotationEffect.ArcBall.Camera = parallelCamera;
         }
 
         private void CreateOpenGL(Scene scene, SceneControl control)

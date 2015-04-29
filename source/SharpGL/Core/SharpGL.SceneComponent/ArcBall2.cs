@@ -139,47 +139,6 @@ namespace SharpGL.SceneComponent
             gl.Scale(Scale, Scale, Scale);
         }
 
-        ///// <summary>
-        ///// Default camera is at positive Z axis to look at negtive Z axis with up vector to positive Y axis.
-        ///// </summary>
-        ///// <param name="eyex"></param>
-        ///// <param name="eyey"></param>
-        ///// <param name="eyez"></param>
-        ///// <param name="centerx"></param>
-        ///// <param name="centery"></param>
-        ///// <param name="centerz"></param>
-        ///// <param name="upx"></param>
-        ///// <param name="upy"></param>
-        ///// <param name="upz"></param>
-        //public void SetCamera(float eyex, float eyey, float eyez,
-        //    float centerx, float centery, float centerz,
-        //    float upx, float upy, float upz)
-        //{
-        //    _back = new Vertex(eyex - centerx, eyey - centery, eyez - centerz);
-        //    _back.Normalize();
-        //    _up = new Vertex(upx, upy, upz);
-        //    _right = _up.VectorProduct(_back);
-        //    _right.Normalize();
-        //    _up = _back.VectorProduct(_right);
-        //    _up.Normalize();
-        //    isCameraSet = true;
-        //}
-
-        /// <summary>
-        /// Default camera is at positive Z axis to look at negtive Z axis with up vector to positive Y axis. 
-        /// </summary>
-        /// <param name="lookAtCamera"></param>
-        public void SetCamera(SharpGL.SceneGraph.Cameras.LookAtCamera lookAtCamera = null)
-        {
-                this.Camera = lookAtCamera;
-        }
-
-        //internal void SetCamera(Vertex position, Vertex target, Vertex up)
-        //{
-        //    SetCamera(position.X, position.Y, position.Z,
-        //        target.X, target.Y, target.Z, up.X, up.Y, up.Z);
-        //}
-
         public void GoUp(float interval)
         {
             UpdateCameraAxis();

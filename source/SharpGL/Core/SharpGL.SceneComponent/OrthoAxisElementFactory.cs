@@ -40,8 +40,8 @@ namespace SharpGL.SceneComponent
             element.AddEffect(sceneAttributes);
 
             var orthoAxisArcBallEffect = new OrthoArcBallEffect();
-            //orthoAxisArcBallEffect.arcBall.Translate = new SharpGL.SceneGraph.Vertex(000, 100, 0);
-            orthoAxisArcBallEffect.arcBall.Scale = 100;
+            //orthoAxisArcBallEffect.Translate = new SharpGL.SceneGraph.Vertex(000, 100, 0);
+            orthoAxisArcBallEffect.Scale = 100;
             element.AddEffect(orthoAxisArcBallEffect);
 
             var axies = new Axies();

@@ -37,11 +37,12 @@ namespace _2DOverlaySample
                 root.RemoveChild(item);
             }
 
-            InitializeCamera(this.sceneControl);
 
             InitializeModel(root);
 
             Initialize2DUI(root);
+
+            InitializeCamera(this.sceneControl);
 
             ApplyCamera();
 
@@ -72,6 +73,7 @@ namespace _2DOverlaySample
             camera.UpVector = new SharpGL.SceneGraph.Vertex(0, 1, 0);
         }
 
+            //this.modelArcBallEffect = null;
         void sceneControl_MouseWheel(object sender, MouseEventArgs e)
         {
             const float factor = 10;
@@ -92,12 +94,6 @@ namespace _2DOverlaySample
                 if (this.cameraRotation != null)
                 {
                     this.cameraRotation.MouseUp(e.X, e.Y);
-                    this.orthoAxisElement.orthoArcBallEffect.arcBall.SetCamera(
-                        this.sceneControl.Scene.CurrentCamera as LookAtCamera);
-                    this.Text = string.Format("Left Mouse Up {0},{1},{2}",
-                        this.cameraRotation.isDown,
-                        this.orthoAxisElement.orthoArcBallEffect.arcBall.mouseDownFlag,
-                        this.modelArcBallEffect.ArcBall.mouseDownFlag);
                 }
             }
             else if (e.Button == System.Windows.Forms.MouseButtons.Right)
@@ -105,11 +101,7 @@ namespace _2DOverlaySample
                 if (this.modelArcBallEffect != null)
                 {
                     this.modelArcBallEffect.ArcBall.MouseUp(e.X, e.Y);
-                    this.orthoAxisElement.orthoArcBallEffect.arcBall.MouseUp(e.X, e.Y);
-                    this.Text = string.Format("Right Mouse Up {0},{1},{2}",
-                        this.cameraRotation.isDown,
-                        this.orthoAxisElement.orthoArcBallEffect.arcBall.mouseDownFlag,
-                        this.modelArcBallEffect.ArcBall.mouseDownFlag);
+                    this.orthoAxisElement.orthoArcBallEffect.MouseUp(e.X, e.Y);
                 }
             }
         }
@@ -121,12 +113,6 @@ namespace _2DOverlaySample
                 if (this.cameraRotation != null)
                 {
                     this.cameraRotation.MouseMove(e.X, e.Y);
-                    this.orthoAxisElement.orthoArcBallEffect.arcBall.SetCamera(
-                           this.sceneControl.Scene.CurrentCamera as LookAtCamera);
-                    this.Text = string.Format("Left Mouse Move {0},{1},{2}",
-                        this.cameraRotation.isDown,
-                        this.orthoAxisElement.orthoArcBallEffect.arcBall.mouseDownFlag,
-                        this.modelArcBallEffect.ArcBall.mouseDownFlag);
                 }
             }
             else if (e.Button == System.Windows.Forms.MouseButtons.Right)
@@ -134,11 +120,7 @@ namespace _2DOverlaySample
                 if (this.modelArcBallEffect != null)
                 {
                     this.modelArcBallEffect.ArcBall.MouseMove(e.X, e.Y);
-                    this.orthoAxisElement.orthoArcBallEffect.arcBall.MouseMove(e.X, e.Y);
-                    this.Text = string.Format("Right Mouse Move {0},{1},{2}",
-                        this.cameraRotation.isDown,
-                        this.orthoAxisElement.orthoArcBallEffect.arcBall.mouseDownFlag,
-                        this.modelArcBallEffect.ArcBall.mouseDownFlag); ;
+                    this.orthoAxisElement.orthoArcBallEffect.MouseMove(e.X, e.Y);
                 }
             }
         }
@@ -151,12 +133,6 @@ namespace _2DOverlaySample
                 {
                     this.cameraRotation.SetBounds(this.sceneControl.Width, this.sceneControl.Height);
                     if (this.cameraRotation != null) this.cameraRotation.MouseDown(e.X, e.Y);
-                    this.orthoAxisElement.orthoArcBallEffect.arcBall.SetCamera(
-           this.sceneControl.Scene.CurrentCamera as LookAtCamera);
-                    this.Text = string.Format("Left Mouse Down {0},{1},{2}",
-                        this.cameraRotation.isDown,
-                        this.orthoAxisElement.orthoArcBallEffect.arcBall.mouseDownFlag,
-                        this.modelArcBallEffect.ArcBall.mouseDownFlag);
                 }
             }
             else if (e.Button == System.Windows.Forms.MouseButtons.Right)
@@ -165,12 +141,8 @@ namespace _2DOverlaySample
                 {
                     this.modelArcBallEffect.ArcBall.SetBounds(this.sceneControl.Width, this.sceneControl.Height);
                     this.modelArcBallEffect.ArcBall.MouseDown(e.X, e.Y);
-                    this.orthoAxisElement.orthoArcBallEffect.arcBall.SetBounds(this.sceneControl.Width, this.sceneControl.Height);
-                    this.orthoAxisElement.orthoArcBallEffect.arcBall.MouseDown(e.X, e.Y);
-                    this.Text = string.Format("Right Mouse Down {0},{1},{2}",
-                        this.cameraRotation.isDown,
-                        this.orthoAxisElement.orthoArcBallEffect.arcBall.mouseDownFlag,
-                        this.modelArcBallEffect.ArcBall.mouseDownFlag);
+                    this.orthoAxisElement.orthoArcBallEffect.SetBounds(this.sceneControl.Width, this.sceneControl.Height);
+                    this.orthoAxisElement.orthoArcBallEffect.MouseDown(e.X, e.Y);
                 }
             }
         }
@@ -187,11 +159,9 @@ namespace _2DOverlaySample
             var modelRoot = new Folder() { Name = "model root" };
             parent.AddChild(modelRoot);
 
-            var camera = this.sceneControl.Scene.CurrentCamera as LookAtCamera;
             var modelArcBallEffect = new ArcBallEffect2();
             modelRoot.AddEffect(modelArcBallEffect);
             this.modelArcBallEffect = modelArcBallEffect;
-            //this.modelArcBallEffect = null;
 
             var modelAxis = new Axies();
             modelRoot.AddChild(modelAxis);

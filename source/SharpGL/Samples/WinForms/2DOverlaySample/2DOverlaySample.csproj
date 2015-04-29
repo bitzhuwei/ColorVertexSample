@@ -53,7 +53,6 @@
     <Compile Include="FormScene.Designer.cs">
       <DependentUpon>FormScene.cs</DependentUpon>
     </Compile>
-    <Compile Include="RasterPosAxisDemo.cs" />
     <Compile Include="SharpGLForm.cs">
       <SubType>Form</SubType>
     </Compile>

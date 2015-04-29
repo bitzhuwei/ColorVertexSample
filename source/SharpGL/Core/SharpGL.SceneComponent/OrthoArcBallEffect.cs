@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using SharpGL.SceneGraph;
 using SharpGL.SceneGraph.Cameras;
 using SharpGL.SceneGraph.Core;
 using SharpGL.SceneGraph.Effects;
@@ -19,18 +20,17 @@ namespace SharpGL.SceneComponent
             set
             {
                 camera = value;
-                this.arcBall.SetCamera(value);
+                this.arcBall.Camera = value;
             }
         }
         public OrthoArcBallEffect(LookAtCamera camera = null)
         {
-            this.arcBall.SetCamera(camera);
             this.Camera = camera;
             this.CenterX = 50;
             this.CenterY = 50;
         }
 
-        public ArcBall2 arcBall = new ArcBall2();
+        protected ArcBall2 arcBall = new ArcBall2();
 
         public double CenterX { get; set; }
         public double CenterY { get; set; }
@@ -91,6 +91,39 @@ namespace SharpGL.SceneComponent
 
             gl.MatrixMode(SharpGL.Enumerations.MatrixMode.Modelview);
             gl.PopMatrix();
+        }
+
+
+        public void SetBounds(int width, int height)
+        {
+            this.arcBall.SetBounds(width, height);
+        }
+
+        public void MouseDown(int x, int y)
+        {
+            this.arcBall.MouseDown(x, y);
+        }
+
+        public void MouseMove(int x, int y)
+        {
+            this.arcBall.MouseMove(x, y);
+        }
+
+        public void MouseUp(int x, int y)
+        {
+            this.arcBall.MouseUp(x, y);
+        }
+
+        public float Scale
+        {
+            get { return this.arcBall.Scale; }
+            set { this.arcBall.Scale = value; }
+        }
+
+        public Vertex Translate
+        {
+            get { return this.arcBall.Translate; }
+            set { this.arcBall.Translate = value; }
         }
     }
 }

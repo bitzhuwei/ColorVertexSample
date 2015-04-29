@@ -18,7 +18,7 @@ namespace SharpGL.SceneComponent
     {
         public ArcBallEffect2(LookAtCamera camera = null)
         {
-            this.arcBall.SetCamera(camera);
+            this.arcBall.Camera = camera;
         }
 
         /// <summary>
