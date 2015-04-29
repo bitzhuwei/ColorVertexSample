@@ -12,17 +12,26 @@ namespace SharpGL.SceneComponent
 {
     /// <summary>
     /// The ArcBall camera supports arcball projection, making it ideal for use with a mouse when using orthogonal view.
+    /// <para>supports arcball rotation in a moving camera</para>
     /// </summary>
     public class OrthoArcBallEffect : Effect
     {
         private LookAtCamera camera;
-        public LookAtCamera Camera { get { return camera; }
+
+        public LookAtCamera Camera
+        {
+            get { return camera; }
             set
             {
                 camera = value;
                 this.arcBall.Camera = value;
             }
         }
+
+        /// <summary>
+        /// if null, please set Camera property later.
+        /// </summary>
+        /// <param name="camera"></param>
         public OrthoArcBallEffect(LookAtCamera camera = null)
         {
             this.Camera = camera;
@@ -58,11 +67,10 @@ namespace SharpGL.SceneComponent
                 height = viewport[3];
             }
 
-
             gl.MatrixMode(SharpGL.Enumerations.MatrixMode.Projection);
             gl.PushMatrix();
             gl.LoadIdentity();
-            gl.Ortho(-CenterX, width-CenterX, -CenterY, height-CenterY, zNear, zFar);
+            gl.Ortho(-CenterX, width - CenterX, -CenterY, height - CenterY, zNear, zFar);
             var camera = this.Camera;
             if (camera == null)
             {
@@ -80,7 +88,7 @@ namespace SharpGL.SceneComponent
 
             gl.MatrixMode(SharpGL.Enumerations.MatrixMode.Modelview);
             gl.PushMatrix();
-            gl.LoadIdentity();
+            //gl.LoadIdentity();
             arcBall.TransformMatrix(gl);
         }
 

@@ -14,19 +14,21 @@ namespace SharpGL.SceneComponent
     /// </summary>
     public class ArcBall2
     {
-        private bool isCameraSet = false;
+        protected bool isCameraSet = false;
         public bool mouseDownFlag;
-        private float _angle;
-        private float _length, _radiusRadius;
-        private float[] _lastRotation = new float[16] { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 };
-        private Vertex _startPosition, _endPosition, _normalVector = new Vertex(0, 1, 0);
-        int _width;
-        int _height;
-        Vertex _back;
-        Vertex _up;
-        Vertex _right;
-        private mat4 currentRotation = mat4.identity();
-
+        protected float _angle;
+        protected float _length, _radiusRadius;
+        protected float[] _lastRotation = new float[16] { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 };
+        protected Vertex _startPosition, _endPosition, _normalVector = new Vertex(0, 1, 0);
+        protected int _width;
+        protected int _height;
+        protected Vertex _back;
+        protected Vertex _up;
+        protected Vertex _right;
+        protected mat4 currentRotation = mat4.identity();
+        float _scale = 1.0f;
+        SceneGraph.Cameras.LookAtCamera _camera;
+             
         public void SetBounds(int width, int height)
         {
             this._width = width; this._height = height;
@@ -70,7 +72,6 @@ namespace SharpGL.SceneComponent
             _up.Normalize();
         }
 
-
         public void MouseMove(int x, int y)
         {
             if (mouseDownFlag)
@@ -105,6 +106,7 @@ namespace SharpGL.SceneComponent
             var result = scale * rotation * translate;//rotate good
             return result;
         }
+
         public mat4 GetRotation()
         {
             return currentRotation;
@@ -162,9 +164,6 @@ namespace SharpGL.SceneComponent
 
         public Vertex Translate { get; set; }
 
-        float _scale = 1.0f;
-        private SceneGraph.Cameras.LookAtCamera _camera;
-             
         public float Scale
         {
             get { return _scale; }

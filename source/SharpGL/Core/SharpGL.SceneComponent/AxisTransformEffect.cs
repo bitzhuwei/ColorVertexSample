@@ -12,7 +12,8 @@ using SharpGL.SceneGraph.Transformations;
 namespace SharpGL.SceneComponent
 {
     /// <summary>
-    /// Show axis at the left bottom of screen wherever the camera is
+    /// Show axis at the left bottom of screen wherever the camera is.
+    /// Don't use this class as it shows black background under axis.
     /// </summary>
     public class AxisTransformEffect : Effect
     {

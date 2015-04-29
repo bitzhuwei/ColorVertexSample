@@ -158,17 +158,6 @@ namespace ColorVertexSample
             }
         }
 
-        private void UpdateAxisViewportEffect(ViewportEffect viewportEffect)
-        {
-            const int factor = 5;
-            var viewport = new Rectangle(0, 0,
-                this.axisSceneControl.Width / factor,
-                this.axisSceneControl.Height / factor);
-            var fullViewport = this.axisSceneControl.ClientRectangle;
-            viewportEffect.viewport = viewport;
-            viewportEffect.fullViewport = fullViewport;
-        }
-
         private OpenGLAttributesEffect InitializeAttributes(SceneElement parent)
         {
             //  Create a set of scene attributes.

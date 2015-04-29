@@ -9,6 +9,7 @@ namespace SharpGL.SceneComponent
 {
     /// <summary>
     /// show the binded element in a specifed viewport.
+    /// Don't use this class as it shows black background.
     /// </summary>
     public class ViewportEffect : Effect
     {

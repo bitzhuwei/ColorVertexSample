@@ -8,7 +8,7 @@ using SharpGL.SceneGraph;
 namespace SharpGL.SceneComponent
 {
     /// <summary>
-    /// rotate and translate camera on a sphere, whose center is camera's target
+    /// rotate and translate camera on a sphere, whose center is camera's Target.
     /// </summary>
     public class CameraRotation
     {
@@ -35,7 +35,7 @@ namespace SharpGL.SceneComponent
         
         private Point downPosition;
         private Size bound;
-        public bool isDown = false;
+        public bool mouseDownFlag = false;
         private float horizontalRotationFactor = 4;
         private float verticalRotationFactor = 4;
         private SharpGL.SceneGraph.Vertex up;
@@ -44,18 +44,17 @@ namespace SharpGL.SceneComponent
 
         public CameraRotation(SharpGL.SceneGraph.Cameras.LookAtCamera lookAtCamera = null)
         {
-
             this.LookAtCamera = lookAtCamera;
-           
         }
+
         public void MouseUp(int x, int y)
         {
-            this.isDown = false;
+            this.mouseDownFlag = false;
         }
 
         public void MouseMove(int x, int y)
         {
-            if (this.isDown)
+            if (this.mouseDownFlag)
             {
                 var camera = this.LookAtCamera;
                 if (camera == null) { return; }
@@ -94,7 +93,7 @@ namespace SharpGL.SceneComponent
 
                 camera.Position = camera.Target +
                     back * (float)((camera.Position - camera.Target).Magnitude());
-                camera.UpVector = this.up;
+                camera.UpVector = up;
                 this.back = back;
                 this.right = right;
                 this.up = up;
@@ -105,7 +104,7 @@ namespace SharpGL.SceneComponent
         public void MouseDown(int x, int y)
         {
             this.downPosition = new Point(x, y);
-            this.isDown = true;
+            this.mouseDownFlag = true;
         }
 
         public void SetBounds(int width, int height)
