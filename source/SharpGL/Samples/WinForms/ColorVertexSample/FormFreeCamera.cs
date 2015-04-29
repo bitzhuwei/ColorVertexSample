@@ -38,6 +38,8 @@ namespace ColorVertexSample
             rainBow.Margin.Left = 100;
             this.colorIndicatorAttachment = new ColorIndicatorGDIAttachment(rainBow);
             this.colorIndicatorAttachment.AttachTo(this.sceneControl);
+
+            this.Text = "Rotation tip: left mouse for camera & right mouse for model";
         }
 
         private int ToInt(TextBox tb)
@@ -60,8 +62,9 @@ namespace ColorVertexSample
         {
             var camera = this.sceneControl.Scene.CurrentCamera as LookAtCamera;
 
-            this.cameraRotation = new CameraRotation();
-            //this.cameraRotation.LookAtCamera = camera;
+            // This means the same:
+            // this.cameraRotation = new CameraRotation() { LookAtCamera = camera };
+            this.cameraRotation = new CameraRotation(camera);
             this.modelArcBallEffect.ArcBall.Camera = camera;
             this.orthoAxisElement.orthoArcBallEffect.Camera = camera;
         }
@@ -75,45 +78,84 @@ namespace ColorVertexSample
 
         private void sceneControl_MouseUp(object sender, MouseEventArgs e)
         {
-            var modelArcBallEffect = this.modelArcBallEffect;
-            if (modelArcBallEffect == null) { return; }
-
-            modelArcBallEffect.ArcBall.MouseUp(e.X, e.Y);
-            this.orthoAxisElement.orthoArcBallEffect.MouseUp(e.X, e.Y);
-        }
-
-        private void sceneControl_MouseMove(object sender, MouseEventArgs e)
-        {
-            var modelArcBallEffect = this.modelArcBallEffect;
-            if (modelArcBallEffect == null) { return; }
-
-            if (e.Button == MouseButtons.Left)
+            if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                modelArcBallEffect.ArcBall.MouseMove(e.X, e.Y);
-                this.orthoAxisElement.orthoArcBallEffect.MouseMove(e.X, e.Y);
+                var cameraRotation = this.cameraRotation;
+                if (cameraRotation == null) { return; }
+
+                cameraRotation.MouseUp(e.X, e.Y);
+
+                ManualRender(this.sceneControl);
+            }
+            else if (e.Button == System.Windows.Forms.MouseButtons.Right)
+            {
+                var modelArcBallEffect = this.modelArcBallEffect;
+                if (modelArcBallEffect == null) { return; }
+                var orthoAxisElement = this.orthoAxisElement;
+                if (orthoAxisElement == null) { return; }
+
+                modelArcBallEffect.ArcBall.MouseUp(e.X, e.Y);
+                orthoAxisElement.orthoArcBallEffect.MouseUp(e.X, e.Y);
 
                 ManualRender(this.sceneControl);
             }
         }
 
-        private void ManualRender(SceneControl control)
+        private void sceneControl_MouseMove(object sender, MouseEventArgs e)
         {
-            control.Invalidate();
+            if (e.Button == MouseButtons.Left)
+            {
+                var cameraRotation = this.cameraRotation;
+                if (cameraRotation == null) { return; }
+
+                cameraRotation.MouseMove(e.X, e.Y);
+
+                ManualRender(this.sceneControl);
+            }
+            else if (e.Button == System.Windows.Forms.MouseButtons.Right)
+            {
+                var modelArcBallEffect = this.modelArcBallEffect;
+                if (modelArcBallEffect == null) { return; }
+                var orthoAxisElement = this.orthoAxisElement;
+                if (orthoAxisElement == null) { return; }
+
+                modelArcBallEffect.ArcBall.MouseMove(e.X, e.Y);
+                orthoAxisElement.orthoArcBallEffect.MouseMove(e.X, e.Y);
+
+                ManualRender(this.sceneControl);
+            }
         }
 
         private void sceneControl_MouseDown(object sender, MouseEventArgs e)
         {
-            var modelArcBallEffect = this.modelArcBallEffect;
-            if (modelArcBallEffect == null) { return; }
-
             if (e.Button == MouseButtons.Left)
             {
-                int width = sceneControl.Width;
-                int height = sceneControl.Height;
+                var cameraRotation = this.cameraRotation;
+                if (cameraRotation == null) { return; }
+
+                var width = sceneControl.Width;
+                var height = sceneControl.Height;
+
+                cameraRotation.SetBounds(width, height);
+                cameraRotation.MouseDown(e.X, e.Y);
+
+                ManualRender(this.sceneControl);
+            }
+            else if (e.Button == System.Windows.Forms.MouseButtons.Right)
+            {
+                var modelArcBallEffect = this.modelArcBallEffect;
+                if (modelArcBallEffect == null) { return; }
+                var orthoAxisElement = this.orthoAxisElement;
+                if (orthoAxisElement == null) { return; }
+
+                var width = sceneControl.Width;
+                var height = sceneControl.Height;
                 modelArcBallEffect.ArcBall.SetBounds(width, height);
                 modelArcBallEffect.ArcBall.MouseDown(e.X, e.Y);
-                this.orthoAxisElement.orthoArcBallEffect.SetBounds(e.X, e.Y);
-                this.orthoAxisElement.orthoArcBallEffect.MouseDown(e.X, e.Y);
+                orthoAxisElement.orthoArcBallEffect.SetBounds(width, height);
+                orthoAxisElement.orthoArcBallEffect.MouseDown(e.X, e.Y);
+
+                ManualRender(this.sceneControl);
             }
         }
 
@@ -167,7 +209,6 @@ namespace ColorVertexSample
 
                 scene.RenderBoundingVolumes = false;
 
-                //this.axisAttachment.ResetAxisRotation();
                 this.colorIndicatorAttachment.SetBound(minValue, maxValue);
 
                 ManualRender(this.sceneControl);
@@ -176,6 +217,11 @@ namespace ColorVertexSample
             {
                 MessageBox.Show(error.ToString());
             }
+        }
+
+        private void ManualRender(SceneControl control)
+        {
+            control.Invalidate();
         }
 
         private OpenGLAttributesEffect InitializeAttributes(SceneElement parent)
