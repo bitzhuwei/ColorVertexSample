@@ -30,6 +30,7 @@ namespace _2DOverlaySample
         /// <param name="e">The <see cref="RenderEventArgs"/> instance containing the event data.</param>
         private void openGLControl_OpenGLDraw(object sender, RenderEventArgs e)
         {
+            openGLControl_Resized(sender, EventArgs.Empty);
             //  Get the OpenGL object.
             OpenGL gl = openGLControl.OpenGL;
 
@@ -42,6 +43,38 @@ namespace _2DOverlaySample
             //  Rotate around the Y axis.
             gl.Rotate(rotation, 0.0f, 1.0f, 0.0f);
 
+            DrawPyramid(gl);
+
+            //  Nudge the rotation.
+            rotation += 3.0f;
+
+            //DrawRectThatFillsViewport(gl);
+
+            const float length = 50f;
+            const float zPos = 0f;// -1f ~ 1f are ok.
+            gl.LoadIdentity();
+            gl.Translate(length*2, length*2, 0);
+            //gl.Rotate(rotation, 0, 0, 1);
+            gl.Scale(1, 1, 1);
+            gl.MatrixMode(SharpGL.Enumerations.MatrixMode.Projection);
+            gl.LoadIdentity();
+            //gl.Ortho2D(0, openGLControl.Width, 0, openGLControl.Height);
+            gl.Ortho(0, openGLControl.Width, 0, openGLControl.Height,-10.0,10);
+
+            gl.Begin(OpenGL.GL_QUADS);
+            gl.Color(1f, 0f, 0f, 1f);
+            gl.Vertex(-length, -length, 1.1+zPos);
+            gl.Color(0f, 1f, 0f, 1f);
+            gl.Vertex(length, -length, zPos);
+            gl.Color(0f, 0f, 1f, 1f);
+            gl.Vertex(length, length, zPos);
+            gl.Color(1f, 1f, 1f, 1f);
+            gl.Vertex(-length, length, zPos);
+            gl.End();
+        }
+
+        private static void DrawPyramid(OpenGL gl)
+        {
             //  Draw a coloured pyramid.
             gl.Begin(OpenGL.GL_TRIANGLES);
             gl.Color(1.0f, 0.0f, 0.0f);
@@ -69,9 +102,31 @@ namespace _2DOverlaySample
             gl.Color(0.0f, 1.0f, 0.0f);
             gl.Vertex(-1.0f, -1.0f, 1.0f);
             gl.End();
+        }
 
-            //  Nudge the rotation.
-            rotation += 3.0f;
+        private static void DrawRectThatFillsViewport(OpenGL gl)
+        {
+            const float zPos = 1f;
+            gl.MatrixMode(OpenGL.GL_MODELVIEW);
+            gl.PushMatrix();
+            gl.LoadIdentity();
+            gl.MatrixMode(OpenGL.GL_PROJECTION);
+            gl.PushMatrix();
+            gl.LoadIdentity();
+            gl.Color(1f, 1f, 1f, 1f);
+            gl.Begin(OpenGL.GL_QUADS);
+            //gl.Vertex(-1, -1, zPos);
+            //gl.Vertex(1, -1, zPos);
+            //gl.Vertex(1, 1, zPos);
+            //gl.Vertex(-1, 1, zPos);
+            gl.Vertex(-1, -1, zPos);
+            gl.Vertex(0, -1, zPos);
+            gl.Vertex(0, 0, zPos);
+            gl.Vertex(-1, 0, zPos);
+            gl.End();
+            gl.PopMatrix();
+            gl.MatrixMode(OpenGL.GL_MODELVIEW);
+            gl.PopMatrix();
         }
 
 
@@ -87,7 +142,7 @@ namespace _2DOverlaySample
 
             //  Get the OpenGL object.
             OpenGL gl = openGLControl.OpenGL;
-
+            var x = openGLControl.DrawFPS;
             //  Set the clear color.
             gl.ClearColor(0, 0, 0, 0);
         }

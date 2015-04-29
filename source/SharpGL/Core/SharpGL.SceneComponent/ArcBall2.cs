@@ -15,7 +15,7 @@ namespace SharpGL.SceneComponent
     public class ArcBall2
     {
         private bool isCameraSet = false;
-        private bool mouseDownFlag;
+        public bool mouseDownFlag;
         private float _angle;
         private float _length, _radiusRadius;
         private float[] _lastRotation = new float[16] { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 };
@@ -45,6 +45,7 @@ namespace SharpGL.SceneComponent
 
         private Vertex GetArcBallPosition(int x, int y)
         {
+            UpdateCameraAxis();
             var rx = (x - _width / 2) / _length;
             var ry = (_height / 2 - y) / _length;
             var zz = _radiusRadius - rx * rx - ry * ry;
@@ -55,6 +56,18 @@ namespace SharpGL.SceneComponent
                 (float)(rx * _right.Z + ry * _up.Z + rz * _back.Z)
                 );
             return result;
+        }
+
+        private void UpdateCameraAxis()
+        {
+            if (!isCameraSet) { return; }
+
+            _back = Camera.Position - Camera.Target;
+            _back.Normalize();
+            _right = Camera.UpVector.VectorProduct(_back);
+            _right.Normalize();
+            _up = _back.VectorProduct(_right);
+            _up.Normalize();
         }
 
 
@@ -126,70 +139,73 @@ namespace SharpGL.SceneComponent
             gl.Scale(Scale, Scale, Scale);
         }
 
-        /// <summary>
-        /// Default camera is at positive Z axis to look at negtive Z axis with up vector to positive Y axis.
-        /// </summary>
-        /// <param name="eyex"></param>
-        /// <param name="eyey"></param>
-        /// <param name="eyez"></param>
-        /// <param name="centerx"></param>
-        /// <param name="centery"></param>
-        /// <param name="centerz"></param>
-        /// <param name="upx"></param>
-        /// <param name="upy"></param>
-        /// <param name="upz"></param>
-        public void SetCamera(float eyex, float eyey, float eyez,
-            float centerx, float centery, float centerz,
-            float upx, float upy, float upz)
-        {
-            _back = new Vertex(eyex - centerx, eyey - centery, eyez - centerz);
-            _back.Normalize();
-            _up = new Vertex(upx, upy, upz);
-            _right = _up.VectorProduct(_back);
-            _right.Normalize();
-            _up = _back.VectorProduct(_right);
-            _up.Normalize();
-            isCameraSet = true;
-        }
+        ///// <summary>
+        ///// Default camera is at positive Z axis to look at negtive Z axis with up vector to positive Y axis.
+        ///// </summary>
+        ///// <param name="eyex"></param>
+        ///// <param name="eyey"></param>
+        ///// <param name="eyez"></param>
+        ///// <param name="centerx"></param>
+        ///// <param name="centery"></param>
+        ///// <param name="centerz"></param>
+        ///// <param name="upx"></param>
+        ///// <param name="upy"></param>
+        ///// <param name="upz"></param>
+        //public void SetCamera(float eyex, float eyey, float eyez,
+        //    float centerx, float centery, float centerz,
+        //    float upx, float upy, float upz)
+        //{
+        //    _back = new Vertex(eyex - centerx, eyey - centery, eyez - centerz);
+        //    _back.Normalize();
+        //    _up = new Vertex(upx, upy, upz);
+        //    _right = _up.VectorProduct(_back);
+        //    _right.Normalize();
+        //    _up = _back.VectorProduct(_right);
+        //    _up.Normalize();
+        //    isCameraSet = true;
+        //}
 
         /// <summary>
         /// Default camera is at positive Z axis to look at negtive Z axis with up vector to positive Y axis. 
         /// </summary>
         /// <param name="lookAtCamera"></param>
-        public void SetCamera(SharpGL.SceneGraph.Cameras.LookAtCamera lookAtCamera)
+        public void SetCamera(SharpGL.SceneGraph.Cameras.LookAtCamera lookAtCamera = null)
         {
-            SetCamera(lookAtCamera.Position.X, lookAtCamera.Position.Y, lookAtCamera.Position.Z,
-                lookAtCamera.Target.X, lookAtCamera.Target.Y, lookAtCamera.Target.Z,
-                lookAtCamera.UpVector.X, lookAtCamera.UpVector.Y, lookAtCamera.UpVector.Z);
+                this.Camera = lookAtCamera;
         }
 
-        internal void SetCamera(Vertex position, Vertex target, Vertex up)
-        {
-            SetCamera(position.X, position.Y, position.Z,
-                target.X, target.Y, target.Z, up.X, up.Y, up.Z);
-        }
+        //internal void SetCamera(Vertex position, Vertex target, Vertex up)
+        //{
+        //    SetCamera(position.X, position.Y, position.Z,
+        //        target.X, target.Y, target.Z, up.X, up.Y, up.Z);
+        //}
 
         public void GoUp(float interval)
         {
+            UpdateCameraAxis();
             this.Translate += this._up * interval;
         }
         public void GoDown(float interval)
         {
+            UpdateCameraAxis();
             this.Translate -= this._up * interval;
         }
         public void GoLeft(float interval)
         {
+            UpdateCameraAxis();
             this.Translate -= this._right * interval;
         }
         public void GoRight(float interval)
         {
+            UpdateCameraAxis();
             this.Translate += this._right * interval;
         }
 
         public Vertex Translate { get; set; }
 
         float _scale = 1.0f;
-     
+        private SceneGraph.Cameras.LookAtCamera _camera;
+             
         public float Scale
         {
             get { return _scale; }
@@ -198,11 +214,13 @@ namespace SharpGL.SceneComponent
 
         public void GoFront(int interval)
         {
+            UpdateCameraAxis();
             this.Translate -= this._back * interval;
         }
 
         public void GoBack(int interval)
         {
+            UpdateCameraAxis();
             this.Translate += this._back * interval;
         }
 
@@ -210,6 +228,16 @@ namespace SharpGL.SceneComponent
         {
             this._lastRotation = new float[16] { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 };
             this.currentRotation = mat4.identity();
+        }
+
+        public SceneGraph.Cameras.LookAtCamera Camera
+        {
+            get { return _camera; }
+            set
+            {
+                _camera = value;
+                isCameraSet = value != null;
+            }
         }
     }
 }

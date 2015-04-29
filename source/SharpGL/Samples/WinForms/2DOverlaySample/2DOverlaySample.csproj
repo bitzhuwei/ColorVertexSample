@@ -47,6 +47,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormScene.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormScene.Designer.cs">
+      <DependentUpon>FormScene.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RasterPosAxisDemo.cs" />
     <Compile Include="SharpGLForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -55,6 +62,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormScene.resx">
+      <DependentUpon>FormScene.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -81,6 +91,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\SharpGL.SceneComponent\SharpGL.SceneComponent.csproj">
+      <Project>{8f81c853-d378-443d-9dfd-475db916cabd}</Project>
+      <Name>SharpGL.SceneComponent</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Core\SharpGL.SceneGraph\SharpGL.SceneGraph.csproj">
       <Project>{47bcaa39-edad-4404-b6bd-4742b0abb523}</Project>
       <Name>SharpGL.SceneGraph</Name>

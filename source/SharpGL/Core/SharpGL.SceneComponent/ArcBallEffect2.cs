@@ -16,14 +16,9 @@ namespace SharpGL.SceneComponent
     /// </summary>
     public class ArcBallEffect2 : Effect
     {
-        public ArcBallEffect2(LookAtCamera camera)
+        public ArcBallEffect2(LookAtCamera camera = null)
         {
             this.arcBall.SetCamera(camera);
-        }
-
-        public ArcBallEffect2(Vertex position, Vertex target, Vertex up)
-        {
-            this.arcBall.SetCamera(position, target, up);
         }
 
         /// <summary>

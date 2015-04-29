@@ -119,7 +119,7 @@ namespace SharpGL
             //  Draw the FPS.
             if (DrawFPS)
             {
-                OpenGL.DrawText(5, 5, 1.0f, 0.0f, 0.0f, "Courier New", 12.0f,
+                OpenGL.DrawText(10,10, 1.0f, 0.0f, 0.0f, "Courier New", 12.0f,
                     string.Format("Draw Time: {0:0.0000} ms ~ {1:0.0} FPS", frameTime, 1000.0 / frameTime));
                 OpenGL.Flush();
             }
