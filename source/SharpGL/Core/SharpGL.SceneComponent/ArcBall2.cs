@@ -19,13 +19,13 @@ namespace SharpGL.SceneComponent
         protected float _angle;
         protected float _length, _radiusRadius;
         protected float[] _lastRotation = new float[16] { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 };
-        protected Vertex _startPosition, _endPosition, _normalVector = new Vertex(0, 1, 0);
+        protected Vertex _startPosition, _normalVector = new Vertex(0, 1, 0);
         protected int _width;
         protected int _height;
         protected Vertex _back;
         protected Vertex _up;
         protected Vertex _right;
-        protected mat4 currentRotation = mat4.identity();
+        //protected mat4 currentRotation = mat4.identity();
         float _scale = 1.0f;
         SceneGraph.Cameras.LookAtCamera _camera;
              
@@ -52,6 +52,10 @@ namespace SharpGL.SceneComponent
             var ry = (_height / 2 - y) / _length;
             var zz = _radiusRadius - rx * rx - ry * ry;
             var rz = (zz > 0 ? Math.Sqrt(zz) : 0);
+            /*                                 | rx |
+             * result = [ _right _up _back ] * | ry |
+             *                                 | rz |
+             */
             var result = new Vertex(
                 (float)(rx * _right.X + ry * _up.X + rz * _back.X),
                 (float)(rx * _right.Y + ry * _up.Y + rz * _back.Y),
@@ -62,11 +66,12 @@ namespace SharpGL.SceneComponent
 
         private void UpdateCameraAxis()
         {
-            if (!isCameraSet) { return; }
+            var camera = this._camera;
+            if (camera == null) { return; }
 
-            _back = Camera.Position - Camera.Target;
+            _back = camera.Position - camera.Target;
             _back.Normalize();
-            _right = Camera.UpVector.VectorProduct(_back);
+            _right = camera.UpVector.VectorProduct(_back);
             _right.Normalize();
             _up = _back.VectorProduct(_right);
             _up.Normalize();
@@ -76,14 +81,15 @@ namespace SharpGL.SceneComponent
         {
             if (mouseDownFlag)
             {
-                this._endPosition = GetArcBallPosition(x, y);
-                var cosAngle = _startPosition.ScalarProduct(_endPosition) / (_startPosition.Magnitude() * _endPosition.Magnitude());
+                var startPosition = this._startPosition;
+                var endPosition = GetArcBallPosition(x, y);
+                var cosAngle = startPosition.ScalarProduct(endPosition) / (startPosition.Magnitude() * endPosition.Magnitude());
                 if (cosAngle > 1) { cosAngle = 1; }
                 else if (cosAngle < -1) { cosAngle = -1; }
-                var angle = 10 * (float)(Math.Acos(cosAngle) / Math.PI * 180);
+                var angle = 1 * (float)(Math.Acos(cosAngle) / Math.PI * 180);
                 System.Threading.Interlocked.Exchange(ref _angle, angle);
-                _normalVector = _startPosition.VectorProduct(_endPosition);
-                _startPosition = _endPosition;
+                this._normalVector = startPosition.VectorProduct(endPosition);
+                this._startPosition = endPosition;
             }
         }
 
@@ -92,32 +98,32 @@ namespace SharpGL.SceneComponent
             mouseDownFlag = false;
         }
 
-        public mat4 GetTransformMat4()
-        {
-            var rotation = GetRotation();
-            var scale = glm.scale(mat4.identity(), new vec3(Scale));
-            var translate = glm.translate(mat4.identity(), new vec3(Translate.X,
-                Translate.Y, Translate.Z));
-            //result = translate * rotation * scale;//rotate good
-            //result = translate * scale * rotation;//rotate reversed
-            //result = rotation * translate * scale;//rotate reversed
-            //result = rotation * scale * translate;
-            //result = scale * translate * rotation;
-            var result = scale * rotation * translate;//rotate good
-            return result;
-        }
+        //public mat4 GetTransformMat4()
+        //{
+        //    var rotation = GetRotation();
+        //    var scale = glm.scale(mat4.identity(), new vec3(Scale));
+        //    var translate = glm.translate(mat4.identity(), new vec3(Translate.X,
+        //        Translate.Y, Translate.Z));
+        //    //result = translate * rotation * scale;//rotate good
+        //    //result = translate * scale * rotation;//rotate reversed
+        //    //result = rotation * translate * scale;//rotate reversed
+        //    //result = rotation * scale * translate;
+        //    //result = scale * translate * rotation;
+        //    var result = scale * rotation * translate;//rotate good
+        //    return result;
+        //}
 
-        public mat4 GetRotation()
-        {
-            return currentRotation;
-        }
+        //public mat4 GetRotation()
+        //{
+        //    return currentRotation;
+        //}
 
-        private void UpdateRotation()
-        {
-            var angle = (float)(_angle * Math.PI / 180.0f);
-            var rotation = glm.rotate(angle, new vec3(_normalVector.X, _normalVector.Y, _normalVector.Z));
-            currentRotation = rotation * currentRotation;
-        }
+        //private void UpdateRotation()
+        //{
+        //    var angle = (float)(_angle * Math.PI / 180.0f);
+        //    var rotation = glm.rotate(angle, new vec3(_normalVector.X, _normalVector.Y, _normalVector.Z));
+        //    currentRotation = rotation * currentRotation;
+        //}
 
         public void TransformMatrix(OpenGL gl)
         {
@@ -132,7 +138,7 @@ namespace SharpGL.SceneComponent
                 gl.MultMatrix(_lastRotation);
                 gl.GetFloat(SharpGL.Enumerations.GetTarget.ModelviewMatix, _lastRotation);
                 gl.PopMatrix();
-                UpdateRotation();
+                //UpdateRotation();
                 System.Threading.Interlocked.Exchange(ref _angle, 0);
             }
 
@@ -185,7 +191,7 @@ namespace SharpGL.SceneComponent
         public void ResetRotation()
         {
             this._lastRotation = new float[16] { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 };
-            this.currentRotation = mat4.identity();
+            //this.currentRotation = mat4.identity();
         }
 
         public SceneGraph.Cameras.LookAtCamera Camera
