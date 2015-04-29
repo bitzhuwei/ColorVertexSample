@@ -61,9 +61,8 @@
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 17.30769F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 82.69231F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 72F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(699, 468);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
@@ -72,12 +71,12 @@
             this.tableLayoutPanel1.SetColumnSpan(this.sceneControl, 2);
             this.sceneControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sceneControl.DrawFPS = false;
-            this.sceneControl.Location = new System.Drawing.Point(3, 83);
+            this.sceneControl.Location = new System.Drawing.Point(3, 75);
             this.sceneControl.Name = "sceneControl";
             this.sceneControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
             this.sceneControl.RenderContextType = SharpGL.RenderContextType.FBO;
             this.sceneControl.RenderTrigger = SharpGL.RenderTrigger.Manual;
-            this.sceneControl.Size = new System.Drawing.Size(693, 382);
+            this.sceneControl.Size = new System.Drawing.Size(693, 390);
             this.sceneControl.TabIndex = 0;
             // 
             // panel1
@@ -100,7 +99,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(693, 74);
+            this.panel1.Size = new System.Drawing.Size(693, 66);
             this.panel1.TabIndex = 1;
             // 
             // lblDebugInfo
@@ -110,7 +109,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblDebugInfo.Location = new System.Drawing.Point(453, 35);
             this.lblDebugInfo.Name = "lblDebugInfo";
-            this.lblDebugInfo.Size = new System.Drawing.Size(238, 39);
+            this.lblDebugInfo.Size = new System.Drawing.Size(238, 31);
             this.lblDebugInfo.TabIndex = 17;
             this.lblDebugInfo.Text = "debug info";
             this.lblDebugInfo.Click += new System.EventHandler(this.lblDebugInfo_Click);
@@ -227,13 +226,13 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "NX";
             // 
-            // FormFixedCamera
+            // FormFreeCamera
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(699, 468);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "FormFixedCamera";
+            this.Name = "FormFreeCamera";
             this.Text = "Form1";
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.sceneControl)).EndInit();

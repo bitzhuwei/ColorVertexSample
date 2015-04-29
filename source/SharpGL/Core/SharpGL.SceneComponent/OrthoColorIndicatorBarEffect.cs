@@ -10,7 +10,10 @@ using SharpGL.SceneGraph.Effects;
 
 namespace SharpGL.SceneComponent
 {
-    public class OrthoColorIndicatorTransformEffect : Effect
+    /// <summary>
+    /// show bar in front of everything at fixed position with width changes according to window's width.
+    /// </summary>
+    public class OrthoColorIndicatorBarEffect : Effect
     {
         private LookAtCamera _camera;
 
@@ -27,7 +30,7 @@ namespace SharpGL.SceneComponent
         /// if null, please set Camera property later.
         /// </summary>
         /// <param name="camera"></param>
-        public OrthoColorIndicatorTransformEffect(LookAtCamera camera = null)
+        public OrthoColorIndicatorBarEffect(LookAtCamera camera = null)
         {
             //this.Camera = camera;
         }

@@ -25,8 +25,7 @@ namespace ColorVertexSample
 {
     public partial class FormFreeCamera : Form
     {
-        //ColorIndicatorGDIAttachment colorIndicatorAttachment;
-        CameraRotation cameraRotation;
+        private CameraRotation cameraRotation;
         private ArcBallEffect2 modelArcBallEffect;
         private OrthoAxisElement orthoAxisElement;
         private OrthoColorIndicatorElement orthoColorIndicatorElement;
@@ -34,11 +33,6 @@ namespace ColorVertexSample
         public FormFreeCamera()
         {
             InitializeComponent();
-
-            var rainBow = ColorTemplateFactory.CreateRainbow();
-            rainBow.Margin.Left = 100;
-            //this.colorIndicatorAttachment = new ColorIndicatorGDIAttachment(rainBow);
-            //this.colorIndicatorAttachment.AttachTo(this.sceneControl);
 
             this.Text = "Rotation tip: left mouse for camera & right mouse for model";
         }
@@ -71,7 +65,8 @@ namespace ColorVertexSample
             this.cameraRotation = new CameraRotation(camera);
             this.modelArcBallEffect.ArcBall.Camera = camera;
             this.orthoAxisElement.orthoArcBallEffect.Camera = camera;
-            this.orthoColorIndicatorElement.scaleEffect.Camera = camera;
+            //this.orthoColorIndicatorElement.scaleEffect.Camera = camera;
+            this.orthoColorIndicatorElement.bar.scaleEffect.Camera = camera;
         }
 
         private void Initialize2DUI(SceneContainer parent)
@@ -220,7 +215,8 @@ namespace ColorVertexSample
 
                 scene.RenderBoundingVolumes = false;
 
-                //this.colorIndicatorAttachment.SetBound(minValue, maxValue);
+                this.orthoColorIndicatorElement.number.SetBound(minValue, maxValue);
+                this.orthoColorIndicatorElement.number.SetControl(this.sceneControl);
 
                 ManualRender(this.sceneControl);
             }

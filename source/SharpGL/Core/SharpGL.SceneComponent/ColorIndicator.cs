@@ -11,7 +11,7 @@ namespace SharpGL.SceneComponent
     {
 
         private GLColor[] colors;
-        public System.Windows.Forms.Padding Margin = new System.Windows.Forms.Padding(100, 3, 20, 40);
+        public System.Windows.Forms.Padding Margin = new System.Windows.Forms.Padding(100, 3, 40, 40);
         public int Width = 100;
         public int Height = 40;
 
