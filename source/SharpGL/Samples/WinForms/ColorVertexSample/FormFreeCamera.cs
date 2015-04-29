@@ -25,10 +25,11 @@ namespace ColorVertexSample
 {
     public partial class FormFreeCamera : Form
     {
-        ColorIndicatorGDIAttachment colorIndicatorAttachment;
+        //ColorIndicatorGDIAttachment colorIndicatorAttachment;
         CameraRotation cameraRotation;
         private ArcBallEffect2 modelArcBallEffect;
         private OrthoAxisElement orthoAxisElement;
+        private OrthoColorIndicatorElement orthoColorIndicatorElement;
 
         public FormFreeCamera()
         {
@@ -36,8 +37,8 @@ namespace ColorVertexSample
 
             var rainBow = ColorTemplateFactory.CreateRainbow();
             rainBow.Margin.Left = 100;
-            this.colorIndicatorAttachment = new ColorIndicatorGDIAttachment(rainBow);
-            this.colorIndicatorAttachment.AttachTo(this.sceneControl);
+            //this.colorIndicatorAttachment = new ColorIndicatorGDIAttachment(rainBow);
+            //this.colorIndicatorAttachment.AttachTo(this.sceneControl);
 
             this.Text = "Rotation tip: left mouse for camera & right mouse for model";
         }
@@ -70,6 +71,7 @@ namespace ColorVertexSample
             this.cameraRotation = new CameraRotation(camera);
             this.modelArcBallEffect.ArcBall.Camera = camera;
             this.orthoAxisElement.orthoArcBallEffect.Camera = camera;
+            this.orthoColorIndicatorElement.scaleEffect.Camera = camera;
         }
 
         private void Initialize2DUI(SceneContainer parent)
@@ -77,6 +79,12 @@ namespace ColorVertexSample
             var orthoAxisElement = OrthoAxisElementFactory.Create();
             parent.AddChild(orthoAxisElement);
             this.orthoAxisElement = orthoAxisElement;
+
+            var colorTemplate = ColorTemplateFactory.CreateRainbow();
+            var orthoColorIndicatorElement = OrthoColorIndicatorElementFactory.Create(colorTemplate);
+            //orthoColorIndicatorElement.scaleEffect.Margin=...
+            parent.AddChild(orthoColorIndicatorElement);
+            this.orthoColorIndicatorElement = orthoColorIndicatorElement;
         }
 
         private void sceneControl_MouseUp(object sender, MouseEventArgs e)
@@ -212,7 +220,7 @@ namespace ColorVertexSample
 
                 scene.RenderBoundingVolumes = false;
 
-                this.colorIndicatorAttachment.SetBound(minValue, maxValue);
+                //this.colorIndicatorAttachment.SetBound(minValue, maxValue);
 
                 ManualRender(this.sceneControl);
             }

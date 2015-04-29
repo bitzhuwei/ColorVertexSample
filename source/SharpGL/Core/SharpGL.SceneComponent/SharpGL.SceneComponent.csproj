@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -47,14 +48,19 @@
     <Compile Include="AxisGDIAttachment.cs" />
     <Compile Include="AxisSpy.cs" />
     <Compile Include="AxisTransformEffect.cs" />
+    <Compile Include="ByteColor.cs" />
     <Compile Include="CameraRotation.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="ColorIndicator.cs" />
     <Compile Include="ColorIndicatorGDIAttachment.cs" />
     <Compile Include="ColorMapHelper.cs" />
+    <Compile Include="GenericModel.cs" />
     <Compile Include="OrthoArcBallEffect.cs" />
     <Compile Include="OrthoAxisElement.cs" />
     <Compile Include="OrthoAxisElementFactory.cs" />
+    <Compile Include="OrthoColorIndicatorElement.cs" />
+    <Compile Include="OrthoColorIndicatorElementFactory.cs" />
+    <Compile Include="OrthoColorIndicatorTransformEffect.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewportEffect.cs" />
   </ItemGroup>

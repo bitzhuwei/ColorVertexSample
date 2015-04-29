@@ -19,7 +19,7 @@ namespace SharpGL.SceneComponent
         /// <returns></returns>
         public static OrthoAxisElement Create(LookAtCamera camera = null)
         {
-            var element = new OrthoAxisElement() { Name = "orthogonal element" };
+            var element = new OrthoAxisElement() { Name = "orthogonal axis element" };
 
             //  Create a set of scene attributes.
             var sceneAttributes = new OpenGLAttributesEffect()
@@ -39,7 +39,7 @@ namespace SharpGL.SceneComponent
             //sceneAttributes.TransformAttributes.MatrixMode = MatrixMode.Projection;
             element.AddEffect(sceneAttributes);
 
-            var orthoAxisArcBallEffect = new OrthoArcBallEffect();
+            var orthoAxisArcBallEffect = new OrthoArcBallEffect(camera);
             element.AddEffect(orthoAxisArcBallEffect);
 
             var axies = new Axies();
