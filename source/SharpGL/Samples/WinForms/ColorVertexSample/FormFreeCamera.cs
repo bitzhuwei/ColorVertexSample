@@ -52,6 +52,9 @@ namespace ColorVertexSample
         {
             base.OnLoad(e);
 
+            this.sceneControl.Scene.SceneContainer.Children.Clear();
+            this.sceneControl.Scene.SceneContainer.Effects.Clear();
+
             sceneControl.MouseDown += sceneControl_MouseDown;
             sceneControl.MouseMove += sceneControl_MouseMove;
             sceneControl.MouseUp += sceneControl_MouseUp;

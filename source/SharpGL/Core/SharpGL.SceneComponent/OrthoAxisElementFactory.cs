@@ -31,29 +31,32 @@ namespace SharpGL.SceneComponent
             sceneAttributes.EnableAttributes.EnableDepthTest = true;
             sceneAttributes.EnableAttributes.EnableNormalize = true;
             sceneAttributes.EnableAttributes.EnableLighting = false;
-            sceneAttributes.EnableAttributes.EnableTexture2D = true;
-            sceneAttributes.EnableAttributes.EnableBlend = true;
-            sceneAttributes.ColorBufferAttributes.BlendingSourceFactor = BlendingSourceFactor.SourceAlpha;
-            sceneAttributes.ColorBufferAttributes.BlendingDestinationFactor = BlendingDestinationFactor.OneMinusSourceAlpha;
-            sceneAttributes.LightingAttributes.TwoSided = true;
-            sceneAttributes.TransformAttributes.MatrixMode = MatrixMode.Projection;
+            //sceneAttributes.EnableAttributes.EnableTexture2D = true;
+            //sceneAttributes.EnableAttributes.EnableBlend = true;
+            //sceneAttributes.ColorBufferAttributes.BlendingSourceFactor = BlendingSourceFactor.SourceAlpha;
+            //sceneAttributes.ColorBufferAttributes.BlendingDestinationFactor = BlendingDestinationFactor.OneMinusSourceAlpha;
+            //sceneAttributes.LightingAttributes.TwoSided = true;
+            //sceneAttributes.TransformAttributes.MatrixMode = MatrixMode.Projection;
             element.AddEffect(sceneAttributes);
 
             var orthoAxisArcBallEffect = new OrthoArcBallEffect();
-            //orthoAxisArcBallEffect.Translate = new SharpGL.SceneGraph.Vertex(000, 100, 0);
-            orthoAxisArcBallEffect.Scale = 100;
             element.AddEffect(orthoAxisArcBallEffect);
 
             var axies = new Axies();
             element.AddChild(axies);
-
-            var grid = new Grid();
-            element.AddChild(grid);
             var transform = new LinearTransformationEffect();
-            transform.LinearTransformation.ScaleX = 0.1f;
-            transform.LinearTransformation.ScaleY = 0.1f;
-            transform.LinearTransformation.ScaleZ = 0.1f;
-            grid.AddEffect(transform);
+            transform.LinearTransformation.ScaleX = 10;
+            transform.LinearTransformation.ScaleY = 10;
+            transform.LinearTransformation.ScaleZ = 10;
+            axies.AddEffect(transform);
+
+            //var grid = new Grid();
+            //element.AddChild(grid);
+            //var transform = new LinearTransformationEffect();
+            //transform.LinearTransformation.ScaleX = 0.1f;
+            //transform.LinearTransformation.ScaleY = 0.1f;
+            //transform.LinearTransformation.ScaleZ = 0.1f;
+            //grid.AddEffect(transform);
 
             element.orthoArcBallEffect = orthoAxisArcBallEffect;
 
