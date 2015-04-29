@@ -64,9 +64,11 @@ namespace SharpGL.SceneComponent
             gl.LoadIdentity();
             var margin = colorTemplate.Margin;
             var targetOrthoBarWidth = width - colorTemplate.Margin.Left - colorTemplate.Margin.Right;
+            if (targetOrthoBarWidth <= 0) { targetOrthoBarWidth = double.Epsilon; }
             var scaledWidth = width * colorTemplate.Width / targetOrthoBarWidth;
             var scaledLeft = -colorTemplate.Margin.Left * colorTemplate.Width / targetOrthoBarWidth;
             var scaledRight = scaledLeft + scaledWidth;
+            if (scaledLeft >= scaledRight) { scaledRight = scaledLeft + double.Epsilon; }
             gl.Ortho(scaledLeft, scaledRight,
                 -colorTemplate.Margin.Bottom, height - colorTemplate.Margin.Bottom,
                 zNear, zFar);
