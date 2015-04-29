@@ -194,6 +194,11 @@ namespace SharpGL.SceneComponent
             //this.currentRotation = mat4.identity();
         }
 
+        public float[] GetCurrentRotation()
+        {
+            return this._lastRotation.ToArray();
+        }
+
         public SceneGraph.Cameras.LookAtCamera Camera
         {
             get { return _camera; }
