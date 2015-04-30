@@ -66,40 +66,47 @@ namespace SharpGL.SceneComponent
                     effect.Push(gl, sceneElement);
 
             //  If the element can be bound, bind it.
-            if (sceneElement is IBindable)
-                ((IBindable)sceneElement).Push(gl);
+            IBindable bindable = sceneElement as IBindable;
+            if (bindable != null) bindable.Push(gl);
 
             //  If the element has an object space, transform into it.
-            if (sceneElement is IHasObjectSpace)
-                ((IHasObjectSpace)sceneElement).PushObjectSpace(gl);
+            IHasObjectSpace hasObjectSpace = sceneElement as IHasObjectSpace;
+            if (hasObjectSpace != null) hasObjectSpace.PushObjectSpace(gl);
 
-            //  If the element has a material, push it.
-            if (sceneElement is IHasMaterial && ((IHasMaterial)sceneElement).Material != null)
-                ((IHasMaterial)sceneElement).Material.Push(gl);
+            //  Render self.
+            {
+                //  If the element has a material, push it.
+                IHasMaterial hasMaterial = sceneElement as IHasMaterial;
+                if (hasMaterial != null && hasMaterial.Material != null)
+                { hasMaterial.Material.Push(gl); }
 
-            //  If the element can be rendered, render it.
-            if (sceneElement is IRenderable)
-                ((IRenderable)sceneElement).Render(gl, renderMode);
+                //  If the element can be rendered, render it.
+                IRenderable renderable = sceneElement as IRenderable;
+                if (renderable != null) renderable.Render(gl, renderMode);
 
-            //  If the element has a material, pop it.
-            if (sceneElement is IHasMaterial && ((IHasMaterial)sceneElement).Material != null)
-                ((IHasMaterial)sceneElement).Material.Pop(gl);
+                //  If the element has a material, pop it.
+                if (hasMaterial != null && hasMaterial.Material != null)
+                { hasMaterial.Material.Pop(gl); }
+            }
 
-            //  IF the element is volume bound and we are rendering volumes, render the volume.
-            if (RenderBoundingVolumes && sceneElement is IVolumeBound)
-                ((IVolumeBound)sceneElement).BoundingVolume.Render(gl, renderMode);
+            //  If the element is volume bound and we are rendering volumes, render the volume.
+            IVolumeBound volumeBound = null;
+            if (RenderBoundingVolumes)
+            {
+                volumeBound = sceneElement as IVolumeBound;
+                if (volumeBound != null)
+                { volumeBound.BoundingVolume.Render(gl, renderMode); }
+            }
 
             //  Recurse through the children.
             foreach (var childElement in sceneElement.Children)
                 RenderElement(childElement, renderMode);
 
             //  If the element has an object space, transform out of it.
-            if (sceneElement is IHasObjectSpace)
-                ((IHasObjectSpace)sceneElement).PopObjectSpace(gl);
+            if (hasObjectSpace != null) hasObjectSpace.PopObjectSpace(gl);
 
             //  If the element can be bound, bind it.
-            if (sceneElement is IBindable)
-                ((IBindable)sceneElement).Pop(gl);
+            if (bindable != null) bindable.Pop(gl);
 
             //  Pop each effect.
             for (int i = sceneElement.Effects.Count - 1; i >= 0; i--)
