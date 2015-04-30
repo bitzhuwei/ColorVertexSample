@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using SharpGL.SceneGraph.Core;
 
-namespace SharpGL.SceneComponents
+namespace ColorVertexSample.Fix
 {
     /// <summary>
     /// The bounding helper.
     /// </summary>
-    internal class BoundingVolumeHelper2
+    internal class BoundingVolumeHelper
     {
         /// <summary>
         /// The bounding volume.
