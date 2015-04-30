@@ -29,7 +29,8 @@
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.sceneControl = new SharpGL.SceneControl();
+            this.sceneControl = new SharpGL.SceneComponent.MySceneControl();
+            //this.sceneControl = new SharpGL.SceneControl();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblDebugInfo = new System.Windows.Forms.Label();
             this.tbRangeMax = new System.Windows.Forms.TextBox();
@@ -261,7 +262,8 @@
         private System.Windows.Forms.TextBox tbRangeMax;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label lblDebugInfo;
-        private SharpGL.SceneControl sceneControl;
+        private SharpGL.SceneComponent.MySceneControl sceneControl;
+        //private SharpGL.SceneControl sceneControl;
     }
 }
 

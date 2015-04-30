@@ -229,7 +229,7 @@ namespace ColorVertexSample
             }
         }
 
-        private void ManualRender(SceneControl control)
+        private void ManualRender(Control control)
         {
             control.Invalidate();
         }
@@ -257,7 +257,7 @@ namespace ColorVertexSample
             return sceneAttributes;
         }
 
-        private void InitializeCamera(PointModelElement element, SceneControl control)
+        private void InitializeCamera(PointModelElement element, MySceneControl control)
         {
             PointModel model = element.Model;
             Rect3D rect3D = model.Bounds;
