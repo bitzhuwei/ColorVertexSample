@@ -58,7 +58,7 @@ namespace _2DOverlaySample
 
 
             this.cameraRotation = new CameraRotation();
-            this.cameraRotation.LookAtCamera = camera;
+            this.cameraRotation.Camera = camera;
             this.modelArcBallEffect.ArcBall.Camera = camera;
             this.orthoAxisElement.orthoArcBallEffect.Camera = camera;
         }

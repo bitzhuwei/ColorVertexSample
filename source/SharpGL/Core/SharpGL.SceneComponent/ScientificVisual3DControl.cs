@@ -6,6 +6,8 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Diagnostics;
+using SharpGL.Version;
 
 namespace SharpGL.SceneComponent
 {
@@ -384,10 +386,4 @@ namespace SharpGL.SceneComponent
         public RenderTrigger RenderTrigger { get; set; }
     }
 
-    /// <summary>
-    /// Delegate for a Render Event.
-    /// </summary>
-    /// <param name="sender">The sender.</param>
-    /// <param name="args">The <see cref="RenderEventArgs"/> instance containing the event data.</param>
-    public delegate void RenderEventHandler(object sender, RenderEventArgs args);
 }
