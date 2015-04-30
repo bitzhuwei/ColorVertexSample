@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using SharpGL.SceneGraph.Core;
+using SharpGL.RenderContextProviders;
+using System.Drawing;
 
 namespace SharpGL.SceneComponent
 {
@@ -31,14 +33,14 @@ namespace SharpGL.SceneComponent
 
         public void Render(OpenGL gl, RenderMode renderMode)
         {
-            var colorTemplate = this.colorTemplate;
+            ColorTemplate colorTemplate = this.colorTemplate;
             if (colorTemplate == null) { return; }
 
-            var rc = gl.RenderContextProvider;
+            IRenderContextProvider rc = gl.RenderContextProvider;
             Debug.Assert(rc != null);
 
-            var width = 0.0;
-            var height = 0.0;
+            int width = 0;
+            int height = 0;
 
             if (rc != null)
             {
@@ -56,24 +58,25 @@ namespace SharpGL.SceneComponent
             if (graphics == null && viewControl != null)
             { graphics = viewControl.CreateGraphics(); }
 
-            var blockWidth = (width - colorTemplate.Margin.Left - colorTemplate.Margin.Right) / (colorTemplate.Colors.Length - 1);
+            int blockWidth = (width - colorTemplate.Margin.Left - colorTemplate.Margin.Right) / (colorTemplate.Colors.Length - 1);
             //draw numbers
             for (int i = 0; i < colorTemplate.Colors.Length; i++)
             {
-                var value = (minValue * (double)(colorTemplate.Colors.Length - 1 - i) / (colorTemplate.Colors.Length - 1)
+                string value = (minValue * (double)(colorTemplate.Colors.Length - 1 - i) / (colorTemplate.Colors.Length - 1)
                     + maxValue * (double)i / (colorTemplate.Colors.Length - 1)).ToString();
-                var valueLength = 0f;
+                float valueLength = 0f;
                 if (graphics != null)
                 { valueLength = graphics.MeasureString(value, font).Width; }
-                var x = colorTemplate.Margin.Left + i * blockWidth - valueLength / 2;
-                var y = colorTemplate.Margin.Bottom - 20;
+                float x = colorTemplate.Margin.Left + i * blockWidth - valueLength / 2;
+                int y = colorTemplate.Margin.Bottom - 20;
                 gl.DrawText((int)x, (int)y, 1, 1, 1, "Courier New", 12.0f, value);
             }
         }
 
         public void Dispose()
         {
-            var g = this.graphics;
+            Graphics g = this.graphics;
+            this.graphics = null;
             if (g != null)
             {
                 g.Dispose();
