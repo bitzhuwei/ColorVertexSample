@@ -84,7 +84,7 @@ namespace ColorVertexSample
 
         private void sceneControl_MouseUp(object sender, MouseEventArgs e)
         {
-            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+            if ((e.Button & MouseButtons.Left) == System.Windows.Forms.MouseButtons.Left)
             {
                 var cameraRotation = this.cameraRotation;
                 if (cameraRotation == null) { return; }
@@ -93,7 +93,8 @@ namespace ColorVertexSample
 
                 ManualRender(this.sceneControl);
             }
-            else if (e.Button == System.Windows.Forms.MouseButtons.Right)
+
+            if ((e.Button & MouseButtons.Right) == System.Windows.Forms.MouseButtons.Right)
             {
                 var modelArcBallEffect = this.modelArcBallEffect;
                 if (modelArcBallEffect == null) { return; }
@@ -109,7 +110,7 @@ namespace ColorVertexSample
 
         private void sceneControl_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
+            if ((e.Button & MouseButtons.Left) == System.Windows.Forms.MouseButtons.Left)
             {
                 var cameraRotation = this.cameraRotation;
                 if (cameraRotation == null) { return; }
@@ -118,7 +119,8 @@ namespace ColorVertexSample
 
                 ManualRender(this.sceneControl);
             }
-            else if (e.Button == System.Windows.Forms.MouseButtons.Right)
+
+            if ((e.Button & MouseButtons.Right) == System.Windows.Forms.MouseButtons.Right)
             {
                 var modelArcBallEffect = this.modelArcBallEffect;
                 if (modelArcBallEffect == null) { return; }
@@ -134,7 +136,7 @@ namespace ColorVertexSample
 
         private void sceneControl_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
+            if ((e.Button & MouseButtons.Left) == System.Windows.Forms.MouseButtons.Left)
             {
                 var cameraRotation = this.cameraRotation;
                 if (cameraRotation == null) { return; }
@@ -147,7 +149,8 @@ namespace ColorVertexSample
 
                 ManualRender(this.sceneControl);
             }
-            else if (e.Button == System.Windows.Forms.MouseButtons.Right)
+
+            if ((e.Button & MouseButtons.Right) == System.Windows.Forms.MouseButtons.Right)
             {
                 var modelArcBallEffect = this.modelArcBallEffect;
                 if (modelArcBallEffect == null) { return; }
