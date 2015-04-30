@@ -6,6 +6,7 @@ using System.Text;
 using GlmNet;
 using SharpGL;
 using SharpGL.SceneGraph;
+using SharpGL.SceneGraph.Cameras;
 
 namespace SharpGL.SceneComponent
 {
@@ -31,11 +32,12 @@ namespace SharpGL.SceneComponent
              
         public void SetBounds(int width, int height)
         {
-            this._width = width; this._height = height;
-            _length = width > height ? width : height;
-            var rx = (width / 2) / _length;
-            var ry = (height / 2) / _length;
-            _radiusRadius = (float)(rx * rx + ry * ry);
+            this._width = width; 
+            this._height = height;
+            this._length = width > height ? width : height;
+            float rx = (width / 2) / _length;
+            float ry = (height / 2) / _length;
+            this._radiusRadius = rx * rx + ry * ry;
         }
 
         public void MouseDown(int x, int y)
@@ -48,25 +50,25 @@ namespace SharpGL.SceneComponent
         private Vertex GetArcBallPosition(int x, int y)
         {
             UpdateCameraAxis();
-            var rx = (x - _width / 2) / _length;
-            var ry = (_height / 2 - y) / _length;
-            var zz = _radiusRadius - rx * rx - ry * ry;
-            var rz = (zz > 0 ? Math.Sqrt(zz) : 0);
+            float rx = (x - _width / 2) / _length;
+            float ry = (_height / 2 - y) / _length;
+            float zz = _radiusRadius - rx * rx - ry * ry;
+            float rz = (zz > 0 ? (float)Math.Sqrt(zz) : 0);
             /*                                 | rx |
              * result = [ _right _up _back ] * | ry |
              *                                 | rz |
              */
             var result = new Vertex(
-                (float)(rx * _right.X + ry * _up.X + rz * _back.X),
-                (float)(rx * _right.Y + ry * _up.Y + rz * _back.Y),
-                (float)(rx * _right.Z + ry * _up.Z + rz * _back.Z)
+                (rx * _right.X + ry * _up.X + rz * _back.X),
+                (rx * _right.Y + ry * _up.Y + rz * _back.Y),
+                (rx * _right.Z + ry * _up.Z + rz * _back.Z)
                 );
             return result;
         }
 
         private void UpdateCameraAxis()
         {
-            var camera = this._camera;
+            LookAtCamera camera = this._camera;
             if (camera == null) { return; }
 
             _back = camera.Position - camera.Target;
@@ -81,9 +83,9 @@ namespace SharpGL.SceneComponent
         {
             if (mouseDownFlag)
             {
-                var startPosition = this._startPosition;
-                var endPosition = GetArcBallPosition(x, y);
-                var cosAngle = startPosition.ScalarProduct(endPosition) / (startPosition.Magnitude() * endPosition.Magnitude());
+                Vertex startPosition = this._startPosition;
+                Vertex endPosition = GetArcBallPosition(x, y);
+                double cosAngle = startPosition.ScalarProduct(endPosition) / (startPosition.Magnitude() * endPosition.Magnitude());
                 if (cosAngle > 1) { cosAngle = 1; }
                 else if (cosAngle < -1) { cosAngle = -1; }
                 var angle = 1 * (float)(Math.Acos(cosAngle) / Math.PI * 180);
