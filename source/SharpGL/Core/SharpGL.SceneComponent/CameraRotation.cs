@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using SharpGL.SceneGraph;
+using SharpGL.SceneGraph.Cameras;
 
 namespace SharpGL.SceneComponent
 {
@@ -12,29 +13,27 @@ namespace SharpGL.SceneComponent
     /// </summary>
     public class CameraRotation
     {
-        private SharpGL.SceneGraph.Cameras.LookAtCamera lookAtCamera;
+        private SharpGL.SceneGraph.Cameras.LookAtCamera camera;
 
-        public SharpGL.SceneGraph.Cameras.LookAtCamera LookAtCamera
+        public SharpGL.SceneGraph.Cameras.LookAtCamera Camera
         {
-            get { return lookAtCamera; }
+            get { return camera; }
             set
             {
-                lookAtCamera = value;
+                camera = value;
                 if (value != null)
                 {
-                    this.back = lookAtCamera.Position - lookAtCamera.Target;
-                    this.back.Normalize();
-                    this.up = lookAtCamera.UpVector;
-                    this.right = this.up.VectorProduct(this.back);
-                    this.right.Normalize();
-                    this.up = this.back.VectorProduct(this.right);
-                    this.up.Normalize();
+                    Vertex back = camera.Position - camera.Target;
+                    Vertex right = Camera.UpVector.VectorProduct(back);
+                    Vertex up = back.VectorProduct(right);
+                    back.Normalize(); right.Normalize(); up.Normalize();
+                    this.back = back; this.right = right; this.up = up;
                 }
             }
-        }     
-        
-        private Point downPosition;
-        private Size bound;
+        }
+
+        private Point downPosition = new Point();
+        private Size bound = new Size();
         public bool mouseDownFlag = false;
         private float horizontalRotationFactor = 4;
         private float verticalRotationFactor = 4;
@@ -44,7 +43,7 @@ namespace SharpGL.SceneComponent
 
         public CameraRotation(SharpGL.SceneGraph.Cameras.LookAtCamera lookAtCamera = null)
         {
-            this.LookAtCamera = lookAtCamera;
+            this.Camera = lookAtCamera;
         }
 
         public void MouseUp(int x, int y)
@@ -56,19 +55,19 @@ namespace SharpGL.SceneComponent
         {
             if (this.mouseDownFlag)
             {
-                var camera = this.LookAtCamera;
+                LookAtCamera camera = this.Camera;
                 if (camera == null) { return; }
 
-                var back = this.back;
-                var right = this.right;
-                var up = this.up;
-                var bound = this.bound;
-                var downPosition = this.downPosition;
+                Vertex back = this.back;
+                Vertex right = this.right;
+                Vertex up = this.up;
+                Size bound = this.bound;
+                Point downPosition = this.downPosition;
                 {
-                    var deltaX = -horizontalRotationFactor * (x - downPosition.X) / bound.Width;
-                    var cos = (float)Math.Cos(deltaX);
-                    var sin = (float)Math.Sin(deltaX);
-                    var newBack = new Vertex(
+                    float deltaX = -horizontalRotationFactor * (x - downPosition.X) / bound.Width;
+                    float cos = (float)Math.Cos(deltaX);
+                    float sin = (float)Math.Sin(deltaX);
+                    Vertex newBack = new Vertex(
                         back.X * cos + right.X * sin,
                         back.Y * cos + right.Y * sin,
                         back.Z * cos + right.Z * sin);
@@ -78,10 +77,10 @@ namespace SharpGL.SceneComponent
                     right.Normalize();
                 }
                 {
-                    var deltaY = verticalRotationFactor * (y - downPosition.Y) / bound.Height;
-                    var cos = (float)Math.Cos(deltaY);
-                    var sin = (float)Math.Sin(deltaY);
-                    var newBack = new Vertex(
+                    float deltaY = verticalRotationFactor * (y - downPosition.Y) / bound.Height;
+                    float cos = (float)Math.Cos(deltaY);
+                    float sin = (float)Math.Sin(deltaY);
+                    Vertex newBack = new Vertex(
                         back.X * cos + up.X * sin,
                         back.Y * cos + up.Y * sin,
                         back.Z * cos + up.Z * sin);
@@ -97,19 +96,22 @@ namespace SharpGL.SceneComponent
                 this.back = back;
                 this.right = right;
                 this.up = up;
-                this.downPosition = new Point(x, y);
+                this.downPosition.X = x;
+                this.downPosition.Y = y;
             }
         }
 
         public void MouseDown(int x, int y)
         {
-            this.downPosition = new Point(x, y);
+            this.downPosition.X = x;
+            this.downPosition.Y = y;
             this.mouseDownFlag = true;
         }
 
         public void SetBounds(int width, int height)
         {
-            this.bound = new Size(width, height);
+            this.bound.Width = width;
+            this.bound.Height = height;
         }
 
         public override string ToString()
