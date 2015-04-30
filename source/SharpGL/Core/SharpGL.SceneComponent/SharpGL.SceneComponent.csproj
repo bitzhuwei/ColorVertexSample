@@ -50,7 +50,6 @@
     <Compile Include="AxisTransformEffect.cs" />
     <Compile Include="ByteColor.cs" />
     <Compile Include="CameraRotation.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="ColorIndicator.cs" />
     <Compile Include="ColorIndicatorGDIAttachment.cs" />
     <Compile Include="ColorMapHelper.cs" />
