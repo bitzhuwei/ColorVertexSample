@@ -66,17 +66,17 @@ namespace SharpGL.SceneComponent
                     effect.Push(gl, sceneElement);
 
             //  If the element can be bound, bind it.
-            IBindable bindable = sceneElement as IBindable;
+            IBindable bindable = sceneElement as IBindable;// example: Light
             if (bindable != null) bindable.Push(gl);
 
             //  If the element has an object space, transform into it.
-            IHasObjectSpace hasObjectSpace = sceneElement as IHasObjectSpace;
+            IHasObjectSpace hasObjectSpace = sceneElement as IHasObjectSpace;// example: Polygon, quadric, Teapot
             if (hasObjectSpace != null) hasObjectSpace.PushObjectSpace(gl);
 
             //  Render self.
             {
                 //  If the element has a material, push it.
-                IHasMaterial hasMaterial = sceneElement as IHasMaterial;
+                IHasMaterial hasMaterial = sceneElement as IHasMaterial;// example: Polygon, quadric, Teapot
                 if (hasMaterial != null && hasMaterial.Material != null)
                 { hasMaterial.Material.Push(gl); }
 
