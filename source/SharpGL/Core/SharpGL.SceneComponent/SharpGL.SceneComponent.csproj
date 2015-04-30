@@ -45,13 +45,9 @@
   <ItemGroup>
     <Compile Include="ArcBall2.cs" />
     <Compile Include="ArcBallEffect2.cs" />
-    <Compile Include="AxisGDIAttachment.cs" />
-    <Compile Include="AxisSpy.cs" />
-    <Compile Include="AxisTransformEffect.cs" />
     <Compile Include="ByteColor.cs" />
     <Compile Include="CameraRotation.cs" />
     <Compile Include="ColorIndicator.cs" />
-    <Compile Include="ColorIndicatorGDIAttachment.cs" />
     <Compile Include="ColorMapHelper.cs" />
     <Compile Include="GenericModel.cs" />
     <Compile Include="MyLight.cs" />
@@ -83,7 +79,6 @@
     <Compile Include="ScientificVisual3DControl.Designer.cs">
       <DependentUpon>ScientificVisual3DControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="ViewportEffect.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SharpGL.SceneGraph\SharpGL.SceneGraph.csproj">

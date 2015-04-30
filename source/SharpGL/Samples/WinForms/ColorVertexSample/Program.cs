@@ -20,8 +20,6 @@ namespace ColorVertexSample
             Application.ThreadException += Application_ThreadException;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new MainView());
-            //Application.Run(new FormFixedCamera());
             Application.Run(new FormFreeCamera());
         }
 
