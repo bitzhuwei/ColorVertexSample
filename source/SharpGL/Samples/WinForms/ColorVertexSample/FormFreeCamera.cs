@@ -98,7 +98,7 @@ namespace ColorVertexSample
             {
                 ArcBallEffect2 modelArcBallEffect = this.modelArcBallEffect;
                 if (modelArcBallEffect == null) { return; }
-                var orthoAxisElement = this.orthoAxisElement;
+                OrthoAxisElement orthoAxisElement = this.orthoAxisElement;
                 if (orthoAxisElement == null) { return; }
 
                 modelArcBallEffect.ArcBall.MouseUp(e.X, e.Y);
@@ -157,8 +157,8 @@ namespace ColorVertexSample
                 OrthoAxisElement orthoAxisElement = this.orthoAxisElement;
                 if (orthoAxisElement == null) { return; }
 
-                var width = sceneControl.Width;
-                var height = sceneControl.Height;
+                int width = sceneControl.Width;
+                int height = sceneControl.Height;
                 modelArcBallEffect.ArcBall.SetBounds(width, height);
                 modelArcBallEffect.ArcBall.MouseDown(e.X, e.Y);
                 orthoAxisElement.orthoArcBallEffect.SetBounds(width, height);

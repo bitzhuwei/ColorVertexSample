@@ -36,7 +36,7 @@ namespace ColorVertexSample
             this.axisAttachment = new AxisGDIAttachment();
             this.axisAttachment.AttachTo(this.axisSceneControl);
 
-            var rainBow = ColorTemplateFactory.CreateRainbow();
+            ColorTemplate rainBow = ColorTemplateFactory.CreateRainbow();
             rainBow.Margin.Left = this.axisAttachment.AxisWidth + 10;
             this.colorIndicatorAttachment = new ColorIndicatorGDIAttachment(rainBow);
             this.colorIndicatorAttachment.AttachTo(this.axisSceneControl);
@@ -127,22 +127,21 @@ namespace ColorVertexSample
                 if (minValue >= maxValue)
                     throw new ArgumentException("min value equal or equal to maxValue");
 
-                var root = this.axisSceneControl.Scene.SceneContainer;
+                SceneContainer root = this.axisSceneControl.Scene.SceneContainer;
 
-                ClearChildren(root);
+                root.Children.Clear();
+                root.Effects.Clear();
 
-                ClearEffects(root);
+                PointModelElement element = InitializeElement(nx, ny, nz, radius, minValue, maxValue, root);
 
-                var element = InitializeElement(nx, ny, nz, radius, minValue, maxValue, root);
-
-                var camera = InitializeCamera(element, this.axisSceneControl);
+                LookAtCamera camera = InitializeCamera(element, this.axisSceneControl);
                 this.axisSceneControl.Scene.CurrentCamera = camera;
 
                 this.modelTransform = new ArcBallEffect2(camera);
                 this.modelTransform.ArcBall.Translate = element.Model.translateVector;
                 element.AddEffect(this.modelTransform);
 
-                var attr = InitializeAttributes(root);
+                OpenGLAttributesEffect attr = InitializeAttributes(root);
 
                 this.axisSceneControl.Scene.RenderBoundingVolumes = false;
 
@@ -183,8 +182,8 @@ namespace ColorVertexSample
 
         private LookAtCamera InitializeCamera(PointModelElement element, SceneControl control)
         {
-            var model = element.Model;
-            var rect3D = model.Bounds;
+            PointModel model = element.Model;
+            Rect3D rect3D = model.Bounds;
             Vertex center = model.WorldCoordCenter();
 
             float size = Math.Max(Math.Max(rect3D.Size.x, rect3D.Size.y), rect3D.Size.z);
@@ -192,7 +191,7 @@ namespace ColorVertexSample
             Vertex position = center + new Vertex(0.0f, 0.0f, 1.0f) * (size * 2);
             //Vertex PositionNear = center + new Vertex(0.0f, 0.0f, 1.0f) * (size * 0.5f);
 
-            var lookAtCamera = new LookAtCamera()
+            LookAtCamera lookAtCamera = new LookAtCamera()
             {
                 Position = position,
                 Target = center,
@@ -217,15 +216,15 @@ namespace ColorVertexSample
         /// <param name="maxValue"></param>
         private PointModelElement InitializeElement(int nx, int ny, int nz, float radius, float minValue, float maxValue, SceneElement parent)
         {
-            var model = PointModelFactory.Create(nx, ny, nz, radius, minValue, maxValue);
+            PointModel model = PointModelFactory.Create(nx, ny, nz, radius, minValue, maxValue);
 
-            var element = new PointModelElement(model);
+            PointModelElement element = new PointModelElement(model);
 
             parent.AddChild(element);
 
-            var axies = new Axies();
-            var effect = new LinearTransformationEffect();
-            var length = maxValue - minValue;
+            Axies axies = new Axies();
+            LinearTransformationEffect effect = new LinearTransformationEffect();
+            float length = maxValue - minValue;
             effect.LinearTransformation.ScaleX = length;
             effect.LinearTransformation.ScaleY = length;
             effect.LinearTransformation.ScaleZ = length;
@@ -233,26 +232,6 @@ namespace ColorVertexSample
             element.AddChild(axies);
 
             return element;
-        }
-
-        private void ClearChildren(SceneElement target)
-        {
-            var elements = new SceneElement[target.Children.Count];
-            target.Children.CopyTo(elements, 0);
-            foreach (var item in elements)
-            {
-                target.RemoveChild(item);
-            }
-        }
-
-        private static void ClearEffects(SceneElement target)
-        {
-            var effects = new Effect[target.Effects.Count];
-            target.Effects.CopyTo(effects, 0);
-            foreach (var item in effects)
-            {
-                target.RemoveEffect(item);
-            }
         }
 
         private void lblDebugInfo_Click(object sender, EventArgs e)

@@ -26,13 +26,9 @@ namespace ColorVertexSample
     public partial class MainView : Form
     {
 
-        //private ArcBallEffect arcBallEffect = new ArcBallEffect();
         private CameraRotation cameraTransform;
 
         float? lookIncrement;
-        //private AxisRotation axisRotation;
-        //private AxisTranslation axisTranslation;
-        //private LinearTransformationEffect axisTransform = new LinearTransformationEffect();
         private AxisTransformEffect axisTransform = new AxisTransformEffect();
 
         public MainView()
@@ -70,27 +66,16 @@ namespace ColorVertexSample
         void sceneControl_SizeChanged(object sender, EventArgs e)
         {
             this.cameraTransform.SetBounds(sceneControl.Width, sceneControl.Height);
-            /*
-              this.axisArcBallEffect.ArcBall.SetBounds(this.sceneControl.Width, this.sceneControl.Height);
-            var gl = this.sceneControl.OpenGL;
-            var axis = gl.UnProject(50, 50, 0.1);
-            axisArcBallEffect.ArcBall.SetTranslate(axis[0], axis[1], axis[2]);
-            axisArcBallEffect.ArcBall.Scale = 0.02f;
-             */
             //UpdateAxisTransform();
         }
 
         void Application_Idle(object sender, EventArgs e)
         {
-            //var cameraTransform = this.cameraTransform;
-            //if (cameraTransform == null) { return; }
-            //this.lblDebugInfo.Text = cameraTransform.ToString();
             //UpdateAxisTransform();
         }
 
         private void sceneControl_MouseUp(object sender, MouseEventArgs e)
         {
-            //arcBallEffect.ArcBall.MouseUp(e.X, e.Y);
             cameraTransform.MouseUp(e.X, e.Y);
         }
 
@@ -98,8 +83,6 @@ namespace ColorVertexSample
         {
             if (e.Button == MouseButtons.Left)
             {
-                //arcBallEffect.ArcBall.SetBounds(sceneControl.Width, sceneControl.Height);
-                //arcBallEffect.ArcBall.MouseMove(e.X, e.Y);
                 cameraTransform.MouseMove(e.X, e.Y);
 
                 //UpdateAxisTransform();
@@ -115,8 +98,6 @@ namespace ColorVertexSample
             {
                 int width = sceneControl.Width;
                 int height = sceneControl.Height;
-                //arcBallEffect.ArcBall.SetBounds(width, height);
-                //arcBallEffect.ArcBall.MouseDown(e.X,e.Y);
                 cameraTransform.MouseDown(e.X, e.Y);
                 cameraTransform.SetBounds(width, height);
             }
@@ -129,7 +110,7 @@ namespace ColorVertexSample
 
             //scale by move the camera position
             float moveDirection = e.Delta > 0 ? 1 : -1;
-            var camera = this.sceneControl.Scene.CurrentCamera as LookAtCamera;
+            LookAtCamera camera = this.sceneControl.Scene.CurrentCamera as LookAtCamera;
             Vertex direction = camera.Target - camera.Position;
             direction.Normalize();
             Vertex distance = direction * (moveDirection * this.lookIncrement.Value);
@@ -185,20 +166,19 @@ namespace ColorVertexSample
                 if (minValue >= maxValue)
                     throw new ArgumentException("min value equal or equal to maxValue");
 
-                var root = this.sceneControl.Scene.SceneContainer;
+                SceneContainer root = this.sceneControl.Scene.SceneContainer;
 
-                ClearChildren(root);
+                root.Children.Clear();
+                root.Effects.Clear();
 
-                ClearEffects(root);
+                ColorVertexes colorVertexes = InitializeColorVertexesModel(nx, ny, nz, radius, minValue, maxValue, root);
 
-                var colorVertexes = InitializeColorVertexesModel(nx, ny, nz, radius, minValue, maxValue, root);
-
-                var camera = InitializeCamera(colorVertexes, this.sceneControl);
+                Camera camera = InitializeCamera(colorVertexes, this.sceneControl);
                 this.sceneControl.Scene.CurrentCamera = camera;
 
-                var axis = InitializeAxis(root);
+                SceneElement axis = InitializeAxis(root);
 
-                var attr = InitializeAttributes(root);
+                OpenGLAttributesEffect attr = InitializeAttributes(root);
 
                 this.sceneControl.Scene.RenderBoundingVolumes = false;
 
@@ -239,7 +219,7 @@ namespace ColorVertexSample
         /// </summary>
         private SceneElement InitializeAxis(SceneElement parent)
         {
-            var axisRoot = new SharpGL.SceneGraph.Primitives.Folder() { Name = "axis root" };
+            Folder axisRoot = new SharpGL.SceneGraph.Primitives.Folder() { Name = "axis root" };
             parent.AddChild(axisRoot);
 
             //  Create light
@@ -341,38 +321,18 @@ namespace ColorVertexSample
         /// <param name="maxValue"></param>
         private ColorVertexes InitializeColorVertexesModel(int nx, int ny, int nz, float radius, float minValue, float maxValue, SceneElement parent)
         {
-            var colorVertexes = ColorVertexesFactory.Create(nx, ny, nz, radius, minValue, maxValue);
+            ColorVertexes colorVertexes = ColorVertexesFactory.Create(nx, ny, nz, radius, minValue, maxValue);
 
-            var visualElement = new ColorVertexesElement(colorVertexes);
+            ColorVertexesElement visualElement = new ColorVertexesElement(colorVertexes);
 
             parent.AddChild(visualElement);
 
             return colorVertexes;
         }
 
-        private void ClearChildren(SceneElement target)
-        {
-            var elements = new SceneElement[target.Children.Count];
-            target.Children.CopyTo(elements, 0);
-            foreach (var item in elements)
-            {
-                target.RemoveChild(item);
-            }
-        }
-
-        private static void ClearEffects(SceneElement target)
-        {
-            var effects = new Effect[target.Effects.Count];
-            target.Effects.CopyTo(effects, 0);
-            foreach (var item in effects)
-            {
-                target.RemoveEffect(item);
-            }
-        }
-
         private Camera InitializeCamera(ColorVertexes colorVertexes, SceneControl control)
         {
-            var rect3D = colorVertexes.Bounds;
+            Rect3D rect3D = colorVertexes.Bounds;
             float centerX = rect3D.X + rect3D.Size.x / 2.0f;
             float centerY = rect3D.Y + rect3D.Size.y / 2.0f;
             float centerZ = rect3D.Z + rect3D.Size.z / 2.0f;
@@ -385,7 +345,7 @@ namespace ColorVertexSample
 
             this.lookIncrement = size * 0.1f;
 
-            var lookAtCamera = new LookAtCamera()
+            LookAtCamera lookAtCamera = new LookAtCamera()
             {
                 Position = position,
                 Target = center,
