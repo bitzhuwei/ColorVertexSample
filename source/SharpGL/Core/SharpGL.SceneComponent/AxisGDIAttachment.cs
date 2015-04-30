@@ -82,7 +82,7 @@ namespace SharpGL.SceneComponent
 
         public void Dettach()
         {
-            var control = this.control;
+            SceneControl control = this.control;
             if (control == null) { return; }
 
             control.MouseDown -= this.mouseDownEventHandler;
@@ -100,10 +100,10 @@ namespace SharpGL.SceneComponent
             parallelCamera.Near = 0.001f;
             parallelCamera.Far = float.MaxValue;
 
-            var modelSceneCamera = control.Scene.CurrentCamera as LookAtCamera;
+            LookAtCamera modelSceneCamera = control.Scene.CurrentCamera as LookAtCamera;
             if (modelSceneCamera != null)
             {
-                var position = modelSceneCamera.Position - modelSceneCamera.Target;
+                Vertex position = modelSceneCamera.Position - modelSceneCamera.Target;
                 position.Normalize();
                 parallelCamera.Position = position * 7;
                 parallelCamera.UpVector = modelSceneCamera.UpVector;
@@ -126,10 +126,10 @@ namespace SharpGL.SceneComponent
         /// <param name="args"></param>
         void SceneControl_GDIDraw(object sender, RenderEventArgs args)
         {
-            var control = this.control;
+            SceneControl control = this.control;
             if (control == null) { return; }
 
-            var modelSceneCamera = control.Scene.CurrentCamera as LookAtCamera;
+            LookAtCamera modelSceneCamera = control.Scene.CurrentCamera as LookAtCamera;
             if (modelSceneCamera != null)
             {
                 UpdateParallelCamera(modelSceneCamera);
@@ -139,7 +139,7 @@ namespace SharpGL.SceneComponent
             this.axisScene.OpenGL.MakeCurrent();
             this.axisScene.Draw();
 
-            var targets = this.axisSpy.projectedAxisVertexes;
+            Vertex[] targets = this.axisSpy.projectedAxisVertexes;
             for (int i = 1; i < targets.Length; i++)
             {
                 args.Graphics.DrawLine(this.pens[i - 1],
@@ -150,7 +150,7 @@ namespace SharpGL.SceneComponent
 
         private void UpdateParallelCamera(LookAtCamera modelSceneCamera)
         {
-            var position = modelSceneCamera.Position - modelSceneCamera.Target;
+            Vertex position = modelSceneCamera.Position - modelSceneCamera.Target;
             position.Normalize();
             parallelCamera.Position = position * 7;
             parallelCamera.UpVector = modelSceneCamera.UpVector;
@@ -185,7 +185,7 @@ namespace SharpGL.SceneComponent
 
         void SceneControl_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            var control = this.control;
+            SceneControl control = this.control;
             if (control == null) { return; }
 
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
@@ -197,7 +197,7 @@ namespace SharpGL.SceneComponent
 
         void SceneControl_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            var control = this.control;
+            SceneControl control = this.control;
             if (control == null) { return; }
 
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
@@ -209,7 +209,7 @@ namespace SharpGL.SceneComponent
 
         void SceneControl_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            var control = this.control;
+            SceneControl control = this.control;
             if (control == null) { return; }
 
             if (e.Button == System.Windows.Forms.MouseButtons.Left)

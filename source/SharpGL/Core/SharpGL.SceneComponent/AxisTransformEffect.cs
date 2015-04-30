@@ -8,6 +8,7 @@ using SharpGL.SceneGraph.Cameras;
 using SharpGL.SceneGraph.Core;
 using SharpGL.SceneGraph.Effects;
 using SharpGL.SceneGraph.Transformations;
+using SharpGL.SceneGraph;
 
 namespace SharpGL.SceneComponent
 {
@@ -26,8 +27,8 @@ namespace SharpGL.SceneComponent
         {
             //  Push the stack.
             gl.PushMatrix();
-          
-            var camera = parentElement.TraverseToRootElement().ParentScene.CurrentCamera as LookAtCamera;
+
+            LookAtCamera camera = parentElement.TraverseToRootElement().ParentScene.CurrentCamera as LookAtCamera;
             if (camera != null)
             {
                 SetTranslate(gl, camera);
@@ -44,9 +45,9 @@ namespace SharpGL.SceneComponent
         {
             gl.Flush();
 
-            var towards = camera.Target - camera.Position;
+            Vertex towards = camera.Target - camera.Position;
             towards.Normalize();
-            var position = camera.Position + towards * 5f;
+            Vertex position = camera.Position + towards * 5f;
 
             this.linearTransformation.TranslateX = position.X;
             this.linearTransformation.TranslateY = position.Y;
@@ -60,11 +61,11 @@ namespace SharpGL.SceneComponent
         /// <param name="parentElement">The parent element.</param>
         public override void Pop(OpenGL gl, SceneElement parentElement)
         {
-             var camera = parentElement.TraverseToRootElement().ParentScene.CurrentCamera as LookAtCamera;
-             if (camera != null)
-             {
-                 gl.Viewport(0, 0, result[2], result[3]);
-             }
+            LookAtCamera camera = parentElement.TraverseToRootElement().ParentScene.CurrentCamera as LookAtCamera;
+            if (camera != null)
+            {
+                gl.Viewport(0, 0, result[2], result[3]);
+            }
 
             //  Pop the stack.
             gl.PopMatrix();
@@ -74,7 +75,7 @@ namespace SharpGL.SceneComponent
         /// The linear transformation.
         /// </summary>
         private LinearTransformation linearTransformation = new LinearTransformation();
-        private int[] result=new int[4];
+        private int[] result = new int[4];
 
         /// <summary>
         /// Gets or sets the linear transformation.

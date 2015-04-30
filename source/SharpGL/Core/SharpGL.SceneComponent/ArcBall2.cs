@@ -58,7 +58,7 @@ namespace SharpGL.SceneComponent
              * result = [ _right _up _back ] * | ry |
              *                                 | rz |
              */
-            var result = new Vertex(
+            Vertex result = new Vertex(
                 (rx * _right.X + ry * _up.X + rz * _back.X),
                 (rx * _right.Y + ry * _up.Y + rz * _back.Y),
                 (rx * _right.Z + ry * _up.Z + rz * _back.Z)
@@ -88,7 +88,7 @@ namespace SharpGL.SceneComponent
                 double cosAngle = startPosition.ScalarProduct(endPosition) / (startPosition.Magnitude() * endPosition.Magnitude());
                 if (cosAngle > 1) { cosAngle = 1; }
                 else if (cosAngle < -1) { cosAngle = -1; }
-                var angle = 1 * (float)(Math.Acos(cosAngle) / Math.PI * 180);
+                float angle = 1 * (float)(Math.Acos(cosAngle) / Math.PI * 180);
                 System.Threading.Interlocked.Exchange(ref _angle, angle);
                 this._normalVector = startPosition.VectorProduct(endPosition);
                 this._startPosition = endPosition;
@@ -102,16 +102,16 @@ namespace SharpGL.SceneComponent
 
         //public mat4 GetTransformMat4()
         //{
-        //    var rotation = GetRotation();
-        //    var scale = glm.scale(mat4.identity(), new vec3(Scale));
-        //    var translate = glm.translate(mat4.identity(), new vec3(Translate.X,
+        //    mat4 rotation = GetRotation();
+        //    mat4 scale = glm.scale(mat4.identity(), new vec3(Scale));
+        //    mat4 translate = glm.translate(mat4.identity(), new vec3(Translate.X,
         //        Translate.Y, Translate.Z));
         //    //result = translate * rotation * scale;//rotate good
         //    //result = translate * scale * rotation;//rotate reversed
         //    //result = rotation * translate * scale;//rotate reversed
         //    //result = rotation * scale * translate;
         //    //result = scale * translate * rotation;
-        //    var result = scale * rotation * translate;//rotate good
+        //    mat4 result = scale * rotation * translate;//rotate good
         //    return result;
         //}
 
@@ -122,8 +122,8 @@ namespace SharpGL.SceneComponent
 
         //private void UpdateRotation()
         //{
-        //    var angle = (float)(_angle * Math.PI / 180.0f);
-        //    var rotation = glm.rotate(angle, new vec3(_normalVector.X, _normalVector.Y, _normalVector.Z));
+        //    float angle = (float)(_angle * Math.PI / 180.0f);
+        //    mat4 rotation = glm.rotate(angle, new vec3(_normalVector.X, _normalVector.Y, _normalVector.Z));
         //    currentRotation = rotation * currentRotation;
         //}
 

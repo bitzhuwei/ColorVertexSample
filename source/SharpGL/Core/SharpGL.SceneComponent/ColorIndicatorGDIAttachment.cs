@@ -56,7 +56,7 @@ namespace SharpGL.SceneComponent
 
         public void Dettach()
         {
-            var control = this.control;
+            SceneControl control = this.control;
             if (control == null) { return; }
 
             control.GDIDraw -= this.renderEventHandler;
@@ -71,21 +71,21 @@ namespace SharpGL.SceneComponent
         /// <param name="args"></param>
         void SceneControl_GDIDraw(object sender, RenderEventArgs args)
         {
-            var colorTemplate = this.ColorTemplate;
+            ColorTemplate colorTemplate = this.ColorTemplate;
             if (colorTemplate == null) { return; }
-            var control = this.control;
+            SceneControl control = this.control;
             if (control == null) { return; }
 
-            var g = args.Graphics;
-            var blockWidth = (control.Width - colorTemplate.Margin.Left - colorTemplate.Margin.Right) / (colorTemplate.Colors.Length - 1);
-            var height = colorTemplate.Height;
+            Graphics g = args.Graphics;
+            int blockWidth = (control.Width - colorTemplate.Margin.Left - colorTemplate.Margin.Right) / (colorTemplate.Colors.Length - 1);
+            int height = colorTemplate.Height;
             //draw rectangles
             for (int i = 0; i < colorTemplate.Colors.Length - 1; i++)
             {
-                var x = colorTemplate.Margin.Left + i * blockWidth;
-                var y = control.Height - (colorTemplate.Height + colorTemplate.Margin.Bottom);
-                var rect = new Rectangle(x, y, blockWidth, height);
-                var brush = new LinearGradientBrush(rect,
+                int x = colorTemplate.Margin.Left + i * blockWidth;
+                int y = control.Height - (colorTemplate.Height + colorTemplate.Margin.Bottom);
+                Rectangle rect = new Rectangle(x, y, blockWidth, height);
+                Brush brush = new LinearGradientBrush(rect,
                     colorTemplate.Colors[i], colorTemplate.Colors[i + 1],
                      LinearGradientMode.Horizontal);
 
@@ -95,18 +95,18 @@ namespace SharpGL.SceneComponent
             //draw dropping lines
             for (int i = 0; i < colorTemplate.Colors.Length; i++)
             {
-                var x = colorTemplate.Margin.Left + i * blockWidth;
-                var y = control.Height - (colorTemplate.Margin.Bottom);
+                int x = colorTemplate.Margin.Left + i * blockWidth;
+                int y = control.Height - (colorTemplate.Margin.Bottom);
                 g.DrawLine(whitePen, x, y, x, y + 6);
             }
             //draw numbers
             for (int i = 0; i < colorTemplate.Colors.Length; i++)
             {
-                var value = (minValue * (double)(colorTemplate.Colors.Length - 1 - i) / (colorTemplate.Colors.Length - 1)
+                string value = (minValue * (double)(colorTemplate.Colors.Length - 1 - i) / (colorTemplate.Colors.Length - 1)
                     + maxValue * (double)i / (colorTemplate.Colors.Length - 1)).ToString();
-                var size = g.MeasureString(value, font);
-                var x = colorTemplate.Margin.Left + i * blockWidth - size.Width / 2;
-                var y = control.Height - (colorTemplate.Margin.Bottom - 9);
+                SizeF size = g.MeasureString(value, font);
+                float x = colorTemplate.Margin.Left + i * blockWidth - size.Width / 2;
+                int y = control.Height - (colorTemplate.Margin.Bottom - 9);
                 g.DrawString(value, font, whiteBrush, x, y);
             }
         }

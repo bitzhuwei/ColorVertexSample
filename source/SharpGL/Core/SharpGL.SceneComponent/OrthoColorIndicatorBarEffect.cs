@@ -7,6 +7,7 @@ using SharpGL.SceneGraph;
 using SharpGL.SceneGraph.Cameras;
 using SharpGL.SceneGraph.Core;
 using SharpGL.SceneGraph.Effects;
+using SharpGL.RenderContextProviders;
 
 namespace SharpGL.SceneComponent
 {
@@ -40,7 +41,7 @@ namespace SharpGL.SceneComponent
 
         public override void Push(OpenGL gl, SceneElement parentElement)
         {
-            var rc = gl.RenderContextProvider;
+            IRenderContextProvider rc = gl.RenderContextProvider;
             Debug.Assert(rc != null);
 
             int width = 0;

@@ -51,7 +51,7 @@ namespace SharpGL.SceneComponent
             double[] z = new double[1];
             for (int i = 0; i < this.axisVertexes.Length; i++)
             {
-                var vertex = this.axisVertexes[i];
+                Vertex vertex = this.axisVertexes[i];
                 gl.Project(vertex.X, vertex.Y, vertex.Z,
                     modelview, projection, viewport, x, y, z);
                 this.projectedAxisVertexes[i].X = (float)x[0];
