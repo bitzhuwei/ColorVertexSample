@@ -112,7 +112,7 @@ namespace ColorVertexSample
         {
             if ((e.Button & MouseButtons.Left) == System.Windows.Forms.MouseButtons.Left)
             {
-                var cameraRotation = this.cameraRotation;
+                CameraRotation cameraRotation = this.cameraRotation;
                 if (cameraRotation == null) { return; }
 
                 cameraRotation.MouseMove(e.X, e.Y);
@@ -122,9 +122,9 @@ namespace ColorVertexSample
 
             if ((e.Button & MouseButtons.Right) == System.Windows.Forms.MouseButtons.Right)
             {
-                var modelArcBallEffect = this.modelArcBallEffect;
+                ArcBallEffect2 modelArcBallEffect = this.modelArcBallEffect;
                 if (modelArcBallEffect == null) { return; }
-                var orthoAxisElement = this.orthoAxisElement;
+                OrthoAxisElement orthoAxisElement = this.orthoAxisElement;
                 if (orthoAxisElement == null) { return; }
 
                 modelArcBallEffect.ArcBall.MouseMove(e.X, e.Y);
@@ -138,11 +138,11 @@ namespace ColorVertexSample
         {
             if ((e.Button & MouseButtons.Left) == System.Windows.Forms.MouseButtons.Left)
             {
-                var cameraRotation = this.cameraRotation;
+                CameraRotation cameraRotation = this.cameraRotation;
                 if (cameraRotation == null) { return; }
 
-                var width = sceneControl.Width;
-                var height = sceneControl.Height;
+                int width = sceneControl.Width;
+                int height = sceneControl.Height;
 
                 cameraRotation.SetBounds(width, height);
                 cameraRotation.MouseDown(e.X, e.Y);
@@ -152,9 +152,9 @@ namespace ColorVertexSample
 
             if ((e.Button & MouseButtons.Right) == System.Windows.Forms.MouseButtons.Right)
             {
-                var modelArcBallEffect = this.modelArcBallEffect;
+                ArcBallEffect2 modelArcBallEffect = this.modelArcBallEffect;
                 if (modelArcBallEffect == null) { return; }
-                var orthoAxisElement = this.orthoAxisElement;
+                OrthoAxisElement orthoAxisElement = this.orthoAxisElement;
                 if (orthoAxisElement == null) { return; }
 
                 var width = sceneControl.Width;
@@ -170,7 +170,7 @@ namespace ColorVertexSample
 
         private void sceneControl_MouseWheel(object sender, MouseEventArgs e)
         {
-            var modelArcBallEffect = this.modelArcBallEffect;
+            ArcBallEffect2 modelArcBallEffect = this.modelArcBallEffect;
             if (modelArcBallEffect == null) { return; }
 
             modelArcBallEffect.ArcBall.Scale += e.Delta * 0.001f;
@@ -199,13 +199,13 @@ namespace ColorVertexSample
                 if (minValue >= maxValue)
                     throw new ArgumentException("min value equal or equal to maxValue");
 
-                var scene = this.sceneControl.Scene;
-                var root = scene.SceneContainer;
+                Scene scene = this.sceneControl.Scene;
+                SceneContainer root = scene.SceneContainer;
 
                 root.Children.Clear();
                 root.Effects.Clear();
 
-                var element = InitializeElement(nx, ny, nz, radius, minValue, maxValue, root);
+                PointModelElement element = InitializeElement(nx, ny, nz, radius, minValue, maxValue, root);
 
                 Initialize2DUI(root);
 
@@ -213,7 +213,7 @@ namespace ColorVertexSample
 
                 ApplyCamera();
 
-                var attr = InitializeAttributes(root);
+                OpenGLAttributesEffect attr = InitializeAttributes(root);
                 root.AddEffect(attr);
 
                 scene.RenderBoundingVolumes = false;
@@ -259,15 +259,15 @@ namespace ColorVertexSample
 
         private void InitializeCamera(PointModelElement element, SceneControl control)
         {
-            var model = element.Model;
-            var rect3D = model.Bounds;
+            PointModel model = element.Model;
+            Rect3D rect3D = model.Bounds;
             Vertex center = model.WorldCoordCenter();
 
             float size = Math.Max(Math.Max(rect3D.Size.x, rect3D.Size.y), rect3D.Size.z);
 
             Vertex position = center + new Vertex(0.0f, 0.0f, 1.0f) * (size * 2);
             //Vertex PositionNear = center + new Vertex(0.0f, 0.0f, 1.0f) * (size * 0.5f);
-            var camera = control.Scene.CurrentCamera as LookAtCamera;
+            LookAtCamera camera = control.Scene.CurrentCamera as LookAtCamera;
 
             camera.Position = position;
             camera.Target = center;
@@ -289,48 +289,28 @@ namespace ColorVertexSample
         /// <param name="maxValue"></param>
         private PointModelElement InitializeElement(int nx, int ny, int nz, float radius, float minValue, float maxValue, SceneElement parent)
         {
-            var model = PointModelFactory.Create(nx, ny, nz, radius, minValue, maxValue);
+            PointModel model = PointModelFactory.Create(nx, ny, nz, radius, minValue, maxValue);
 
-            var element = new PointModelElement(model);
+            PointModelElement element = new PointModelElement(model);
 
             parent.AddChild(element);
 
-            var axies = new Axies();
-            var effect = new LinearTransformationEffect();
-            var length = maxValue - minValue;
+            Axies axies = new Axies();
+            LinearTransformationEffect effect = new LinearTransformationEffect();
+            float length = maxValue - minValue;
             effect.LinearTransformation.ScaleX = length;
             effect.LinearTransformation.ScaleY = length;
             effect.LinearTransformation.ScaleZ = length;
             axies.AddEffect(effect);
             element.AddChild(axies);
 
-            var modelArcBallEffect = new ArcBallEffect2();
+            ArcBallEffect2 modelArcBallEffect = new ArcBallEffect2();
             modelArcBallEffect.ArcBall.Translate = element.Model.translateVector;
             element.AddEffect(modelArcBallEffect);
 
             this.modelArcBallEffect = modelArcBallEffect;
 
             return element;
-        }
-
-        private void ClearChildren(SceneElement target)
-        {
-            var elements = new SceneElement[target.Children.Count];
-            target.Children.CopyTo(elements, 0);
-            foreach (var item in elements)
-            {
-                target.RemoveChild(item);
-            }
-        }
-
-        private static void ClearEffects(SceneElement target)
-        {
-            var effects = new Effect[target.Effects.Count];
-            target.Effects.CopyTo(effects, 0);
-            foreach (var item in effects)
-            {
-                target.RemoveEffect(item);
-            }
         }
 
         private void lblDebugInfo_Click(object sender, EventArgs e)
