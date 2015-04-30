@@ -82,7 +82,6 @@
     <Compile Include="ScientificVisual3DControl.Designer.cs">
       <DependentUpon>ScientificVisual3DControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="ScientificVisual3DScene.cs" />
     <Compile Include="ViewportEffect.cs" />
   </ItemGroup>
   <ItemGroup>
