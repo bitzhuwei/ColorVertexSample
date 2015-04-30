@@ -98,7 +98,7 @@ namespace ColorVertexSample.Model
 
         public Vertex WorldCoordCenter()
         {
-            var result = this.Bounds.location 
+            Vertex result = this.Bounds.location 
                 + (Vertex)this.Bounds.size3D / 2 
                 + this.translateVector;
             return result;
