@@ -11,12 +11,12 @@ namespace ColorVertexSample.Model
         public static PointModel Create(int nx, int ny, int nz, float radius, float minValue, float maxValue)
         {
             int pointCount = nx * ny * nz;
-            var model = new PointModel(pointCount);
-            var positionRandom = new Random();
-            var colorRandom = new Random();
+            PointModel model = new PointModel(pointCount);
+            Random positionRandom = new Random();
+            Random colorRandom = new Random();
 
             Vertex min = new Vertex(), max = new Vertex();
-            var isInit = false;
+            bool isInit = false;
 
             unsafe
             {
