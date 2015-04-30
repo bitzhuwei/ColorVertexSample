@@ -5,6 +5,10 @@ using System.Windows.Forms;
 
 namespace ColorVertexSample
 {
+
+    /// <summary>
+    /// 程序入口
+    /// </summary>
     static class Program
     {
         /// <summary>
