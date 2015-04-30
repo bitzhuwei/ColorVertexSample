@@ -58,7 +58,7 @@ namespace ColorVertexSample
 
         private void ApplyCamera()
         {
-            var camera = this.sceneControl.Scene.CurrentCamera as LookAtCamera;
+            LookAtCamera camera = this.sceneControl.Scene.CurrentCamera as LookAtCamera;
 
             // This means the same:
             // this.cameraRotation = new CameraRotation() { LookAtCamera = camera };
@@ -71,12 +71,12 @@ namespace ColorVertexSample
 
         private void Initialize2DUI(SceneContainer parent)
         {
-            var orthoAxisElement = OrthoAxisElementFactory.Create();
+            OrthoAxisElement orthoAxisElement = OrthoAxisElementFactory.Create();
             parent.AddChild(orthoAxisElement);
             this.orthoAxisElement = orthoAxisElement;
 
-            var colorTemplate = ColorTemplateFactory.CreateRainbow();
-            var orthoColorIndicatorElement = OrthoColorIndicatorElementFactory.Create(colorTemplate);
+            ColorTemplate colorTemplate = ColorTemplateFactory.CreateRainbow();
+            OrthoColorIndicatorElement orthoColorIndicatorElement = OrthoColorIndicatorElementFactory.Create(colorTemplate);
             //orthoColorIndicatorElement.scaleEffect.Margin=...
             parent.AddChild(orthoColorIndicatorElement);
             this.orthoColorIndicatorElement = orthoColorIndicatorElement;
@@ -86,7 +86,7 @@ namespace ColorVertexSample
         {
             if ((e.Button & MouseButtons.Left) == System.Windows.Forms.MouseButtons.Left)
             {
-                var cameraRotation = this.cameraRotation;
+                CameraRotation cameraRotation = this.cameraRotation;
                 if (cameraRotation == null) { return; }
 
                 cameraRotation.MouseUp(e.X, e.Y);
@@ -96,7 +96,7 @@ namespace ColorVertexSample
 
             if ((e.Button & MouseButtons.Right) == System.Windows.Forms.MouseButtons.Right)
             {
-                var modelArcBallEffect = this.modelArcBallEffect;
+                ArcBallEffect2 modelArcBallEffect = this.modelArcBallEffect;
                 if (modelArcBallEffect == null) { return; }
                 var orthoAxisElement = this.orthoAxisElement;
                 if (orthoAxisElement == null) { return; }
