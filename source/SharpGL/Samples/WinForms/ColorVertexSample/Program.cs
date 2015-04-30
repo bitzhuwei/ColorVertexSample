@@ -7,7 +7,7 @@ namespace ColorVertexSample
 {
 
     /// <summary>
-    /// 程序入口
+    /// 程序入口， try again
     /// </summary>
     static class Program
     {
