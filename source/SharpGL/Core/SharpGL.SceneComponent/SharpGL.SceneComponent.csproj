@@ -54,6 +54,13 @@
     <Compile Include="ColorIndicatorGDIAttachment.cs" />
     <Compile Include="ColorMapHelper.cs" />
     <Compile Include="GenericModel.cs" />
+    <Compile Include="MyScene.cs" />
+    <Compile Include="MySceneControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MySceneControl.Designer.cs">
+      <DependentUpon>MySceneControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="OrthoArcBallEffect.cs" />
     <Compile Include="OrthoAxisElement.cs" />
     <Compile Include="OrthoAxisElementFactory.cs" />
@@ -75,6 +82,7 @@
     <Compile Include="ScientificVisual3DControl.Designer.cs">
       <DependentUpon>ScientificVisual3DControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="ScientificVisual3DScene.cs" />
     <Compile Include="ViewportEffect.cs" />
   </ItemGroup>
   <ItemGroup>

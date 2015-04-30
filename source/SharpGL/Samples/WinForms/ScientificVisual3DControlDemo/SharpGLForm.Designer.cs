@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.openGLControl = new SharpGL.OpenGLControl();
+            this.openGLControl = new SharpGL.SceneComponent.ScientificVisual3DControl();
             ((System.ComponentModel.ISupportInitialize)(this.openGLControl)).BeginInit();
             this.SuspendLayout();
             // 
@@ -61,7 +61,7 @@
 
         #endregion
 
-        private SharpGL.OpenGLControl openGLControl;
+        private SharpGL.SceneComponent.ScientificVisual3DControl openGLControl;
     }
 }
 
