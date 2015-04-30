@@ -43,8 +43,8 @@ namespace SharpGL.SceneComponent
             var rc = gl.RenderContextProvider;
             Debug.Assert(rc != null);
 
-            var width = 0.0;
-            var height = 0.0;
+            int width = 0;
+            int height = 0;
 
             if (rc != null)
             {
@@ -62,13 +62,13 @@ namespace SharpGL.SceneComponent
             gl.MatrixMode(SharpGL.Enumerations.MatrixMode.Projection);
             gl.PushMatrix();
             gl.LoadIdentity();
-            var margin = colorTemplate.Margin;
-            var targetOrthoBarWidth = width - colorTemplate.Margin.Left - colorTemplate.Margin.Right;
-            if (targetOrthoBarWidth <= 0) { targetOrthoBarWidth = double.Epsilon; }
-            var scaledWidth = width * colorTemplate.Width / targetOrthoBarWidth;
-            var scaledLeft = -colorTemplate.Margin.Left * colorTemplate.Width / targetOrthoBarWidth;
-            var scaledRight = scaledLeft + scaledWidth;
-            if (scaledLeft >= scaledRight) { scaledRight = scaledLeft + double.Epsilon; }
+            System.Windows.Forms.Padding margin = colorTemplate.Margin;
+            int targetOrthoBarWidth = width - colorTemplate.Margin.Left - colorTemplate.Margin.Right;
+            if (targetOrthoBarWidth <= 0) { targetOrthoBarWidth = 1; }
+            int scaledWidth = width * colorTemplate.Width / targetOrthoBarWidth;
+            int scaledLeft = -colorTemplate.Margin.Left * colorTemplate.Width / targetOrthoBarWidth;
+            int scaledRight = scaledLeft + scaledWidth;
+            if (scaledLeft >= scaledRight) { scaledRight = scaledLeft + 1; }
             gl.Ortho(scaledLeft, scaledRight,
                 -colorTemplate.Margin.Bottom, height - colorTemplate.Margin.Bottom,
                 zNear, zFar);
@@ -81,7 +81,7 @@ namespace SharpGL.SceneComponent
             }
             else
             {
-                var position = camera.Position - camera.Target;
+                Vertex position = camera.Position - camera.Target;
                 position.Normalize();
                 gl.LookAt(position.X, position.Y, position.Z,
                     0, 0, 0,
