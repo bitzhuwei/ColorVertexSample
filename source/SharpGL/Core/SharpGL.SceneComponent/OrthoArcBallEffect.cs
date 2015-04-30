@@ -7,6 +7,7 @@ using SharpGL.SceneGraph;
 using SharpGL.SceneGraph.Cameras;
 using SharpGL.SceneGraph.Core;
 using SharpGL.SceneGraph.Effects;
+using SharpGL.RenderContextProviders;
 
 namespace SharpGL.SceneComponent
 {
@@ -48,11 +49,11 @@ namespace SharpGL.SceneComponent
 
         public override void Push(OpenGL gl, SceneElement parentElement)
         {
-            var rc = gl.RenderContextProvider;
+            IRenderContextProvider rc = gl.RenderContextProvider;
             Debug.Assert(rc != null);
 
-            var width = 0.0;
-            var height = 0.0;
+            int width = 0; ;
+            int height = 0;
 
             if (rc != null)
             {
@@ -71,7 +72,7 @@ namespace SharpGL.SceneComponent
             gl.PushMatrix();
             gl.LoadIdentity();
             gl.Ortho(-CenterX, width - CenterX, -CenterY, height - CenterY, zNear, zFar);
-            var camera = this.Camera;
+            LookAtCamera camera = this.Camera;
             if (camera == null)
             {
                 gl.LookAt(0, 0, 1, 0, 0, 0, 0, 1, 0);
@@ -79,7 +80,7 @@ namespace SharpGL.SceneComponent
             }
             else
             {
-                var position = camera.Position - camera.Target;
+                Vertex position = camera.Position - camera.Target;
                 position.Normalize();
                 gl.LookAt(position.X, position.Y, position.Z,
                     0, 0, 0,
