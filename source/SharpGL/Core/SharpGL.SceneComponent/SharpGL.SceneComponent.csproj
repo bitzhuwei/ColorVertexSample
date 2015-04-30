@@ -54,6 +54,7 @@
     <Compile Include="ColorIndicatorGDIAttachment.cs" />
     <Compile Include="ColorMapHelper.cs" />
     <Compile Include="GenericModel.cs" />
+    <Compile Include="MyLight.cs" />
     <Compile Include="MyScene.cs" />
     <Compile Include="MySceneControl.cs">
       <SubType>UserControl</SubType>
