@@ -16,9 +16,9 @@ namespace SharpGL.SceneComponent
 
         public void Render(OpenGL gl, RenderMode renderMode)
         {
-            var rectModel = this.rectModel;
-            var verticalLines = this.verticalLines;
-            var horizontalLines = this.horizontalLines;
+            GenericModel rectModel = this.rectModel;
+            GenericModel verticalLines = this.verticalLines;
+            GenericModel horizontalLines = this.horizontalLines;
 
             if (rectModel != null)
             { rectModel.Render(gl, renderMode); }
