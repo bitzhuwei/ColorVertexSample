@@ -19,10 +19,10 @@ namespace SharpGL.SceneComponent
         /// <returns></returns>
         public static OrthoAxisElement Create(LookAtCamera camera = null)
         {
-            var element = new OrthoAxisElement() { Name = "orthogonal axis element" };
+            OrthoAxisElement element = new OrthoAxisElement() { Name = "orthogonal axis element" };
 
             //  Create a set of scene attributes.
-            var sceneAttributes = new OpenGLAttributesEffect()
+            OpenGLAttributesEffect sceneAttributes = new OpenGLAttributesEffect()
             {
                 Name = "Scene Attributes"
             };
@@ -39,20 +39,20 @@ namespace SharpGL.SceneComponent
             //sceneAttributes.TransformAttributes.MatrixMode = MatrixMode.Projection;
             element.AddEffect(sceneAttributes);
 
-            var orthoAxisArcBallEffect = new OrthoArcBallEffect(camera);
+            OrthoArcBallEffect orthoAxisArcBallEffect = new OrthoArcBallEffect(camera);
             element.AddEffect(orthoAxisArcBallEffect);
 
-            var axies = new Axies();
+            Axies axies = new Axies();
             element.AddChild(axies);
-            var transform = new LinearTransformationEffect();
+            LinearTransformationEffect transform = new LinearTransformationEffect();
             transform.LinearTransformation.ScaleX = 10;
             transform.LinearTransformation.ScaleY = 10;
             transform.LinearTransformation.ScaleZ = 10;
             axies.AddEffect(transform);
 
-            //var grid = new Grid();
+            //Grid grid = new Grid();
             //element.AddChild(grid);
-            //var transform = new LinearTransformationEffect();
+            //LinearTransformationEffect transform = new LinearTransformationEffect();
             //transform.LinearTransformation.ScaleX = 0.1f;
             //transform.LinearTransformation.ScaleY = 0.1f;
             //transform.LinearTransformation.ScaleZ = 0.1f;
