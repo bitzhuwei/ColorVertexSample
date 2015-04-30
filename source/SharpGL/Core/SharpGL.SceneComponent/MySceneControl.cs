@@ -12,7 +12,7 @@ namespace SharpGL.SceneComponent
     /// <summary>
     /// replace of <see cref="SharpGL.WinForms.SceneControl"/>
     /// </summary>
-    public partial class MySceneControl : OpenGLControl, ISupportInitialize
+    public partial class MySceneControl : OpenGLControl
     {
         public MySceneControl()
         {
@@ -21,6 +21,9 @@ namespace SharpGL.SceneComponent
 
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             SetStyle(ControlStyles.UserPaint, true);
+
+            // this.scene.OpenGL.RenderContextProvider is null, so we use this.OpenGL instead.
+            this.scene.OpenGL = this.OpenGL;
 
             //  Initialise the scene.
             SceneGraph.Helpers.SceneHelper.InitialiseModelingScene(Scene);
