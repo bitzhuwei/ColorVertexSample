@@ -11,6 +11,8 @@ namespace SharpGL.SceneComponent
 {
     /// <summary>
     /// replace of <see cref="SharpGL.WinForms.SceneControl"/>
+    /// <para>Invoke base.OnSizeChanged to update opengl's view size.</para>
+    /// <para>Use <see cref="MyScene"/> instead of Scene. <see cref="MyScene"/> pushes and pops <see cref="IBindable"/> scene elements.</para>
     /// </summary>
     public partial class MySceneControl : OpenGLControl
     {

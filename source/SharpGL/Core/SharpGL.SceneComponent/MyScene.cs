@@ -8,6 +8,7 @@ namespace SharpGL.SceneComponent
 {
     /// <summary>
     /// replace of <see cref="SharpGL.SceneGraph.Scene"/>
+    /// <see cref="MyScene"/> pushes and pops <see cref="IBindable"/> scene elements.</para>
     /// </summary>
     public class MyScene : SharpGL.SceneGraph.Scene
     {
