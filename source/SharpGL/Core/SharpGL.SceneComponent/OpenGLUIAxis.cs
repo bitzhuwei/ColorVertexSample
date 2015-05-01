@@ -20,7 +20,7 @@ namespace SharpGL.SceneComponent
         public OpenGLUIAxis(AnchorStyles anchor, Padding margin, System.Drawing.Size size, int zNear = -1000, int zFar = 1000, GLColor rectColor = null)
             : base(anchor, margin, size, zNear, zFar)
         {
-            var axis = new SharpGL.SceneGraph.Primitives.Axies();
+            var axis = new CylinderAxis();
             var axisTransform = new SharpGL.SceneGraph.Effects.LinearTransformationEffect();
             this.axisTransform = axisTransform.LinearTransformation;
             axis.AddEffect(axisTransform);
@@ -33,11 +33,10 @@ namespace SharpGL.SceneComponent
             base.RenderModel(args, gl, renderMode);
 
             // ** / 2: half of width/height, 
-            // ** / 3: SharpGL.SceneGraph.Primitives.Axies' vertices are (3, 0, 0) (0, 3, 0) (0, 0, 3)
-            int min = Math.Min(args.UIWidth, args.UIHeight) / 2 / 3;
-            this.axisTransform.ScaleX = min;
-            this.axisTransform.ScaleY = min;
-            this.axisTransform.ScaleZ = min;
+            // ** / 3: CylinderAxis' length is 3.
+            this.axisTransform.ScaleX = args.UIWidth / 2 / 3;
+            this.axisTransform.ScaleY = args.UIHeight / 2 / 3;
+            //this.axisTransform.ScaleZ = 1;// This is not needed.
         }
 
         public override void PushObjectSpace(OpenGL gl)

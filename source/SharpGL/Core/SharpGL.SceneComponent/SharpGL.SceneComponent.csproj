@@ -55,6 +55,7 @@
     <Compile Include="ColorIndicatorNumber.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="CylinderAxis.cs" />
     <Compile Include="GenericModel.cs" />
     <Compile Include="MyLight.cs" />
     <Compile Include="MyScene.cs" />
