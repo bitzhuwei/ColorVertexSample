@@ -1,9 +1,11 @@
-﻿using SharpGL.SceneGraph.Core;
+﻿using SharpGL.SceneGraph;
+using SharpGL.SceneGraph.Core;
 using SharpGL.SceneGraph.Effects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace SharpGL.SceneComponent
 {
@@ -15,7 +17,9 @@ namespace SharpGL.SceneComponent
         ArcBall2 arcBall = new ArcBall2();
         private LinearTransformationEffect axisTransform;
 
-        public OpenGLUIAxis()
+
+        public OpenGLUIAxis(AnchorStyles anchor, Padding margin, System.Drawing.Size size, int zNear = -1000, int zFar = 1000, GLColor rectColor = null)
+            : base(anchor, margin, size, zNear, zFar)
         {
             SharpGL.SceneGraph.Primitives.Axies axis = new SharpGL.SceneGraph.Primitives.Axies();
             LinearTransformationEffect axisTransform = new LinearTransformationEffect();

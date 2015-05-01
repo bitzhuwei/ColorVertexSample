@@ -1,7 +1,9 @@
-﻿using System;
+﻿using SharpGL.SceneGraph;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace SharpGL.SceneComponent
 {
@@ -10,7 +12,8 @@ namespace SharpGL.SceneComponent
     /// </summary>
     public class OpenGLUIColorIndicator : OpenGLUIRect
     {
-        public OpenGLUIColorIndicator()
+        public OpenGLUIColorIndicator(AnchorStyles anchor, Padding margin, System.Drawing.Size size, int zNear = -1000, int zFar = 1000, GLColor rectColor = null)
+            : base(anchor, margin, size, zNear, zFar)
         {
         }
 

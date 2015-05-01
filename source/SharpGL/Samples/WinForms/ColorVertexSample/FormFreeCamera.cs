@@ -76,10 +76,16 @@ namespace ColorVertexSample
             //parent.AddChild(orthoColorIndicatorElement);
             this.orthoColorIndicatorElement = orthoColorIndicatorElement;
 
-            OpenGLUIAxis uiAxis = new OpenGLUIAxis() { Name = "UI: Axis", Anchor = AnchorStyles.Left | AnchorStyles.Bottom, Margin = new Padding(5, 0, 0, 20), Size = new Size(40, 40), };
+            OpenGLUIAxis uiAxis = new OpenGLUIAxis(
+                AnchorStyles.Left | AnchorStyles.Bottom,
+                new Padding(5, 0, 0, 20), new Size(40, 40))
+                { Name = "UI: Axis", };
             parent.AddChild(uiAxis);
             this.uiAxis = uiAxis;
-            OpenGLUIColorIndicator uiColorIndicator = new OpenGLUIColorIndicator() { Name = "UI: Color Indicator", Anchor = AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right, Margin = new Padding(5 + 40 + 8, 0, 40, 20), Size = new Size(100, 35), };
+            OpenGLUIColorIndicator uiColorIndicator = new OpenGLUIColorIndicator(
+                AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right,
+                new Padding(5 + 40 + 8, 0, 40, 20), new Size(100, 35))
+                { Name = "UI: Color Indicator", };
             parent.AddChild(uiColorIndicator);
         }
 

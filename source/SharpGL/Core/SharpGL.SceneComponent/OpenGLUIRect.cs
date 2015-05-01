@@ -13,15 +13,32 @@ namespace SharpGL.SceneComponent
 {
     /// <summary>
     /// Draw a rectangle on OpenGL control like a <see cref="Windows.Forms.Control"/> drawn on a <see cref="windows.Forms.Form"/>.
-    /// Set its properties(Margin, Dock, etc) to adjust its behaviour.
+    /// Set its properties(Anchor, Margin, Size, etc) to adjust its behaviour.
     /// </summary>
     public class OpenGLUIRect : SceneElement, IRenderable, IHasObjectSpace
     {
-        public OpenGLUIRect()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="anchor">something like AnchorStyles.Left | AnchorStyles.Bottom.</param>
+        /// <param name="margin"></param>
+        /// <param name="size"></param>
+        /// <param name="zNear"></param>
+        /// <param name="zFar"></param>
+        /// <param name="rectColor">default color is red.</param>
+        public OpenGLUIRect(AnchorStyles anchor, Padding margin, System.Drawing.Size size, int zNear = -1000, int zFar = 1000, GLColor rectColor = null)
         {
-            this.zNear = -1000;
-            this.zFar = 1000;
-            this.RectColor = new GLColor(1, 0, 0, 1);
+            this.Anchor = anchor;
+            this.Margin = margin;
+            this.Size = size;
+            this.zNear = zNear;
+            this.zFar = zFar;
+            if (rectColor == null)
+            { this.RectColor = new GLColor(1, 0, 0, 1); }
+            else
+            { this.RectColor = new GLColor(1, 0, 0, 1); }
+
+            this.RenderBound = true;
         }
 
         #region IRenderable 成员
@@ -122,13 +139,16 @@ namespace SharpGL.SceneComponent
         /// <param name="renderMode"></param>
         protected virtual void RenderModel(OpenGLUIRectArgs args, OpenGL gl, RenderMode renderMode)
         {
-            gl.Begin(Enumerations.BeginMode.LineLoop);
-            gl.Color(RectColor);
-            gl.Vertex(-args.UIWidth / 2, -args.UIHeight / 2, 0);
-            gl.Vertex(args.UIWidth / 2, -args.UIHeight / 2, 0);
-            gl.Vertex(args.UIWidth / 2, args.UIHeight / 2, 0);
-            gl.Vertex(-args.UIWidth / 2, args.UIHeight / 2, 0);
-            gl.End();
+            if (this.RenderBound)
+            {
+                gl.Begin(Enumerations.BeginMode.LineLoop);
+                gl.Color(RectColor);
+                gl.Vertex(-args.UIWidth / 2, -args.UIHeight / 2, 0);
+                gl.Vertex(args.UIWidth / 2, -args.UIHeight / 2, 0);
+                gl.Vertex(args.UIWidth / 2, args.UIHeight / 2, 0);
+                gl.Vertex(-args.UIWidth / 2, args.UIHeight / 2, 0);
+                gl.End();
+            }
         }
 
         /// <summary>
@@ -171,6 +191,8 @@ namespace SharpGL.SceneComponent
         public int zFar { get; set; }
 
         public GLColor RectColor { get; set; }
+
+        public bool RenderBound { get; set; }
 
         #region IHasObjectSpace 成员
 
