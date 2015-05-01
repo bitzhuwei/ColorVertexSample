@@ -47,7 +47,12 @@
     <Compile Include="ArcBallEffect2.cs" />
     <Compile Include="ByteColor.cs" />
     <Compile Include="CameraRotation.cs" />
-    <Compile Include="ColorIndicator.cs" />
+    <Compile Include="ColorIndicatorBar.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ColorIndicatorNumber.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ColorMapHelper.cs" />
     <Compile Include="GenericModel.cs" />
     <Compile Include="MyLight.cs" />
@@ -62,17 +67,6 @@
     <Compile Include="OpenGLUIColorIndicator.cs" />
     <Compile Include="OpenGLUIRect.cs" />
     <Compile Include="OpenGLUIRectArgs.cs" />
-    <Compile Include="OrthoColorIndicatorBar.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="OrthoColorIndicatorElement.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="OrthoColorIndicatorElementFactory.cs" />
-    <Compile Include="OrthoColorIndicatorBarEffect.cs" />
-    <Compile Include="OrthoColorIndicatorNumber.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScientificVisual3DControl.cs">
       <SubType>UserControl</SubType>

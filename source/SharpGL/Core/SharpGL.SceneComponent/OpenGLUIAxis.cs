@@ -1,6 +1,5 @@
 ﻿using SharpGL.SceneGraph;
 using SharpGL.SceneGraph.Core;
-using SharpGL.SceneGraph.Effects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,15 +14,15 @@ namespace SharpGL.SceneComponent
     public class OpenGLUIAxis : OpenGLUIRect
     {
         ArcBall2 arcBall = new ArcBall2();
-        private LinearTransformationEffect axisTransform;
+        private SceneGraph.Transformations.LinearTransformation axisTransform;
 
 
         public OpenGLUIAxis(AnchorStyles anchor, Padding margin, System.Drawing.Size size, int zNear = -1000, int zFar = 1000, GLColor rectColor = null)
             : base(anchor, margin, size, zNear, zFar)
         {
-            SharpGL.SceneGraph.Primitives.Axies axis = new SharpGL.SceneGraph.Primitives.Axies();
-            LinearTransformationEffect axisTransform = new LinearTransformationEffect();
-            this.axisTransform = axisTransform;
+            var axis = new SharpGL.SceneGraph.Primitives.Axies();
+            var axisTransform = new SharpGL.SceneGraph.Effects.LinearTransformationEffect();
+            this.axisTransform = axisTransform.LinearTransformation;
             axis.AddEffect(axisTransform);
             base.AddChild(axis);
         }
@@ -36,9 +35,9 @@ namespace SharpGL.SceneComponent
             // ** / 2: half of width/height, 
             // ** / 3: SharpGL.SceneGraph.Primitives.Axies' vertices are (3, 0, 0) (0, 3, 0) (0, 0, 3)
             int min = Math.Min(args.UIWidth, args.UIHeight) / 2 / 3;
-            this.axisTransform.LinearTransformation.ScaleX = min;
-            this.axisTransform.LinearTransformation.ScaleY = min;
-            this.axisTransform.LinearTransformation.ScaleZ = min;
+            this.axisTransform.ScaleX = min;
+            this.axisTransform.ScaleY = min;
+            this.axisTransform.ScaleZ = min;
         }
 
         public override void PushObjectSpace(OpenGL gl)

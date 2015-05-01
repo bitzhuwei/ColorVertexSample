@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -47,10 +48,16 @@
     <Compile Include="types-from-SharpGL.SceneComponent\AxisGDIAttachment.cs" />
     <Compile Include="types-from-SharpGL.SceneComponent\AxisSpy.cs" />
     <Compile Include="types-from-SharpGL.SceneComponent\AxisTransformEffect.cs" />
+    <Compile Include="types-from-SharpGL.SceneComponent\ColorIndicator.cs" />
     <Compile Include="types-from-SharpGL.SceneComponent\ColorIndicatorGDIAttachment.cs" />
     <Compile Include="types-from-SharpGL.SceneComponent\OrthoArcBallEffect.cs" />
     <Compile Include="types-from-SharpGL.SceneComponent\OrthoAxisElement.cs" />
     <Compile Include="types-from-SharpGL.SceneComponent\OrthoAxisElementFactory.cs" />
+    <Compile Include="types-from-SharpGL.SceneComponent\OrthoColorIndicatorBar.cs" />
+    <Compile Include="types-from-SharpGL.SceneComponent\OrthoColorIndicatorBarEffect.cs" />
+    <Compile Include="types-from-SharpGL.SceneComponent\OrthoColorIndicatorElement.cs" />
+    <Compile Include="types-from-SharpGL.SceneComponent\OrthoColorIndicatorElementFactory.cs" />
+    <Compile Include="types-from-SharpGL.SceneComponent\OrthoColorIndicatorNumber.cs" />
     <Compile Include="types-from-SharpGL.SceneComponent\ViewportEffect.cs" />
   </ItemGroup>
   <ItemGroup>
