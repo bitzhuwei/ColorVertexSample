@@ -57,6 +57,7 @@ namespace SharpGL.SceneComponent
             if ((Anchor & leftRightAnchor) == leftRightAnchor)
             {
                 args.UIWidth = viewWidth - Margin.Left - Margin.Right;
+                if (args.UIWidth < 0) { args.UIWidth = 0; }
             }
             else
             {
@@ -66,6 +67,7 @@ namespace SharpGL.SceneComponent
             if ((Anchor & topBottomAnchor) == topBottomAnchor)
             {
                 args.UIHeight = viewHeight - Margin.Top - Margin.Bottom;
+                if (args.UIHeight < 0) { args.UIHeight = 0; }
             }
             else
             {
