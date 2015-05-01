@@ -15,12 +15,13 @@ namespace SharpGL.SceneComponent
     /// Draw a rectangle on OpenGL control like a <see cref="Windows.Forms.Control"/> drawn on a <see cref="windows.Forms.Form"/>.
     /// Set its properties(Margin, Dock, etc) to adjust its behaviour.
     /// </summary>
-    public class OpenGLUIRect : SceneElement, IRenderable
+    public class OpenGLUIRect : SceneElement, IRenderable, IHasObjectSpace
     {
         public OpenGLUIRect()
         {
             this.zNear = -1000;
             this.zFar = 1000;
+            this.RectColor = new GLColor(1, 0, 0, 1);
         }
 
         #region IRenderable 成员
@@ -28,11 +29,17 @@ namespace SharpGL.SceneComponent
         public void Render(OpenGL gl, RenderMode renderMode)
         {
             //if (renderMode == RenderMode.HitTest) { return; }
+
+            RenderModel(UIWidth, UIHeight, gl, renderMode);
+        }
+
+        private void CalculateViewport(OpenGL gl, out int viewWidth, out int viewHeight)
+        {
             IRenderContextProvider rcp = gl.RenderContextProvider;
             Debug.Assert(rcp != null, "The gl.RenderContextProvider is null!");
 
-            int viewWidth = 0;
-            int viewHeight = 0;
+            viewWidth = 0;
+            viewHeight = 0;
 
             if (rcp != null)
             {
@@ -46,40 +53,6 @@ namespace SharpGL.SceneComponent
                 viewWidth = viewport[2];
                 viewHeight = viewport[3];
             }
-
-            int UIWidth, UIHeight, left, bottom;
-            CalculateCoords(viewWidth, viewHeight, out UIWidth, out UIHeight, out left, out bottom);
-
-            gl.MatrixMode(SharpGL.Enumerations.MatrixMode.Projection);
-            gl.PushMatrix();
-            gl.LoadIdentity();
-            gl.Ortho(left, left + viewWidth, bottom, bottom + viewHeight, zNear, zFar);
-
-            LookAtCamera camera = null;// this.Camera;
-            if (camera == null)
-            {
-                gl.LookAt(0, 0, 1, 0, 0, 0, 0, 1, 0);
-                //throw new Exception("Camera not set!");
-            }
-            else
-            {
-                Vertex position = camera.Position - camera.Target;
-                position.Normalize();
-                gl.LookAt(position.X, position.Y, position.Z,
-                    0, 0, 0,
-                    camera.UpVector.X, camera.UpVector.Y, camera.UpVector.Z);
-            }
-
-            gl.MatrixMode(SharpGL.Enumerations.MatrixMode.Modelview);
-            gl.PushMatrix();
-
-            RenderModel(UIWidth, UIHeight, gl, renderMode);
-
-            gl.MatrixMode(SharpGL.Enumerations.MatrixMode.Projection);
-            gl.PopMatrix();
-
-            gl.MatrixMode(SharpGL.Enumerations.MatrixMode.Modelview);
-            gl.PopMatrix();
         }
 
         private void CalculateCoords(int viewWidth, int viewHeight, out int UIWidth, out int UIHeight, out int left, out int bottom)
@@ -116,7 +89,7 @@ namespace SharpGL.SceneComponent
             }
             else // if ((Anchor & leftRightAnchor) == leftRightAnchor)
             {
-                left = -viewWidth / 2;
+                left = -(UIWidth / 2 + Margin.Left);
             }
 
             if ((Anchor & topBottomAnchor) == AnchorStyles.None)
@@ -133,17 +106,24 @@ namespace SharpGL.SceneComponent
             }
             else // if ((Anchor & topBottomAnchor) == topBottomAnchor)
             {
-                bottom = -viewHeight / 2;
+                bottom = -(UIHeight / 2 + Margin.Bottom);
             }
         }
 
 
         #endregion
 
+        /// <summary>
+        /// render UI model at axis's center(0, 0, 0) in <paramref name="UIWidth"/> and <paramref name="UIHeight"/>.
+        /// </summary>
+        /// <param name="UIWidth"></param>
+        /// <param name="UIHeight"></param>
+        /// <param name="gl"></param>
+        /// <param name="renderMode"></param>
         protected virtual void RenderModel(int UIWidth, int UIHeight, OpenGL gl, RenderMode renderMode)
         {
             gl.Begin(Enumerations.BeginMode.LineLoop);
-            gl.Color(1.0f, 1.0f, 1.0f, 1.0f);
+            gl.Color(RectColor);
             gl.Vertex(-UIWidth / 2, -UIHeight / 2, 0);
             gl.Vertex(UIWidth / 2, -UIHeight / 2, 0);
             gl.Vertex(UIWidth / 2, UIHeight / 2, 0);
@@ -152,16 +132,23 @@ namespace SharpGL.SceneComponent
         }
 
         /// <summary>
-        /// leftRightAnchor = (AnchorStyles.Left &amp; AnchorStyles.Right); 
+        /// leftRightAnchor = (AnchorStyles.Left | AnchorStyles.Right); 
         /// </summary>
         protected const AnchorStyles leftRightAnchor = (AnchorStyles.Left | AnchorStyles.Right);
 
         /// <summary>
-        /// topBottomAnchor = (AnchorStyles.Top &amp; AnchorStyles.Bottom);
+        /// topBottomAnchor = (AnchorStyles.Top | AnchorStyles.Bottom);
         /// </summary>
         protected const AnchorStyles topBottomAnchor = (AnchorStyles.Top | AnchorStyles.Bottom);
 
-        public LookAtCamera Camera { get; set; }
+        protected int viewWidth;
+        protected int viewHeight;
+        protected int UIWidth;
+        protected int UIHeight;
+        protected int left;
+        protected int bottom;
+
+        public virtual LookAtCamera Camera { get; set; }
         public System.Windows.Forms.AnchorStyles Anchor { get; set; }
         public System.Windows.Forms.Padding Margin { get; set; }
 
@@ -181,5 +168,62 @@ namespace SharpGL.SceneComponent
         public int zNear { get; set; }
 
         public int zFar { get; set; }
+
+        public GLColor RectColor { get; set; }
+
+        #region IHasObjectSpace 成员
+
+        /// <summary>
+        /// Prepare projection matrix.
+        /// </summary>
+        /// <param name="gl"></param>
+        public virtual void PushObjectSpace(OpenGL gl)
+        {
+            //int viewWidth;
+            //int viewHeight;
+            CalculateViewport(gl, out viewWidth, out viewHeight);
+
+            //int UIWidth, UIHeight, left, bottom;
+            CalculateCoords(viewWidth, viewHeight, out UIWidth, out UIHeight, out left, out bottom);
+
+            gl.MatrixMode(SharpGL.Enumerations.MatrixMode.Projection);
+            gl.PushMatrix();
+            gl.LoadIdentity();
+            gl.Ortho(left, left + viewWidth, bottom, bottom + viewHeight, zNear, zFar);
+
+            LookAtCamera camera = this.Camera;
+            if (camera == null)
+            {
+                gl.LookAt(0, 0, 1, 0, 0, 0, 0, 1, 0);
+                //throw new Exception("Camera not set!");
+            }
+            else
+            {
+                Vertex position = camera.Position - camera.Target;
+                position.Normalize();
+                gl.LookAt(position.X, position.Y, position.Z,
+                    0, 0, 0,
+                    camera.UpVector.X, camera.UpVector.Y, camera.UpVector.Z);
+            }
+
+            gl.MatrixMode(SharpGL.Enumerations.MatrixMode.Modelview);
+            gl.PushMatrix();
+        }
+
+        public virtual void PopObjectSpace(OpenGL gl)
+        {
+            gl.MatrixMode(SharpGL.Enumerations.MatrixMode.Projection);
+            gl.PopMatrix();
+
+            gl.MatrixMode(SharpGL.Enumerations.MatrixMode.Modelview);
+            gl.PopMatrix();
+        }
+
+        public virtual SceneGraph.Transformations.LinearTransformation Transformation
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        #endregion
     }
 }
