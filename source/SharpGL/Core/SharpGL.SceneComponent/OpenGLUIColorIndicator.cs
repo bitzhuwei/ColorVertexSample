@@ -8,7 +8,7 @@ namespace SharpGL.SceneComponent
     /// <summary>
     /// Draw color indicator on viewport as an UI.
     /// </summary>
-    class OpenGLUIColorIndicator : OpenGLUIRect
+    public class OpenGLUIColorIndicator : OpenGLUIRect
     {
         public OpenGLUIColorIndicator()
         {

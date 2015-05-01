@@ -76,9 +76,11 @@ namespace ColorVertexSample
             //parent.AddChild(orthoColorIndicatorElement);
             this.orthoColorIndicatorElement = orthoColorIndicatorElement;
 
-            OpenGLUIAxis uiAxis = new OpenGLUIAxis() { Name = "UI Rect", Anchor = AnchorStyles.Left | AnchorStyles.Bottom, Margin = new Padding(5, 0, 0, 20), Size = new Size(40, 40), };
+            OpenGLUIAxis uiAxis = new OpenGLUIAxis() { Name = "UI: Axis", Anchor = AnchorStyles.Left | AnchorStyles.Bottom, Margin = new Padding(5, 0, 0, 20), Size = new Size(40, 40), };
             parent.AddChild(uiAxis);
             this.uiAxis = uiAxis;
+            OpenGLUIColorIndicator uiColorIndicator = new OpenGLUIColorIndicator() { Name = "UI: Color Indicator", Anchor = AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right, Margin = new Padding(5 + 40 + 8, 0, 40, 20), Size = new Size(100, 35), };
+            parent.AddChild(uiColorIndicator);
         }
 
         private void sceneControl_MouseUp(object sender, MouseEventArgs e)
