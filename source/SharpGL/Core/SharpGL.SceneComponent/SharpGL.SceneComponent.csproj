@@ -50,6 +50,8 @@
     <Compile Include="ColorIndicatorBar.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ColorIndicatorData.cs" />
+    <Compile Include="ColorIndicatorDataFactory.cs" />
     <Compile Include="ColorIndicatorNumber.cs">
       <SubType>Code</SubType>
     </Compile>
