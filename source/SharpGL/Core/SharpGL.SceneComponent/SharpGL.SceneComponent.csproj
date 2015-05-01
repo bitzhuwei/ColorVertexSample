@@ -58,6 +58,7 @@
     <Compile Include="MySceneControl.Designer.cs">
       <DependentUpon>MySceneControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="OpenGLUIRect.cs" />
     <Compile Include="OrthoArcBallEffect.cs" />
     <Compile Include="OrthoAxisElement.cs" />
     <Compile Include="OrthoAxisElementFactory.cs" />
