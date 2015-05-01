@@ -40,7 +40,7 @@ namespace SharpGL.SceneComponent
 
             //  Render the root element, this will then render the whole
             //  of the scene tree.
-            RenderElement(SceneContainer, gl, RenderMode.Design);
+            MyRenderElement(SceneContainer, gl, RenderMode.Design);
 
             //  TODO: Adding this code here re-enables textures- it should work without it but it
             //  doesn't, look into this.
@@ -55,7 +55,7 @@ namespace SharpGL.SceneComponent
         /// </summary>
         /// <param name="gl">The gl.</param>
         /// <param name="renderMode">The render mode.</param>
-        public void RenderElement(SceneElement sceneElement, OpenGL gl, RenderMode renderMode)
+        public void MyRenderElement(SceneElement sceneElement, OpenGL gl, RenderMode renderMode)
         {
             //  If the element is disabled, we're done.
             if (sceneElement.IsEnabled == false)
@@ -101,7 +101,7 @@ namespace SharpGL.SceneComponent
 
             //  Recurse through the children.
             foreach (var childElement in sceneElement.Children)
-                RenderElement(childElement, renderMode);
+                MyRenderElement(childElement, gl, renderMode);
 
             //  If the element has an object space, transform out of it.
             if (hasObjectSpace != null) hasObjectSpace.PopObjectSpace(gl);
