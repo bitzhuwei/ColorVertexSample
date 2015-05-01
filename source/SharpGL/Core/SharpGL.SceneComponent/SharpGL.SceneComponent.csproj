@@ -60,9 +60,6 @@
     </Compile>
     <Compile Include="OpenGLUIAxis.cs" />
     <Compile Include="OpenGLUIRect.cs" />
-    <Compile Include="OrthoArcBallEffect.cs" />
-    <Compile Include="OrthoAxisElement.cs" />
-    <Compile Include="OrthoAxisElementFactory.cs" />
     <Compile Include="OrthoColorIndicatorBar.cs">
       <SubType>Code</SubType>
     </Compile>

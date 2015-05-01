@@ -48,6 +48,9 @@
     <Compile Include="types-from-SharpGL.SceneComponent\AxisSpy.cs" />
     <Compile Include="types-from-SharpGL.SceneComponent\AxisTransformEffect.cs" />
     <Compile Include="types-from-SharpGL.SceneComponent\ColorIndicatorGDIAttachment.cs" />
+    <Compile Include="types-from-SharpGL.SceneComponent\OrthoArcBallEffect.cs" />
+    <Compile Include="types-from-SharpGL.SceneComponent\OrthoAxisElement.cs" />
+    <Compile Include="types-from-SharpGL.SceneComponent\OrthoAxisElementFactory.cs" />
     <Compile Include="types-from-SharpGL.SceneComponent\ViewportEffect.cs" />
   </ItemGroup>
   <ItemGroup>
