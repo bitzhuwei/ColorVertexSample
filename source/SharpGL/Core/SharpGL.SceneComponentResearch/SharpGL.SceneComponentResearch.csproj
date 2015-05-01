@@ -50,6 +50,7 @@
     <Compile Include="types-from-SharpGL.SceneComponent\AxisTransformEffect.cs" />
     <Compile Include="types-from-SharpGL.SceneComponent\ColorIndicator.cs" />
     <Compile Include="types-from-SharpGL.SceneComponent\ColorIndicatorGDIAttachment.cs" />
+    <Compile Include="types-from-SharpGL.SceneComponent\ColorMapHelper.cs" />
     <Compile Include="types-from-SharpGL.SceneComponent\OrthoArcBallEffect.cs" />
     <Compile Include="types-from-SharpGL.SceneComponent\OrthoAxisElement.cs" />
     <Compile Include="types-from-SharpGL.SceneComponent\OrthoAxisElementFactory.cs" />

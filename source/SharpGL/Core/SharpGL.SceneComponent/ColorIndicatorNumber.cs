@@ -1,13 +1,41 @@
-﻿using SharpGL.SceneGraph.Core;
+﻿using SharpGL.SceneGraph;
+using SharpGL.SceneGraph.Core;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace SharpGL.SceneComponent
 {
-    class ColorIndicatorNumber : SceneElement
+    class ColorIndicatorNumber : SceneElement, IRenderable
     {
         public ColorIndicatorData Data { get; set; }
+
+        //private System.Drawing.Font font = new System.Drawing.Font("Courier New", fontSize);
+        const float fontSize = 12f;
+
+        public void Render(OpenGL gl, RenderMode renderMode)
+        {
+            OpenGLUIRectArgs lastArgs = this.CurrentArgs;
+            if (lastArgs == null) { return; }
+            ColorIndicatorData data = this.Data;
+            if (data == null) { return; }
+
+            int blockWidth = lastArgs.UIWidth / (data.Colors.Length - 1);
+            //draw numbers
+            for (int i = 0; i < data.Colors.Length; i++)
+            {
+                string value = (data.minValue * (double)(data.Colors.Length - 1 - i) / (data.Colors.Length - 1)
+                    + data.maxValue * (double)i / (data.Colors.Length - 1)).ToString();
+                float valueLength = 100.0f * (float)value.Length / fontSize;
+                float x = -lastArgs.UIWidth / 2 - lastArgs.left + i * blockWidth - valueLength / 2;
+                int y = -lastArgs.UIHeight / 2 - lastArgs.bottom - 14;
+                gl.DrawText((int)x, (int)y, 1, 1, 1, "Courier New", fontSize, value);
+            }
+        }
+
+        public OpenGLUIRectArgs CurrentArgs { get; set; }
     }
 }
