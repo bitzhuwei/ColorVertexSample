@@ -89,8 +89,8 @@ namespace SharpGL.SceneComponent
         }
 
 
-        public int minValue { get; set; }
+        public float minValue { get; set; }
 
-        public int maxValue { get; set; }
+        public float maxValue { get; set; }
     }
 }

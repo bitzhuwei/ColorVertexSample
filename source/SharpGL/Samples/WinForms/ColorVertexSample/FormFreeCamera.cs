@@ -27,8 +27,8 @@ namespace ColorVertexSample
     {
         private CameraRotation cameraRotation;
         private ArcBallEffect2 modelArcBallEffect;
-        private OrthoColorIndicatorElement orthoColorIndicatorElement;
         private OpenGLUIAxis uiAxis;
+        private OpenGLUIColorIndicator uiColorIndicator;
 
         public FormFreeCamera()
         {
@@ -64,31 +64,26 @@ namespace ColorVertexSample
             // this.cameraRotation = new CameraRotation() { LookAtCamera = camera };
             this.cameraRotation = new CameraRotation(camera);
             this.modelArcBallEffect.ArcBall.Camera = camera;
-            this.orthoColorIndicatorElement.bar.scaleEffect.Camera = camera;
             this.uiAxis.Camera = camera;
         }
 
         private void Initialize2DUI(SceneContainer parent)
         {
-            ColorTemplate colorTemplate = ColorTemplateFactory.CreateRainbow();
-            OrthoColorIndicatorElement orthoColorIndicatorElement = OrthoColorIndicatorElementFactory.Create(colorTemplate);
-            //orthoColorIndicatorElement.scaleEffect.Margin=...
-            //parent.AddChild(orthoColorIndicatorElement);
-            this.orthoColorIndicatorElement = orthoColorIndicatorElement;
-
             OpenGLUIAxis uiAxis = new OpenGLUIAxis(
                 AnchorStyles.Left | AnchorStyles.Bottom,
-                new Padding(5, 0, 0, 20), new Size(40, 40))
+                new Padding(10, 0, 0, 20), new Size(40, 40))
                 { Name = "UI: Axis", };
             parent.AddChild(uiAxis);
             this.uiAxis = uiAxis;
+
             OpenGLUIColorIndicator uiColorIndicator = new OpenGLUIColorIndicator(
                 AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right,
-                new Padding(5 + 40 + 8, 0, 40, 40), new Size(100, 15))
+                new Padding(10 + 40 + 10, 0, 40, 40), new Size(100, 15))
                 { Name = "UI: Color Indicator", };
             ColorIndicatorData rainbow = ColorIndicatorDataFactory.CreateRainbow();
             uiColorIndicator.Data = rainbow;
             parent.AddChild(uiColorIndicator);
+            this.uiColorIndicator = uiColorIndicator;
         }
 
         private void sceneControl_MouseUp(object sender, MouseEventArgs e)
@@ -254,8 +249,8 @@ namespace ColorVertexSample
 
                 scene.RenderBoundingVolumes = false;
 
-                this.orthoColorIndicatorElement.number.SetBound(minValue, maxValue);
-                this.orthoColorIndicatorElement.number.SetControl(this.sceneControl);
+                this.uiColorIndicator.Data.minValue = minValue;
+                this.uiColorIndicator.Data.maxValue = maxValue;
 
                 ManualRender(this.sceneControl);
             }
