@@ -104,7 +104,7 @@ namespace SharpGL.SceneComponent
         public MyScene Scene
         {
             get { return scene; }
-            protected set { scene = value; }
+            set { scene = value; }
         }
     }
 
