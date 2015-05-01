@@ -30,83 +30,80 @@ namespace SharpGL.SceneComponent
         {
             //if (renderMode == RenderMode.HitTest) { return; }
 
-            RenderModel(UIWidth, UIHeight, gl, renderMode);
+            RenderModel(args, gl, renderMode);
         }
 
-        private void CalculateViewport(OpenGL gl, out int viewWidth, out int viewHeight)
+        private void CalculateViewport(OpenGL gl, OpenGLUIRectArgs args)
         {
             IRenderContextProvider rcp = gl.RenderContextProvider;
             Debug.Assert(rcp != null, "The gl.RenderContextProvider is null!");
 
-            viewWidth = 0;
-            viewHeight = 0;
-
             if (rcp != null)
             {
-                viewWidth = rcp.Width;
-                viewHeight = rcp.Height;
+                args.viewWidth = rcp.Width;
+                args.viewHeight = rcp.Height;
             }
             else
             {
                 int[] viewport = new int[4];
                 gl.GetInteger(OpenGL.GL_VIEWPORT, viewport);
-                viewWidth = viewport[2];
-                viewHeight = viewport[3];
+                args.viewWidth = viewport[2];
+                args.viewHeight = viewport[3];
             }
         }
 
-        private void CalculateCoords(int viewWidth, int viewHeight, out int UIWidth, out int UIHeight, out int left, out int bottom)
+        private void CalculateCoords(int viewWidth, int viewHeight, OpenGLUIRectArgs args)
         {
             if ((Anchor & leftRightAnchor) == leftRightAnchor)
             {
-                UIWidth = viewWidth - Margin.Left - Margin.Right;
+                args.UIWidth = viewWidth - Margin.Left - Margin.Right;
             }
             else
             {
-                UIWidth = this.Size.Width;
+                args.UIWidth = this.Size.Width;
             }
 
             if ((Anchor & topBottomAnchor) == topBottomAnchor)
             {
-                UIHeight = viewHeight - Margin.Top - Margin.Bottom;
+                args.UIHeight = viewHeight - Margin.Top - Margin.Bottom;
             }
             else
             {
-                UIHeight = this.Size.Height;
+                args.UIHeight = this.Size.Height;
             }
 
             if ((Anchor & leftRightAnchor) == AnchorStyles.None)
             {
-                left = -viewWidth / 2;
+                args.left = -viewWidth / 2;
             }
             else if ((Anchor & leftRightAnchor) == AnchorStyles.Left)
             {
-                left = -(UIWidth / 2 + Margin.Left);
+                args.left = -(args.UIWidth / 2 + Margin.Left);
             }
             else if ((Anchor & leftRightAnchor) == AnchorStyles.Right)
             {
-                left = -(viewWidth - UIWidth / 2 - Margin.Right);
+                args.left = -(viewWidth - args.UIWidth / 2 - Margin.Right);
             }
             else // if ((Anchor & leftRightAnchor) == leftRightAnchor)
             {
-                left = -(UIWidth / 2 + Margin.Left);
+                args.left = -(args.UIWidth / 2 + Margin.Left);
             }
 
             if ((Anchor & topBottomAnchor) == AnchorStyles.None)
             {
-                bottom = -viewHeight / 2;
+                args.bottom = -viewHeight / 2;
             }
             else if ((Anchor & topBottomAnchor) == AnchorStyles.Bottom)
             {
-                bottom = -(UIHeight / 2 + Margin.Bottom);
+                args.bottom = -(args.UIHeight / 2 + Margin.Bottom);
             }
             else if ((Anchor & topBottomAnchor) == AnchorStyles.Top)
             {
-                bottom = -(viewHeight - UIHeight / 2 - Margin.Top);
+                args.bottom = -(viewHeight - args.UIHeight / 2 - Margin.Top);
             }
             else // if ((Anchor & topBottomAnchor) == topBottomAnchor)
             {
-                bottom = -(UIHeight / 2 + Margin.Bottom);
+                args.bottom = -(args.UIHeight / 2 + Margin.Bottom);
             }
         }
 
@@ -115,19 +112,20 @@ namespace SharpGL.SceneComponent
 
         /// <summary>
         /// render UI model at axis's center(0, 0, 0) in <paramref name="UIWidth"/> and <paramref name="UIHeight"/>.
+        /// <para>The <see cref="OpenGLUIRect.RenderMode()"/> only draws a rectangle to show the UI's scope.</para>
         /// </summary>
         /// <param name="UIWidth"></param>
         /// <param name="UIHeight"></param>
         /// <param name="gl"></param>
         /// <param name="renderMode"></param>
-        protected virtual void RenderModel(int UIWidth, int UIHeight, OpenGL gl, RenderMode renderMode)
+        protected virtual void RenderModel(OpenGLUIRectArgs args, OpenGL gl, RenderMode renderMode)
         {
             gl.Begin(Enumerations.BeginMode.LineLoop);
             gl.Color(RectColor);
-            gl.Vertex(-UIWidth / 2, -UIHeight / 2, 0);
-            gl.Vertex(UIWidth / 2, -UIHeight / 2, 0);
-            gl.Vertex(UIWidth / 2, UIHeight / 2, 0);
-            gl.Vertex(-UIWidth / 2, UIHeight / 2, 0);
+            gl.Vertex(-args.UIWidth / 2, -args.UIHeight / 2, 0);
+            gl.Vertex(args.UIWidth / 2, -args.UIHeight / 2, 0);
+            gl.Vertex(args.UIWidth / 2, args.UIHeight / 2, 0);
+            gl.Vertex(-args.UIWidth / 2, args.UIHeight / 2, 0);
             gl.End();
         }
 
@@ -141,12 +139,13 @@ namespace SharpGL.SceneComponent
         /// </summary>
         protected const AnchorStyles topBottomAnchor = (AnchorStyles.Top | AnchorStyles.Bottom);
 
-        protected int viewWidth;
-        protected int viewHeight;
-        protected int UIWidth;
-        protected int UIHeight;
-        protected int left;
-        protected int bottom;
+        //protected int viewWidth;
+        //protected int viewHeight;
+        //protected int UIWidth;
+        //protected int UIHeight;
+        //protected int left;
+        //protected int bottom;
+        protected OpenGLUIRectArgs args = new OpenGLUIRectArgs();
 
         public virtual LookAtCamera Camera { get; set; }
         public System.Windows.Forms.AnchorStyles Anchor { get; set; }
@@ -181,15 +180,15 @@ namespace SharpGL.SceneComponent
         {
             //int viewWidth;
             //int viewHeight;
-            CalculateViewport(gl, out viewWidth, out viewHeight);
+            CalculateViewport(gl, args);
 
             //int UIWidth, UIHeight, left, bottom;
-            CalculateCoords(viewWidth, viewHeight, out UIWidth, out UIHeight, out left, out bottom);
+            CalculateCoords(args.viewWidth, args.viewHeight, args);
 
             gl.MatrixMode(SharpGL.Enumerations.MatrixMode.Projection);
             gl.PushMatrix();
             gl.LoadIdentity();
-            gl.Ortho(left, left + viewWidth, bottom, bottom + viewHeight, zNear, zFar);
+            gl.Ortho(args.left, args.right, args.bottom, args.top, zNear, zFar);
 
             LookAtCamera camera = this.Camera;
             if (camera == null)

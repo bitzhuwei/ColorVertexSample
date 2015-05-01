@@ -59,7 +59,9 @@
       <DependentUpon>MySceneControl.cs</DependentUpon>
     </Compile>
     <Compile Include="OpenGLUIAxis.cs" />
+    <Compile Include="OpenGLUIColorIndicator.cs" />
     <Compile Include="OpenGLUIRect.cs" />
+    <Compile Include="OpenGLUIRectArgs.cs" />
     <Compile Include="OrthoColorIndicatorBar.cs">
       <SubType>Code</SubType>
     </Compile>
