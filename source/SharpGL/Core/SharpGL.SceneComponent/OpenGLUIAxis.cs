@@ -36,7 +36,8 @@ namespace SharpGL.SceneComponent
             // ** / 3: CylinderAxis' length is 3.
             this.axisTransform.ScaleX = args.UIWidth / 2 / 3;
             this.axisTransform.ScaleY = args.UIHeight / 2 / 3;
-            //this.axisTransform.ScaleZ = 1;// This is not needed.
+            int max = Math.Max(args.UIWidth,args.UIHeight);
+            this.axisTransform.ScaleZ = max / 2 / 3;
         }
 
         public override void PushObjectSpace(OpenGL gl)
