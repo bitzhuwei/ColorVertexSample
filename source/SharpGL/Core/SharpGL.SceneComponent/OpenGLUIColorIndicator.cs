@@ -13,18 +13,36 @@ namespace SharpGL.SceneComponent
     public class OpenGLUIColorIndicator : OpenGLUIRect
     {
         private SceneGraph.Transformations.LinearTransformation colorBarTransform;
+        private ColorIndicatorData data;
+        private ColorIndicatorBar colorBar;
+        private ColorIndicatorNumber colorNumber;
+
+        public ColorIndicatorData Data
+        {
+            get { return data; }
+            set
+            {
+                data = value;
+                this.colorBar.Data = value;
+                this.colorNumber.Data = value;
+            }
+        }
 
         public OpenGLUIColorIndicator(AnchorStyles anchor, Padding margin, System.Drawing.Size size, int zNear = -1000, int zFar = 1000, GLColor rectColor = null)
             : base(anchor, margin, size, zNear, zFar)
         {
-            var colorBar = new ColorIndicatorBar();
-            var colorBarTransform = new SharpGL.SceneGraph.Effects.LinearTransformationEffect();
-            colorBar.AddEffect(colorBarTransform);
-            base.AddChild(colorBar);
-            this.colorBarTransform = colorBarTransform.LinearTransformation;
+            {
+                this.colorBar = new ColorIndicatorBar() { Name = "color indicator's bar" };
+                var colorBarTransform = new SharpGL.SceneGraph.Effects.LinearTransformationEffect();
+                colorBar.AddEffect(colorBarTransform);
+                base.AddChild(colorBar);
+                this.colorBarTransform = colorBarTransform.LinearTransformation;
+            }
 
-            var colorNumber = new ColorIndicatorNumber();
-            base.AddChild(colorNumber);
+            {
+                this.colorNumber = new ColorIndicatorNumber() { Name = "color indicator's number" };
+                base.AddChild(colorNumber);
+            }
         }
 
         protected override void RenderModel(OpenGLUIRectArgs args, OpenGL gl, SceneGraph.Core.RenderMode renderMode)
@@ -32,12 +50,9 @@ namespace SharpGL.SceneComponent
             // Draw rectangle to show UI's scope.
             base.RenderModel(args, gl, renderMode);
 
-            // ** / 2: half of width/height, 
-            // ** / 3: SharpGL.SceneGraph.Primitives.Axies' vertices are (3, 0, 0) (0, 3, 0) (0, 0, 3)
-            int min = Math.Min(args.UIWidth, args.UIHeight) / 2 / 3;
-            this.colorBarTransform.ScaleX = min;
-            this.colorBarTransform.ScaleY = min;
-            this.colorBarTransform.ScaleZ = min;
+            this.colorBarTransform.ScaleX = (float)args.UIWidth / (float)ColorIndicatorBar.barWidth;
+            this.colorBarTransform.ScaleY = (float)args.UIHeight / (float)ColorIndicatorBar.barHeight;
+            //this.colorBarTransform.ScaleZ = 1;// This is not needed.
         }
     }
 }

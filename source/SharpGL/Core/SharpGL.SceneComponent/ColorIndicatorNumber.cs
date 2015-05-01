@@ -8,5 +8,6 @@ namespace SharpGL.SceneComponent
 {
     class ColorIndicatorNumber : SceneElement
     {
+        public ColorIndicatorData Data { get; set; }
     }
 }

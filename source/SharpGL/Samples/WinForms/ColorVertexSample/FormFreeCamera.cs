@@ -84,8 +84,10 @@ namespace ColorVertexSample
             this.uiAxis = uiAxis;
             OpenGLUIColorIndicator uiColorIndicator = new OpenGLUIColorIndicator(
                 AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right,
-                new Padding(5 + 40 + 8, 0, 40, 20), new Size(100, 35))
+                new Padding(5 + 40 + 8, 0, 40, 40), new Size(100, 15))
                 { Name = "UI: Color Indicator", };
+            ColorIndicatorData rainbow = ColorIndicatorDataFactory.CreateRainbow();
+            uiColorIndicator.Data = rainbow;
             parent.AddChild(uiColorIndicator);
         }
 

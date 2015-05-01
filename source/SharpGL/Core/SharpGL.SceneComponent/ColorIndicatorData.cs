@@ -9,7 +9,7 @@ namespace SharpGL.SceneComponent
     /// <summary>
     /// Contains gradient colors and max, min values.
     /// </summary>
-    class ColorIndicatorData
+    public class ColorIndicatorData
     {
         private GLColor[] colors;
 
