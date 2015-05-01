@@ -14,7 +14,6 @@ namespace SharpGL.SceneComponent
     {
         ArcBall2 arcBall = new ArcBall2();
         private LinearTransformationEffect axisTransform;
-        //private SceneGraph.Primitives.Axies axis;
 
         public OpenGLUIAxis()
         {
@@ -29,6 +28,8 @@ namespace SharpGL.SceneComponent
         {
             base.RenderModel(UIWidth, UIHeight, gl, renderMode);
 
+            // ** / 2: half of width/height, 
+            // ** / 3: SharpGL.SceneGraph.Primitives.Axies' vertices are (3, 0, 0) (0, 3, 0) (0, 0, 3)
             int min = Math.Min(UIWidth, UIHeight) / 2 / 3;
             this.axisTransform.LinearTransformation.ScaleX = min;
             this.axisTransform.LinearTransformation.ScaleY = min;

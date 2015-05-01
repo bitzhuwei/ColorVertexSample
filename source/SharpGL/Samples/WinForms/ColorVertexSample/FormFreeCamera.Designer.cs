@@ -30,7 +30,6 @@
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.sceneControl = new SharpGL.SceneComponent.MySceneControl();
-            //this.sceneControl = new SharpGL.SceneControl();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblDebugInfo = new System.Windows.Forms.Label();
             this.tbRangeMax = new System.Windows.Forms.TextBox();
@@ -64,7 +63,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 72F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(699, 468);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(693, 468);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // sceneControl
@@ -77,7 +76,7 @@
             this.sceneControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
             this.sceneControl.RenderContextType = SharpGL.RenderContextType.FBO;
             this.sceneControl.RenderTrigger = SharpGL.RenderTrigger.Manual;
-            this.sceneControl.Size = new System.Drawing.Size(693, 390);
+            this.sceneControl.Size = new System.Drawing.Size(687, 390);
             this.sceneControl.TabIndex = 0;
             // 
             // panel1
@@ -100,7 +99,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(693, 66);
+            this.panel1.Size = new System.Drawing.Size(687, 66);
             this.panel1.TabIndex = 1;
             // 
             // lblDebugInfo
@@ -110,7 +109,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblDebugInfo.Location = new System.Drawing.Point(453, 35);
             this.lblDebugInfo.Name = "lblDebugInfo";
-            this.lblDebugInfo.Size = new System.Drawing.Size(238, 31);
+            this.lblDebugInfo.Size = new System.Drawing.Size(232, 31);
             this.lblDebugInfo.TabIndex = 17;
             this.lblDebugInfo.Text = "debug info";
             this.lblDebugInfo.Click += new System.EventHandler(this.lblDebugInfo_Click);
@@ -153,7 +152,7 @@
             // 
             this.btnCreate3D.Location = new System.Drawing.Point(303, 40);
             this.btnCreate3D.Name = "btnCreate3D";
-            this.btnCreate3D.Size = new System.Drawing.Size(144, 23);
+            this.btnCreate3D.Size = new System.Drawing.Size(138, 23);
             this.btnCreate3D.TabIndex = 12;
             this.btnCreate3D.Text = "Create Scene3D";
             this.btnCreate3D.UseVisualStyleBackColor = true;
@@ -231,7 +230,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(699, 468);
+            this.ClientSize = new System.Drawing.Size(693, 468);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormFreeCamera";
             this.Text = "Form1";

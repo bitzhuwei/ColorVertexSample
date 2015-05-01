@@ -27,8 +27,8 @@ namespace ColorVertexSample
     {
         private CameraRotation cameraRotation;
         private ArcBallEffect2 modelArcBallEffect;
-        private OrthoAxisElement orthoAxisElement;
         private OrthoColorIndicatorElement orthoColorIndicatorElement;
+        private OpenGLUIAxis uiAxis;
 
         public FormFreeCamera()
         {
@@ -64,108 +64,134 @@ namespace ColorVertexSample
             // this.cameraRotation = new CameraRotation() { LookAtCamera = camera };
             this.cameraRotation = new CameraRotation(camera);
             this.modelArcBallEffect.ArcBall.Camera = camera;
-            this.orthoAxisElement.orthoArcBallEffect.Camera = camera;
-            //this.orthoColorIndicatorElement.scaleEffect.Camera = camera;
             this.orthoColorIndicatorElement.bar.scaleEffect.Camera = camera;
+            this.uiAxis.Camera = camera;
         }
 
         private void Initialize2DUI(SceneContainer parent)
         {
-            OrthoAxisElement orthoAxisElement = OrthoAxisElementFactory.Create();
-            parent.AddChild(orthoAxisElement);
-            this.orthoAxisElement = orthoAxisElement;
-
             ColorTemplate colorTemplate = ColorTemplateFactory.CreateRainbow();
             OrthoColorIndicatorElement orthoColorIndicatorElement = OrthoColorIndicatorElementFactory.Create(colorTemplate);
             //orthoColorIndicatorElement.scaleEffect.Margin=...
-            parent.AddChild(orthoColorIndicatorElement);
+            //parent.AddChild(orthoColorIndicatorElement);
             this.orthoColorIndicatorElement = orthoColorIndicatorElement;
+
+            OpenGLUIAxis uiAxis = new OpenGLUIAxis() { Name = "UI Rect", Anchor = AnchorStyles.Left | AnchorStyles.Bottom, Margin = new Padding(5, 0, 0, 20), Size = new Size(40, 40), };
+            parent.AddChild(uiAxis);
+            this.uiAxis = uiAxis;
         }
 
         private void sceneControl_MouseUp(object sender, MouseEventArgs e)
         {
-            if ((e.Button & MouseButtons.Left) == System.Windows.Forms.MouseButtons.Left)
+            bool render = false;
+
+            if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
             {
                 CameraRotation cameraRotation = this.cameraRotation;
-                if (cameraRotation == null) { return; }
-
-                cameraRotation.MouseUp(e.X, e.Y);
-
-                ManualRender(this.sceneControl);
+                if (cameraRotation != null)
+                {
+                    cameraRotation.MouseUp(e.X, e.Y);
+                    render = true;
+                }
             }
 
-            if ((e.Button & MouseButtons.Right) == System.Windows.Forms.MouseButtons.Right)
+            if ((e.Button & MouseButtons.Right) == MouseButtons.Right)
             {
                 ArcBallEffect2 modelArcBallEffect = this.modelArcBallEffect;
-                if (modelArcBallEffect == null) { return; }
-                OrthoAxisElement orthoAxisElement = this.orthoAxisElement;
-                if (orthoAxisElement == null) { return; }
+                if (modelArcBallEffect != null)
+                {
+                    modelArcBallEffect.ArcBall.MouseUp(e.X, e.Y);
+                    render = true;
+                }
 
-                modelArcBallEffect.ArcBall.MouseUp(e.X, e.Y);
-                orthoAxisElement.orthoArcBallEffect.MouseUp(e.X, e.Y);
-
-                ManualRender(this.sceneControl);
+                OpenGLUIAxis uiAxis = this.uiAxis;
+                if (uiAxis != null)
+                {
+                    uiAxis.MouseUp(e.X, e.Y);
+                    render = true;
+                }
             }
+
+            if (render)
+            { ManualRender(this.sceneControl); }
         }
 
         private void sceneControl_MouseMove(object sender, MouseEventArgs e)
         {
-            if ((e.Button & MouseButtons.Left) == System.Windows.Forms.MouseButtons.Left)
+            bool render = false;
+            if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
             {
                 CameraRotation cameraRotation = this.cameraRotation;
-                if (cameraRotation == null) { return; }
-
-                cameraRotation.MouseMove(e.X, e.Y);
-
-                ManualRender(this.sceneControl);
+                if (cameraRotation != null)
+                {
+                    cameraRotation.MouseMove(e.X, e.Y);
+                    render = true;
+                }
             }
 
-            if ((e.Button & MouseButtons.Right) == System.Windows.Forms.MouseButtons.Right)
+            if ((e.Button & MouseButtons.Right) == MouseButtons.Right)
             {
                 ArcBallEffect2 modelArcBallEffect = this.modelArcBallEffect;
-                if (modelArcBallEffect == null) { return; }
-                OrthoAxisElement orthoAxisElement = this.orthoAxisElement;
-                if (orthoAxisElement == null) { return; }
+                if (modelArcBallEffect != null)
+                {
+                    modelArcBallEffect.ArcBall.MouseMove(e.X, e.Y);
+                    render = true;
+                }
 
-                modelArcBallEffect.ArcBall.MouseMove(e.X, e.Y);
-                orthoAxisElement.orthoArcBallEffect.MouseMove(e.X, e.Y);
-
-                ManualRender(this.sceneControl);
+                OpenGLUIAxis uiAxis = this.uiAxis;
+                if (uiAxis != null)
+                {
+                    uiAxis.MouseMove(e.X, e.Y);
+                    render = true;
+                } 
             }
+
+            if (render)
+            { ManualRender(this.sceneControl); }
         }
 
         private void sceneControl_MouseDown(object sender, MouseEventArgs e)
         {
+            bool render = false;
             if ((e.Button & MouseButtons.Left) == System.Windows.Forms.MouseButtons.Left)
             {
                 CameraRotation cameraRotation = this.cameraRotation;
-                if (cameraRotation == null) { return; }
+                if (cameraRotation != null)
+                {
+                    int width = sceneControl.Width;
+                    int height = sceneControl.Height;
 
-                int width = sceneControl.Width;
-                int height = sceneControl.Height;
+                    cameraRotation.SetBounds(width, height);
+                    cameraRotation.MouseDown(e.X, e.Y);
 
-                cameraRotation.SetBounds(width, height);
-                cameraRotation.MouseDown(e.X, e.Y);
-
-                ManualRender(this.sceneControl);
+                    render = true;
+                } 
             }
 
             if ((e.Button & MouseButtons.Right) == System.Windows.Forms.MouseButtons.Right)
             {
-                ArcBallEffect2 modelArcBallEffect = this.modelArcBallEffect;
-                if (modelArcBallEffect == null) { return; }
-                OrthoAxisElement orthoAxisElement = this.orthoAxisElement;
-                if (orthoAxisElement == null) { return; }
-
                 int width = sceneControl.Width;
-                int height = sceneControl.Height;
-                modelArcBallEffect.ArcBall.SetBounds(width, height);
-                modelArcBallEffect.ArcBall.MouseDown(e.X, e.Y);
-                orthoAxisElement.orthoArcBallEffect.SetBounds(width, height);
-                orthoAxisElement.orthoArcBallEffect.MouseDown(e.X, e.Y);
+                int height = sceneControl.Height; 
+                
+                ArcBallEffect2 modelArcBallEffect = this.modelArcBallEffect;
+                if (modelArcBallEffect != null)
+                {
+                    modelArcBallEffect.ArcBall.SetBounds(width, height);
+                    modelArcBallEffect.ArcBall.MouseDown(e.X, e.Y);
+                    render = true;
+                }
 
-                ManualRender(this.sceneControl);
+                OpenGLUIAxis uiAxis = this.uiAxis;
+                if (uiAxis != null)
+                {
+                    uiAxis.SetBounds(width, height);
+                    uiAxis.MouseDown(e.X, e.Y);
+                    render = true;
+                } 
             }
+
+            if (render)
+            { ManualRender(this.sceneControl); }
         }
 
         private void sceneControl_MouseWheel(object sender, MouseEventArgs e)
