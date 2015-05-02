@@ -53,5 +53,7 @@ namespace ColorVertexSample.Visual
         protected void Dispose(bool disposing)
         {
         }
+
+        public SharpGL.SceneComponent.ArcBallEffect2 modelArcBallEffect { get; set; }
     }
 }

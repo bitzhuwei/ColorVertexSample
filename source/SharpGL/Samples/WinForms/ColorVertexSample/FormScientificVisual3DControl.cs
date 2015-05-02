@@ -25,7 +25,7 @@ namespace ColorVertexSample
 {
     public partial class FormScientificVisual3DControl : Form
     {
-        private ArcBallEffect2 modelArcBallEffect;
+        ArcBall2 modelArcBall;
 
         public FormScientificVisual3DControl()
         {
@@ -54,7 +54,7 @@ namespace ColorVertexSample
         {
             LookAtCamera camera = this.sceneControl.Scene.CurrentCamera as LookAtCamera;
 
-            this.modelArcBallEffect.ArcBall.Camera = camera;
+            this.modelArcBall.Camera = camera;
             this.sceneControl.SetSceneCameraToUICamera();
         }
 
@@ -64,10 +64,10 @@ namespace ColorVertexSample
 
             if ((e.Button & MouseButtons.Right) == MouseButtons.Right)
             {
-                ArcBallEffect2 modelArcBallEffect = this.modelArcBallEffect;
-                if (modelArcBallEffect != null)
+                ArcBall2 modelArcBall = this.modelArcBall;
+                if (modelArcBall != null)
                 {
-                    modelArcBallEffect.ArcBall.MouseUp(e.X, e.Y);
+                    modelArcBall.MouseUp(e.X, e.Y);
                     render = true;
                 }
             }
@@ -82,10 +82,10 @@ namespace ColorVertexSample
 
             if ((e.Button & MouseButtons.Right) == MouseButtons.Right)
             {
-                ArcBallEffect2 modelArcBallEffect = this.modelArcBallEffect;
-                if (modelArcBallEffect != null)
+                ArcBall2 modelArcBall = this.modelArcBall;
+                if (modelArcBall != null)
                 {
-                    modelArcBallEffect.ArcBall.MouseMove(e.X, e.Y);
+                    modelArcBall.MouseMove(e.X, e.Y);
                     render = true;
                 }
             }
@@ -101,13 +101,13 @@ namespace ColorVertexSample
             if ((e.Button & MouseButtons.Right) == System.Windows.Forms.MouseButtons.Right)
             {
                 int width = sceneControl.Width;
-                int height = sceneControl.Height; 
-                
-                ArcBallEffect2 modelArcBallEffect = this.modelArcBallEffect;
-                if (modelArcBallEffect != null)
+                int height = sceneControl.Height;
+
+                ArcBall2 modelArcBall = this.modelArcBall;
+                if (modelArcBall != null)
                 {
-                    modelArcBallEffect.ArcBall.SetBounds(width, height);
-                    modelArcBallEffect.ArcBall.MouseDown(e.X, e.Y);
+                    modelArcBall.SetBounds(width, height);
+                    modelArcBall.MouseDown(e.X, e.Y);
                     render = true;
                 }
             }
@@ -118,12 +118,12 @@ namespace ColorVertexSample
 
         private void sceneControl_MouseWheel(object sender, MouseEventArgs e)
         {
-            ArcBallEffect2 modelArcBallEffect = this.modelArcBallEffect;
-            if (modelArcBallEffect == null) { return; }
+            ArcBall2 modelArcBall = this.modelArcBall;
+            if (modelArcBall == null) { return; }
 
-            modelArcBallEffect.ArcBall.Scale += e.Delta * 0.001f;
-            if (modelArcBallEffect.ArcBall.Scale < 0.01f)
-            { modelArcBallEffect.ArcBall.Scale = 0.01f; }
+            modelArcBall.Scale += e.Delta * 0.001f;
+            if (modelArcBall.Scale < 0.01f)
+            { modelArcBall.Scale = 0.01f; }
 
             ManualRender(this.sceneControl);
         }
@@ -154,6 +154,7 @@ namespace ColorVertexSample
                 root.Effects.Clear();
 
                 PointModelElement element = InitializeElement(nx, ny, nz, radius, minValue, maxValue, root);
+                this.modelArcBall = element.modelArcBallEffect.ArcBall; 
 
                 InitializeCamera(element, this.sceneControl);
 
@@ -239,23 +240,9 @@ namespace ColorVertexSample
             PointModel model = PointModelFactory.Create(nx, ny, nz, radius, minValue, maxValue);
 
             PointModelElement element = new PointModelElement(model);
+            element = PointModelElementFactory.Create(nx, ny, nz, radius, minValue, maxValue);
 
             parent.AddChild(element);
-
-            Axies axies = new Axies();
-            LinearTransformationEffect effect = new LinearTransformationEffect();
-            float length = maxValue - minValue;
-            effect.LinearTransformation.ScaleX = length;
-            effect.LinearTransformation.ScaleY = length;
-            effect.LinearTransformation.ScaleZ = length;
-            axies.AddEffect(effect);
-            element.AddChild(axies);
-
-            ArcBallEffect2 modelArcBallEffect = new ArcBallEffect2();
-            modelArcBallEffect.ArcBall.Translate = element.Model.translateVector;
-            element.AddEffect(modelArcBallEffect);
-
-            this.modelArcBallEffect = modelArcBallEffect;
 
             return element;
         }

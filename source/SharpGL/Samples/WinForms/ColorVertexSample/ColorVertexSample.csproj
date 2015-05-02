@@ -68,8 +68,10 @@
     <Compile Include="Model\PointModelFactory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScientificSceneHelper.cs" />
     <Compile Include="Visual\ColorVertexesElement.cs" />
     <Compile Include="Visual\PointModelElement.cs" />
+    <Compile Include="Visual\PointModelElementFactory.cs" />
     <EmbeddedResource Include="FormScientificVisual3DControl.resx">
       <DependentUpon>FormScientificVisual3DControl.cs</DependentUpon>
     </EmbeddedResource>
