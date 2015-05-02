@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace SharpGL.SceneComponent
 {
-    class ColorIndicatorNumber : SceneElement, IRenderable
+    internal class ColorIndicatorNumber : SceneElement, IRenderable
     {
         public ColorIndicatorData Data { get; set; }
 
