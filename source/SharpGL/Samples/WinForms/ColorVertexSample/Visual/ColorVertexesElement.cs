@@ -32,8 +32,7 @@ namespace ColorVertexSample.Visual
 
             unsafe
             {
-                gl.Enable(OpenGL.GL_DEPTH_TEST);
-                gl.Enable(0X8861);
+                gl.Enable(OpenGL.GL_POINT_SPRITE_ARB);
 
                 gl.EnableClientState(OpenGL.GL_VERTEX_ARRAY);
                 gl.EnableClientState(OpenGL.GL_COLOR_ARRAY);
