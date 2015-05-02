@@ -11,7 +11,7 @@ namespace SharpGL.SceneComponent
     /// <summary>
     /// Draw axis with arc ball rotation effect on viewport as an UI.
     /// </summary>
-    public class OpenGLUIAxis : OpenGLUIRect
+    public class OpenGLUIAxis : OpenGLUIRect, IRotation
     {
         ArcBall2 arcBall = new ArcBall2();
         private SceneGraph.Transformations.LinearTransformation axisTransform;
@@ -25,6 +25,7 @@ namespace SharpGL.SceneComponent
             this.axisTransform = axisTransform.LinearTransformation;
             axis.AddEffect(axisTransform);
             base.AddChild(axis);
+            this.RectColor = new GLColor(1, 1, 0, 1);
         }
 
         protected override void RenderModel(OpenGLUIRectArgs args, OpenGL gl, SceneGraph.Core.RenderMode renderMode)
@@ -44,8 +45,16 @@ namespace SharpGL.SceneComponent
         {
             base.PushObjectSpace(gl);
 
-            arcBall.TransformMatrix(gl);
+            if (arcBall.Camera != null)
+            {
+                arcBall.TransformMatrix(gl);
+            }
         }
+
+
+
+        #region IRotation 成员
+
 
         public override SceneGraph.Cameras.LookAtCamera Camera
         {
@@ -79,5 +88,12 @@ namespace SharpGL.SceneComponent
         {
             this.arcBall.MouseDown(x, y);
         }
+
+        public void ResetRotation()
+        {
+            this.arcBall.ResetRotation();
+        }
+
+        #endregion
     }
 }

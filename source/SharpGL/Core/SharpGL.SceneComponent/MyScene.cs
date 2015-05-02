@@ -12,6 +12,20 @@ namespace SharpGL.SceneComponent
     /// </summary>
     public class MyScene : SharpGL.SceneGraph.Scene
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="isClear">Execute gl.ClearColor() and gl.Clear() if true.</param>
+        public MyScene(bool isClear = true)
+        {
+            this.IsClear = isClear;
+        }
+
+        /// <summary>
+        /// Execute gl.ClearColor() and gl.Clear() if true.
+        /// </summary>
+        public bool IsClear { get; set; }
+
         public override void Draw(SceneGraph.Cameras.Camera camera = null)
         {
             var gl = OpenGL;
@@ -23,18 +37,24 @@ namespace SharpGL.SceneComponent
             if (camera == null)
                 camera = CurrentCamera;
 
-            //	Set the clear color.
-            float[] clear = (SharpGL.SceneGraph.GLColor)ClearColor;
+            if (IsClear)
+            {
+                //	Set the clear color.
+                float[] clear = (SharpGL.SceneGraph.GLColor)ClearColor;
 
-            gl.ClearColor(clear[0], clear[1], clear[2], clear[3]);
+                gl.ClearColor(clear[0], clear[1], clear[2], clear[3]);
+            }
 
             //  Reproject.
             if (camera != null)
                 camera.Project(gl);
 
-            //	Clear.
-            gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT |
-                OpenGL.GL_STENCIL_BUFFER_BIT);
+            if (IsClear)
+            {
+                //	Clear.
+                gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT |
+                    OpenGL.GL_STENCIL_BUFFER_BIT);
+            }
 
             //gl.BindTexture(OpenGL.GL_TEXTURE_2D, 0);
 

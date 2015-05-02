@@ -9,6 +9,8 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using SharpGL.Version;
 using SharpGL.SceneGraph;
+using System.Collections.ObjectModel;
+using SharpGL.SceneGraph.Cameras;
 
 namespace SharpGL.SceneComponent
 {
@@ -19,8 +21,114 @@ namespace SharpGL.SceneComponent
     {
         public ScientificVisual3DControl()
         {
-            this.UIScene = new MyScene();
-            this.UIScene.OpenGL = this.OpenGL;
+            //this.RotationObjects = new ObservableCollection<IRotation>();
+
+            MyScene UIScene = new MyScene();
+            UIScene.IsClear = false;
+            UIScene.OpenGL = this.OpenGL;
+            this.UIScene = UIScene;
+            
+            ScientificVisual3DControlHelper.InitializeUIScene(this);
+
+            this.MouseDown += ScientificVisual3DControl_MouseDown;
+            this.MouseMove += ScientificVisual3DControl_MouseMove;
+            this.MouseUp += ScientificVisual3DControl_MouseUp;
+        }
+
+        void ScientificVisual3DControl_MouseUp(object sender, MouseEventArgs e)
+        {
+            bool render = false;
+
+            if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
+            {
+                CameraRotation cameraRotation = this.cameraRotation;
+                if (cameraRotation != null)
+                {
+                    cameraRotation.MouseUp(e.X, e.Y);
+
+                    render = true;
+                }
+            }
+
+            if ((e.Button & MouseButtons.Right) == MouseButtons.Right)
+            {
+                IRotation rotation = this.uiAxis;
+                if (rotation != null)
+                {
+                    rotation.MouseUp(e.X, e.Y);
+
+                    render = true;
+                }
+            }
+
+            if (render)
+            { ManualRender(this); }
+        }
+
+        void ScientificVisual3DControl_MouseMove(object sender, MouseEventArgs e)
+        {
+            bool render = false;
+            if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
+            {
+                CameraRotation cameraRotation = this.cameraRotation;
+                if (cameraRotation != null)
+                {
+                    cameraRotation.MouseMove(e.X, e.Y);
+
+                    render = true;
+                }
+            }
+
+            if ((e.Button & MouseButtons.Right) == MouseButtons.Right)
+            {
+                IRotation rotation = this.uiAxis;
+                if (rotation != null)
+                {
+                    rotation.MouseMove(e.X, e.Y);
+
+                    render = true;
+                }
+            }
+
+            if (render)
+            { ManualRender(this); }
+        }
+
+        void ScientificVisual3DControl_MouseDown(object sender, MouseEventArgs e)
+        {
+            bool render = false;
+
+            if ((e.Button & MouseButtons.Left) == System.Windows.Forms.MouseButtons.Left)
+            {
+                CameraRotation cameraRotation = this.cameraRotation;
+                if (cameraRotation != null)
+                {
+                    cameraRotation.SetBounds(this.Width, this.Height);
+                    cameraRotation.MouseDown(e.X, e.Y);
+
+                    render = true;
+                }
+            }
+
+            if ((e.Button & MouseButtons.Right) == System.Windows.Forms.MouseButtons.Right)
+            {
+                IRotation rotation = this.uiAxis;
+                if (rotation != null)
+                {
+                    rotation.SetBounds(this.Width, this.Height);
+                    rotation.MouseDown(e.X, e.Y);
+
+                    render = true;
+                }
+            }
+
+            if (render)
+            { ManualRender(this); }
+        }
+
+        private void ManualRender(Control control)
+        {
+            control.Invalidate();
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -62,6 +170,33 @@ namespace SharpGL.SceneComponent
             frameTime = stopwatch.Elapsed.TotalMilliseconds;
         }
 
+        private LookAtCamera _camera;
+
+        public LookAtCamera Camera
+        {
+            get { return _camera; }
+            set
+            {
+                if (value == null)
+                { throw new ArgumentNullException("camera"); }
+
+                _camera = value;
+                if (this.uiAxis != null)
+                {
+                    this.uiAxis.Camera = value;
+                    this.cameraRotation.Camera = value;
+                }
+            }
+        }
+
         public MyScene UIScene { get; set; }
+
+        //public ObservableCollection<IRotation> RotationObjects { get; protected set; }
+
+        private CameraRotation cameraRotation = new CameraRotation();
+
+        public OpenGLUIAxis uiAxis { get; set; }
+
+        public OpenGLUIColorIndicator uiColorIndicator { get; set; }
     }
 }

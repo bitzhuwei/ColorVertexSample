@@ -57,6 +57,7 @@
     </Compile>
     <Compile Include="CylinderAxis.cs" />
     <Compile Include="GenericModel.cs" />
+    <Compile Include="IRotation.cs" />
     <Compile Include="MyLight.cs" />
     <Compile Include="MyScene.cs" />
     <Compile Include="MySceneControl.cs">
@@ -76,6 +77,7 @@
     <Compile Include="ScientificVisual3DControl.Designer.cs">
       <DependentUpon>ScientificVisual3DControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="ScientificVisual3DControlHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SharpGL.SceneGraph\SharpGL.SceneGraph.csproj">
