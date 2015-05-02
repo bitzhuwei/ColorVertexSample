@@ -11,6 +11,9 @@ using System.Text;
 
 namespace SharpGL.SceneComponent
 {
+    /// <summary>
+    /// Cylinder-made axis.
+    /// </summary>
     public class CylinderAxis : SceneElement, IRenderable
     {
         private bool initialized = false;
@@ -109,6 +112,7 @@ namespace SharpGL.SceneComponent
         {
             if (!initialized)
             {
+                // Cylinder needs an opengl context(OpenGL gl;) to generate inner cylinder. So this is the best place to initialize.
                 InitAxis(this);
                 initialized = true;
             }
