@@ -202,6 +202,7 @@ namespace SharpGL.SceneComponent
         /// <param name="gl"></param>
         public virtual void PushObjectSpace(OpenGL gl)
         {
+            this.args = new OpenGLUIRectArgs();
             //int viewWidth;
             //int viewHeight;
             CalculateViewport(gl, args);
