@@ -41,7 +41,7 @@ namespace SharpGL.SceneComponent
 
             if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
             {
-                CameraRotation cameraRotation = this.cameraRotation;
+                CameraRotation cameraRotation = this.CameraRotation;
                 if (cameraRotation != null)
                 {
                     cameraRotation.MouseUp(e.X, e.Y);
@@ -70,7 +70,7 @@ namespace SharpGL.SceneComponent
             bool render = false;
             if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
             {
-                CameraRotation cameraRotation = this.cameraRotation;
+                CameraRotation cameraRotation = this.CameraRotation;
                 if (cameraRotation != null)
                 {
                     cameraRotation.MouseMove(e.X, e.Y);
@@ -100,7 +100,7 @@ namespace SharpGL.SceneComponent
 
             if ((e.Button & MouseButtons.Left) == System.Windows.Forms.MouseButtons.Left)
             {
-                CameraRotation cameraRotation = this.cameraRotation;
+                CameraRotation cameraRotation = this.CameraRotation;
                 if (cameraRotation != null)
                 {
                     cameraRotation.SetBounds(this.Width, this.Height);
@@ -170,30 +170,21 @@ namespace SharpGL.SceneComponent
             frameTime = stopwatch.Elapsed.TotalMilliseconds;
         }
 
-        private LookAtCamera _camera;
-
-        public LookAtCamera Camera
+        public void SetSceneCameraToUICamera()
         {
-            get { return _camera; }
-            set
-            {
-                if (value == null)
-                { throw new ArgumentNullException("camera"); }
+            LookAtCamera camera = this.Scene.CurrentCamera as LookAtCamera;
+            this.UIScene.CurrentCamera = camera;
+            //if (camera == null) { return; }
 
-                _camera = value;
-                if (this.uiAxis != null)
-                {
-                    this.uiAxis.Camera = value;
-                    this.cameraRotation.Camera = value;
-                }
-            }
+            this.uiAxis.Camera = camera;
+            this.CameraRotation.Camera = camera;
         }
 
         public MyScene UIScene { get; set; }
 
         //public ObservableCollection<IRotation> RotationObjects { get; protected set; }
 
-        private CameraRotation cameraRotation = new CameraRotation();
+        public CameraRotation CameraRotation { get; set; }
 
         public OpenGLUIAxis uiAxis { get; set; }
 

@@ -55,7 +55,7 @@ namespace ColorVertexSample
             LookAtCamera camera = this.sceneControl.Scene.CurrentCamera as LookAtCamera;
 
             this.modelArcBallEffect.ArcBall.Camera = camera;
-            this.sceneControl.Camera = camera;
+            this.sceneControl.SetSceneCameraToUICamera();
         }
 
         private void sceneControl_MouseUp(object sender, MouseEventArgs e)

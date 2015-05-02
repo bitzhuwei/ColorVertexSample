@@ -27,11 +27,7 @@ namespace SharpGL.SceneComponent
 
             InitializeAttributes(UIScene.SceneContainer);
 
-            LookAtCamera camera = scientificVisual3DControl.Scene.CurrentCamera as LookAtCamera;
-            if (camera != null)
-            {
-                UIScene.CurrentCamera = camera;
-            }
+            scientificVisual3DControl.SetSceneCameraToUICamera();
 
             UIScene.RenderBoundingVolumes = false;
         }
@@ -76,6 +72,8 @@ namespace SharpGL.SceneComponent
             uiColorIndicator.Data = rainbow;
             parent.AddChild(uiColorIndicator);
             scientificVisual3DControl.uiColorIndicator = uiColorIndicator;
+
+            scientificVisual3DControl.CameraRotation = new CameraRotation();
         }
     }
 }
