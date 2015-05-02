@@ -29,9 +29,9 @@ namespace SharpGL.SceneComponent
             {
                 string value = (data.minValue * (double)(data.Colors.Length - 1 - i) / (data.Colors.Length - 1)
                     + data.maxValue * (double)i / (data.Colors.Length - 1)).ToString();
-                float valueLength = 100.0f * (float)value.Length / fontSize;
-                float x = -lastArgs.UIWidth / 2 - lastArgs.left + i * blockWidth - valueLength / 2;
-                int y = -lastArgs.UIHeight / 2 - lastArgs.bottom - 14;
+                double valueLength = 100.0 * value.Length / fontSize;
+                double x = -(double)lastArgs.UIWidth / 2 - lastArgs.left + i * blockWidth - valueLength / 2;
+                double y = -(double)lastArgs.UIHeight / 2 - lastArgs.bottom - 14;
                 gl.DrawText((int)x, (int)y, 1, 1, 1, "Courier New", fontSize, value);
             }
         }

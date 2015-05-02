@@ -93,7 +93,8 @@ namespace SharpGL.SceneComponent
 
             if ((Anchor & leftRightAnchor) == AnchorStyles.None)
             {
-                args.left = -viewWidth / 2;
+                args.left = -(args.UIWidth / 2
+                    + (viewWidth - args.UIWidth) * ((double)Margin.Left / (double)(Margin.Left + Margin.Right)));
             }
             else if ((Anchor & leftRightAnchor) == AnchorStyles.Left)
             {
@@ -111,6 +112,8 @@ namespace SharpGL.SceneComponent
             if ((Anchor & topBottomAnchor) == AnchorStyles.None)
             {
                 args.bottom = -viewHeight / 2;
+                args.bottom = -(args.UIHeight / 2
+                    + (viewHeight - args.UIHeight) * ((double)Margin.Bottom / (double)(Margin.Bottom + Margin.Top)));
             }
             else if ((Anchor & topBottomAnchor) == AnchorStyles.Bottom)
             {

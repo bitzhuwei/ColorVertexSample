@@ -29,18 +29,18 @@ namespace SharpGL.SceneComponent
         /// <summary>
         /// left in gl.Ortho(left, right, bottom, top, zNear, zFar);
         /// </summary>
-        public int left;
+        public double left;
         /// <summary>
         /// bottom in gl.Ortho(left, right, bottom, top, zNear, zFar);
         /// </summary>
-        public int bottom;
+        public double bottom;
         /// <summary>
         /// right in gl.Ortho(left, right, bottom, top, zNear, zFar);
         /// </summary>
-        public int right { get { return left + viewWidth; } }
+        public double right { get { return left + viewWidth; } }
         /// <summary>
         /// top in gl.Ortho(left, right, bottom, top, zNear, zFar);
         /// </summary>
-        public int top { get { return bottom + viewHeight; } }
+        public double top { get { return bottom + viewHeight; } }
     }
 }
