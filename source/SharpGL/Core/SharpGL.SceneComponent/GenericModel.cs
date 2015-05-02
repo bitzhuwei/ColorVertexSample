@@ -45,7 +45,6 @@ namespace SharpGL.SceneComponent
 
             unsafe
             {
-                gl.Enable(OpenGL.GL_DEPTH_TEST);
                 gl.Enable(0X8861);
 
                 gl.EnableClientState(OpenGL.GL_VERTEX_ARRAY);
