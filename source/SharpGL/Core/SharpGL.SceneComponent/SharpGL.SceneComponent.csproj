@@ -61,7 +61,6 @@
     <Compile Include="IRotation.cs" />
     <Compile Include="IScale.cs" />
     <Compile Include="IScientificModel.cs" />
-    <Compile Include="IScientificRenderer.cs" />
     <Compile Include="MyLight.cs" />
     <Compile Include="MyScene.cs" />
     <Compile Include="MySceneControl.cs">
