@@ -18,7 +18,7 @@ namespace SharpGL.SceneComponent
     /// Scene control which contains axis, color indicator, etc.
     /// <para>Set the <see cref="ScientificModel"/> property to view a model.</para>
     /// </summary>
-    public partial class ScientificVisual3DControl : MySceneControl, ISupportInitialize
+    public partial class ScientificVisual3DControl : MySceneControl
     {
         /// <summary>
         /// contains the model <see cref="IScientificModel"/> we want to show.
@@ -42,7 +42,7 @@ namespace SharpGL.SceneComponent
         {
             ScientificModelElement element = this.scientificModelElement;
             if (element == null) { return; }
-            IMouseScale modelScale = element.modelScale;
+            IMouseScale modelScale = element.modelTranslation;
             if (modelScale == null) { return; }
 
             modelScale.Scale += e.Delta * 0.001f;
@@ -58,10 +58,10 @@ namespace SharpGL.SceneComponent
 
             if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
             {
-                IMouseRotation cameraRotation = this.CameraRotation;
-                if (cameraRotation != null)
+                IMouseRotation rotation = this.CameraRotation;
+                if (rotation != null)
                 {
-                    cameraRotation.MouseUp(e.X, e.Y);
+                    rotation.MouseUp(e.X, e.Y);
 
                     render = true;
                 }
@@ -69,23 +69,27 @@ namespace SharpGL.SceneComponent
 
             if ((e.Button & MouseButtons.Right) == MouseButtons.Right)
             {
-                IMouseRotation rotation = this.uiAxis;
-                if (rotation != null)
                 {
-                    rotation.MouseUp(e.X, e.Y);
-
-                    render = true;
-                }
-
-                ScientificModelElement element = this.scientificModelElement;
-                if (element != null)
-                {
-                    rotation = element.modelRotation;
+                    IMouseRotation rotation = this.uiAxis;
                     if (rotation != null)
                     {
                         rotation.MouseUp(e.X, e.Y);
 
                         render = true;
+                    }
+                }
+
+                {
+                    ScientificModelElement element = this.scientificModelElement;
+                    if (element != null)
+                    {
+                        IMouseRotation rotation = element.modelTranslation;
+                        if (rotation != null)
+                        {
+                            rotation.MouseUp(e.X, e.Y);
+
+                            render = true;
+                        }
                     }
                 }
             }
@@ -110,23 +114,27 @@ namespace SharpGL.SceneComponent
 
             if ((e.Button & MouseButtons.Right) == MouseButtons.Right)
             {
-                IMouseRotation rotation = this.uiAxis;
-                if (rotation != null)
                 {
-                    rotation.MouseMove(e.X, e.Y);
-
-                    render = true;
-                }
-
-                ScientificModelElement element = this.scientificModelElement;
-                if (element != null)
-                {
-                    rotation = element.modelRotation;
+                    IMouseRotation rotation = this.uiAxis;
                     if (rotation != null)
                     {
                         rotation.MouseMove(e.X, e.Y);
 
                         render = true;
+                    }
+                }
+
+                {
+                    ScientificModelElement element = this.scientificModelElement;
+                    if (element != null)
+                    {
+                        IMouseRotation rotation = element.modelTranslation;
+                        if (rotation != null)
+                        {
+                            rotation.MouseMove(e.X, e.Y);
+
+                            render = true;
+                        }
                     }
                 }
             }
@@ -153,25 +161,29 @@ namespace SharpGL.SceneComponent
 
             if ((e.Button & MouseButtons.Right) == System.Windows.Forms.MouseButtons.Right)
             {
-                IMouseRotation rotation = this.uiAxis;
-                if (rotation != null)
                 {
-                    rotation.SetBounds(this.Width, this.Height);
-                    rotation.MouseDown(e.X, e.Y);
-
-                    render = true;
-                }
-
-                ScientificModelElement element = this.scientificModelElement;
-                if (element != null)
-                {
-                    rotation = element.modelRotation;
+                    IMouseRotation rotation = this.uiAxis;
                     if (rotation != null)
                     {
                         rotation.SetBounds(this.Width, this.Height);
                         rotation.MouseDown(e.X, e.Y);
 
                         render = true;
+                    }
+                }
+
+                {
+                    ScientificModelElement element = this.scientificModelElement;
+                    if (element != null)
+                    {
+                        IMouseRotation rotation = element.modelTranslation;
+                        if (rotation != null)
+                        {
+                            rotation.SetBounds(this.Width, this.Height);
+                            rotation.MouseDown(e.X, e.Y);
+
+                            render = true;
+                        }
                     }
                 }
             }
@@ -182,7 +194,7 @@ namespace SharpGL.SceneComponent
 
         private void ManualRender(Control control)
         {
-            control.Invalidate();
+            control.Invalidate();// this will invokes OnPaint(PaintEventArgs e);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -235,6 +247,9 @@ namespace SharpGL.SceneComponent
             this.CameraRotation.Camera = camera;
         }
 
+        /// <summary>
+        /// holds UI elements(axis, color indicator etc).
+        /// </summary>
         public MyScene UIScene { get; set; }
 
         //public ObservableCollection<IRotation> RotationObjects { get; protected set; }
@@ -244,8 +259,14 @@ namespace SharpGL.SceneComponent
         /// </summary>
         public CameraRotation CameraRotation { get; set; }
 
+        /// <summary>
+        /// Draw axis with arc ball rotation effect on viewport as an UI.
+        /// </summary>
         public OpenGLUIAxis uiAxis { get; set; }
 
+        /// <summary>
+        /// Draw color indicator on viewport as an UI.
+        /// </summary>
         public OpenGLUIColorIndicator uiColorIndicator { get; set; }
 
         /// <summary>
@@ -269,8 +290,8 @@ namespace SharpGL.SceneComponent
 
                 element.Model = value;
                 element.modelTranslation.Translate = value.Translate;
-                element.modelRotation.ResetRotation();
-                element.modelScale.Scale = 1;
+                element.modelTranslation.ResetRotation();
+                element.modelTranslation.Scale = 1;
                 element.Model.AdjustCamera(this.OpenGL, this.Scene.CurrentCamera);
                 // force CameraRotation to udpate.
                 this.CameraRotation.Camera = this.Scene.CurrentCamera as LookAtCamera;

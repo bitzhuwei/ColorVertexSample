@@ -98,8 +98,6 @@ namespace SharpGL.SceneComponent
             ScientificModelElement element = new ScientificModelElement();
             ArcBallEffect2 arcBallEffect = new ArcBallEffect2();
             element.AddEffect(arcBallEffect);
-            element.modelRotation = arcBallEffect.ArcBall;
-            element.modelScale = arcBallEffect.ArcBall;
             element.modelTranslation = arcBallEffect.ArcBall;
             root.AddChild(element);
             scientificVisual3DControl.SetModelElement(element);

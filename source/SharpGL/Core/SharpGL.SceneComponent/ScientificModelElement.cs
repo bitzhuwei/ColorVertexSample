@@ -8,10 +8,11 @@ namespace SharpGL.SceneComponent
 {
     internal class ScientificModelElement : SceneElement, IRenderable
     {
-        internal IMouseRotation modelRotation;
-        internal IMouseScale modelScale;
-        internal ITranslation modelTranslation;
+        internal IMouseTransform modelTranslation;
 
+        /// <summary>
+        /// The model shown in <see cref="ScientificVisual3DControl"/>.
+        /// </summary>
         public IScientificModel Model { get; set; }
 
         #region IRenderable 成员
