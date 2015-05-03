@@ -24,6 +24,7 @@ namespace SharpGL.SceneComponent
         /// </summary>
         private ScientificModelElement scientificModelElement;
         private IRotation modelRotation;
+        private IScale modelScale;
 
         public ScientificVisual3DControl()
         {
@@ -35,6 +36,19 @@ namespace SharpGL.SceneComponent
             this.MouseDown += ScientificVisual3DControl_MouseDown;
             this.MouseMove += ScientificVisual3DControl_MouseMove;
             this.MouseUp += ScientificVisual3DControl_MouseUp;
+            this.MouseWheel += ScientificVisual3DControl_MouseWheel;
+        }
+
+        void ScientificVisual3DControl_MouseWheel(object sender, MouseEventArgs e)
+        {
+            IScale modelScale = this.modelScale;
+            if (modelScale == null) { return; }
+
+            modelScale.Scale += e.Delta * 0.001f;
+            if (modelScale.Scale < 0.01f)
+            { modelScale.Scale = 0.01f; }
+
+            ManualRender(this); 
         }
 
         void ScientificVisual3DControl_MouseUp(object sender, MouseEventArgs e)
@@ -250,6 +264,11 @@ namespace SharpGL.SceneComponent
         internal void SetModelRotation(IRotation rotation)
         {
             this.modelRotation = rotation;
+        }
+
+        internal void SetModelScale(IScale scale)
+        {
+            this.modelScale = scale;
         }
     }
 }

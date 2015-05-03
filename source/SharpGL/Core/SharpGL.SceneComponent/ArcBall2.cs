@@ -13,7 +13,7 @@ namespace SharpGL.SceneComponent
     /// <summary>
     /// The ArcBall camera supports arcball projection, making it ideal for use with a mouse.
     /// </summary>
-    public class ArcBall2 : IRotation
+    public class ArcBall2 : IRotation, IScale
     {
         protected bool isCameraSet = false;
         public bool mouseDownFlag;
@@ -210,5 +210,6 @@ namespace SharpGL.SceneComponent
                 isCameraSet = value != null;
             }
         }
+
     }
 }

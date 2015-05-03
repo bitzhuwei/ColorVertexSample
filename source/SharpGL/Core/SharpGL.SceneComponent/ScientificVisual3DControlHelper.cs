@@ -102,6 +102,7 @@ namespace SharpGL.SceneComponent
             root.AddChild(element);
             scientificVisual3DControl.SetModelElement(element);
             scientificVisual3DControl.SetModelRotation(arcBallEffect.ArcBall);
+            scientificVisual3DControl.SetModelScale(arcBallEffect.ArcBall);
         }
 
         private static OpenGLAttributesEffect InitializeSceneAttributes(SceneElement parent)
