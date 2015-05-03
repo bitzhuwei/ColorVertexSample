@@ -11,7 +11,7 @@ namespace SharpGL.SceneComponent
     /// <summary>
     /// Draw axis with arc ball rotation effect on viewport as an UI.
     /// </summary>
-    public class OpenGLUIAxis : OpenGLUIRect, IRotation
+    public class OpenGLUIAxis : OpenGLUIRect, IMouseRotation
     {
         ArcBall2 arcBall = new ArcBall2();
         private SceneGraph.Transformations.LinearTransformation axisTransform;

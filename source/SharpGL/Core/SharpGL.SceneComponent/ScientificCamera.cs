@@ -90,24 +90,6 @@ namespace SharpGL.SceneComponent
         public Vertex UpVector { get; set; }
 
         /// <summary>
-        /// Gets or sets the position.
-        /// </summary>
-        /// <value>
-        /// The position.
-        /// </value>
-        [Description("The position of the camera"), Category("Camera")]
-        public Vertex Position { get; set; }
-
-        /// <summary>
-        /// Gets or sets the aspect.
-        /// </summary>
-        /// <value>
-        /// The aspect.
-        /// </value>
-        [Description("Screen Aspect Ratio"), Category("Camera")]
-        public double AspectRatio { get; set; }
-
-        /// <summary>
         /// Gets or sets the field of view.
         /// </summary>
         /// <value>

@@ -8,17 +8,17 @@ namespace SharpGL.SceneComponent
 {
     public class OrthoColorIndicatorBar : SceneElement, IRenderable
     {
-        public GenericModel rectModel { get; set; }
+        public PointerScientificModel rectModel { get; set; }
 
-        public GenericModel verticalLines { get; set; }
+        public PointerScientificModel verticalLines { get; set; }
 
-        public GenericModel horizontalLines { get; set; }
+        public PointerScientificModel horizontalLines { get; set; }
 
         public void Render(OpenGL gl, RenderMode renderMode)
         {
-            GenericModel rectModel = this.rectModel;
-            GenericModel verticalLines = this.verticalLines;
-            GenericModel horizontalLines = this.horizontalLines;
+            PointerScientificModel rectModel = this.rectModel;
+            PointerScientificModel verticalLines = this.verticalLines;
+            PointerScientificModel horizontalLines = this.horizontalLines;
 
             if (rectModel != null)
             { rectModel.Render(gl, renderMode); }

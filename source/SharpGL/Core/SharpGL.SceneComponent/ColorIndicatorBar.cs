@@ -38,7 +38,7 @@ namespace SharpGL.SceneComponent
             // initialize rectangles with gradient color.
             {
                 int length = data.Colors.Length;
-                GenericModel rectModel = new GenericModel(length * 2, Enumerations.BeginMode.QuadStrip);
+                PointerScientificModel rectModel = new PointerScientificModel(length * 2, Enumerations.BeginMode.QuadStrip);
                 Vertex* positions = rectModel.Positions;
                 for (int i = 0; i < length; i++)
                 {
@@ -73,7 +73,7 @@ namespace SharpGL.SceneComponent
             // initialize two horizontal white lines.
             {
                 int length = 4;
-                GenericModel horizontalLines = new GenericModel(length, Enumerations.BeginMode.Lines);
+                PointerScientificModel horizontalLines = new PointerScientificModel(length, Enumerations.BeginMode.Lines);
                 Vertex* positions = horizontalLines.Positions;
                 positions[0].X = 0; positions[0].Y = 0; positions[0].Z = 0;
                 positions[1].X = barWidth; positions[1].Y = 0; positions[1].Z = 0;
@@ -100,7 +100,7 @@ namespace SharpGL.SceneComponent
             // initialize vertical lines.
             {
                 int length = data.Colors.Length;
-                GenericModel verticalLines = new GenericModel(length * 2, Enumerations.BeginMode.Lines);
+                PointerScientificModel verticalLines = new PointerScientificModel(length * 2, Enumerations.BeginMode.Lines);
                 Vertex* positions = verticalLines.Positions;
                 for (int i = 0; i < length; i++)
                 {
@@ -133,17 +133,17 @@ namespace SharpGL.SceneComponent
         public const int barWidth = 100;
         public const int barHeight = 30;
 
-        private GenericModel rectModel;
+        private PointerScientificModel rectModel;
 
-        private GenericModel verticalLines;
+        private PointerScientificModel verticalLines;
 
-        private GenericModel horizontalLines;
+        private PointerScientificModel horizontalLines;
 
         public void Render(OpenGL gl, RenderMode renderMode)
         {
-            GenericModel rectModel = this.rectModel;
-            GenericModel verticalLines = this.verticalLines;
-            GenericModel horizontalLines = this.horizontalLines;
+            PointerScientificModel rectModel = this.rectModel;
+            PointerScientificModel verticalLines = this.verticalLines;
+            PointerScientificModel horizontalLines = this.horizontalLines;
 
             if (rectModel != null)
             { rectModel.Render(gl, renderMode); }

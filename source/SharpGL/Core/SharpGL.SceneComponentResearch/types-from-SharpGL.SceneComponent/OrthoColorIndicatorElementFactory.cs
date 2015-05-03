@@ -58,7 +58,7 @@ namespace SharpGL.SceneComponent
             // initialize rectangles with gradient color.
             {
                 int length = colorTemplate.Colors.Length;
-                GenericModel rectModel = new GenericModel(length * 2, Enumerations.BeginMode.QuadStrip);
+                PointerScientificModel rectModel = new PointerScientificModel(length * 2, Enumerations.BeginMode.QuadStrip);
                 Vertex* positions = rectModel.Positions;
                 for (int i = 0; i < length; i++)
                 {
@@ -86,7 +86,7 @@ namespace SharpGL.SceneComponent
             // initialize two horizontal white lines.
             {
                 int length = 4;
-                GenericModel horizontalLines = new GenericModel(length, Enumerations.BeginMode.Lines);
+                PointerScientificModel horizontalLines = new PointerScientificModel(length, Enumerations.BeginMode.Lines);
                 Vertex* positions = horizontalLines.Positions;
                 positions[0].X = 0; positions[0].Y = 0; positions[0].Z = 0;
                 positions[1].X = colorTemplate.Width; positions[1].Y = 0; positions[1].Z = 0;
@@ -107,7 +107,7 @@ namespace SharpGL.SceneComponent
             // initialize vertical lines.
             {
                 int length = colorTemplate.Colors.Length;
-                GenericModel verticalLines = new GenericModel(length * 2, Enumerations.BeginMode.Lines);
+                PointerScientificModel verticalLines = new PointerScientificModel(length * 2, Enumerations.BeginMode.Lines);
                 Vertex* positions = verticalLines.Positions;
                 for (int i = 0; i < length; i++)
                 {

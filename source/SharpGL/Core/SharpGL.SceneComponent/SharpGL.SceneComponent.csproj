@@ -57,9 +57,13 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CylinderAxis.cs" />
-    <Compile Include="GenericModel.cs" />
-    <Compile Include="IRotation.cs" />
-    <Compile Include="IScale.cs" />
+    <Compile Include="IMouseRotation.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="IMouseScale.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ITranslation.cs" />
     <Compile Include="IScientificModel.cs" />
     <Compile Include="MyLight.cs" />
     <Compile Include="MyScene.cs" />
@@ -73,6 +77,9 @@
     <Compile Include="OpenGLUIColorIndicator.cs" />
     <Compile Include="OpenGLUIRect.cs" />
     <Compile Include="OpenGLUIRectArgs.cs" />
+    <Compile Include="PointerScientificModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScientificCamera.cs" />
     <Compile Include="ScientificModelElement.cs" />

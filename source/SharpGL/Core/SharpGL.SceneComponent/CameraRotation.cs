@@ -11,7 +11,7 @@ namespace SharpGL.SceneComponent
     /// <summary>
     /// rotate and translate camera on a sphere, whose center is camera's Target.
     /// </summary>
-    public class CameraRotation : IRotation
+    public class CameraRotation : IMouseRotation
     {
         private Point downPosition = new Point();
         private Size bound = new Size();

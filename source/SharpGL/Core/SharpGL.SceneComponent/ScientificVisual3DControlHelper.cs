@@ -85,7 +85,6 @@ namespace SharpGL.SceneComponent
             if (scientificVisual3DControl == null) { return; }
 
             MyScene scene = scientificVisual3DControl.Scene;
-            scene.IsClear = false;
             scene.SceneContainer.Name = "Scene's container";
             scene.SceneContainer.Children.Clear();
             scene.SceneContainer.Effects.Clear();
@@ -103,6 +102,7 @@ namespace SharpGL.SceneComponent
             scientificVisual3DControl.SetModelElement(element);
             scientificVisual3DControl.SetModelRotation(arcBallEffect.ArcBall);
             scientificVisual3DControl.SetModelScale(arcBallEffect.ArcBall);
+            scientificVisual3DControl.SetModelTranslation(arcBallEffect.ArcBall);
         }
 
         private static OpenGLAttributesEffect InitializeSceneAttributes(SceneElement parent)

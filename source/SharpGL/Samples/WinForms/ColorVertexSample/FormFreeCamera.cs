@@ -320,7 +320,7 @@ namespace ColorVertexSample
         /// <param name="maxValue"></param>
         private PointModelElement InitializeElement(int nx, int ny, int nz, float radius, float minValue, float maxValue, SceneElement parent)
         {
-            PointModel model = PointModelFactory.Create(nx, ny, nz, radius, minValue, maxValue);
+            PointModel model = PointModel.Create(nx, ny, nz, radius, minValue, maxValue);
 
             PointModelElement element = new PointModelElement(model);
 
@@ -336,7 +336,7 @@ namespace ColorVertexSample
             element.AddChild(axies);
 
             ArcBallEffect2 modelArcBallEffect = new ArcBallEffect2();
-            modelArcBallEffect.ArcBall.Translate = element.Model.translateVector;
+            modelArcBallEffect.ArcBall.Translate = element.Model.Translate;
             element.AddEffect(modelArcBallEffect);
 
             this.modelArcBallEffect = modelArcBallEffect;

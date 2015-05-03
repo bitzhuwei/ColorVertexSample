@@ -15,7 +15,8 @@ using SharpGL.SceneGraph.Cameras;
 namespace SharpGL.SceneComponent
 {
     /// <summary>
-    /// scene control which contains axis, color indicator, etc.
+    /// Scene control which contains axis, color indicator, etc.
+    /// <para>Set the <see cref="ScientificModel"/> property to view a model.</para>
     /// </summary>
     public partial class ScientificVisual3DControl : MySceneControl, ISupportInitialize
     {
@@ -23,8 +24,9 @@ namespace SharpGL.SceneComponent
         /// contains the model <see cref="IScientificModel"/> we want to show.
         /// </summary>
         private ScientificModelElement scientificModelElement;
-        private IRotation modelRotation;
-        private IScale modelScale;
+        private IMouseRotation modelRotation;
+        private IMouseScale modelScale;
+        private ITranslation modelTranslation;
 
         public ScientificVisual3DControl()
         {
@@ -41,7 +43,7 @@ namespace SharpGL.SceneComponent
 
         void ScientificVisual3DControl_MouseWheel(object sender, MouseEventArgs e)
         {
-            IScale modelScale = this.modelScale;
+            IMouseScale modelScale = this.modelScale;
             if (modelScale == null) { return; }
 
             modelScale.Scale += e.Delta * 0.001f;
@@ -57,7 +59,7 @@ namespace SharpGL.SceneComponent
 
             if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
             {
-                IRotation cameraRotation = this.CameraRotation;
+                IMouseRotation cameraRotation = this.CameraRotation;
                 if (cameraRotation != null)
                 {
                     cameraRotation.MouseUp(e.X, e.Y);
@@ -68,7 +70,7 @@ namespace SharpGL.SceneComponent
 
             if ((e.Button & MouseButtons.Right) == MouseButtons.Right)
             {
-                IRotation rotation = this.uiAxis;
+                IMouseRotation rotation = this.uiAxis;
                 if (rotation != null)
                 {
                     rotation.MouseUp(e.X, e.Y);
@@ -94,7 +96,7 @@ namespace SharpGL.SceneComponent
             bool render = false;
             if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
             {
-                IRotation cameraRotation = this.CameraRotation;
+                IMouseRotation cameraRotation = this.CameraRotation;
                 if (cameraRotation != null)
                 {
                     cameraRotation.MouseMove(e.X, e.Y);
@@ -105,7 +107,7 @@ namespace SharpGL.SceneComponent
 
             if ((e.Button & MouseButtons.Right) == MouseButtons.Right)
             {
-                IRotation rotation = this.uiAxis;
+                IMouseRotation rotation = this.uiAxis;
                 if (rotation != null)
                 {
                     rotation.MouseMove(e.X, e.Y);
@@ -132,7 +134,7 @@ namespace SharpGL.SceneComponent
 
             if ((e.Button & MouseButtons.Left) == System.Windows.Forms.MouseButtons.Left)
             {
-                IRotation cameraRotation = this.CameraRotation;
+                IMouseRotation cameraRotation = this.CameraRotation;
                 if (cameraRotation != null)
                 {
                     cameraRotation.SetBounds(this.Width, this.Height);
@@ -144,7 +146,7 @@ namespace SharpGL.SceneComponent
 
             if ((e.Button & MouseButtons.Right) == System.Windows.Forms.MouseButtons.Right)
             {
-                IRotation rotation = this.uiAxis;
+                IMouseRotation rotation = this.uiAxis;
                 if (rotation != null)
                 {
                     rotation.SetBounds(this.Width, this.Height);
@@ -156,6 +158,7 @@ namespace SharpGL.SceneComponent
                 rotation = this.modelRotation;
                 if (rotation != null)
                 {
+                    rotation.SetBounds(this.Width, this.Height);
                     rotation.MouseDown(e.X, e.Y);
 
                     render = true;
@@ -210,12 +213,13 @@ namespace SharpGL.SceneComponent
             frameTime = stopwatch.Elapsed.TotalMilliseconds;
         }
 
-        public void SetSceneCameraToUICamera()
+        internal void SetSceneCameraToUICamera()
         {
             LookAtCamera camera = this.Scene.CurrentCamera as LookAtCamera;
-            this.UIScene.CurrentCamera = camera;
-            //if (camera == null) { return; }
+            if (camera == null)
+            { throw new Exception("this.Scene.CurrentCamera cannot be null."); }
 
+            this.UIScene.CurrentCamera = camera;
             this.uiAxis.Camera = camera;
             this.CameraRotation.Camera = camera;
         }
@@ -248,8 +252,14 @@ namespace SharpGL.SceneComponent
                 ScientificModelElement element = this.scientificModelElement;
                 if (element == null)
                 { throw new Exception("scientificModelElement must not be null!"); }
-                element.Model = value;
 
+                element.Model = value;
+                this.modelTranslation.Translate = value.Translate;
+                this.modelRotation.ResetRotation();
+                this.modelScale.Scale = 1;
+                value.AdjustCamera(this.OpenGL, this.Scene.CurrentCamera);
+                this.CameraRotation.Camera = this.Scene.CurrentCamera as LookAtCamera;
+                this.uiAxis.ResetRotation();
             }
         }
 
@@ -261,14 +271,19 @@ namespace SharpGL.SceneComponent
             this.scientificModelElement = element;
         }
 
-        internal void SetModelRotation(IRotation rotation)
+        internal void SetModelRotation(IMouseRotation rotation)
         {
             this.modelRotation = rotation;
         }
 
-        internal void SetModelScale(IScale scale)
+        internal void SetModelScale(IMouseScale scale)
         {
             this.modelScale = scale;
+        }
+
+        internal void SetModelTranslation(ITranslation translation)
+        {
+            this.modelTranslation = translation; 
         }
     }
 }
