@@ -19,15 +19,17 @@ namespace SharpGL.SceneComponent
     /// </summary>
     public partial class ScientificVisual3DControl : MySceneControl, ISupportInitialize
     {
+        /// <summary>
+        /// contains the model <see cref="IScientificModel"/> we want to show.
+        /// </summary>
+        private ScientificModelElement scientificModelElement;
+        private IRotation modelRotation;
+
         public ScientificVisual3DControl()
         {
             //this.RotationObjects = new ObservableCollection<IRotation>();
 
-            MyScene UIScene = new MyScene();
-            UIScene.IsClear = false;
-            UIScene.OpenGL = this.OpenGL;
-            this.UIScene = UIScene;
-            
+            ScientificVisual3DControlHelper.InitializeScene(this);
             ScientificVisual3DControlHelper.InitializeUIScene(this);
 
             this.MouseDown += ScientificVisual3DControl_MouseDown;
@@ -41,7 +43,7 @@ namespace SharpGL.SceneComponent
 
             if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
             {
-                CameraRotation cameraRotation = this.CameraRotation;
+                IRotation cameraRotation = this.CameraRotation;
                 if (cameraRotation != null)
                 {
                     cameraRotation.MouseUp(e.X, e.Y);
@@ -59,6 +61,14 @@ namespace SharpGL.SceneComponent
 
                     render = true;
                 }
+
+                rotation = this.modelRotation;
+                if (rotation != null)
+                {
+                    rotation.MouseUp(e.X, e.Y);
+
+                    render = true;
+                }
             }
 
             if (render)
@@ -70,7 +80,7 @@ namespace SharpGL.SceneComponent
             bool render = false;
             if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
             {
-                CameraRotation cameraRotation = this.CameraRotation;
+                IRotation cameraRotation = this.CameraRotation;
                 if (cameraRotation != null)
                 {
                     cameraRotation.MouseMove(e.X, e.Y);
@@ -82,6 +92,14 @@ namespace SharpGL.SceneComponent
             if ((e.Button & MouseButtons.Right) == MouseButtons.Right)
             {
                 IRotation rotation = this.uiAxis;
+                if (rotation != null)
+                {
+                    rotation.MouseMove(e.X, e.Y);
+
+                    render = true;
+                }
+
+                rotation = this.modelRotation;
                 if (rotation != null)
                 {
                     rotation.MouseMove(e.X, e.Y);
@@ -100,7 +118,7 @@ namespace SharpGL.SceneComponent
 
             if ((e.Button & MouseButtons.Left) == System.Windows.Forms.MouseButtons.Left)
             {
-                CameraRotation cameraRotation = this.CameraRotation;
+                IRotation cameraRotation = this.CameraRotation;
                 if (cameraRotation != null)
                 {
                     cameraRotation.SetBounds(this.Width, this.Height);
@@ -116,6 +134,14 @@ namespace SharpGL.SceneComponent
                 if (rotation != null)
                 {
                     rotation.SetBounds(this.Width, this.Height);
+                    rotation.MouseDown(e.X, e.Y);
+
+                    render = true;
+                }
+
+                rotation = this.modelRotation;
+                if (rotation != null)
+                {
                     rotation.MouseDown(e.X, e.Y);
 
                     render = true;
@@ -189,5 +215,41 @@ namespace SharpGL.SceneComponent
         public OpenGLUIAxis uiAxis { get; set; }
 
         public OpenGLUIColorIndicator uiColorIndicator { get; set; }
+
+        /// <summary>
+        /// Get or set data model that we want to show.
+        /// </summary>
+        public IScientificModel ScientificModel
+        {
+            get
+            {
+                ScientificModelElement element = this.scientificModelElement;
+                if (element == null) { return null; }
+
+                IScientificModel model = element.Model;
+                return model;
+            }
+            set
+            {
+                ScientificModelElement element = this.scientificModelElement;
+                if (element == null)
+                { throw new Exception("scientificModelElement must not be null!"); }
+                element.Model = value;
+
+            }
+        }
+
+        internal void SetModelElement(ScientificModelElement element)
+        {
+            if (element == null)
+            { throw new ArgumentNullException("element"); }
+
+            this.scientificModelElement = element;
+        }
+
+        internal void SetModelRotation(IRotation rotation)
+        {
+            this.modelRotation = rotation;
+        }
     }
 }

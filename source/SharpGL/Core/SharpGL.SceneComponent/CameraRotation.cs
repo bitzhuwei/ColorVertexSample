@@ -11,27 +11,8 @@ namespace SharpGL.SceneComponent
     /// <summary>
     /// rotate and translate camera on a sphere, whose center is camera's Target.
     /// </summary>
-    public class CameraRotation
+    public class CameraRotation : IRotation
     {
-        private SharpGL.SceneGraph.Cameras.LookAtCamera camera;
-
-        public SharpGL.SceneGraph.Cameras.LookAtCamera Camera
-        {
-            get { return camera; }
-            set
-            {
-                camera = value;
-                if (value != null)
-                {
-                    Vertex back = camera.Position - camera.Target;
-                    Vertex right = Camera.UpVector.VectorProduct(back);
-                    Vertex up = back.VectorProduct(right);
-                    back.Normalize(); right.Normalize(); up.Normalize();
-                    this.back = back; this.right = right; this.up = up;
-                }
-            }
-        }
-
         private Point downPosition = new Point();
         private Size bound = new Size();
         public bool mouseDownFlag = false;
@@ -44,6 +25,49 @@ namespace SharpGL.SceneComponent
         public CameraRotation(SharpGL.SceneGraph.Cameras.LookAtCamera lookAtCamera = null)
         {
             this.Camera = lookAtCamera;
+        }
+
+      
+
+        public override string ToString()
+        {
+            return string.Format("back:{0}|{3:0.00},up:{1}|{4:0.00},right:{2}|{5:0.00}",
+                FormatVertex(back), FormatVertex(up), FormatVertex(right), back.Magnitude(), up.Magnitude(), right.Magnitude());
+            //return base.ToString();
+        }
+
+        private string FormatVertex(Vertex v)
+        {
+            return string.Format("{0:0.00},{1:0.00},{2:0.00}",
+                v.X, v.Y, v.Z);
+        }
+
+
+
+        #region IRotation 成员
+
+        private SharpGL.SceneGraph.Cameras.LookAtCamera camera;
+        private LookAtCamera originalCamera;
+
+        public LookAtCamera Camera
+        {
+            get { return camera; }
+            set
+            {
+                camera = value;
+                if (value != null)
+                {
+                    Vertex back = camera.Position - camera.Target;
+                    Vertex right = Camera.UpVector.VectorProduct(back);
+                    Vertex up = back.VectorProduct(right);
+                    back.Normalize(); right.Normalize(); up.Normalize();
+                    this.back = back; this.right = right; this.up = up;
+                    if (this.originalCamera == null)
+                    { this.originalCamera = new LookAtCamera(); }
+                    this.originalCamera.Position = value.Position;
+                    this.originalCamera.UpVector = value.UpVector;
+                }
+            }
         }
 
         public void MouseUp(int x, int y)
@@ -101,6 +125,12 @@ namespace SharpGL.SceneComponent
             }
         }
 
+        public void SetBounds(int width, int height)
+        {
+            this.bound.Width = width;
+            this.bound.Height = height;
+        }
+
         public void MouseDown(int x, int y)
         {
             this.downPosition.X = x;
@@ -108,23 +138,17 @@ namespace SharpGL.SceneComponent
             this.mouseDownFlag = true;
         }
 
-        public void SetBounds(int width, int height)
+        public void ResetRotation()
         {
-            this.bound.Width = width;
-            this.bound.Height = height;
+            LookAtCamera camera = this.Camera;
+            if (camera == null) { return; }
+            LookAtCamera originalCamera = this.originalCamera;
+            if (originalCamera == null) { return; }
+
+            camera.Position = originalCamera.Position;
+            camera.UpVector = originalCamera.UpVector;
         }
 
-        public override string ToString()
-        {
-            return string.Format("back:{0}|{3:0.00},up:{1}|{4:0.00},right:{2}|{5:0.00}",
-                FormatVertex(back), FormatVertex(up), FormatVertex(right), back.Magnitude(), up.Magnitude(), right.Magnitude());
-            //return base.ToString();
-        }
-
-        private string FormatVertex(Vertex v)
-        {
-            return string.Format("{0:0.00},{1:0.00},{2:0.00}",
-                v.X, v.Y, v.Z);
-        }
+        #endregion
     }
 }

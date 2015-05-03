@@ -36,6 +36,18 @@ namespace SharpGL.SceneComponent
             //  Push the stack.
             gl.PushMatrix();
 
+            // Try to get the scene's camera.
+            if (this.arcBall.Camera == null)
+            {
+                SceneContainer container = parentElement.TraverseToRootElement();
+                if (container != null)
+                {
+                    Scene scene = container.ParentScene;
+                    LookAtCamera camera = scene.CurrentCamera as LookAtCamera;
+                    this.arcBall.Camera = camera;
+                }
+            }
+
             //  Perform the transformation.
             arcBall.TransformMatrix(gl);
         }
