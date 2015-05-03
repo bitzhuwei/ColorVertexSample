@@ -1,6 +1,8 @@
-﻿using SharpGL.SceneGraph.Core;
+﻿using SharpGL.SceneGraph.Cameras;
+using SharpGL.SceneGraph.Core;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
@@ -133,6 +135,19 @@ namespace SharpGL.SceneComponent
             for (int i = sceneElement.Effects.Count - 1; i >= 0; i--)
                 if (sceneElement.Effects[i].IsEnabled)
                     sceneElement.Effects[i].Pop(gl, sceneElement);
+        }
+
+        /// <summary>
+        /// Gets the current camera.
+        /// </summary>
+        /// <value>
+        /// The current camera.
+        /// </value>
+        [Description("The current camera being used to view the scene."), Category("Scene")]
+        public new Camera CurrentCamera
+        {
+            get { return base.CurrentCamera; }
+            internal set { base.CurrentCamera = value; }
         }
     }
 }
