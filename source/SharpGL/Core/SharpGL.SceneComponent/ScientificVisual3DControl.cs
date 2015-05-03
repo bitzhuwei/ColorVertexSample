@@ -24,9 +24,6 @@ namespace SharpGL.SceneComponent
         /// contains the model <see cref="IScientificModel"/> we want to show.
         /// </summary>
         private ScientificModelElement scientificModelElement;
-        private IMouseRotation modelRotation;
-        private IMouseScale modelScale;
-        private ITranslation modelTranslation;
 
         public ScientificVisual3DControl()
         {
@@ -43,7 +40,9 @@ namespace SharpGL.SceneComponent
 
         void ScientificVisual3DControl_MouseWheel(object sender, MouseEventArgs e)
         {
-            IMouseScale modelScale = this.modelScale;
+            ScientificModelElement element = this.scientificModelElement;
+            if (element == null) { return; }
+            IMouseScale modelScale = element.modelScale;
             if (modelScale == null) { return; }
 
             modelScale.Scale += e.Delta * 0.001f;
@@ -78,12 +77,16 @@ namespace SharpGL.SceneComponent
                     render = true;
                 }
 
-                rotation = this.modelRotation;
-                if (rotation != null)
+                ScientificModelElement element = this.scientificModelElement;
+                if (element != null)
                 {
-                    rotation.MouseUp(e.X, e.Y);
+                    rotation = element.modelRotation;
+                    if (rotation != null)
+                    {
+                        rotation.MouseUp(e.X, e.Y);
 
-                    render = true;
+                        render = true;
+                    }
                 }
             }
 
@@ -115,12 +118,16 @@ namespace SharpGL.SceneComponent
                     render = true;
                 }
 
-                rotation = this.modelRotation;
-                if (rotation != null)
+                ScientificModelElement element = this.scientificModelElement;
+                if (element != null)
                 {
-                    rotation.MouseMove(e.X, e.Y);
+                    rotation = element.modelRotation;
+                    if (rotation != null)
+                    {
+                        rotation.MouseMove(e.X, e.Y);
 
-                    render = true;
+                        render = true;
+                    }
                 }
             }
 
@@ -155,13 +162,17 @@ namespace SharpGL.SceneComponent
                     render = true;
                 }
 
-                rotation = this.modelRotation;
-                if (rotation != null)
+                ScientificModelElement element = this.scientificModelElement;
+                if (element != null)
                 {
-                    rotation.SetBounds(this.Width, this.Height);
-                    rotation.MouseDown(e.X, e.Y);
+                    rotation = element.modelRotation;
+                    if (rotation != null)
+                    {
+                        rotation.SetBounds(this.Width, this.Height);
+                        rotation.MouseDown(e.X, e.Y);
 
-                    render = true;
+                        render = true;
+                    }
                 }
             }
 
@@ -228,6 +239,9 @@ namespace SharpGL.SceneComponent
 
         //public ObservableCollection<IRotation> RotationObjects { get; protected set; }
 
+        /// <summary>
+        /// rotate and translate camera on a sphere, whose center is camera's Target.
+        /// </summary>
         public CameraRotation CameraRotation { get; set; }
 
         public OpenGLUIAxis uiAxis { get; set; }
@@ -254,10 +268,11 @@ namespace SharpGL.SceneComponent
                 { throw new Exception("scientificModelElement must not be null!"); }
 
                 element.Model = value;
-                this.modelTranslation.Translate = value.Translate;
-                this.modelRotation.ResetRotation();
-                this.modelScale.Scale = 1;
-                value.AdjustCamera(this.OpenGL, this.Scene.CurrentCamera);
+                element.modelTranslation.Translate = value.Translate;
+                element.modelRotation.ResetRotation();
+                element.modelScale.Scale = 1;
+                element.Model.AdjustCamera(this.OpenGL, this.Scene.CurrentCamera);
+                // force CameraRotation to udpate.
                 this.CameraRotation.Camera = this.Scene.CurrentCamera as LookAtCamera;
                 this.uiAxis.ResetRotation();
             }
@@ -269,21 +284,6 @@ namespace SharpGL.SceneComponent
             { throw new ArgumentNullException("element"); }
 
             this.scientificModelElement = element;
-        }
-
-        internal void SetModelRotation(IMouseRotation rotation)
-        {
-            this.modelRotation = rotation;
-        }
-
-        internal void SetModelScale(IMouseScale scale)
-        {
-            this.modelScale = scale;
-        }
-
-        internal void SetModelTranslation(ITranslation translation)
-        {
-            this.modelTranslation = translation; 
         }
     }
 }

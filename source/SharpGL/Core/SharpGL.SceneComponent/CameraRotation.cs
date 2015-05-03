@@ -60,8 +60,14 @@ namespace SharpGL.SceneComponent
                     Vertex back = camera.Position - camera.Target;
                     Vertex right = Camera.UpVector.VectorProduct(back);
                     Vertex up = back.VectorProduct(right);
-                    back.Normalize(); right.Normalize(); up.Normalize();
-                    this.back = back; this.right = right; this.up = up;
+                    back.Normalize(); 
+                    right.Normalize();
+                    up.Normalize();
+
+                    this.back = back; 
+                    this.right = right; 
+                    this.up = up;
+
                     if (this.originalCamera == null)
                     { this.originalCamera = new LookAtCamera(); }
                     this.originalCamera.Position = value.Position;

@@ -6,8 +6,12 @@ using System.Text;
 
 namespace SharpGL.SceneComponent
 {
-    public class ScientificModelElement : SceneElement, IRenderable
+    internal class ScientificModelElement : SceneElement, IRenderable
     {
+        internal IMouseRotation modelRotation;
+        internal IMouseScale modelScale;
+        internal ITranslation modelTranslation;
+
         public IScientificModel Model { get; set; }
 
         #region IRenderable 成员
