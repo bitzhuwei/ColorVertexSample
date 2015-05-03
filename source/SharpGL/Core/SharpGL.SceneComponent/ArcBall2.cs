@@ -13,7 +13,7 @@ namespace SharpGL.SceneComponent
     /// <summary>
     /// The ArcBall camera supports arcball projection, making it ideal for use with a mouse.
     /// </summary>
-    public class ArcBall2 : IMouseRotation, IMouseScale, ITranslation
+    public class ArcBall2 : IMouseTransform
     {
         protected bool isCameraSet = false;
         public bool mouseDownFlag;
@@ -30,23 +30,6 @@ namespace SharpGL.SceneComponent
         float _scale = 1.0f;
         SceneGraph.Cameras.LookAtCamera _camera;
              
-        public void SetBounds(int width, int height)
-        {
-            this._width = width; 
-            this._height = height;
-            this._length = width > height ? width : height;
-            float rx = (width / 2) / _length;
-            float ry = (height / 2) / _length;
-            this._radiusRadius = rx * rx + ry * ry;
-        }
-
-        public void MouseDown(int x, int y)
-        {
-            this._startPosition = GetArcBallPosition(x, y);
-
-            mouseDownFlag = true;
-        }
-
         private Vertex GetArcBallPosition(int x, int y)
         {
             UpdateCameraAxis();
@@ -79,27 +62,6 @@ namespace SharpGL.SceneComponent
             _up.Normalize();
         }
 
-        public void MouseMove(int x, int y)
-        {
-            if (mouseDownFlag)
-            {
-                Vertex startPosition = this._startPosition;
-                Vertex endPosition = GetArcBallPosition(x, y);
-                double cosAngle = startPosition.ScalarProduct(endPosition) / (startPosition.Magnitude() * endPosition.Magnitude());
-                if (cosAngle > 1) { cosAngle = 1; }
-                else if (cosAngle < -1) { cosAngle = -1; }
-                float angle = 1 * (float)(Math.Acos(cosAngle) / Math.PI * 180);
-                System.Threading.Interlocked.Exchange(ref _angle, angle);
-                this._normalVector = startPosition.VectorProduct(endPosition);
-                this._startPosition = endPosition;
-            }
-        }
-
-        public void MouseUp(int x, int y)
-        {
-            mouseDownFlag = false;
-        }
-
         //public mat4 GetTransformMat4()
         //{
         //    mat4 rotation = GetRotation();
@@ -127,28 +89,6 @@ namespace SharpGL.SceneComponent
         //    currentRotation = rotation * currentRotation;
         //}
 
-        public void TransformMatrix(OpenGL gl)
-        {
-            if(!isCameraSet)
-            { throw new Exception("Camera is not set by using SetCamera(..)"); }
-
-            if (_angle != 0)
-            {
-                gl.PushMatrix();
-                gl.LoadIdentity();
-                gl.Rotate(2 * _angle, _normalVector.X, _normalVector.Y, _normalVector.Z);
-                gl.MultMatrix(_lastRotation);
-                gl.GetFloat(SharpGL.Enumerations.GetTarget.ModelviewMatix, _lastRotation);
-                gl.PopMatrix();
-                //UpdateRotation();
-                System.Threading.Interlocked.Exchange(ref _angle, 0);
-            }
-
-            gl.Translate(Translate.X, Translate.Y, Translate.Z);
-            gl.MultMatrix(_lastRotation);
-            gl.Scale(Scale, Scale, Scale);
-        }
-
         public void GoUp(float interval)
         {
             UpdateCameraAxis();
@@ -170,14 +110,6 @@ namespace SharpGL.SceneComponent
             this.Translate += this._right * interval;
         }
 
-        public Vertex Translate { get; set; }
-
-        public float Scale
-        {
-            get { return _scale; }
-            set { _scale = value; }
-        }
-
         public void GoFront(int interval)
         {
             UpdateCameraAxis();
@@ -190,18 +122,41 @@ namespace SharpGL.SceneComponent
             this.Translate += this._back * interval;
         }
 
-        public void ResetRotation()
-        {
-            this._lastRotation = new float[16] { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 };
-            //this.currentRotation = mat4.identity();
-        }
-
         public float[] GetCurrentRotation()
         {
             return this._lastRotation.ToArray();
         }
 
-        public SceneGraph.Cameras.LookAtCamera Camera
+
+        #region IMouseTransform 成员
+
+        public void TransformMatrix(OpenGL gl)
+        {
+            if (!isCameraSet)
+            { throw new Exception("Camera is not set by using SetCamera(..)"); }
+
+            if (_angle != 0)
+            {
+                gl.PushMatrix();
+                gl.LoadIdentity();
+                gl.Rotate(2 * _angle, _normalVector.X, _normalVector.Y, _normalVector.Z);
+                gl.MultMatrix(_lastRotation);
+                gl.GetFloat(SharpGL.Enumerations.GetTarget.ModelviewMatix, _lastRotation);
+                gl.PopMatrix();
+                //UpdateRotation();
+                System.Threading.Interlocked.Exchange(ref _angle, 0);
+            }
+
+            gl.Translate(Translate.X, Translate.Y, Translate.Z);
+            gl.MultMatrix(_lastRotation);
+            gl.Scale(Scale, Scale, Scale);
+        }
+
+        #endregion
+
+        #region IMouseRotation 成员
+
+        public LookAtCamera Camera
         {
             get { return _camera; }
             set
@@ -211,5 +166,66 @@ namespace SharpGL.SceneComponent
             }
         }
 
+        public void MouseUp(int x, int y)
+        {
+            mouseDownFlag = false;
+        }
+
+        public void MouseMove(int x, int y)
+        {
+            if (mouseDownFlag)
+            {
+                Vertex startPosition = this._startPosition;
+                Vertex endPosition = GetArcBallPosition(x, y);
+                double cosAngle = startPosition.ScalarProduct(endPosition) / (startPosition.Magnitude() * endPosition.Magnitude());
+                if (cosAngle > 1) { cosAngle = 1; }
+                else if (cosAngle < -1) { cosAngle = -1; }
+                float angle = 1 * (float)(Math.Acos(cosAngle) / Math.PI * 180);
+                System.Threading.Interlocked.Exchange(ref _angle, angle);
+                this._normalVector = startPosition.VectorProduct(endPosition);
+                this._startPosition = endPosition;
+            }
+        }
+
+        public void SetBounds(int width, int height)
+        {
+            this._width = width;
+            this._height = height;
+            this._length = width > height ? width : height;
+            float rx = (width / 2) / _length;
+            float ry = (height / 2) / _length;
+            this._radiusRadius = rx * rx + ry * ry;
+        }
+
+        public void MouseDown(int x, int y)
+        {
+            this._startPosition = GetArcBallPosition(x, y);
+
+            mouseDownFlag = true;
+        }
+
+        public void ResetRotation()
+        {
+            this._lastRotation = new float[16] { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 };
+            //this.currentRotation = mat4.identity();
+        }
+
+        #endregion
+
+        #region IMouseScale 成员
+
+        public float Scale
+        {
+            get { return _scale; }
+            set { _scale = value; }
+        }
+
+        #endregion
+
+        #region ITranslation 成员
+
+        public Vertex Translate { get; set; }
+
+        #endregion
     }
 }

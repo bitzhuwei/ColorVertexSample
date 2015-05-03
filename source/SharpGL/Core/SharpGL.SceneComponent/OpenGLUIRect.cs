@@ -172,6 +172,11 @@ namespace SharpGL.SceneComponent
         //protected int bottom;
         protected OpenGLUIRectArgs args = new OpenGLUIRectArgs();
 
+        /// <summary>
+        /// if Camera is null, this UI rectangle area will be drawn with an invoking
+        /// <para>gl.LookAt(0, 0, 1, 0, 0, 0, 0, 1, 0);</para>
+        /// <para>otherwise, it uses gl.LookAt(Camera's (Position - Target), Target, UpVector);</para>
+        /// </summary>
         public virtual LookAtCamera Camera { get; set; }
         public System.Windows.Forms.AnchorStyles Anchor { get; set; }
         public System.Windows.Forms.Padding Margin { get; set; }

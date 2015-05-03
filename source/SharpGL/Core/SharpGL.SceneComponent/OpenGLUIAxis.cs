@@ -1,5 +1,6 @@
 ﻿using SharpGL.SceneGraph;
 using SharpGL.SceneGraph.Core;
+using SharpGL.SceneGraph.Effects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,19 +14,22 @@ namespace SharpGL.SceneComponent
     /// </summary>
     public class OpenGLUIAxis : OpenGLUIRect, IMouseRotation
     {
-        ArcBall2 arcBall = new ArcBall2();
+        internal IMouseTransform mouseTransform = new ArcBall2();
+        /// <summary>
+        /// keeps axis' scale.
+        /// </summary>
         private SceneGraph.Transformations.LinearTransformation axisTransform;
 
 
         public OpenGLUIAxis(AnchorStyles anchor, Padding margin, System.Drawing.Size size, int zNear = -1000, int zFar = 1000, GLColor rectColor = null)
             : base(anchor, margin, size, zNear, zFar)
         {
-            var axis = new CylinderAxis();
-            var axisTransform = new SharpGL.SceneGraph.Effects.LinearTransformationEffect();
+            CylinderAxis axis = new CylinderAxis();
+            LinearTransformationEffect axisTransform = new SharpGL.SceneGraph.Effects.LinearTransformationEffect();
             this.axisTransform = axisTransform.LinearTransformation;
             axis.AddEffect(axisTransform);
             base.AddChild(axis);
-            this.RectColor = new GLColor(1, 1, 0, 1);
+            this.RectColor = new GLColor(1, 1, 0, 1);// red(x axis) + green(y axis)
         }
 
         protected override void RenderModel(OpenGLUIRectArgs args, OpenGL gl, SceneGraph.Core.RenderMode renderMode)
@@ -45,9 +49,9 @@ namespace SharpGL.SceneComponent
         {
             base.PushObjectSpace(gl);
 
-            if (arcBall.Camera != null)
+            if (mouseTransform.Camera != null)
             {
-                arcBall.TransformMatrix(gl);
+                mouseTransform.TransformMatrix(gl);
             }
         }
 
@@ -55,7 +59,11 @@ namespace SharpGL.SceneComponent
 
         #region IRotation 成员
 
-
+        /// <summary>
+        /// if Camera is null, this UI rectangle area will be drawn with an invoking
+        /// <para>gl.LookAt(0, 0, 1, 0, 0, 0, 0, 1, 0);</para>
+        /// <para>otherwise, it uses gl.LookAt(Camera's (Position - Target), Target, UpVector);</para>
+        /// </summary>
         public override SceneGraph.Cameras.LookAtCamera Camera
         {
             get
@@ -65,33 +73,33 @@ namespace SharpGL.SceneComponent
             set
             {
                 base.Camera = value;
-                this.arcBall.Camera = value;
+                this.mouseTransform.Camera = value;
             }
         }
 
         public void MouseUp(int x, int y)
         {
-            this.arcBall.MouseUp(x, y);
+            this.mouseTransform.MouseUp(x, y);
         }
 
         public void MouseMove(int x, int y)
         {
-            this.arcBall.MouseMove(x, y);
+            this.mouseTransform.MouseMove(x, y);
         }
 
         public void SetBounds(int width, int height)
         {
-            this.arcBall.SetBounds(width, height);
+            this.mouseTransform.SetBounds(width, height);
         }
 
         public void MouseDown(int x, int y)
         {
-            this.arcBall.MouseDown(x, y);
+            this.mouseTransform.MouseDown(x, y);
         }
 
         public void ResetRotation()
         {
-            this.arcBall.ResetRotation();
+            this.mouseTransform.ResetRotation();
         }
 
         #endregion
