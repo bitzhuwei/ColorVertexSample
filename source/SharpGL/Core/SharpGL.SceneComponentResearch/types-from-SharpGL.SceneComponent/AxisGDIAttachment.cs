@@ -39,7 +39,7 @@ namespace SharpGL.SceneComponent
 
         private float _penWidth = 2;
         private Scene axisScene = new Scene();
-        private ArcBallEffect2 rotationEffect;
+        private MyArcBallEffect rotationEffect;
         private LookAtCamera parallelCamera;
         private Pen[] pens;
         private AxisSpy axisSpy;
@@ -178,7 +178,7 @@ namespace SharpGL.SceneComponent
         private void InitAxis(SharpGL.SceneGraph.Scene scene, SceneControl control)
         {
             this.axisSpy = new AxisSpy();
-            this.rotationEffect = new ArcBallEffect2(this.parallelCamera);
+            this.rotationEffect = new MyArcBallEffect(this.parallelCamera);
             scene.SceneContainer.AddChild(this.axisSpy);
             scene.SceneContainer.AddEffect(this.rotationEffect);
         }

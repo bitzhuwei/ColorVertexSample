@@ -54,6 +54,6 @@ namespace ColorVertexSample.Visual
         {
         }
 
-        public SharpGL.SceneComponent.ArcBallEffect2 modelArcBallEffect { get; set; }
+        public SharpGL.SceneComponent.MyArcBallEffect modelArcBallEffect { get; set; }
     }
 }

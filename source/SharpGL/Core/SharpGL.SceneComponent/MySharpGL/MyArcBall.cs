@@ -11,9 +11,9 @@ using SharpGL.SceneGraph.Cameras;
 namespace SharpGL.SceneComponent
 {
     /// <summary>
-    /// The ArcBall camera supports arcball projection, making it ideal for use with a mouse.
+    /// The MyArcBall supports arcball projection, making it ideal for use with a mouse.
     /// </summary>
-    public class ArcBall2 : IMouseTransform
+    public class MyArcBall : IMouseTransform
     {
         protected bool isCameraSet = false;
         public bool mouseDownFlag;

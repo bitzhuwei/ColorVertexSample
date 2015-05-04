@@ -15,13 +15,13 @@ namespace SharpGL.SceneComponent
     /// The ArcBall camera supports arcball projection, making it ideal for use with a mouse.
     /// <para>supports arcball rotation in a moving camera</para>
     /// </summary>
-    public class ArcBallEffect2 : Effect
+    public class MyArcBallEffect : Effect
     {
         /// <summary>
         ///  if null, please set arcBall.Camera property later.
         /// </summary>
         /// <param name="camera">if null, please set arcBall.Camera property later.</param>
-        public ArcBallEffect2(LookAtCamera camera = null)
+        public MyArcBallEffect(LookAtCamera camera = null)
         {
             this.arcBall.Camera = camera;
         }
@@ -66,7 +66,7 @@ namespace SharpGL.SceneComponent
         /// <summary>
         /// The arcball.
         /// </summary>
-        private ArcBall2 arcBall = new ArcBall2();
+        private MyArcBall arcBall = new MyArcBall();
 
         /// <summary>
         /// Gets or sets the linear transformation.
@@ -75,7 +75,7 @@ namespace SharpGL.SceneComponent
         /// The linear transformation.
         /// </value>
         [Description("The ArcBall."), Category("Effect")]
-        public ArcBall2 ArcBall
+        public MyArcBall ArcBall
         {
             get { return arcBall; }
             set { arcBall = value; }

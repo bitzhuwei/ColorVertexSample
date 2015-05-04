@@ -96,7 +96,7 @@ namespace SharpGL.SceneComponent
             scene.RenderBoundingVolumes = false;
 
             ScientificModelElement element = new ScientificModelElement();
-            ArcBallEffect2 arcBallEffect = new ArcBallEffect2();
+            MyArcBallEffect arcBallEffect = new MyArcBallEffect();
             element.AddEffect(arcBallEffect);
             element.modelTranslation = arcBallEffect.ArcBall;
             root.AddChild(element);

@@ -26,7 +26,7 @@ namespace ColorVertexSample
     public partial class FormFreeCamera : Form
     {
         private CameraRotation cameraRotation;
-        private ArcBallEffect2 modelArcBallEffect;
+        private MyArcBallEffect modelArcBallEffect;
         private OpenGLUIAxis uiAxis;
         private OpenGLUIColorIndicator uiColorIndicator;
 
@@ -102,7 +102,7 @@ namespace ColorVertexSample
 
             if ((e.Button & MouseButtons.Right) == MouseButtons.Right)
             {
-                ArcBallEffect2 modelArcBallEffect = this.modelArcBallEffect;
+                MyArcBallEffect modelArcBallEffect = this.modelArcBallEffect;
                 if (modelArcBallEffect != null)
                 {
                     modelArcBallEffect.ArcBall.MouseUp(e.X, e.Y);
@@ -136,7 +136,7 @@ namespace ColorVertexSample
 
             if ((e.Button & MouseButtons.Right) == MouseButtons.Right)
             {
-                ArcBallEffect2 modelArcBallEffect = this.modelArcBallEffect;
+                MyArcBallEffect modelArcBallEffect = this.modelArcBallEffect;
                 if (modelArcBallEffect != null)
                 {
                     modelArcBallEffect.ArcBall.MouseMove(e.X, e.Y);
@@ -178,7 +178,7 @@ namespace ColorVertexSample
                 int width = sceneControl.Width;
                 int height = sceneControl.Height; 
                 
-                ArcBallEffect2 modelArcBallEffect = this.modelArcBallEffect;
+                MyArcBallEffect modelArcBallEffect = this.modelArcBallEffect;
                 if (modelArcBallEffect != null)
                 {
                     modelArcBallEffect.ArcBall.SetBounds(width, height);
@@ -201,7 +201,7 @@ namespace ColorVertexSample
 
         private void sceneControl_MouseWheel(object sender, MouseEventArgs e)
         {
-            ArcBallEffect2 modelArcBallEffect = this.modelArcBallEffect;
+            MyArcBallEffect modelArcBallEffect = this.modelArcBallEffect;
             if (modelArcBallEffect == null) { return; }
 
             modelArcBallEffect.ArcBall.Scale += e.Delta * 0.001f;
@@ -335,7 +335,7 @@ namespace ColorVertexSample
             axies.AddEffect(effect);
             element.AddChild(axies);
 
-            ArcBallEffect2 modelArcBallEffect = new ArcBallEffect2();
+            MyArcBallEffect modelArcBallEffect = new MyArcBallEffect();
             modelArcBallEffect.ArcBall.Translate = element.Model.Translate;
             element.AddEffect(modelArcBallEffect);
 

@@ -14,7 +14,7 @@ namespace SharpGL.SceneComponent
     /// </summary>
     public class OpenGLUIAxis : OpenGLUIRect, IMouseRotation
     {
-        internal IMouseTransform mouseTransform = new ArcBall2();
+        internal IMouseTransform mouseTransform = new MyArcBall();
         /// <summary>
         /// keeps axis' scale.
         /// </summary>

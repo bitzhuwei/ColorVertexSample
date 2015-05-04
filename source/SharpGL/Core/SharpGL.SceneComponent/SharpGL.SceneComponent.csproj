@@ -43,8 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArcBall2.cs" />
-    <Compile Include="ArcBallEffect2.cs" />
+    <Compile Include="MySharpGL\MyArcBall.cs" />
+    <Compile Include="MySharpGL\MyArcBallEffect.cs" />
     <Compile Include="ByteColor.cs" />
     <Compile Include="CameraRotation.cs" />
     <Compile Include="ECameraType.cs" />
@@ -66,14 +66,15 @@
     <Compile Include="IMouseTransform.cs" />
     <Compile Include="ITranslation.cs" />
     <Compile Include="IScientificModel.cs" />
-    <Compile Include="MyLight.cs" />
-    <Compile Include="MyScene.cs" />
-    <Compile Include="MySceneControl.cs">
+    <Compile Include="MySharpGL\MyLight.cs" />
+    <Compile Include="MySharpGL\MyScene.cs" />
+    <Compile Include="MySharpGL\MySceneControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MySceneControl.Designer.cs">
+    <Compile Include="MySharpGL\MySceneControl.Designer.cs">
       <DependentUpon>MySceneControl.cs</DependentUpon>
     </Compile>
+    <Content Include="MySharpGL\read-me.txt" />
     <Compile Include="OpenGLUIAxis.cs" />
     <Compile Include="OpenGLUIColorIndicator.cs" />
     <Compile Include="OpenGLUIRect.cs" />

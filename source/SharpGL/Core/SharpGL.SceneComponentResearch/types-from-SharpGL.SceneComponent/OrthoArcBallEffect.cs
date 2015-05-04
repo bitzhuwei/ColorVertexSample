@@ -40,7 +40,7 @@ namespace SharpGL.SceneComponent
             this.CenterY = 50;
         }
 
-        protected ArcBall2 arcBall = new ArcBall2();
+        protected MyArcBall arcBall = new MyArcBall();
 
         public double CenterX { get; set; }
         public double CenterY { get; set; }
