@@ -6,7 +6,7 @@ using System.Text;
 
 namespace SharpGL.SceneComponent
 {
-    public class ColorIndicatorDataFactory
+    class ColorIndicatorDataFactory
     {
         public static ColorIndicatorData CreateRainbow()
         {
