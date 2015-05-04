@@ -289,10 +289,13 @@ namespace SharpGL.SceneComponent
                 { throw new Exception("scientificModelElement must not be null!"); }
 
                 element.Model = value;
-                element.modelTranslation.Translate = value.Translate;
                 element.modelTranslation.ResetRotation();
                 element.modelTranslation.Scale = 1;
-                element.Model.AdjustCamera(this.OpenGL, this.Scene.CurrentCamera);
+                if (value != null)
+                {
+                    element.modelTranslation.Translate = value.Translate;
+                    element.Model.AdjustCamera(this.OpenGL, this.Scene.CurrentCamera);
+                }
                 // force CameraRotation to udpate.
                 this.CameraRotation.Camera = this.Scene.CurrentCamera as LookAtCamera;
                 this.uiAxis.ResetRotation();
