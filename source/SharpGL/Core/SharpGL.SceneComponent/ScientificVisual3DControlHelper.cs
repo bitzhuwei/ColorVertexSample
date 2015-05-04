@@ -66,7 +66,6 @@ namespace SharpGL.SceneComponent
                 AnchorStyles.Left | AnchorStyles.Bottom,
                 new Padding(10, 0, 0, 20), new Size(40, 40)) { Name = "UI: Axis", };
             parent.AddChild(uiAxis);
-            //scientificVisual3DControl.RotationObjects.Add(uiAxis);
             scientificVisual3DControl.uiAxis = uiAxis;
 
             SimpleUIColorIndicator uiColorIndicator = new SimpleUIColorIndicator(
@@ -101,9 +100,6 @@ namespace SharpGL.SceneComponent
             element.modelTranslation = arcBallEffect.ArcBall;
             root.AddChild(element);
             scientificVisual3DControl.SetModelElement(element);
-            //scientificVisual3DControl.SetModelRotation(arcBallEffect.ArcBall);
-            //scientificVisual3DControl.SetModelScale(arcBallEffect.ArcBall);
-            //scientificVisual3DControl.SetModelTranslation(arcBallEffect.ArcBall);
         }
 
         private static OpenGLAttributesEffect InitializeSceneAttributes(SceneElement parent)

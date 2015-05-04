@@ -27,8 +27,6 @@ namespace SharpGL.SceneComponent
 
         public ScientificVisual3DControl()
         {
-            //this.RotationObjects = new ObservableCollection<IRotation>();
-
             ScientificVisual3DControlHelper.InitializeScene(this);
             ScientificVisual3DControlHelper.InitializeUIScene(this);
 
@@ -251,8 +249,6 @@ namespace SharpGL.SceneComponent
         /// holds UI elements(axis, color indicator etc).
         /// </summary>
         public MyScene UIScene { get; set; }
-
-        //public ObservableCollection<IRotation> RotationObjects { get; protected set; }
 
         /// <summary>
         /// rotate and translate camera on a sphere, whose center is camera's Target.
