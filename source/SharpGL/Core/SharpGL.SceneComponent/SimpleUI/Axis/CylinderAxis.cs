@@ -25,7 +25,7 @@ namespace SharpGL.SceneComponent
 
         private void InitAxis(SceneElement parent)
         {
-            MyLight light1 = new MyLight()
+            Light light1 = new Light()
             {
                 Name = "Cylinder Axis Root: Light",
                 On = true,
