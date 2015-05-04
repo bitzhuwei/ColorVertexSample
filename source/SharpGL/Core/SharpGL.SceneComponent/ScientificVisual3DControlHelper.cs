@@ -62,14 +62,14 @@ namespace SharpGL.SceneComponent
         private static void Initialize2DUI(ScientificVisual3DControl scientificVisual3DControl)
         {
             SceneElement parent = scientificVisual3DControl.UIScene.SceneContainer;
-            OpenGLUIAxis uiAxis = new OpenGLUIAxis(
+            SimpleUIAxis uiAxis = new SimpleUIAxis(
                 AnchorStyles.Left | AnchorStyles.Bottom,
                 new Padding(10, 0, 0, 20), new Size(40, 40)) { Name = "UI: Axis", };
             parent.AddChild(uiAxis);
             //scientificVisual3DControl.RotationObjects.Add(uiAxis);
             scientificVisual3DControl.uiAxis = uiAxis;
 
-            OpenGLUIColorIndicator uiColorIndicator = new OpenGLUIColorIndicator(
+            SimpleUIColorIndicator uiColorIndicator = new SimpleUIColorIndicator(
                 AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right,
                 new Padding(10 + 40 + 10, 0, 40, 40), new Size(100, 15)) { Name = "UI: Color Indicator", };
             ColorIndicatorData rainbow = ColorIndicatorDataFactory.CreateRainbow();

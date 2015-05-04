@@ -12,7 +12,7 @@ namespace SharpGL.SceneComponent
     /// <summary>
     /// Draw axis with arc ball rotation effect on viewport as an UI.
     /// </summary>
-    public class OpenGLUIAxis : OpenGLUIRect, IMouseRotation
+    public class SimpleUIAxis : SimpleUIRect, IMouseRotation
     {
         internal IMouseTransform mouseTransform = new MyArcBall();
         /// <summary>
@@ -21,7 +21,7 @@ namespace SharpGL.SceneComponent
         private SceneGraph.Transformations.LinearTransformation axisTransform;
 
 
-        public OpenGLUIAxis(AnchorStyles anchor, Padding margin, System.Drawing.Size size, int zNear = -1000, int zFar = 1000, GLColor rectColor = null)
+        public SimpleUIAxis(AnchorStyles anchor, Padding margin, System.Drawing.Size size, int zNear = -1000, int zFar = 1000, GLColor rectColor = null)
             : base(anchor, margin, size, zNear, zFar)
         {
             CylinderAxis axis = new CylinderAxis();
@@ -32,7 +32,7 @@ namespace SharpGL.SceneComponent
             this.RectColor = new GLColor(1, 1, 0, 1);// red(x axis) + green(y axis)
         }
 
-        protected override void RenderModel(OpenGLUIRectArgs args, OpenGL gl, SceneGraph.Core.RenderMode renderMode)
+        protected override void RenderModel(SimpleUIRectArgs args, OpenGL gl, SceneGraph.Core.RenderMode renderMode)
         {
             // Draw rectangle to show UI's scope.
             base.RenderModel(args, gl, renderMode);

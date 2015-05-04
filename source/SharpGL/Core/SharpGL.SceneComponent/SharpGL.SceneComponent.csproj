@@ -48,15 +48,15 @@
     <Compile Include="ByteColor.cs" />
     <Compile Include="CameraRotation.cs" />
     <Compile Include="ECameraType.cs" />
-    <Compile Include="ColorIndicatorBar.cs">
+    <Compile Include="SimpleUI\ColorIndicator\ColorIndicatorBar.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ColorIndicatorData.cs" />
-    <Compile Include="ColorIndicatorDataFactory.cs" />
-    <Compile Include="ColorIndicatorNumber.cs">
+    <Compile Include="SimpleUI\ColorIndicator\ColorIndicatorData.cs" />
+    <Compile Include="SimpleUI\ColorIndicator\ColorIndicatorDataFactory.cs" />
+    <Compile Include="SimpleUI\ColorIndicator\ColorIndicatorNumber.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CylinderAxis.cs" />
+    <Compile Include="SimpleUI\Axis\CylinderAxis.cs" />
     <Compile Include="IMouseRotation.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -75,10 +75,10 @@
       <DependentUpon>MySceneControl.cs</DependentUpon>
     </Compile>
     <Content Include="MySharpGL\read-me.txt" />
-    <Compile Include="OpenGLUIAxis.cs" />
-    <Compile Include="OpenGLUIColorIndicator.cs" />
-    <Compile Include="OpenGLUIRect.cs" />
-    <Compile Include="OpenGLUIRectArgs.cs" />
+    <Compile Include="SimpleUI\Axis\SimpleUIAxis.cs" />
+    <Compile Include="SimpleUI\ColorIndicator\SimpleUIColorIndicator.cs" />
+    <Compile Include="SimpleUI\SimpleUIRect.cs" />
+    <Compile Include="SimpleUI\SimpleUIRectArgs.cs" />
     <Compile Include="PointerScientificModel.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -92,6 +92,7 @@
       <DependentUpon>ScientificVisual3DControl.cs</DependentUpon>
     </Compile>
     <Compile Include="ScientificVisual3DControlHelper.cs" />
+    <Content Include="SimpleUI\read-me.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SharpGL.SceneGraph\SharpGL.SceneGraph.csproj">

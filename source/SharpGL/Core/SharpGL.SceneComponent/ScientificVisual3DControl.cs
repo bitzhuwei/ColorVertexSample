@@ -262,12 +262,12 @@ namespace SharpGL.SceneComponent
         /// <summary>
         /// Draw axis with arc ball rotation effect on viewport as an UI.
         /// </summary>
-        public OpenGLUIAxis uiAxis { get; set; }
+        public SimpleUIAxis uiAxis { get; set; }
 
         /// <summary>
         /// Draw color indicator on viewport as an UI.
         /// </summary>
-        public OpenGLUIColorIndicator uiColorIndicator { get; set; }
+        public SimpleUIColorIndicator uiColorIndicator { get; set; }
 
         /// <summary>
         /// Get or set data model that we want to show.

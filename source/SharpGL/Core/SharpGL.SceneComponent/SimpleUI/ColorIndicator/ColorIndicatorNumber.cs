@@ -18,7 +18,7 @@ namespace SharpGL.SceneComponent
 
         public void Render(OpenGL gl, RenderMode renderMode)
         {
-            OpenGLUIRectArgs lastArgs = this.CurrentArgs;
+            SimpleUIRectArgs lastArgs = this.CurrentArgs;
             if (lastArgs == null) { return; }
             ColorIndicatorData data = this.Data;
             if (data == null) { return; }
@@ -36,6 +36,6 @@ namespace SharpGL.SceneComponent
             }
         }
 
-        public OpenGLUIRectArgs CurrentArgs { get; set; }
+        public SimpleUIRectArgs CurrentArgs { get; set; }
     }
 }

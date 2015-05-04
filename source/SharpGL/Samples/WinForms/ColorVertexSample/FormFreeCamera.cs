@@ -27,7 +27,7 @@ namespace ColorVertexSample
     {
         private CameraRotation cameraRotation;
         private MyArcBallEffect modelArcBallEffect;
-        private OpenGLUIAxis uiAxis;
+        private SimpleUIAxis uiAxis;
         private OpenGLUIColorIndicator uiColorIndicator;
 
         public FormFreeCamera()
@@ -69,7 +69,7 @@ namespace ColorVertexSample
 
         private void Initialize2DUI(SceneContainer parent)
         {
-            OpenGLUIAxis uiAxis = new OpenGLUIAxis(
+            SimpleUIAxis uiAxis = new SimpleUIAxis(
                 AnchorStyles.Left | AnchorStyles.Bottom,
                 new Padding(10, 0, 0, 20), new Size(40, 40))
                 { Name = "UI: Axis", };
@@ -109,7 +109,7 @@ namespace ColorVertexSample
                     render = true;
                 }
 
-                OpenGLUIAxis uiAxis = this.uiAxis;
+                SimpleUIAxis uiAxis = this.uiAxis;
                 if (uiAxis != null)
                 {
                     uiAxis.MouseUp(e.X, e.Y);
@@ -143,7 +143,7 @@ namespace ColorVertexSample
                     render = true;
                 }
 
-                OpenGLUIAxis uiAxis = this.uiAxis;
+                SimpleUIAxis uiAxis = this.uiAxis;
                 if (uiAxis != null)
                 {
                     uiAxis.MouseMove(e.X, e.Y);
@@ -186,7 +186,7 @@ namespace ColorVertexSample
                     render = true;
                 }
 
-                OpenGLUIAxis uiAxis = this.uiAxis;
+                SimpleUIAxis uiAxis = this.uiAxis;
                 if (uiAxis != null)
                 {
                     uiAxis.SetBounds(width, height);

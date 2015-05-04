@@ -10,7 +10,7 @@ namespace SharpGL.SceneComponent
     /// <summary>
     /// Draw color indicator on viewport as an UI.
     /// </summary>
-    public class OpenGLUIColorIndicator : OpenGLUIRect
+    public class SimpleUIColorIndicator : SimpleUIRect
     {
         private SceneGraph.Transformations.LinearTransformation colorBarTransform;
         private ColorIndicatorData data;
@@ -28,7 +28,7 @@ namespace SharpGL.SceneComponent
             }
         }
 
-        public OpenGLUIColorIndicator(AnchorStyles anchor, Padding margin, System.Drawing.Size size, int zNear = -1000, int zFar = 1000, GLColor rectColor = null)
+        public SimpleUIColorIndicator(AnchorStyles anchor, Padding margin, System.Drawing.Size size, int zNear = -1000, int zFar = 1000, GLColor rectColor = null)
             : base(anchor, margin, size, zNear, zFar)
         {
             {
@@ -45,7 +45,7 @@ namespace SharpGL.SceneComponent
             }
         }
 
-        protected override void RenderModel(OpenGLUIRectArgs args, OpenGL gl, SceneGraph.Core.RenderMode renderMode)
+        protected override void RenderModel(SimpleUIRectArgs args, OpenGL gl, SceneGraph.Core.RenderMode renderMode)
         {
             // Draw rectangle to show UI's scope.
             base.RenderModel(args, gl, renderMode);

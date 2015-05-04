@@ -8,7 +8,7 @@ namespace SharpGL.SceneComponent
     /// <summary>
     /// pass viewport and UI's rect information.
     /// </summary>
-    public class OpenGLUIRectArgs
+    public class SimpleUIRectArgs
     {
         /// <summary>
         /// viewport's width.

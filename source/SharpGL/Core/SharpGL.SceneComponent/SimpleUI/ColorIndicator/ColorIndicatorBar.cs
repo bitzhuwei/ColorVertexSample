@@ -8,7 +8,7 @@ using System.Text;
 namespace SharpGL.SceneComponent
 {
     /// <summary>
-    /// Render rectangles and lines of <see cref="OpenGLUIColorIndicator"/>.
+    /// Render rectangles and lines of <see cref="SimpleUIColorIndicator"/>.
     /// </summary>
     internal class ColorIndicatorBar : SceneElement, IRenderable
     {
