@@ -12,6 +12,7 @@ namespace SharpGL.SceneComponent
 {
     /// <summary>
     /// The MyArcBall supports arcball projection, making it ideal for use with a mouse.
+    /// <para><see cref="MyArcBall"/> is a better(support all moving camera's) version of <see cref="SharpGL.SceneGraph.Core.ArcBall"/>.</para>
     /// </summary>
     public class MyArcBall : IMouseTransform
     {
