@@ -43,6 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\ModelObject.cs" />
+    <Compile Include="Model\ModelSpace.cs" />
+    <Compile Include="Model\ModelSpaceContainer.cs" />
     <Compile Include="MySharpGL\MyArcBall.cs" />
     <Compile Include="MySharpGL\MyArcBallEffect.cs" />
     <Compile Include="ByteColor.cs" />
@@ -75,7 +78,9 @@
     </Compile>
     <Content Include="MySharpGL\read-me.txt" />
     <Compile Include="SimpleUI\Axis\SimpleUIAxis.cs" />
+    <Compile Include="SimpleUI\ColorIndicator\ColorPalette.cs" />
     <Compile Include="SimpleUI\ColorIndicator\SimpleUIColorIndicator.cs" />
+    <Compile Include="SimpleUI\ColorIndicator\UIColorIndicator.cs" />
     <Compile Include="SimpleUI\SimpleUIRect.cs" />
     <Compile Include="SimpleUI\SimpleUIRectArgs.cs" />
     <Compile Include="PointerScientificModel.cs">
