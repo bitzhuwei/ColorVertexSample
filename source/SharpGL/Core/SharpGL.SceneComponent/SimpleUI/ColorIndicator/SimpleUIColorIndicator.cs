@@ -28,6 +28,16 @@ namespace SharpGL.SceneComponent
             }
         }
 
+        /// <summary>
+        /// Draw color indicator on viewport as an UI. 
+        /// </summary>
+        /// <param name="anchor">the edges of the viewport to which a SimpleUIColorIndicator is bound and determines how it is resized with its parent.</param>
+        /// <param name="margin">the space between viewport and SimpleUIColorIndicator.</param>
+        /// <param name="size">Stores width when <see cref="OpenGLUIRect.Anchor"/>.Left & <see cref="OpenGLUIRect.Anchor"/>.Right is <see cref="OpenGLUIRect.Anchor"/>.None.
+        /// <para> and height when <see cref="OpenGLUIRect.Anchor"/>.Top & <see cref="OpenGLUIRect.Anchor"/>.Bottom is <see cref="OpenGLUIRect.Anchor"/>.None.</para></param>
+        /// <param name="zNear"></param>
+        /// <param name="zFar"></param>
+        /// <param name="rectColor"></param>
         public SimpleUIColorIndicator(AnchorStyles anchor, Padding margin, System.Drawing.Size size, int zNear = -1000, int zFar = 1000, GLColor rectColor = null)
             : base(anchor, margin, size, zNear, zFar)
         {

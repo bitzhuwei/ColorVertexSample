@@ -20,9 +20,11 @@ namespace SharpGL.SceneComponent
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="anchor">something like AnchorStyles.Left | AnchorStyles.Bottom.</param>
-        /// <param name="margin"></param>
-        /// <param name="size"></param>
+        /// <param name="anchor">the edges of the viewport to which a SimpleUIRect is bound and determines how it is resized with its parent.
+        /// <para>something like AnchorStyles.Left | AnchorStyles.Bottom.</para></param>
+        /// <param name="margin">the space between viewport and SimpleRect.</param>
+        /// <param name="size">Stores width when <see cref="OpenGLUIRect.Anchor"/>.Left & <see cref="OpenGLUIRect.Anchor"/>.Right is <see cref="OpenGLUIRect.Anchor"/>.None.
+        /// <para> and height when <see cref="OpenGLUIRect.Anchor"/>.Top & <see cref="OpenGLUIRect.Anchor"/>.Bottom is <see cref="OpenGLUIRect.Anchor"/>.None.</para></param>
         /// <param name="zNear"></param>
         /// <param name="zFar"></param>
         /// <param name="rectColor">default color is red.</param>
@@ -178,7 +180,16 @@ namespace SharpGL.SceneComponent
         /// <para>otherwise, it uses gl.LookAt(Camera's (Position - Target), Target, UpVector);</para>
         /// </summary>
         public virtual LookAtCamera Camera { get; set; }
+
+        /// <summary>
+        /// the edges of the OpenGLControl to which a SimpleUIRect is bound and determines how it is resized with its parent.
+        /// <para>something like AnchorStyles.Left | AnchorStyles.Bottom.</para>
+        /// </summary>
         public System.Windows.Forms.AnchorStyles Anchor { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the space between viewport and SimpleRect.
+        /// </summary>
         public System.Windows.Forms.Padding Margin { get; set; }
 
         ///// <summary>
