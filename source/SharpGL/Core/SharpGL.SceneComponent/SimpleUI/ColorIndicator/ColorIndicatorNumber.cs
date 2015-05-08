@@ -27,7 +27,6 @@ namespace SharpGL.SceneComponent
             if (blockCount <= 0) { return; }
 
             GLColor[] colors = data.ColorPalette.Colors;
-            float[] coords = data.ColorPalette.Coords;
             int blockWidth = 0;
             if (data.MaxValue - data.MinValue == 0)
             {

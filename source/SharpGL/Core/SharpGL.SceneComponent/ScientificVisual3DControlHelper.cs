@@ -70,7 +70,7 @@ namespace SharpGL.SceneComponent
 
             SimpleUIColorIndicator uiColorIndicator = new SimpleUIColorIndicator(
                 AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right,
-                new Padding(10 + 40 + 10, 0, 40, 40), new Size(100, 15)) { Name = "UI: Color Indicator", };
+                new Padding(80, 0, 80, 40), new Size(100, 15)) { Name = "UI: Color Indicator", };
             ColorIndicatorData rainbow = ColorIndicatorDataFactory.CreateRainbow();
             uiColorIndicator.Data = rainbow;
             parent.AddChild(uiColorIndicator);
