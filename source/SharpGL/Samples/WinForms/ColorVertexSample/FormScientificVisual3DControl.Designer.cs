@@ -37,7 +37,9 @@
             this.tbRangeMin = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.btnCreate3D = new System.Windows.Forms.Button();
+            this.tbColorIndicatorBlockCount = new System.Windows.Forms.TextBox();
             this.tbRadius = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.lblRadius = new System.Windows.Forms.Label();
             this.tbNZ = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -76,6 +78,7 @@
             this.sceneControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
             this.sceneControl.RenderContextType = SharpGL.RenderContextType.FBO;
             this.sceneControl.RenderTrigger = SharpGL.RenderTrigger.Manual;
+            this.sceneControl.ScientificModel = null;
             this.sceneControl.Size = new System.Drawing.Size(687, 390);
             this.sceneControl.TabIndex = 0;
             // 
@@ -88,7 +91,9 @@
             this.panel1.Controls.Add(this.tbRangeMin);
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.btnCreate3D);
+            this.panel1.Controls.Add(this.tbColorIndicatorBlockCount);
             this.panel1.Controls.Add(this.tbRadius);
+            this.panel1.Controls.Add(this.label6);
             this.panel1.Controls.Add(this.lblRadius);
             this.panel1.Controls.Add(this.tbNZ);
             this.panel1.Controls.Add(this.label3);
@@ -158,18 +163,35 @@
             this.btnCreate3D.UseVisualStyleBackColor = true;
             this.btnCreate3D.Click += new System.EventHandler(this.Create3DObject);
             // 
+            // tbColorIndicatorBlockCount
+            // 
+            this.tbColorIndicatorBlockCount.Location = new System.Drawing.Point(423, 6);
+            this.tbColorIndicatorBlockCount.Name = "tbColorIndicatorBlockCount";
+            this.tbColorIndicatorBlockCount.Size = new System.Drawing.Size(60, 21);
+            this.tbColorIndicatorBlockCount.TabIndex = 11;
+            this.tbColorIndicatorBlockCount.Text = "12";
+            // 
             // tbRadius
             // 
-            this.tbRadius.Location = new System.Drawing.Point(470, 11);
+            this.tbRadius.Location = new System.Drawing.Point(578, 8);
             this.tbRadius.Name = "tbRadius";
             this.tbRadius.Size = new System.Drawing.Size(100, 21);
             this.tbRadius.TabIndex = 11;
             this.tbRadius.Text = "0.5";
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(280, 12);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(137, 12);
+            this.label6.TabIndex = 10;
+            this.label6.Text = "Color Indicator Blocks";
+            // 
             // lblRadius
             // 
             this.lblRadius.AutoSize = true;
-            this.lblRadius.Location = new System.Drawing.Point(418, 15);
+            this.lblRadius.Location = new System.Drawing.Point(526, 12);
             this.lblRadius.Name = "lblRadius";
             this.lblRadius.Size = new System.Drawing.Size(41, 12);
             this.lblRadius.TabIndex = 10;
@@ -177,16 +199,16 @@
             // 
             // tbNZ
             // 
-            this.tbNZ.Location = new System.Drawing.Point(303, 11);
+            this.tbNZ.Location = new System.Drawing.Point(214, 8);
             this.tbNZ.Name = "tbNZ";
-            this.tbNZ.Size = new System.Drawing.Size(100, 21);
+            this.tbNZ.Size = new System.Drawing.Size(60, 21);
             this.tbNZ.TabIndex = 5;
             this.tbNZ.Text = "100";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(280, 15);
+            this.label3.Location = new System.Drawing.Point(191, 12);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(23, 12);
             this.label3.TabIndex = 4;
@@ -194,16 +216,16 @@
             // 
             // tbNY
             // 
-            this.tbNY.Location = new System.Drawing.Point(167, 11);
+            this.tbNY.Location = new System.Drawing.Point(125, 9);
             this.tbNY.Name = "tbNY";
-            this.tbNY.Size = new System.Drawing.Size(100, 21);
+            this.tbNY.Size = new System.Drawing.Size(60, 21);
             this.tbNY.TabIndex = 3;
             this.tbNY.Text = "100";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(138, 15);
+            this.label2.Location = new System.Drawing.Point(96, 15);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(23, 12);
             this.label2.TabIndex = 2;
@@ -213,7 +235,7 @@
             // 
             this.tbNX.Location = new System.Drawing.Point(30, 11);
             this.tbNX.Name = "tbNX";
-            this.tbNX.Size = new System.Drawing.Size(95, 21);
+            this.tbNX.Size = new System.Drawing.Size(60, 21);
             this.tbNX.TabIndex = 1;
             this.tbNX.Text = "100";
             // 
@@ -226,14 +248,14 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "NX";
             // 
-            // FormFreeCamera
+            // FormScientificVisual3DControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(693, 468);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.MinimumSize = new System.Drawing.Size(1, 0);
-            this.Name = "FormFreeCamera";
+            this.MinimumSize = new System.Drawing.Size(16, 38);
+            this.Name = "FormScientificVisual3DControl";
             this.Text = "Form1";
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.sceneControl)).EndInit();
@@ -263,6 +285,8 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label lblDebugInfo;
         private SharpGL.SceneComponent.ScientificVisual3DControl sceneControl;
+        private System.Windows.Forms.TextBox tbColorIndicatorBlockCount;
+        private System.Windows.Forms.Label label6;
     }
 }
 
