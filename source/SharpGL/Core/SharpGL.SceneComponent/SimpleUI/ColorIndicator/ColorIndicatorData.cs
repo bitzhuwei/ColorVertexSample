@@ -41,70 +41,25 @@ namespace SharpGL.SceneComponent
             }
         }
 
-        //QuantityRange quantityRange = new QuantityRange(0, 100);
-
-        //public QuantityRange QuantityRange
-        //{
-        //    get { return quantityRange; }
-        //    set { quantityRange = value; }
-        //}
-
-        //private int maxBlock = 12;
-
-        ///// <summary>
-        ///// Get or set maximum block count.
-        ///// </summary>
-        //public int MaxBlock
-        //{
-        //    get { return maxBlock; }
-        //    set
-        //    {
-        //        if (maxBlock != value)
-        //        {
-        //            maxBlock = value;
-        //            lastModified = DateTime.Now.Ticks;
-        //        }
-        //    }
-        //}
-
-    
-
-        private int blockCount = 5;
-        /// <summary>
-        /// Get or set block count.
-        /// </summary>
-        public int BlockCount
-        {
-            get { return blockCount; }
-            set
-            {
-                if (blockCount != value)
-                {
-                    blockCount = value;
-                    lastModified = DateTime.Now.Ticks;
-                }
-            }
-        }
-
         public ColorIndicatorData(ColorPalette colorPalette)
         {
             this.ColorPalette = colorPalette;
         }
 
-        //private float step = 10.0f;
+        private float step = 10.0f;
 
-        //public float Step
-        //{
-        //    get { return step; }
-        //    set
-        //    {
-        //        if (step != value)
-        //        { 
-        //            step = value;
-        //            lastModified = DateTime.Now.Ticks;
-        //        }
-        //    }
-        //}
+        public float Step
+        {
+            get { return step; }
+            set
+            {
+                if (step != value)
+                {
+                    step = value;
+                    lastModified = DateTime.Now.Ticks;
+                }
+            }
+        }
 
         private string quantityLabel = string.Empty;
         /// <summary>
@@ -163,14 +118,14 @@ namespace SharpGL.SceneComponent
             return this.colorPalette.MapToColor(value, this.MinValue, this.MaxValue);
         }
 
-        //public int GetBlockCount()
-        //{
-        //    int blockCount = (int)Math.Floor((this.MaxValue - this.MinValue) / this.Step) + 1;
+        public int GetBlockCount()
+        {
+            if (this.step <= 0) { return -1; }
 
-        //    if (blockCount > this.MaxBlock) { blockCount = this.MaxBlock; }
+            int blockCount = (int)Math.Floor((this.MaxValue - this.MinValue) / this.Step) + 1;
 
-        //    return blockCount;
-        //}
+            return blockCount;
+        }
 
         //private GLColor[] colors;
 
@@ -236,22 +191,9 @@ namespace SharpGL.SceneComponent
         //    return color;
         //}
 
-        //public override string ToString()
-        //{
-        //    GLColor[] colors = this.Colors;
-        //    if (colors == null)
-        //    {
-        //        return string.Format("0 colors. value:{0} ~ {1}", minValue, maxValue);
-        //    }
-        //    else
-        //    {
-        //        return string.Format("{0} colors. Value:{1} ~ {2}", colors.Length, minValue, maxValue);
-        //    }
-        //}
-
-
-        //public float minValue { get; set; }
-
-        //public float maxValue { get; set; }
+        public override string ToString()
+        {
+            return string.Format("{0},min:{1}, max:{2}, step:{3}", colorPalette, minValue, maxValue, step);
+        }
     }
 }

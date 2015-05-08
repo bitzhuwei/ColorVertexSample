@@ -19,15 +19,7 @@ namespace SharpGL.SceneComponent
         public ColorIndicatorData Data
         {
             get { return data; }
-            set
-            {
-                data = value;
-                //TryUpdate(value);
-                //if (value != null)
-                //{ lastModified = value.LastModified; }
-                //else
-                //{ lastModified = DateTime.Now.Ticks; }
-            }
+            set { data = value; }
         }
 
         private unsafe void TryUpdate(ColorIndicatorData data)
@@ -56,17 +48,31 @@ namespace SharpGL.SceneComponent
 
         unsafe private void GenerateVerticalLines(ColorIndicatorData data)
         {
-            //int blockCount = data.GetBlockCount();
-            int blockCount = data.BlockCount;
+            int blockCount = data.GetBlockCount();
+            //int blockCount = data.BlockCount;
             int length = blockCount + 1;
             PointerScientificModel verticalLines = new PointerScientificModel(length * 2, Enumerations.BeginMode.Lines);
             Vertex* positions = verticalLines.Positions;
             for (int i = 0; i < length; i++)
             {
-                positions[i * 2].X = barWidth * i / (length - 1);
+                if (i + 1 != length)
+                {
+                    if (data.MaxValue != data.MinValue)
+                    {
+                        positions[i * 2].X = barWidth * (i * data.Step / (data.MaxValue - data.MinValue));
+                    }
+                    else
+                    {
+                        positions[i * 2].X = barWidth * 0;
+                    }
+                }
+                else
+                {
+                    positions[i * 2].X = barWidth;
+                }
                 positions[i * 2].Y = -9;
                 positions[i * 2].Z = 0;
-                positions[i * 2 + 1].X = barWidth * i / (length - 1);
+                positions[i * 2 + 1].X = positions[i * 2].X;
                 positions[i * 2 + 1].Y = barHeight;
                 positions[i * 2 + 1].Z = 0;
             }
@@ -123,10 +129,10 @@ namespace SharpGL.SceneComponent
             Vertex* positions = rectModel.Positions;
             for (int i = 0; i < length; i++)
             {
-                positions[i * 2].X = barWidth * data.ColorPalette.Coords[i];// i / (length - 1);
+                positions[i * 2].X = barWidth * data.ColorPalette.Coords[i];
                 positions[i * 2].Y = 0;
                 positions[i * 2].Z = 0;
-                positions[i * 2 + 1].X = barWidth * data.ColorPalette.Coords[i];// i / (length - 1);
+                positions[i * 2 + 1].X = positions[i * 2].X;
                 positions[i * 2 + 1].Y = barHeight;
                 positions[i * 2 + 1].Z = 0;
             }

@@ -23,18 +23,28 @@ namespace SharpGL.SceneComponent
             ColorIndicatorData data = this.Data;
             if (data == null) { return; }
 
-            //int blockCount = data.GetBlockCount();
-            int blockCount = data.BlockCount;
+            int blockCount = data.GetBlockCount();
             if (blockCount <= 0) { return; }
 
             GLColor[] colors = data.ColorPalette.Colors;
             float[] coords = data.ColorPalette.Coords;
-            int blockWidth = lastArgs.UIWidth / blockCount;
+            int blockWidth = 0;
+            if (data.MaxValue - data.MinValue == 0)
+            {
+                blockWidth = lastArgs.UIWidth;
+            }
+            else
+            {
+                blockWidth = (int)(lastArgs.UIWidth * (data.Step / (data.MaxValue - data.MinValue)));
+            }
             //draw numbers
             for (int i = 0; i <= blockCount; i++)
             {
-                string value = (data.MinValue * (double)(blockCount - i) / (blockCount)
-                    + data.MaxValue * (double)i / (blockCount)).ToString();
+                string value = null;
+                if (i == blockCount)
+                { value = data.MaxValue.ToString(); }
+                else
+                { value = (data.MinValue + data.Step * i).ToString(); }
                 double valueLength = 100.0 * value.Length / fontSize;
                 double x = -(double)lastArgs.UIWidth / 2 - lastArgs.left + i * blockWidth - valueLength / 2;
                 double y = -(double)lastArgs.UIHeight / 2 - lastArgs.bottom - 14;
