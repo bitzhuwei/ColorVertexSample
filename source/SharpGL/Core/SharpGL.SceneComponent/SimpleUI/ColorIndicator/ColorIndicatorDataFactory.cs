@@ -12,7 +12,7 @@ namespace SharpGL.SceneComponent
         public static ColorIndicatorData CreateRainbow()
         {
             ColorPalette colorPalette = ColorPaletteFactory.CreateRainbow();
-            return new ColorIndicatorData(colorPalette, 12);
+            return new ColorIndicatorData(colorPalette);
         }
     }
 }

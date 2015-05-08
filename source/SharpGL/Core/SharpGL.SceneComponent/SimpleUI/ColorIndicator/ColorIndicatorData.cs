@@ -8,14 +8,15 @@ using System.Text;
 namespace SharpGL.SceneComponent
 {
     /// <summary>
-    /// Contains gradient colors and max, min values.
+    /// Contains color palette, block count, min value, max value etc.
+    /// <para>Works as model while <see cref="SimpleUIColorIndicator"/> works as view.</para>
     /// </summary>
     public class ColorIndicatorData
     {
         private long lastModified = 0;
 
         /// <summary>
-        /// Get last time(in ticks) that this object's property is modified.
+        /// Get last time(in ticks) when this object's property is modified.
         /// </summary>
         internal long LastModified
         {
@@ -24,6 +25,9 @@ namespace SharpGL.SceneComponent
 
         ColorPalette colorPalette;
 
+        /// <summary>
+        /// Get or set color palette.
+        /// </summary>
         public ColorPalette ColorPalette
         {
             get { return colorPalette; }
@@ -45,29 +49,30 @@ namespace SharpGL.SceneComponent
         //    set { quantityRange = value; }
         //}
 
-        private int maxBlock = 100;
+        //private int maxBlock = 12;
 
-        public int MaxBlock
-        {
-            get { return maxBlock; }
-            set
-            {
-                if (maxBlock != value)
-                {
-                    maxBlock = value;
-                    lastModified = DateTime.Now.Ticks;
-                }
-            }
-        }
+        ///// <summary>
+        ///// Get or set maximum block count.
+        ///// </summary>
+        //public int MaxBlock
+        //{
+        //    get { return maxBlock; }
+        //    set
+        //    {
+        //        if (maxBlock != value)
+        //        {
+        //            maxBlock = value;
+        //            lastModified = DateTime.Now.Ticks;
+        //        }
+        //    }
+        //}
 
-        public ColorIndicatorData(ColorPalette colorPalette, int maxBlock = 12)
-        {
-            this.ColorPalette = colorPalette;
-            this.MaxBlock = maxBlock;
-        }
+    
 
         private int blockCount = 5;
-
+        /// <summary>
+        /// Get or set block count.
+        /// </summary>
         public int BlockCount
         {
             get { return blockCount; }
@@ -79,6 +84,11 @@ namespace SharpGL.SceneComponent
                     lastModified = DateTime.Now.Ticks;
                 }
             }
+        }
+
+        public ColorIndicatorData(ColorPalette colorPalette)
+        {
+            this.ColorPalette = colorPalette;
         }
 
         //private float step = 10.0f;
@@ -96,11 +106,28 @@ namespace SharpGL.SceneComponent
         //    }
         //}
 
-        public String QuantityLabel { get; set; }
+        private string quantityLabel = string.Empty;
+        /// <summary>
+        /// Get or set label for the quantity.
+        /// </summary>
+        public string QuantityLabel
+        {
+            get { return quantityLabel; }
+            set
+            {
+                if (quantityLabel != value)
+                {
+                    quantityLabel = value;
+                    lastModified = DateTime.Now.Ticks;
+                }
+            }
+        }
 
 
         private float minValue;
-
+        /// <summary>
+        /// Get or set minimum value.
+        /// </summary>
         public float MinValue
         {
             get { return minValue; }
@@ -115,7 +142,9 @@ namespace SharpGL.SceneComponent
         }
 
         private float maxValue;
-
+        /// <summary>
+        /// Get or set maximum value.
+        /// </summary>
         public float MaxValue
         {
             get { return maxValue; }
