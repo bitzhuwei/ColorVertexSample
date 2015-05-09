@@ -12,7 +12,7 @@ namespace System
         /// </summary>
         /// <param name="array"></param>
         /// <returns></returns>
-        public static string PrintArray(this Array array)
+        public static string PrintArray(this System.Collections.IEnumerable array)
         {
             if (array == null) { return string.Empty; }
 
