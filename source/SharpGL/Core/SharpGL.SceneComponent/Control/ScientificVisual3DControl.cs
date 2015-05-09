@@ -24,7 +24,7 @@ namespace SharpGL.SceneComponent
         /// parent of the model elements we want to show.
         /// </summary>
         internal SceneGraph.Core.SceneElement scientificModelElementRoot;
-        private IMouseLinearTransform sharedMouseTransform;// = new LinearArcBall();
+        private IMouseLinearTransform sharedMouseTransform;
 
         public ScientificVisual3DControl()
         {
@@ -252,48 +252,6 @@ namespace SharpGL.SceneComponent
         /// </summary>
         public SimpleUIColorIndicator uiColorIndicator { get; set; }
 
-        ///// <summary>
-        ///// Get or set data model that we want to show.
-        ///// </summary>
-        //public IScientificModel ScientificModel
-        //{
-        //    get
-        //    {
-        //        ScientificModelElement element = this.scientificModelElement;
-        //        if (element == null) { return null; }
-
-        //        IScientificModel model = element.Model;
-        //        return model;
-        //    }
-        //    set
-        //    {
-        //        ScientificModelElement element = this.scientificModelElement;
-        //        if (element == null)
-        //        { throw new Exception("scientificModelElement must not be null!"); }
-
-        //        element.Model = value;
-        //        element.modelTranslation.ResetRotation();
-        //        element.modelTranslation.Scale = 1;
-        //        if (value != null)
-        //        {
-        //            element.modelTranslation.Translate = value.Translate;
-        //            element.Model.AdjustCamera(this.OpenGL, this.Scene.CurrentCamera);
-        //        }
-        //        // force CameraRotation to udpate.
-        //        this.CameraRotation.Camera = this.Scene.CurrentCamera as LookAtCamera;
-        //        this.uiAxis.ResetRotation();
-        //    }
-        //}
-
-        //internal void SetModelElement(ScientificModelElement element)
-        //{
-        //    if (element == null)
-        //    { throw new ArgumentNullException("element"); }
-
-        //    this.scientificModelElement = element;
-        //}
-
-
         public void AddScientificModel(IScientificModel model)
         {
             if (model == null) { return; }
@@ -311,6 +269,12 @@ namespace SharpGL.SceneComponent
             model.AdjustCamera(this.OpenGL, this.Scene.CurrentCamera);
             // force CameraRotation to udpate.
             this.CameraRotation.Camera = this.Scene.CurrentCamera as LookAtCamera;
+        }
+
+        public void ClearScientificModels()
+        {
+            this.scientificModelElementRoot.Children.Clear();
+            ManualRender(this);
         }
     }
 }

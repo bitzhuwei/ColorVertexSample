@@ -74,5 +74,10 @@ namespace ColorVertexSample
             this.tbRangeMax.Text = "1000";
             this.tbColorIndicatorStep.Text = "110";
         }
+
+        private void btnClearModels_Click(object sender, EventArgs e)
+        {
+            this.sceneControl.ClearScientificModels();
+        }
     }
 }

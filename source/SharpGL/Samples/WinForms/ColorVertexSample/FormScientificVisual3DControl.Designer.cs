@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.sceneControl = new SharpGL.SceneComponent.ScientificVisual3DControl();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblDebugInfo = new System.Windows.Forms.Label();
             this.tbRangeMax = new System.Windows.Forms.TextBox();
@@ -46,10 +47,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.tbNX = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.sceneControl = new SharpGL.SceneComponent.ScientificVisual3DControl();
+            this.btnClearModels = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
-            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sceneControl)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -68,6 +69,19 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(693, 468);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
+            // sceneControl
+            // 
+            this.tableLayoutPanel1.SetColumnSpan(this.sceneControl, 2);
+            this.sceneControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.sceneControl.DrawFPS = false;
+            this.sceneControl.Location = new System.Drawing.Point(3, 75);
+            this.sceneControl.Name = "sceneControl";
+            this.sceneControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
+            this.sceneControl.RenderContextType = SharpGL.RenderContextType.FBO;
+            this.sceneControl.RenderTrigger = SharpGL.RenderTrigger.Manual;
+            this.sceneControl.Size = new System.Drawing.Size(687, 390);
+            this.sceneControl.TabIndex = 0;
+            // 
             // panel1
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.panel1, 2);
@@ -76,6 +90,7 @@
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.tbRangeMin);
             this.panel1.Controls.Add(this.label4);
+            this.panel1.Controls.Add(this.btnClearModels);
             this.panel1.Controls.Add(this.btnCreate3D);
             this.panel1.Controls.Add(this.tbColorIndicatorStep);
             this.panel1.Controls.Add(this.tbRadius);
@@ -98,9 +113,9 @@
             this.lblDebugInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblDebugInfo.Location = new System.Drawing.Point(453, 35);
+            this.lblDebugInfo.Location = new System.Drawing.Point(578, 35);
             this.lblDebugInfo.Name = "lblDebugInfo";
-            this.lblDebugInfo.Size = new System.Drawing.Size(232, 31);
+            this.lblDebugInfo.Size = new System.Drawing.Size(107, 31);
             this.lblDebugInfo.TabIndex = 17;
             this.lblDebugInfo.Text = "debug info";
             this.lblDebugInfo.Click += new System.EventHandler(this.lblDebugInfo_Click);
@@ -141,11 +156,11 @@
             // 
             // btnCreate3D
             // 
-            this.btnCreate3D.Location = new System.Drawing.Point(303, 40);
+            this.btnCreate3D.Location = new System.Drawing.Point(288, 40);
             this.btnCreate3D.Name = "btnCreate3D";
-            this.btnCreate3D.Size = new System.Drawing.Size(138, 23);
+            this.btnCreate3D.Size = new System.Drawing.Size(52, 23);
             this.btnCreate3D.TabIndex = 12;
-            this.btnCreate3D.Text = "Create Scene3D";
+            this.btnCreate3D.Text = "Add";
             this.btnCreate3D.UseVisualStyleBackColor = true;
             this.btnCreate3D.Click += new System.EventHandler(this.Create3DObject);
             // 
@@ -234,18 +249,15 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "NX";
             // 
-            // sceneControl
+            // btnClearModels
             // 
-            this.tableLayoutPanel1.SetColumnSpan(this.sceneControl, 2);
-            this.sceneControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.sceneControl.DrawFPS = false;
-            this.sceneControl.Location = new System.Drawing.Point(3, 75);
-            this.sceneControl.Name = "sceneControl";
-            this.sceneControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
-            this.sceneControl.RenderContextType = SharpGL.RenderContextType.FBO;
-            this.sceneControl.RenderTrigger = SharpGL.RenderTrigger.Manual;
-            this.sceneControl.Size = new System.Drawing.Size(687, 390);
-            this.sceneControl.TabIndex = 0;
+            this.btnClearModels.Location = new System.Drawing.Point(346, 40);
+            this.btnClearModels.Name = "btnClearModels";
+            this.btnClearModels.Size = new System.Drawing.Size(52, 23);
+            this.btnClearModels.TabIndex = 12;
+            this.btnClearModels.Text = "Clear";
+            this.btnClearModels.UseVisualStyleBackColor = true;
+            this.btnClearModels.Click += new System.EventHandler(this.btnClearModels_Click);
             // 
             // FormScientificVisual3DControl
             // 
@@ -257,9 +269,9 @@
             this.Name = "FormScientificVisual3DControl";
             this.Text = "Form1";
             this.tableLayoutPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.sceneControl)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.sceneControl)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -286,6 +298,7 @@
         private SharpGL.SceneComponent.ScientificVisual3DControl sceneControl;
         private System.Windows.Forms.TextBox tbColorIndicatorStep;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button btnClearModels;
     }
 }
 
