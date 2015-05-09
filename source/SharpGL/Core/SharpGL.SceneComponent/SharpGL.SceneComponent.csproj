@@ -76,6 +76,7 @@
     <Compile Include="MySharpGL\MySceneControl.Designer.cs">
       <DependentUpon>MySceneControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utility\ArrayHelper.cs" />
     <Content Include="MySharpGL\read-me.txt" />
     <Compile Include="SimpleUI\Axis\SimpleUIAxis.cs" />
     <Compile Include="SimpleUI\ColorIndicator\ColorPalette.cs" />
