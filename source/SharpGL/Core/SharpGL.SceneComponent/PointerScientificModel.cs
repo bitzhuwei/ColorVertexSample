@@ -134,11 +134,5 @@ namespace SharpGL.SceneComponent
         
         #endregion
 
-        #region ITranslation 成员
-
-        public virtual Vertex Translate { get; set; }
-        
-        #endregion
-
     }
 }
