@@ -96,13 +96,13 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScientificCamera.cs" />
-    <Compile Include="ScientificVisual3DControl.cs">
+    <Compile Include="Control\ScientificVisual3DControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ScientificVisual3DControl.Designer.cs">
+    <Compile Include="Control\ScientificVisual3DControl.Designer.cs">
       <DependentUpon>ScientificVisual3DControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="ScientificVisual3DControlHelper.cs" />
+    <Compile Include="Control\ScientificVisual3DControlHelper.cs" />
     <Content Include="SimpleUI\read-me.txt" />
   </ItemGroup>
   <ItemGroup>
