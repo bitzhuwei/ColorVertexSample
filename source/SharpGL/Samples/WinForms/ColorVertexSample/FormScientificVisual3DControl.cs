@@ -39,7 +39,6 @@ namespace ColorVertexSample
                 int ny = System.Convert.ToInt32(tbNY.Text);
                 int nz = System.Convert.ToInt32(tbNZ.Text);
                 float step = System.Convert.ToSingle(tbColorIndicatorStep.Text);
-                //int blockCount = System.Convert.ToInt32(tbColorIndicatorBlockCount.Text);
                 float radius = System.Convert.ToSingle(this.tbRadius.Text);
                 float minValue = System.Convert.ToSingle(this.tbRangeMin.Text);
                 float maxValue = System.Convert.ToSingle(this.tbRangeMax.Text);
@@ -48,12 +47,10 @@ namespace ColorVertexSample
 
                 PointModel model = PointModel.Create(nx, ny, nz, radius, minValue, maxValue);
 
-                //this.sceneControl.ScientificModel = model;
                 this.sceneControl.AddScientificModel(model);
                 this.sceneControl.uiColorIndicator.Data.MinValue = minValue;
                 this.sceneControl.uiColorIndicator.Data.MaxValue = maxValue;
                 this.sceneControl.uiColorIndicator.Data.Step = step;
-                //this.sceneControl.uiColorIndicator.Data.BlockCount = blockCount;
                 this.sceneControl.Invalidate();// redraw the scene.
             }
             catch (Exception error)
