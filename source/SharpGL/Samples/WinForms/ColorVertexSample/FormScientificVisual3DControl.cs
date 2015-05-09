@@ -72,7 +72,7 @@ namespace ColorVertexSample
         {
             this.tbRangeMin.Text = "-1000";
             this.tbRangeMax.Text = "1000";
-            this.tbColorIndicatorStep.Text = "12";
+            this.tbColorIndicatorStep.Text = "110";
         }
     }
 }
