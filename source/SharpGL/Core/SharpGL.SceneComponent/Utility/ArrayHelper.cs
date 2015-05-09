@@ -5,10 +5,13 @@ using System.Text;
 
 namespace System
 {
+    /// <summary>
+    /// Helper class for array.
+    /// </summary>
     public static class ArrayHelper
     {
         /// <summary>
-        /// Print array's elements in format 'element, element, element, ...'
+        /// Print elements in format 'element, element, element, ...'
         /// </summary>
         /// <param name="array"></param>
         /// <returns></returns>
