@@ -49,22 +49,6 @@ namespace ColorVertexSample.Model
 
                 }
 
-                //model.Translate = (max + min) / 2;
-
-                //for (long i = 0; i < model.PointCount; i++)
-                //{
-                //    Vertex* centers = model.Positions;
-                //    centers[i].X -= model.Translate.X;
-                //    centers[i].Y -= model.Translate.Y;
-                //    centers[i].Z -= model.Translate.Z;
-                //}
-
-                //Vertex location = min - model.Translate;
-                //Size3D size = max - min;
-                //Rect3D rect = new Rect3D(location, size);
-
-                //model.Bounds = rect;
-                //model.BoundingBox = new BoundingBox() { MinPosition = min, MaxPosition = max };
                 model.BoundingBox.MaxPosition = max;
                 model.BoundingBox.MinPosition = min;
             }
