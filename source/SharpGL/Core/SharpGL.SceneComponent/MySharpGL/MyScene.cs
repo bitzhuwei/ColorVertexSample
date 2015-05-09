@@ -96,6 +96,10 @@ namespace SharpGL.SceneComponent
             IHasObjectSpace hasObjectSpace = sceneElement as IHasObjectSpace;// example: Polygon, quadric, Teapot
             if (hasObjectSpace != null) hasObjectSpace.PushObjectSpace(gl);
 
+            //  If the element has an object space, transform into it.
+            IMyHasObjectSpace myHasObjectSpace = sceneElement as IMyHasObjectSpace;// example: Polygon, quadric, Teapot
+            if (myHasObjectSpace != null) myHasObjectSpace.PushObjectSpace(gl);
+
             //  Render self.
             {
                 //  If the element has a material, push it.
@@ -124,6 +128,9 @@ namespace SharpGL.SceneComponent
             //  Recurse through the children.
             foreach (var childElement in sceneElement.Children)
                 MyRenderElement(childElement, gl, renderMode);
+
+            //  If the element has an object space, transform out of it.
+            if (myHasObjectSpace != null) myHasObjectSpace.PopObjectSpace(gl);
 
             //  If the element has an object space, transform out of it.
             if (hasObjectSpace != null) hasObjectSpace.PopObjectSpace(gl);

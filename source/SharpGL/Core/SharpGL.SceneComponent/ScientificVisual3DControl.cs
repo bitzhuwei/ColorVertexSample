@@ -24,7 +24,7 @@ namespace SharpGL.SceneComponent
         /// parent of the model elements we want to show.
         /// </summary>
         internal SceneGraph.Core.SceneElement scientificModelElementRoot;
-        private IMouseTransform sharedMouseTransform;// = new LinearArcBall();
+        private IMouseLinearTransform sharedMouseTransform;// = new LinearArcBall();
 
         public ScientificVisual3DControl()
         {

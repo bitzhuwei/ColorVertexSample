@@ -8,11 +8,15 @@ using System.Text;
 
 namespace SharpGL.SceneComponent
 {
-    public class BoundingBox
+    /// <summary>
+    /// Specify a cuboid that marks a model's edges.
+    /// </summary>
+    public class BoundingBox : IBoundingBox
     {
-        public Vertex MaxPosition { get; set; }
-        public Vertex MinPosition { get; set; }
 
+        /// <summary>
+        /// Cuboid's color of its lines.
+        /// </summary>
         public GLColor BoxColor { get; set; }
 
         public BoundingBox()
@@ -20,6 +24,23 @@ namespace SharpGL.SceneComponent
             BoxColor = new GLColor(1, 1, 1, 1);// white color
         }
 
+
+        #region IBoundingBox 成员
+
+        /// <summary>
+        /// Maximum position of this cuboid.
+        /// </summary>
+        public Vertex MaxPosition { get; set; }
+
+        /// <summary>
+        /// Minimum position of this cuboid.
+        /// </summary>
+        public Vertex MinPosition { get; set; }
+
+        /// <summary>
+        /// Get center position of this cuboid.
+        /// </summary>
+        /// <returns></returns>
         public Vertex GetCenter()
         {
             return (this.MaxPosition + this.MinPosition) / 2;
@@ -31,12 +52,12 @@ namespace SharpGL.SceneComponent
         /// <param name="x">The x size.</param>
         /// <param name="y">The y size.</param>
         /// <param name="z">The z size.</param>
-        public void GetBoundDimensions(out float x, out float y, out float z)
+        public void GetBoundDimensions(out float xSize, out float ySize, out float zSize)
         {
             Vertex diff = this.MaxPosition - this.MinPosition;
-            x = Math.Abs(diff.X);
-            y = Math.Abs(diff.Y);
-            z = Math.Abs(diff.Z);
+            xSize = Math.Abs(diff.X);
+            ySize = Math.Abs(diff.Y);
+            zSize = Math.Abs(diff.Z);
         }
 
         /// <summary>
@@ -44,7 +65,7 @@ namespace SharpGL.SceneComponent
         /// </summary>
         /// <param name="gl">The OpenGL instance.</param>
         /// <param name="renderMode">The render mode.</param>
-        public void Render(OpenGL gl, RenderMode renderMode)
+        public virtual void Render(OpenGL gl, RenderMode renderMode)
         {
             gl.Color(BoxColor);
 
@@ -73,5 +94,7 @@ namespace SharpGL.SceneComponent
             gl.Vertex(MinPosition.X, MaxPosition.Y, MaxPosition.Z);
             gl.End();
         }
+
+        #endregion
     }
 }

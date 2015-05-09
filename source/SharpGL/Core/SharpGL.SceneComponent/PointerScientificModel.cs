@@ -130,7 +130,7 @@ namespace SharpGL.SceneComponent
         {
         }
 
-        public BoundingBox BoundingBox { get; internal set; }
+        public IBoundingBox BoundingBox { get; internal set; }
         
         #endregion
 

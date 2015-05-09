@@ -12,11 +12,10 @@ namespace SharpGL.SceneComponent
     /// </summary>
     public interface IScientificModel
     {
-        BoundingBox BoundingBox { get; }
-        ///// <summary>
-        ///// Move from (0, 0, 0) to Translate, and you are at model's center in world coordiante.
-        ///// </summary>
-        //Vertex Translate { get; set; }
+        /// <summary>
+        /// Cuboid that marks the model's edges.
+        /// </summary>
+        IBoundingBox BoundingBox { get; }
 
         /// <summary>
         /// Render this model.
