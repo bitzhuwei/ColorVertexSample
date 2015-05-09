@@ -14,19 +14,19 @@ namespace ColorVertexSample.Model
     /// </summary>
     public class PointModel : PointerScientificModel
     {
-        public Rect3D Bounds { get; set; }
+        //public Rect3D Bounds { get; set; }
 
-        /// <summary>
-        /// Get model's center position in world coordinate.
-        /// </summary>
-        /// <returns></returns>
-        public Vertex WorldCoordCenter()
-        {
-            Vertex result = this.Bounds.location
-                + (Vertex)this.Bounds.size3D / 2
-                + base.Translate;
-            return result;
-        }
+        ///// <summary>
+        ///// Get model's center position in world coordinate.
+        ///// </summary>
+        ///// <returns></returns>
+        //public Vertex WorldCoordCenter()
+        //{
+        //    Vertex result = this.Bounds.location
+        //        + (Vertex)this.Bounds.size3D / 2
+        //        + base.Translate;
+        //    return result;
+        //}
 
         protected PointModel(int pointCount, SharpGL.Enumerations.BeginMode mode)
             : base(pointCount, mode)
@@ -43,10 +43,13 @@ namespace ColorVertexSample.Model
 
         public override void AdjustCamera(SharpGL.OpenGL gl,  SharpGL.SceneGraph.Cameras.Camera camera)
         {
-            Rect3D rect3D = this.Bounds;
-            Vertex center = this.WorldCoordCenter();
+            //Rect3D rect3D = this.Bounds;
+            //Vertex center = this.WorldCoordCenter();
+            float x, y, z;
+            this.BoundingBox.GetBoundDimensions(out x, out y, out z);
+            Vertex center = this.BoundingBox.GetCenter();
 
-            float size = Math.Max(Math.Max(rect3D.Size.x, rect3D.Size.y), rect3D.Size.z);
+            float size = Math.Max(Math.Max(x, y), z);
 
             Vertex position = center + new Vertex(0.0f, 0.0f, 1.0f) * (size * 2);
             //Vertex PositionNear = center + new Vertex(0.0f, 0.0f, 1.0f) * (size * 0.5f);

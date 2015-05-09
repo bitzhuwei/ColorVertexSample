@@ -244,7 +244,6 @@
             this.sceneControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
             this.sceneControl.RenderContextType = SharpGL.RenderContextType.FBO;
             this.sceneControl.RenderTrigger = SharpGL.RenderTrigger.Manual;
-            this.sceneControl.ScientificModel = null;
             this.sceneControl.Size = new System.Drawing.Size(687, 390);
             this.sceneControl.TabIndex = 0;
             // 

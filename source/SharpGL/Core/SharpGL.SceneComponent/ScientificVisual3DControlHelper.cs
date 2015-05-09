@@ -94,12 +94,16 @@ namespace SharpGL.SceneComponent
 
             scene.RenderBoundingVolumes = false;
 
-            ScientificModelElement element = new ScientificModelElement();
-            MyArcBallEffect arcBallEffect = new MyArcBallEffect();
-            element.AddEffect(arcBallEffect);
-            element.modelTranslation = arcBallEffect.ArcBall;
-            root.AddChild(element);
-            scientificVisual3DControl.SetModelElement(element);
+            SceneElement scientificModelElementRoot = new SceneElement() 
+            { Name = "Scientific Model Elements' root" };
+            scene.SceneContainer.AddChild(scientificModelElementRoot);
+            scientificVisual3DControl.scientificModelElementRoot = scientificModelElementRoot;
+            //ScientificModelElement element = new ScientificModelElement();
+            //MyArcBallEffect arcBallEffect = new MyArcBallEffect();
+            //element.AddEffect(arcBallEffect);
+            //element.modelTranslation = arcBallEffect.ArcBall;
+            //root.AddChild(element);
+            //scientificVisual3DControl.SetModelElement(element);
         }
 
         private static OpenGLAttributesEffect InitializeSceneAttributes(SceneElement parent)

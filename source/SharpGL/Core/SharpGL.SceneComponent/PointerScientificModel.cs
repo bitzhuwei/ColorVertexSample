@@ -38,6 +38,7 @@ namespace SharpGL.SceneComponent
                 this.colors = Marshal.AllocHGlobal(ptrColors);
             }
             this.PointCount = pointCount;
+            this.BoundingBox = new BoundingBox();
 
             this.mode = mode;
         }
@@ -129,6 +130,8 @@ namespace SharpGL.SceneComponent
         {
         }
 
+        public BoundingBox BoundingBox { get; internal set; }
+        
         #endregion
 
         #region ITranslation 成员
@@ -136,5 +139,6 @@ namespace SharpGL.SceneComponent
         public virtual Vertex Translate { get; set; }
         
         #endregion
+
     }
 }

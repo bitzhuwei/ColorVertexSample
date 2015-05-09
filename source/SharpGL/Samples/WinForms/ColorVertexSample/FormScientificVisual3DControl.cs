@@ -49,7 +49,8 @@ namespace ColorVertexSample
 
                 PointModel model = PointModel.Create(nx, ny, nz, radius, minValue, maxValue);
 
-                this.sceneControl.ScientificModel = model;
+                //this.sceneControl.ScientificModel = model;
+                this.sceneControl.AddScientificModel(model);
                 this.sceneControl.uiColorIndicator.Data.MinValue = minValue;
                 this.sceneControl.uiColorIndicator.Data.MaxValue = maxValue;
                 this.sceneControl.uiColorIndicator.Data.Step = step;
