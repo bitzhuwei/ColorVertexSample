@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.sceneControl = new SharpGL.SceneComponent.ScientificVisual3DControl();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblDebugInfo = new System.Windows.Forms.Label();
             this.tbRangeMax = new System.Windows.Forms.TextBox();
@@ -48,9 +47,10 @@
             this.tbNX = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnClearModels = new System.Windows.Forms.Button();
+            this.sceneControl = new SharpGL.SceneComponent.ScientificVisual3DControl();
             this.tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.sceneControl)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.sceneControl)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -68,19 +68,6 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(693, 468);
             this.tableLayoutPanel1.TabIndex = 0;
-            // 
-            // sceneControl
-            // 
-            this.tableLayoutPanel1.SetColumnSpan(this.sceneControl, 2);
-            this.sceneControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.sceneControl.DrawFPS = false;
-            this.sceneControl.Location = new System.Drawing.Point(3, 75);
-            this.sceneControl.Name = "sceneControl";
-            this.sceneControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
-            this.sceneControl.RenderContextType = SharpGL.RenderContextType.FBO;
-            this.sceneControl.RenderTrigger = SharpGL.RenderTrigger.Manual;
-            this.sceneControl.Size = new System.Drawing.Size(687, 390);
-            this.sceneControl.TabIndex = 0;
             // 
             // panel1
             // 
@@ -113,9 +100,9 @@
             this.lblDebugInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblDebugInfo.Location = new System.Drawing.Point(578, 35);
+            this.lblDebugInfo.Location = new System.Drawing.Point(404, 35);
             this.lblDebugInfo.Name = "lblDebugInfo";
-            this.lblDebugInfo.Size = new System.Drawing.Size(107, 31);
+            this.lblDebugInfo.Size = new System.Drawing.Size(280, 28);
             this.lblDebugInfo.TabIndex = 17;
             this.lblDebugInfo.Text = "debug info";
             this.lblDebugInfo.Click += new System.EventHandler(this.lblDebugInfo_Click);
@@ -259,6 +246,19 @@
             this.btnClearModels.UseVisualStyleBackColor = true;
             this.btnClearModels.Click += new System.EventHandler(this.btnClearModels_Click);
             // 
+            // sceneControl
+            // 
+            this.tableLayoutPanel1.SetColumnSpan(this.sceneControl, 2);
+            this.sceneControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.sceneControl.DrawFPS = false;
+            this.sceneControl.Location = new System.Drawing.Point(3, 75);
+            this.sceneControl.Name = "sceneControl";
+            this.sceneControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
+            this.sceneControl.RenderContextType = SharpGL.RenderContextType.FBO;
+            this.sceneControl.RenderTrigger = SharpGL.RenderTrigger.Manual;
+            this.sceneControl.Size = new System.Drawing.Size(687, 390);
+            this.sceneControl.TabIndex = 0;
+            // 
             // FormScientificVisual3DControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -269,9 +269,9 @@
             this.Name = "FormScientificVisual3DControl";
             this.Text = "Form1";
             this.tableLayoutPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.sceneControl)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.sceneControl)).EndInit();
             this.ResumeLayout(false);
 
         }
