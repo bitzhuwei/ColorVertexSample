@@ -89,10 +89,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Core\SharpGL.SceneComponentResearch\SharpGL.SceneComponentResearch.csproj">
-      <Project>{8506aacc-d903-427b-973f-d10e733efb2a}</Project>
-      <Name>SharpGL.SceneComponentResearch</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Core\SharpGL.SceneComponent\SharpGL.SceneComponent.csproj">
       <Project>{8f81c853-d378-443d-9dfd-475db916cabd}</Project>
       <Name>SharpGL.SceneComponent</Name>

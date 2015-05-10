@@ -37,13 +37,17 @@ namespace SharpGL.SceneComponent
         /// </summary>
         public Vertex MinPosition { get; set; }
 
-        /// <summary>
+         /// <summary>
         /// Get center position of this cuboid.
         /// </summary>
-        /// <returns></returns>
-        public Vertex GetCenter()
+        /// <param name="x">x position.</param>
+        /// <param name="y">y position.</param>
+        /// <param name="z">z position.</param>
+        public void GetCenter(out float x, out float y, out float z)
         {
-            return (this.MaxPosition + this.MinPosition) / 2;
+            x = (this.MaxPosition.X + this.MinPosition.X) / 2;
+            y = (this.MaxPosition.Y + this.MinPosition.Y) / 2;
+            z = (this.MaxPosition.Z + this.MinPosition.Z) / 2;
         }
 
         /// <summary>

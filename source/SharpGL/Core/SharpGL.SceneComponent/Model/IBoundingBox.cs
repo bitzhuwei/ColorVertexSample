@@ -25,8 +25,10 @@ namespace SharpGL.SceneComponent
         /// <summary>
         /// Get center position of this cuboid.
         /// </summary>
-        /// <returns></returns>
-        Vertex GetCenter();
+        /// <param name="x">x position.</param>
+        /// <param name="y">y position.</param>
+        /// <param name="z">z position.</param>
+        void GetCenter(out float x, out float y, out float z);
 
         /// <summary>
         /// Gets the bound dimensions.

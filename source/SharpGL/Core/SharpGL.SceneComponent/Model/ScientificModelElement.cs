@@ -7,6 +7,9 @@ using System.Text;
 
 namespace SharpGL.SceneComponent
 {
+    /// <summary>
+    /// Render the <see cref="IScientificModel"/>.
+    /// </summary>
     internal class ScientificModelElement : SceneElement, IRenderable, IMyHasObjectSpace
     {
         /// <summary>
@@ -21,8 +24,14 @@ namespace SharpGL.SceneComponent
 
         #region IRenderable 成员
 
-        public void Render(OpenGL gl, RenderMode renderMode)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="gl"></param>
+        /// <param name="renderMode"></param>
+        public virtual void Render(OpenGL gl, RenderMode renderMode)
         {
+            //TODO: this 'virtual' maybe not necessary, consider to remove it.
             IScientificModel model = this.Model;
             if (model == null) { return; }
 
@@ -34,16 +43,28 @@ namespace SharpGL.SceneComponent
 
         #region IHasObjectSpace 成员
 
+        /// <summary>
+        /// rotate <see cref="IScientificModel"/> around its bounding box's center position.
+        /// </summary>
+        /// <param name="gl"></param>
         public virtual void PushObjectSpace(OpenGL gl)
         {
             gl.PushMatrix();
-            if (this.Model == null) { return; }
-
+            IScientificModel model = this.Model;
+            if (model == null) { return; }
+            IBoundingBox boundingBox = model.BoundingBox;
             gl.LoadIdentity();
-            Vertex center = this.Model.BoundingBox.GetCenter();
-            gl.Translate(center.X, center.Y, center.Z);//lastly, move model back.
+            float x = 0, y = 0, z = 0;
+            if (boundingBox != null)
+            {
+                boundingBox.GetCenter(out x, out y, out z);
+                gl.Translate(x, y, z);//lastly, move model back.
+            }
             modelTransform.TransformMatrix(gl);// then, rotate and scale model.
-            gl.Translate(-center.X, -center.Y, -center.Z);// firstly, move model to (0, 0, 0);
+            if (boundingBox != null)
+            {
+                gl.Translate(-x, -y, -z);// firstly, move model to (0, 0, 0);
+            }
         }
 
         public virtual void PopObjectSpace(OpenGL gl)

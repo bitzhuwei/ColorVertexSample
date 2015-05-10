@@ -14,20 +14,6 @@ namespace ColorVertexSample.Model
     /// </summary>
     public class PointModel : PointerScientificModel
     {
-        //public Rect3D Bounds { get; set; }
-
-        ///// <summary>
-        ///// Get model's center position in world coordinate.
-        ///// </summary>
-        ///// <returns></returns>
-        //public Vertex WorldCoordCenter()
-        //{
-        //    Vertex result = this.Bounds.location
-        //        + (Vertex)this.Bounds.size3D / 2
-        //        + base.Translate;
-        //    return result;
-        //}
-
         protected PointModel(int pointCount, SharpGL.Enumerations.BeginMode mode)
             : base(pointCount, mode)
         { }
@@ -43,13 +29,13 @@ namespace ColorVertexSample.Model
 
         public override void AdjustCamera(SharpGL.OpenGL gl,  SharpGL.SceneGraph.Cameras.Camera camera)
         {
-            //Rect3D rect3D = this.Bounds;
-            //Vertex center = this.WorldCoordCenter();
+            float xSize, ySize, zSize;
+            this.BoundingBox.GetBoundDimensions(out xSize, out ySize, out zSize);
             float x, y, z;
-            this.BoundingBox.GetBoundDimensions(out x, out y, out z);
-            Vertex center = this.BoundingBox.GetCenter();
+            this.BoundingBox.GetCenter(out x, out y, out z);
+            Vertex center = new Vertex(x, y, z);
 
-            float size = Math.Max(Math.Max(x, y), z);
+            float size = Math.Max(Math.Max(xSize, ySize), zSize);
 
             Vertex position = center + new Vertex(0.0f, 0.0f, 1.0f) * (size * 2);
             //Vertex PositionNear = center + new Vertex(0.0f, 0.0f, 1.0f) * (size * 0.5f);
@@ -69,101 +55,4 @@ namespace ColorVertexSample.Model
             lookAtCamera.Far = float.MaxValue;
         }
     }
-    //public class PointModel : IDisposable
-    //{
-    //    private bool _disposed = false;
-
-    //    /// <summary>
-    //    /// 中心点数组
-    //    /// </summary>
-    //    private IntPtr _positionHeader = IntPtr.Zero;
-
-    //    private IntPtr _colorHeader = IntPtr.Zero;
-
-    //    public Vertex translateVector;
-
-    //    public Rect3D Bounds { get; set; }
-
-    //    public PointModel(int pointCount)
-    //    {
-    //        if (pointCount <= 0)
-    //            throw new ArgumentException("size can not less equal to zero");
-    //        unsafe
-    //        {
-    //            long bytes = sizeof(Vertex) * (pointCount);
-    //            if (bytes >= int.MaxValue)
-    //                throw new ArgumentException("size exceed");
-
-    //            IntPtr ptrBytes = new IntPtr(bytes);
-    //            _positionHeader = Marshal.AllocHGlobal(ptrBytes);
-    //        }
-    //        unsafe
-    //        {
-    //            long colorBytes = sizeof(Color) * pointCount;
-    //            IntPtr ptrColors = new IntPtr(colorBytes);
-    //            this._colorHeader = Marshal.AllocHGlobal(ptrColors);
-    //        }
-    //        this.PointCount = pointCount;
-    //    }
-
-    //    public int PointCount { get; protected set; }
-
-    //    public unsafe Vertex* Positions
-    //    {
-    //        get
-    //        {
-    //            Vertex* positions = (Vertex*)this._positionHeader;
-    //            return positions;
-    //        }
-    //    }
-
-    //    public unsafe Color* Colors
-    //    {
-    //        get
-    //        {
-    //            Color* colors = (Color*)this._colorHeader;
-    //            return colors;
-    //        }
-    //    }
-
-    //    public void Dispose()
-    //    {
-    //        this.Dispose(true);
-    //        GC.SuppressFinalize(this);
-    //    }
-
-    //    protected virtual void Dispose(bool disposing)
-    //    {
-    //        if (!this._disposed)
-    //        {
-
-    //            if (this._positionHeader != IntPtr.Zero)
-    //            {
-    //                Marshal.FreeHGlobal(this._positionHeader);
-    //                this._positionHeader = IntPtr.Zero;
-    //            }
-
-    //            if (this._colorHeader != IntPtr.Zero)
-    //            {
-    //                Marshal.FreeHGlobal(this._colorHeader);
-    //                this._colorHeader = IntPtr.Zero;
-    //            }
-
-    //            this._disposed = true;
-    //        }
-    //    }
-
-    //    ~PointModel()
-    //    {
-    //        Dispose(false);
-    //    }
-
-    //    public Vertex WorldCoordCenter()
-    //    {
-    //        Vertex result = this.Bounds.location 
-    //            + (Vertex)this.Bounds.size3D / 2 
-    //            + this.translateVector;
-    //        return result;
-    //    }
-    //}
 }
