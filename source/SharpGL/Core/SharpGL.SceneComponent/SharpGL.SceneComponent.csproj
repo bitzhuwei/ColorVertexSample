@@ -91,7 +91,7 @@
     <Compile Include="SimpleUI\ColorIndicator\UIColorIndicator.cs" />
     <Compile Include="SimpleUI\SimpleUIRect.cs" />
     <Compile Include="SimpleUI\SimpleUIRectArgs.cs" />
-    <Compile Include="PointerScientificModel.cs">
+    <Compile Include="Model\PointerScientificModel.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

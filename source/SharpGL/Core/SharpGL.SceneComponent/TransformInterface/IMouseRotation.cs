@@ -6,7 +6,7 @@ using System.Text;
 namespace SharpGL.SceneComponent
 {
     /// <summary>
-    /// Rotate model with mouse operation.
+    /// Rotate something(model, camera, etc) with mouse operation.
     /// </summary>
     public interface IMouseRotation
     {
