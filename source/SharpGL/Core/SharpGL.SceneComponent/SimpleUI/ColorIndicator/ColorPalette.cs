@@ -143,7 +143,7 @@ namespace SharpGL.SceneComponent.SimpleUI.ColorIndicator
             double xi=0.0d, xi1=0.0d;
             GLColor yi=colors[0], yi1=colors[1];
 
-            for (int i = 0; i <= coords.Length - 1; i++)
+            for (int i = 0; i < coords.Length - 1; i++)
             {
                 xi = coords[i];
                 xi1 = coords[i + 1];
