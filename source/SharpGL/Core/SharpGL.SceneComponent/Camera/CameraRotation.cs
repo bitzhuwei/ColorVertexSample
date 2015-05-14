@@ -22,7 +22,7 @@ namespace SharpGL.SceneComponent
         private SharpGL.SceneGraph.Vertex back;
         private SharpGL.SceneGraph.Vertex right;
 
-        public CameraRotation(SharpGL.SceneGraph.Cameras.LookAtCamera lookAtCamera = null)
+        public CameraRotation(ScientificCamera lookAtCamera = null)
         {
             this.Camera = lookAtCamera;
         }
@@ -46,10 +46,10 @@ namespace SharpGL.SceneComponent
 
         #region IRotation 成员
 
-        private SharpGL.SceneGraph.Cameras.LookAtCamera camera;
-        private LookAtCamera originalCamera;
+        private ScientificCamera camera;
+        private ScientificCamera originalCamera;
 
-        public LookAtCamera Camera
+        public ScientificCamera Camera
         {
             get { return camera; }
             set
@@ -69,7 +69,7 @@ namespace SharpGL.SceneComponent
                     this.up = up;
 
                     if (this.originalCamera == null)
-                    { this.originalCamera = new LookAtCamera(); }
+                    { this.originalCamera = new ScientificCamera(); }
                     this.originalCamera.Position = value.Position;
                     this.originalCamera.UpVector = value.UpVector;
                 }
@@ -85,7 +85,7 @@ namespace SharpGL.SceneComponent
         {
             if (this.mouseDownFlag)
             {
-                LookAtCamera camera = this.Camera;
+                ScientificCamera camera = this.Camera;
                 if (camera == null) { return; }
 
                 Vertex back = this.back;
@@ -146,9 +146,9 @@ namespace SharpGL.SceneComponent
 
         public void ResetRotation()
         {
-            LookAtCamera camera = this.Camera;
+            ScientificCamera camera = this.Camera;
             if (camera == null) { return; }
-            LookAtCamera originalCamera = this.originalCamera;
+            ScientificCamera originalCamera = this.originalCamera;
             if (originalCamera == null) { return; }
 
             camera.Position = originalCamera.Position;

@@ -123,9 +123,9 @@ namespace SharpGL.SceneComponent
             gl.DisableClientState(OpenGL.GL_COLOR_ARRAY);
         }
 
-        public virtual void AdjustCamera(SharpGL.OpenGL gl, SceneGraph.Cameras.Camera camera)
-        {
-        }
+        //public virtual void AdjustCamera(SharpGL.OpenGL gl, SceneGraph.Cameras.Camera camera)
+        //{
+        //}
 
         public IBoundingBox BoundingBox { get; internal set; }
         

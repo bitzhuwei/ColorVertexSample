@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Camera\IOrthoCamera.cs" />
+    <Compile Include="Camera\IPerspectiveCamera.cs" />
     <Compile Include="Model\ModelContainer.cs" />
     <Compile Include="Model\BoundingBox.cs">
       <SubType>Code</SubType>
@@ -56,8 +58,9 @@
     <Compile Include="MySharpGL\ArcBallTransform.cs" />
     <Compile Include="MySharpGL\ArcBallTransformEffect.cs" />
     <Compile Include="ByteColor.cs" />
-    <Compile Include="CameraRotation.cs" />
-    <Compile Include="ECameraType.cs" />
+    <Compile Include="Camera\CameraRotation.cs" />
+    <Compile Include="Camera\ECameraType.cs" />
+    <Compile Include="MySharpGL\MySceneControlHelper.cs" />
     <Compile Include="SimpleUI\ColorIndicator\ColorIndicatorBar.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -94,14 +97,13 @@
     <Compile Include="SimpleUI\Axis\SimpleUIAxis.cs" />
     <Compile Include="SimpleUI\ColorIndicator\ColorPalette.cs" />
     <Compile Include="SimpleUI\ColorIndicator\SimpleUIColorIndicator.cs" />
-    <Compile Include="SimpleUI\ColorIndicator\UIColorIndicator.cs" />
     <Compile Include="SimpleUI\SimpleUIRect.cs" />
     <Compile Include="SimpleUI\SimpleUIRectArgs.cs" />
     <Compile Include="Model\PointerScientificModel.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScientificCamera.cs" />
+    <Compile Include="Camera\ScientificCamera.cs" />
     <Compile Include="Control\ScientificVisual3DControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

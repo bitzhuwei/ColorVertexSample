@@ -24,11 +24,11 @@ namespace SharpGL.SceneComponent
         /// <param name="renderMode"></param>
         void Render(SharpGL.OpenGL gl, RenderMode renderMode);
 
-        /// <summary>
-        /// Adjust camera's position, target, etc according to model.
-        /// </summary>
-        /// <param name="gl"></param>
-        /// <param name="camera"></param>
-        void AdjustCamera(SharpGL.OpenGL gl, SharpGL.SceneGraph.Cameras.Camera camera);
+        ///// <summary>
+        ///// Adjust camera's position, target, etc according to model.
+        ///// </summary>
+        ///// <param name="gl"></param>
+        ///// <param name="camera"></param>
+        //void AdjustCamera(SharpGL.OpenGL gl, SharpGL.SceneGraph.Cameras.Camera camera);
     }
 }

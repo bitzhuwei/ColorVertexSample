@@ -28,7 +28,7 @@ namespace SharpGL.SceneComponent
             this.scene.OpenGL = this.OpenGL;
 
             //  Initialise the scene.
-            SceneGraph.Helpers.SceneHelper.InitialiseModelingScene(Scene);
+            MySceneControlHelper.InitialiseModelingScene(scene);
         }
 
         protected override void OnPaint(PaintEventArgs e)

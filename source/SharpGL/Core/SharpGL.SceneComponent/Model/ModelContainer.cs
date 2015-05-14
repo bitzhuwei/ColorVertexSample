@@ -47,9 +47,18 @@ namespace SharpGL.SceneComponent
         internal void AddChild(ScientificModelElement child)
         {
             base.AddChild(child);
+            BoundingBox boundingBox = this.boundingBox;
             IBoundingBox modelBoundingBox = child.Model.BoundingBox;
-            this.boundingBox.Extend(modelBoundingBox.MinPosition);
-            this.boundingBox.Extend(modelBoundingBox.MaxPosition);
+            if (base.Children.Count > 1)
+            {
+                boundingBox.Extend(modelBoundingBox.MinPosition);
+                boundingBox.Extend(modelBoundingBox.MaxPosition);
+            }
+            else 
+            {
+                boundingBox.MinPosition = modelBoundingBox.MinPosition;
+                boundingBox.MaxPosition = modelBoundingBox.MaxPosition;
+            }
             UpdateExpandedBoudingBox();
         }
         
@@ -111,29 +120,55 @@ namespace SharpGL.SceneComponent
         /// </summary>
         /// <param name="openGL"></param>
         /// <param name="camera"></param>
-        internal void AdjustCamera(OpenGL openGL, SceneGraph.Cameras.LookAtCamera camera)
+        internal void AdjustCamera(OpenGL openGL, ScientificCamera camera)
         {
             IBoundingBox boundingBox = this.boundingBox;
+
             float xSize, ySize, zSize;
             boundingBox.GetBoundDimensions(out xSize, out ySize, out zSize);
-            float x, y, z;
-            boundingBox.GetCenter(out x, out y, out z);
-            Vertex center = new Vertex(x, y, z);
-
             float size = Math.Max(Math.Max(xSize, ySize), zSize);
 
-            Vertex position = center + new Vertex(0.0f, 0.0f, 1.0f) * (size * 2);
+            float x, y, z;
+            boundingBox.GetCenter(out x, out y, out z);
+            Vertex target = new Vertex(x, y, z);
+
+            Vertex target2Position = camera.Position - camera.Target;
+            target2Position.Normalize();
+
+            Vertex position = target + target2Position * (size * 2 + 1);
+            //new Vertex(0.0f, 0.0f, 1.0f) * (size * 2);
 
             int[] viewport = new int[4];
             openGL.GetInteger(SharpGL.Enumerations.GetTarget.Viewport, viewport);
             int width = viewport[2]; int height = viewport[3];
+
+            IPerspectiveCamera perspectiveCamera = camera;
+            perspectiveCamera.FieldOfView = 60;
+            perspectiveCamera.AspectRatio = (double)width / (double)height;
+            perspectiveCamera.Near = 0.001;
+            perspectiveCamera.Far = double.MaxValue;
+            
+            IOrthoCamera orthoCamera = camera;
+            if (width > height)
+            {
+                orthoCamera.Left = -size * width / height;
+                orthoCamera.Right = size * width / height;
+                orthoCamera.Bottom = -size;
+                orthoCamera.Top = size;
+            }
+            else
+            {
+                orthoCamera.Left = -size;
+                orthoCamera.Right = size;
+                orthoCamera.Bottom = -size * height / width;
+                orthoCamera.Top = size * height / width;
+            }
+            orthoCamera.Near = 0.001;
+            orthoCamera.Far = double.MaxValue;
+
             camera.Position = position;
-            camera.Target = center;
-            camera.UpVector = new Vertex(0f, 1f, 0f);
-            camera.FieldOfView = 60;
-            camera.AspectRatio = (double)width / (double)height;
-            camera.Near = 0.001;
-            camera.Far = float.MaxValue;
+            camera.Target = target;
+            //camera.UpVector = new Vertex(0f, 1f, 0f);
         }
 
         #region IRenderable 成员
@@ -143,6 +178,7 @@ namespace SharpGL.SceneComponent
             if (renderMode == RenderMode.HitTest) { return; }
             if (!this.RenderBoundingBox) { return; }
             IBoundingBox boundingBox = this.expandedBoundingBox;
+            //IBoundingBox boundingBox = this.boundingBox;
             if (boundingBox == null) { return; }
 
             boundingBox.Render(gl, renderMode);

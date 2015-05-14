@@ -10,22 +10,29 @@ namespace SharpGL.SceneComponent
     /// <summary>
     /// projects in perspective view or ortho view.
     /// </summary>
-    class ScientificCamera : SharpGL.SceneGraph.Cameras.Camera
+    public class ScientificCamera : SharpGL.SceneGraph.Cameras.Camera, IPerspectiveCamera, IOrthoCamera
     {
         public ScientificCamera(ECameraType cameraType = ECameraType.Perspecitive)
         {
             Name = "Scientific Camera";
-            this.FieldOfView = 60f;
-            this.AspectRatio = 1f;
-            this.Near = 0.5f;
-            this.Far = 40f;
+            IPerspectiveCamera perspectiveCamera = this;
+            perspectiveCamera.FieldOfView = 60f;
+            perspectiveCamera.AspectRatio = 1f;
+            perspectiveCamera.Near = 0.001;
+            perspectiveCamera.Far = double.MaxValue;
+
+            IOrthoCamera orthoCamera = this;
+            orthoCamera.Left = -100;
+            orthoCamera.Right = 100;
+            orthoCamera.Bottom = -100;
+            orthoCamera.Top = 100;
+            orthoCamera.Near = -1000;
+            orthoCamera.Far = 1000;
+
             this.Target = new Vertex(0, 0, 0);
             this.UpVector = new Vertex(0, 1, 0);
             this.Position = new Vertex(0, 0, 0);
-            this.Left = -100;
-            this.Right = 100;
-            this.Bottom = -100;
-            this.Top = 100;
+
             this.CameraType = cameraType;
         }
 
@@ -58,10 +65,12 @@ namespace SharpGL.SceneComponent
             switch (CameraType)
             {
                 case ECameraType.Perspecitive:
-                    gl.Perspective(FieldOfView, AspectRatio, Near, Far);
+                    IPerspectiveCamera perspectiveCamera = this;
+                    gl.Perspective(perspectiveCamera.FieldOfView, perspectiveCamera.AspectRatio, perspectiveCamera.Near, perspectiveCamera.Far);
                     break;
                 case ECameraType.Ortho:
-                    gl.Ortho(Left, Right, Bottom, Top, Near, Far);
+                    IOrthoCamera orthoCamera = this;
+                    gl.Ortho(orthoCamera.Left, orthoCamera.Right, orthoCamera.Bottom, orthoCamera.Top, orthoCamera.Near, orthoCamera.Far);
                     break;
                 default:
                     break;
@@ -90,71 +99,40 @@ namespace SharpGL.SceneComponent
         public Vertex UpVector { get; set; }
 
         /// <summary>
-        /// Gets or sets the field of view.
-        /// </summary>
-        /// <value>
-        /// The field of view.
-        /// </value>
-        [Description("The angle of the lense of the camera (60 degrees = human eye)."), Category("Camera (Perspective)")]
-        public double FieldOfView { get; set; }
-
-        /// <summary>
-        /// Gets or sets the near.
-        /// </summary>
-        /// <value>
-        /// The near.
-        /// </value>
-        [Description("The near clipping distance."), Category("Camera (Perspective)")]
-        public double Near { get; set; }
-
-        /// <summary>
-        /// Gets or sets the far.
-        /// </summary>
-        /// <value>
-        /// The far.
-        /// </value>
-        [Description("The left clipping distance."), Category("Camera (Perspective)")]
-        public double Far { get; set; }
-
-        /// <summary>
-        /// Gets or sets the far.
-        /// </summary>
-        /// <value>
-        /// The far.
-        /// </value>
-        [Description("The far clipping distance."), Category("Camera (Ortho)")]
-        public double Left { get; set; }
-
-        /// <summary>
-        /// Gets or sets the far.
-        /// </summary>
-        /// <value>
-        /// The far.
-        /// </value>
-        [Description("The far clipping distance."), Category("Camera (Ortho)")]
-        public double Right { get; set; }
-
-        /// <summary>
-        /// Gets or sets the far.
-        /// </summary>
-        /// <value>
-        /// The far.
-        /// </value>
-        [Description("The far clipping distance."), Category("Camera (Ortho)")]
-        public double Bottom { get; set; }
-
-        /// <summary>
-        /// Gets or sets the far.
-        /// </summary>
-        /// <value>
-        /// The far.
-        /// </value>
-        [Description("The far clipping distance."), Category("Camera (Ortho)")]
-        public double Top { get; set; }
-
-        /// <summary>
         /// camera's perspective type.
         /// </summary>
         public ECameraType CameraType { get; set; }
+
+        #region IPerspectiveCamera 成员
+
+        double IPerspectiveCamera.FieldOfView { get; set; }
+
+        double IPerspectiveCamera.AspectRatio
+        {
+            get { return base.AspectRatio; }
+            set { base.AspectRatio = value; }
+        }
+
+        double IPerspectiveCamera.Near { get; set; }
+
+        double IPerspectiveCamera.Far { get; set; }
+
+        #endregion
+
+        #region IOrthoCamera 成员
+
+        double IOrthoCamera.Left { get; set; }
+
+        double IOrthoCamera.Right { get; set; }
+
+        double IOrthoCamera.Bottom { get; set; }
+
+        double IOrthoCamera.Top { get; set; }
+
+        double IOrthoCamera.Near { get; set; }
+
+        double IOrthoCamera.Far { get; set; }
+
+        #endregion
     }
 }

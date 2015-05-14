@@ -140,13 +140,10 @@ namespace SharpGL.SceneComponent
         /// <summary>
         /// Gets the current camera.
         /// </summary>
-        /// <value>
-        /// The current camera.
-        /// </value>
         [Description("The current camera being used to view the scene."), Category("Scene")]
-        public new Camera CurrentCamera
+        public new ScientificCamera CurrentCamera
         {
-            get { return base.CurrentCamera; }
+            get { return base.CurrentCamera as ScientificCamera; }
             internal set { base.CurrentCamera = value; }
         }
     }

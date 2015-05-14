@@ -21,7 +21,7 @@ namespace SharpGL.SceneComponent
         ///  if null, please set arcBall.Camera property later.
         /// </summary>
         /// <param name="camera">if null, please set arcBall.Camera property later.</param>
-        public ArcBallTransformEffect(LookAtCamera camera = null)
+        public ArcBallTransformEffect(ScientificCamera camera = null)
         {
             this.arcBall.Camera = camera;
         }
@@ -43,7 +43,7 @@ namespace SharpGL.SceneComponent
                 if (container != null)
                 {
                     Scene scene = container.ParentScene;
-                    LookAtCamera camera = scene.CurrentCamera as LookAtCamera;
+                    ScientificCamera camera = scene.CurrentCamera as ScientificCamera;
                     this.arcBall.Camera = camera;
                 }
             }

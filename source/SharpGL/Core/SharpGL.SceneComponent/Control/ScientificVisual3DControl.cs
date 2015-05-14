@@ -35,15 +35,36 @@ namespace SharpGL.SceneComponent
             this.MouseMove += ScientificVisual3DControl_MouseMove;
             this.MouseUp += ScientificVisual3DControl_MouseUp;
             this.MouseWheel += ScientificVisual3DControl_MouseWheel;
+            this.Resized += ScientificVisual3DControl_Resized;
+        }
+
+        void ScientificVisual3DControl_Resized(object sender, EventArgs e)
+        {
+            this.modelContainer.AdjustCamera(this.OpenGL, this.Scene.CurrentCamera);
         }
 
         void ScientificVisual3DControl_MouseWheel(object sender, MouseEventArgs e)
         {
-            LookAtCamera camera = this.Scene.CurrentCamera as LookAtCamera;
-            if (camera == null) { return; }
+            ScientificCamera camera = this.Scene.CurrentCamera;
+            //if (camera == null) { return; }
 
-            Vertex target2Position = camera.Position - camera.Target;
-            camera.Position = camera.Target + target2Position * (1 - e.Delta * 0.001f);
+            if (camera.CameraType == ECameraType.Perspecitive)
+            {
+                Vertex target2Position = camera.Position - camera.Target;
+                camera.Position = camera.Target + target2Position * (1 - e.Delta * 0.001f);
+            }
+            else if (camera.CameraType == ECameraType.Ortho)
+            {
+                IOrthoCamera orthoCamera = camera;
+                double distanceX = orthoCamera.Right - orthoCamera.Left;
+                double distanceY = orthoCamera.Top - orthoCamera.Bottom;
+                double centerX = (orthoCamera.Left + orthoCamera.Right) / 2;
+                double centerY = (orthoCamera.Bottom + orthoCamera.Top) / 2;
+                orthoCamera.Left = centerX - distanceX * (1 - e.Delta * 0.001) / 2;
+                orthoCamera.Right = centerX + distanceX * (1 - e.Delta * 0.001) / 2;
+                orthoCamera.Bottom = centerY - distanceY * (1 - e.Delta * 0.001) / 2;
+                orthoCamera.Top = centerX + distanceY * (1 - e.Delta * 0.001) / 2;
+            }
 
             ManualRender(this);
         }
@@ -105,6 +126,8 @@ namespace SharpGL.SceneComponent
             { ManualRender(this); }
         }
 
+
+
         private void ManualRender(Control control)
         {
             control.Invalidate();// this will invokes OnPaint(PaintEventArgs e);
@@ -151,7 +174,7 @@ namespace SharpGL.SceneComponent
 
         internal void SetSceneCameraToUICamera()
         {
-            LookAtCamera camera = this.Scene.CurrentCamera as LookAtCamera;
+            ScientificCamera camera = this.Scene.CurrentCamera;
             if (camera == null)
             { throw new Exception("this.Scene.CurrentCamera cannot be null."); }
 
@@ -163,12 +186,12 @@ namespace SharpGL.SceneComponent
         /// <summary>
         /// holds UI elements(axis, color indicator etc).
         /// </summary>
-        public MyScene UIScene { get; set; }
+        internal MyScene UIScene { get; set; }
 
         /// <summary>
         /// rotate and translate camera on a sphere, whose center is camera's Target.
         /// </summary>
-        public CameraRotation CameraRotation { get; set; }
+        internal CameraRotation CameraRotation { get; set; }
 
         /// <summary>
         /// Draw axis with arc ball rotation effect on viewport as an UI.
@@ -184,12 +207,12 @@ namespace SharpGL.SceneComponent
         {
             if (model == null) { return; }
 
-            LookAtCamera camera = this.Scene.CurrentCamera as LookAtCamera;
+            ScientificCamera camera = this.Scene.CurrentCamera;
             ScientificModelElement element = new ScientificModelElement(model, this.renderModelsBoundingBox);
             this.modelContainer.AddChild(element);
             this.modelContainer.AdjustCamera(this.OpenGL, camera);
             // force CameraRotation to udpate.
-            this.CameraRotation.Camera = this.Scene.CurrentCamera as LookAtCamera;
+            this.CameraRotation.Camera = this.Scene.CurrentCamera;
 
             ManualRender(this);
         }
@@ -219,6 +242,22 @@ namespace SharpGL.SceneComponent
                             element.RenderBoundingBox = value;
                         }
                     }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets camera's view type.
+        /// </summary>
+        public ECameraType CameraType
+        {
+            get { return this.Scene.CurrentCamera.CameraType; }
+            set
+            {
+                if (this.Scene.CurrentCamera.CameraType != value)
+                {
+                    this.Scene.CurrentCamera.CameraType = value;
+                    ManualRender(this);
                 }
             }
         }
