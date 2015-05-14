@@ -44,7 +44,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\ModelContainer.cs" />
-    <Compile Include="TransformInterface\IMouseLinearTransform.cs" />
     <Compile Include="Model\BoundingBox.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -53,7 +52,6 @@
     <Compile Include="Model\ScientificModelElement.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MySharpGL\IMyHasObjectSpace.cs" />
     <Compile Include="MySharpGL\LinearArcBall.cs" />
     <Compile Include="MySharpGL\MyArcBall.cs" />
     <Compile Include="MySharpGL\MyArcBallEffect.cs" />
@@ -69,20 +67,27 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="SimpleUI\Axis\CylinderAxis.cs" />
-    <Compile Include="TransformInterface\IMouseRotation.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="TransformInterface\IMouseScale.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="TransformInterface\IMouseTransform.cs" />
-    <Compile Include="TransformInterface\ITranslation.cs" />
     <Compile Include="MySharpGL\MyScene.cs" />
     <Compile Include="MySharpGL\MySceneControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="MySharpGL\MySceneControl.Designer.cs">
       <DependentUpon>MySceneControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TransformInterface\IMouseLinearTransform.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TransformInterface\IMouseRotation.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TransformInterface\IMouseScale.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TransformInterface\IMouseTransform.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TransformInterface\ITranslation.cs">
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="Utility\ArrayHelper.cs" />
     <Content Include="MySharpGL\read-me.txt" />

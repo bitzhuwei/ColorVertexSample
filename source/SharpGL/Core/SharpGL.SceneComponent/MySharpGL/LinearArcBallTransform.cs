@@ -10,7 +10,7 @@ namespace SharpGL.SceneComponent
     /// <summary>
     /// Linear arc ball only make linear transforms(rotation and scale).
     /// </summary>
-    public class LinearArcBall : IMouseLinearTransform
+    public class LinearArcBallTransform : IMouseLinearTransform
     {
         protected bool isCameraSet = false;
         public bool mouseDownFlag;

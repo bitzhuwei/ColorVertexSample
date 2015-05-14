@@ -15,7 +15,7 @@ namespace SharpGL.SceneComponent
     /// Draw a rectangle on OpenGL control like a <see cref="Windows.Forms.Control"/> drawn on a <see cref="windows.Forms.Form"/>.
     /// Set its properties(Anchor, Margin, Size, etc) to adjust its behaviour.
     /// </summary>
-    public class SimpleUIRect : SceneElement, IRenderable, IMyHasObjectSpace
+    public class SimpleUIRect : SceneElement, IRenderable, IHasObjectSpace
     {
         /// <summary>
         /// 
@@ -262,6 +262,15 @@ namespace SharpGL.SceneComponent
             gl.PopMatrix();
         }
 
+        /// <summary>
+        /// This is not used.
+        /// </summary>
+        public SceneGraph.Transformations.LinearTransformation Transformation
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         #endregion
+
     }
 }

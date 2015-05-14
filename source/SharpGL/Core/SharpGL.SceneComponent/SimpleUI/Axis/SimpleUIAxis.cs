@@ -14,7 +14,7 @@ namespace SharpGL.SceneComponent
     /// </summary>
     public class SimpleUIAxis : SimpleUIRect, IMouseRotation
     {
-        internal IMouseTransform mouseTransform = new MyArcBall();
+        internal IMouseTransform mouseTransform = new ArcBallTransform();
         /// <summary>
         /// keeps axis' scale.
         /// </summary>
