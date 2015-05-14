@@ -51,7 +51,7 @@ namespace ColorVertexSample
                 this.sceneControl.uiColorIndicator.Data.MinValue = minValue;
                 this.sceneControl.uiColorIndicator.Data.MaxValue = maxValue;
                 this.sceneControl.uiColorIndicator.Data.Step = step;
-                this.sceneControl.Invalidate();// redraw the scene.
+                //this.sceneControl.Invalidate();// redraw the scene.
             }
             catch (Exception error)
             {

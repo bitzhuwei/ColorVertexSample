@@ -13,6 +13,17 @@ namespace SharpGL.SceneComponent
     /// </summary>
     public class BoundingBox : IBoundingBox
     {
+        /// <summary>
+        /// Maximum position of this cuboid.
+        /// </summary>
+        private Vertex maxPosition;
+
+
+        /// <summary>
+        /// Minimum position of this cuboid.
+        /// </summary>
+        private Vertex minPosition;
+
 
         /// <summary>
         /// Cuboid's color of its lines.
@@ -30,14 +41,22 @@ namespace SharpGL.SceneComponent
         /// <summary>
         /// Maximum position of this cuboid.
         /// </summary>
-        public Vertex MaxPosition { get; set; }
+        public Vertex MaxPosition
+        {
+            get { return maxPosition; }
+            set { maxPosition = value; }
+        }
 
         /// <summary>
         /// Minimum position of this cuboid.
         /// </summary>
-        public Vertex MinPosition { get; set; }
+        public Vertex MinPosition
+        {
+            get { return minPosition; }
+            set { minPosition = value; }
+        }
 
-         /// <summary>
+        /// <summary>
         /// Get center position of this cuboid.
         /// </summary>
         /// <param name="x">x position.</param>
@@ -100,5 +119,32 @@ namespace SharpGL.SceneComponent
         }
 
         #endregion
+
+        /// <summary>
+        /// Make sure the bounding box covers specifed vertex.
+        /// </summary>
+        /// <param name="vertex"></param>
+        internal void Extend(Vertex vertex)
+        {
+            if (vertex.X < this.minPosition.X) { this.minPosition.X = vertex.X; }
+            if (vertex.Y < this.minPosition.Y) { this.minPosition.Y = vertex.Y; }
+            if (vertex.Z < this.minPosition.Z) { this.minPosition.Z = vertex.Z; }
+
+            if (vertex.X > this.maxPosition.X) { this.maxPosition.X = vertex.X; }
+            if (vertex.Y > this.maxPosition.Y) { this.maxPosition.Y = vertex.Y; }
+            if (vertex.Z > this.maxPosition.Z) { this.maxPosition.Z = vertex.Z; }
+
+        }
+
+        internal void Reset()
+        {
+            this.minPosition.X = 0;
+            this.minPosition.Y = 0;
+            this.minPosition.Z = 0;
+
+            this.maxPosition.X = 0;
+            this.maxPosition.Y = 0;
+            this.maxPosition.Z = 0;
+        }
     }
 }

@@ -53,7 +53,7 @@ namespace SharpGL.SceneComponent
             this.axisTransform.ScaleX = args.UIWidth / 2 / 3;
             this.axisTransform.ScaleY = args.UIHeight / 2 / 3;
             int max = Math.Max(args.UIWidth,args.UIHeight);
-            this.axisTransform.ScaleZ = (this.RightHandAxis ? -1 : 1) * max / 2 / 3;
+            this.axisTransform.ScaleZ = (this.RightHandAxis ? 1 : -1) * max / 2 / 3;
         }
 
         public override void PushObjectSpace(OpenGL gl)

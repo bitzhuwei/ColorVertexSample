@@ -8,7 +8,7 @@ using System.Text;
 namespace SharpGL.SceneComponent
 {
     /// <summary>
-    /// interface for the model shown in <see cref="ScientificVisual3DControl"/>.
+    /// interface for the model object shown in <see cref="ScientificVisual3DControl"/>.
     /// </summary>
     public interface IScientificModel
     {

@@ -21,10 +21,9 @@ namespace SharpGL.SceneComponent
     public partial class ScientificVisual3DControl : MySceneControl
     {
         /// <summary>
-        /// parent of the model elements we want to show.
+        /// maintains bounding box that contains all models.
         /// </summary>
-        internal SceneGraph.Core.SceneElement scientificModelElementRoot;
-        private IMouseLinearTransform sharedMouseTransform;
+        internal ModelContainer modelContainer;
 
         public ScientificVisual3DControl()
         {
@@ -39,12 +38,11 @@ namespace SharpGL.SceneComponent
 
         void ScientificVisual3DControl_MouseWheel(object sender, MouseEventArgs e)
         {
-            IMouseScale modelScale = sharedMouseTransform;
-            if (modelScale == null) { return; }
+            LookAtCamera camera = this.Scene.CurrentCamera as LookAtCamera;
+            if (camera == null) { return; }
 
-            modelScale.Scale += e.Delta * 0.001f;
-            if (modelScale.Scale < 0.01f)
-            { modelScale.Scale = 0.01f; }
+            Vertex target2Position = camera.Position - camera.Target;
+            camera.Position = camera.Target + target2Position * (1 + e.Delta * 0.001f);
 
             ManualRender(this);
         }
@@ -61,29 +59,6 @@ namespace SharpGL.SceneComponent
                     rotation.MouseUp(e.X, e.Y);
 
                     render = true;
-                }
-            }
-
-            if ((e.Button & MouseButtons.Right) == MouseButtons.Right)
-            {
-                {
-                    IMouseRotation rotation = this.uiAxis;
-                    if (rotation != null)
-                    {
-                        rotation.MouseUp(e.X, e.Y);
-
-                        render = true;
-                    }
-                }
-
-                {
-                    IMouseRotation rotation = sharedMouseTransform;
-                    if (rotation != null)
-                    {
-                        rotation.MouseUp(e.X, e.Y);
-
-                        render = true;
-                    }
                 }
             }
 
@@ -105,29 +80,6 @@ namespace SharpGL.SceneComponent
                 }
             }
 
-            if ((e.Button & MouseButtons.Right) == MouseButtons.Right)
-            {
-                {
-                    IMouseRotation rotation = this.uiAxis;
-                    if (rotation != null)
-                    {
-                        rotation.MouseMove(e.X, e.Y);
-
-                        render = true;
-                    }
-                }
-
-                {
-                    IMouseRotation rotation = sharedMouseTransform;
-                    if (rotation != null)
-                    {
-                        rotation.MouseMove(e.X, e.Y);
-
-                        render = true;
-                    }
-                }
-            }
-
             if (render)
             { ManualRender(this); }
         }
@@ -145,31 +97,6 @@ namespace SharpGL.SceneComponent
                     cameraRotation.MouseDown(e.X, e.Y);
 
                     render = true;
-                }
-            }
-
-            if ((e.Button & MouseButtons.Right) == System.Windows.Forms.MouseButtons.Right)
-            {
-                {
-                    IMouseRotation rotation = this.uiAxis;
-                    if (rotation != null)
-                    {
-                        rotation.SetBounds(this.Width, this.Height);
-                        rotation.MouseDown(e.X, e.Y);
-
-                        render = true;
-                    }
-                }
-
-                {
-                    IMouseRotation rotation = sharedMouseTransform;
-                    if (rotation != null)
-                    {
-                        rotation.SetBounds(this.Width, this.Height);
-                        rotation.MouseDown(e.X, e.Y);
-
-                        render = true;
-                    }
                 }
             }
 
@@ -257,23 +184,18 @@ namespace SharpGL.SceneComponent
             if (model == null) { return; }
 
             LookAtCamera camera = this.Scene.CurrentCamera as LookAtCamera;
-            if (this.sharedMouseTransform == null)
-            {
-                this.sharedMouseTransform = new LinearArcBall();
-                this.sharedMouseTransform.Camera = camera;
-            }
-            ScientificModelElement element = new ScientificModelElement();
-            element.Model = model;
-            element.modelTransform = this.sharedMouseTransform;
-            this.scientificModelElementRoot.AddChild(element);
-            model.AdjustCamera(this.OpenGL, this.Scene.CurrentCamera);
+            ScientificModelElement element = new ScientificModelElement(model, false);
+            this.modelContainer.AddChild(element);
+            this.modelContainer.AdjustCamera(this.OpenGL, camera);
             // force CameraRotation to udpate.
             this.CameraRotation.Camera = this.Scene.CurrentCamera as LookAtCamera;
+
+            ManualRender(this);
         }
 
         public void ClearScientificModels()
         {
-            this.scientificModelElementRoot.Children.Clear();
+            this.modelContainer.ClearChild();
             ManualRender(this);
         }
     }

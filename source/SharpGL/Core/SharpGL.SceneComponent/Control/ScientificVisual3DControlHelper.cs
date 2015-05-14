@@ -76,7 +76,6 @@ namespace SharpGL.SceneComponent
             parent.AddChild(uiColorIndicator);
             scientificVisual3DControl.uiColorIndicator = uiColorIndicator;
 
-            scientificVisual3DControl.CameraRotation = new CameraRotation();
         }
 
         internal static void InitializeScene(ScientificVisual3DControl scientificVisual3DControl)
@@ -94,10 +93,16 @@ namespace SharpGL.SceneComponent
 
             scene.RenderBoundingVolumes = false;
 
-            SceneElement scientificModelElementRoot = new SceneElement() 
-            { Name = "Scientific Model Elements' root" };
-            scene.SceneContainer.AddChild(scientificModelElementRoot);
-            scientificVisual3DControl.scientificModelElementRoot = scientificModelElementRoot;
+            //SceneElement scientificModelElementRoot = new SceneElement() 
+            //{ Name = "Scientific Model Elements' root" };
+            //scene.SceneContainer.AddChild(scientificModelElementRoot);
+            //scientificVisual3DControl.scientificModelElementRoot = scientificModelElementRoot;
+            ModelContainer container = new ModelContainer()
+            { Name = "model space's container which contains models as children." };
+            scene.SceneContainer.AddChild(container);
+            scientificVisual3DControl.modelContainer = container;
+
+            scientificVisual3DControl.CameraRotation = new CameraRotation();
         }
 
         private static OpenGLAttributesEffect InitializeSceneAttributes(SceneElement parent)
