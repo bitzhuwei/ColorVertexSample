@@ -27,8 +27,6 @@ namespace ColorVertexSample
         public FormScientificVisual3DControl()
         {
             InitializeComponent();
-
-            this.Text = "Rotation tip: left mouse for camera & right mouse for model";
         }
 
         private void Create3DObject(object sender, EventArgs e)

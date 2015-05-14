@@ -24,6 +24,7 @@ namespace SharpGL.SceneComponent
         /// maintains bounding box that contains all models.
         /// </summary>
         internal ModelContainer modelContainer;
+        private bool renderModelsBoundingBox = true;
 
         public ScientificVisual3DControl()
         {
@@ -184,7 +185,7 @@ namespace SharpGL.SceneComponent
             if (model == null) { return; }
 
             LookAtCamera camera = this.Scene.CurrentCamera as LookAtCamera;
-            ScientificModelElement element = new ScientificModelElement(model, false);
+            ScientificModelElement element = new ScientificModelElement(model, this.renderModelsBoundingBox);
             this.modelContainer.AddChild(element);
             this.modelContainer.AdjustCamera(this.OpenGL, camera);
             // force CameraRotation to udpate.
@@ -197,6 +198,29 @@ namespace SharpGL.SceneComponent
         {
             this.modelContainer.ClearChild();
             ManualRender(this);
+        }
+
+        /// <summary>
+        /// Determins whether render every model's bounding box or not.
+        /// </summary>
+        public bool RenderModelsBoundingBox
+        {
+            get { return this.renderModelsBoundingBox; }
+            set
+            {
+                if (this.renderModelsBoundingBox != value)
+                {
+                    this.renderModelsBoundingBox = value;
+                    foreach (var item in this.modelContainer.Children)
+                    {
+                        ScientificModelElement element = item as ScientificModelElement;
+                        if (element != null)
+                        {
+                            element.RenderBoundingBox = value;
+                        }
+                    }
+                }
+            }
         }
     }
 }

@@ -29,12 +29,14 @@
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.sceneControl = new SharpGL.SceneComponent.ScientificVisual3DControl();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblDebugInfo = new System.Windows.Forms.Label();
             this.tbRangeMax = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.tbRangeMin = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.btnClearModels = new System.Windows.Forms.Button();
             this.btnCreate3D = new System.Windows.Forms.Button();
             this.tbColorIndicatorStep = new System.Windows.Forms.TextBox();
             this.tbRadius = new System.Windows.Forms.TextBox();
@@ -46,11 +48,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.tbNX = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnClearModels = new System.Windows.Forms.Button();
-            this.sceneControl = new SharpGL.SceneComponent.ScientificVisual3DControl();
             this.tableLayoutPanel1.SuspendLayout();
-            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sceneControl)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -68,6 +68,19 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(693, 468);
             this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // sceneControl
+            // 
+            this.tableLayoutPanel1.SetColumnSpan(this.sceneControl, 2);
+            this.sceneControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.sceneControl.DrawFPS = false;
+            this.sceneControl.Location = new System.Drawing.Point(3, 75);
+            this.sceneControl.Name = "sceneControl";
+            this.sceneControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
+            this.sceneControl.RenderContextType = SharpGL.RenderContextType.FBO;
+            this.sceneControl.RenderTrigger = SharpGL.RenderTrigger.Manual;
+            this.sceneControl.Size = new System.Drawing.Size(687, 390);
+            this.sceneControl.TabIndex = 0;
             // 
             // panel1
             // 
@@ -140,6 +153,16 @@
             this.label4.Size = new System.Drawing.Size(23, 12);
             this.label4.TabIndex = 13;
             this.label4.Text = "min";
+            // 
+            // btnClearModels
+            // 
+            this.btnClearModels.Location = new System.Drawing.Point(346, 40);
+            this.btnClearModels.Name = "btnClearModels";
+            this.btnClearModels.Size = new System.Drawing.Size(52, 23);
+            this.btnClearModels.TabIndex = 12;
+            this.btnClearModels.Text = "Clear";
+            this.btnClearModels.UseVisualStyleBackColor = true;
+            this.btnClearModels.Click += new System.EventHandler(this.btnClearModels_Click);
             // 
             // btnCreate3D
             // 
@@ -236,29 +259,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "NX";
             // 
-            // btnClearModels
-            // 
-            this.btnClearModels.Location = new System.Drawing.Point(346, 40);
-            this.btnClearModels.Name = "btnClearModels";
-            this.btnClearModels.Size = new System.Drawing.Size(52, 23);
-            this.btnClearModels.TabIndex = 12;
-            this.btnClearModels.Text = "Clear";
-            this.btnClearModels.UseVisualStyleBackColor = true;
-            this.btnClearModels.Click += new System.EventHandler(this.btnClearModels_Click);
-            // 
-            // sceneControl
-            // 
-            this.tableLayoutPanel1.SetColumnSpan(this.sceneControl, 2);
-            this.sceneControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.sceneControl.DrawFPS = false;
-            this.sceneControl.Location = new System.Drawing.Point(3, 75);
-            this.sceneControl.Name = "sceneControl";
-            this.sceneControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
-            this.sceneControl.RenderContextType = SharpGL.RenderContextType.FBO;
-            this.sceneControl.RenderTrigger = SharpGL.RenderTrigger.Manual;
-            this.sceneControl.Size = new System.Drawing.Size(687, 390);
-            this.sceneControl.TabIndex = 0;
-            // 
             // FormScientificVisual3DControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -267,11 +267,11 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.MinimumSize = new System.Drawing.Size(16, 38);
             this.Name = "FormScientificVisual3DControl";
-            this.Text = "Form1";
+            this.Text = "Scientific Visual 3D Control Demo.";
             this.tableLayoutPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.sceneControl)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.sceneControl)).EndInit();
             this.ResumeLayout(false);
 
         }
