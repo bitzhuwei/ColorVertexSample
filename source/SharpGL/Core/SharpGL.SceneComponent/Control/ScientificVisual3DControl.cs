@@ -144,6 +144,13 @@ namespace SharpGL.SceneComponent
             //	Do the scene drawing.
             Scene.Draw();
 
+            if (this.CameraType == ECameraType.Ortho)
+            {
+                // Redraw model container's bounding box so that it appears in front of models.
+                // TODO: this is not needed in ECameraType.Perspecitive mode. fix this.
+                this.modelContainer.Render(this.OpenGL, SceneGraph.Core.RenderMode.Render);
+            }
+
             UIScene.Draw();
 
             //	If there is a draw handler, then call it.
