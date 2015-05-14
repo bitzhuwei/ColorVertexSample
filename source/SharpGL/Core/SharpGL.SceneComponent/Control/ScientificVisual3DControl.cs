@@ -43,7 +43,7 @@ namespace SharpGL.SceneComponent
             if (camera == null) { return; }
 
             Vertex target2Position = camera.Position - camera.Target;
-            camera.Position = camera.Target + target2Position * (1 + e.Delta * 0.001f);
+            camera.Position = camera.Target + target2Position * (1 - e.Delta * 0.001f);
 
             ManualRender(this);
         }
