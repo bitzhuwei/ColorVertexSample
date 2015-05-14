@@ -35,10 +35,13 @@ namespace SharpGL.SceneComponent
             }
         }
 
+        /// <summary>
+        /// Determins whether render the bounding box or not.
+        /// </summary>
         public bool RenderBoundingBox { get; set; }
 
         /// <summary>
-        /// Adda a child and extend bounding box.
+        /// Adds a child and extend bounding box.
         /// </summary>
         /// <param name="child"></param>
         internal void AddChild(ScientificModelElement child)
@@ -49,7 +52,11 @@ namespace SharpGL.SceneComponent
             this.boundingBox.Extend(modelBoundingBox.MaxPosition);
             UpdateExpandedBoudingBox();
         }
-
+        
+        /// <summary>
+        /// Removes a chlid and updates expanded bounding box.
+        /// </summary>
+        /// <param name="child"></param>
         internal void RemoveChild(ScientificModelElement child)
         {
             base.RemoveChild(child);
@@ -68,6 +75,9 @@ namespace SharpGL.SceneComponent
             UpdateExpandedBoudingBox();
         }
 
+        /// <summary>
+        /// Clears children, resets bounding box and updates expanded bounding box.
+        /// </summary>
         internal void ClearChild()
         {
             base.Children.Clear();
@@ -77,7 +87,6 @@ namespace SharpGL.SceneComponent
 
         public ModelContainer()
         {
-            ExpandFactor = 1.1f;
             this.RenderBoundingBox = true;
         }
 
@@ -97,6 +106,11 @@ namespace SharpGL.SceneComponent
                 ExpandFactor * (zSize / 2) + z);
         }
 
+        /// <summary>
+        /// Adjusts camera according to bounding box.
+        /// </summary>
+        /// <param name="openGL"></param>
+        /// <param name="camera"></param>
         internal void AdjustCamera(OpenGL openGL, SceneGraph.Cameras.LookAtCamera camera)
         {
             IBoundingBox boundingBox = this.boundingBox;

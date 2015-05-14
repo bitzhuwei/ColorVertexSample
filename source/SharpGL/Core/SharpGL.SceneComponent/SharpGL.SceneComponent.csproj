@@ -52,9 +52,9 @@
     <Compile Include="Model\ScientificModelElement.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MySharpGL\LinearArcBall.cs" />
-    <Compile Include="MySharpGL\MyArcBall.cs" />
-    <Compile Include="MySharpGL\MyArcBallEffect.cs" />
+    <Compile Include="MySharpGL\LinearArcBallTransform.cs" />
+    <Compile Include="MySharpGL\ArcBallTransform.cs" />
+    <Compile Include="MySharpGL\ArcBallTransformEffect.cs" />
     <Compile Include="ByteColor.cs" />
     <Compile Include="CameraRotation.cs" />
     <Compile Include="ECameraType.cs" />
