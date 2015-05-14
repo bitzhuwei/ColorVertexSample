@@ -208,7 +208,7 @@ namespace SharpGL.SceneComponent
         /// <summary>
         /// Draw color indicator on viewport as an UI.
         /// </summary>
-        public SimpleUIColorIndicator uiColorIndicator { get; set; }
+        internal SimpleUIColorIndicator uiColorIndicator { get; set; }
 
         public void AddScientificModel(IScientificModel model)
         {
@@ -267,6 +267,14 @@ namespace SharpGL.SceneComponent
                     ManualRender(this);
                 }
             }
+        }
+
+        public void SetColorIndicator(float minValue, float maxValue, float step)
+        {
+            this.uiColorIndicator.Data.MinValue = minValue;
+            this.uiColorIndicator.Data.MaxValue = maxValue;
+            this.uiColorIndicator.Data.Step = step;
+            ManualRender(this);
         }
     }
 }
