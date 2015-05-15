@@ -43,10 +43,9 @@ namespace ColorVertexSample.Model
                     positions[i].Z = z;
 
                     ByteColor* colors = model.Colors;
-                    colors[i].red = (byte)colorRandom.Next(0, 256);
-                    colors[i].green = (byte)colorRandom.Next(0, 256);
-                    colors[i].blue = (byte)colorRandom.Next(0, 256);
-
+                    colors[i].red = (byte)colorRandom.Next(0, 256 / 2);// 256 / 2 is max color in byte.
+                    colors[i].green = (byte)colorRandom.Next(0, 256 / 2);
+                    colors[i].blue = (byte)colorRandom.Next(0, 256 / 2);
                 }
 
                 model.BoundingBox.MaxPosition = max;
