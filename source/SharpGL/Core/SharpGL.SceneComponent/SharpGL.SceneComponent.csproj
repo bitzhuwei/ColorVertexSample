@@ -43,7 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TransformInterface\IMouseLinearTransform.cs" />
+    <Compile Include="Camera\IOrthoCamera.cs" />
+    <Compile Include="Camera\IPerspectiveCamera.cs" />
+    <Compile Include="Model\ModelContainer.cs" />
     <Compile Include="Model\BoundingBox.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -52,13 +54,13 @@
     <Compile Include="Model\ScientificModelElement.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MySharpGL\IMyHasObjectSpace.cs" />
-    <Compile Include="MySharpGL\LinearArcBall.cs" />
-    <Compile Include="MySharpGL\MyArcBall.cs" />
-    <Compile Include="MySharpGL\MyArcBallEffect.cs" />
+    <Compile Include="MySharpGL\LinearArcBallTransform.cs" />
+    <Compile Include="MySharpGL\ArcBallTransform.cs" />
+    <Compile Include="MySharpGL\ArcBallTransformEffect.cs" />
     <Compile Include="ByteColor.cs" />
-    <Compile Include="CameraRotation.cs" />
-    <Compile Include="ECameraType.cs" />
+    <Compile Include="Camera\CameraRotation.cs" />
+    <Compile Include="Camera\ECameraType.cs" />
+    <Compile Include="MySharpGL\MySceneControlHelper.cs" />
     <Compile Include="SimpleUI\ColorIndicator\ColorIndicatorBar.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -68,14 +70,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="SimpleUI\Axis\CylinderAxis.cs" />
-    <Compile Include="TransformInterface\IMouseRotation.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="TransformInterface\IMouseScale.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="TransformInterface\IMouseTransform.cs" />
-    <Compile Include="TransformInterface\ITranslation.cs" />
     <Compile Include="MySharpGL\MyScene.cs" />
     <Compile Include="MySharpGL\MySceneControl.cs">
       <SubType>UserControl</SubType>
@@ -83,19 +77,33 @@
     <Compile Include="MySharpGL\MySceneControl.Designer.cs">
       <DependentUpon>MySceneControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="TransformInterface\IMouseLinearTransform.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TransformInterface\IMouseRotation.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TransformInterface\IMouseScale.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TransformInterface\IMouseTransform.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TransformInterface\ITranslation.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Utility\ArrayHelper.cs" />
     <Content Include="MySharpGL\read-me.txt" />
     <Compile Include="SimpleUI\Axis\SimpleUIAxis.cs" />
     <Compile Include="SimpleUI\ColorIndicator\ColorPalette.cs" />
     <Compile Include="SimpleUI\ColorIndicator\SimpleUIColorIndicator.cs" />
-    <Compile Include="SimpleUI\ColorIndicator\UIColorIndicator.cs" />
     <Compile Include="SimpleUI\SimpleUIRect.cs" />
     <Compile Include="SimpleUI\SimpleUIRectArgs.cs" />
-    <Compile Include="PointerScientificModel.cs">
+    <Compile Include="Model\PointerScientificModel.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScientificCamera.cs" />
+    <Compile Include="Camera\ScientificCamera.cs" />
     <Compile Include="Control\ScientificVisual3DControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -14,7 +14,7 @@ namespace SharpGL.SceneComponent
     /// </summary>
     public class SimpleUIAxis : SimpleUIRect, IMouseRotation
     {
-        internal IMouseTransform mouseTransform = new MyArcBall();
+        internal IMouseTransform mouseTransform = new ArcBallTransform();
         /// <summary>
         /// keeps axis' scale.
         /// </summary>
@@ -53,12 +53,14 @@ namespace SharpGL.SceneComponent
             this.axisTransform.ScaleX = args.UIWidth / 2 / 3;
             this.axisTransform.ScaleY = args.UIHeight / 2 / 3;
             int max = Math.Max(args.UIWidth,args.UIHeight);
-            this.axisTransform.ScaleZ = (this.RightHandAxis ? -1 : 1) * max / 2 / 3;
+            this.axisTransform.ScaleZ = (this.RightHandAxis ? 1 : -1) * max / 2 / 3;
+            //this.axisTransform.TranslateZ = base.zFar;// make sure UI shows in front of enything else.
         }
 
         public override void PushObjectSpace(OpenGL gl)
         {
             base.PushObjectSpace(gl);
+
 
             if (mouseTransform.Camera != null)
             {
@@ -75,7 +77,7 @@ namespace SharpGL.SceneComponent
         /// <para>gl.LookAt(0, 0, 1, 0, 0, 0, 0, 1, 0);</para>
         /// <para>Otherwise, it uses gl.LookAt(Camera's (Position - Target), Target, UpVector);</para>
         /// </summary>
-        public override SceneGraph.Cameras.LookAtCamera Camera
+        public override ScientificCamera Camera
         {
             get
             {

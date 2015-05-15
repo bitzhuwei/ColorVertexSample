@@ -109,26 +109,23 @@ namespace SharpGL.SceneComponent
             if (this.PointCount <= 0)
                 return;
 
-            unsafe
-            {
-                gl.Enable(OpenGL.GL_POINT_SPRITE_ARB);
+            gl.Enable(OpenGL.GL_POINT_SPRITE_ARB);
 
-                gl.EnableClientState(OpenGL.GL_VERTEX_ARRAY);
-                gl.EnableClientState(OpenGL.GL_COLOR_ARRAY);
+            gl.EnableClientState(OpenGL.GL_VERTEX_ARRAY);
+            gl.EnableClientState(OpenGL.GL_COLOR_ARRAY);
 
-                gl.VertexPointer(3, OpenGL.GL_FLOAT, 0, this.positions);
-                gl.ColorPointer(3, OpenGL.GL_BYTE, 0, this.colors);
+            gl.VertexPointer(3, OpenGL.GL_FLOAT, 0, this.positions);
+            gl.ColorPointer(3, OpenGL.GL_BYTE, 0, this.colors);
 
-                gl.DrawArrays((uint)mode, 0, this.PointCount);
+            gl.DrawArrays((uint)mode, 0, this.PointCount);
 
-                gl.DisableClientState(OpenGL.GL_VERTEX_ARRAY);
-                gl.DisableClientState(OpenGL.GL_COLOR_ARRAY);
-            }
+            gl.DisableClientState(OpenGL.GL_VERTEX_ARRAY);
+            gl.DisableClientState(OpenGL.GL_COLOR_ARRAY);
         }
 
-        public virtual void AdjustCamera(SharpGL.OpenGL gl, SceneGraph.Cameras.Camera camera)
-        {
-        }
+        //public virtual void AdjustCamera(SharpGL.OpenGL gl, SceneGraph.Cameras.Camera camera)
+        //{
+        //}
 
         public IBoundingBox BoundingBox { get; internal set; }
         

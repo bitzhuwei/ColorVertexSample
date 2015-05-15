@@ -15,7 +15,7 @@ namespace SharpGL.SceneComponent
     /// Draw a rectangle on OpenGL control like a <see cref="Windows.Forms.Control"/> drawn on a <see cref="windows.Forms.Form"/>.
     /// Set its properties(Anchor, Margin, Size, etc) to adjust its behaviour.
     /// </summary>
-    public class SimpleUIRect : SceneElement, IRenderable, IMyHasObjectSpace
+    public class SimpleUIRect : SceneElement, IRenderable, IHasObjectSpace
     {
         /// <summary>
         /// 
@@ -179,7 +179,7 @@ namespace SharpGL.SceneComponent
         /// <para>gl.LookAt(0, 0, 1, 0, 0, 0, 0, 1, 0);</para>
         /// <para>otherwise, it uses gl.LookAt(Camera's (Position - Target), Target, UpVector);</para>
         /// </summary>
-        public virtual LookAtCamera Camera { get; set; }
+        public virtual ScientificCamera Camera { get; set; }
 
         /// <summary>
         /// the edges of the OpenGLControl to which a SimpleUIRect is bound and determines how it is resized with its parent.
@@ -234,7 +234,7 @@ namespace SharpGL.SceneComponent
             gl.LoadIdentity();
             gl.Ortho(args.left, args.right, args.bottom, args.top, zNear, zFar);
 
-            LookAtCamera camera = this.Camera;
+            ScientificCamera camera = this.Camera;
             if (camera == null)
             {
                 gl.LookAt(0, 0, 1, 0, 0, 0, 0, 1, 0);
@@ -262,6 +262,15 @@ namespace SharpGL.SceneComponent
             gl.PopMatrix();
         }
 
+        /// <summary>
+        /// This is not used.
+        /// </summary>
+        public SceneGraph.Transformations.LinearTransformation Transformation
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         #endregion
+
     }
 }

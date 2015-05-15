@@ -21,10 +21,10 @@ namespace SharpGL.SceneComponent
     public partial class ScientificVisual3DControl : MySceneControl
     {
         /// <summary>
-        /// parent of the model elements we want to show.
+        /// maintains bounding box that contains all models.
         /// </summary>
-        internal SceneGraph.Core.SceneElement scientificModelElementRoot;
-        private IMouseLinearTransform sharedMouseTransform;
+        internal ModelContainer modelContainer;
+        private bool renderModelsBoundingBox = true;
 
         public ScientificVisual3DControl()
         {
@@ -35,16 +35,36 @@ namespace SharpGL.SceneComponent
             this.MouseMove += ScientificVisual3DControl_MouseMove;
             this.MouseUp += ScientificVisual3DControl_MouseUp;
             this.MouseWheel += ScientificVisual3DControl_MouseWheel;
+            this.Resized += ScientificVisual3DControl_Resized;
+        }
+
+        void ScientificVisual3DControl_Resized(object sender, EventArgs e)
+        {
+            this.modelContainer.AdjustCamera(this.OpenGL, this.Scene.CurrentCamera);
         }
 
         void ScientificVisual3DControl_MouseWheel(object sender, MouseEventArgs e)
         {
-            IMouseScale modelScale = sharedMouseTransform;
-            if (modelScale == null) { return; }
+            ScientificCamera camera = this.Scene.CurrentCamera;
+            //if (camera == null) { return; }
 
-            modelScale.Scale += e.Delta * 0.001f;
-            if (modelScale.Scale < 0.01f)
-            { modelScale.Scale = 0.01f; }
+            if (camera.CameraType == ECameraType.Perspecitive)
+            {
+                Vertex target2Position = camera.Position - camera.Target;
+                camera.Position = camera.Target + target2Position * (1 - e.Delta * 0.001f);
+            }
+            else if (camera.CameraType == ECameraType.Ortho)
+            {
+                IOrthoCamera orthoCamera = camera;
+                double distanceX = orthoCamera.Right - orthoCamera.Left;
+                double distanceY = orthoCamera.Top - orthoCamera.Bottom;
+                double centerX = (orthoCamera.Left + orthoCamera.Right) / 2;
+                double centerY = (orthoCamera.Bottom + orthoCamera.Top) / 2;
+                orthoCamera.Left = centerX - distanceX * (1 - e.Delta * 0.001) / 2;
+                orthoCamera.Right = centerX + distanceX * (1 - e.Delta * 0.001) / 2;
+                orthoCamera.Bottom = centerY - distanceY * (1 - e.Delta * 0.001) / 2;
+                orthoCamera.Top = centerX + distanceY * (1 - e.Delta * 0.001) / 2;
+            }
 
             ManualRender(this);
         }
@@ -64,29 +84,6 @@ namespace SharpGL.SceneComponent
                 }
             }
 
-            if ((e.Button & MouseButtons.Right) == MouseButtons.Right)
-            {
-                {
-                    IMouseRotation rotation = this.uiAxis;
-                    if (rotation != null)
-                    {
-                        rotation.MouseUp(e.X, e.Y);
-
-                        render = true;
-                    }
-                }
-
-                {
-                    IMouseRotation rotation = sharedMouseTransform;
-                    if (rotation != null)
-                    {
-                        rotation.MouseUp(e.X, e.Y);
-
-                        render = true;
-                    }
-                }
-            }
-
             if (render)
             { ManualRender(this); }
         }
@@ -102,29 +99,6 @@ namespace SharpGL.SceneComponent
                     cameraRotation.MouseMove(e.X, e.Y);
 
                     render = true;
-                }
-            }
-
-            if ((e.Button & MouseButtons.Right) == MouseButtons.Right)
-            {
-                {
-                    IMouseRotation rotation = this.uiAxis;
-                    if (rotation != null)
-                    {
-                        rotation.MouseMove(e.X, e.Y);
-
-                        render = true;
-                    }
-                }
-
-                {
-                    IMouseRotation rotation = sharedMouseTransform;
-                    if (rotation != null)
-                    {
-                        rotation.MouseMove(e.X, e.Y);
-
-                        render = true;
-                    }
                 }
             }
 
@@ -148,34 +122,11 @@ namespace SharpGL.SceneComponent
                 }
             }
 
-            if ((e.Button & MouseButtons.Right) == System.Windows.Forms.MouseButtons.Right)
-            {
-                {
-                    IMouseRotation rotation = this.uiAxis;
-                    if (rotation != null)
-                    {
-                        rotation.SetBounds(this.Width, this.Height);
-                        rotation.MouseDown(e.X, e.Y);
-
-                        render = true;
-                    }
-                }
-
-                {
-                    IMouseRotation rotation = sharedMouseTransform;
-                    if (rotation != null)
-                    {
-                        rotation.SetBounds(this.Width, this.Height);
-                        rotation.MouseDown(e.X, e.Y);
-
-                        render = true;
-                    }
-                }
-            }
-
             if (render)
             { ManualRender(this); }
         }
+
+
 
         private void ManualRender(Control control)
         {
@@ -192,6 +143,13 @@ namespace SharpGL.SceneComponent
 
             //	Do the scene drawing.
             Scene.Draw();
+
+            if (this.CameraType == ECameraType.Ortho)
+            {
+                // Redraw model container's bounding box so that it appears in front of models.
+                // TODO: this is not needed in ECameraType.Perspecitive mode. fix this.
+                this.modelContainer.Render(this.OpenGL, SceneGraph.Core.RenderMode.Render);
+            }
 
             UIScene.Draw();
 
@@ -223,7 +181,7 @@ namespace SharpGL.SceneComponent
 
         internal void SetSceneCameraToUICamera()
         {
-            LookAtCamera camera = this.Scene.CurrentCamera as LookAtCamera;
+            ScientificCamera camera = this.Scene.CurrentCamera;
             if (camera == null)
             { throw new Exception("this.Scene.CurrentCamera cannot be null."); }
 
@@ -235,12 +193,12 @@ namespace SharpGL.SceneComponent
         /// <summary>
         /// holds UI elements(axis, color indicator etc).
         /// </summary>
-        public MyScene UIScene { get; set; }
+        internal MyScene UIScene { get; set; }
 
         /// <summary>
         /// rotate and translate camera on a sphere, whose center is camera's Target.
         /// </summary>
-        public CameraRotation CameraRotation { get; set; }
+        internal CameraRotation CameraRotation { get; set; }
 
         /// <summary>
         /// Draw axis with arc ball rotation effect on viewport as an UI.
@@ -250,30 +208,72 @@ namespace SharpGL.SceneComponent
         /// <summary>
         /// Draw color indicator on viewport as an UI.
         /// </summary>
-        public SimpleUIColorIndicator uiColorIndicator { get; set; }
+        internal SimpleUIColorIndicator uiColorIndicator { get; set; }
 
         public void AddScientificModel(IScientificModel model)
         {
             if (model == null) { return; }
 
-            LookAtCamera camera = this.Scene.CurrentCamera as LookAtCamera;
-            if (this.sharedMouseTransform == null)
-            {
-                this.sharedMouseTransform = new LinearArcBall();
-                this.sharedMouseTransform.Camera = camera;
-            }
-            ScientificModelElement element = new ScientificModelElement();
-            element.Model = model;
-            element.modelTransform = this.sharedMouseTransform;
-            this.scientificModelElementRoot.AddChild(element);
-            model.AdjustCamera(this.OpenGL, this.Scene.CurrentCamera);
+            ScientificCamera camera = this.Scene.CurrentCamera;
+            ScientificModelElement element = new ScientificModelElement(model, this.renderModelsBoundingBox);
+            this.modelContainer.AddChild(element);
+            this.modelContainer.AdjustCamera(this.OpenGL, camera);
             // force CameraRotation to udpate.
-            this.CameraRotation.Camera = this.Scene.CurrentCamera as LookAtCamera;
+            this.CameraRotation.Camera = this.Scene.CurrentCamera;
+
+            ManualRender(this);
         }
 
         public void ClearScientificModels()
         {
-            this.scientificModelElementRoot.Children.Clear();
+            this.modelContainer.ClearChild();
+            ManualRender(this);
+        }
+
+        /// <summary>
+        /// Determins whether render every model's bounding box or not.
+        /// </summary>
+        public bool RenderModelsBoundingBox
+        {
+            get { return this.renderModelsBoundingBox; }
+            set
+            {
+                if (this.renderModelsBoundingBox != value)
+                {
+                    this.renderModelsBoundingBox = value;
+                    foreach (var item in this.modelContainer.Children)
+                    {
+                        ScientificModelElement element = item as ScientificModelElement;
+                        if (element != null)
+                        {
+                            element.RenderBoundingBox = value;
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets camera's view type.
+        /// </summary>
+        public ECameraType CameraType
+        {
+            get { return this.Scene.CurrentCamera.CameraType; }
+            set
+            {
+                if (this.Scene.CurrentCamera.CameraType != value)
+                {
+                    this.Scene.CurrentCamera.CameraType = value;
+                    ManualRender(this);
+                }
+            }
+        }
+
+        public void SetColorIndicator(float minValue, float maxValue, float step)
+        {
+            this.uiColorIndicator.Data.MinValue = minValue;
+            this.uiColorIndicator.Data.MaxValue = maxValue;
+            this.uiColorIndicator.Data.Step = step;
             ManualRender(this);
         }
     }

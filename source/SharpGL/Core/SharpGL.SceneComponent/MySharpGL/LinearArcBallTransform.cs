@@ -10,7 +10,7 @@ namespace SharpGL.SceneComponent
     /// <summary>
     /// Linear arc ball only make linear transforms(rotation and scale).
     /// </summary>
-    public class LinearArcBall : IMouseLinearTransform
+    public class LinearArcBallTransform : IMouseLinearTransform
     {
         protected bool isCameraSet = false;
         public bool mouseDownFlag;
@@ -25,7 +25,7 @@ namespace SharpGL.SceneComponent
         protected Vertex _right;
         //protected mat4 currentRotation = mat4.identity();
         float _scale = 1.0f;
-        SceneGraph.Cameras.LookAtCamera _camera;
+        ScientificCamera _camera;
 
         private Vertex GetArcBallPosition(int x, int y)
         {
@@ -48,7 +48,7 @@ namespace SharpGL.SceneComponent
 
         private void UpdateCameraAxis()
         {
-            LookAtCamera camera = this._camera;
+            ScientificCamera camera = this._camera;
             if (camera == null) { return; }
 
             _back = camera.Position - camera.Target;
@@ -119,7 +119,7 @@ namespace SharpGL.SceneComponent
 
         #region IMouseRotation 成员
 
-        public LookAtCamera Camera
+        public ScientificCamera Camera
         {
             get { return _camera; }
             set
