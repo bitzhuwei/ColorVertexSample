@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.sceneControl = new SharpGL.SceneComponent.ScientificVisual3DControl();
             this.panel1 = new System.Windows.Forms.Panel();
             this.rdoOrtho = new System.Windows.Forms.RadioButton();
             this.rdoPerspective = new System.Windows.Forms.RadioButton();
@@ -50,9 +49,13 @@
             this.label2 = new System.Windows.Forms.Label();
             this.tbNX = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.chkRenderModels = new System.Windows.Forms.CheckBox();
+            this.chkRenderModelsBox = new System.Windows.Forms.CheckBox();
+            this.chkRenderContainerBox = new System.Windows.Forms.CheckBox();
+            this.sceneControl = new SharpGL.SceneComponent.ScientificVisual3DControl();
             this.tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.sceneControl)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.sceneControl)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -71,24 +74,12 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(693, 468);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // sceneControl
-            // 
-            this.sceneControl.CameraType = SharpGL.SceneComponent.ECameraType.Perspecitive;
-            this.tableLayoutPanel1.SetColumnSpan(this.sceneControl, 2);
-            this.sceneControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.sceneControl.DrawFPS = false;
-            this.sceneControl.Location = new System.Drawing.Point(3, 88);
-            this.sceneControl.Name = "sceneControl";
-            this.sceneControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
-            this.sceneControl.RenderContextType = SharpGL.RenderContextType.FBO;
-            this.sceneControl.RenderModelsBoundingBox = true;
-            this.sceneControl.RenderTrigger = SharpGL.RenderTrigger.Manual;
-            this.sceneControl.Size = new System.Drawing.Size(687, 377);
-            this.sceneControl.TabIndex = 0;
-            // 
             // panel1
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.panel1, 2);
+            this.panel1.Controls.Add(this.chkRenderContainerBox);
+            this.panel1.Controls.Add(this.chkRenderModelsBox);
+            this.panel1.Controls.Add(this.chkRenderModels);
             this.panel1.Controls.Add(this.rdoOrtho);
             this.panel1.Controls.Add(this.rdoPerspective);
             this.panel1.Controls.Add(this.lblDebugInfo);
@@ -144,12 +135,13 @@
             this.lblDebugInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblDebugInfo.Location = new System.Drawing.Point(612, 35);
+            this.lblDebugInfo.Location = new System.Drawing.Point(660, 35);
             this.lblDebugInfo.Name = "lblDebugInfo";
-            this.lblDebugInfo.Size = new System.Drawing.Size(72, 41);
+            this.lblDebugInfo.Size = new System.Drawing.Size(24, 41);
             this.lblDebugInfo.TabIndex = 17;
             this.lblDebugInfo.Text = "debug info";
             this.lblDebugInfo.Click += new System.EventHandler(this.lblDebugInfo_Click);
+            this.lblDebugInfo.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lblDebugInfo_MouseClick);
             // 
             // tbRangeMax
             // 
@@ -291,6 +283,62 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "NX";
             // 
+            // chkRenderModels
+            // 
+            this.chkRenderModels.AutoSize = true;
+            this.chkRenderModels.Checked = true;
+            this.chkRenderModels.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkRenderModels.Location = new System.Drawing.Point(404, 55);
+            this.chkRenderModels.Name = "chkRenderModels";
+            this.chkRenderModels.Size = new System.Drawing.Size(60, 16);
+            this.chkRenderModels.TabIndex = 19;
+            this.chkRenderModels.Text = "models";
+            this.chkRenderModels.UseVisualStyleBackColor = true;
+            this.chkRenderModels.CheckedChanged += new System.EventHandler(this.chkRenderModels_CheckedChanged);
+            // 
+            // chkRenderModelsBox
+            // 
+            this.chkRenderModelsBox.AutoSize = true;
+            this.chkRenderModelsBox.Checked = true;
+            this.chkRenderModelsBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkRenderModelsBox.Location = new System.Drawing.Point(470, 55);
+            this.chkRenderModelsBox.Name = "chkRenderModelsBox";
+            this.chkRenderModelsBox.Size = new System.Drawing.Size(54, 16);
+            this.chkRenderModelsBox.TabIndex = 19;
+            this.chkRenderModelsBox.Text = "boxes";
+            this.chkRenderModelsBox.UseVisualStyleBackColor = true;
+            this.chkRenderModelsBox.CheckedChanged += new System.EventHandler(this.chkRenderModelsBox_CheckedChanged);
+            // 
+            // chkRenderContainerBox
+            // 
+            this.chkRenderContainerBox.AutoSize = true;
+            this.chkRenderContainerBox.Checked = true;
+            this.chkRenderContainerBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkRenderContainerBox.Location = new System.Drawing.Point(528, 55);
+            this.chkRenderContainerBox.Name = "chkRenderContainerBox";
+            this.chkRenderContainerBox.Size = new System.Drawing.Size(114, 16);
+            this.chkRenderContainerBox.TabIndex = 19;
+            this.chkRenderContainerBox.Text = "container\'s box";
+            this.chkRenderContainerBox.UseVisualStyleBackColor = true;
+            this.chkRenderContainerBox.CheckedChanged += new System.EventHandler(this.chkRenderContainerBox_CheckedChanged);
+            // 
+            // sceneControl
+            // 
+            this.sceneControl.CameraType = SharpGL.SceneComponent.ECameraType.Perspecitive;
+            this.tableLayoutPanel1.SetColumnSpan(this.sceneControl, 2);
+            this.sceneControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.sceneControl.DrawFPS = false;
+            this.sceneControl.Location = new System.Drawing.Point(3, 88);
+            this.sceneControl.Name = "sceneControl";
+            this.sceneControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
+            this.sceneControl.RenderContainerBoundingBox = true;
+            this.sceneControl.RenderContextType = SharpGL.RenderContextType.FBO;
+            this.sceneControl.RenderModels = true;
+            this.sceneControl.RenderModelsBoundingBox = true;
+            this.sceneControl.RenderTrigger = SharpGL.RenderTrigger.Manual;
+            this.sceneControl.Size = new System.Drawing.Size(687, 377);
+            this.sceneControl.TabIndex = 0;
+            // 
             // FormScientificVisual3DControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -301,9 +349,9 @@
             this.Name = "FormScientificVisual3DControl";
             this.Text = "Scientific Visual 3D Control Demo.";
             this.tableLayoutPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.sceneControl)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.sceneControl)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -333,6 +381,9 @@
         private System.Windows.Forms.Button btnClearModels;
         private System.Windows.Forms.RadioButton rdoOrtho;
         private System.Windows.Forms.RadioButton rdoPerspective;
+        private System.Windows.Forms.CheckBox chkRenderContainerBox;
+        private System.Windows.Forms.CheckBox chkRenderModelsBox;
+        private System.Windows.Forms.CheckBox chkRenderModels;
     }
 }
 

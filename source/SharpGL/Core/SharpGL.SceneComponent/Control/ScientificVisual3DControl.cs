@@ -25,7 +25,8 @@ namespace SharpGL.SceneComponent
         /// </summary>
         internal ModelContainer modelContainer;
         private bool renderModelsBoundingBox = true;
-
+        private bool renderModels = true;
+   
         public ScientificVisual3DControl()
         {
             ScientificVisual3DControlHelper.InitializeScene(this);
@@ -148,7 +149,7 @@ namespace SharpGL.SceneComponent
             {
                 // Redraw model container's bounding box so that it appears in front of models.
                 // TODO: this is not needed in ECameraType.Perspecitive mode. fix this.
-                this.modelContainer.Render(this.OpenGL, SceneGraph.Core.RenderMode.Render);
+                //this.modelContainer.Render(this.OpenGL, SceneGraph.Core.RenderMode.Render);
             }
 
             UIScene.Draw();
@@ -249,6 +250,44 @@ namespace SharpGL.SceneComponent
                             element.RenderBoundingBox = value;
                         }
                     }
+                    ManualRender(this);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Determins whether render every model or not.
+        /// </summary>
+        public bool RenderModels
+        {
+            get { return this.renderModels; }
+            set
+            {
+                if (this.renderModels != value)
+                {
+                    this.renderModels = value;
+                    foreach (var item in this.modelContainer.Children)
+                    {
+                        ScientificModelElement element = item as ScientificModelElement;
+                        if (element != null)
+                        {
+                            element.RenderModel = value;
+                        }
+                    }
+                    ManualRender(this);
+                }
+            }
+        }
+
+        public bool RenderContainerBoundingBox
+        {
+            get { return this.modelContainer.RenderBoundingBox; }
+            set
+            {
+                if (this.modelContainer.RenderBoundingBox != value)
+                {
+                    this.modelContainer.RenderBoundingBox = value;
+                    ManualRender(this);
                 }
             }
         }

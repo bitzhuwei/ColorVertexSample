@@ -92,5 +92,31 @@ namespace ColorVertexSample
                 this.sceneControl.CameraType = ECameraType.Ortho;
             }
         }
+
+        private void lblDebugInfo_MouseClick(object sender, MouseEventArgs e)
+        {
+            if(e.Button== System.Windows.Forms.MouseButtons.Right)
+            {
+                bool depthTest = this.sceneControl.OpenGL.IsEnabled(OpenGL.GL_DEPTH_TEST);
+                StringBuilder builder = new StringBuilder();
+                builder.Append(string.Format("depth test: {0}", depthTest ? "enabled" : "disabled"));
+                MessageBox.Show(builder.ToString());
+            }
+        }
+
+        private void chkRenderModels_CheckedChanged(object sender, EventArgs e)
+        {
+            this.sceneControl.RenderModels = this.chkRenderModels.Checked;
+        }
+
+        private void chkRenderModelsBox_CheckedChanged(object sender, EventArgs e)
+        {
+            this.sceneControl.RenderModelsBoundingBox = this.chkRenderModelsBox.Checked;
+        }
+
+        private void chkRenderContainerBox_CheckedChanged(object sender, EventArgs e)
+        {
+            this.sceneControl.RenderContainerBoundingBox = this.chkRenderContainerBox.Checked;
+        }
     }
 }

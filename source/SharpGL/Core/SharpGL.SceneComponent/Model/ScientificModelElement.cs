@@ -19,10 +19,13 @@ namespace SharpGL.SceneComponent
 
         public bool RenderBoundingBox { get; set; }
 
-        public ScientificModelElement(IScientificModel model, bool renderBoundingBox = true)
+        public bool RenderModel { get; set; }
+
+        public ScientificModelElement(IScientificModel model, bool renderBoundingBox = true, bool renderModel = true)
         {
             this.Model = model;
             this.RenderBoundingBox = renderBoundingBox;
+            this.RenderModel = renderModel;
         }
 
         #region IRenderable 成员
@@ -38,7 +41,11 @@ namespace SharpGL.SceneComponent
             IScientificModel model = this.Model;
             if (model == null) { return; }
 
-            model.Render(gl, renderMode);
+            if (this.RenderModel)
+            {
+                model.Render(gl, renderMode);
+            }
+
             if (this.RenderBoundingBox)
             {
                 model.BoundingBox.Render(gl, renderMode);
