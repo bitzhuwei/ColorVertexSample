@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{9C91BBE9-AEC4-47C0-98D7-1732A3F205FB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpGL.WinForms", "Core\SharpGL.WinForms\SharpGL.WinForms.csproj", "{B2984A6D-AD1C-4BE9-94AB-BA002B338751}"
@@ -69,6 +67,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpGL.SceneComponent", "Core\SharpGL.SceneComponent\SharpGL.SceneComponent.csproj", "{8F81C853-D378-443D-9DFD-475DB916CABD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpGL.SceneComponentResearch", "Core\SharpGL.SceneComponentResearch\SharpGL.SceneComponentResearch.csproj", "{8506AACC-D903-427B-973F-D10E733EFB2A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CameraSample", "Samples\WinForms\CameraSample\CameraSample.csproj", "{F6FF7852-AD3D-4A8C-AAB2-779A420FF51C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -359,6 +359,16 @@ Global
 		{8506AACC-D903-427B-973F-D10E733EFB2A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{8506AACC-D903-427B-973F-D10E733EFB2A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{8506AACC-D903-427B-973F-D10E733EFB2A}.Release|x86.ActiveCfg = Release|Any CPU
+		{F6FF7852-AD3D-4A8C-AAB2-779A420FF51C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6FF7852-AD3D-4A8C-AAB2-779A420FF51C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6FF7852-AD3D-4A8C-AAB2-779A420FF51C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F6FF7852-AD3D-4A8C-AAB2-779A420FF51C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F6FF7852-AD3D-4A8C-AAB2-779A420FF51C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F6FF7852-AD3D-4A8C-AAB2-779A420FF51C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6FF7852-AD3D-4A8C-AAB2-779A420FF51C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6FF7852-AD3D-4A8C-AAB2-779A420FF51C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F6FF7852-AD3D-4A8C-AAB2-779A420FF51C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F6FF7852-AD3D-4A8C-AAB2-779A420FF51C}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -384,6 +394,7 @@ Global
 		{5DDE8F09-0202-41F1-BE23-E4843CA38A07} = {7B5EC8D9-8BB2-4738-AE7C-1B6E4BE0DFF3}
 		{96B2D003-5C78-4EB2-9EFB-18CCEF52C90F} = {7B5EC8D9-8BB2-4738-AE7C-1B6E4BE0DFF3}
 		{A1067634-84F1-4FA5-B683-000AF430DA1A} = {7B5EC8D9-8BB2-4738-AE7C-1B6E4BE0DFF3}
+		{F6FF7852-AD3D-4A8C-AAB2-779A420FF51C} = {7B5EC8D9-8BB2-4738-AE7C-1B6E4BE0DFF3}
 		{EC159669-6A37-410A-806D-AA05365FA3F3} = {B8FC469E-614B-44E1-8F5C-6DB9DD34C9B0}
 		{352017EE-EDA6-48CD-82B9-7B793CD69236} = {B8FC469E-614B-44E1-8F5C-6DB9DD34C9B0}
 		{6DB0A8E3-0385-4B1A-BF61-44F8275909A2} = {B8FC469E-614B-44E1-8F5C-6DB9DD34C9B0}
