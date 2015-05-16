@@ -27,6 +27,16 @@ namespace ColorVertexSample
         public FormScientificVisual3DControl()
         {
             InitializeComponent();
+
+            InitilizeViewTypeControl();
+        }
+
+        private void InitilizeViewTypeControl()
+        {
+            foreach (string item in Enum.GetNames(typeof(EViewType)))
+            {
+                this.cmbViewType.Items.Add(item);
+            }
         }
 
         private void Create3DObject(object sender, EventArgs e)
@@ -118,5 +128,13 @@ namespace ColorVertexSample
         {
             this.sceneControl.RenderContainerBoundingBox = this.chkRenderContainerBox.Checked;
         }
+
+        private void cmbViewType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selected = this.cmbViewType.SelectedItem.ToString();
+            EViewType viewType = (EViewType)Enum.Parse(typeof(EViewType), selected);
+            this.sceneControl.ViewType = viewType;
+        }
+
     }
 }

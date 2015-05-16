@@ -26,6 +26,7 @@ namespace SharpGL.SceneComponent
         internal ModelContainer modelContainer;
         private bool renderModelsBoundingBox = true;
         private bool renderModels = true;
+        private EViewType viewType;
    
         public ScientificVisual3DControl()
         {
@@ -41,7 +42,8 @@ namespace SharpGL.SceneComponent
 
         void ScientificVisual3DControl_Resized(object sender, EventArgs e)
         {
-            this.modelContainer.AdjustCamera(this.OpenGL, this.Scene.CurrentCamera);
+            //this.modelContainer.AdjustCamera(this.OpenGL, this.Scene.CurrentCamera);
+            CameraHelper.AdjustCamera(this.modelContainer.BoundingBox, this.OpenGL, this.Scene.CurrentCamera);
         }
 
         void ScientificVisual3DControl_MouseWheel(object sender, MouseEventArgs e)
@@ -218,7 +220,8 @@ namespace SharpGL.SceneComponent
             ScientificCamera camera = this.Scene.CurrentCamera;
             ScientificModelElement element = new ScientificModelElement(model, this.renderModelsBoundingBox);
             this.modelContainer.AddChild(element);
-            this.modelContainer.AdjustCamera(this.OpenGL, camera);
+            //this.modelContainer.AdjustCamera(this.OpenGL, camera);
+            CameraHelper.AdjustCamera(this.modelContainer.BoundingBox, this.OpenGL, camera);
             // force CameraRotation to udpate.
             this.CameraRotation.Camera = this.Scene.CurrentCamera;
 
@@ -305,6 +308,22 @@ namespace SharpGL.SceneComponent
                     this.Scene.CurrentCamera.CameraType = value;
                     ManualRender(this);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets view type(top, bottom, left, right, front, back and userView).
+        /// </summary>
+        public EViewType ViewType
+        {
+            get { return this.viewType; }
+            set
+            {
+                this.viewType = value;
+                CameraHelper.ApplyViewType(this.modelContainer.BoundingBox, this.OpenGL, this.Scene.CurrentCamera, value);
+                // force CameraRotation to udpate.
+                this.CameraRotation.Camera = this.Scene.CurrentCamera;
+                ManualRender(this);
             }
         }
 

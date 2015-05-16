@@ -45,6 +45,8 @@
   <ItemGroup>
     <Compile Include="Camera\IOrthoCamera.cs" />
     <Compile Include="Camera\IPerspectiveCamera.cs" />
+    <Compile Include="Control\EViewType.cs" />
+    <Compile Include="Control\CameraHelper.cs" />
     <Compile Include="Model\ModelContainer.cs" />
     <Compile Include="Model\BoundingBox.cs">
       <SubType>Code</SubType>

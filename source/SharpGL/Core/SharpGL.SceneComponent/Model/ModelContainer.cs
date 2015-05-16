@@ -14,6 +14,12 @@ namespace SharpGL.SceneComponent
     internal class ModelContainer : SceneElement, IRenderable
     {
         BoundingBox boundingBox = new BoundingBox();
+
+        public BoundingBox BoundingBox
+        {
+            get { return boundingBox; }
+        }
+
         BoundingBox expandedBoundingBox = new BoundingBox();
 
         private float expandFactor = 1.1f;
@@ -113,62 +119,6 @@ namespace SharpGL.SceneComponent
                 ExpandFactor * (xSize / 2) + x,
                 ExpandFactor * (ySize / 2) + y,
                 ExpandFactor * (zSize / 2) + z);
-        }
-
-        /// <summary>
-        /// Adjusts camera according to bounding box.
-        /// </summary>
-        /// <param name="openGL"></param>
-        /// <param name="camera"></param>
-        internal void AdjustCamera(OpenGL openGL, ScientificCamera camera)
-        {
-            IBoundingBox boundingBox = this.boundingBox;
-
-            float xSize, ySize, zSize;
-            boundingBox.GetBoundDimensions(out xSize, out ySize, out zSize);
-            float size = Math.Max(Math.Max(xSize, ySize), zSize);
-
-            float x, y, z;
-            boundingBox.GetCenter(out x, out y, out z);
-            Vertex target = new Vertex(x, y, z);
-
-            Vertex target2Position = camera.Position - camera.Target;
-            target2Position.Normalize();
-
-            Vertex position = target + target2Position * (size * 2 + 1);
-            //new Vertex(0.0f, 0.0f, 1.0f) * (size * 2);
-
-            int[] viewport = new int[4];
-            openGL.GetInteger(SharpGL.Enumerations.GetTarget.Viewport, viewport);
-            int width = viewport[2]; int height = viewport[3];
-
-            IPerspectiveCamera perspectiveCamera = camera;
-            perspectiveCamera.FieldOfView = 60;
-            perspectiveCamera.AspectRatio = (double)width / (double)height;
-            perspectiveCamera.Near = 0.001;
-            perspectiveCamera.Far = double.MaxValue;
-            
-            IOrthoCamera orthoCamera = camera;
-            if (width > height)
-            {
-                orthoCamera.Left = -size * width / height;
-                orthoCamera.Right = size * width / height;
-                orthoCamera.Bottom = -size;
-                orthoCamera.Top = size;
-            }
-            else
-            {
-                orthoCamera.Left = -size;
-                orthoCamera.Right = size;
-                orthoCamera.Bottom = -size * height / width;
-                orthoCamera.Top = size * height / width;
-            }
-            orthoCamera.Near = 0.001;
-            orthoCamera.Far = double.MaxValue;
-
-            camera.Position = position;
-            camera.Target = target;
-            //camera.UpVector = new Vertex(0f, 1f, 0f);
         }
 
         #region IRenderable 成员
