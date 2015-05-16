@@ -31,7 +31,10 @@ namespace SimpleDrawingSample
 
            // gl.Color(1.0f, 1.0f, 1.0f);
            // gl.FontBitmaps.DrawText(gl, 0, 0, "Arial", "Argh");
-
+            var width = this.openGLControl1.Width;
+            var height = this.openGLControl1.Height;
+            //gl.Ortho(-width / 2, width / 2, -height / 2, height / 2, -100, 100);
+            //gl.LookAt()
             
 
             gl.Translate(-1.5f, 0.0f, -6.0f);				// Move Left And Into The Screen
