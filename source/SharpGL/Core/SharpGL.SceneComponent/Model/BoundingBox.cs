@@ -90,8 +90,17 @@ namespace SharpGL.SceneComponent
         /// <param name="renderMode">The render mode.</param>
         public virtual void Render(OpenGL gl, RenderMode renderMode)
         {
+            //  Push attributes, disable lighting.
+            gl.PushAttrib(OpenGL.GL_CURRENT_BIT | OpenGL.GL_ENABLE_BIT |
+                OpenGL.GL_LINE_BIT | OpenGL.GL_POLYGON_BIT);
+            gl.Disable(OpenGL.GL_LIGHTING);
+            gl.Disable(OpenGL.GL_TEXTURE_2D);
+            gl.LineWidth(1.0f);
             gl.Color(BoxColor);
 
+            //QuadsDraw(gl);
+
+            //gl.Color(1.0f, 0, 0);
             gl.Begin(BeginMode.LineLoop);
             gl.Vertex(MinPosition.X, MinPosition.Y, MinPosition.Z);
             gl.Vertex(MaxPosition.X, MinPosition.Y, MinPosition.Z);
@@ -99,6 +108,7 @@ namespace SharpGL.SceneComponent
             gl.Vertex(MinPosition.X, MinPosition.Y, MaxPosition.Z);
             gl.End();
 
+            //gl.Color(0, 1.0f, 0);
             gl.Begin(BeginMode.LineLoop);
             gl.Vertex(MinPosition.X, MaxPosition.Y, MinPosition.Z);
             gl.Vertex(MaxPosition.X, MaxPosition.Y, MinPosition.Z);
@@ -106,6 +116,7 @@ namespace SharpGL.SceneComponent
             gl.Vertex(MinPosition.X, MaxPosition.Y, MaxPosition.Z);
             gl.End();
 
+            //gl.Color(0, 0, 1.0f);
             gl.Begin(BeginMode.Lines);
             gl.Vertex(MinPosition.X, MinPosition.Y, MinPosition.Z);
             gl.Vertex(MinPosition.X, MaxPosition.Y, MinPosition.Z);
@@ -116,6 +127,54 @@ namespace SharpGL.SceneComponent
             gl.Vertex(MinPosition.X, MinPosition.Y, MaxPosition.Z);
             gl.Vertex(MinPosition.X, MaxPosition.Y, MaxPosition.Z);
             gl.End();
+
+            gl.PopAttrib();
+        }
+
+        /// <summary>
+        /// This simulates BoundingVolume's render method.
+        /// </summary>
+        /// <param name="gl"></param>
+        /// <param name="renderMode"></param>
+        private void QuadsDraw(OpenGL gl, RenderMode renderMode)
+        {
+            //  Push attributes, disable lighting.
+            gl.PushAttrib(OpenGL.GL_CURRENT_BIT | OpenGL.GL_ENABLE_BIT |
+                OpenGL.GL_LINE_BIT | OpenGL.GL_POLYGON_BIT);
+            gl.Disable(OpenGL.GL_LIGHTING);
+            gl.Disable(OpenGL.GL_TEXTURE_2D);
+            gl.LineWidth(1.0f);
+            gl.PolygonMode(OpenGL.GL_FRONT_AND_BACK,
+                renderMode == RenderMode.HitTest ? (uint)PolygonMode.Filled : (uint)PolygonMode.Lines);
+
+            gl.Begin(BeginMode.Quads);
+            gl.Vertex(maxPosition.X, maxPosition.Y, minPosition.Z);//gl.Vertex(hhl);	// Top Right Of The Quad (Top)
+            gl.Vertex(minPosition.X, maxPosition.Y, minPosition.Z);//gl.Vertex(lhl);	// Top Left Of The Quad (Top)
+            gl.Vertex(minPosition.X, maxPosition.Y, maxPosition.Z);//gl.Vertex(lhh);	// Bottom Left Of The Quad (Top)
+            gl.Vertex(maxPosition.X, maxPosition.Y, maxPosition.Z);//gl.Vertex(hhh);	// Bottom Right Of The Quad (Top)
+            gl.Vertex(maxPosition.X, minPosition.Y, maxPosition.Z);//gl.Vertex(hlh);	// Top Right Of The Quad (Bottom)
+            gl.Vertex(minPosition.X, minPosition.Y, maxPosition.Z);//gl.Vertex(llh);	// Top Left Of The Quad (Bottom)
+            gl.Vertex(minPosition.X, minPosition.Y, minPosition.Z);//gl.Vertex(lll);	// Bottom Left Of The Quad (Bottom)
+            gl.Vertex(maxPosition.X, minPosition.Y, minPosition.Z);//gl.Vertex(hll);	// Bottom Right Of The Quad (Bottom)
+            gl.Vertex(maxPosition.X, maxPosition.Y, maxPosition.Z);//gl.Vertex(hhh);	// Top Right Of The Quad (Front)
+            gl.Vertex(minPosition.X, maxPosition.Y, maxPosition.Z);//gl.Vertex(lhh);	// Top Left Of The Quad (Front)
+            gl.Vertex(minPosition.X, minPosition.Y, maxPosition.Z);//gl.Vertex(llh);	// Bottom Left Of The Quad (Front)
+            gl.Vertex(maxPosition.X, minPosition.Y, maxPosition.Z);//gl.Vertex(hlh);	// Bottom Right Of The Quad (Front)
+            gl.Vertex(maxPosition.X, minPosition.Y, minPosition.Z);//gl.Vertex(hll);	// Top Right Of The Quad (Back)
+            gl.Vertex(minPosition.X, minPosition.Y, minPosition.Z);//gl.Vertex(lll);	// Top Left Of The Quad (Back)
+            gl.Vertex(minPosition.X, maxPosition.Y, minPosition.Z);//gl.Vertex(lhl);	// Bottom Left Of The Quad (Back)
+            gl.Vertex(maxPosition.X, maxPosition.Y, minPosition.Z);//gl.Vertex(hhl);	// Bottom Right Of The Quad (Back)
+            gl.Vertex(minPosition.X, maxPosition.Y, maxPosition.Z);//gl.Vertex(lhh);	// Top Right Of The Quad (Left)
+            gl.Vertex(minPosition.X, maxPosition.Y, minPosition.Z);//gl.Vertex(lhl);	// Top Left Of The Quad (Left)
+            gl.Vertex(minPosition.X, minPosition.Y, minPosition.Z);//gl.Vertex(lll);	// Bottom Left Of The Quad (Left)
+            gl.Vertex(minPosition.X, minPosition.Y, maxPosition.Z);//gl.Vertex(llh);	// Bottom Right Of The Quad (Left)
+            gl.Vertex(maxPosition.X, maxPosition.Y, minPosition.Z);//gl.Vertex(hhl);	// Top Right Of The Quad (Right)
+            gl.Vertex(maxPosition.X, maxPosition.Y, maxPosition.Z);//gl.Vertex(hhh);	// Top Left Of The Quad (Right)
+            gl.Vertex(maxPosition.X, minPosition.Y, maxPosition.Z);//gl.Vertex(hlh);	// Bottom Left Of The Quad (Right)
+            gl.Vertex(maxPosition.X, minPosition.Y, minPosition.Z);//gl.Vertex(hll);	// Bottom Right Of The Quad (Right)
+            gl.End();
+
+            gl.PopAttrib();
         }
 
         #endregion
