@@ -52,7 +52,7 @@ namespace SharpGL.SceneComponent
             RenderModel(args, gl, renderMode);
         }
 
-        private void CalculateViewport(OpenGL gl, SimpleUIRectArgs args)
+        protected void CalculateViewport(OpenGL gl, SimpleUIRectArgs args)
         {
             IRenderContextProvider rcp = gl.RenderContextProvider;
             Debug.Assert(rcp != null, "The gl.RenderContextProvider is null!");
@@ -71,7 +71,7 @@ namespace SharpGL.SceneComponent
             }
         }
 
-        private void CalculateCoords(int viewWidth, int viewHeight, SimpleUIRectArgs args)
+        protected void CalculateCoords(int viewWidth, int viewHeight, SimpleUIRectArgs args)
         {
             if ((Anchor & leftRightAnchor) == leftRightAnchor)
             {
