@@ -182,17 +182,7 @@ namespace SharpGL.SceneComponent
             frameTime = stopwatch.Elapsed.TotalMilliseconds;
         }
 
-        internal void SetSceneCameraToUICamera()
-        {
-            ScientificCamera camera = this.Scene.CurrentCamera;
-            if (camera == null)
-            { throw new Exception("this.Scene.CurrentCamera cannot be null."); }
-
-            this.UIScene.CurrentCamera = camera;
-            this.uiAxis.Camera = camera;
-            this.CameraRotation.Camera = camera;
-        }
-
+       
         /// <summary>
         /// holds UI elements(axis, color indicator etc).
         /// </summary>

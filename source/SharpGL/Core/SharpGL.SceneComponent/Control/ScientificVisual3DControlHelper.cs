@@ -31,9 +31,19 @@ namespace SharpGL.SceneComponent
 
             InitializeUISceneAttributes(root);
 
-            scientificVisual3DControl.SetSceneCameraToUICamera();
+            SetSceneCameraToUICamera(scientificVisual3DControl);
 
             UIScene.RenderBoundingVolumes = false;
+        }
+        internal static void SetSceneCameraToUICamera(ScientificVisual3DControl scientificVisual3DControl)
+        {
+            ScientificCamera camera = scientificVisual3DControl.Scene.CurrentCamera;
+            if (camera == null)
+            { throw new Exception("this.Scene.CurrentCamera cannot be null."); }
+
+            scientificVisual3DControl.UIScene.CurrentCamera = camera;
+            scientificVisual3DControl.uiAxis.Camera = camera;
+            scientificVisual3DControl.CameraRotation.Camera = camera;
         }
 
         private static OpenGLAttributesEffect InitializeUISceneAttributes(SceneElement parent)
