@@ -109,6 +109,7 @@ namespace SharpGL.SceneComponent
             if (this.PointCount <= 0)
                 return;
 
+            // render with Vertex Array(not VAO)
             gl.Enable(OpenGL.GL_POINT_SPRITE_ARB);
 
             gl.EnableClientState(OpenGL.GL_VERTEX_ARRAY);
