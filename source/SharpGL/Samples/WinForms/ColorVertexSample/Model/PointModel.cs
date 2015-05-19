@@ -21,6 +21,7 @@ namespace ColorVertexSample.Model
         public static PointModel Create(int nx, int ny, int nz, float radius, float minValue, float maxValue)
         {
             int pointCount = nx * ny * nz;
+            pointCount += 3 - pointCount % 3;
             PointModel model = new PointModel(pointCount, SharpGL.Enumerations.BeginMode.Points);
             PointModelHelper.Build(model, nx, ny, nz, radius, minValue, maxValue);
 
