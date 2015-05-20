@@ -6,13 +6,12 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using SharpGL;
-using System.Threading;
 
 namespace SimpleDrawingSample
 {
-    public partial class FormSimpleDrawingSample : Form
+    public partial class FormMyOpenGLControlDemo : Form
     {
-        public FormSimpleDrawingSample()
+        public FormMyOpenGLControlDemo()
         {
             InitializeComponent();
         }
@@ -24,8 +23,6 @@ namespace SimpleDrawingSample
 
         private void openGLControl1_OpenGLDraw(object sender, RenderEventArgs e)
         {
-            UpdateLabelInfo();
-
             //  Get the OpenGL object, just to clean up the code.
             OpenGL gl = this.openGLControl1.OpenGL;
 
@@ -126,14 +123,6 @@ namespace SimpleDrawingSample
             rquad -= 3.0f;// 0.15f;						// Decrease The Rotation Variable For The Quad 
         }
 
-        bool odd = false;
-        private void UpdateLabelInfo()
-        {
-            this.label1.Text = string.Format("Thread id:{0}, OpenGL context:{1} {2}", Thread.CurrentThread.ManagedThreadId, this.openGLControl1.OpenGL.RenderContextProvider.RenderContextHandle,
-                odd ? "~" : "");
-            odd = !odd;
-        }
-
 
         float rtri = 0;
         float rquad = 0;
@@ -141,11 +130,6 @@ namespace SimpleDrawingSample
         private void label1_Click(object sender, EventArgs e)
         {
             new FormSimpleDrawingSample().Show();
-        }
-
-        private void FormSimpleDrawingSample_Load(object sender, EventArgs e)
-        {
-            UpdateLabelInfo();
         }
     }
 }

@@ -1,6 +1,6 @@
 namespace SimpleDrawingSample
 {
-    partial class FormSimpleDrawingSample
+    partial class FormMyOpenGLControlDemo
     {
         /// <summary>
         /// Required designer variable.
@@ -71,7 +71,6 @@ namespace SimpleDrawingSample
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormSimpleDrawingSample";
             this.Text = "Simple Drawing Sample";
-            this.Load += new System.EventHandler(this.FormSimpleDrawingSample_Load);
             ((System.ComponentModel.ISupportInitialize)(this.openGLControl1)).EndInit();
             this.ResumeLayout(false);
 
