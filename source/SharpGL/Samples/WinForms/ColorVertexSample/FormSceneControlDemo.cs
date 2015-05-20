@@ -237,6 +237,8 @@ namespace ColorVertexSample
             {
                 this.cmbRenderOrder.Items.Add(item);
             }
+
+            this.FormSceneControlDemo_Resize(sender, e);
         }
 
         private void cmbRenderOrder_SelectedIndexChanged(object sender, EventArgs e)

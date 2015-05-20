@@ -230,6 +230,8 @@ namespace ColorVertexSample
             {
                 this.cmbRenderOrder.Items.Add(item);
             }
+
+            this.ScientificVisual3DControl_Resized(sceneControl, e);
         }
 
         private void cmbRenderOrder_SelectedIndexChanged(object sender, EventArgs e)
