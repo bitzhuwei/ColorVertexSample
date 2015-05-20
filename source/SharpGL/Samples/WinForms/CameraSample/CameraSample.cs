@@ -33,6 +33,8 @@ namespace CameraSample
             //fix render Context Provider
             this.sceneControl1.Scene.OpenGL = this.sceneControl1.OpenGL;
 
+
+
             //clear the default scene
             this.sceneControl1.Scene.SceneContainer.Children.Clear();
 
@@ -51,9 +53,16 @@ namespace CameraSample
 
 
 
-            PerspectiveCamera persCamera = new PerspectiveCamera();
+            LookAtCamera persCamera = new LookAtCamera();
             this.comboBox1.Items.Add(persCamera);
+            persCamera.Position = new Vertex(0.0f, 0.0f, (float)(modelSpace.Near+modelSpace.Near));
+            persCamera.Near = Math.Abs(modelSpace.Near);
+            persCamera.Far = float.MaxValue;
+            persCamera.Target = new Vertex(0, 0, 0);
+            persCamera.UpVector = new Vertex(0, 1, 0);
 
+
+            //create model
             BoundingBox space = new BoundingBox();
             space.Name = "Virtual Space";
             space.LBN = new Vertex(-5000, -5000, 5000);
