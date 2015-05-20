@@ -55,7 +55,29 @@ namespace ColorVertexSample
 
                 PointModel model = PointModel.Create(nx, ny, nz, radius, minValue, maxValue);
 
-                this.sceneControl.AddScientificModel(model);
+                //this.sceneControl.AddScientificModel(model);// This is replaced by codes below.
+                ScientificModelElement element = new ScientificModelElement(model, false, true);
+                this.sceneControl.AddModelElement(element);
+                // update ModelContainer's BoundingBox.
+                BoundingBox boundingBox = this.sceneControl.ModelContainer.BoundingBox;
+                IBoundingBox modelBoundingBox = model.BoundingBox;
+                if (this.sceneControl.ModelContainer.Children.Count > 1)
+                {
+                    boundingBox.Extend(modelBoundingBox.MinPosition);
+                    boundingBox.Extend(modelBoundingBox.MaxPosition);
+                }
+                else
+                {
+                    boundingBox.Set(modelBoundingBox.MinPosition.X,
+                        modelBoundingBox.MinPosition.Y,
+                        modelBoundingBox.MinPosition.Z,
+                        modelBoundingBox.MaxPosition.X,
+                        modelBoundingBox.MaxPosition.Y,
+                        modelBoundingBox.MaxPosition.Z);
+                }
+                // update ViewType to UserView.
+                this.sceneControl.ViewType = EViewType.UserView;
+
                 this.sceneControl.SetColorIndicator(minValue, maxValue, step);
             }
             catch (Exception error)
@@ -116,17 +138,17 @@ namespace ColorVertexSample
 
         private void chkRenderModels_CheckedChanged(object sender, EventArgs e)
         {
-            this.sceneControl.RenderModels = this.chkRenderModels.Checked;
+            //this.sceneControl.RenderModels = this.chkRenderModels.Checked;
         }
 
         private void chkRenderModelsBox_CheckedChanged(object sender, EventArgs e)
         {
-            this.sceneControl.RenderModelsBoundingBox = this.chkRenderModelsBox.Checked;
+            //this.sceneControl.RenderModelsBoundingBox = this.chkRenderModelsBox.Checked;
         }
 
         private void chkRenderContainerBox_CheckedChanged(object sender, EventArgs e)
         {
-            this.sceneControl.RenderContainerBoundingBox = this.chkRenderContainerBox.Checked;
+            this.sceneControl.RenderBoundingBox = this.chkRenderContainerBox.Checked;
         }
 
         private void cmbViewType_SelectedIndexChanged(object sender, EventArgs e)

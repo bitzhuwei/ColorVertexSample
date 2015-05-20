@@ -62,6 +62,12 @@
     <Compile Include="ByteColor.cs" />
     <Compile Include="Camera\CameraRotation.cs" />
     <Compile Include="Camera\ECameraType.cs" />
+    <Compile Include="MySharpGL\MyOpenGLControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MySharpGL\MyOpenGLControl.Designer.cs">
+      <DependentUpon>MyOpenGLControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="MySharpGL\MySceneControlHelper.cs" />
     <Compile Include="SimpleUI\ColorIndicator\ColorIndicatorBar.cs">
       <SubType>Code</SubType>

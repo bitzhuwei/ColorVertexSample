@@ -84,10 +84,8 @@
             this.sceneControl.Location = new System.Drawing.Point(3, 88);
             this.sceneControl.Name = "sceneControl";
             this.sceneControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
-            this.sceneControl.RenderContainerBoundingBox = true;
+            this.sceneControl.RenderBoundingBox = true;
             this.sceneControl.RenderContextType = SharpGL.RenderContextType.FBO;
-            this.sceneControl.RenderModels = true;
-            this.sceneControl.RenderModelsBoundingBox = true;
             this.sceneControl.RenderTrigger = SharpGL.RenderTrigger.Manual;
             this.sceneControl.Size = new System.Drawing.Size(687, 377);
             this.sceneControl.TabIndex = 0;
@@ -144,7 +142,7 @@
             this.chkRenderContainerBox.Name = "chkRenderContainerBox";
             this.chkRenderContainerBox.Size = new System.Drawing.Size(114, 16);
             this.chkRenderContainerBox.TabIndex = 19;
-            this.chkRenderContainerBox.Text = "container\'s box";
+            this.chkRenderContainerBox.Text = "model container";
             this.chkRenderContainerBox.UseVisualStyleBackColor = true;
             this.chkRenderContainerBox.CheckedChanged += new System.EventHandler(this.chkRenderContainerBox_CheckedChanged);
             // 
@@ -159,6 +157,7 @@
             this.chkRenderModelsBox.TabIndex = 19;
             this.chkRenderModelsBox.Text = "boxes";
             this.chkRenderModelsBox.UseVisualStyleBackColor = true;
+            this.chkRenderModelsBox.Visible = false;
             this.chkRenderModelsBox.CheckedChanged += new System.EventHandler(this.chkRenderModelsBox_CheckedChanged);
             // 
             // chkRenderModels
@@ -172,6 +171,7 @@
             this.chkRenderModels.TabIndex = 19;
             this.chkRenderModels.Text = "models";
             this.chkRenderModels.UseVisualStyleBackColor = true;
+            this.chkRenderModels.Visible = false;
             this.chkRenderModels.CheckedChanged += new System.EventHandler(this.chkRenderModels_CheckedChanged);
             // 
             // rdoOrtho

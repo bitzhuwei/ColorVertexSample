@@ -11,6 +11,7 @@ using SharpGL.Version;
 using SharpGL.SceneGraph;
 using System.Collections.ObjectModel;
 using SharpGL.SceneGraph.Cameras;
+using SharpGL.SceneGraph.Core;
 
 namespace SharpGL.SceneComponent
 {
@@ -24,8 +25,13 @@ namespace SharpGL.SceneComponent
         /// maintains bounding box that contains all models.
         /// </summary>
         internal ModelContainer modelContainer;
-        private bool renderModelsBoundingBox = true;
-        private bool renderModels = true;
+
+        /// <summary>
+        /// Gets the root element of all models.
+        /// </summary>
+        public ModelContainer ModelContainer
+        { get { return this.modelContainer; } }
+
         private EViewType viewType;
    
         public ScientificVisual3DControl()
@@ -196,83 +202,95 @@ namespace SharpGL.SceneComponent
         /// <summary>
         /// Draw axis with arc ball rotation effect on viewport as an UI.
         /// </summary>
-        public SimpleUIAxis uiAxis { get; set; }
+        internal SimpleUIAxis uiAxis { get; set; }
 
         /// <summary>
         /// Draw color indicator on viewport as an UI.
         /// </summary>
         internal SimpleUIColorIndicator uiColorIndicator { get; set; }
 
-        public void AddScientificModel(IScientificModel model)
+        public void AddModelElement(SceneElement element)
         {
-            if (model == null) { return; }
-
-            ScientificCamera camera = this.Scene.CurrentCamera;
-            ScientificModelElement element = new ScientificModelElement(model, this.renderModelsBoundingBox);
             this.modelContainer.AddChild(element);
-            //this.modelContainer.AdjustCamera(this.OpenGL, camera);
-            CameraHelper.AdjustCamera(this.modelContainer.BoundingBox, this.OpenGL, camera);
-            // force CameraRotation to udpate.
-            this.CameraRotation.Camera = this.Scene.CurrentCamera;
 
             ManualRender(this);
         }
+
+        //public void AddScientificModel(IScientificModel model)
+        //{
+        //    if (model == null) { return; }
+
+        //    ScientificCamera camera = this.Scene.CurrentCamera;
+        //    ScientificModelElement element = new ScientificModelElement(model, this.renderModelsBoundingBox);
+        //    this.modelContainer.AddChild(element);
+        //    //this.modelContainer.AdjustCamera(this.OpenGL, camera);
+        //    CameraHelper.AdjustCamera(this.modelContainer.BoundingBox, this.OpenGL, camera);
+        //    // force CameraRotation to udpate.
+        //    this.CameraRotation.Camera = this.Scene.CurrentCamera;
+
+        //    ManualRender(this);
+        //}
 
         public void ClearScientificModels()
         {
-            this.modelContainer.ClearChild();
+            //this.modelContainer.ClearChild();
+            this.modelContainer.Children.Clear();
+
             ManualRender(this);
         }
 
-        /// <summary>
-        /// Determins whether render every model's bounding box or not.
-        /// </summary>
-        public bool RenderModelsBoundingBox
-        {
-            get { return this.renderModelsBoundingBox; }
-            set
-            {
-                if (this.renderModelsBoundingBox != value)
-                {
-                    this.renderModelsBoundingBox = value;
-                    foreach (var item in this.modelContainer.Children)
-                    {
-                        ScientificModelElement element = item as ScientificModelElement;
-                        if (element != null)
-                        {
-                            element.RenderBoundingBox = value;
-                        }
-                    }
-                    ManualRender(this);
-                }
-            }
-        }
+        ///// <summary>
+        ///// Determins whether render every model's bounding box or not.
+        ///// </summary>
+        //public bool RenderModelsBoundingBox
+        //{
+        //    get { return this.renderModelsBoundingBox; }
+        //    set
+        //    {
+        //        if (this.renderModelsBoundingBox != value)
+        //        {
+        //            this.renderModelsBoundingBox = value;
+        //            foreach (var item in this.modelContainer.Children)
+        //            {
+        //                ScientificModelElement element = item as ScientificModelElement;
+        //                if (element != null)
+        //                {
+        //                    element.RenderBoundingBox = value;
+        //                }
+        //            }
+        //            ManualRender(this);
+        //        }
+        //    }
+        //}
+
+        ///// <summary>
+        ///// Determins whether render every model or not.
+        ///// </summary>
+        //public bool RenderModels
+        //{
+        //    get { return this.renderModels; }
+        //    set
+        //    {
+        //        if (this.renderModels != value)
+        //        {
+        //            this.renderModels = value;
+        //            foreach (var item in this.modelContainer.Children)
+        //            {
+        //                ScientificModelElement element = item as ScientificModelElement;
+        //                if (element != null)
+        //                {
+        //                    element.RenderModel = value;
+        //                }
+        //            }
+        //            ManualRender(this);
+        //        }
+        //    }
+        //}
 
         /// <summary>
-        /// Determins whether render every model or not.
+        /// Determins whether to render model container's bounding box or not.
         /// </summary>
-        public bool RenderModels
-        {
-            get { return this.renderModels; }
-            set
-            {
-                if (this.renderModels != value)
-                {
-                    this.renderModels = value;
-                    foreach (var item in this.modelContainer.Children)
-                    {
-                        ScientificModelElement element = item as ScientificModelElement;
-                        if (element != null)
-                        {
-                            element.RenderModel = value;
-                        }
-                    }
-                    ManualRender(this);
-                }
-            }
-        }
-
-        public bool RenderContainerBoundingBox
+        public bool RenderBoundingBox
         {
             get { return this.modelContainer.RenderBoundingBox; }
             set
@@ -280,6 +298,7 @@ namespace SharpGL.SceneComponent
                 if (this.modelContainer.RenderBoundingBox != value)
                 {
                     this.modelContainer.RenderBoundingBox = value;
+
                     ManualRender(this);
                 }
             }
@@ -296,6 +315,7 @@ namespace SharpGL.SceneComponent
                 if (this.Scene.CurrentCamera.CameraType != value)
                 {
                     this.Scene.CurrentCamera.CameraType = value;
+
                     ManualRender(this);
                 }
             }
@@ -324,5 +344,6 @@ namespace SharpGL.SceneComponent
             this.uiColorIndicator.Data.Step = step;
             ManualRender(this);
         }
+
     }
 }

@@ -46,7 +46,7 @@
             this.sceneControl.Location = new System.Drawing.Point(12, 34);
             this.sceneControl.Name = "sceneControl";
             this.sceneControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
-            this.sceneControl.RenderContextType = SharpGL.RenderContextType.DIBSection;
+            this.sceneControl.RenderContextType = SharpGL.RenderContextType.FBO;
             this.sceneControl.RenderTrigger = SharpGL.RenderTrigger.Manual;
             this.sceneControl.Size = new System.Drawing.Size(640, 347);
             this.sceneControl.TabIndex = 0;
