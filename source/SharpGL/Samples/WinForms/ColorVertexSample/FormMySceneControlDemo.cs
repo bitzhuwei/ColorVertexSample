@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace ColorVertexSample
 {
-    public partial class FormSceneControlDemo : Form
+    public partial class FormMySceneControlDemo : Form
     {
         private ModelContainer modelContainer;
 
@@ -24,14 +24,13 @@ namespace ColorVertexSample
             get { return cameraRotation; }
             set { cameraRotation = value; }
         }
-
-        public FormSceneControlDemo()
+    
+        public FormMySceneControlDemo()
         {
             InitializeComponent();
          
             InitializeSceneControl();
 
-            
         }
 
         private void InitializeSceneControl()
@@ -52,13 +51,14 @@ namespace ColorVertexSample
                 this.modelContainer.BoundingBox.Extend(pointModel.BoundingBox.MinPosition);
             }
 
-            var camera = new ScientificCamera()
-            {
-                Position = new Vertex(-10f, -10f, 10f),
-                Target = new Vertex(0f, 0f, 0f),
-                UpVector = new Vertex(0f, 0f, 1f)
-            };
-            this.sceneControl.Scene.CurrentCamera = camera;
+            // Diff: MySceneControl don't need this.
+            //var camera = new ScientificCamera()
+            //{
+            //    Position = new Vertex(-10f, -10f, 10f),
+            //    Target = new Vertex(0f, 0f, 0f),
+            //    UpVector = new Vertex(0f, 0f, 1f)
+            //};
+            //this.sceneControl.Scene.CurrentCamera = camera;
 
             this.cameraRotation = new CameraRotation();
             this.cameraRotation.Camera = this.sceneControl.Scene.CurrentCamera as ScientificCamera;
@@ -74,14 +74,13 @@ namespace ColorVertexSample
         {
             //this.modelContainer.AdjustCamera(this.OpenGL, this.Scene.CurrentCamera);
             //CameraHelper.AdjustCamera(this.modelContainer.BoundingBox, this.OpenGL, this.Scene.CurrentCamera);
-            CameraHelper.AdjustCamera(this.modelContainer.BoundingBox, this.sceneControl.OpenGL, this.sceneControl
-                .Scene.CurrentCamera as ScientificCamera);
+            CameraHelper.AdjustCamera(this.modelContainer.BoundingBox, this.sceneControl.OpenGL, this.sceneControl.Scene.CurrentCamera);
             ManualRender(this.sceneControl);
         }
 
         void ScientificVisual3DControl_MouseWheel(object sender, MouseEventArgs e)
         {
-            ScientificCamera camera = this.sceneControl.Scene.CurrentCamera as ScientificCamera;
+            ScientificCamera camera = this.sceneControl.Scene.CurrentCamera;
             //if (camera == null) { return; }
 
             if (camera.CameraType == ECameraType.Perspecitive)
@@ -215,18 +214,12 @@ namespace ColorVertexSample
             }
         }
 
-        private void FormSceneControlDemo_Resize(object sender, EventArgs e)
+        private void btnManualRender_Click(object sender, EventArgs e)
         {
-            this.ScientificVisual3DControl_Resized(sender, e);
+            ManualRender(this.sceneControl);
         }
 
-        private void btnNewDemo_Click(object sender, EventArgs e)
-        {
-            (new FormMySceneControlDemo()).Show();
-            //(new FormSceneControlDemo()).Show();
-        }
-
-        private void FormSceneControlDemo_Load(object sender, EventArgs e)
+        private void FormMySceneControlDemo_Load(object sender, EventArgs e)
         {
             List<ScientificModelElement.Order> orders = new List<ScientificModelElement.Order>()
             {
@@ -246,7 +239,7 @@ namespace ColorVertexSample
             foreach (var item in this.modelContainer.Children)
             {
                 ScientificModelElement element = item as ScientificModelElement;
-                if(element!=null)
+                if (element != null)
                 {
                     element.RenderOrder = order;
                 }

@@ -48,8 +48,7 @@ namespace ColorVertexSample.Model
                     colors[i].blue = (byte)colorRandom.Next(0, 256 / 2);
                 }
 
-                model.BoundingBox.MaxPosition = max;
-                model.BoundingBox.MinPosition = min;
+                model.BoundingBox.Set(min.X, min.Y, min.Z, max.X, max.Y, max.Z);
             }
         }
     }

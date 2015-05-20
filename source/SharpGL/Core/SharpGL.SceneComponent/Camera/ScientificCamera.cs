@@ -12,9 +12,15 @@ namespace SharpGL.SceneComponent
     /// </summary>
     public class ScientificCamera : SharpGL.SceneGraph.Cameras.Camera, IPerspectiveCamera, IOrthoCamera
     {
+        static int count = 0;
+        public override string ToString()
+        {
+            return string.Format("{0}/{1}", Name, count);
+            //return base.ToString();
+        }
         public ScientificCamera(ECameraType cameraType = ECameraType.Perspecitive)
         {
-            Name = "Scientific Camera";
+            Name = "Scientific Camera: " + count++;
             IPerspectiveCamera perspectiveCamera = this;
             perspectiveCamera.FieldOfView = 60f;
             perspectiveCamera.AspectRatio = 1f;

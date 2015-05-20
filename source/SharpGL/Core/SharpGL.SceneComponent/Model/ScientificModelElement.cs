@@ -10,7 +10,7 @@ namespace SharpGL.SceneComponent
     /// <summary>
     /// Render the <see cref="IScientificModel"/>.
     /// </summary>
-    internal class ScientificModelElement : SceneElement, IRenderable
+    public class ScientificModelElement : SceneElement, IRenderable
     {
         /// <summary>
         /// The model shown in <see cref="ScientificVisual3DControl"/>.
@@ -21,11 +21,14 @@ namespace SharpGL.SceneComponent
 
         public bool RenderModel { get; set; }
 
-        public ScientificModelElement(IScientificModel model, bool renderBoundingBox = true, bool renderModel = true)
+        public Order RenderOrder { get; set; }
+
+        public ScientificModelElement(IScientificModel model, bool renderBoundingBox = true, bool renderModel = true, Order order = ScientificModelElement.Order.ModelBoundingBox)
         {
             this.Model = model;
             this.RenderBoundingBox = renderBoundingBox;
             this.RenderModel = renderModel;
+            this.RenderOrder = order;
         }
 
         #region IRenderable 成员
@@ -41,18 +44,43 @@ namespace SharpGL.SceneComponent
             IScientificModel model = this.Model;
             if (model == null) { return; }
 
-            if (this.RenderModel)
+            switch (RenderOrder)
             {
-                model.Render(gl, renderMode);
+                case Order.ModelBoundingBox:
+                    if (this.RenderModel)
+                    {
+                        model.Render(gl, renderMode);
+                    } 
+ 
+                    if (this.RenderBoundingBox)
+                    {
+                        model.BoundingBox.Render(gl, renderMode);
+                    }
+                   break;
+                case Order.BoundingBoxModel:
+                    if (this.RenderBoundingBox)
+                    {
+                        model.BoundingBox.Render(gl, renderMode);
+                    }
+
+                    if (this.RenderModel)
+                    {
+                        model.Render(gl, renderMode);
+                    }
+                    break;
+                default:
+                    throw new NotImplementedException();
             }
 
-            if (this.RenderBoundingBox)
-            {
-                model.BoundingBox.Render(gl, renderMode);
-            }
         }
 
         #endregion
 
+        public enum Order
+        {
+            ModelBoundingBox,
+            BoundingBoxModel,
+        }
     }
+
 }

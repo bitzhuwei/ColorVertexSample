@@ -11,10 +11,13 @@ namespace SharpGL.SceneComponent
     /// <summary>
     /// maintains bounding box that contains all models.
     /// </summary>
-    internal class ModelContainer : SceneElement, IRenderable
+    public class ModelContainer : SceneElement, IRenderable
     {
         BoundingBox boundingBox = new BoundingBox();
 
+        /// <summary>
+        /// Gets bounding box that contains all models.
+        /// </summary>
         public BoundingBox BoundingBox
         {
             get { return boundingBox; }
@@ -60,10 +63,14 @@ namespace SharpGL.SceneComponent
                 boundingBox.Extend(modelBoundingBox.MinPosition);
                 boundingBox.Extend(modelBoundingBox.MaxPosition);
             }
-            else 
+            else
             {
-                boundingBox.MinPosition = modelBoundingBox.MinPosition;
-                boundingBox.MaxPosition = modelBoundingBox.MaxPosition;
+                boundingBox.Set(modelBoundingBox.MinPosition.X,
+                    modelBoundingBox.MinPosition.Y,
+                    modelBoundingBox.MinPosition.Z,
+                    modelBoundingBox.MaxPosition.X,
+                    modelBoundingBox.MaxPosition.Y,
+                    modelBoundingBox.MaxPosition.Z);
             }
             UpdateExpandedBoudingBox();
         }
@@ -76,7 +83,7 @@ namespace SharpGL.SceneComponent
         {
             base.RemoveChild(child);
             //TODO: improve efficiency with some algorithm.
-            this.boundingBox.Reset();
+            this.boundingBox.Set();
             foreach (var item in this.Children)
             {
                 ScientificModelElement element = item as ScientificModelElement;
@@ -96,7 +103,7 @@ namespace SharpGL.SceneComponent
         internal void ClearChild()
         {
             base.Children.Clear();
-            this.boundingBox.Reset();
+            this.boundingBox.Set();
             UpdateExpandedBoudingBox();
         }
 
@@ -111,11 +118,10 @@ namespace SharpGL.SceneComponent
             this.boundingBox.GetCenter(out x, out y, out z);
             float xSize, ySize, zSize;
             this.boundingBox.GetBoundDimensions(out xSize, out ySize, out zSize);
-            this.expandedBoundingBox.MinPosition = new Vertex(
+            this.boundingBox.Set(
                 ExpandFactor * (-xSize / 2) + x,
                 ExpandFactor * (-ySize / 2) + y,
-                ExpandFactor * (-zSize / 2) + z);
-            this.expandedBoundingBox.MaxPosition = new Vertex(
+                ExpandFactor * (-zSize / 2) + z,
                 ExpandFactor * (xSize / 2) + x,
                 ExpandFactor * (ySize / 2) + y,
                 ExpandFactor * (zSize / 2) + z);

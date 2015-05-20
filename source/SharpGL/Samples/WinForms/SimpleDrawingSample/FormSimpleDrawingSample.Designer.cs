@@ -38,11 +38,12 @@ namespace SimpleDrawingSample
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.Location = new System.Drawing.Point(12, 425);
+            this.label1.Location = new System.Drawing.Point(12, 392);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(768, 33);
+            this.label1.Size = new System.Drawing.Size(768, 30);
             this.label1.TabIndex = 1;
             this.label1.Text = resources.GetString("label1.Text");
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // openGLControl1
             // 
@@ -51,18 +52,20 @@ namespace SimpleDrawingSample
             | System.Windows.Forms.AnchorStyles.Right)));
             this.openGLControl1.DrawFPS = false;
             this.openGLControl1.FrameRate = 28;
-            this.openGLControl1.Location = new System.Drawing.Point(12, 12);
+            this.openGLControl1.Location = new System.Drawing.Point(12, 11);
             this.openGLControl1.Name = "openGLControl1";
+            this.openGLControl1.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
             this.openGLControl1.RenderContextType = SharpGL.RenderContextType.FBO;
-            this.openGLControl1.Size = new System.Drawing.Size(768, 410);
+            this.openGLControl1.RenderTrigger = SharpGL.RenderTrigger.TimerBased;
+            this.openGLControl1.Size = new System.Drawing.Size(768, 378);
             this.openGLControl1.TabIndex = 0;
             this.openGLControl1.OpenGLDraw += new SharpGL.RenderEventHandler(this.openGLControl1_OpenGLDraw);
             // 
             // FormSimpleDrawingSample
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(792, 467);
+            this.ClientSize = new System.Drawing.Size(792, 431);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.openGLControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

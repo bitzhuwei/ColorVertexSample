@@ -44,7 +44,7 @@ namespace SharpGL.SceneComponent
         public Vertex MaxPosition
         {
             get { return maxPosition; }
-            set { maxPosition = value; }
+            protected set { maxPosition = value; }
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace SharpGL.SceneComponent
         public Vertex MinPosition
         {
             get { return minPosition; }
-            set { minPosition = value; }
+            protected set { minPosition = value; }
         }
 
         /// <summary>
@@ -177,13 +177,24 @@ namespace SharpGL.SceneComponent
             gl.PopAttrib();
         }
 
+        public void Set(float minX = 0, float minY = 0, float minZ = 0, float maxX = 0, float maxY = 0, float maxZ = 0)
+        {
+            this.minPosition.X = minX;
+            this.minPosition.Y = minY;
+            this.minPosition.Z = minZ;
+
+            this.maxPosition.X = maxX;
+            this.maxPosition.Y = maxY;
+            this.maxPosition.Z = maxZ;
+        }
+
         #endregion
 
         /// <summary>
         /// Make sure the bounding box covers specifed vertex.
         /// </summary>
         /// <param name="vertex"></param>
-        internal void Extend(Vertex vertex)
+        public void Extend(Vertex vertex)
         {
             if (vertex.X < this.minPosition.X) { this.minPosition.X = vertex.X; }
             if (vertex.Y < this.minPosition.Y) { this.minPosition.Y = vertex.Y; }
@@ -195,15 +206,5 @@ namespace SharpGL.SceneComponent
 
         }
 
-        internal void Reset()
-        {
-            this.minPosition.X = 0;
-            this.minPosition.Y = 0;
-            this.minPosition.Z = 0;
-
-            this.maxPosition.X = 0;
-            this.maxPosition.Y = 0;
-            this.maxPosition.Z = 0;
-        }
     }
 }

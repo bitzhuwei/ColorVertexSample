@@ -50,6 +50,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormMySceneControlDemo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMySceneControlDemo.Designer.cs">
+      <DependentUpon>FormMySceneControlDemo.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSceneControlDemo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -68,6 +74,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormMySceneControlDemo.resx">
+      <DependentUpon>FormMySceneControlDemo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormSceneControlDemo.resx">
       <DependentUpon>FormSceneControlDemo.cs</DependentUpon>
     </EmbeddedResource>

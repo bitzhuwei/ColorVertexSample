@@ -6,7 +6,7 @@ using System.Text;
 
 namespace SharpGL.SceneComponent
 {
-    class CameraHelper
+    public class CameraHelper
     {
         /// <summary>
         /// Adjusts camera according to bounding box.
@@ -15,7 +15,7 @@ namespace SharpGL.SceneComponent
         /// <param name="boundingBox"></param>
         /// <param name="openGL"></param>
         /// <param name="camera"></param>
-        internal static void AdjustCamera(IBoundingBox boundingBox, OpenGL openGL, ScientificCamera camera)
+        public static void AdjustCamera(IBoundingBox boundingBox, OpenGL openGL, ScientificCamera camera)
         {
             float sizeX, sizeY, sizeZ;
             boundingBox.GetBoundDimensions(out sizeX, out sizeY, out sizeZ);
@@ -85,7 +85,7 @@ namespace SharpGL.SceneComponent
         /// <param name="openGL"></param>
         /// <param name="camera"></param>
         /// <param name="viewType"></param>
-        internal static void ApplyViewType(IBoundingBox boundingBox, OpenGL openGL, ScientificCamera camera, EViewType viewType)
+        public static void ApplyViewType(IBoundingBox boundingBox, OpenGL openGL, ScientificCamera camera, EViewType viewType)
         {
             float sizeX, sizeY, sizeZ;
             boundingBox.GetBoundDimensions(out sizeX, out sizeY, out sizeZ);

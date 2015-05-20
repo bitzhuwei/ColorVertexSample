@@ -15,12 +15,12 @@ namespace SharpGL.SceneComponent
         /// <summary>
         /// Maximum position of this cuboid.
         /// </summary>
-        Vertex MaxPosition { get; set; }
+        Vertex MaxPosition { get; }
 
         /// <summary>
         /// Minimum position of this cuboid.
         /// </summary>
-        Vertex MinPosition { get; set; }
+        Vertex MinPosition { get; }
 
         /// <summary>
         /// Get center position of this cuboid.
@@ -45,5 +45,15 @@ namespace SharpGL.SceneComponent
         /// <param name="renderMode">The render mode.</param>
         void Render(OpenGL gl, RenderMode renderMode);
 
+        /// <summary>
+        /// Only way to set bounding box'es values.
+        /// </summary>
+        /// <param name="minX"></param>
+        /// <param name="minY"></param>
+        /// <param name="minZ"></param>
+        /// <param name="maxX"></param>
+        /// <param name="maxY"></param>
+        /// <param name="maxZ"></param>
+        void Set(float minX, float minY, float minZ, float maxX, float maxY, float maxZ);
     }
 }

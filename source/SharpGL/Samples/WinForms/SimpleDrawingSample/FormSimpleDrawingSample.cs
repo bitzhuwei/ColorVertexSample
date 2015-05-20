@@ -126,5 +126,10 @@ namespace SimpleDrawingSample
 
         float rtri = 0;
         float rquad = 0;
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+            new FormSimpleDrawingSample().Show();
+        }
     }
 }
