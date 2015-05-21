@@ -47,6 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormMySceneControl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMySceneControl.Designer.cs">
+      <DependentUpon>FormMySceneControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSceneControl.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -63,6 +69,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormMySceneControl.resx">
+      <DependentUpon>FormMySceneControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
