@@ -39,18 +39,18 @@
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // mySceneControl
+            // scientificControl
             // 
             this.scientificControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.scientificControl.DrawFPS = true;
             this.scientificControl.Location = new System.Drawing.Point(159, 0);
-            this.scientificControl.Name = "mySceneControl";
+            this.scientificControl.Name = "scientificControl";
             this.scientificControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
             this.scientificControl.RenderContextType = SharpGL.RenderContextType.FBO;
             this.scientificControl.RenderTrigger = SharpGL.RenderTrigger.TimerBased;
-            this.scientificControl.Size = new System.Drawing.Size(465, 361);
+            this.scientificControl.Size = new System.Drawing.Size(597, 361);
             this.scientificControl.TabIndex = 0;
             this.scientificControl.OpenGLInitialized += new System.EventHandler(this.openGLControl_OpenGLInitialized);
             this.scientificControl.OpenGLDraw += new SharpGL.RenderEventHandler(this.openGLControl_OpenGLDraw);
@@ -124,7 +124,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(624, 361);
+            this.ClientSize = new System.Drawing.Size(756, 361);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.cmbCameraType);
             this.Controls.Add(this.scientificControl);

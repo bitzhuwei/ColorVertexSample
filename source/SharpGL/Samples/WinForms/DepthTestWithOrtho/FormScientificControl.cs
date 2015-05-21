@@ -42,18 +42,18 @@ namespace DepthTestWithOrtho
                 verticesCount, SharpGL.Enumerations.BeginMode.Points);
             this.scientificControl.Scene.SceneContainer.AddChild(model);
 
-            this.scientificControl.MouseWheel += openGLControl_MouseWheel;
+            //this.scientificControl.MouseWheel += openGLControl_MouseWheel;
         }
 
-        void openGLControl_MouseWheel(object sender, MouseEventArgs e)
-        {
-            ScientificCamera camera = this.scientificControl.Scene.CurrentCamera;
-            //if (camera == null) { return; }
+        //void openGLControl_MouseWheel(object sender, MouseEventArgs e)
+        //{
+        //    ScientificCamera camera = this.scientificControl.Scene.CurrentCamera;
+        //    //if (camera == null) { return; }
 
-            camera.Scale(e.Delta);
+        //    camera.Scale(e.Delta);
 
-            this.openGLControl_Resized(sender, e);
-        }
+        //    this.openGLControl_Resized(sender, e);
+        //}
 
         /// <summary>
         /// Handles the OpenGLDraw event of the openGLControl control.

@@ -42,7 +42,7 @@ namespace SharpGL.SceneComponent
             //this.MouseDown += ScientificVisual3DControl_MouseDown;
             //this.MouseMove += ScientificVisual3DControl_MouseMove;
             //this.MouseUp += ScientificVisual3DControl_MouseUp;
-            //this.MouseWheel += ScientificVisual3DControl_MouseWheel;
+            this.MouseWheel += ScientificControl_MouseWheel;
             //this.Resized += ScientificVisual3DControl_Resized;
         }
 
@@ -52,15 +52,15 @@ namespace SharpGL.SceneComponent
         //    CameraHelper.AdjustCamera(this.modelContainer.BoundingBox, this.OpenGL, this.Scene.CurrentCamera);
         //}
 
-        //void ScientificVisual3DControl_MouseWheel(object sender, MouseEventArgs e)
-        //{
-        //    ScientificCamera camera = this.Scene.CurrentCamera;
-        //    //if (camera == null) { return; }
+        void ScientificControl_MouseWheel(object sender, MouseEventArgs e)
+        {
+            ScientificCamera camera = this.Scene.CurrentCamera;
+            //if (camera == null) { return; }
 
-        //    camera.Scale(e.Delta);
+            camera.Scale(e.Delta);
 
-        //    ManualRender(this);
-        //}
+            ManualRender(this);
+        }
 
         //void ScientificVisual3DControl_MouseUp(object sender, MouseEventArgs e)
         //{
@@ -119,12 +119,10 @@ namespace SharpGL.SceneComponent
         //    { ManualRender(this); }
         //}
 
-
-
-        //private void ManualRender(Control control)
-        //{
-        //    control.Invalidate();// this will invokes OnPaint(PaintEventArgs e);
-        //}
+        private void ManualRender(Control control)
+        {
+            control.Invalidate();// this will invokes OnPaint(PaintEventArgs e);
+        }
 
         //protected override void OnPaint(PaintEventArgs e)
         //{
