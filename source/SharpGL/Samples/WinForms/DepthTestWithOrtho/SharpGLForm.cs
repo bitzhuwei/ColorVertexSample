@@ -338,6 +338,7 @@ namespace DepthTestWithOrtho
         private void cmbCameraType_SelectedIndexChanged(object sender, EventArgs e)
         {
             var type = (ECameraType)this.cmbCameraType.SelectedItem;
+            this.groupBox1.Visible = type == ECameraType.Ortho;
             this.camera.CameraType = type;
             this.CameraResized();
         }
