@@ -33,46 +33,11 @@ namespace DepthTestWithOrtho
             IOrthoCamera orthoCamera = camera;
             orthoCamera.Left = -10; orthoCamera.Bottom = -10; orthoCamera.Near = -10;
             orthoCamera.Right = 10; orthoCamera.Top = 10; orthoCamera.Far = 10;
-            //this.scientificControl.Scene.SceneContainer.Children.Clear();
-            //this.scientificControl.Scene.SceneContainer.Effects.Clear();
             var model = new ModelDemo(
                 new Vertex(-1, -1, -1), new Vertex(1, 1, 1), 
                 verticesCount, SharpGL.Enumerations.BeginMode.Points);
             this.scientificControl.Scene.SceneContainer.AddChild(model);
 
-        }
-
-        /// <summary>
-        /// Handles the OpenGLDraw event of the openGLControl control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="RenderEventArgs"/> instance containing the event data.</param>
-        private void openGLControl_OpenGLDraw(object sender, RenderEventArgs e)
-        {
-            //var gl = this.sceneControl.OpenGL;
-            //gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT);
-            //gl.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-
-            //DrawPoints(gl);
-            //DrawCube(gl);
-        }
-
-        /// <summary>
-        /// Handles the OpenGLInitialized event of the openGLControl control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void openGLControl_OpenGLInitialized(object sender, EventArgs e)
-        {
-            //  TODO: Initialise OpenGL here.
-
-            //  Get the OpenGL object.
-            OpenGL gl = scientificControl.OpenGL;
-
-            //  Set the clear color.
-            gl.ClearColor(0, 0, 0, 0);
-
-            openGLControl_Resized(sender, e);
         }
 
         /// <summary>
