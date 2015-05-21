@@ -37,6 +37,8 @@ namespace DepthTestWithOrtho
                 new Vertex(-1, -1, -1), new Vertex(1, 1, 1), 
                 verticesCount, SharpGL.Enumerations.BeginMode.Points);
             this.scientificControl.AddModelElement(model);
+            var boundingBox = this.scientificControl.ModelContainer.BoundingBox;
+            boundingBox.Set(-1.1f, -1.1f, -1.1f, 1.1f, 1.1f, 1.1f);
         }
 
         /// <summary>

@@ -26,11 +26,11 @@ namespace SharpGL.SceneComponent
         /// </summary>
         internal ModelContainer modelContainer;
 
-        ///// <summary>
-        ///// Gets the root element of all models.
-        ///// </summary>
-        //public ModelContainer ModelContainer
-        //{ get { return this.modelContainer; } }
+        /// <summary>
+        /// Gets the root element of all models.
+        /// </summary>
+        public ModelContainer ModelContainer
+        { get { return this.modelContainer; } }
 
         //private EViewType viewType;
 
