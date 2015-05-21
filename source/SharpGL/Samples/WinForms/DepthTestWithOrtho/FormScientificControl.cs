@@ -33,8 +33,8 @@ namespace DepthTestWithOrtho
             IOrthoCamera orthoCamera = camera;
             orthoCamera.Left = -10; orthoCamera.Bottom = -10; orthoCamera.Near = -10;
             orthoCamera.Right = 10; orthoCamera.Top = 10; orthoCamera.Far = 10;
-            this.scientificControl.Scene.SceneContainer.Children.Clear();
-            this.scientificControl.Scene.SceneContainer.Effects.Clear();
+            //this.scientificControl.Scene.SceneContainer.Children.Clear();
+            //this.scientificControl.Scene.SceneContainer.Effects.Clear();
             var model = new ModelDemo(
                 new Vertex(-1, -1, -1), new Vertex(1, 1, 1), 
                 verticesCount, SharpGL.Enumerations.BeginMode.Points);

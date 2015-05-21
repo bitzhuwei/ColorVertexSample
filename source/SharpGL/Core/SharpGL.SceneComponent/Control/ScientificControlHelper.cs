@@ -93,11 +93,11 @@ namespace SharpGL.SceneComponent
             if (scientificVisual3DControl == null) { return; }
 
             MyScene scene = scientificVisual3DControl.Scene;
-            //scene.SceneContainer.Name = "Scene's container";
-            //scene.SceneContainer.Children.Clear();
-            //scene.SceneContainer.Effects.Clear();
-
             SceneElement root = scene.SceneContainer;
+            root.Name = string.Format("Scene's container in {0}.", scientificVisual3DControl.GetType().Name);
+            root.Children.Clear();
+            root.Effects.Clear();
+
 
             //InitializeSceneAttributes(root);
 
