@@ -83,23 +83,7 @@ namespace ColorVertexSample
             ScientificCamera camera = this.sceneControl.Scene.CurrentCamera;
             //if (camera == null) { return; }
 
-            if (camera.CameraType == ECameraType.Perspecitive)
-            {
-                Vertex target2Position = camera.Position - camera.Target;
-                camera.Position = camera.Target + target2Position * (1 - e.Delta * 0.001f);
-            }
-            else if (camera.CameraType == ECameraType.Ortho)
-            {
-                IOrthoCamera orthoCamera = camera;
-                double distanceX = orthoCamera.Right - orthoCamera.Left;
-                double distanceY = orthoCamera.Top - orthoCamera.Bottom;
-                double centerX = (orthoCamera.Left + orthoCamera.Right) / 2;
-                double centerY = (orthoCamera.Bottom + orthoCamera.Top) / 2;
-                orthoCamera.Left = centerX - distanceX * (1 - e.Delta * 0.001) / 2;
-                orthoCamera.Right = centerX + distanceX * (1 - e.Delta * 0.001) / 2;
-                orthoCamera.Bottom = centerY - distanceY * (1 - e.Delta * 0.001) / 2;
-                orthoCamera.Top = centerX + distanceY * (1 - e.Delta * 0.001) / 2;
-            }
+            camera.Scale(e.Delta);
 
             ManualRender(this.sceneControl);
         }
