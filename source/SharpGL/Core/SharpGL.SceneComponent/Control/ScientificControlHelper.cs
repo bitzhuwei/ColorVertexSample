@@ -88,32 +88,32 @@ namespace SharpGL.SceneComponent
 
         //}
 
-        //internal static void InitializeScene(ScientificControl scientificVisual3DControl)
-        //{
-        //    if (scientificVisual3DControl == null) { return; }
+        internal static void InitializeScene(ScientificControl scientificVisual3DControl)
+        {
+            if (scientificVisual3DControl == null) { return; }
 
-        //    MyScene scene = scientificVisual3DControl.Scene;
-        //    scene.SceneContainer.Name = "Scene's container";
-        //    scene.SceneContainer.Children.Clear();
-        //    scene.SceneContainer.Effects.Clear();
+            MyScene scene = scientificVisual3DControl.Scene;
+            //scene.SceneContainer.Name = "Scene's container";
+            //scene.SceneContainer.Children.Clear();
+            //scene.SceneContainer.Effects.Clear();
 
-        //    SceneElement root = scene.SceneContainer;
+            SceneElement root = scene.SceneContainer;
 
-        //    InitializeSceneAttributes(root);
+            //InitializeSceneAttributes(root);
 
-        //    scene.RenderBoundingVolumes = false;
+            //scene.RenderBoundingVolumes = false;
 
-        //    //SceneElement scientificModelElementRoot = new SceneElement() 
-        //    //{ Name = "Scientific Model Elements' root" };
-        //    //scene.SceneContainer.AddChild(scientificModelElementRoot);
-        //    //scientificVisual3DControl.scientificModelElementRoot = scientificModelElementRoot;
-        //    ModelContainer container = new ModelContainer()
-        //    { Name = "model space's container which contains models as children." };
-        //    scene.SceneContainer.AddChild(container);
-        //    scientificVisual3DControl.modelContainer = container;
+            //SceneElement scientificModelElementRoot = new SceneElement() 
+            //{ Name = "Scientific Model Elements' root" };
+            //scene.SceneContainer.AddChild(scientificModelElementRoot);
+            //scientificVisual3DControl.scientificModelElementRoot = scientificModelElementRoot;
+            //ModelContainer container = new ModelContainer() { Name = "model space's container which contains models as children." };
+            //scene.SceneContainer.AddChild(container);
+            //scientificVisual3DControl.modelContainer = container;
 
-        //    scientificVisual3DControl.CameraRotation = new CameraRotation();
-        //}
+            scientificVisual3DControl.CameraRotation = new CameraRotation();
+            scientificVisual3DControl.CameraRotation.Camera = scientificVisual3DControl.Scene.CurrentCamera;
+        }
 
         //private static OpenGLAttributesEffect InitializeSceneAttributes(SceneElement parent)
         //{

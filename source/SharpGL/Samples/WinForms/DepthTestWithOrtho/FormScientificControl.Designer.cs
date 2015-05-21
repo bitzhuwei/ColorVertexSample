@@ -55,9 +55,6 @@
             this.scientificControl.OpenGLInitialized += new System.EventHandler(this.openGLControl_OpenGLInitialized);
             this.scientificControl.OpenGLDraw += new SharpGL.RenderEventHandler(this.openGLControl_OpenGLDraw);
             this.scientificControl.Resized += new System.EventHandler(this.openGLControl_Resized);
-            this.scientificControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.openGLControl_MouseDown);
-            this.scientificControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.openGLControl_MouseMove);
-            this.scientificControl.MouseUp += new System.Windows.Forms.MouseEventHandler(this.openGLControl_MouseUp);
             // 
             // cmbCameraType
             // 

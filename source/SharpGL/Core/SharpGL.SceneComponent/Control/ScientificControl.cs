@@ -36,12 +36,12 @@ namespace SharpGL.SceneComponent
 
         public ScientificControl()
         {
-            //ScientificControlHelper.InitializeScene(this);
+            ScientificControlHelper.InitializeScene(this);
             //ScientificControlHelper.InitializeUIScene(this);
 
-            //this.MouseDown += ScientificVisual3DControl_MouseDown;
-            //this.MouseMove += ScientificVisual3DControl_MouseMove;
-            //this.MouseUp += ScientificVisual3DControl_MouseUp;
+            this.MouseDown += ScientificVisual3DControl_MouseDown;
+            this.MouseMove += ScientificVisual3DControl_MouseMove;
+            this.MouseUp += ScientificVisual3DControl_MouseUp;
             this.MouseWheel += ScientificControl_MouseWheel;
             //this.Resized += ScientificVisual3DControl_Resized;
         }
@@ -62,62 +62,62 @@ namespace SharpGL.SceneComponent
             ManualRender(this);
         }
 
-        //void ScientificVisual3DControl_MouseUp(object sender, MouseEventArgs e)
-        //{
-        //    bool render = false;
+        void ScientificVisual3DControl_MouseUp(object sender, MouseEventArgs e)
+        {
+            bool render = false;
 
-        //    if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
-        //    {
-        //        IMouseRotation rotation = this.CameraRotation;
-        //        if (rotation != null)
-        //        {
-        //            rotation.MouseUp(e.X, e.Y);
+            if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
+            {
+                IMouseRotation rotation = this.CameraRotation;
+                if (rotation != null)
+                {
+                    rotation.MouseUp(e.X, e.Y);
 
-        //            render = true;
-        //        }
-        //    }
+                    render = true;
+                }
+            }
 
-        //    if (render)
-        //    { ManualRender(this); }
-        //}
+            if (render)
+            { ManualRender(this); }
+        }
 
-        //void ScientificVisual3DControl_MouseMove(object sender, MouseEventArgs e)
-        //{
-        //    bool render = false;
-        //    if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
-        //    {
-        //        IMouseRotation cameraRotation = this.CameraRotation;
-        //        if (cameraRotation != null)
-        //        {
-        //            cameraRotation.MouseMove(e.X, e.Y);
+        void ScientificVisual3DControl_MouseMove(object sender, MouseEventArgs e)
+        {
+            bool render = false;
+            if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
+            {
+                IMouseRotation cameraRotation = this.CameraRotation;
+                if (cameraRotation != null)
+                {
+                    cameraRotation.MouseMove(e.X, e.Y);
 
-        //            render = true;
-        //        }
-        //    }
+                    render = true;
+                }
+            }
 
-        //    if (render)
-        //    { ManualRender(this); }
-        //}
+            if (render)
+            { ManualRender(this); }
+        }
 
-        //void ScientificVisual3DControl_MouseDown(object sender, MouseEventArgs e)
-        //{
-        //    bool render = false;
+        void ScientificVisual3DControl_MouseDown(object sender, MouseEventArgs e)
+        {
+            bool render = false;
 
-        //    if ((e.Button & MouseButtons.Left) == System.Windows.Forms.MouseButtons.Left)
-        //    {
-        //        IMouseRotation cameraRotation = this.CameraRotation;
-        //        if (cameraRotation != null)
-        //        {
-        //            cameraRotation.SetBounds(this.Width, this.Height);
-        //            cameraRotation.MouseDown(e.X, e.Y);
+            if ((e.Button & MouseButtons.Left) == System.Windows.Forms.MouseButtons.Left)
+            {
+                IMouseRotation cameraRotation = this.CameraRotation;
+                if (cameraRotation != null)
+                {
+                    cameraRotation.SetBounds(this.Width, this.Height);
+                    cameraRotation.MouseDown(e.X, e.Y);
 
-        //            render = true;
-        //        }
-        //    }
+                    render = true;
+                }
+            }
 
-        //    if (render)
-        //    { ManualRender(this); }
-        //}
+            if (render)
+            { ManualRender(this); }
+        }
 
         private void ManualRender(Control control)
         {
@@ -176,10 +176,10 @@ namespace SharpGL.SceneComponent
         ///// </summary>
         //internal MyScene UIScene { get; set; }
 
-        ///// <summary>
-        ///// rotate and translate camera on a sphere, whose center is camera's Target.
-        ///// </summary>
-        //internal CameraRotation CameraRotation { get; set; }
+        /// <summary>
+        /// rotate and translate camera on a sphere, whose center is camera's Target.
+        /// </summary>
+        internal CameraRotation CameraRotation { get; set; }
 
         ///// <summary>
         ///// Draw axis with arc ball rotation effect on viewport as an UI.
