@@ -18,6 +18,7 @@ namespace SharpGL.SceneComponent
     /// <summary>
     /// Scene control which contains axis, color indicator, etc.
     /// <para>Set the <see cref="ScientificModel"/> property to view a model.</para>
+    /// <para>这个控件在Ortho模式的camera下，Line会被大量的点覆盖。这个问题暂时不知道是如何产生的。</para>
     /// </summary>
     public partial class ScientificVisual3DControl : MySceneControl
     {
