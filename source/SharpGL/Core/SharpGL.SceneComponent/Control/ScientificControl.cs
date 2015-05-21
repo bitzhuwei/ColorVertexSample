@@ -21,10 +21,10 @@ namespace SharpGL.SceneComponent
     /// </summary>
     public partial class ScientificControl : MySceneControl
     {
-        ///// <summary>
-        ///// maintains bounding box that contains all models.
-        ///// </summary>
-        //internal ModelContainer modelContainer;
+        /// <summary>
+        /// maintains bounding box that contains all models.
+        /// </summary>
+        internal ModelContainer modelContainer;
 
         ///// <summary>
         ///// Gets the root element of all models.
@@ -191,12 +191,16 @@ namespace SharpGL.SceneComponent
         ///// </summary>
         //internal SimpleUIColorIndicator uiColorIndicator { get; set; }
 
-        //public void AddModelElement(SceneElement element)
-        //{
-        //    this.modelContainer.AddChild(element);
+        /// <summary>
+        /// Add a model's element to model container.
+        /// </summary>
+        /// <param name="element"></param>
+        public void AddModelElement(SceneElement element)
+        {
+            this.modelContainer.AddChild(element);
 
-        //    ManualRender(this);
-        //}
+            ManualRender(this);
+        }
 
         //public void AddScientificModel(IScientificModel model)
         //{

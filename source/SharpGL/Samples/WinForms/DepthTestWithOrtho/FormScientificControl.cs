@@ -36,8 +36,7 @@ namespace DepthTestWithOrtho
             var model = new ModelDemo(
                 new Vertex(-1, -1, -1), new Vertex(1, 1, 1), 
                 verticesCount, SharpGL.Enumerations.BeginMode.Points);
-            this.scientificControl.Scene.SceneContainer.AddChild(model);
-
+            this.scientificControl.AddModelElement(model);
         }
 
         /// <summary>

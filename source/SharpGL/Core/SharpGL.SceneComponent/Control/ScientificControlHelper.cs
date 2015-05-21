@@ -107,9 +107,9 @@ namespace SharpGL.SceneComponent
             //{ Name = "Scientific Model Elements' root" };
             //scene.SceneContainer.AddChild(scientificModelElementRoot);
             //scientificVisual3DControl.scientificModelElementRoot = scientificModelElementRoot;
-            //ModelContainer container = new ModelContainer() { Name = "model space's container which contains models as children." };
-            //scene.SceneContainer.AddChild(container);
-            //scientificVisual3DControl.modelContainer = container;
+            ModelContainer container = new ModelContainer() { Name = "model space's container which contains models as children." };
+            root.AddChild(container);
+            scientificVisual3DControl.modelContainer = container;
 
             scientificVisual3DControl.CameraRotation = new CameraRotation();
             scientificVisual3DControl.CameraRotation.Camera = scientificVisual3DControl.Scene.CurrentCamera;
