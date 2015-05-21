@@ -47,6 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormScientificControl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormScientificControl.Designer.cs">
+      <DependentUpon>FormScientificControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormMySceneControl.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -69,6 +75,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormScientificControl.resx">
+      <DependentUpon>FormScientificControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormMySceneControl.resx">
       <DependentUpon>FormMySceneControl.cs</DependentUpon>
     </EmbeddedResource>

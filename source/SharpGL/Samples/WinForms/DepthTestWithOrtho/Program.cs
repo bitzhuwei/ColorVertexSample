@@ -15,7 +15,9 @@ namespace DepthTestWithOrtho
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormMySceneControl());
+            Application.Run(new FormScientificControl());
+            //Application.Run(new FormScientificVisual3DControl());
+            //Application.Run(new FormMySceneControl());
             //Application.Run(new FormSceneControl());
             //Application.Run(new SharpGLForm());
         }
