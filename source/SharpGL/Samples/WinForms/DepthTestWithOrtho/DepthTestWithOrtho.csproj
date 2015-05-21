@@ -47,6 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormSceneControl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSceneControl.Designer.cs">
+      <DependentUpon>FormSceneControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="SharpGLForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -65,6 +71,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="FormSceneControl.resx">
+      <DependentUpon>FormSceneControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SharpGLForm.resx">
       <DependentUpon>SharpGLForm.cs</DependentUpon>
     </EmbeddedResource>
