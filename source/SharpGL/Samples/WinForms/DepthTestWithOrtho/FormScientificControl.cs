@@ -17,7 +17,6 @@ namespace DepthTestWithOrtho
     /// </summary>
     public partial class FormScientificControl : Form
     {
-        //CameraRotation cameraRotation = new CameraRotation();
         int verticesCount = 100000;
 
         /// <summary>
@@ -34,7 +33,6 @@ namespace DepthTestWithOrtho
             IOrthoCamera orthoCamera = camera;
             orthoCamera.Left = -10; orthoCamera.Bottom = -10; orthoCamera.Near = -10;
             orthoCamera.Right = 10; orthoCamera.Top = 10; orthoCamera.Far = 10;
-            //this.cameraRotation.Camera = camera;
             this.scientificControl.Scene.SceneContainer.Children.Clear();
             this.scientificControl.Scene.SceneContainer.Effects.Clear();
             var model = new ModelDemo(
@@ -42,21 +40,7 @@ namespace DepthTestWithOrtho
                 verticesCount, SharpGL.Enumerations.BeginMode.Points);
             this.scientificControl.Scene.SceneContainer.AddChild(model);
 
-            //this.scientificControl.MouseWheel += openGLControl_MouseWheel;
-            //this.scientificControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.openGLControl_MouseDown);
-            //this.scientificControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.openGLControl_MouseMove);
-            //this.scientificControl.MouseUp += new System.Windows.Forms.MouseEventHandler(this.openGLControl_MouseUp);
         }
-
-        //void openGLControl_MouseWheel(object sender, MouseEventArgs e)
-        //{
-        //    ScientificCamera camera = this.scientificControl.Scene.CurrentCamera;
-        //    //if (camera == null) { return; }
-
-        //    camera.Scale(e.Delta);
-
-        //    this.openGLControl_Resized(sender, e);
-        //}
 
         /// <summary>
         /// Handles the OpenGLDraw event of the openGLControl control.
@@ -137,23 +121,6 @@ namespace DepthTestWithOrtho
             gl.Viewport(0, 0, w, h);
             scientificCamera.Project(gl);
         }
-
-        //private void openGLControl_MouseDown(object sender, MouseEventArgs e)
-        //{
-        //    this.cameraRotation.SetBounds(this.scientificControl.Width, this.scientificControl.Height);
-        //    this.cameraRotation.MouseDown(e.X, e.Y);
-        //}
-
-        //private void openGLControl_MouseUp(object sender, MouseEventArgs e)
-        //{
-        //    this.cameraRotation.MouseUp(e.X, e.Y);
-        //}
-
-        //private void openGLControl_MouseMove(object sender, MouseEventArgs e)
-        //{
-        //    this.cameraRotation.MouseMove(e.X, e.Y);
-        //    this.CameraResized();
-        //}
 
         private void SharpGLForm_Load(object sender, EventArgs e)
         {
