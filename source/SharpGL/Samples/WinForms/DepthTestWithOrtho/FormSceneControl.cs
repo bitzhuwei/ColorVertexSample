@@ -25,10 +25,10 @@ namespace DepthTestWithOrtho
             Position = new SharpGL.SceneGraph.Vertex(0, 0, 5),
         };
 
-        List<Vertex> positions = new List<Vertex>();
-        List<GLColor> colors = new List<GLColor>();
+        //List<Vertex> positions = new List<Vertex>();
+        //List<GLColor> colors = new List<GLColor>();
         int verticesCount = 100000;
-        Random random = new Random();
+        //Random random = new Random();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SharpGLForm"/> class.
@@ -37,26 +37,33 @@ namespace DepthTestWithOrtho
         {
             InitializeComponent();
 
-            for (int i = 0; i < verticesCount; i++)
-            {
-                var position = new Vertex();
-                position.X = (float)random.NextDouble() * 2 - 1;
-                position.Y = (float)random.NextDouble() * 2 - 1;
-                position.Z = (float)random.NextDouble() * 2 - 1;
-                positions.Add(position);
-                var color = new GLColor();
-                color.R = (float)random.NextDouble();
-                color.G = (float)random.NextDouble();
-                color.B = (float)random.NextDouble();
-                color.A = (float)random.NextDouble();
-                colors.Add(color);
-            }
+            //for (int i = 0; i < verticesCount; i++)
+            //{
+            //    var position = new Vertex();
+            //    position.X = (float)random.NextDouble() * 2 - 1;
+            //    position.Y = (float)random.NextDouble() * 2 - 1;
+            //    position.Z = (float)random.NextDouble() * 2 - 1;
+            //    positions.Add(position);
+            //    var color = new GLColor();
+            //    color.R = (float)random.NextDouble();
+            //    color.G = (float)random.NextDouble();
+            //    color.B = (float)random.NextDouble();
+            //    color.A = (float)random.NextDouble();
+            //    colors.Add(color);
+            //}
 
             IOrthoCamera orthoCamera = camera;
             orthoCamera.Left = -10; orthoCamera.Bottom = -10; orthoCamera.Near = -10;
             orthoCamera.Right = 10; orthoCamera.Top = 10; orthoCamera.Far = 10;
             this.sceneControl.Scene.CurrentCamera = camera;
             this.cameraRotation.Camera = this.camera;
+            this.sceneControl.Scene.SceneContainer.Children.Clear();
+            this.sceneControl.Scene.SceneContainer.Effects.Clear();
+            var model = new ModelDemo(
+                new Vertex(-1, -1, -1), new Vertex(1, 1, 1), 
+                verticesCount, SharpGL.Enumerations.BeginMode.Points);
+            this.sceneControl.Scene.SceneContainer.AddChild(model);
+
             this.sceneControl.MouseWheel += openGLControl_MouseWheel;
         }
 
@@ -77,27 +84,27 @@ namespace DepthTestWithOrtho
         /// <param name="e">The <see cref="RenderEventArgs"/> instance containing the event data.</param>
         private void openGLControl_OpenGLDraw(object sender, RenderEventArgs e)
         {
-            var gl = this.sceneControl.OpenGL;
-            gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT);
-            gl.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+            //var gl = this.sceneControl.OpenGL;
+            //gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT);
+            //gl.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-            DrawPoints(gl);
-            DrawCube(gl);
+            //DrawPoints(gl);
+            //DrawCube(gl);
         }
 
-        private void DrawPoints(OpenGL gl)
-        {
-            gl.LoadIdentity();
+        //private void DrawPoints(OpenGL gl)
+        //{
+        //    gl.LoadIdentity();
 
-            gl.Begin(SharpGL.Enumerations.BeginMode.Points);
-            for (int i = 0; i < verticesCount; i++)
-            {
-                gl.Color(colors[i].R, colors[i].G, colors[i].B);
-                gl.Vertex(positions[i].X, positions[i].Y, positions[i].Z);
-            }
-            gl.End();
+        //    gl.Begin(SharpGL.Enumerations.BeginMode.Points);
+        //    for (int i = 0; i < verticesCount; i++)
+        //    {
+        //        gl.Color(colors[i].R, colors[i].G, colors[i].B);
+        //        gl.Vertex(positions[i].X, positions[i].Y, positions[i].Z);
+        //    }
+        //    gl.End();
 
-        }
+        //}
 
        
         private void DrawCube(OpenGL gl)

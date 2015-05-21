@@ -53,6 +53,8 @@
     <Compile Include="FormSceneControl.Designer.cs">
       <DependentUpon>FormSceneControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="ModelDemo.cs" />
+    <Compile Include="ModelDemoHelper.cs" />
     <Compile Include="SharpGLForm.cs">
       <SubType>Form</SubType>
     </Compile>
