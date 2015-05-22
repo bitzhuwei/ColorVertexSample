@@ -32,7 +32,6 @@ namespace SharpGL.SceneComponent
         public ModelContainer ModelContainer
         { get { return this.modelContainer; } }
 
-        //private EViewType viewType;
 
         public ScientificControl()
         {
@@ -218,13 +217,13 @@ namespace SharpGL.SceneComponent
         //    ManualRender(this);
         //}
 
-        //public void ClearScientificModels()
-        //{
-        //    //this.modelContainer.ClearChild();
-        //    this.modelContainer.Children.Clear();
+        public void ClearScientificModels()
+        {
+            //this.modelContainer.ClearChild();
+            this.modelContainer.Children.Clear();
 
-        //    ManualRender(this);
-        //}
+            ManualRender(this);
+        }
 
         ///// <summary>
         ///// Determins whether render every model's bounding box or not.
@@ -274,22 +273,22 @@ namespace SharpGL.SceneComponent
         //    }
         //}
 
-        ///// <summary>
-        ///// Determins whether to render model container's bounding box or not.
-        ///// </summary>
-        //public bool RenderBoundingBox
-        //{
-        //    get { return this.modelContainer.RenderBoundingBox; }
-        //    set
-        //    {
-        //        if (this.modelContainer.RenderBoundingBox != value)
-        //        {
-        //            this.modelContainer.RenderBoundingBox = value;
+        /// <summary>
+        /// Determins whether to render model container's bounding box or not.
+        /// </summary>
+        public bool RenderBoundingBox
+        {
+            get { return this.modelContainer.RenderBoundingBox; }
+            set
+            {
+                if (this.modelContainer.RenderBoundingBox != value)
+                {
+                    this.modelContainer.RenderBoundingBox = value;
 
-        //            ManualRender(this);
-        //        }
-        //    }
-        //}
+                    ManualRender(this);
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets camera's view type.
@@ -308,21 +307,23 @@ namespace SharpGL.SceneComponent
             }
         }
 
-        ///// <summary>
-        ///// Gets or sets view type(top, bottom, left, right, front, back and userView).
-        ///// </summary>
-        //public EViewType ViewType
-        //{
-        //    get { return this.viewType; }
-        //    set
-        //    {
-        //        this.viewType = value;
-        //        CameraHelper.ApplyViewType(this.modelContainer.BoundingBox, this.OpenGL, this.Scene.CurrentCamera, value);
-        //        // force CameraRotation to udpate.
-        //        this.CameraRotation.Camera = this.Scene.CurrentCamera;
-        //        ManualRender(this);
-        //    }
-        //}
+        private EViewType viewType;
+
+        /// <summary>
+        /// Gets or sets view type(top, bottom, left, right, front, back and userView).
+        /// </summary>
+        public EViewType ViewType
+        {
+            get { return this.viewType; }
+            set
+            {
+                this.viewType = value;
+                CameraHelper.ApplyViewType(this.modelContainer.BoundingBox, this.OpenGL, this.Scene.CurrentCamera, value);
+                // force CameraRotation to udpate.
+                this.CameraRotation.Camera = this.Scene.CurrentCamera;
+                ManualRender(this);
+            }
+        }
 
         //public void SetColorIndicator(float minValue, float maxValue, float step)
         //{
