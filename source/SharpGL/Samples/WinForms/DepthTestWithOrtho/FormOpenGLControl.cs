@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using SharpGL;
 using SharpGL.SceneComponent;
 using SharpGL.SceneGraph;
+using SharpGL.SceneGraph.Core;
 
 namespace DepthTestWithOrtho
 {
@@ -22,13 +23,11 @@ namespace DepthTestWithOrtho
         {
             Target = new SharpGL.SceneGraph.Vertex(0, 0, 0),
             UpVector = new SharpGL.SceneGraph.Vertex(0, 1, 0),
-            Position = new SharpGL.SceneGraph.Vertex(0, 0, 5),
+            Position = new SharpGL.SceneGraph.Vertex(0, 0, 10),
         };
 
-        List<Vertex> positions = new List<Vertex>();
-        List<GLColor> colors = new List<GLColor>();
+        List<SceneElement> elements = new List<SceneElement>();
         int verticesCount = 100000;
-        Random random = new Random();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FormOpenGLControl"/> class.
@@ -37,24 +36,30 @@ namespace DepthTestWithOrtho
         {
             InitializeComponent();
 
-            for (int i = 0; i < verticesCount; i++)
             {
-                var position = new Vertex();
-                position.X = (float)random.NextDouble() * 2 - 1;
-                position.Y = (float)random.NextDouble() * 2 - 1;
-                position.Z = (float)random.NextDouble() * 2 - 1;
-                positions.Add(position);
-                var color = new GLColor();
-                color.R = (float)random.NextDouble();
-                color.G = (float)random.NextDouble();
-                color.B = (float)random.NextDouble();
-                color.A = (float)random.NextDouble();
-                colors.Add(color);
+                var model = Model.PointModel.Create(verticesCount, 1, 1, 1, -3, -1);
+                var element = new ScientificModelElement(model);
+                elements.Add(element);
+            }
+            {
+                var model = Model.PointModel.Create(verticesCount, 1, 1, 1, -1, 1);
+                var element = new ScientificModelElement(model);
+                elements.Add(element);
+            }
+            {
+                var model = Model.PointModel.Create(verticesCount, 1, 1, 1, 1, 3);
+                var element = new ScientificModelElement(model);
+                elements.Add(element);
+            }
+            {
+                var modelContainer = new ModelContainer();
+                modelContainer.BoundingBox.Set(-3.1f, -3.1f, -3.1f, 3.1f, 3.1f, 3.1f);
+                elements.Add(modelContainer);
             }
 
             IOrthoCamera orthoCamera = camera;
-            orthoCamera.Left = -10; orthoCamera.Bottom = -10; orthoCamera.Near = -10;
-            orthoCamera.Right = 10; orthoCamera.Top = 10; orthoCamera.Far = 10;
+            orthoCamera.Left = -10; orthoCamera.Bottom = -10; orthoCamera.Near = 0;
+            orthoCamera.Right = 10; orthoCamera.Top = 10; orthoCamera.Far = 15;
             this.cameraRotation.Camera = this.camera;
             this.openGLControl.MouseWheel += openGLControl_MouseWheel;
         }
@@ -80,125 +85,15 @@ namespace DepthTestWithOrtho
             gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT);
             gl.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-            DrawPoints(gl);
-            DrawCube(gl);
-        }
-
-        private void DrawPoints(OpenGL gl)
-        {
-            gl.LoadIdentity();
-
-            gl.Begin(SharpGL.Enumerations.BeginMode.Points);
-            for (int i = 0; i < verticesCount; i++)
+            foreach (var item in this.elements)
             {
-                gl.Color(colors[i].R, colors[i].G, colors[i].B);
-                gl.Vertex(positions[i].X, positions[i].Y, positions[i].Z);
+                IRenderable renderable = item as IRenderable;
+                if (renderable != null)
+                {
+                    renderable.Render(gl, RenderMode.Render);
+                }
             }
-            gl.End();
-
         }
-
-       
-        private void DrawCube(OpenGL gl)
-        {
-            float minX = -1;
-            float minY = -1;
-            float minZ = -1;
-            float maxX = 1;
-            float maxY = 1;
-            float maxZ = 1;
-
-            gl.LoadIdentity();
-
-            gl.Color(1f, 1f, 1f);
-            //gl.Color(1f, 0f, 0f);
-            gl.Begin(SharpGL.Enumerations.BeginMode.LineLoop);
-            gl.Vertex(minX, minY, minZ);
-            gl.Vertex(minX, minY, maxZ);
-            gl.Vertex(minX, maxY, maxZ);
-            gl.Vertex(minX, maxY, minZ);
-            gl.End();
-
-            //gl.Color(0f, 1f, 0f);
-            gl.Begin(SharpGL.Enumerations.BeginMode.LineLoop);
-            gl.Vertex(maxX, minY, minZ);
-            gl.Vertex(maxX, minY, maxZ);
-            gl.Vertex(maxX, maxY, maxZ);
-            gl.Vertex(maxX, maxY, minZ);
-            gl.End();
-
-            //gl.Color(0, 0, 1f);
-            gl.Begin(SharpGL.Enumerations.BeginMode.Lines);
-            gl.Vertex(minX, minY, minZ);
-            gl.Vertex(maxX, minY, minZ);
-            gl.Vertex(minX, minY, maxZ);
-            gl.Vertex(maxX, minY, maxZ);
-            gl.Vertex(minX, maxY, maxZ);
-            gl.Vertex(maxX, maxY, maxZ);
-            gl.Vertex(minX, maxY, minZ);
-            gl.Vertex(maxX, maxY, minZ);
-            gl.End();
-
-        }
-
-        //private void NewDraw(OpenGL gl)
-        //{
-        //    gl.Enable(OpenGL.GL_DEPTH_TEST);//深度测试
-        //    gl.Begin(OpenGL.GL_TRIANGLES);
-        //    gl.Color(255, 0, 0);      //红色
-        //    gl.Vertex(-50.0f, 0.0f, 0.0f);
-        //    gl.Vertex(50.0f, 0.0f, 0.0f);
-        //    gl.Vertex(0.0f, 80.0f, 0.0f);
-
-        //    gl.Color(0, 255, 0);    //绿色
-        //    gl.Vertex(-50.0f, 0.0f, -10.0f);
-        //    gl.Vertex(50.0f, 0.0f, -10.0f);
-        //    gl.Vertex(0.0f, 80.0f, -10.0f);
-        //    gl.End();
-        //}
-
-        //private void OriginalDraw(OpenGL gl)
-        //{
-
-        //    //  Load the identity matrix.
-        //    gl.LoadIdentity();
-
-        //    //  Rotate around the Y axis.
-        //    gl.Rotate(rotation, 0.0f, 1.0f, 0.0f);
-
-        //    //  Draw a coloured pyramid.
-        //    gl.Begin(OpenGL.GL_TRIANGLES);
-        //    gl.Color(1.0f, 0.0f, 0.0f);
-        //    gl.Vertex(0.0f, 1.0f, 0.0f);
-        //    gl.Color(0.0f, 1.0f, 0.0f);
-        //    gl.Vertex(-1.0f, -1.0f, 1.0f);
-        //    gl.Color(0.0f, 0.0f, 1.0f);
-        //    gl.Vertex(1.0f, -1.0f, 1.0f);
-        //    gl.Color(1.0f, 0.0f, 0.0f);
-        //    gl.Vertex(0.0f, 1.0f, 0.0f);
-        //    gl.Color(0.0f, 0.0f, 1.0f);
-        //    gl.Vertex(1.0f, -1.0f, 1.0f);
-        //    gl.Color(0.0f, 1.0f, 0.0f);
-        //    gl.Vertex(1.0f, -1.0f, -1.0f);
-        //    gl.Color(1.0f, 0.0f, 0.0f);
-        //    gl.Vertex(0.0f, 1.0f, 0.0f);
-        //    gl.Color(0.0f, 1.0f, 0.0f);
-        //    gl.Vertex(1.0f, -1.0f, -1.0f);
-        //    gl.Color(0.0f, 0.0f, 1.0f);
-        //    gl.Vertex(-1.0f, -1.0f, -1.0f);
-        //    gl.Color(1.0f, 0.0f, 0.0f);
-        //    gl.Vertex(0.0f, 1.0f, 0.0f);
-        //    gl.Color(0.0f, 0.0f, 1.0f);
-        //    gl.Vertex(-1.0f, -1.0f, -1.0f);
-        //    gl.Color(0.0f, 1.0f, 0.0f);
-        //    gl.Vertex(-1.0f, -1.0f, 1.0f);
-        //    gl.End();
-
-        //    //  Nudge the rotation.
-        //    rotation += 3.0f;
-        //}
-
-
 
         /// <summary>
         /// Handles the OpenGLInitialized event of the openGLControl control.
@@ -226,9 +121,6 @@ namespace DepthTestWithOrtho
         private void openGLControl_Resized(object sender, EventArgs e)
         {
             CameraResized();
-            //NewResized();
-            //OirginalResized();
-
         }
 
         private void CameraResized()
@@ -261,53 +153,6 @@ namespace DepthTestWithOrtho
             gl.Viewport(0, 0, w, h);
             this.camera.Project(gl);
         }
-
-        //private void NewResized()
-        //{
-        //    OpenGL gl = openGLControl.OpenGL;
-        //    var h = this.openGLControl.Height;
-        //    var w = this.openGLControl.Width;
-
-        //    if (h == 0)
-        //        h = 1;
-        //    gl.Viewport(0, 0, w, h);
-        //    gl.MatrixMode(OpenGL.GL_PROJECTION);
-        //    gl.LoadIdentity();
-        //    if (w < h)
-        //        gl.Ortho(-10.0f, 10.0f, -10.0f * h / w, 10.0f * h / w, -10.0f, 10.0f);
-        //    else
-        //        gl.Ortho(-10.0f * w / h, 10.0f * w / h, -10.0f, 10.0f, -10.0f, 10.0f);
-        //    gl.MatrixMode(OpenGL.GL_MODELVIEW);
-        //    gl.LoadIdentity();
-        //}
-
-        //private void OirginalResized()
-        //{
-        //    //  TODO: Set the projection matrix here.
-
-        //    //  Get the OpenGL object.
-        //    OpenGL gl = openGLControl.OpenGL;
-
-        //    //  Set the projection matrix.
-        //    gl.MatrixMode(OpenGL.GL_PROJECTION);
-
-        //    //  Load the identity.
-        //    gl.LoadIdentity();
-
-        //    //  Create a perspective transformation.
-        //    gl.Perspective(60.0f, (double)Width / (double)Height, 0.01, 100.0);
-
-        //    //  Use the 'look at' helper function to position and aim the camera.
-        //    gl.LookAt(-5, 5, -5, 0, 0, 0, 0, 1, 0);
-
-        //    //  Set the modelview matrix.
-        //    gl.MatrixMode(OpenGL.GL_MODELVIEW);
-        //}
-
-        ///// <summary>
-        ///// The current rotation.
-        ///// </summary>
-        //private float rotation = 0.0f;
 
         private void openGLControl_MouseDown(object sender, MouseEventArgs e)
         {

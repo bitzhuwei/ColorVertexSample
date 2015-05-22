@@ -45,6 +45,9 @@
   <ItemGroup>
     <Compile Include="Camera\IOrthoCamera.cs" />
     <Compile Include="Camera\IPerspectiveCamera.cs" />
+    <Compile Include="Camera\SatelliteRotation.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Control\EViewType.cs" />
     <Compile Include="Control\CameraHelper.cs" />
     <Compile Include="Control\ScientificControl.cs">
@@ -67,7 +70,6 @@
     <Compile Include="MySharpGL\ArcBallTransform.cs" />
     <Compile Include="MySharpGL\ArcBallTransformEffect.cs" />
     <Compile Include="ByteColor.cs" />
-    <Compile Include="Camera\SatelliteRotation.cs" />
     <Compile Include="Camera\ECameraType.cs" />
     <Compile Include="MySharpGL\MyOpenGLControl.cs">
       <SubType>UserControl</SubType>
