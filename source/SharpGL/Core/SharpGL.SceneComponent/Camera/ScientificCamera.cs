@@ -147,18 +147,20 @@ namespace SharpGL.SceneComponent
             if (camera.CameraType == ECameraType.Perspecitive)
             {
                 var target2Position = camera.Position - camera.Target;
-                if (target2Position.Magnitude () < 0.1)
+                if (target2Position.Magnitude () < 0.01)
                 {
                     target2Position.Normalize();
-                    target2Position.X *= 0.1f;
-                    target2Position.Y *= 0.1f;
-                    target2Position.Z *= 0.1f;
+                    target2Position.X *= 0.01f;
+                    target2Position.Y *= 0.01f;
+                    target2Position.Z *= 0.01f;
                 }
-                var newDiff = target2Position * (1 - delta * 0.001f);
-                camera.Position = camera.Target + newDiff;
-                // Increase ortho camera's far property in case the camera's position is far more.
+                var scaledTarget2Position = target2Position * (1 - delta * 0.001f);
+                camera.Position = camera.Target + scaledTarget2Position;
+                // Increase ortho camera's Near/Far property in case the camera's position changes too much.
                 IOrthoCamera orthoCamera = camera;
-                orthoCamera.Far += newDiff.Magnitude() - target2Position.Magnitude();
+                double lengthDiff = scaledTarget2Position.Magnitude() - target2Position.Magnitude();
+                orthoCamera.Far += lengthDiff;
+                orthoCamera.Near += lengthDiff;
             }
             else if (camera.CameraType == ECameraType.Ortho)
             {
