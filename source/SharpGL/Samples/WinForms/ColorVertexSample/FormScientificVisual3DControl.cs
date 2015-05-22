@@ -37,6 +37,11 @@ namespace ColorVertexSample
             {
                 this.cmbViewType.Items.Add(item);
             }
+
+            foreach (string item in Enum.GetNames(typeof(ECameraType)))
+            {
+                this.cmbCameraType.Items.Add(item);
+            }
         }
 
         private void Create3DObject(object sender, EventArgs e)
@@ -57,11 +62,11 @@ namespace ColorVertexSample
 
                 //this.sceneControl.AddScientificModel(model);// This is replaced by codes below.
                 ScientificModelElement element = new ScientificModelElement(model, false, true);
-                this.sceneControl.AddModelElement(element);
+                this.scientificVisual3DControl.AddModelElement(element);
                 // update ModelContainer's BoundingBox.
-                BoundingBox boundingBox = this.sceneControl.ModelContainer.BoundingBox;
+                BoundingBox boundingBox = this.scientificVisual3DControl.ModelContainer.BoundingBox;
                 IBoundingBox modelBoundingBox = model.BoundingBox;
-                if (this.sceneControl.ModelContainer.Children.Count > 1)
+                if (this.scientificVisual3DControl.ModelContainer.Children.Count > 1)
                 {
                     boundingBox.Extend(modelBoundingBox.MinPosition);
                     boundingBox.Extend(modelBoundingBox.MaxPosition);
@@ -76,9 +81,9 @@ namespace ColorVertexSample
                         modelBoundingBox.MaxPosition.Z);
                 }
                 // update ViewType to UserView.
-                this.sceneControl.ViewType = EViewType.UserView;
+                this.scientificVisual3DControl.ViewType = EViewType.UserView;
 
-                this.sceneControl.SetColorIndicator(minValue, maxValue, step);
+                this.scientificVisual3DControl.SetColorIndicator(minValue, maxValue, step);
             }
             catch (Exception error)
             {
@@ -106,57 +111,39 @@ namespace ColorVertexSample
 
         private void btnClearModels_Click(object sender, EventArgs e)
         {
-            this.sceneControl.ClearScientificModels();
-        }
-
-        private void rdoPerspective_CheckedChanged(object sender, EventArgs e)
-        {
-            if (this.rdoPerspective.Checked)
-            {
-                this.sceneControl.CameraType = ECameraType.Perspecitive;
-            }
-        }
-
-        private void rdoOrtho_CheckedChanged(object sender, EventArgs e)
-        {
-            if (this.rdoOrtho.Checked)
-            {
-                this.sceneControl.CameraType = ECameraType.Ortho;
-            }
+            this.scientificVisual3DControl.ClearScientificModels();
         }
 
         private void lblDebugInfo_MouseClick(object sender, MouseEventArgs e)
         {
             if(e.Button== System.Windows.Forms.MouseButtons.Right)
             {
-                bool depthTest = this.sceneControl.OpenGL.IsEnabled(OpenGL.GL_DEPTH_TEST);
+                bool depthTest = this.scientificVisual3DControl.OpenGL.IsEnabled(OpenGL.GL_DEPTH_TEST);
                 StringBuilder builder = new StringBuilder();
                 builder.Append(string.Format("depth test: {0}", depthTest ? "enabled" : "disabled"));
                 MessageBox.Show(builder.ToString());
             }
         }
 
-        private void chkRenderModels_CheckedChanged(object sender, EventArgs e)
-        {
-            //this.sceneControl.RenderModels = this.chkRenderModels.Checked;
-        }
-
-        private void chkRenderModelsBox_CheckedChanged(object sender, EventArgs e)
-        {
-            //this.sceneControl.RenderModelsBoundingBox = this.chkRenderModelsBox.Checked;
-        }
-
         private void chkRenderContainerBox_CheckedChanged(object sender, EventArgs e)
         {
-            this.sceneControl.RenderBoundingBox = this.chkRenderContainerBox.Checked;
+            this.scientificVisual3DControl.RenderBoundingBox = this.chkRenderContainerBox.Checked;
         }
 
         private void cmbViewType_SelectedIndexChanged(object sender, EventArgs e)
         {
             string selected = this.cmbViewType.SelectedItem.ToString();
             EViewType viewType = (EViewType)Enum.Parse(typeof(EViewType), selected);
-            this.sceneControl.ViewType = viewType;
+            this.scientificVisual3DControl.ViewType = viewType;
         }
+
+        private void cmbCameraType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selected = this.cmbCameraType.SelectedItem.ToString();
+            ECameraType cameraType = (ECameraType)Enum.Parse(typeof(ECameraType), selected);
+            this.scientificVisual3DControl.CameraType = cameraType;
+        }
+
 
     }
 }
