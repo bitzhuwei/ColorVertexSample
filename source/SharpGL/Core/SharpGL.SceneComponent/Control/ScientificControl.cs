@@ -291,22 +291,22 @@ namespace SharpGL.SceneComponent
         //    }
         //}
 
-        ///// <summary>
-        ///// Gets or sets camera's view type.
-        ///// </summary>
-        //public ECameraType CameraType
-        //{
-        //    get { return this.Scene.CurrentCamera.CameraType; }
-        //    set
-        //    {
-        //        if (this.Scene.CurrentCamera.CameraType != value)
-        //        {
-        //            this.Scene.CurrentCamera.CameraType = value;
+        /// <summary>
+        /// Gets or sets camera's view type.
+        /// </summary>
+        public ECameraType CameraType
+        {
+            get { return this.Scene.CurrentCamera.CameraType; }
+            set
+            {
+                if (this.Scene.CurrentCamera.CameraType != value)
+                {
+                    this.Scene.CurrentCamera.CameraType = value;
 
-        //            ManualRender(this);
-        //        }
-        //    }
-        //}
+                    ManualRender(this);
+                }
+            }
+        }
 
         ///// <summary>
         ///// Gets or sets view type(top, bottom, left, right, front, back and userView).

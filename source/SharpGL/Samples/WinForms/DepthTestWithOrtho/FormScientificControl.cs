@@ -51,8 +51,7 @@ namespace DepthTestWithOrtho
         {
             var type = (ECameraType)this.cmbCameraType.SelectedItem;
             this.groupBox1.Visible = type == ECameraType.Ortho;
-            this.scientificControl.Scene.CurrentCamera.CameraType = type;
-            this.scientificControl.UpdateCamera();
+            this.scientificControl.CameraType = type;
         }
 
         private void txtZNear_TextChanged(object sender, EventArgs e)
