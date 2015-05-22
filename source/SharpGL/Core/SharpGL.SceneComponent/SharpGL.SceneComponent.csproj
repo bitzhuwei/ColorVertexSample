@@ -67,7 +67,7 @@
     <Compile Include="MySharpGL\ArcBallTransform.cs" />
     <Compile Include="MySharpGL\ArcBallTransformEffect.cs" />
     <Compile Include="ByteColor.cs" />
-    <Compile Include="Camera\CameraRotation.cs" />
+    <Compile Include="Camera\SatelliteRotation.cs" />
     <Compile Include="Camera\ECameraType.cs" />
     <Compile Include="MySharpGL\MyOpenGLControl.cs">
       <SubType>UserControl</SubType>

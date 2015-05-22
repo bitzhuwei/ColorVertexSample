@@ -111,7 +111,7 @@ namespace SharpGL.SceneComponent
             root.AddChild(container);
             scientificVisual3DControl.modelContainer = container;
 
-            scientificVisual3DControl.CameraRotation = new CameraRotation();
+            scientificVisual3DControl.CameraRotation = new SatelliteRotation();
             scientificVisual3DControl.CameraRotation.Camera = scientificVisual3DControl.Scene.CurrentCamera;
         }
 

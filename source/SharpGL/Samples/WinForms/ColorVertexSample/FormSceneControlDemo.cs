@@ -17,9 +17,9 @@ namespace ColorVertexSample
     {
         private ModelContainer modelContainer;
 
-        private CameraRotation cameraRotation;
+        private SatelliteRotation cameraRotation;
 
-        public CameraRotation CameraRotation
+        public SatelliteRotation CameraRotation
         {
             get { return cameraRotation; }
             set { cameraRotation = value; }
@@ -60,7 +60,7 @@ namespace ColorVertexSample
             };
             this.sceneControl.Scene.CurrentCamera = camera;
 
-            this.cameraRotation = new CameraRotation();
+            this.cameraRotation = new SatelliteRotation();
             this.cameraRotation.Camera = this.sceneControl.Scene.CurrentCamera as ScientificCamera;
 
             this.sceneControl.MouseDown += ScientificVisual3DControl_MouseDown;

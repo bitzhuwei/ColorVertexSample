@@ -17,7 +17,7 @@ namespace DepthTestWithOrtho
     /// </summary>
     public partial class FormMySceneControl : Form
     {
-        CameraRotation cameraRotation = new CameraRotation();
+        SatelliteRotation cameraRotation = new SatelliteRotation();
         ScientificCamera camera;
         //ScientificCamera camera = new ScientificCamera(ECameraType.Ortho)
         //{

@@ -17,7 +17,7 @@ namespace DepthTestWithOrtho
     /// </summary>
     public partial class FormOpenGLControl : Form
     {
-        CameraRotation cameraRotation = new CameraRotation();
+        SatelliteRotation cameraRotation = new SatelliteRotation();
         ScientificCamera camera = new ScientificCamera(ECameraType.Ortho)
         {
             Target = new SharpGL.SceneGraph.Vertex(0, 0, 0),

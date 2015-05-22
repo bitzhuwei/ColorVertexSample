@@ -112,7 +112,7 @@ namespace SharpGL.SceneComponent
             scene.SceneContainer.AddChild(container);
             scientificVisual3DControl.modelContainer = container;
 
-            scientificVisual3DControl.CameraRotation = new CameraRotation();
+            scientificVisual3DControl.CameraRotation = new SatelliteRotation();
         }
 
         private static OpenGLAttributesEffect InitializeSceneAttributes(SceneElement parent)

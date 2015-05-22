@@ -179,7 +179,7 @@ namespace SharpGL.SceneComponent
         /// <summary>
         /// rotate and translate camera on a sphere, whose center is camera's Target.
         /// </summary>
-        internal CameraRotation CameraRotation { get; set; }
+        internal SatelliteRotation CameraRotation { get; set; }
 
         ///// <summary>
         ///// Draw axis with arc ball rotation effect on viewport as an UI.
@@ -319,8 +319,8 @@ namespace SharpGL.SceneComponent
             {
                 this.viewType = value;
                 CameraHelper.ApplyViewType(this.modelContainer.BoundingBox, this.OpenGL, this.Scene.CurrentCamera, value);
-                // force CameraRotation to udpate.
-                this.CameraRotation.Camera = this.Scene.CurrentCamera;
+                //// force CameraRotation to udpate.
+                //this.CameraRotation.Camera = this.Scene.CurrentCamera;
                 ManualRender(this);
             }
         }
@@ -339,8 +339,8 @@ namespace SharpGL.SceneComponent
         public void UpdateCamera()
         {
             CameraHelper.AdjustCamera(this.modelContainer.BoundingBox, this.OpenGL, this.Scene.CurrentCamera);
-            // force CameraRotation to udpate.
-            this.CameraRotation.Camera = this.Scene.CurrentCamera;
+            //// force CameraRotation to udpate.
+            //this.CameraRotation.Camera = this.Scene.CurrentCamera;
             ManualRender(this);
         }
 
