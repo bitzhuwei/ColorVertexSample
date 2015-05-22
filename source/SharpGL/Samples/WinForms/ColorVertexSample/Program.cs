@@ -21,7 +21,8 @@ namespace ColorVertexSample
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new FormScientificVisual3DControl());
-            Application.Run(new FormSceneControlDemo());
+            Application.Run(new FormScientificControl());
+            //Application.Run(new FormSceneControlDemo());
         }
 
         private static void Application_ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)
