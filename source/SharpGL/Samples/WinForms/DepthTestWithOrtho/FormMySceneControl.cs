@@ -54,6 +54,9 @@ namespace DepthTestWithOrtho
             //}
 
             this.camera = this.mySceneControl.Scene.CurrentCamera;
+            this.camera.Target = new SharpGL.SceneGraph.Vertex(0, 0, 0);
+            this.camera.UpVector = new SharpGL.SceneGraph.Vertex(0, 1, 0);
+            this.camera.Position = new SharpGL.SceneGraph.Vertex(0, 0, 5);
             IOrthoCamera orthoCamera = this.camera;
             orthoCamera.Left = -10; orthoCamera.Bottom = -10; orthoCamera.Near = -10;
             orthoCamera.Right = 10; orthoCamera.Top = 10; orthoCamera.Far = 10;
