@@ -330,5 +330,15 @@ namespace SharpGL.SceneComponent
             ManualRender(this);
         }
 
+        /// <summary>
+        /// Update camera when resized, model container's bounding box updated, etc.
+        /// </summary>
+        public void UpdateCamera()
+        {
+            CameraHelper.AdjustCamera(this.modelContainer.BoundingBox, this.OpenGL, this.Scene.CurrentCamera);
+            // force CameraRotation to udpate.
+            this.CameraRotation.Camera = this.Scene.CurrentCamera;
+            ManualRender(this);
+        }
     }
 }

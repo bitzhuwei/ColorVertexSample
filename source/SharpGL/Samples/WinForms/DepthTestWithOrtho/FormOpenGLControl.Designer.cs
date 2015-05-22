@@ -1,6 +1,6 @@
 ﻿namespace DepthTestWithOrtho
 {
-    partial class SharpGLForm
+    partial class FormOpenGLControl
     {
         /// <summary>
         /// Required designer variable.

@@ -32,7 +32,7 @@ namespace DepthTestWithOrtho
         //Random random = new Random();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SharpGLForm"/> class.
+        /// Initializes a new instance of the <see cref="FormOpenGLControl"/> class.
         /// </summary>
         public FormMySceneControl()
         {

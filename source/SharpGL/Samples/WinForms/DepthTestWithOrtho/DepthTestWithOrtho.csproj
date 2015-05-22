@@ -48,6 +48,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutBox1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutBox1.Designer.cs">
+      <DependentUpon>AboutBox1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormScientificVisual3DControl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormScientificVisual3DControl.Designer.cs">
+      <DependentUpon>FormScientificVisual3DControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormScientificControl.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -70,14 +82,20 @@
     <Compile Include="ModelDemoHelper.cs" />
     <Compile Include="Model\PointModel.cs" />
     <Compile Include="Model\PointModelHelper.cs" />
-    <Compile Include="SharpGLForm.cs">
+    <Compile Include="FormOpenGLControl.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SharpGLForm.Designer.cs">
-      <DependentUpon>SharpGLForm.cs</DependentUpon>
+    <Compile Include="FormOpenGLControl.Designer.cs">
+      <DependentUpon>FormOpenGLControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AboutBox1.resx">
+      <DependentUpon>AboutBox1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormScientificVisual3DControl.resx">
+      <DependentUpon>FormScientificVisual3DControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormScientificControl.resx">
       <DependentUpon>FormScientificControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -97,8 +115,8 @@
     <EmbeddedResource Include="FormSceneControl.resx">
       <DependentUpon>FormSceneControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SharpGLForm.resx">
-      <DependentUpon>SharpGLForm.cs</DependentUpon>
+    <EmbeddedResource Include="FormOpenGLControl.resx">
+      <DependentUpon>FormOpenGLControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">
@@ -128,6 +146,9 @@
       <Project>{5ef45533-e2c7-46f2-b4a3-b8f36cd406e0}</Project>
       <Name>SharpGL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

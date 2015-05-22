@@ -15,14 +15,14 @@ namespace DepthTestWithOrtho
     /// <summary>
     /// The main form class.
     /// </summary>
-    public partial class FormScientificControl : Form
+    public partial class FormScientificVisual3DControl : Form
     {
         int verticesCount = 100000;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FormOpenGLControl"/> class.
         /// </summary>
-        public FormScientificControl()
+        public FormScientificVisual3DControl()
         {
             InitializeComponent();
 

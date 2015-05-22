@@ -1,0 +1,1 @@
+﻿This demo shows OpenGLControl, SceneControl, MySceneControl, ScientificControl and ScientificVisual3DControl's behaviour when displaying points and lines.

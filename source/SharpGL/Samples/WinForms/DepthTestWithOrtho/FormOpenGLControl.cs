@@ -15,7 +15,7 @@ namespace DepthTestWithOrtho
     /// <summary>
     /// The main form class.
     /// </summary>
-    public partial class SharpGLForm : Form
+    public partial class FormOpenGLControl : Form
     {
         CameraRotation cameraRotation = new CameraRotation();
         ScientificCamera camera = new ScientificCamera(ECameraType.Ortho)
@@ -31,9 +31,9 @@ namespace DepthTestWithOrtho
         Random random = new Random();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SharpGLForm"/> class.
+        /// Initializes a new instance of the <see cref="FormOpenGLControl"/> class.
         /// </summary>
-        public SharpGLForm()
+        public FormOpenGLControl()
         {
             InitializeComponent();
 

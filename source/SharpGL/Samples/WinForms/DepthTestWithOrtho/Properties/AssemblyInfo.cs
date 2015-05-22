@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("DepthTestWithOrtho")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("This demo shows OpenGLControl, SceneControl, MySceneControl, ScientificControl and ScientificVisual3DControl's behaviour when displaying points and lines.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("DepthTestWithOrtho")]
