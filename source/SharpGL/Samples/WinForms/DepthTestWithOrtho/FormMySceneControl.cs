@@ -56,18 +56,38 @@ namespace DepthTestWithOrtho
             this.camera = this.mySceneControl.Scene.CurrentCamera;
             this.camera.Target = new SharpGL.SceneGraph.Vertex(0, 0, 0);
             this.camera.UpVector = new SharpGL.SceneGraph.Vertex(0, 1, 0);
-            this.camera.Position = new SharpGL.SceneGraph.Vertex(0, 0, 5);
+            this.camera.Position = new SharpGL.SceneGraph.Vertex(0, 0, 10);
             IOrthoCamera orthoCamera = this.camera;
-            orthoCamera.Left = -10; orthoCamera.Bottom = -10; orthoCamera.Near = -10;
-            orthoCamera.Right = 10; orthoCamera.Top = 10; orthoCamera.Far = 10;
+            orthoCamera.Left = -10; orthoCamera.Bottom = -10; orthoCamera.Near = 0;
+            orthoCamera.Right = 10; orthoCamera.Top = 10; orthoCamera.Far = 15;
             //this.sceneControl.Scene.CurrentCamera = camera;
             this.cameraRotation.Camera = this.camera;
             this.mySceneControl.Scene.SceneContainer.Children.Clear();
             this.mySceneControl.Scene.SceneContainer.Effects.Clear();
-            var model = new ModelDemo(
-                new Vertex(-1, -1, -1), new Vertex(1, 1, 1), 
-                verticesCount, SharpGL.Enumerations.BeginMode.Points);
-            this.mySceneControl.Scene.SceneContainer.AddChild(model);
+            //var model = new ModelDemo(
+            //    new Vertex(-1, -1, -1), new Vertex(1, 1, 1), 
+            //    verticesCount, SharpGL.Enumerations.BeginMode.Points);
+            //this.mySceneControl.Scene.SceneContainer.AddChild(model);
+            {
+                var model = Model.PointModel.Create(verticesCount, 1, 1, 1, -3, -1);
+                var element = new ScientificModelElement(model);
+                this.mySceneControl.Scene.SceneContainer.AddChild(element);
+            }
+            {
+                var model = Model.PointModel.Create(verticesCount, 1, 1, 1, -1, 1);
+                var element = new ScientificModelElement(model);
+                this.mySceneControl.Scene.SceneContainer.AddChild(element);
+            }
+            {
+                var model = Model.PointModel.Create(verticesCount, 1, 1, 1, 1, 3);
+                var element = new ScientificModelElement(model);
+                this.mySceneControl.Scene.SceneContainer.AddChild(element);
+            }
+            {
+                var modelContainer = new ModelContainer();
+                modelContainer.BoundingBox.Set(-3.1f, -3.1f, -3.1f, 3.1f, 3.1f, 3.1f);
+                this.mySceneControl.Scene.SceneContainer.AddChild(modelContainer);
+            }
 
             this.mySceneControl.MouseWheel += openGLControl_MouseWheel;
         }
@@ -111,7 +131,7 @@ namespace DepthTestWithOrtho
 
         //}
 
-       
+
         private void DrawCube(OpenGL gl)
         {
             float minX = -1;
@@ -361,7 +381,7 @@ namespace DepthTestWithOrtho
         private void txtZNear_TextChanged(object sender, EventArgs e)
         {
             double value = 0;
-            if (double.TryParse(txtZNear.Text,out value))
+            if (double.TryParse(txtZNear.Text, out value))
             {
                 IOrthoCamera camera = this.camera;
                 camera.Near = value;
@@ -372,7 +392,7 @@ namespace DepthTestWithOrtho
         private void txtZFar_TextChanged(object sender, EventArgs e)
         {
             double value = 0;
-            if(double.TryParse(txtZFar.Text,out value))
+            if (double.TryParse(txtZFar.Text, out value))
             {
                 IOrthoCamera camera = this.camera;
                 camera.Far = value;
