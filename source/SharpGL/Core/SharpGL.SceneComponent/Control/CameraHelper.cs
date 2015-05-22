@@ -58,6 +58,7 @@ namespace SharpGL.SceneComponent
             }
             orthoCamera.Near = 0;// 0.001;
             //orthoCamera.Far = double.MaxValue;
+            orthoCamera.Far = size * 3 + 1;// double.MaxValue;
 
             camera.Position = position;
             camera.Target = target;
@@ -163,7 +164,7 @@ namespace SharpGL.SceneComponent
                 orthoCamera.Top = size * height / width;
             }
             orthoCamera.Near = 0.001;
-            orthoCamera.Far = double.MaxValue;
+            orthoCamera.Far = size * 3 + 1;// double.MaxValue;
 
             camera.Position = position;
             camera.Target = target;
