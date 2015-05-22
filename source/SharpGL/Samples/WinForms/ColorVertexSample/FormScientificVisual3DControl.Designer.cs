@@ -360,7 +360,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.MinimumSize = new System.Drawing.Size(16, 38);
             this.Name = "FormScientificVisual3DControl";
-            this.Text = "Scientific Visual 3D Control Demo.";
+            this.Text = "ScientificVisual3DControl Demo.";
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.sceneControl)).EndInit();
             this.panel1.ResumeLayout(false);

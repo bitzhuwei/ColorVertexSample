@@ -56,12 +56,12 @@ namespace ColorVertexSample
                 PointModel model = PointModel.Create(nx, ny, nz, radius, minValue, maxValue);
 
                 //this.sceneControl.AddScientificModel(model);// This is replaced by codes below.
-                ScientificModelElement element = new ScientificModelElement(model, false, true);
-                this.sceneControl.AddModelElement(element);
+                ScientificModelElement element = new ScientificModelElement(model);//, false, true);
+                this.scientificControl.AddModelElement(element);
                 // update ModelContainer's BoundingBox.
-                BoundingBox boundingBox = this.sceneControl.ModelContainer.BoundingBox;
+                BoundingBox boundingBox = this.scientificControl.ModelContainer.BoundingBox;
                 IBoundingBox modelBoundingBox = model.BoundingBox;
-                if (this.sceneControl.ModelContainer.Children.Count > 1)
+                if (this.scientificControl.ModelContainer.Children.Count > 1)
                 {
                     boundingBox.Extend(modelBoundingBox.MinPosition);
                     boundingBox.Extend(modelBoundingBox.MaxPosition);
@@ -76,7 +76,8 @@ namespace ColorVertexSample
                         modelBoundingBox.MaxPosition.Z);
                 }
                 // update ViewType to UserView.
-                this.sceneControl.ViewType = EViewType.UserView;
+                //this.scientificControl.ViewType = EViewType.UserView;
+                this.scientificControl.UpdateCamera();
 
                 //this.sceneControl.SetColorIndicator(minValue, maxValue, step);
             }
@@ -106,14 +107,14 @@ namespace ColorVertexSample
 
         private void btnClearModels_Click(object sender, EventArgs e)
         {
-            this.sceneControl.ClearScientificModels();
+            this.scientificControl.ClearScientificModels();
         }
 
         private void rdoPerspective_CheckedChanged(object sender, EventArgs e)
         {
             if (this.rdoPerspective.Checked)
             {
-                this.sceneControl.CameraType = ECameraType.Perspecitive;
+                this.scientificControl.CameraType = ECameraType.Perspecitive;
             }
         }
 
@@ -121,7 +122,7 @@ namespace ColorVertexSample
         {
             if (this.rdoOrtho.Checked)
             {
-                this.sceneControl.CameraType = ECameraType.Ortho;
+                this.scientificControl.CameraType = ECameraType.Ortho;
             }
         }
 
@@ -129,7 +130,7 @@ namespace ColorVertexSample
         {
             if(e.Button== System.Windows.Forms.MouseButtons.Right)
             {
-                bool depthTest = this.sceneControl.OpenGL.IsEnabled(OpenGL.GL_DEPTH_TEST);
+                bool depthTest = this.scientificControl.OpenGL.IsEnabled(OpenGL.GL_DEPTH_TEST);
                 StringBuilder builder = new StringBuilder();
                 builder.Append(string.Format("depth test: {0}", depthTest ? "enabled" : "disabled"));
                 MessageBox.Show(builder.ToString());
@@ -148,14 +149,14 @@ namespace ColorVertexSample
 
         private void chkRenderContainerBox_CheckedChanged(object sender, EventArgs e)
         {
-            this.sceneControl.RenderBoundingBox = this.chkRenderContainerBox.Checked;
+            this.scientificControl.RenderBoundingBox = this.chkRenderContainerBox.Checked;
         }
 
         private void cmbViewType_SelectedIndexChanged(object sender, EventArgs e)
         {
             string selected = this.cmbViewType.SelectedItem.ToString();
             EViewType viewType = (EViewType)Enum.Parse(typeof(EViewType), selected);
-            this.sceneControl.ViewType = viewType;
+            this.scientificControl.ViewType = viewType;
         }
 
     }

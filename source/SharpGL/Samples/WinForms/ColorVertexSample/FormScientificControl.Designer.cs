@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.sceneControl = new SharpGL.SceneComponent.ScientificControl();
+            this.scientificControl = new SharpGL.SceneComponent.ScientificControl();
             this.panel1 = new System.Windows.Forms.Panel();
             this.cmbViewType = new System.Windows.Forms.ComboBox();
             this.chkRenderContainerBox = new System.Windows.Forms.CheckBox();
@@ -55,7 +55,7 @@
             this.tbNX = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.sceneControl)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.scientificControl)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -64,7 +64,7 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.87556F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.12444F));
-            this.tableLayoutPanel1.Controls.Add(this.sceneControl, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.scientificControl, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
@@ -77,19 +77,19 @@
             // 
             // sceneControl
             // 
-            this.sceneControl.CameraType = SharpGL.SceneComponent.ECameraType.Perspecitive;
-            this.tableLayoutPanel1.SetColumnSpan(this.sceneControl, 2);
-            this.sceneControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.sceneControl.DrawFPS = false;
-            this.sceneControl.Location = new System.Drawing.Point(3, 88);
-            this.sceneControl.Name = "sceneControl";
-            this.sceneControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
-            this.sceneControl.RenderBoundingBox = true;
-            this.sceneControl.RenderContextType = SharpGL.RenderContextType.FBO;
-            this.sceneControl.RenderTrigger = SharpGL.RenderTrigger.Manual;
-            this.sceneControl.Size = new System.Drawing.Size(687, 377);
-            this.sceneControl.TabIndex = 0;
-            this.sceneControl.ViewType = SharpGL.SceneComponent.EViewType.UserView;
+            this.scientificControl.CameraType = SharpGL.SceneComponent.ECameraType.Perspecitive;
+            this.tableLayoutPanel1.SetColumnSpan(this.scientificControl, 2);
+            this.scientificControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scientificControl.DrawFPS = false;
+            this.scientificControl.Location = new System.Drawing.Point(3, 88);
+            this.scientificControl.Name = "sceneControl";
+            this.scientificControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
+            this.scientificControl.RenderBoundingBox = true;
+            this.scientificControl.RenderContextType = SharpGL.RenderContextType.FBO;
+            this.scientificControl.RenderTrigger = SharpGL.RenderTrigger.Manual;
+            this.scientificControl.Size = new System.Drawing.Size(687, 377);
+            this.scientificControl.TabIndex = 0;
+            this.scientificControl.ViewType = SharpGL.SceneComponent.EViewType.UserView;
             // 
             // panel1
             // 
@@ -352,17 +352,17 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "NX";
             // 
-            // FormScientificVisual3DControl
+            // FormScientificControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(693, 468);
             this.Controls.Add(this.tableLayoutPanel1);
             this.MinimumSize = new System.Drawing.Size(16, 38);
-            this.Name = "FormScientificVisual3DControl";
-            this.Text = "Scientific Visual 3D Control Demo.";
+            this.Name = "FormScientificControl";
+            this.Text = "ScientificControl Demo.";
             this.tableLayoutPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.sceneControl)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.scientificControl)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
@@ -388,7 +388,7 @@
         private System.Windows.Forms.TextBox tbRangeMax;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label lblDebugInfo;
-        private SharpGL.SceneComponent.ScientificControl sceneControl;
+        private SharpGL.SceneComponent.ScientificControl scientificControl;
         private System.Windows.Forms.TextBox tbColorIndicatorStep;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button btnClearModels;
