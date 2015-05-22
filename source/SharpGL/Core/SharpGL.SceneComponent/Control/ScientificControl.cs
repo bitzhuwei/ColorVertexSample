@@ -43,14 +43,15 @@ namespace SharpGL.SceneComponent
             this.MouseMove += ScientificVisual3DControl_MouseMove;
             this.MouseUp += ScientificVisual3DControl_MouseUp;
             this.MouseWheel += ScientificControl_MouseWheel;
-            //this.Resized += ScientificVisual3DControl_Resized;
+            this.Resized += ScientificVisual3DControl_Resized;
         }
 
-        //void ScientificVisual3DControl_Resized(object sender, EventArgs e)
-        //{
-        //    //this.modelContainer.AdjustCamera(this.OpenGL, this.Scene.CurrentCamera);
-        //    CameraHelper.AdjustCamera(this.modelContainer.BoundingBox, this.OpenGL, this.Scene.CurrentCamera);
-        //}
+        void ScientificVisual3DControl_Resized(object sender, EventArgs e)
+        {
+            //this.modelContainer.AdjustCamera(this.OpenGL, this.Scene.CurrentCamera);
+            //CameraHelper.AdjustCamera(this.modelContainer.BoundingBox, this.OpenGL, this.Scene.CurrentCamera);
+            this.UpdateCamera();
+        }
 
         void ScientificControl_MouseWheel(object sender, MouseEventArgs e)
         {

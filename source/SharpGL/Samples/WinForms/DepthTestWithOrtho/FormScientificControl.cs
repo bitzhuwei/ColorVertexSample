@@ -46,19 +46,19 @@ namespace DepthTestWithOrtho
             this.scientificControl.UpdateCamera();
         }
 
-        /// <summary>
-        /// Handles the Resized event of the openGLControl control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private void openGLControl_Resized(object sender, EventArgs e)
-        {
-            this.scientificControl.UpdateCamera();
-            //CameraResized();
-            //NewResized();
-            //OirginalResized();
+        ///// <summary>
+        ///// Handles the Resized event of the openGLControl control.
+        ///// </summary>
+        ///// <param name="sender">The source of the event.</param>
+        ///// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        //private void openGLControl_Resized(object sender, EventArgs e)
+        //{
+        //    this.scientificControl.UpdateCamera();
+        //    //CameraResized();
+        //    //NewResized();
+        //    //OirginalResized();
 
-        }
+        //}
 
         //private void CameraResized()
         //{
