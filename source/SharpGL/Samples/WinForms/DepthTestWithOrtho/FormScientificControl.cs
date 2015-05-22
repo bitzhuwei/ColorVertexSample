@@ -27,13 +27,43 @@ namespace DepthTestWithOrtho
             InitializeComponent();
 
             // Create model and add it to model container.
-            var model = new ModelDemo(
-                new Vertex(-1, -1, -1), new Vertex(1, 1, 1), 
-                verticesCount, SharpGL.Enumerations.BeginMode.Points);
-            this.scientificControl.AddModelElement(model);
+            //{
+            //    var model = new ModelDemo(
+            //        new Vertex(-3, -3, -3), new Vertex(-1, -1, -1),
+            //        verticesCount, SharpGL.Enumerations.BeginMode.Points);
+            //    this.scientificControl.AddModelElement(model);
+            //}
+            //{
+            //    var model = new ModelDemo(
+            //        new Vertex(-1, -1, -1), new Vertex(1, 1, 1),
+            //        verticesCount, SharpGL.Enumerations.BeginMode.Points);
+            //    this.scientificControl.AddModelElement(model);
+            //}
+            //{
+            //    var model = new ModelDemo(
+            //        new Vertex(1, 1, 1), new Vertex(3, 3, 3),
+            //        verticesCount, SharpGL.Enumerations.BeginMode.Points);
+            //    this.scientificControl.AddModelElement(model);
+            //}
+            {
+                var model = Model.PointModel.Create(verticesCount, 1, 1, 1, -3, -1);
+                var element = new ScientificModelElement(model);
+                this.scientificControl.AddModelElement(element);
+            }
+            {
+                var model = Model.PointModel.Create(verticesCount, 1, 1, 1, -1, 1);
+                var element = new ScientificModelElement(model);
+                this.scientificControl.AddModelElement(element);
+            }
+            {
+                var model = Model.PointModel.Create(verticesCount, 1, 1, 1, 1, 3);
+                var element = new ScientificModelElement(model);
+                this.scientificControl.AddModelElement(element);
+            }
+
             // Update model container's bounding box.
             var boundingBox = this.scientificControl.ModelContainer.BoundingBox;
-            boundingBox.Set(-1.1f, -1.1f, -1.1f, 1.1f, 1.1f, 1.1f);
+            boundingBox.Set(-3.1f, -3.1f, -3.1f, 3.1f, 3.1f, 3.1f);
             // Update camera
             this.scientificControl.UpdateCamera();
         }

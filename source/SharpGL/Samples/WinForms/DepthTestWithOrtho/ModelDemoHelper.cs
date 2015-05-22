@@ -11,14 +11,17 @@ namespace DepthTestWithOrtho
         internal static void Build(ModelDemo modelDemo, int pointCount)
         {
             var random = new Random();
+            var max = modelDemo.MaxPosition;
+            var min = modelDemo.MinPosition;
             var positions = modelDemo.positions;
             var colors = modelDemo.colors;
             for (int i = 0; i < pointCount; i++)
             {
                 var position = new Vertex();
-                position.X = (float)random.NextDouble() * 2 - 1;
-                position.Y = (float)random.NextDouble() * 2 - 1;
-                position.Z = (float)random.NextDouble() * 2 - 1;
+                //position = (max - min) * (float)random.NextDouble() + min;
+                position.X = (max .X- min.X) * (float)random.NextDouble() + min.X;
+                position.Y = (max .Y- min.Y) * (float)random.NextDouble() + min.Y;
+                position.Z = (max .Z- min.Z) * (float)random.NextDouble() + min.Z;
                 positions.Add(position);
                 var color = new GLColor();
                 color.R = (float)random.NextDouble();
