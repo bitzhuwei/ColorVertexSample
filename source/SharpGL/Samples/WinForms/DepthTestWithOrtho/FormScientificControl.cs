@@ -33,12 +33,17 @@ namespace DepthTestWithOrtho
             IOrthoCamera orthoCamera = camera;
             orthoCamera.Left = -10; orthoCamera.Bottom = -10; orthoCamera.Near = -10;
             orthoCamera.Right = 10; orthoCamera.Top = 10; orthoCamera.Far = 10;
+
+            // Create model and add it to model container.
             var model = new ModelDemo(
                 new Vertex(-1, -1, -1), new Vertex(1, 1, 1), 
                 verticesCount, SharpGL.Enumerations.BeginMode.Points);
             this.scientificControl.AddModelElement(model);
+            // Update model container's bounding box.
             var boundingBox = this.scientificControl.ModelContainer.BoundingBox;
             boundingBox.Set(-1.1f, -1.1f, -1.1f, 1.1f, 1.1f, 1.1f);
+            // Update camera
+            this.scientificControl.UpdateCamera();
         }
 
         /// <summary>
@@ -48,45 +53,46 @@ namespace DepthTestWithOrtho
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void openGLControl_Resized(object sender, EventArgs e)
         {
-            CameraResized();
+            this.scientificControl.UpdateCamera();
+            //CameraResized();
             //NewResized();
             //OirginalResized();
 
         }
 
-        private void CameraResized()
-        {
-            var scientificCamera = this.scientificControl.Scene.CurrentCamera;
-            if (scientificCamera == null) { return; }
+        //private void CameraResized()
+        //{
+        //    var scientificCamera = this.scientificControl.Scene.CurrentCamera;
+        //    if (scientificCamera == null) { return; }
 
-            OpenGL gl = scientificControl.OpenGL;
-            var h = this.scientificControl.Height;
-            var w = this.scientificControl.Width;
+        //    OpenGL gl = scientificControl.OpenGL;
+        //    var h = this.scientificControl.Height;
+        //    var w = this.scientificControl.Width;
 
-            if (h == 0)
-                h = 1;
+        //    if (h == 0)
+        //        h = 1;
 
-            {
-                IPerspectiveCamera camera = scientificCamera;
-                camera.AspectRatio = (double)w / (double)h;
-            }
+        //    {
+        //        IPerspectiveCamera camera = scientificCamera;
+        //        camera.AspectRatio = (double)w / (double)h;
+        //    }
 
-            {
-                IOrthoCamera camera = scientificCamera;
-                if (w < h)
-                {
-                    camera.Bottom = camera.Left * h / w;
-                    camera.Top = camera.Right * h / w;
-                }
-                else
-                {
-                    camera.Left = camera.Bottom * w / h;
-                    camera.Right = camera.Top * w / h;
-                }
-            }
-            gl.Viewport(0, 0, w, h);
-            scientificCamera.Project(gl);
-        }
+        //    {
+        //        IOrthoCamera camera = scientificCamera;
+        //        if (w < h)
+        //        {
+        //            camera.Bottom = camera.Left * h / w;
+        //            camera.Top = camera.Right * h / w;
+        //        }
+        //        else
+        //        {
+        //            camera.Left = camera.Bottom * w / h;
+        //            camera.Right = camera.Top * w / h;
+        //        }
+        //    }
+        //    gl.Viewport(0, 0, w, h);
+        //    scientificCamera.Project(gl);
+        //}
 
         private void SharpGLForm_Load(object sender, EventArgs e)
         {
@@ -102,7 +108,8 @@ namespace DepthTestWithOrtho
             var type = (ECameraType)this.cmbCameraType.SelectedItem;
             this.groupBox1.Visible = type == ECameraType.Ortho;
             this.scientificControl.Scene.CurrentCamera.CameraType = type;
-            this.CameraResized();
+            this.scientificControl.UpdateCamera();
+            //this.CameraResized();
         }
 
         private void txtZNear_TextChanged(object sender, EventArgs e)
@@ -112,7 +119,8 @@ namespace DepthTestWithOrtho
             {
                 IOrthoCamera camera = this.scientificControl.Scene.CurrentCamera;
                 camera.Near = value;
-                CameraResized();
+                this.scientificControl.UpdateCamera();
+                //CameraResized();
             }
         }
 
@@ -123,7 +131,8 @@ namespace DepthTestWithOrtho
             {
                 IOrthoCamera camera = this.scientificControl.Scene.CurrentCamera;
                 camera.Far = value;
-                CameraResized();
+                this.scientificControl.UpdateCamera();
+                //CameraResized();
             }
         }
     }
