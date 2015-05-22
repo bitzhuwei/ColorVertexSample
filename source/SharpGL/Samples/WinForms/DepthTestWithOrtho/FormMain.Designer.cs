@@ -33,11 +33,12 @@
             this.btnMySceneControl = new System.Windows.Forms.Button();
             this.btnScientificControl = new System.Windows.Forms.Button();
             this.btnScientificVisual3DControl = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnOpenGLControl
             // 
-            this.btnOpenGLControl.Location = new System.Drawing.Point(12, 28);
+            this.btnOpenGLControl.Location = new System.Drawing.Point(12, 12);
             this.btnOpenGLControl.Name = "btnOpenGLControl";
             this.btnOpenGLControl.Size = new System.Drawing.Size(260, 23);
             this.btnOpenGLControl.TabIndex = 1;
@@ -47,7 +48,7 @@
             // 
             // btnSceneControl
             // 
-            this.btnSceneControl.Location = new System.Drawing.Point(12, 57);
+            this.btnSceneControl.Location = new System.Drawing.Point(12, 41);
             this.btnSceneControl.Name = "btnSceneControl";
             this.btnSceneControl.Size = new System.Drawing.Size(260, 23);
             this.btnSceneControl.TabIndex = 1;
@@ -57,7 +58,7 @@
             // 
             // btnMySceneControl
             // 
-            this.btnMySceneControl.Location = new System.Drawing.Point(12, 86);
+            this.btnMySceneControl.Location = new System.Drawing.Point(12, 70);
             this.btnMySceneControl.Name = "btnMySceneControl";
             this.btnMySceneControl.Size = new System.Drawing.Size(260, 23);
             this.btnMySceneControl.TabIndex = 1;
@@ -67,7 +68,7 @@
             // 
             // btnScientificControl
             // 
-            this.btnScientificControl.Location = new System.Drawing.Point(12, 115);
+            this.btnScientificControl.Location = new System.Drawing.Point(12, 99);
             this.btnScientificControl.Name = "btnScientificControl";
             this.btnScientificControl.Size = new System.Drawing.Size(260, 23);
             this.btnScientificControl.TabIndex = 1;
@@ -77,7 +78,7 @@
             // 
             // btnScientificVisual3DControl
             // 
-            this.btnScientificVisual3DControl.Location = new System.Drawing.Point(12, 144);
+            this.btnScientificVisual3DControl.Location = new System.Drawing.Point(12, 128);
             this.btnScientificVisual3DControl.Name = "btnScientificVisual3DControl";
             this.btnScientificVisual3DControl.Size = new System.Drawing.Size(260, 23);
             this.btnScientificVisual3DControl.TabIndex = 1;
@@ -85,11 +86,23 @@
             this.btnScientificVisual3DControl.UseVisualStyleBackColor = true;
             this.btnScientificVisual3DControl.Click += new System.EventHandler(this.btnScientificVisual3DControl_Click);
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(12, 157);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(260, 93);
+            this.textBox1.TabIndex = 2;
+            this.textBox1.Text = "This demo shows OpenGLControl, SceneControl, MySceneControl, ScientificControl an" +
+    "d ScientificVisual3DControl\'s behaviour when displaying points and lines.";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 262);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.btnScientificVisual3DControl);
             this.Controls.Add(this.btnScientificControl);
             this.Controls.Add(this.btnMySceneControl);
@@ -98,6 +111,7 @@
             this.Name = "FormMain";
             this.Text = "FormMain";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -108,5 +122,6 @@
         private System.Windows.Forms.Button btnMySceneControl;
         private System.Windows.Forms.Button btnScientificControl;
         private System.Windows.Forms.Button btnScientificVisual3DControl;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
