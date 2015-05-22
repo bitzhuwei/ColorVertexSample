@@ -16,11 +16,6 @@ namespace DepthTestWithOrtho
             InitializeComponent();
         }
 
-        private void 关于AToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            (new AboutBox1()).ShowDialog();
-        }
-
         private void btnOpenGLControl_Click(object sender, EventArgs e)
         {
             (new FormOpenGLControl()).Show();
