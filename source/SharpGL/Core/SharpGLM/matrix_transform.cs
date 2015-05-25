@@ -66,9 +66,9 @@ namespace GlmNet
         /// <returns></returns>
         public static mat4 lookAt(vec3 eye, vec3 center, vec3 up)
         {
-            vec3 f = new vec3(normalize(center - eye));
-            vec3 s = new vec3(normalize(cross(f, up)));
-            vec3 u = new vec3(cross(s, f));
+            vec3 f = normalize(center - eye);
+            vec3 s = normalize(cross(f, up));
+            vec3 u = cross(s, f);
 
             mat4 Result = new mat4(1);
             Result[0, 0] = s.x;
