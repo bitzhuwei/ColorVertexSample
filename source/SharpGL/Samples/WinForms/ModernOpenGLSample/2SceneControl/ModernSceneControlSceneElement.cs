@@ -11,17 +11,12 @@ using System.Text;
 
 namespace ModernOpenGLSample._2SceneControl
 {
-    class ModernOpenGLControlSceneElement : SceneElement, IRenderable
+    class ModernSceneControlSceneElement : SceneElement, IRenderable, IHasObjectSpace
     {
-        SatelliteRotation cameraRotation = new SatelliteRotation();
 
-        public ModernOpenGLControlSceneElement()
+        public ModernSceneControlSceneElement(IScientificCamera camera = null)
         {
-            ScientificCamera camera = new ScientificCamera(ECameraType.Perspecitive);
-            camera.Position = new SharpGL.SceneGraph.Vertex(0, 0, -5);
-            camera.Target = new SharpGL.SceneGraph.Vertex();
-            camera.UpVector = new SharpGL.SceneGraph.Vertex(0, 1, 0);
-            this.cameraRotation.Camera = camera;
+            this.Camera = camera;
         }
 
         //  The projection, view and model matrices.
@@ -38,6 +33,8 @@ namespace ModernOpenGLSample._2SceneControl
 
         //  The shader program for our vertex and fragment shader.
         private ShaderProgram shaderProgram;
+
+        public IScientificCamera Camera { get; set; }
 
         /// <summary>
         /// Initialises the scene.
@@ -68,10 +65,10 @@ namespace ModernOpenGLSample._2SceneControl
 
             //  Create a model matrix to make the model a little bigger.
             modelMatrix = glm.scale(new mat4(1.0f), new vec3(2.5f));
-            IPerspectiveCamera camera = this.cameraRotation.Camera;
-            projectionMatrix = camera.GetProjectionMat4();
-            viewMatrix = this.cameraRotation.Camera.GetViewMat4();
-            modelMatrix = mat4.identity();
+            //IPerspectiveCamera camera = this.cameraRotation.Camera;
+            //projectionMatrix = camera.GetProjectionMat4();
+            //viewMatrix = this.cameraRotation.Camera.GetViewMat4();
+            //modelMatrix = mat4.identity();
 
             //  Now create the geometry for the square.
             CreateVerticesForSquare(gl);
@@ -119,40 +116,11 @@ namespace ModernOpenGLSample._2SceneControl
             vertexBufferArray.Unbind(gl);
         }
 
-        internal void SetBound(int width, int height)
-        {
-            this.cameraRotation.SetBounds(width, height);
-        }
-
-        internal void MouseDown(int x, int y)
-        {
-            this.cameraRotation.MouseDown(x, y);
-        }
-
-        internal void MouseMove(int x, int y)
-        {
-            this.cameraRotation.MouseMove(x, y);
-        }
-
-        internal void MouseUp(int x, int y)
-        {
-            this.cameraRotation.MouseUp(x, y);
-        }
-
 
         #region IRenderable 成员
 
         void IRenderable.Render(OpenGL gl, RenderMode renderMode)
         {
-            //  Clear the scene.
-            gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT | OpenGL.GL_STENCIL_BUFFER_BIT);
-
-            // Update matrices.
-            IPerspectiveCamera camera = this.cameraRotation.Camera;
-            projectionMatrix = camera.GetProjectionMat4();
-            viewMatrix = this.cameraRotation.Camera.GetViewMat4();
-            modelMatrix = mat4.identity();
-
             //  Bind the shader, set the matrices.
             shaderProgram.Bind(gl);
             shaderProgram.SetUniformMatrix4(gl, "projectionMatrix", projectionMatrix.to_array());
@@ -168,6 +136,40 @@ namespace ModernOpenGLSample._2SceneControl
             //  Unbind our vertex array and shader.
             vertexBufferArray.Unbind(gl);
             shaderProgram.Unbind(gl);
+        }
+
+        #endregion
+
+        #region IHasObjectSpace 成员
+
+        void IHasObjectSpace.PushObjectSpace(OpenGL gl)
+        {
+            // Update matrices.
+            IScientificCamera camera = this.Camera;
+            if (camera == null) { return; }
+            if (camera.CameraType == ECameraType.Perspecitive)
+            {
+                IPerspectiveViewCamera perspective = camera;
+                this.projectionMatrix = perspective.GetProjectionMat4();
+                this.viewMatrix = perspective.GetViewMat4();
+            }
+            else if (camera.CameraType == ECameraType.Ortho)
+            {
+                IOrthoViewCamera ortho = camera;
+                this.projectionMatrix = ortho.GetProjectionMat4();
+                this.viewMatrix = ortho.GetViewMat4();
+            }
+
+            modelMatrix = mat4.identity();
+        }
+
+        void IHasObjectSpace.PopObjectSpace(OpenGL gl)
+        {
+        }
+
+        SharpGL.SceneGraph.Transformations.LinearTransformation IHasObjectSpace.Transformation
+        {
+            get { throw new NotImplementedException(); }
         }
 
         #endregion
