@@ -25,7 +25,7 @@ namespace SharpGL.SceneComponent
         protected Vertex _right;
         //protected mat4 currentRotation = mat4.identity();
         float _scale = 1.0f;
-        ScientificCamera _camera;
+        IScientificCamera _camera;
 
         private Vertex GetArcBallPosition(int x, int y)
         {
@@ -48,7 +48,7 @@ namespace SharpGL.SceneComponent
 
         private void UpdateCameraAxis()
         {
-            ScientificCamera camera = this._camera;
+            IViewCamera camera = this._camera;
             if (camera == null) { return; }
 
             _back = camera.Position - camera.Target;
@@ -119,7 +119,7 @@ namespace SharpGL.SceneComponent
 
         #region IMouseRotation 成员
 
-        public ScientificCamera Camera
+        public IScientificCamera Camera
         {
             get { return _camera; }
             set

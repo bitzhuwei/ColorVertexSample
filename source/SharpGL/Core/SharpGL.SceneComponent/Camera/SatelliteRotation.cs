@@ -28,7 +28,7 @@ namespace SharpGL.SceneComponent
         /// <para>Just like a satellite moves around a fixed star.</para> 
         /// </summary>
         /// <param name="camera"></param>
-        public SatelliteRotation(ScientificCamera camera = null)
+        public SatelliteRotation(IScientificCamera camera = null)
         {
             this.Camera = camera;
         }
@@ -50,9 +50,9 @@ namespace SharpGL.SceneComponent
 
         #region IRotation 成员
 
-        private ScientificCamera originalCamera;
+        private IScientificCamera originalCamera;
 
-        public ScientificCamera Camera { get; set; }
+        public IScientificCamera Camera { get; set; }
 
         public void MouseUp(int x, int y)
         {
@@ -63,7 +63,7 @@ namespace SharpGL.SceneComponent
         {
             if (this.mouseDownFlag)
             {
-                ScientificCamera camera = this.Camera;
+                IViewCamera camera = this.Camera;
                 if (camera == null) { return; }
 
                 Vertex back = this.back;
@@ -148,9 +148,9 @@ namespace SharpGL.SceneComponent
 
         public void ResetRotation()
         {
-            ScientificCamera camera = this.Camera;
+            IViewCamera camera = this.Camera;
             if (camera == null) { return; }
-            ScientificCamera originalCamera = this.originalCamera;
+            IViewCamera originalCamera = this.originalCamera;
             if (originalCamera == null) { return; }
 
             camera.Position = originalCamera.Position;

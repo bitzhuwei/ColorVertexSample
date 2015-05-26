@@ -80,7 +80,7 @@ namespace SharpGL.SceneComponent
             gl.LoadIdentity();
             gl.Ortho(args.left, args.right, args.bottom, args.top, zNear, zFar);
 
-            ScientificCamera camera = this.Camera;
+            IViewCamera camera = this.Camera;
             if (camera == null)
             {
                 gl.LookAt(0, 0, 1, 0, 0, 0, 0, 1, 0);
@@ -122,7 +122,7 @@ namespace SharpGL.SceneComponent
         /// <para>gl.LookAt(0, 0, 1, 0, 0, 0, 0, 1, 0);</para>
         /// <para>Otherwise, it uses gl.LookAt(Camera's (Position - Target), Target, UpVector);</para>
         /// </summary>
-        public override ScientificCamera Camera
+        public override IScientificCamera Camera
         {
             get
             {

@@ -10,7 +10,7 @@ namespace SharpGL.SceneComponent
     /// </summary>
     public interface IMouseRotation
     {
-        ScientificCamera Camera { get; set; }
+        IScientificCamera Camera { get; set; }
 
         void MouseUp(int x, int y);
 

@@ -179,7 +179,7 @@ namespace SharpGL.SceneComponent
         /// <para>gl.LookAt(0, 0, 1, 0, 0, 0, 0, 1, 0);</para>
         /// <para>otherwise, it uses gl.LookAt(Camera's (Position - Target), Target, UpVector);</para>
         /// </summary>
-        public virtual ScientificCamera Camera { get; set; }
+        public virtual IScientificCamera Camera { get; set; }
 
         /// <summary>
         /// the edges of the OpenGLControl to which a SimpleUIRect is bound and determines how it is resized with its parent.
@@ -234,7 +234,7 @@ namespace SharpGL.SceneComponent
             gl.LoadIdentity();
             gl.Ortho(args.left, args.right, args.bottom, args.top, zNear, zFar);
 
-            ScientificCamera camera = this.Camera;
+            IViewCamera camera = this.Camera;
             if (camera == null)
             {
                 gl.LookAt(0, 0, 1, 0, 0, 0, 0, 1, 0);
