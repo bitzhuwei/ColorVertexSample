@@ -73,6 +73,12 @@ namespace ColorVertexSample
         void ScientificVisual3DControl_Resized(object sender, EventArgs e)
         {
             ScientificCamera camera = this.sceneControl.Scene.CurrentCamera as ScientificCamera;
+
+            {
+                IViewCamera viewCamera = camera;
+                viewCamera.AdjustCamera(this.modelContainer.BoundingBox, this.sceneControl.OpenGL);
+            }
+
             if (camera.CameraType == ECameraType.Perspecitive)
             {
                 IPerspectiveCamera perspecitive = camera;

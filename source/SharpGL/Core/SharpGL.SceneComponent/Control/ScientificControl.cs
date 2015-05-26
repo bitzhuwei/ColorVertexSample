@@ -340,6 +340,12 @@ namespace SharpGL.SceneComponent
         public void UpdateCamera()
         {
             ScientificCamera camera = this.Scene.CurrentCamera;
+
+            {
+                IViewCamera viewCamera = camera;
+                viewCamera.AdjustCamera(this.modelContainer.BoundingBox, this.OpenGL);
+            }
+
             if (camera.CameraType == ECameraType.Perspecitive)
             {
                 IPerspectiveCamera perspecitive = camera;
