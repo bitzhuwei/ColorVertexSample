@@ -45,6 +45,8 @@
   <ItemGroup>
     <Compile Include="Camera\IOrthoCamera.cs" />
     <Compile Include="Camera\IPerspectiveCamera.cs" />
+    <Compile Include="Camera\IOrthoViewCamera.cs" />
+    <Compile Include="Camera\IPerspectiveViewCamera.cs" />
     <Compile Include="Camera\IViewCamera.cs" />
     <Compile Include="Camera\SatelliteRotation.cs">
       <SubType>Code</SubType>

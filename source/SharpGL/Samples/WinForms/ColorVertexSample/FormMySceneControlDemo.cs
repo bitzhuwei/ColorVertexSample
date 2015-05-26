@@ -74,19 +74,14 @@ namespace ColorVertexSample
         {
             ScientificCamera camera = this.sceneControl.Scene.CurrentCamera;
 
-            {
-                IViewCamera viewCamera = camera;
-                viewCamera.AdjustCamera(this.modelContainer.BoundingBox, this.sceneControl.OpenGL);
-            }
-
             if (camera.CameraType == ECameraType.Perspecitive)
             {
-                IPerspectiveCamera perspecitive = camera;
+                IPerspectiveViewCamera perspecitive = camera;
                 perspecitive.AdjustCamera(this.modelContainer.BoundingBox, this.sceneControl.OpenGL);
             }
             else if (camera.CameraType == ECameraType.Ortho)
             {
-                IOrthoCamera orthoCamera = camera;
+                IOrthoViewCamera orthoCamera = camera;
                 orthoCamera.AdjustCamera(this.modelContainer.BoundingBox, this.sceneControl.OpenGL);
             }
             else

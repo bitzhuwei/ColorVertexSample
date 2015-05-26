@@ -6,7 +6,7 @@ using System.Text;
 namespace SharpGL.SceneComponent
 {
     /// <summary>
-    /// Use this for perspective projection matrix.
+    /// Use this for perspective projection * view matrix.
     /// <para>Typical usage: projection * view * model in GLSL.</para>
     /// </summary>
     public interface IPerspectiveCamera
