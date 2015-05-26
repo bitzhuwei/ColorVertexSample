@@ -11,9 +11,17 @@ using System.Text;
 
 namespace ModernOpenGLSample._2SceneControl
 {
+    /// <summary>
+    /// Render models with shader and VAO.
+    /// <para>Use <see cref="IHasObjectSpace"/> and <see cref="IScientificCamera"/> to update projection and view matrices.</para>
+    /// </summary>
     class ModernSceneControlSceneElement : SceneElement, IRenderable, IHasObjectSpace
     {
-
+        /// <summary>
+        /// Render models with shader and VAO.
+        /// <para>Use <see cref="IHasObjectSpace"/> and <paramref name="camera"/> to update projection and view matrices.</para>
+        /// </summary>
+        /// <param name="camera"></param>
         public ModernSceneControlSceneElement(IScientificCamera camera = null)
         {
             this.Camera = camera;
@@ -34,6 +42,9 @@ namespace ModernOpenGLSample._2SceneControl
         //  The shader program for our vertex and fragment shader.
         private ShaderProgram shaderProgram;
 
+        /// <summary>
+        /// <para>Use <see cref="IHasObjectSpace"/> and <see cref="IScientificCamera"/> to update projection and view matrices.</para>
+        /// </summary>
         public IScientificCamera Camera { get; set; }
 
         /// <summary>
@@ -46,7 +57,7 @@ namespace ModernOpenGLSample._2SceneControl
         {
             //  Set a blue clear colour.
             gl.ClearColor(0.4f, 0.6f, 0.9f, 0.0f);
-            
+
             //  Create the shader program.
             var vertexShaderSource = ManifestResourceLoader.LoadTextFile("Shader.vert");
             var fragmentShaderSource = ManifestResourceLoader.LoadTextFile("Shader.frag");
@@ -111,13 +122,14 @@ namespace ModernOpenGLSample._2SceneControl
             colourDataBuffer.Create(gl);
             colourDataBuffer.Bind(gl);
             colourDataBuffer.SetData(gl, 1, colors, false, 3);
-            
+
             //  Unbind the vertex array, we've finished specifying data for it.
             vertexBufferArray.Unbind(gl);
         }
 
 
         #region IRenderable 成员
+        /// 
 
         void IRenderable.Render(OpenGL gl, RenderMode renderMode)
         {
@@ -159,6 +171,8 @@ namespace ModernOpenGLSample._2SceneControl
                 this.projectionMatrix = ortho.GetProjectionMat4();
                 this.viewMatrix = ortho.GetViewMat4();
             }
+            else
+            { throw new NotImplementedException(); }
 
             modelMatrix = mat4.identity();
         }
