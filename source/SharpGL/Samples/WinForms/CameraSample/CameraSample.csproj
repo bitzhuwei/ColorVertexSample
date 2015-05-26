@@ -32,9 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SharpGL.WinForms">
-      <HintPath>..\..\..\Core\SharpGL.WinForms\obj\Debug\SharpGL.WinForms.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -86,6 +83,10 @@
     <ProjectReference Include="..\..\..\Core\SharpGL.SceneGraph\SharpGL.SceneGraph.csproj">
       <Project>{47bcaa39-edad-4404-b6bd-4742b0abb523}</Project>
       <Name>SharpGL.SceneGraph</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Core\SharpGL.WinForms\SharpGL.WinForms.csproj">
+      <Project>{b2984a6d-ad1c-4be9-94ab-ba002b338751}</Project>
+      <Name>SharpGL.WinForms</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Core\SharpGL\SharpGL.csproj">
       <Project>{5ef45533-e2c7-46f2-b4a3-b8f36cd406e0}</Project>
