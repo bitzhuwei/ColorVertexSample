@@ -13,7 +13,8 @@ namespace ModernOpenGLSample
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormModernOpenGLSample());
+            Application.Run(new ModernOpenGLSample._1OpenGLControl.FormModernOpenGLControlDemo());
+            //Application.Run(new FormModernOpenGLSample());
         }
     }
 }

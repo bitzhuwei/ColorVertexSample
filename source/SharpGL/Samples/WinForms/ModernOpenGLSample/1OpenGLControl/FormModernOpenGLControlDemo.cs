@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace ModernOpenGLSample
+namespace ModernOpenGLSample._1OpenGLControl
 {
     public partial class FormModernOpenGLControlDemo : Form
     {
@@ -47,6 +47,22 @@ namespace ModernOpenGLSample
         /// The scene that we are rendering.
         /// </summary>
         private readonly ModernOpenGLControlSceneElement sceneElement = new ModernOpenGLControlSceneElement();
+
+        private void openGLControl_MouseDown(object sender, MouseEventArgs e)
+        {
+            this.sceneElement.SetBound(this.openGLControl.Width, this.openGLControl.Height);
+            this.sceneElement.MouseDown(e.X,e.Y);
+        }
+
+        private void openGLControl_MouseMove(object sender, MouseEventArgs e)
+        {
+            this.sceneElement.MouseMove(e.X, e.Y);
+        }
+
+        private void openGLControl_MouseUp(object sender, MouseEventArgs e)
+        {
+            this.sceneElement.MouseUp(e.X, e.Y);
+        }
 
     }
 }

@@ -37,10 +37,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GlmNet, Version=0.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\GlmNet.0.0.2.0\lib\net40\GlmNet.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -62,8 +58,10 @@
     <Compile Include="..\..\..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="FormModernOpenGLControlDemo.cs" />
-    <Compile Include="FormModernOpenGLControlDemo.Designer.cs">
+    <Compile Include="1OpenGLControl\FormModernOpenGLControlDemo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="1OpenGLControl\FormModernOpenGLControlDemo.Designer.cs">
       <DependentUpon>FormModernOpenGLControlDemo.cs</DependentUpon>
     </Compile>
     <Compile Include="FormModernOpenGLSample.cs">
@@ -73,12 +71,11 @@
       <DependentUpon>FormModernOpenGLSample.cs</DependentUpon>
     </Compile>
     <Compile Include="ManifestResourceLoader.cs" />
-    <Compile Include="ModernOpenGLControlSceneElement.cs" />
-    <Compile Include="ModernSatelliteCamera.cs" />
+    <Compile Include="1OpenGLControl\ModernOpenGLControlSceneElement.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scene.cs" />
-    <EmbeddedResource Include="FormModernOpenGLControlDemo.resx">
+    <EmbeddedResource Include="1OpenGLControl\FormModernOpenGLControlDemo.resx">
       <DependentUpon>FormModernOpenGLControlDemo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormModernOpenGLSample.resx">
@@ -109,6 +106,10 @@
     <EmbeddedResource Include="Shader.vert" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\SharpGL.SceneComponent\SharpGL.SceneComponent.csproj">
+      <Project>{8f81c853-d378-443d-9dfd-475db916cabd}</Project>
+      <Name>SharpGL.SceneComponent</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Core\SharpGL.SceneGraph\SharpGL.SceneGraph.csproj">
       <Project>{47BCAA39-EDAD-4404-B6BD-4742B0ABB523}</Project>
       <Name>SharpGL.SceneGraph</Name>
@@ -116,6 +117,10 @@
     <ProjectReference Include="..\..\..\Core\SharpGL.WinForms\SharpGL.WinForms.csproj">
       <Project>{B2984A6D-AD1C-4BE9-94AB-BA002B338751}</Project>
       <Name>SharpGL.WinForms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Core\SharpGLM\SharpGLM.csproj">
+      <Project>{d15e2fee-512e-4804-8687-bcbdbedbeb7b}</Project>
+      <Name>SharpGLM</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Core\SharpGL\SharpGL.csproj">
       <Project>{5EF45533-E2C7-46F2-B4A3-B8F36CD406E0}</Project>
