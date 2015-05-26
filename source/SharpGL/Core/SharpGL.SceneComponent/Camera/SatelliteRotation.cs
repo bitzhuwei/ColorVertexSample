@@ -29,39 +29,6 @@ namespace SharpGL.SceneComponent
         }
 
 
-        GlmNet.mat4 GetProjectionMat4(ProjectionType type)
-        {
-            if (type == ProjectionType.Perspective)
-            {
-                IPerspectiveCamera camera = this.Camera;
-                GlmNet.mat4 perspective = GlmNet.glm.perspective((float)camera.FieldOfView,
-                    (float)camera.AspectRatio, (float)camera.Near, (float)camera.Far);
-                return perspective;
-            }
-            else if (type == ProjectionType.Ortho)
-            {
-                IOrthoCamera camera = this.Camera;
-                GlmNet.mat4 ortho = GlmNet.glm.ortho((float)camera.Left, (float)camera.Right,
-                    (float)camera.Bottom, (float)camera.Top,
-                    (float)camera.Near, (float)camera.Far);
-                return ortho;
-            }
-            else
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        GlmNet.mat4 GetViewMat4()
-        {
-            ScientificCamera camera = this.Camera;
-            GlmNet.vec3 position = ToVec3(camera.Position);
-            GlmNet.vec3 target = ToVec3(camera.Target);
-            GlmNet.vec3 up = ToVec3(camera.UpVector);
-            GlmNet.mat4 lookAt = GlmNet.glm.lookAt(position, target, up);
-            return lookAt;
-        }
-
         public override string ToString()
         {
             return string.Format("back:{0}|{3:0.00},up:{1}|{4:0.00},right:{2}|{5:0.00}",
@@ -75,11 +42,6 @@ namespace SharpGL.SceneComponent
                 v.X, v.Y, v.Z);
         }
 
-        private GlmNet.vec3 ToVec3(Vertex v)
-        {
-            GlmNet.vec3 result = new GlmNet.vec3(v.X, v.Y, v.Z);
-            return result;
-        }
 
         #region IRotation 成员
 
