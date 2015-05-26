@@ -67,58 +67,13 @@ namespace ModernOpenGLSample._1OpenGLControl
 
             //  Create a model matrix to make the model a little bigger.
             modelMatrix = glm.scale(new mat4(1.0f), new vec3(2.5f));
-            projectionMatrix = this.GetProjectionMat4();
-            viewMatrix = this.GetViewMat4();
+            IPerspectiveCamera camera = this.cameraRotation.Camera;
+            projectionMatrix = camera.GetProjectionMat4();
+            viewMatrix = this.cameraRotation.Camera.GetViewMat4();
             modelMatrix = mat4.identity();
 
             //  Now create the geometry for the square.
             CreateVerticesForSquare(gl);
-        }
-
-        GlmNet.mat4 GetProjectionMat4()
-        {
-            mat4 result = GetProjectionMat4(this.cameraRotation.Camera.CameraType);
-            return result;
-        }
-
-        GlmNet.mat4 GetProjectionMat4(ECameraType type)
-        {
-            if (type == ECameraType.Perspecitive)
-            {
-                IPerspectiveCamera camera = this.cameraRotation.Camera;
-                GlmNet.mat4 perspective = GlmNet.glm.perspective(
-                    (float)(camera.FieldOfView / 360.0 * Math.PI * 2),
-                    (float)camera.AspectRatio, (float)camera.Near, (float)camera.Far);
-                return perspective;
-            }
-            else if (type == ECameraType.Ortho)
-            {
-                IOrthoCamera camera = this.cameraRotation.Camera;
-                GlmNet.mat4 ortho = GlmNet.glm.ortho((float)camera.Left, (float)camera.Right,
-                    (float)camera.Bottom, (float)camera.Top,
-                    (float)camera.Near, (float)camera.Far);
-                return ortho;
-            }
-            else
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        GlmNet.mat4 GetViewMat4()
-        {
-            ScientificCamera camera = this.cameraRotation.Camera;
-            GlmNet.vec3 position = ToVec3(camera.Position);
-            GlmNet.vec3 target = ToVec3(camera.Target);
-            GlmNet.vec3 up = ToVec3(camera.UpVector);
-            GlmNet.mat4 lookAt = GlmNet.glm.lookAt(position, target, up);
-            return lookAt;
-        }
-
-        private vec3 ToVec3(SharpGL.SceneGraph.Vertex vertex)
-        {
-            vec3 result = new vec3(vertex.X, vertex.Y, vertex.Z);
-            return result;
         }
 
         /// <summary>
@@ -131,8 +86,9 @@ namespace ModernOpenGLSample._1OpenGLControl
             gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT | OpenGL.GL_STENCIL_BUFFER_BIT);
 
             // Update matrices.
-            projectionMatrix = this.GetProjectionMat4();
-            viewMatrix = this.GetViewMat4();
+            IPerspectiveCamera camera = this.cameraRotation.Camera;
+            projectionMatrix = camera.GetProjectionMat4();
+            viewMatrix = this.cameraRotation.Camera.GetViewMat4();
             modelMatrix = mat4.identity();
 
             //  Bind the shader, set the matrices.

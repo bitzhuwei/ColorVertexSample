@@ -50,7 +50,8 @@ namespace SharpGL.SceneComponent
         void ScientificVisual3DControl_Resized(object sender, EventArgs e)
         {
             //this.modelContainer.AdjustCamera(this.OpenGL, this.Scene.CurrentCamera);
-            CameraHelper.AdjustCamera(this.modelContainer.BoundingBox, this.OpenGL, this.Scene.CurrentCamera);
+            //CameraHelper.AdjustCamera(this.modelContainer.BoundingBox, this.OpenGL, this.Scene.CurrentCamera);
+            this.Scene.CurrentCamera.AdjustCamera(this.modelContainer.BoundingBox, this.OpenGL);
         }
 
         void ScientificVisual3DControl_MouseWheel(object sender, MouseEventArgs e)
@@ -315,7 +316,8 @@ namespace SharpGL.SceneComponent
             set
             {
                 this.viewType = value;
-                CameraHelper.ApplyViewType(this.modelContainer.BoundingBox, this.OpenGL, this.Scene.CurrentCamera, value);
+                //CameraHelper.ApplyViewType(this.modelContainer.BoundingBox, this.OpenGL, this.Scene.CurrentCamera, value);
+                this.Scene.CurrentCamera.ApplyViewType(this.modelContainer.BoundingBox, this.OpenGL, value);
                 //// force CameraRotation to udpate.
                 //this.CameraRotation.Camera = this.Scene.CurrentCamera;
                 ManualRender(this);
@@ -335,7 +337,8 @@ namespace SharpGL.SceneComponent
         /// </summary>
         public void UpdateCamera()
         {
-            CameraHelper.AdjustCamera(this.modelContainer.BoundingBox, this.OpenGL, this.Scene.CurrentCamera);
+            //CameraHelper.AdjustCamera(this.modelContainer.BoundingBox, this.OpenGL, this.Scene.CurrentCamera);
+            this.Scene.CurrentCamera.AdjustCamera(this.modelContainer.BoundingBox, this.OpenGL);
             //// force CameraRotation to udpate.
             //this.CameraRotation.Camera = this.Scene.CurrentCamera;
             ManualRender(this);

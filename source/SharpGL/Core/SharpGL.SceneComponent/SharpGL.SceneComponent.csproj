@@ -45,11 +45,12 @@
   <ItemGroup>
     <Compile Include="Camera\IOrthoCamera.cs" />
     <Compile Include="Camera\IPerspectiveCamera.cs" />
+    <Compile Include="Camera\IViewCamera.cs" />
     <Compile Include="Camera\SatelliteRotation.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Control\EViewType.cs" />
-    <Compile Include="Control\CameraHelper.cs" />
+    <Compile Include="Camera\CameraHelper.cs" />
     <Compile Include="Control\ScientificControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

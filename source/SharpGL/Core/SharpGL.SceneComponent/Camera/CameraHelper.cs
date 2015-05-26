@@ -1,4 +1,5 @@
-﻿using SharpGL.SceneGraph;
+﻿using GlmNet;
+using SharpGL.SceneGraph;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,16 +7,16 @@ using System.Text;
 
 namespace SharpGL.SceneComponent
 {
-    public class CameraHelper
+    public static class CameraHelper
     {
         /// <summary>
         /// Adjusts camera according to bounding box.
         /// <para>Use this when bounding box's size or positon is changed.</para>
         /// </summary>
+        /// <param name="camera"></param>
         /// <param name="boundingBox"></param>
         /// <param name="openGL"></param>
-        /// <param name="camera"></param>
-        public static void AdjustCamera(IBoundingBox boundingBox, OpenGL openGL, ScientificCamera camera)
+        public static void AdjustCamera(this ScientificCamera camera, IBoundingBox boundingBox, OpenGL openGL)
         {
             float sizeX, sizeY, sizeZ;
             boundingBox.GetBoundDimensions(out sizeX, out sizeY, out sizeZ);
@@ -82,11 +83,12 @@ namespace SharpGL.SceneComponent
         /// <para> Y |    </para>
         /// <para>   Z    </para>
         /// </summary>
+        /// <param name="camera"></param>
         /// <param name="boundingBox"></param>
         /// <param name="openGL"></param>
-        /// <param name="camera"></param>
         /// <param name="viewType"></param>
-        public static void ApplyViewType(IBoundingBox boundingBox, OpenGL openGL, ScientificCamera camera, EViewType viewType)
+        public static void ApplyViewType(this ScientificCamera camera, IBoundingBox boundingBox,
+            OpenGL openGL, EViewType viewType)
         {
             float sizeX, sizeY, sizeZ;
             boundingBox.GetBoundDimensions(out sizeX, out sizeY, out sizeZ);
@@ -132,7 +134,7 @@ namespace SharpGL.SceneComponent
                     break;
                 default:
                     throw new NotImplementedException(string.Format("new value({0}) of EViewType is not implemented!", viewType));
-                    //break;
+                //break;
             }
 
             Vertex position = target + target2Position * (size * 2 + 1);
@@ -169,6 +171,52 @@ namespace SharpGL.SceneComponent
             camera.Position = position;
             camera.Target = target;
             camera.UpVector = upVector;
+        }
+
+        /// <summary>
+        /// Extension method for <see cref="IPerspectiveCamera"/> to get projection matrix.
+        /// </summary>
+        /// <param name="camera"></param>
+        /// <returns></returns>
+        public static mat4 GetProjectionMat4(this IPerspectiveCamera camera)
+        {
+            GlmNet.mat4 perspective = GlmNet.glm.perspective(
+                (float)(camera.FieldOfView / 360.0 * Math.PI * 2),
+                (float)camera.AspectRatio, (float)camera.Near, (float)camera.Far);
+            return perspective;
+        }
+
+        /// <summary>
+        /// Extension method for <see cref="IOrthoCamera"/> to get projection matrix.
+        /// </summary>
+        /// <param name="camera"></param>
+        /// <returns></returns>
+        public static mat4 GetProjectionMat4(this IOrthoCamera camera)
+        {
+            GlmNet.mat4 ortho = GlmNet.glm.ortho((float)camera.Left, (float)camera.Right,
+                (float)camera.Bottom, (float)camera.Top,
+                (float)camera.Near, (float)camera.Far);
+            return ortho;
+        }
+
+        /// <summary>
+        /// Extension method for <see cref="IViewCamera"/> to get view matrix.
+        /// </summary>
+        /// <param name="camera"></param>
+        /// <returns></returns>
+        public static GlmNet.mat4 GetViewMat4(this IViewCamera camera)
+        {
+            GlmNet.vec3 position = ToVec3(camera.Position);
+            GlmNet.vec3 target = ToVec3(camera.Target);
+            GlmNet.vec3 up = ToVec3(camera.UpVector);
+            GlmNet.mat4 lookAt = GlmNet.glm.lookAt(position, target, up);
+            return lookAt;
+        }
+
+        private static vec3 ToVec3(SharpGL.SceneGraph.Vertex vertex)
+        {
+            vec3 result = new vec3(vertex.X, vertex.Y, vertex.Z);
+            return result;
         }
     }
 }

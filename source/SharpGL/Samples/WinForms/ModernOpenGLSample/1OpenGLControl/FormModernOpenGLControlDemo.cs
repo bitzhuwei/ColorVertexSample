@@ -50,18 +50,27 @@ namespace ModernOpenGLSample._1OpenGLControl
 
         private void openGLControl_MouseDown(object sender, MouseEventArgs e)
         {
-            this.sceneElement.SetBound(this.openGLControl.Width, this.openGLControl.Height);
-            this.sceneElement.MouseDown(e.X,e.Y);
+            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+            {
+                this.sceneElement.SetBound(this.openGLControl.Width, this.openGLControl.Height);
+                this.sceneElement.MouseDown(e.X, e.Y);
+            }
         }
 
         private void openGLControl_MouseMove(object sender, MouseEventArgs e)
         {
-            this.sceneElement.MouseMove(e.X, e.Y);
+            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+            {
+                this.sceneElement.MouseMove(e.X, e.Y);
+            }
         }
 
         private void openGLControl_MouseUp(object sender, MouseEventArgs e)
         {
-            this.sceneElement.MouseUp(e.X, e.Y);
+            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+            {
+                this.sceneElement.MouseUp(e.X, e.Y);
+            }
         }
 
     }

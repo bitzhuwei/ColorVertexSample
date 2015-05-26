@@ -10,7 +10,7 @@ namespace SharpGL.SceneComponent
     /// <summary>
     /// projects in perspective view or ortho view.
     /// </summary>
-    public class ScientificCamera : SharpGL.SceneGraph.Cameras.Camera, IPerspectiveCamera, IOrthoCamera
+    public class ScientificCamera : SharpGL.SceneGraph.Cameras.Camera, IViewCamera, IPerspectiveCamera, IOrthoCamera
     {
         static int count = 0;
         public override string ToString()

@@ -73,8 +73,8 @@ namespace ColorVertexSample
         void ScientificVisual3DControl_Resized(object sender, EventArgs e)
         {
             //this.modelContainer.AdjustCamera(this.OpenGL, this.Scene.CurrentCamera);
-            //CameraHelper.AdjustCamera(this.modelContainer.BoundingBox, this.OpenGL, this.Scene.CurrentCamera);
-            CameraHelper.AdjustCamera(this.modelContainer.BoundingBox, this.sceneControl.OpenGL, this.sceneControl.Scene.CurrentCamera);
+            //CameraHelper.AdjustCamera(this.modelContainer.BoundingBox, this.sceneControl.OpenGL, this.sceneControl.Scene.CurrentCamera);
+            this.sceneControl.Scene.CurrentCamera.AdjustCamera(this.modelContainer.BoundingBox, this.sceneControl.OpenGL);
             ManualRender(this.sceneControl);
         }
 

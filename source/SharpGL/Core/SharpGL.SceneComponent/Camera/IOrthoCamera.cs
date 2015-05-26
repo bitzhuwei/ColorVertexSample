@@ -5,6 +5,10 @@ using System.Text;
 
 namespace SharpGL.SceneComponent
 {
+    /// <summary>
+    /// Use this for ortho projection.
+    /// <para>Typical usage: projection * view * model in GLSL.</para>
+    /// </summary>
     public interface IOrthoCamera
     {
         /// <summary>
