@@ -318,8 +318,22 @@ namespace SharpGL.SceneComponent
             set
             {
                 this.viewType = value;
-                //CameraHelper.ApplyViewType(this.modelContainer.BoundingBox, this.OpenGL, this.Scene.CurrentCamera, value);
-                this.Scene.CurrentCamera.ApplyViewType(this.modelContainer.BoundingBox, this.OpenGL, value);
+                ScientificCamera camera = this.Scene.CurrentCamera;
+
+                if (camera.CameraType == ECameraType.Perspecitive)
+                {
+                    IPerspectiveViewCamera perspecitive = camera;
+                    perspecitive.ApplyViewType(this.modelContainer.BoundingBox, this.OpenGL, value);
+                }
+                else if (camera.CameraType == ECameraType.Ortho)
+                {
+                    IOrthoViewCamera orthoCamera = camera;
+                    orthoCamera.ApplyViewType(this.modelContainer.BoundingBox, this.OpenGL, value);
+                }
+                else
+                {
+                    throw new NotImplementedException();
+                } 
                 //// force CameraRotation to udpate.
                 //this.CameraRotation.Camera = this.Scene.CurrentCamera;
                 ManualRender(this);

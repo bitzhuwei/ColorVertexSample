@@ -209,56 +209,182 @@ namespace SharpGL.SceneComponent
         /// <param name="boundingBox"></param>
         /// <param name="openGL"></param>
         /// <param name="viewType"></param>
-        public static void ApplyViewType(this ScientificCamera camera, IBoundingBox boundingBox,
+        public static void ApplyViewType(this IPerspectiveViewCamera camera, IBoundingBox boundingBox,
             OpenGL openGL, EViewType viewType)
         {
             float sizeX, sizeY, sizeZ;
             boundingBox.GetBoundDimensions(out sizeX, out sizeY, out sizeZ);
             float size = Math.Max(Math.Max(sizeX, sizeY), sizeZ);
 
-            float centerX, centerY, centerZ;
-            boundingBox.GetCenter(out centerX, out centerY, out centerZ);
-            Vertex target = new Vertex(centerX, centerY, centerZ);
-
-            Vertex target2Position;
-            Vertex upVector;
-            GetBackAndUp(out target2Position, out upVector, viewType);
-
-            Vertex position = target + target2Position * (size * 2 + 1);
-            //new Vertex(0.0f, 0.0f, 1.0f) * (size * 2);
-
-            int[] viewport = new int[4];
-            openGL.GetInteger(SharpGL.Enumerations.GetTarget.Viewport, viewport);
-            int width = viewport[2]; int height = viewport[3];
-
-            IPerspectiveCamera perspectiveCamera = camera;
-            perspectiveCamera.FieldOfView = 60;
-            perspectiveCamera.AspectRatio = (double)width / (double)height;
-            perspectiveCamera.Near = 0.01;
-            perspectiveCamera.Far = size * 3 + 1;// double.MaxValue;
-
-            IOrthoCamera orthoCamera = camera;
-            if (width > height)
             {
-                orthoCamera.Left = -size * width / height;
-                orthoCamera.Right = size * width / height;
-                orthoCamera.Bottom = -size;
-                orthoCamera.Top = size;
-            }
-            else
-            {
-                orthoCamera.Left = -size;
-                orthoCamera.Right = size;
-                orthoCamera.Bottom = -size * height / width;
-                orthoCamera.Top = size * height / width;
-            }
-            orthoCamera.Near = 0.001;
-            orthoCamera.Far = size * 3 + 1;// double.MaxValue;
+                float centerX, centerY, centerZ;
+                boundingBox.GetCenter(out centerX, out centerY, out centerZ);
+                Vertex target = new Vertex(centerX, centerY, centerZ);
 
-            camera.Position = position;
-            camera.Target = target;
-            camera.UpVector = upVector;
+                Vertex target2Position;
+                Vertex upVector;
+                GetBackAndUp(out target2Position, out upVector, viewType);
+
+                Vertex position = target + target2Position * (size * 2 + 1);
+
+                camera.Position = position;
+                camera.Target = target;
+                camera.UpVector = upVector;
+            }
+
+            {
+                int[] viewport = new int[4];
+                openGL.GetInteger(SharpGL.Enumerations.GetTarget.Viewport, viewport);
+                int width = viewport[2]; int height = viewport[3];
+
+                IPerspectiveCamera perspectiveCamera = camera;
+                perspectiveCamera.FieldOfView = 60;
+                perspectiveCamera.AspectRatio = (double)width / (double)height;
+                perspectiveCamera.Near = 0.01;
+                perspectiveCamera.Far = size * 3 + 1;// double.MaxValue;
+            }
         }
+
+        /// <summary>
+        /// Apply specifed viewType to camera according to bounding box's size and position.
+        /// <para>    +-------+    </para>
+        /// <para>   /|      /|    </para>
+        /// <para>  +-------+ |    </para>
+        /// <para>  | |     | |    </para>
+        /// <para>  | O-----|-+---X</para>
+        /// <para>  |/      |/     </para>
+        /// <para>  +-------+      </para>
+        /// <para> /  |            </para>
+        /// <para>Y   Z            </para>
+        /// <para>其边长为(2 * Math.Sqrt(3)), 所在的坐标系如下</para>
+        /// <para>   O---X</para>
+        /// <para>  /|    </para>
+        /// <para> Y |    </para>
+        /// <para>   Z    </para>
+        /// </summary>
+        /// <param name="camera"></param>
+        /// <param name="boundingBox"></param>
+        /// <param name="openGL"></param>
+        /// <param name="viewType"></param>
+        public static void ApplyViewType(this IOrthoViewCamera camera, IBoundingBox boundingBox,
+            OpenGL openGL, EViewType viewType)
+        {
+            float sizeX, sizeY, sizeZ;
+            boundingBox.GetBoundDimensions(out sizeX, out sizeY, out sizeZ);
+            float size = Math.Max(Math.Max(sizeX, sizeY), sizeZ);
+
+            {
+                float centerX, centerY, centerZ;
+                boundingBox.GetCenter(out centerX, out centerY, out centerZ);
+                Vertex target = new Vertex(centerX, centerY, centerZ);
+
+                Vertex target2Position;
+                Vertex upVector;
+                GetBackAndUp(out target2Position, out upVector, viewType);
+
+                Vertex position = target + target2Position * (size * 2 + 1);
+
+                camera.Position = position;
+                camera.Target = target;
+                camera.UpVector = upVector;
+            }
+
+            {
+                int[] viewport = new int[4];
+                openGL.GetInteger(SharpGL.Enumerations.GetTarget.Viewport, viewport);
+                int width = viewport[2]; int height = viewport[3];
+
+                IOrthoCamera orthoCamera = camera;
+                if (width > height)
+                {
+                    orthoCamera.Left = -size * width / height;
+                    orthoCamera.Right = size * width / height;
+                    orthoCamera.Bottom = -size;
+                    orthoCamera.Top = size;
+                }
+                else
+                {
+                    orthoCamera.Left = -size;
+                    orthoCamera.Right = size;
+                    orthoCamera.Bottom = -size * height / width;
+                    orthoCamera.Top = size * height / width;
+                }
+                orthoCamera.Near = 0.001;
+                orthoCamera.Far = size * 3 + 1;// double.MaxValue;
+            }
+        }
+
+        ///// <summary>
+        ///// Apply specifed viewType to camera according to bounding box's size and position.
+        ///// <para>    +-------+    </para>
+        ///// <para>   /|      /|    </para>
+        ///// <para>  +-------+ |    </para>
+        ///// <para>  | |     | |    </para>
+        ///// <para>  | O-----|-+---X</para>
+        ///// <para>  |/      |/     </para>
+        ///// <para>  +-------+      </para>
+        ///// <para> /  |            </para>
+        ///// <para>Y   Z            </para>
+        ///// <para>其边长为(2 * Math.Sqrt(3)), 所在的坐标系如下</para>
+        ///// <para>   O---X</para>
+        ///// <para>  /|    </para>
+        ///// <para> Y |    </para>
+        ///// <para>   Z    </para>
+        ///// </summary>
+        ///// <param name="camera"></param>
+        ///// <param name="boundingBox"></param>
+        ///// <param name="openGL"></param>
+        ///// <param name="viewType"></param>
+        //public static void ApplyViewType(this ScientificCamera camera, IBoundingBox boundingBox,
+        //    OpenGL openGL, EViewType viewType)
+        //{
+        //    float sizeX, sizeY, sizeZ;
+        //    boundingBox.GetBoundDimensions(out sizeX, out sizeY, out sizeZ);
+        //    float size = Math.Max(Math.Max(sizeX, sizeY), sizeZ);
+
+        //    float centerX, centerY, centerZ;
+        //    boundingBox.GetCenter(out centerX, out centerY, out centerZ);
+        //    Vertex target = new Vertex(centerX, centerY, centerZ);
+
+        //    Vertex target2Position;
+        //    Vertex upVector;
+        //    GetBackAndUp(out target2Position, out upVector, viewType);
+
+        //    Vertex position = target + target2Position * (size * 2 + 1);
+        //    //new Vertex(0.0f, 0.0f, 1.0f) * (size * 2);
+
+        //    int[] viewport = new int[4];
+        //    openGL.GetInteger(SharpGL.Enumerations.GetTarget.Viewport, viewport);
+        //    int width = viewport[2]; int height = viewport[3];
+
+        //    IPerspectiveCamera perspectiveCamera = camera;
+        //    perspectiveCamera.FieldOfView = 60;
+        //    perspectiveCamera.AspectRatio = (double)width / (double)height;
+        //    perspectiveCamera.Near = 0.01;
+        //    perspectiveCamera.Far = size * 3 + 1;// double.MaxValue;
+
+        //    IOrthoCamera orthoCamera = camera;
+        //    if (width > height)
+        //    {
+        //        orthoCamera.Left = -size * width / height;
+        //        orthoCamera.Right = size * width / height;
+        //        orthoCamera.Bottom = -size;
+        //        orthoCamera.Top = size;
+        //    }
+        //    else
+        //    {
+        //        orthoCamera.Left = -size;
+        //        orthoCamera.Right = size;
+        //        orthoCamera.Bottom = -size * height / width;
+        //        orthoCamera.Top = size * height / width;
+        //    }
+        //    orthoCamera.Near = 0.001;
+        //    orthoCamera.Far = size * 3 + 1;// double.MaxValue;
+
+        //    camera.Position = position;
+        //    camera.Target = target;
+        //    camera.UpVector = upVector;
+        //}
 
         private static void GetBackAndUp(out Vertex target2Position, out Vertex upVector, EViewType viewType)
         {
