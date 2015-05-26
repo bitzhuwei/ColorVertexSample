@@ -10,13 +10,13 @@ namespace SharpGL.SceneComponent
     public static class CameraHelper
     {
         /// <summary>
-        /// Adjusts camera according to bounding box.
+        /// Adjusts camera's position, target and UpVector according to bounding box.
         /// <para>Use this when bounding box's size or positon is changed.</para>
         /// </summary>
         /// <param name="camera"></param>
         /// <param name="boundingBox"></param>
         /// <param name="openGL"></param>
-        public static void AdjustCamera(this ScientificCamera camera, IBoundingBox boundingBox, OpenGL openGL)
+        public static void AdjustCamera(this IViewCamera camera, IBoundingBox boundingBox, OpenGL openGL)
         {
             float sizeX, sizeY, sizeZ;
             boundingBox.GetBoundDimensions(out sizeX, out sizeY, out sizeZ);
@@ -30,7 +30,24 @@ namespace SharpGL.SceneComponent
             target2Position.Normalize();
 
             Vertex position = target + target2Position * (size * 2 + 1);
-            //new Vertex(0.0f, 0.0f, 1.0f) * (size * 2);
+
+            camera.Position = position;
+            camera.Target = target;
+            //camera.UpVector = new Vertex(0f, 1f, 0f);
+        }
+
+        /// <summary>
+        /// Adjusts camera's perspective settings according to bounding box.
+        /// <para>Use this when bounding box's size or positon is changed.</para>
+        /// </summary>
+        /// <param name="camera"></param>
+        /// <param name="boundingBox"></param>
+        /// <param name="openGL"></param>
+        public static void AdjustCamera(this IPerspectiveCamera camera, IBoundingBox boundingBox, OpenGL openGL)
+        {
+            float sizeX, sizeY, sizeZ;
+            boundingBox.GetBoundDimensions(out sizeX, out sizeY, out sizeZ);
+            float size = Math.Max(Math.Max(sizeX, sizeY), sizeZ);
 
             int[] viewport = new int[4];
             openGL.GetInteger(SharpGL.Enumerations.GetTarget.Viewport, viewport);
@@ -41,6 +58,24 @@ namespace SharpGL.SceneComponent
             perspectiveCamera.AspectRatio = (double)width / (double)height;
             perspectiveCamera.Near = 0.01;
             perspectiveCamera.Far = size * 3 + 1;// double.MaxValue;
+        }
+
+        /// <summary>
+        /// Adjusts camera's ortho settings according to bounding box.
+        /// <para>Use this when bounding box's size or positon is changed.</para>
+        /// </summary>
+        /// <param name="camera"></param>
+        /// <param name="boundingBox"></param>
+        /// <param name="openGL"></param>
+        public static void AdjustCamera(this IOrthoCamera camera, IBoundingBox boundingBox, OpenGL openGL)
+        {
+            float sizeX, sizeY, sizeZ;
+            boundingBox.GetBoundDimensions(out sizeX, out sizeY, out sizeZ);
+            float size = Math.Max(Math.Max(sizeX, sizeY), sizeZ);
+
+            int[] viewport = new int[4];
+            openGL.GetInteger(SharpGL.Enumerations.GetTarget.Viewport, viewport);
+            int width = viewport[2]; int height = viewport[3];
 
             IOrthoCamera orthoCamera = camera;
             if (width > height)
@@ -57,13 +92,8 @@ namespace SharpGL.SceneComponent
                 orthoCamera.Bottom = -size * height / width;
                 orthoCamera.Top = size * height / width;
             }
-            orthoCamera.Near = 0;// 0.001;
-            //orthoCamera.Far = double.MaxValue;
+            orthoCamera.Near = 0;
             orthoCamera.Far = size * 3 + 1;// double.MaxValue;
-
-            camera.Position = position;
-            camera.Target = target;
-            //camera.UpVector = new Vertex(0f, 1f, 0f);
         }
 
         /// <summary>

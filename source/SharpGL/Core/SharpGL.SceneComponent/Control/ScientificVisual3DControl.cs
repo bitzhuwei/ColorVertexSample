@@ -34,7 +34,7 @@ namespace SharpGL.SceneComponent
         { get { return this.modelContainer; } }
 
         private EViewType viewType;
-   
+
         public ScientificVisual3DControl()
         {
             ScientificVisual3DControlHelper.InitializeScene(this);
@@ -49,9 +49,21 @@ namespace SharpGL.SceneComponent
 
         void ScientificVisual3DControl_Resized(object sender, EventArgs e)
         {
-            //this.modelContainer.AdjustCamera(this.OpenGL, this.Scene.CurrentCamera);
-            //CameraHelper.AdjustCamera(this.modelContainer.BoundingBox, this.OpenGL, this.Scene.CurrentCamera);
-            this.Scene.CurrentCamera.AdjustCamera(this.modelContainer.BoundingBox, this.OpenGL);
+            ScientificCamera camera = this.Scene.CurrentCamera;
+            if (camera.CameraType == ECameraType.Perspecitive)
+            {
+                IPerspectiveCamera perspecitive = camera;
+                perspecitive.AdjustCamera(this.modelContainer.BoundingBox, this.OpenGL);
+            }
+            else if (camera.CameraType == ECameraType.Ortho)
+            {
+                IOrthoCamera orthoCamera = camera;
+                orthoCamera.AdjustCamera(this.modelContainer.BoundingBox, this.OpenGL);
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
 
         void ScientificVisual3DControl_MouseWheel(object sender, MouseEventArgs e)
@@ -174,7 +186,7 @@ namespace SharpGL.SceneComponent
             frameTime = stopwatch.Elapsed.TotalMilliseconds;
         }
 
-       
+
         /// <summary>
         /// holds UI elements(axis, color indicator etc).
         /// </summary>
@@ -337,8 +349,21 @@ namespace SharpGL.SceneComponent
         /// </summary>
         public void UpdateCamera()
         {
-            //CameraHelper.AdjustCamera(this.modelContainer.BoundingBox, this.OpenGL, this.Scene.CurrentCamera);
-            this.Scene.CurrentCamera.AdjustCamera(this.modelContainer.BoundingBox, this.OpenGL);
+            ScientificCamera camera = this.Scene.CurrentCamera;
+            if (camera.CameraType == ECameraType.Perspecitive)
+            {
+                IPerspectiveCamera perspecitive = camera;
+                perspecitive.AdjustCamera(this.modelContainer.BoundingBox, this.OpenGL);
+            }
+            else if (camera.CameraType == ECameraType.Ortho)
+            {
+                IOrthoCamera orthoCamera = camera;
+                orthoCamera.AdjustCamera(this.modelContainer.BoundingBox, this.OpenGL);
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
             //// force CameraRotation to udpate.
             //this.CameraRotation.Camera = this.Scene.CurrentCamera;
             ManualRender(this);
