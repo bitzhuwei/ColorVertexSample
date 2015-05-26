@@ -258,7 +258,7 @@
             this.tbNZ.Name = "tbNZ";
             this.tbNZ.Size = new System.Drawing.Size(60, 21);
             this.tbNZ.TabIndex = 5;
-            this.tbNZ.Text = "10";
+            this.tbNZ.Text = "100";
             // 
             // label3
             // 
@@ -275,7 +275,7 @@
             this.tbNY.Name = "tbNY";
             this.tbNY.Size = new System.Drawing.Size(60, 21);
             this.tbNY.TabIndex = 3;
-            this.tbNY.Text = "10";
+            this.tbNY.Text = "100";
             // 
             // label2
             // 
@@ -292,7 +292,7 @@
             this.tbNX.Name = "tbNX";
             this.tbNX.Size = new System.Drawing.Size(60, 21);
             this.tbNX.TabIndex = 1;
-            this.tbNX.Text = "10";
+            this.tbNX.Text = "100";
             // 
             // label1
             // 
