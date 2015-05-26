@@ -23,6 +23,11 @@ namespace SharpGL.SceneComponent
         private SharpGL.SceneGraph.Vertex back;
         private SharpGL.SceneGraph.Vertex right;
 
+        /// <summary>
+        /// Rotates a camera on a sphere, whose center is camera's Target.
+        /// <para>Just like a satellite moves around a fixed star.</para> 
+        /// </summary>
+        /// <param name="camera"></param>
         public SatelliteRotation(ScientificCamera camera = null)
         {
             this.Camera = camera;
