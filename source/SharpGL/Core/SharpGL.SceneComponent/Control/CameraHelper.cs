@@ -38,8 +38,8 @@ namespace SharpGL.SceneComponent
             IPerspectiveCamera perspectiveCamera = camera;
             perspectiveCamera.FieldOfView = 60;
             perspectiveCamera.AspectRatio = (double)width / (double)height;
-            perspectiveCamera.Near = 0.001;
-            perspectiveCamera.Far = double.MaxValue;
+            perspectiveCamera.Near = 0.01;
+            perspectiveCamera.Far = size * 3 + 1;// double.MaxValue;
 
             IOrthoCamera orthoCamera = camera;
             if (width > height)
@@ -145,8 +145,8 @@ namespace SharpGL.SceneComponent
             IPerspectiveCamera perspectiveCamera = camera;
             perspectiveCamera.FieldOfView = 60;
             perspectiveCamera.AspectRatio = (double)width / (double)height;
-            perspectiveCamera.Near = 0.001;
-            perspectiveCamera.Far = double.MaxValue;
+            perspectiveCamera.Near = 0.01;
+            perspectiveCamera.Far = size * 3 + 1;// double.MaxValue;
 
             IOrthoCamera orthoCamera = camera;
             if (width > height)

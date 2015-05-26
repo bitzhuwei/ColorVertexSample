@@ -24,8 +24,8 @@ namespace SharpGL.SceneComponent
             IPerspectiveCamera perspectiveCamera = this;
             perspectiveCamera.FieldOfView = 60f;
             perspectiveCamera.AspectRatio = 1f;
-            perspectiveCamera.Near = 0.001;
-            perspectiveCamera.Far = double.MaxValue;
+            perspectiveCamera.Near = 0.01;
+            perspectiveCamera.Far = 1000;
 
             IOrthoCamera orthoCamera = this;
             orthoCamera.Left = -100;
@@ -156,9 +156,12 @@ namespace SharpGL.SceneComponent
                 }
                 var scaledTarget2Position = target2Position * (1 - delta * 0.001f);
                 camera.Position = camera.Target + scaledTarget2Position;
-                // Increase ortho camera's Near/Far property in case the camera's position changes too much.
-                IOrthoCamera orthoCamera = camera;
                 double lengthDiff = scaledTarget2Position.Magnitude() - target2Position.Magnitude();
+                // Increase ortho camera's Near/Far property in case the camera's position changes too much.
+                IPerspectiveCamera perspectiveCamera = camera;
+                perspectiveCamera.Far += lengthDiff;
+                //perspectiveCamera.Near += lengthDiff;
+                IOrthoCamera orthoCamera = camera;
                 orthoCamera.Far += lengthDiff;
                 orthoCamera.Near += lengthDiff;
             }
