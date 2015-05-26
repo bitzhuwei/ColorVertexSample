@@ -1,6 +1,6 @@
-﻿namespace ModernOpenGLSample._1OpenGLControl
+﻿namespace ModernOpenGLSample._2SceneControl
 {
-    partial class FormModernOpenGLControlDemo
+    partial class FormModernSceneControlDemo
     {
         /// <summary>
         /// Required designer variable.
@@ -28,29 +28,27 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.openGLControl = new SharpGL.OpenGLControl();
+            this.sceneControl = new SharpGL.SceneControl();
             this.txtInfo = new System.Windows.Forms.TextBox();
-            ((System.ComponentModel.ISupportInitialize)(this.openGLControl)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sceneControl)).BeginInit();
             this.SuspendLayout();
             // 
             // openGLControl
             // 
-            this.openGLControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.sceneControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.openGLControl.DrawFPS = false;
-            this.openGLControl.Location = new System.Drawing.Point(156, 12);
-            this.openGLControl.Name = "openGLControl";
-            this.openGLControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL4_0;
-            this.openGLControl.RenderContextType = SharpGL.RenderContextType.FBO;
-            this.openGLControl.RenderTrigger = SharpGL.RenderTrigger.TimerBased;
-            this.openGLControl.Size = new System.Drawing.Size(425, 346);
-            this.openGLControl.TabIndex = 0;
-            this.openGLControl.OpenGLInitialized += new System.EventHandler(this.openGLControl_OpenGLInitialized);
-            this.openGLControl.OpenGLDraw += new SharpGL.RenderEventHandler(this.openGLControl_OpenGLDraw);
-            this.openGLControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.openGLControl_MouseDown);
-            this.openGLControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.openGLControl_MouseMove);
-            this.openGLControl.MouseUp += new System.Windows.Forms.MouseEventHandler(this.openGLControl_MouseUp);
+            this.sceneControl.DrawFPS = false;
+            this.sceneControl.Location = new System.Drawing.Point(156, 12);
+            this.sceneControl.Name = "openGLControl";
+            this.sceneControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL4_0;
+            this.sceneControl.RenderContextType = SharpGL.RenderContextType.FBO;
+            this.sceneControl.RenderTrigger = SharpGL.RenderTrigger.TimerBased;
+            this.sceneControl.Size = new System.Drawing.Size(425, 346);
+            this.sceneControl.TabIndex = 0;
+            this.sceneControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.openGLControl_MouseDown);
+            this.sceneControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.openGLControl_MouseMove);
+            this.sceneControl.MouseUp += new System.Windows.Forms.MouseEventHandler(this.openGLControl_MouseUp);
             // 
             // txtInfo
             // 
@@ -63,16 +61,16 @@
             this.txtInfo.Size = new System.Drawing.Size(138, 346);
             this.txtInfo.TabIndex = 1;
             // 
-            // FormModernOpenGLControlDemo
+            // FormModernSceneControlDemo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(593, 370);
             this.Controls.Add(this.txtInfo);
-            this.Controls.Add(this.openGLControl);
-            this.Name = "FormModernOpenGLControlDemo";
-            this.Text = "Modern OpenGLControl Demo";
-            ((System.ComponentModel.ISupportInitialize)(this.openGLControl)).EndInit();
+            this.Controls.Add(this.sceneControl);
+            this.Name = "FormModernSceneControlDemo";
+            this.Text = "Modern SceneControl Demo";
+            ((System.ComponentModel.ISupportInitialize)(this.sceneControl)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -80,7 +78,7 @@
 
         #endregion
 
-        private SharpGL.OpenGLControl openGLControl;
+        private SharpGL.SceneControl sceneControl;
         private System.Windows.Forms.TextBox txtInfo;
     }
 }
