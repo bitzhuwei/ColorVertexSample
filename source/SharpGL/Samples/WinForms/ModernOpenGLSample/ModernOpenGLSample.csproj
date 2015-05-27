@@ -114,6 +114,8 @@
     <None Include="app.config" />
     <EmbeddedResource Include="Shader.frag" />
     <None Include="packages.config" />
+    <EmbeddedResource Include="PickingShader.frag" />
+    <EmbeddedResource Include="PickingShader.vert" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
