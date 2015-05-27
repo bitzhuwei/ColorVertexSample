@@ -14,15 +14,16 @@ namespace ModernOpenGLSample._3MySceneControl
     /// <summary>
     /// Render models with shader and VAO.
     /// <para>Use <see cref="IHasObjectSpace"/> and <see cref="IScientificCamera"/> to update projection and view matrices.</para>
+    /// <para>This element can be picked.</para>
     /// </summary>
-    class ModernSceneControlSceneElement : SceneElement, IRenderable, IHasObjectSpace
+    class ModernMySceneControlSceneElement : SceneElement, IRenderable, IHasObjectSpace
     {
         /// <summary>
         /// Render models with shader and VAO.
         /// <para>Use <see cref="IHasObjectSpace"/> and <paramref name="camera"/> to update projection and view matrices.</para>
         /// </summary>
         /// <param name="camera"></param>
-        public ModernSceneControlSceneElement(IScientificCamera camera = null)
+        public ModernMySceneControlSceneElement(IScientificCamera camera = null)
         {
             this.Camera = camera;
         }
@@ -36,11 +37,16 @@ namespace ModernOpenGLSample._3MySceneControl
         const uint attributeIndexPosition = 0;
         const uint attributeIndexColour = 1;
 
-        //  The vertex buffer array which contains the vertex and colour buffers.
+        /// <summary>
+        ///  The vertex buffer array which contains the vertex and colour buffers.
+        /// </summary>
         VertexBufferArray vertexBufferArray;
 
-        //  The shader program for our vertex and fragment shader.
+        /// <summary>
+        ///  The shader program for our vertex and fragment shader.
+        /// </summary>
         private ShaderProgram shaderProgram;
+        private ShaderProgram pickingShaderProgram;
 
         /// <summary>
         /// <para>Use <see cref="IHasObjectSpace"/> and <see cref="IScientificCamera"/> to update projection and view matrices.</para>
@@ -59,13 +65,26 @@ namespace ModernOpenGLSample._3MySceneControl
             gl.ClearColor(0.4f, 0.6f, 0.9f, 0.0f);
 
             //  Create the shader program.
-            var vertexShaderSource = ManifestResourceLoader.LoadTextFile("Shader.vert");
-            var fragmentShaderSource = ManifestResourceLoader.LoadTextFile("Shader.frag");
-            shaderProgram = new ShaderProgram();
-            shaderProgram.Create(gl, vertexShaderSource, fragmentShaderSource, null);
-            shaderProgram.BindAttributeLocation(gl, attributeIndexPosition, "in_Position");
-            shaderProgram.BindAttributeLocation(gl, attributeIndexColour, "in_Color");
-            shaderProgram.AssertValid(gl);
+            {
+                var vertexShaderSource = ManifestResourceLoader.LoadTextFile("Shader.vert");
+                var fragmentShaderSource = ManifestResourceLoader.LoadTextFile("Shader.frag");
+                ShaderProgram shader = new ShaderProgram();
+                shader.Create(gl, vertexShaderSource, fragmentShaderSource, null);
+                shader.BindAttributeLocation(gl, attributeIndexPosition, "in_Position");
+                shader.BindAttributeLocation(gl, attributeIndexColour, "in_Color");
+                shader.AssertValid(gl);
+                this.shaderProgram = shader;
+            }
+            {
+                var vertexShaderSource = ManifestResourceLoader.LoadTextFile("PickingShader.vert");
+                var fragmentShaderSource = ManifestResourceLoader.LoadTextFile("PickingShader.frag");
+                ShaderProgram shader = new ShaderProgram();
+                shader.Create(gl, vertexShaderSource, fragmentShaderSource, null);
+                shader.BindAttributeLocation(gl, attributeIndexPosition, "in_Position");
+                shader.BindAttributeLocation(gl, attributeIndexColour, "in_Color");
+                shader.AssertValid(gl);
+                this.pickingShaderProgram = shader;
+            }
 
             //  Create a perspective projection matrix.
             const float rads = (60.0f / 360.0f) * (float)Math.PI * 2.0f;
@@ -133,21 +152,46 @@ namespace ModernOpenGLSample._3MySceneControl
 
         void IRenderable.Render(OpenGL gl, RenderMode renderMode)
         {
-            //  Bind the shader, set the matrices.
-            shaderProgram.Bind(gl);
-            shaderProgram.SetUniformMatrix4(gl, "projectionMatrix", projectionMatrix.to_array());
-            shaderProgram.SetUniformMatrix4(gl, "viewMatrix", viewMatrix.to_array());
-            shaderProgram.SetUniformMatrix4(gl, "modelMatrix", modelMatrix.to_array());
+            if (renderMode != RenderMode.HitTest)
+            {
+                ShaderProgram shader = this.shaderProgram;
 
-            //  Bind the out vertex array.
-            vertexBufferArray.Bind(gl);
+                //  Bind the shader, set the matrices.
+                shader.Bind(gl);
+                shader.SetUniformMatrix4(gl, "projectionMatrix", projectionMatrix.to_array());
+                shader.SetUniformMatrix4(gl, "viewMatrix", viewMatrix.to_array());
+                shader.SetUniformMatrix4(gl, "modelMatrix", modelMatrix.to_array());
 
-            //  Draw the square.
-            gl.DrawArrays(OpenGL.GL_TRIANGLES, 0, 6);
+                //  Bind the out vertex array.
+                vertexBufferArray.Bind(gl);
 
-            //  Unbind our vertex array and shader.
-            vertexBufferArray.Unbind(gl);
-            shaderProgram.Unbind(gl);
+                //  Draw the square.
+                gl.DrawArrays(OpenGL.GL_TRIANGLES, 0, 6);
+
+                //  Unbind our vertex array and shader.
+                vertexBufferArray.Unbind(gl);
+                shader.Unbind(gl);
+            }
+            else
+            {
+                ShaderProgram shader = this.pickingShaderProgram; 
+
+                // Bind shader, set matrices.
+                shader.Bind(gl);
+                shader.SetUniformMatrix4(gl, "projectionMatrix", projectionMatrix.to_array());
+                shader.SetUniformMatrix4(gl, "viewMatrix", viewMatrix.to_array());
+                shader.SetUniformMatrix4(gl, "modelMatrix", modelMatrix.to_array());
+
+                //  Bind the out vertex array.
+                vertexBufferArray.Bind(gl);
+
+                //  Draw the square.
+                gl.DrawArrays(OpenGL.GL_TRIANGLES, 0, 6);
+
+                //  Unbind our vertex array and shader.
+                vertexBufferArray.Unbind(gl);
+                shader.Unbind(gl);
+            }
         }
 
         #endregion

@@ -28,27 +28,28 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.sceneControl = new SharpGL.SceneComponent.MySceneControl();
+            this.mySceneControl = new SharpGL.SceneComponent.MySceneControl();
             this.txtInfo = new System.Windows.Forms.TextBox();
-            ((System.ComponentModel.ISupportInitialize)(this.sceneControl)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mySceneControl)).BeginInit();
             this.SuspendLayout();
             // 
-            // sceneControl
+            // mySceneControl
             // 
-            this.sceneControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.mySceneControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.sceneControl.DrawFPS = false;
-            this.sceneControl.Location = new System.Drawing.Point(156, 12);
-            this.sceneControl.Name = "sceneControl";
-            this.sceneControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL4_0;
-            this.sceneControl.RenderContextType = SharpGL.RenderContextType.FBO;
-            this.sceneControl.RenderTrigger = SharpGL.RenderTrigger.TimerBased;
-            this.sceneControl.Size = new System.Drawing.Size(425, 346);
-            this.sceneControl.TabIndex = 0;
-            this.sceneControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.openGLControl_MouseDown);
-            this.sceneControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.openGLControl_MouseMove);
-            this.sceneControl.MouseUp += new System.Windows.Forms.MouseEventHandler(this.openGLControl_MouseUp);
+            this.mySceneControl.DrawFPS = false;
+            this.mySceneControl.Location = new System.Drawing.Point(156, 12);
+            this.mySceneControl.Name = "mySceneControl";
+            this.mySceneControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL4_0;
+            this.mySceneControl.RenderContextType = SharpGL.RenderContextType.FBO;
+            this.mySceneControl.RenderTrigger = SharpGL.RenderTrigger.TimerBased;
+            this.mySceneControl.Size = new System.Drawing.Size(425, 346);
+            this.mySceneControl.TabIndex = 0;
+            this.mySceneControl.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.mySceneControl_MouseDoubleClick);
+            this.mySceneControl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.openGLControl_MouseDown);
+            this.mySceneControl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.openGLControl_MouseMove);
+            this.mySceneControl.MouseUp += new System.Windows.Forms.MouseEventHandler(this.openGLControl_MouseUp);
             // 
             // txtInfo
             // 
@@ -67,10 +68,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(593, 370);
             this.Controls.Add(this.txtInfo);
-            this.Controls.Add(this.sceneControl);
+            this.Controls.Add(this.mySceneControl);
             this.Name = "FormModernSceneControlDemo";
             this.Text = "Modern MySceneControl Demo";
-            ((System.ComponentModel.ISupportInitialize)(this.sceneControl)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mySceneControl)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -78,7 +79,7 @@
 
         #endregion
 
-        private SharpGL.SceneComponent.MySceneControl sceneControl;
+        private SharpGL.SceneComponent.MySceneControl mySceneControl;
         private System.Windows.Forms.TextBox txtInfo;
     }
 }

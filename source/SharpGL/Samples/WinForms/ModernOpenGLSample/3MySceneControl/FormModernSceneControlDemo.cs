@@ -30,27 +30,27 @@ namespace ModernOpenGLSample._3MySceneControl
             this.sceneElement.Camera = camera;
 
             // prepare scene's settings.
-            this.sceneControl.Scene.SceneContainer.Children.Clear();
-            this.sceneControl.Scene.SceneContainer.Effects.Clear();
-            this.sceneControl.Scene.ClearColor = new GLColor(0.4f, 0.6f, 0.9f, 0.0f);
+            this.mySceneControl.Scene.SceneContainer.Children.Clear();
+            this.mySceneControl.Scene.SceneContainer.Effects.Clear();
+            this.mySceneControl.Scene.ClearColor = new GLColor(0.4f, 0.6f, 0.9f, 0.0f);
 
             // prepare model's element.
-            this.sceneElement.Initialise(this.sceneControl.OpenGL, 
-                this.sceneControl.Width, this.sceneControl.Height);
-            this.sceneControl.Scene.SceneContainer.AddChild(this.sceneElement);
+            this.sceneElement.Initialise(this.mySceneControl.OpenGL, 
+                this.mySceneControl.Width, this.mySceneControl.Height);
+            this.mySceneControl.Scene.SceneContainer.AddChild(this.sceneElement);
         }
 
         /// <summary>
         /// The scene that we are rendering.
         /// </summary>
-        private readonly ModernSceneControlSceneElement sceneElement = new ModernSceneControlSceneElement();
+        private readonly ModernMySceneControlSceneElement sceneElement = new ModernMySceneControlSceneElement();
         SatelliteRotation cameraRotation = new SatelliteRotation();
 
         private void openGLControl_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                this.cameraRotation.SetBounds(this.sceneControl.Width, this.sceneControl.Height);
+                this.cameraRotation.SetBounds(this.mySceneControl.Width, this.mySceneControl.Height);
                 this.cameraRotation.MouseDown(e.X, e.Y);
             }
         }
@@ -68,6 +68,14 @@ namespace ModernOpenGLSample._3MySceneControl
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
                 this.cameraRotation.MouseUp(e.X, e.Y);
+            }
+        }
+
+        private void mySceneControl_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+            {
+                this.mySceneControl.Scene.DoHitTest(e.X, e.Y);
             }
         }
 
