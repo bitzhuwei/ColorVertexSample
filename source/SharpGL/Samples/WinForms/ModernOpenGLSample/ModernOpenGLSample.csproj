@@ -64,7 +64,6 @@
     <Compile Include="3MySceneControl\FormModernSceneControlDemo.Designer.cs">
       <DependentUpon>FormModernSceneControlDemo.cs</DependentUpon>
     </Compile>
-    <Compile Include="3MySceneControl\ModernSceneControlSceneElement.cs" />
     <Compile Include="2SceneControl\FormModernSceneControlDemo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -78,6 +77,7 @@
     <Compile Include="1OpenGLControl\FormModernOpenGLControlDemo.Designer.cs">
       <DependentUpon>FormModernOpenGLControlDemo.cs</DependentUpon>
     </Compile>
+    <Compile Include="3MySceneControl\ModernMySceneControlSceneElement.cs" />
     <Compile Include="FormModernOpenGLSample.cs">
       <SubType>Form</SubType>
     </Compile>
