@@ -63,6 +63,14 @@ namespace ModernOpenGLSample._1OpenGLControl
             {
                 this.sceneElement.MouseMove(e.X, e.Y);
             }
+
+            byte[] result = new byte[4];
+            this.openGLControl.OpenGL.ReadPixels(
+                e.X, this.openGLControl.Height - e.Y, 1, 1,
+                OpenGL.GL_RGBA, OpenGL.GL_UNSIGNED_BYTE, result);
+            var color = string.Format("R:{0},G:{1},B:{2},A:{3}",
+                result[0], result[1], result[2], result[3]);
+            this.txtInfo.Text = color;
         }
 
         private void openGLControl_MouseUp(object sender, MouseEventArgs e)
