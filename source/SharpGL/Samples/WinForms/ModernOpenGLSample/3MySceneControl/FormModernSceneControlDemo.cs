@@ -29,22 +29,27 @@ namespace ModernOpenGLSample._3MySceneControl
             camera.UpVector = new SharpGL.SceneGraph.Vertex(0, 1, 0);
             this.cameraRotation.Camera = camera;
             this.sceneElement.Camera = camera;
+            this.sceneElement2.Camera = camera;
 
             // prepare scene's settings.
             this.mySceneControl.Scene.SceneContainer.Children.Clear();
             this.mySceneControl.Scene.SceneContainer.Effects.Clear();
             this.mySceneControl.Scene.ClearColor = new GLColor(0.4f, 0.6f, 0.9f, 0.0f);
 
-            // prepare model's element.
-            this.sceneElement.Initialise(this.mySceneControl.OpenGL, 
+            // prepare models' elements.
+            this.sceneElement.Initialise(this.mySceneControl.OpenGL,
                 this.mySceneControl.Width, this.mySceneControl.Height);
             this.mySceneControl.Scene.SceneContainer.AddChild(this.sceneElement);
+            this.sceneElement2.Initialise(this.mySceneControl.OpenGL,
+                this.mySceneControl.Width, this.mySceneControl.Height);
+            this.mySceneControl.Scene.SceneContainer.AddChild(this.sceneElement2);
         }
 
         /// <summary>
         /// The scene that we are rendering.
         /// </summary>
         private readonly ModernMySceneControlSceneElement sceneElement = new ModernMySceneControlSceneElement();
+        private readonly ModernMySceneControlSceneElement sceneElement2 = new ModernMySceneControlSceneElement(false);
         SatelliteRotation cameraRotation = new SatelliteRotation();
 
         private void openGLControl_MouseDown(object sender, MouseEventArgs e)

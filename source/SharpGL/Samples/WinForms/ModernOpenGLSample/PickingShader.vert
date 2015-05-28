@@ -6,11 +6,12 @@ out vec4 pass_Color;
 uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 modelMatrix;
+uniform int pickingBaseID;
 
 void main(void) {
 	gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(in_Position, 1.0);
 
-	int objectID = gl_VertexID;
+	int objectID = pickingBaseID + gl_VertexID;
 	pass_Color = vec4(
 		float(objectID & 0xFF) / 255.0, 
 		float((objectID >> 8) & 0xFF) / 255.0, 

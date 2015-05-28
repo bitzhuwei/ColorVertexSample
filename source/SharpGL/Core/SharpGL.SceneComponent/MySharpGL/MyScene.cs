@@ -18,8 +18,16 @@ namespace SharpGL.SceneComponent
         /// 
         /// </summary>
         /// <param name="isClear">Execute gl.ClearColor() and gl.Clear() if true.</param>
-        public MyScene(bool isClear = true)
+        public MyScene(SharedStageInfo stagetInfo = null, bool isClear = true)
         {
+            if (stagetInfo != null)
+            {
+                this.StageInfo = stagetInfo;
+            }
+            else
+            {
+                this.StageInfo = new SharedStageInfo();
+            }
             this.IsClear = isClear;
         }
 
@@ -27,6 +35,8 @@ namespace SharpGL.SceneComponent
         /// Execute gl.ClearColor() and gl.Clear() if true.
         /// </summary>
         public bool IsClear { get; set; }
+
+        public SharedStageInfo StageInfo { get; set; }
 
         /// <summary>
         /// Draw the scene.
@@ -84,9 +94,12 @@ namespace SharpGL.SceneComponent
 
             //gl.BindTexture(OpenGL.GL_TEXTURE_2D, 0);
 
+            SharedStageInfo info = this.StageInfo;
+            info.Reset();
+
             //  Render the root element, this will then render the whole
             //  of the scene tree.
-            MyRenderElement(SceneContainer, gl, renderMode);
+            MyRenderElement(SceneContainer, gl, renderMode, info);
 
             //  TODO: Adding this code here re-enables textures- it should work without it but it
             //  doesn't, look into this.
@@ -106,7 +119,7 @@ namespace SharpGL.SceneComponent
         /// </summary>
         /// <param name="gl">The gl.</param>
         /// <param name="renderMode">The render mode.</param>
-        public void MyRenderElement(SceneElement sceneElement, OpenGL gl, RenderMode renderMode)
+        public void MyRenderElement(SceneElement sceneElement, OpenGL gl, RenderMode renderMode, SharedStageInfo info)
         {
             //  If the element is disabled, we're done.
             if (sceneElement.IsEnabled == false)
@@ -124,6 +137,9 @@ namespace SharpGL.SceneComponent
             //  If the element has an object space, transform into it.
             IHasObjectSpace hasObjectSpace = sceneElement as IHasObjectSpace;// example: Polygon, quadric, Teapot
             if (hasObjectSpace != null) hasObjectSpace.PushObjectSpace(gl);
+
+            IHasModernObjectSpace hasModernObjectSpace = sceneElement as IHasModernObjectSpace;
+            if (hasModernObjectSpace != null) hasModernObjectSpace.PushObjectSpace(gl, renderMode, info);
 
             //  Render self.
             {
@@ -152,7 +168,9 @@ namespace SharpGL.SceneComponent
 
             //  Recurse through the children.
             foreach (var childElement in sceneElement.Children)
-                MyRenderElement(childElement, gl, renderMode);
+                MyRenderElement(childElement, gl, renderMode, info);
+
+            if (hasModernObjectSpace != null) hasModernObjectSpace.PopObjectSpace(gl, renderMode, info);
 
             //  If the element has an object space, transform out of it.
             if (hasObjectSpace != null) hasObjectSpace.PopObjectSpace(gl);
