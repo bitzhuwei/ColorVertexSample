@@ -33,14 +33,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.sceneControl)).BeginInit();
             this.SuspendLayout();
             // 
-            // openGLControl
+            // sceneControl
             // 
             this.sceneControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.sceneControl.DrawFPS = false;
             this.sceneControl.Location = new System.Drawing.Point(156, 12);
-            this.sceneControl.Name = "openGLControl";
+            this.sceneControl.Name = "sceneControl";
             this.sceneControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL4_0;
             this.sceneControl.RenderContextType = SharpGL.RenderContextType.FBO;
             this.sceneControl.RenderTrigger = SharpGL.RenderTrigger.TimerBased;
