@@ -70,6 +70,7 @@
     <Compile Include="Model\ScientificModelElement.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="MySharpGL\IHasModernObjectSpace.cs" />
     <Compile Include="MySharpGL\LinearArcBallTransform.cs" />
     <Compile Include="MySharpGL\ArcBallTransform.cs" />
     <Compile Include="MySharpGL\ArcBallTransformEffect.cs" />
@@ -82,6 +83,7 @@
       <DependentUpon>MyOpenGLControl.cs</DependentUpon>
     </Compile>
     <Compile Include="MySharpGL\MySceneControlHelper.cs" />
+    <Compile Include="MySharpGL\SharedStageInfo.cs" />
     <Compile Include="SimpleUI\ColorIndicator\ColorIndicatorBar.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -16,15 +16,16 @@ namespace ModernOpenGLSample._3MySceneControl
     /// <para>Use <see cref="IHasObjectSpace"/> and <see cref="IScientificCamera"/> to update projection and view matrices.</para>
     /// <para>This element can be picked.</para>
     /// </summary>
-    class ModernMySceneControlSceneElement : SceneElement, IRenderable, IHasObjectSpace
+    class ModernMySceneControlSceneElement : SceneElement, IRenderable, IHasModernObjectSpace
     {
         /// <summary>
         /// Render models with shader and VAO.
         /// <para>Use <see cref="IHasObjectSpace"/> and <paramref name="camera"/> to update projection and view matrices.</para>
         /// </summary>
         /// <param name="camera"></param>
-        public ModernMySceneControlSceneElement(IScientificCamera camera = null)
+        public ModernMySceneControlSceneElement(bool positiveGrowth = true, IScientificCamera camera = null)
         {
+            this.positiveGrowth = positiveGrowth;
             this.Camera = camera;
         }
 
@@ -103,6 +104,8 @@ namespace ModernOpenGLSample._3MySceneControl
 
         float[] vertices;//= new float[18];
         float[] colors;//= new float[18]; // Colors for our vertices  
+        private int pickingBaseID;
+        private bool positiveGrowth;
 
         /// <summary>
         /// Creates the geometry for the square, also creating the vertex buffer array.
@@ -140,22 +143,13 @@ namespace ModernOpenGLSample._3MySceneControl
 
             Random random = new Random();
 
+            int direction = this.positiveGrowth ? 1 : -1;
             // points
             for (int i = 0; i < length; i++)
             {
-                vertices[i] = (float)i / (float)length;
+                vertices[i] = direction * (float)i / (float)length;
                 colors[i] = (float)((random.NextDouble() * 2 - 1) * 1);
-                //vertices[i] = (float)(random.NextDouble() * 2 - 1);
-                //if (i % 2 == 0)
-                //{
-                //    vertices[i] = (i + 0.0f) / (float)(length);
-                //}
-                //else
-                //{
-                //    vertices[i] = -(i + 0.0f) / (float)(length);
-                //}
-
-                // triangles
+                //colors[i] = (float)i / (float)length;
             }
 
             //// triangles
@@ -189,6 +183,11 @@ namespace ModernOpenGLSample._3MySceneControl
             shader.SetUniformMatrix4(gl, "projectionMatrix", projectionMatrix.to_array());
             shader.SetUniformMatrix4(gl, "viewMatrix", viewMatrix.to_array());
             shader.SetUniformMatrix4(gl, "modelMatrix", modelMatrix.to_array());
+            if (renderMode == RenderMode.HitTest)
+            {
+                shader.SetUniform1(gl, "pickingBaseID", this.pickingBaseID);
+
+            }
 
             //  Bind the out vertex array.
             vertexBufferArray.Bind(gl);
@@ -204,40 +203,51 @@ namespace ModernOpenGLSample._3MySceneControl
 
         #endregion
 
-        #region IHasObjectSpace 成员
 
-        void IHasObjectSpace.PushObjectSpace(OpenGL gl)
+        #region IHasModernObjectSpace 成员
+
+        void IHasModernObjectSpace.PushObjectSpace(OpenGL gl, RenderMode renderMode, SharpGL.SceneComponent.SharedStageInfo info)
         {
             // Update matrices.
             IScientificCamera camera = this.Camera;
-            if (camera == null) { return; }
-            if (camera.CameraType == ECameraType.Perspecitive)
+            if (camera != null)
             {
-                IPerspectiveViewCamera perspective = camera;
-                this.projectionMatrix = perspective.GetProjectionMat4();
-                this.viewMatrix = perspective.GetViewMat4();
+                if (camera.CameraType == ECameraType.Perspecitive)
+                {
+                    IPerspectiveViewCamera perspective = camera;
+                    this.projectionMatrix = perspective.GetProjectionMat4();
+                    this.viewMatrix = perspective.GetViewMat4();
+                }
+                else if (camera.CameraType == ECameraType.Ortho)
+                {
+                    IOrthoViewCamera ortho = camera;
+                    this.projectionMatrix = ortho.GetProjectionMat4();
+                    this.viewMatrix = ortho.GetViewMat4();
+                }
+                else
+                { throw new NotImplementedException(); }
             }
-            else if (camera.CameraType == ECameraType.Ortho)
-            {
-                IOrthoViewCamera ortho = camera;
-                this.projectionMatrix = ortho.GetProjectionMat4();
-                this.viewMatrix = ortho.GetViewMat4();
-            }
-            else
-            { throw new NotImplementedException(); }
 
             modelMatrix = mat4.identity();
+
+            if (renderMode == RenderMode.HitTest)
+            {
+                this.pickingBaseID = info.pickingBaseID;
+                info.pickingBaseID += this.vertices.Length / 3;
+            }
         }
 
-        void IHasObjectSpace.PopObjectSpace(OpenGL gl)
+        void IHasModernObjectSpace.PopObjectSpace(OpenGL gl, RenderMode renderMode, SharpGL.SceneComponent.SharedStageInfo info)
         {
-        }
-
-        SharpGL.SceneGraph.Transformations.LinearTransformation IHasObjectSpace.Transformation
-        {
-            get { throw new NotImplementedException(); }
+            // Nothing to do.
         }
 
         #endregion
+
+        public override string ToString()
+        {
+            return string.Format("{0} element", positiveGrowth ? "+" : "-");
+            //return base.ToString();
+        }
     }
 }
