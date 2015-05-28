@@ -110,14 +110,44 @@ namespace SharpGL.Shaders
                 throw new Exception(GetInfoLog(gl));
         }
 
+        public void SetUniform1(OpenGL gl, string uniformName, int v1)
+        {
+            gl.Uniform1(GetUniformLocation(gl, uniformName), v1);
+        }
+
+        public void SetUniform3(OpenGL gl, string uniformName, int v1, int v2)
+        {
+            gl.Uniform2(GetUniformLocation(gl, uniformName), v1, v2);
+        }
+
+        public void SetUniform3(OpenGL gl, string uniformName, int v1, int v2, int v3)
+        {
+            gl.Uniform3(GetUniformLocation(gl, uniformName), v1, v2, v3);
+        }
+
+        public void SetUniform3(OpenGL gl, string uniformName, int v1, int v2, int v3, int v4)
+        {
+            gl.Uniform4(GetUniformLocation(gl, uniformName), v1, v2, v3, v4);
+        }
+
         public void SetUniform1(OpenGL gl, string uniformName, float v1)
         {
             gl.Uniform1(GetUniformLocation(gl, uniformName), v1);
         }
 
+        public void SetUniform3(OpenGL gl, string uniformName, float v1, float v2)
+        {
+            gl.Uniform2(GetUniformLocation(gl, uniformName), v1, v2);
+        }
+
         public void SetUniform3(OpenGL gl, string uniformName, float v1, float v2, float v3)
         {
             gl.Uniform3(GetUniformLocation(gl, uniformName), v1, v2, v3);
+        }
+
+        public void SetUniform3(OpenGL gl, string uniformName, float v1, float v2, float v3, float v4)
+        {
+            gl.Uniform4(GetUniformLocation(gl, uniformName), v1, v2, v3, v4);
         }
 
         public void SetUniformMatrix3(OpenGL gl, string uniformName, float[] m)
