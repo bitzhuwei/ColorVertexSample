@@ -1,9 +1,7 @@
 ﻿#version 150 core
+in vec4 pass_Color;
+out vec4 out_Color;
 
-	flat in vec4 particle_color_fs;
-	out vec4 FragColor;
-
-void main() 
-{
-	FragColor = particle_color_fs;
+void main(void) {
+	out_Color = pass_Color;
 }

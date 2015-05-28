@@ -64,6 +64,8 @@ namespace ModernOpenGLSample._1OpenGLControl
                 this.sceneElement.MouseMove(e.X, e.Y);
             }
 
+            this.sceneElement.Draw(this.openGLControl.OpenGL, SharpGL.SceneGraph.Core.RenderMode.HitTest);
+
             byte[] result = new byte[4];
             this.openGLControl.OpenGL.ReadPixels(
                 e.X, this.openGLControl.Height - e.Y, 1, 1,

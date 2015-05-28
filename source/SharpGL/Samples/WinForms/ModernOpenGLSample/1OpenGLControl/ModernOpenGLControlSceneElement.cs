@@ -2,6 +2,7 @@
 using SharpGL;
 using SharpGL.SceneComponent;
 using SharpGL.SceneGraph;
+using SharpGL.SceneGraph.Core;
 using SharpGL.Shaders;
 using SharpGL.VertexBuffers;
 using System;
@@ -38,6 +39,7 @@ namespace ModernOpenGLSample._1OpenGLControl
 
         //  The shader program for our vertex and fragment shader.
         private ShaderProgram shaderProgram;
+        private ShaderProgram pickingShaderProgram;
 
         /// <summary>
         /// Initialises the scene.
@@ -49,15 +51,29 @@ namespace ModernOpenGLSample._1OpenGLControl
         {
             //  Set a blue clear colour.
             gl.ClearColor(0.4f, 0.6f, 0.9f, 0.5f);
-            
-            //  Create the shader program.
-            var vertexShaderSource = ManifestResourceLoader.LoadTextFile("Shader.vert");
-            var fragmentShaderSource = ManifestResourceLoader.LoadTextFile("Shader.frag");
-            shaderProgram = new ShaderProgram();
-            shaderProgram.Create(gl, vertexShaderSource, fragmentShaderSource, null);
-            shaderProgram.BindAttributeLocation(gl, attributeIndexPosition, "in_Position");
-            shaderProgram.BindAttributeLocation(gl, attributeIndexColour, "in_Color");
-            shaderProgram.AssertValid(gl);
+
+            {
+                //  Create the shader program.
+                var vertexShaderSource = ManifestResourceLoader.LoadTextFile("Shader.vert");
+                var fragmentShaderSource = ManifestResourceLoader.LoadTextFile("Shader.frag");
+                var shaderProgram = new ShaderProgram();
+                shaderProgram.Create(gl, vertexShaderSource, fragmentShaderSource, null);
+                shaderProgram.BindAttributeLocation(gl, attributeIndexPosition, "in_Position");
+                shaderProgram.BindAttributeLocation(gl, attributeIndexColour, "in_Color");
+                shaderProgram.AssertValid(gl);
+                this.shaderProgram = shaderProgram;
+            }
+            {
+                //  Create the shader program.
+                var vertexShaderSource = ManifestResourceLoader.LoadTextFile("PickingShader.vert");
+                var fragmentShaderSource = ManifestResourceLoader.LoadTextFile("PickingShader.frag");
+                var shaderProgram = new ShaderProgram();
+                shaderProgram.Create(gl, vertexShaderSource, fragmentShaderSource, null);
+                shaderProgram.BindAttributeLocation(gl, attributeIndexPosition, "in_Position");
+                shaderProgram.BindAttributeLocation(gl, attributeIndexColour, "in_Color");
+                shaderProgram.AssertValid(gl);
+                this.pickingShaderProgram = shaderProgram;
+            }
 
             //  Create a perspective projection matrix.
             const float rads = (60.0f / 360.0f) * (float)Math.PI * 2.0f;
@@ -81,8 +97,10 @@ namespace ModernOpenGLSample._1OpenGLControl
         /// Draws the scene.
         /// </summary>
         /// <param name="gl">The OpenGL instance.</param>
-        public void Draw(OpenGL gl)
+        public void Draw(OpenGL gl, RenderMode renderMode = RenderMode.Render)
         {
+            var shader = (renderMode == RenderMode.HitTest) ? pickingShaderProgram : shaderProgram;
+
             //  Clear the scene.
             gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT | OpenGL.GL_STENCIL_BUFFER_BIT);
 
@@ -95,10 +113,10 @@ namespace ModernOpenGLSample._1OpenGLControl
             modelMatrix = mat4.identity();
 
             //  Bind the shader, set the matrices.
-            shaderProgram.Bind(gl);
-            shaderProgram.SetUniformMatrix4(gl, "projectionMatrix", projectionMatrix.to_array());
-            shaderProgram.SetUniformMatrix4(gl, "viewMatrix", viewMatrix.to_array());
-            shaderProgram.SetUniformMatrix4(gl, "modelMatrix", modelMatrix.to_array());
+            shader.Bind(gl);
+            shader.SetUniformMatrix4(gl, "projectionMatrix", projectionMatrix.to_array());
+            shader.SetUniformMatrix4(gl, "viewMatrix", viewMatrix.to_array());
+            shader.SetUniformMatrix4(gl, "modelMatrix", modelMatrix.to_array());
 
             //  Bind the out vertex array.
             vertexBufferArray.Bind(gl);
@@ -109,7 +127,9 @@ namespace ModernOpenGLSample._1OpenGLControl
 
             //  Unbind our vertex array and shader.
             vertexBufferArray.Unbind(gl);
-            shaderProgram.Unbind(gl);
+            shader.Unbind(gl);
+
+            gl.Flush();
         }
 
         float[] vertices;//= new float[18];
@@ -186,23 +206,10 @@ namespace ModernOpenGLSample._1OpenGLControl
                     vertices[i * 9 + j * 3 + 2] = (float)(z + random.NextDouble() / 5 - 1);
                 }
             }
-        }
-
-        private static void GenerateSquare(out float[] vertices, out float[] colors)
-        {
-            vertices = new float[18]; colors = new float[18];
-            vertices[0] = -0.5f; vertices[1] = -0.5f; vertices[2] = 0.0f; // Bottom left corner  
-            colors[0] = 1.0f; colors[1] = 1.0f; colors[2] = 1.0f; // Bottom left corner  
-            vertices[3] = -0.5f; vertices[4] = 0.5f; vertices[5] = 0.0f; // Top left corner  
-            colors[3] = 1.0f; colors[4] = 0.0f; colors[5] = 0.0f; // Top left corner  
-            vertices[6] = 0.5f; vertices[7] = 0.5f; vertices[8] = 0.0f; // Top Right corner  
-            colors[6] = 0.0f; colors[7] = 1.0f; colors[8] = 0.0f; // Top Right corner  
-            vertices[9] = 0.5f; vertices[10] = -0.5f; vertices[11] = 0.0f; // Bottom right corner  
-            colors[9] = 0.0f; colors[10] = 0.0f; colors[11] = 1.0f; // Bottom right corner  
-            vertices[12] = -0.5f; vertices[13] = -0.5f; vertices[14] = 0.0f; // Bottom left corner  
-            colors[12] = 1.0f; colors[13] = 1.0f; colors[14] = 1.0f; // Bottom left corner  
-            vertices[15] = 0.5f; vertices[16] = 0.5f; vertices[17] = 0.0f; // Top Right corner  
-            colors[15] = 0.0f; colors[16] = 1.0f; colors[17] = 0.0f; // Top Right corner  
+            for (int i = 0; i < length; i++)
+            {
+                colors[i] = (float)(random.NextDouble() * 1);
+            }
         }
 
         internal void SetBound(int width, int height)
