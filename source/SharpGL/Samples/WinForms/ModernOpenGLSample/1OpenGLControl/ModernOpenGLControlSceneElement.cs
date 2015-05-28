@@ -101,6 +101,16 @@ namespace ModernOpenGLSample._1OpenGLControl
         {
             var shader = (renderMode == RenderMode.HitTest) ? pickingShaderProgram : shaderProgram;
 
+            if (renderMode == RenderMode.HitTest)
+            {
+                gl.ClearColor(1, 1, 1, 1);
+            }
+            else
+            {
+                //  Set a blue clear colour.
+                gl.ClearColor(0.4f, 0.6f, 0.9f, 0.5f);
+            }
+
             //  Clear the scene.
             gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT | OpenGL.GL_STENCIL_BUFFER_BIT);
 
@@ -122,8 +132,8 @@ namespace ModernOpenGLSample._1OpenGLControl
             vertexBufferArray.Bind(gl);
 
             //  Draw the square.
-            //gl.DrawArrays(OpenGL.GL_TRIANGLES, 0, 6);
-            gl.DrawArrays(OpenGL.GL_TRIANGLES, 0, vertices.Length);
+            //gl.DrawArrays(OpenGL.GL_TRIANGLES, 0, vertices.Length);
+            gl.DrawArrays(OpenGL.GL_POINTS, 0, vertices.Length);
 
             //  Unbind our vertex array and shader.
             vertexBufferArray.Unbind(gl);
@@ -174,42 +184,40 @@ namespace ModernOpenGLSample._1OpenGLControl
             Random random = new Random();
 
             // points
-            //for (int i = 0; i < length; i++)
-            //{
-            //    //vertices[i] = (float)(random.NextDouble() * 2 - 1);
-            //    //if (i % 2 == 0)
-            //    //{
-            //    //    vertices[i] = (i + 0.0f) / (float)(length);
-            //    //}
-            //    //else
-            //    //{
-            //    //    vertices[i] = -(i + 0.0f) / (float)(length);
-            //    //}
-
-            //    // triangles
-            //}
-
-            // triangles
-            for (int i = 0; i < length / 9; i++)
-            {
-                var x = random.NextDouble(); var y = random.NextDouble(); var z = random.NextDouble();
-                for (int j = 0; j < 3; j++)
-                {
-                    vertices[i * 9 + j * 3] = (float)(x + random.NextDouble() / 5 - 1);
-                }
-                for (int j = 0; j < 3; j++)
-                {
-                    vertices[i * 9 + j * 3 + 1] = (float)(y + random.NextDouble() / 5 - 1);
-                }
-                for (int j = 0; j < 3; j++)
-                {
-                    vertices[i * 9 + j * 3 + 2] = (float)(z + random.NextDouble() / 5 - 1);
-                }
-            }
             for (int i = 0; i < length; i++)
             {
-                colors[i] = (float)(random.NextDouble() * 1);
+                vertices[i] = (float)i / (float)length;
+                colors[i] = (float)((random.NextDouble() * 2 - 1) * 1);
+                //vertices[i] = (float)(random.NextDouble() * 2 - 1);
+                //if (i % 2 == 0)
+                //{
+                //    vertices[i] = (i + 0.0f) / (float)(length);
+                //}
+                //else
+                //{
+                //    vertices[i] = -(i + 0.0f) / (float)(length);
+                //}
+
+                // triangles
             }
+
+            //// triangles
+            //for (int i = 0; i < length / 9; i++)
+            //{
+            //    var x = random.NextDouble(); var y = random.NextDouble(); var z = random.NextDouble();
+            //    for (int j = 0; j < 3; j++)
+            //    {
+            //        vertices[i * 9 + j * 3] = (float)(x + random.NextDouble() / 5 - 1);
+            //    }
+            //    for (int j = 0; j < 3; j++)
+            //    {
+            //        vertices[i * 9 + j * 3 + 1] = (float)(y + random.NextDouble() / 5 - 1);
+            //    }
+            //    for (int j = 0; j < 3; j++)
+            //    {
+            //        vertices[i * 9 + j * 3 + 2] = (float)(z + random.NextDouble() / 5 - 1);
+            //    }
+            //}
         }
 
         internal void SetBound(int width, int height)

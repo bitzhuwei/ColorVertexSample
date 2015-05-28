@@ -63,7 +63,7 @@ namespace ModernOpenGLSample._1OpenGLControl
             {
                 this.sceneElement.MouseMove(e.X, e.Y);
             }
-
+            //// Color-coded picking.
             this.sceneElement.Draw(this.openGLControl.OpenGL, SharpGL.SceneGraph.Core.RenderMode.HitTest);
 
             byte[] result = new byte[4];
@@ -72,7 +72,16 @@ namespace ModernOpenGLSample._1OpenGLControl
                 OpenGL.GL_RGBA, OpenGL.GL_UNSIGNED_BYTE, result);
             var color = string.Format("R:{0},G:{1},B:{2},A:{3}",
                 result[0], result[1], result[2], result[3]);
-            this.txtInfo.Text = color;
+            var vertexID = 0u;
+            var r = (uint)result[0];
+            var g = (uint)result[1] << 8;
+            var b = (uint)result[2] << 16;
+            var a = (uint)result[3] << 24;
+            vertexID = r + g + b + a;
+            this.txtInfo.Text = string.Format("{1}{0}vertex ID:{0}={2}{0}+{3}{0}+{4}{0}+{5}{0}={6}{0}+{7}{0}+{8}{0}+{9}{0}={10}",
+                Environment.NewLine, color,
+                result[0], result[1] + " << 8", result[2] + " << 16", result[3] + " << 24",
+                r, g, b, a, vertexID);
         }
 
         private void openGLControl_MouseUp(object sender, MouseEventArgs e)
