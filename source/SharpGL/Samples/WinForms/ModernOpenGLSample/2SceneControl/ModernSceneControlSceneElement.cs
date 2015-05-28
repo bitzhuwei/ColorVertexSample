@@ -143,7 +143,7 @@ namespace ModernOpenGLSample._2SceneControl
             for (int i = 0; i < length; i++)
             {
                 vertices[i] = (float)i / (float)length;
-                colors[i] = (float)((random.NextDouble() * 2 - 1)*1);
+                colors[i] = (float)((random.NextDouble() * 2 - 1) * 1);
                 //vertices[i] = (float)(random.NextDouble() * 2 - 1);
                 //if (i % 2 == 0)
                 //{

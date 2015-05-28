@@ -37,14 +37,10 @@ namespace ModernOpenGLSample._3MySceneControl
         const uint attributeIndexPosition = 0;
         const uint attributeIndexColour = 1;
 
-        /// <summary>
-        ///  The vertex buffer array which contains the vertex and colour buffers.
-        /// </summary>
+        //  The vertex buffer array which contains the vertex and colour buffers.
         VertexBufferArray vertexBufferArray;
 
-        /// <summary>
-        ///  The shader program for our vertex and fragment shader.
-        /// </summary>
+        //  The shader program for our vertex and fragment shader.
         private ShaderProgram shaderProgram;
         private ShaderProgram pickingShaderProgram;
 
@@ -62,28 +58,29 @@ namespace ModernOpenGLSample._3MySceneControl
         public void Initialise(OpenGL gl, float width, float height)
         {
             //  Set a blue clear colour.
-            gl.ClearColor(0.4f, 0.6f, 0.9f, 0.0f);
+            gl.ClearColor(0.4f, 0.6f, 0.9f, 0.5f);
 
-            //  Create the shader program.
             {
+                //  Create the shader program.
                 var vertexShaderSource = ManifestResourceLoader.LoadTextFile("Shader.vert");
                 var fragmentShaderSource = ManifestResourceLoader.LoadTextFile("Shader.frag");
-                ShaderProgram shader = new ShaderProgram();
-                shader.Create(gl, vertexShaderSource, fragmentShaderSource, null);
-                shader.BindAttributeLocation(gl, attributeIndexPosition, "in_Position");
-                shader.BindAttributeLocation(gl, attributeIndexColour, "in_Color");
-                shader.AssertValid(gl);
-                this.shaderProgram = shader;
+                var shaderProgram = new ShaderProgram();
+                shaderProgram.Create(gl, vertexShaderSource, fragmentShaderSource, null);
+                shaderProgram.BindAttributeLocation(gl, attributeIndexPosition, "in_Position");
+                shaderProgram.BindAttributeLocation(gl, attributeIndexColour, "in_Color");
+                shaderProgram.AssertValid(gl);
+                this.shaderProgram = shaderProgram;
             }
             {
+                //  Create the picking shader program.
                 var vertexShaderSource = ManifestResourceLoader.LoadTextFile("PickingShader.vert");
                 var fragmentShaderSource = ManifestResourceLoader.LoadTextFile("PickingShader.frag");
-                ShaderProgram shader = new ShaderProgram();
-                shader.Create(gl, vertexShaderSource, fragmentShaderSource, null);
-                shader.BindAttributeLocation(gl, attributeIndexPosition, "in_Position");
-                shader.BindAttributeLocation(gl, attributeIndexColour, "in_Color");
-                shader.AssertValid(gl);
-                this.pickingShaderProgram = shader;
+                var shaderProgram = new ShaderProgram();
+                shaderProgram.Create(gl, vertexShaderSource, fragmentShaderSource, null);
+                shaderProgram.BindAttributeLocation(gl, attributeIndexPosition, "in_Position");
+                shaderProgram.BindAttributeLocation(gl, attributeIndexColour, "in_Color");
+                shaderProgram.AssertValid(gl);
+                this.pickingShaderProgram = shaderProgram;
             }
 
             //  Create a perspective projection matrix.
@@ -101,29 +98,19 @@ namespace ModernOpenGLSample._3MySceneControl
             //modelMatrix = mat4.identity();
 
             //  Now create the geometry for the square.
-            CreateVerticesForSquare(gl);
+            CreateVertices(gl);
         }
+
+        float[] vertices;//= new float[18];
+        float[] colors;//= new float[18]; // Colors for our vertices  
 
         /// <summary>
         /// Creates the geometry for the square, also creating the vertex buffer array.
         /// </summary>
         /// <param name="gl">The OpenGL instance.</param>
-        private void CreateVerticesForSquare(OpenGL gl)
+        private void CreateVertices(OpenGL gl)
         {
-            var vertices = new float[18];
-            var colors = new float[18]; // Colors for our vertices  
-            vertices[0] = -0.5f; vertices[1] = -0.5f; vertices[2] = 0.0f; // Bottom left corner  
-            colors[0] = 1.0f; colors[1] = 1.0f; colors[2] = 1.0f; // Bottom left corner  
-            vertices[3] = -0.5f; vertices[4] = 0.5f; vertices[5] = 0.0f; // Top left corner  
-            colors[3] = 1.0f; colors[4] = 0.0f; colors[5] = 0.0f; // Top left corner  
-            vertices[6] = 0.5f; vertices[7] = 0.5f; vertices[8] = 0.0f; // Top Right corner  
-            colors[6] = 0.0f; colors[7] = 1.0f; colors[8] = 0.0f; // Top Right corner  
-            vertices[9] = 0.5f; vertices[10] = -0.5f; vertices[11] = 0.0f; // Bottom right corner  
-            colors[9] = 0.0f; colors[10] = 0.0f; colors[11] = 1.0f; // Bottom right corner  
-            vertices[12] = -0.5f; vertices[13] = -0.5f; vertices[14] = 0.0f; // Bottom left corner  
-            colors[12] = 1.0f; colors[13] = 1.0f; colors[14] = 1.0f; // Bottom left corner  
-            vertices[15] = 0.5f; vertices[16] = 0.5f; vertices[17] = 0.0f; // Top Right corner  
-            colors[15] = 0.0f; colors[16] = 1.0f; colors[17] = 0.0f; // Top Right corner  
+            GeneratePoints(out vertices, out  colors);
 
             //  Create the vertex array object.
             vertexBufferArray = new VertexBufferArray();
@@ -146,52 +133,73 @@ namespace ModernOpenGLSample._3MySceneControl
             vertexBufferArray.Unbind(gl);
         }
 
+        private void GeneratePoints(out float[] vertices, out float[] colors)
+        {
+            const int length = 256 * 3;
+            vertices = new float[length]; colors = new float[length];
+
+            Random random = new Random();
+
+            // points
+            for (int i = 0; i < length; i++)
+            {
+                vertices[i] = (float)i / (float)length;
+                colors[i] = (float)((random.NextDouble() * 2 - 1) * 1);
+                //vertices[i] = (float)(random.NextDouble() * 2 - 1);
+                //if (i % 2 == 0)
+                //{
+                //    vertices[i] = (i + 0.0f) / (float)(length);
+                //}
+                //else
+                //{
+                //    vertices[i] = -(i + 0.0f) / (float)(length);
+                //}
+
+                // triangles
+            }
+
+            //// triangles
+            //for (int i = 0; i < length / 9; i++)
+            //{
+            //    var x = random.NextDouble(); var y = random.NextDouble(); var z = random.NextDouble();
+            //    for (int j = 0; j < 3; j++)
+            //    {
+            //        vertices[i * 9 + j * 3] = (float)(x + random.NextDouble() / 5 - 1);
+            //    }
+            //    for (int j = 0; j < 3; j++)
+            //    {
+            //        vertices[i * 9 + j * 3 + 1] = (float)(y + random.NextDouble() / 5 - 1);
+            //    }
+            //    for (int j = 0; j < 3; j++)
+            //    {
+            //        vertices[i * 9 + j * 3 + 2] = (float)(z + random.NextDouble() / 5 - 1);
+            //    }
+            //}
+        }
 
         #region IRenderable 成员
-        /// 
 
         void IRenderable.Render(OpenGL gl, RenderMode renderMode)
         {
-            if (renderMode != RenderMode.HitTest)
-            {
-                ShaderProgram shader = this.shaderProgram;
+            gl.PointSize(3);
 
-                //  Bind the shader, set the matrices.
-                shader.Bind(gl);
-                shader.SetUniformMatrix4(gl, "projectionMatrix", projectionMatrix.to_array());
-                shader.SetUniformMatrix4(gl, "viewMatrix", viewMatrix.to_array());
-                shader.SetUniformMatrix4(gl, "modelMatrix", modelMatrix.to_array());
+            var shader = (renderMode == RenderMode.HitTest) ? pickingShaderProgram : shaderProgram;
+            //  Bind the shader, set the matrices.
+            shader.Bind(gl);
+            shader.SetUniformMatrix4(gl, "projectionMatrix", projectionMatrix.to_array());
+            shader.SetUniformMatrix4(gl, "viewMatrix", viewMatrix.to_array());
+            shader.SetUniformMatrix4(gl, "modelMatrix", modelMatrix.to_array());
 
-                //  Bind the out vertex array.
-                vertexBufferArray.Bind(gl);
+            //  Bind the out vertex array.
+            vertexBufferArray.Bind(gl);
 
-                //  Draw the square.
-                gl.DrawArrays(OpenGL.GL_TRIANGLES, 0, 6);
+            //  Draw the square.
+            //gl.DrawArrays(OpenGL.GL_TRIANGLES, 0, vertices.Length);
+            gl.DrawArrays(OpenGL.GL_POINTS, 0, vertices.Length);
 
-                //  Unbind our vertex array and shader.
-                vertexBufferArray.Unbind(gl);
-                shader.Unbind(gl);
-            }
-            else
-            {
-                ShaderProgram shader = this.pickingShaderProgram; 
-
-                // Bind shader, set matrices.
-                shader.Bind(gl);
-                shader.SetUniformMatrix4(gl, "projectionMatrix", projectionMatrix.to_array());
-                shader.SetUniformMatrix4(gl, "viewMatrix", viewMatrix.to_array());
-                shader.SetUniformMatrix4(gl, "modelMatrix", modelMatrix.to_array());
-
-                //  Bind the out vertex array.
-                vertexBufferArray.Bind(gl);
-
-                //  Draw the square.
-                gl.DrawArrays(OpenGL.GL_TRIANGLES, 0, 6);
-
-                //  Unbind our vertex array and shader.
-                vertexBufferArray.Unbind(gl);
-                shader.Unbind(gl);
-            }
+            //  Unbind our vertex array and shader.
+            vertexBufferArray.Unbind(gl);
+            shader.Unbind(gl);
         }
 
         #endregion

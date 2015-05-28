@@ -40,7 +40,7 @@ namespace SharpGL.SceneComponent
             OpenGL.MakeCurrent();
 
             //	Do the scene drawing.
-            scene.Draw();
+            scene.Draw(SharpGL.SceneGraph.Core.RenderMode.Render);
 
             //	If there is a draw handler, then call it.
             DoOpenGLDraw(new RenderEventArgs(e.Graphics));

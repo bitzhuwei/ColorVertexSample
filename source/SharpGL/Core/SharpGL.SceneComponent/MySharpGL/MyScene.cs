@@ -28,7 +28,12 @@ namespace SharpGL.SceneComponent
         /// </summary>
         public bool IsClear { get; set; }
 
-        public override void Draw(SceneGraph.Cameras.Camera camera = null)
+        /// <summary>
+        /// Draw the scene.
+        /// </summary>
+        /// <param name="renderMode">Use Render for normal rendering and HitTest for picking.</param>
+        /// <param name="camera">Keep this to null if <see cref="CurrentCamera"/> is already set up.</param>
+        public void Draw(RenderMode renderMode = RenderMode.Render, SceneGraph.Cameras.Camera camera = null)
         {
             var gl = OpenGL;
             if (gl == null) { return; }
@@ -41,10 +46,29 @@ namespace SharpGL.SceneComponent
 
             if (IsClear)
             {
-                //	Set the clear color.
-                float[] clear = (SharpGL.SceneGraph.GLColor)ClearColor;
+                if (renderMode == RenderMode.HitTest)
+                {
+                    // When picking on a position that no model exists, 
+                    // the picked color would be
+                    // =255
+                    // +255 << 8
+                    // +255 << 16
+                    // +255 << 24
+                    // =255
+                    // +65280
+                    // +16711680
+                    // +4278190080
+                    // =4294967295
+                    // This makes it easier to determin whether we picked something or not.
+                    gl.ClearColor(1, 1, 1, 1);
+                }
+                else
+                {
+                    //	Set the clear color.
+                    float[] clear = (SharpGL.SceneGraph.GLColor)ClearColor;
 
-                gl.ClearColor(clear[0], clear[1], clear[2], clear[3]);
+                    gl.ClearColor(clear[0], clear[1], clear[2], clear[3]);
+                }
             }
 
             //  Reproject.
@@ -62,7 +86,7 @@ namespace SharpGL.SceneComponent
 
             //  Render the root element, this will then render the whole
             //  of the scene tree.
-            MyRenderElement(SceneContainer, gl, RenderMode.Design);
+            MyRenderElement(SceneContainer, gl, renderMode);
 
             //  TODO: Adding this code here re-enables textures- it should work without it but it
             //  doesn't, look into this.
@@ -71,6 +95,11 @@ namespace SharpGL.SceneComponent
 
             gl.Flush();
         }
+
+        //public override void Draw(SceneGraph.Cameras.Camera camera = null)
+        //{
+        //    this.Draw(camera, RenderMode.Design);
+        //}
 
         /// <summary>
         /// Renders the element.

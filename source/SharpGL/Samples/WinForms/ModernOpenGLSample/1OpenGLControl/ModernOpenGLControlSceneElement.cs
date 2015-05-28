@@ -114,7 +114,7 @@ namespace ModernOpenGLSample._1OpenGLControl
             //  Clear the scene.
             gl.Clear(OpenGL.GL_COLOR_BUFFER_BIT | OpenGL.GL_DEPTH_BUFFER_BIT | OpenGL.GL_STENCIL_BUFFER_BIT);
 
-            gl.PointSize(4);
+            gl.PointSize(3);
 
             // Update matrices.
             IPerspectiveCamera camera = this.cameraRotation.Camera;
