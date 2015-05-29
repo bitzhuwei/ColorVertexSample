@@ -52,6 +52,8 @@
     <Compile Include="Camera\SatelliteRotation.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ColorCodedPicking\IPickedPrimitive.cs" />
+    <Compile Include="ColorCodedPicking\PrimitiveType.cs" />
     <Compile Include="Control\EViewType.cs" />
     <Compile Include="Camera\CameraHelper.cs" />
     <Compile Include="Control\ScientificControl.cs">
@@ -70,7 +72,8 @@
     <Compile Include="Model\ScientificModelElement.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MySharpGL\IHasModernObjectSpace.cs" />
+    <Compile Include="ColorCodedPicking\ColorCodedPickingHelper.cs" />
+    <Compile Include="ColorCodedPicking\IColorCodedPicking.cs" />
     <Compile Include="MySharpGL\LinearArcBallTransform.cs" />
     <Compile Include="MySharpGL\ArcBallTransform.cs" />
     <Compile Include="MySharpGL\ArcBallTransformEffect.cs" />
@@ -83,7 +86,7 @@
       <DependentUpon>MyOpenGLControl.cs</DependentUpon>
     </Compile>
     <Compile Include="MySharpGL\MySceneControlHelper.cs" />
-    <Compile Include="MySharpGL\SharedStageInfo.cs" />
+    <Compile Include="ColorCodedPicking\SharedStageInfo.cs" />
     <Compile Include="SimpleUI\ColorIndicator\ColorIndicatorBar.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -116,6 +119,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Utility\ArrayHelper.cs" />
+    <Compile Include="Utility\PrimitiveTypeHelper.cs" />
+    <Compile Include="Utility\BeginModeHelper.cs" />
     <Content Include="MySharpGL\read-me.txt" />
     <Compile Include="SimpleUI\Axis\SimpleUIAxis.cs" />
     <Compile Include="SimpleUI\ColorIndicator\ColorPalette.cs" />

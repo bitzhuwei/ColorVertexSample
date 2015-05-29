@@ -17,7 +17,7 @@ namespace ModernOpenGLSample._3MySceneControl
     /// <para>Use <see cref="IHasObjectSpace"/> and <see cref="IScientificCamera"/> to update projection and view matrices.</para>
     /// <para>This element can be picked.</para>
     /// </summary>
-    class ModernMySceneControlSceneElement : SceneElement, IRenderable, IHasModernObjectSpace
+    class ModernMySceneControlSceneElement : SceneElement, IRenderable, IColorCodedPicking //, IHasModernObjectSpace
     {
         public BeginMode mode;
 
@@ -109,7 +109,7 @@ namespace ModernOpenGLSample._3MySceneControl
         float[] vertices;//= new float[18];
         float[] colors;//= new float[18]; // Colors for our vertices  
 
-        private int pickingBaseID;
+        //private int pickingBaseID;
         private bool positiveGrowth;
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace ModernOpenGLSample._3MySceneControl
         {
             int direction = this.positiveGrowth ? 1 : -1;
             const int length = 12 * 3;
-            vertices = new float[length ]; colors = new float[length ];
+            vertices = new float[length]; colors = new float[length];
             /*
             vertices[0] = 0; vertices[1] = 0; vertices[2] = 0;
             vertices[3] = 0; vertices[4] = 1; vertices[5] = 0;
@@ -160,14 +160,14 @@ namespace ModernOpenGLSample._3MySceneControl
                 vertices[i] = direction * i / 6;
             }
             //vertices[length] = vertices[length - 3];
-            
+
             for (int i = 1; i < length; i += 3)
             {
                 vertices[i] = (i / 3) % 2;
             }
             //vertices[length + 1] = vertices[length - 3 + 1];
 
-            for (int i = 0; i < length; i+=3)
+            for (int i = 0; i < length; i += 3)
             {
                 colors[i] = (i / 3) % 2;
             }
@@ -220,36 +220,6 @@ namespace ModernOpenGLSample._3MySceneControl
 
         void IRenderable.Render(OpenGL gl, RenderMode renderMode)
         {
-            gl.PointSize(3);
-
-            var shader = (renderMode == RenderMode.HitTest) ? pickingShaderProgram : shaderProgram;
-            //  Bind the shader, set the matrices.
-            shader.Bind(gl);
-            shader.SetUniformMatrix4(gl, "projectionMatrix", projectionMatrix.to_array());
-            shader.SetUniformMatrix4(gl, "viewMatrix", viewMatrix.to_array());
-            shader.SetUniformMatrix4(gl, "modelMatrix", modelMatrix.to_array());
-            if (renderMode == RenderMode.HitTest)
-            {
-                shader.SetUniform1(gl, "pickingBaseID", this.pickingBaseID);
-            }
-
-            //  Bind the out vertex array.
-            vertexBufferArray.Bind(gl);
-
-            //  Draw the square.
-            gl.DrawArrays((uint)this.mode, 0, vertices.Length / 3);
-
-            //  Unbind our vertex array and shader.
-            vertexBufferArray.Unbind(gl);
-            shader.Unbind(gl);
-        }
-
-        #endregion
-
-        #region IHasModernObjectSpace 成员
-
-        void IHasModernObjectSpace.PushObjectSpace(OpenGL gl, RenderMode renderMode, SharpGL.SceneComponent.SharedStageInfo info)
-        {
             // Update matrices.
             IScientificCamera camera = this.Camera;
             if (camera != null)
@@ -272,24 +242,146 @@ namespace ModernOpenGLSample._3MySceneControl
 
             modelMatrix = mat4.identity();
 
+            gl.PointSize(3);
+
+            var shader = (renderMode == RenderMode.HitTest) ? pickingShaderProgram : shaderProgram;
+            //  Bind the shader, set the matrices.
+            shader.Bind(gl);
+            shader.SetUniformMatrix4(gl, "projectionMatrix", projectionMatrix.to_array());
+            shader.SetUniformMatrix4(gl, "viewMatrix", viewMatrix.to_array());
+            shader.SetUniformMatrix4(gl, "modelMatrix", modelMatrix.to_array());
             if (renderMode == RenderMode.HitTest)
             {
-                this.pickingBaseID = info.pickingBaseID;
-                info.pickingBaseID += this.vertices.Length / 3;
+                shader.SetUniform1(gl, "pickingBaseID", ((IColorCodedPicking)this).PickingBaseID);
             }
-        }
 
-        void IHasModernObjectSpace.PopObjectSpace(OpenGL gl, RenderMode renderMode, SharpGL.SceneComponent.SharedStageInfo info)
-        {
-            // Nothing to do.
+            //  Bind the out vertex array.
+            vertexBufferArray.Bind(gl);
+
+            //  Draw the square.
+            gl.DrawArrays((uint)this.mode, 0, vertices.Length / 3);
+
+            //  Unbind our vertex array and shader.
+            vertexBufferArray.Unbind(gl);
+            shader.Unbind(gl);
         }
 
         #endregion
+
+        //#region IHasModernObjectSpace 成员
+
+        //void IHasModernObjectSpace.PushObjectSpace(OpenGL gl, RenderMode renderMode, SharpGL.SceneComponent.SharedStageInfo info)
+        //{
+        //    // Update matrices.
+        //    IScientificCamera camera = this.Camera;
+        //    if (camera != null)
+        //    {
+        //        if (camera.CameraType == ECameraType.Perspecitive)
+        //        {
+        //            IPerspectiveViewCamera perspective = camera;
+        //            this.projectionMatrix = perspective.GetProjectionMat4();
+        //            this.viewMatrix = perspective.GetViewMat4();
+        //        }
+        //        else if (camera.CameraType == ECameraType.Ortho)
+        //        {
+        //            IOrthoViewCamera ortho = camera;
+        //            this.projectionMatrix = ortho.GetProjectionMat4();
+        //            this.viewMatrix = ortho.GetViewMat4();
+        //        }
+        //        else
+        //        { throw new NotImplementedException(); }
+        //    }
+
+        //    modelMatrix = mat4.identity();
+
+        //    if (renderMode == RenderMode.HitTest)
+        //    {
+        //        this.pickingBaseID = info.RendererPrimitiveCount;
+        //        info.RendererPrimitiveCount += this.vertices.Length / 3;
+        //    }
+        //}
+
+        //void IHasModernObjectSpace.PopObjectSpace(OpenGL gl, RenderMode renderMode, SharpGL.SceneComponent.SharedStageInfo info)
+        //{
+        //    // Nothing to do.
+        //}
+
+        //#endregion
 
 
         public override string ToString()
         {
             return string.Format("{0} element", positiveGrowth ? "+" : "-");
+            //return base.ToString();
+        }
+
+
+        #region IColorCodedPicking 成员
+
+        int IColorCodedPicking.PickingBaseID { get; set; }
+
+        int IColorCodedPicking.PrimitiveCount
+        {
+            get { return this.vertices.Length / 3; }
+        }
+
+        IPickedPrimitive IColorCodedPicking.Pick(int vertexID)
+        {
+            if (vertexID < 0) // Illigal ID.
+            { return null; }
+
+            IColorCodedPicking pickElement = this;
+
+            if (vertexID < pickElement.PickingBaseID) // ID is in some previous element.
+            { return null; }
+
+            if (pickElement.PickingBaseID + pickElement.PrimitiveCount <= vertexID) // ID is in some subsequent element.
+            { return null; }
+
+
+            PickedPrimitive picked = new PickedPrimitive();
+
+            picked.Type = BeginModeHelper.ToPrimitiveType(this.mode);
+
+            int vertexCount = PrimitiveTypeHelper.GetVertexCount(picked.Type);
+            if (vertexCount == -1) { vertexCount = this.vertices.Length / 3; }
+
+            float[] positions = new float[vertexCount * 3];
+            for (int i = vertexID * 3 + 2, j = positions.Length - 1; j >= 0; i--, j--)
+            {
+                if (i < 0)
+                { i += this.vertices.Length; }
+                positions[j] = this.vertices[i];
+            }
+
+            picked.positions = positions;
+
+            return picked;
+        }
+
+        #endregion
+    }
+
+    /// <summary>
+    /// The color-coded picking result.
+    /// <para>Representing a primitive.</para>
+    /// </summary>
+    public class PickedPrimitive : IPickedPrimitive
+    {
+        /// <summary>
+        /// Gets or sets primitive's type.
+        /// </summary>
+        public PrimitiveType Type { get; set; }
+
+        /// <summary>
+        /// Gets or sets values of this primitive.
+        /// </summary>
+        public float[] positions { get; set; }
+
+        public override string ToString()
+        {
+            string result = string.Format("{0}:{1}", Type, positions.PrintPositions());
+            return result;
             //return base.ToString();
         }
     }

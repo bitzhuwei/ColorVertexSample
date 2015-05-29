@@ -29,5 +29,28 @@ namespace System
             return builder.ToString();
         }
 
+        /// <summary>
+        /// Print elements in format 'x,y,z; x,y,z; ...'
+        /// </summary>
+        /// <param name="array"></param>
+        /// <returns></returns>
+        public static string PrintPositions(this float[] array)
+        {
+            if (array == null) { return string.Empty; }
+
+            StringBuilder builder = new StringBuilder();
+            int counter = 0;
+            foreach (var item in array)
+            {
+                builder.Append(item);
+                counter++;
+                if (counter % 3 == 0)
+                { builder.Append("; "); }
+                else
+                { builder.Append(","); }
+            }
+
+            return builder.ToString();
+        }
     }
 }

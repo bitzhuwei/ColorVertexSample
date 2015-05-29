@@ -138,9 +138,6 @@ namespace SharpGL.SceneComponent
             IHasObjectSpace hasObjectSpace = sceneElement as IHasObjectSpace;// example: Polygon, quadric, Teapot
             if (hasObjectSpace != null) hasObjectSpace.PushObjectSpace(gl);
 
-            IHasModernObjectSpace hasModernObjectSpace = sceneElement as IHasModernObjectSpace;
-            if (hasModernObjectSpace != null) hasModernObjectSpace.PushObjectSpace(gl, renderMode, info);
-
             //  Render self.
             {
                 //  If the element has a material, push it.
@@ -148,9 +145,24 @@ namespace SharpGL.SceneComponent
                 if (hasMaterial != null && hasMaterial.Material != null)
                 { hasMaterial.Material.Push(gl); }
 
-                //  If the element can be rendered, render it.
-                IRenderable renderable = sceneElement as IRenderable;
-                if (renderable != null) renderable.Render(gl, renderMode);
+                IColorCodedPicking picking = null;
+                if (renderMode == RenderMode.HitTest)
+                {
+                    picking = sceneElement as IColorCodedPicking;
+                    if (picking != null) picking.PickingBaseID = info.RenderedPrimitiveCount;
+
+                    //  If the element can be rendered, render it.
+                    IRenderable renderable = sceneElement as IRenderable;
+                    if (renderable != null) renderable.Render(gl, renderMode);
+
+                    if (picking != null) info.RenderedPrimitiveCount += picking.PrimitiveCount;
+                }
+                else
+                {
+                    //  If the element can be rendered, render it.
+                    IRenderable renderable = sceneElement as IRenderable;
+                    if (renderable != null) renderable.Render(gl, renderMode);
+                }
 
                 //  If the element has a material, pop it.
                 if (hasMaterial != null && hasMaterial.Material != null)
@@ -169,8 +181,6 @@ namespace SharpGL.SceneComponent
             //  Recurse through the children.
             foreach (var childElement in sceneElement.Children)
                 MyRenderElement(childElement, gl, renderMode, info);
-
-            if (hasModernObjectSpace != null) hasModernObjectSpace.PopObjectSpace(gl, renderMode, info);
 
             //  If the element has an object space, transform out of it.
             if (hasObjectSpace != null) hasObjectSpace.PopObjectSpace(gl);
@@ -192,6 +202,45 @@ namespace SharpGL.SceneComponent
         {
             get { return base.CurrentCamera as ScientificCamera; }
             internal set { base.CurrentCamera = value; }
+        }
+
+        /// <summary>
+        /// Get picked primitive by <paramref name="vertexID"/> as the last vertex that constructs the primitive.
+        /// </summary>
+        /// <param name="vertexID">The last vertex that constructs the primitive.</param>
+        /// <returns></returns>
+        public IPickedPrimitive Pick(int vertexID)
+        {
+            if (vertexID < 0) { return null; }
+
+            IPickedPrimitive picked = null;
+
+            SceneElement element = this.SceneContainer;
+            picked = Pick(element, vertexID);
+
+            return picked;
+        }
+
+        private IPickedPrimitive Pick(SceneElement element, int vertexID)
+        {
+            IPickedPrimitive result = null;
+            IColorCodedPicking picking = element as IColorCodedPicking;
+            if (picking != null)
+            {
+                result = picking.Pick(vertexID);
+            }
+
+            if (result == null)
+            {
+                foreach (var item in element.Children)
+                {
+                    result = Pick(item, vertexID);
+                    if (result != null)
+                    { break; }
+                }
+            }
+
+            return result;
         }
     }
 }
