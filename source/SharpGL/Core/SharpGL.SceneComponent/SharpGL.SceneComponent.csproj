@@ -53,6 +53,7 @@
     <Compile Include="Camera\SatelliteRotation.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ColorCodedPicking\IColorCodedPickkingHelper.cs" />
     <Compile Include="ColorCodedPicking\IPickedPrimitive.cs" />
     <Compile Include="ColorCodedPicking\PrimitiveType.cs" />
     <Compile Include="Control\EViewType.cs" />
