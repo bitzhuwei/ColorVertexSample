@@ -109,7 +109,8 @@ namespace ModernOpenGLSample._2SceneControl
         /// <param name="gl">The OpenGL instance.</param>
         private void CreateVertices(OpenGL gl)
         {
-            GeneratePoints(out vertices, out  colors);
+            //GeneratePoints(out vertices, out  colors);
+            GenerateModel(out vertices, out colors);
 
             //  Create the vertex array object.
             vertexBufferArray = new VertexBufferArray();
@@ -132,49 +133,78 @@ namespace ModernOpenGLSample._2SceneControl
             vertexBufferArray.Unbind(gl);
         }
 
-        private void GeneratePoints(out float[] vertices, out float[] colors)
+        private void GenerateModel(out float[] vertices, out float[] colors)
         {
-            const int length = 256 * 3;
+            const int length = 12 * 3;
             vertices = new float[length]; colors = new float[length];
-
-            Random random = new Random();
-
-            // points
-            for (int i = 0; i < length; i++)
+            /*
+            vertices[0] = 0; vertices[1] = 0; vertices[2] = 0;
+            vertices[3] = 0; vertices[4] = 1; vertices[5] = 0;
+            vertices[6] = 1; vertices[7] = 0; vertices[8] = 0;
+            vertices[9] = 1; vertices[10] = 1; vertices[11] = 0;
+            vertices[12] = 2; vertices[13] = 0; vertices[14] = 0;
+            vertices[15] = 2; vertices[16] = 1; vertices[17] = 0;
+             */
+            for (int i = 0; i < length; i += 3)
             {
-                vertices[i] = (float)i / (float)length;
-                colors[i] = (float)((random.NextDouble() * 2 - 1) * 1);
-                //vertices[i] = (float)(random.NextDouble() * 2 - 1);
-                //if (i % 2 == 0)
-                //{
-                //    vertices[i] = (i + 0.0f) / (float)(length);
-                //}
-                //else
-                //{
-                //    vertices[i] = -(i + 0.0f) / (float)(length);
-                //}
-
-                // triangles
+                vertices[i] = i / 6;
             }
+            //vertices[length] = vertices[length - 3];
 
-            //// triangles
-            //for (int i = 0; i < length / 9; i++)
-            //{
-            //    var x = random.NextDouble(); var y = random.NextDouble(); var z = random.NextDouble();
-            //    for (int j = 0; j < 3; j++)
-            //    {
-            //        vertices[i * 9 + j * 3] = (float)(x + random.NextDouble() / 5 - 1);
-            //    }
-            //    for (int j = 0; j < 3; j++)
-            //    {
-            //        vertices[i * 9 + j * 3 + 1] = (float)(y + random.NextDouble() / 5 - 1);
-            //    }
-            //    for (int j = 0; j < 3; j++)
-            //    {
-            //        vertices[i * 9 + j * 3 + 2] = (float)(z + random.NextDouble() / 5 - 1);
-            //    }
-            //}
+            for (int i = 1; i < length; i += 3)
+            {
+                vertices[i] = (i / 3) % 2;
+            }
+            //vertices[length + 1] = vertices[length - 3 + 1];
+
+            for (int i = 0; i < length; i += 3)
+            {
+                colors[i] = (i / 3) % 2;
+            }
+            for (int i = 1; i < length; i += 3)
+            {
+                colors[i] = ((i - 1) / 6) % 2;
+            }
+            for (int i = 2; i < length; i += 3)
+            {
+                colors[i] = i / 12;
+            }
         }
+
+        //private void GeneratePoints(out float[] vertices, out float[] colors)
+        //{
+        //    const int length = 256 * 3;
+        //    vertices = new float[length]; colors = new float[length];
+
+        //    Random random = new Random();
+
+        //    int direction = this.positiveGrowth ? 1 : -1;
+        //    // points
+        //    for (int i = 0; i < length; i++)
+        //    {
+        //        vertices[i] = direction * (float)i / (float)length;
+        //        colors[i] = (float)((random.NextDouble() * 2 - 1) * 1);
+        //        //colors[i] = (float)i / (float)length;
+        //    }
+
+        //    //// triangles
+        //    //for (int i = 0; i < length / 9; i++)
+        //    //{
+        //    //    var x = random.NextDouble(); var y = random.NextDouble(); var z = random.NextDouble();
+        //    //    for (int j = 0; j < 3; j++)
+        //    //    {
+        //    //        vertices[i * 9 + j * 3] = (float)(x + random.NextDouble() / 5 - 1);
+        //    //    }
+        //    //    for (int j = 0; j < 3; j++)
+        //    //    {
+        //    //        vertices[i * 9 + j * 3 + 1] = (float)(y + random.NextDouble() / 5 - 1);
+        //    //    }
+        //    //    for (int j = 0; j < 3; j++)
+        //    //    {
+        //    //        vertices[i * 9 + j * 3 + 2] = (float)(z + random.NextDouble() / 5 - 1);
+        //    //    }
+        //    //}
+        //}
 
         #region IRenderable 成员
 

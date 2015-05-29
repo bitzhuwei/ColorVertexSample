@@ -23,7 +23,7 @@ namespace ModernOpenGLSample._2SceneControl
 
             // prepare camera.
             ScientificCamera camera = new ScientificCamera(ECameraType.Perspecitive);
-            camera.Position = new SharpGL.SceneGraph.Vertex(0, 0, -2);
+            camera.Position = new SharpGL.SceneGraph.Vertex(0, 0, 5);
             camera.Target = new SharpGL.SceneGraph.Vertex();
             camera.UpVector = new SharpGL.SceneGraph.Vertex(0, 1, 0);
             this.cameraRotation.Camera = camera;

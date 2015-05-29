@@ -1,5 +1,5 @@
 ﻿#version 150 core
-in vec4 pass_Color;
+flat in vec4 pass_Color; // glShadeMode(GL_FLAT); in legacy opengl.
 out vec4 out_Color;
 
 void main(void) {

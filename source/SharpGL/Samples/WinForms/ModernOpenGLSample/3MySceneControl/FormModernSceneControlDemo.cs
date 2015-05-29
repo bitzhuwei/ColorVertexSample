@@ -1,4 +1,5 @@
 ﻿using SharpGL;
+using SharpGL.Enumerations;
 using SharpGL.SceneComponent;
 using SharpGL.SceneGraph;
 using SharpGL.SceneGraph.Core;
@@ -22,9 +23,17 @@ namespace ModernOpenGLSample._3MySceneControl
         {
             InitializeComponent();
 
+            foreach (var name in Enum.GetNames(typeof(BeginMode)))
+            {
+                var item = new ComboBoxItem<BeginMode>(
+                    name, (BeginMode)Enum.Parse(typeof(BeginMode), name));
+                this.cmbBeginMode.Items.Add(item);
+            }
+            this.cmbBeginMode.SelectedIndex = 4;
+
             // prepare camera.
             ScientificCamera camera = new ScientificCamera(ECameraType.Perspecitive);
-            camera.Position = new SharpGL.SceneGraph.Vertex(0, 0, -2);
+            camera.Position = new SharpGL.SceneGraph.Vertex(0, 0, 5);
             camera.Target = new SharpGL.SceneGraph.Vertex();
             camera.UpVector = new SharpGL.SceneGraph.Vertex(0, 1, 0);
             this.cameraRotation.Camera = camera;
@@ -42,7 +51,8 @@ namespace ModernOpenGLSample._3MySceneControl
             this.mySceneControl.Scene.SceneContainer.AddChild(this.sceneElement);
             this.sceneElement2.Initialise(this.mySceneControl.OpenGL,
                 this.mySceneControl.Width, this.mySceneControl.Height);
-            this.mySceneControl.Scene.SceneContainer.AddChild(this.sceneElement2);
+            //this.mySceneControl.Scene.SceneContainer.AddChild(this.sceneElement2);
+
         }
 
         /// <summary>
@@ -113,5 +123,30 @@ namespace ModernOpenGLSample._3MySceneControl
             }
         }
 
+        private void cmbBeginMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var item = this.cmbBeginMode.SelectedItem as ComboBoxItem<BeginMode>;
+            this.sceneElement.mode = item.value;
+            this.sceneElement2.mode = item.value;
+        }
+
+    }
+
+    class ComboBoxItem<T>
+    {
+        public T value;
+        public string name;
+
+        public ComboBoxItem(string name, T value)
+        {
+            this.name = name;
+            this.value = value;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0}", name);
+            //return base.ToString();
+        }
     }
 }

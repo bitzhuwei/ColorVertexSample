@@ -30,6 +30,7 @@
         {
             this.mySceneControl = new SharpGL.SceneComponent.MySceneControl();
             this.txtInfo = new System.Windows.Forms.TextBox();
+            this.cmbBeginMode = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.mySceneControl)).BeginInit();
             this.SuspendLayout();
             // 
@@ -55,18 +56,29 @@
             // 
             this.txtInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.txtInfo.Location = new System.Drawing.Point(12, 12);
+            this.txtInfo.Location = new System.Drawing.Point(12, 38);
             this.txtInfo.Multiline = true;
             this.txtInfo.Name = "txtInfo";
             this.txtInfo.ReadOnly = true;
-            this.txtInfo.Size = new System.Drawing.Size(138, 346);
+            this.txtInfo.Size = new System.Drawing.Size(138, 320);
             this.txtInfo.TabIndex = 1;
+            // 
+            // cmbBeginMode
+            // 
+            this.cmbBeginMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBeginMode.FormattingEnabled = true;
+            this.cmbBeginMode.Location = new System.Drawing.Point(12, 12);
+            this.cmbBeginMode.Name = "cmbBeginMode";
+            this.cmbBeginMode.Size = new System.Drawing.Size(138, 20);
+            this.cmbBeginMode.TabIndex = 2;
+            this.cmbBeginMode.SelectedIndexChanged += new System.EventHandler(this.cmbBeginMode_SelectedIndexChanged);
             // 
             // FormModernSceneControlDemo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(593, 370);
+            this.Controls.Add(this.cmbBeginMode);
             this.Controls.Add(this.txtInfo);
             this.Controls.Add(this.mySceneControl);
             this.Name = "FormModernSceneControlDemo";
@@ -81,5 +93,6 @@
 
         private SharpGL.SceneComponent.MySceneControl mySceneControl;
         private System.Windows.Forms.TextBox txtInfo;
+        private System.Windows.Forms.ComboBox cmbBeginMode;
     }
 }

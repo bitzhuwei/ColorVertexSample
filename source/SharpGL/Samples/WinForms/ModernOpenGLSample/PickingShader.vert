@@ -2,7 +2,7 @@
 
 in vec3 in_Position;
 in vec3 in_Color;  
-out vec4 pass_Color;
+flat out vec4 pass_Color; // glShadeMode(GL_FLAT); in legacy opengl.
 uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 modelMatrix;
