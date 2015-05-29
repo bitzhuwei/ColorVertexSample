@@ -100,10 +100,6 @@ namespace ModernOpenGLSample._3MySceneControl
                 // the vertexID is the last vertex that constructs the primitive.
                 // see http://www.cnblogs.com/bitzhuwei/p/modern-opengl-picking-primitive-in-VBO-2.html
                 var vertexID = 0;
-                //var shiftedR = (int)codedColor[0];
-                //var shiftedG = (int)codedColor[1] << 8;
-                //var shiftedB = (int)codedColor[2] << 16;
-                //var shiftedA = (int)codedColor[3] << 24;
                 var shiftedR = codedColor[0];
                 var shiftedG = codedColor[1] << 8;
                 var shiftedB = codedColor[2] << 16;
@@ -123,11 +119,11 @@ namespace ModernOpenGLSample._3MySceneControl
                     shiftedR, shiftedG, shiftedB, shiftedA, vertexID, picked);
             }
 
-            // Use this to simplify picking.
-            {
-                IPickedPrimitive picked = this.mySceneControl.Pick(e.X, e.Y);
-                this.txtInfo.Text = string.Format("{0}", picked);
-            }
+            //// Use this to simplify picking.
+            //{
+            //    IPickedPrimitive picked = this.mySceneControl.Pick(e.X, e.Y);
+            //    this.txtInfo.Text = string.Format("{0}", picked);
+            //}
         }
 
         private void openGLControl_MouseUp(object sender, MouseEventArgs e)
