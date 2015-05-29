@@ -228,6 +228,13 @@ namespace SharpGL.SceneComponent
             if (picking != null)
             {
                 result = picking.Pick(vertexID);
+                if (result != null)
+                {
+                    result.Element = picking;
+#if DEBUG
+                    result.VertexID = vertexID;
+#endif
+                }
             }
 
             if (result == null)

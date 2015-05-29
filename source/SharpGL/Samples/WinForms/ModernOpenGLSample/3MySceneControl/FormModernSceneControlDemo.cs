@@ -51,7 +51,7 @@ namespace ModernOpenGLSample._3MySceneControl
             this.mySceneControl.Scene.SceneContainer.AddChild(this.sceneElement);
             this.sceneElement2.Initialise(this.mySceneControl.OpenGL,
                 this.mySceneControl.Width, this.mySceneControl.Height);
-            //this.mySceneControl.Scene.SceneContainer.AddChild(this.sceneElement2);
+            this.mySceneControl.Scene.SceneContainer.AddChild(this.sceneElement2);
 
         }
 
@@ -78,48 +78,56 @@ namespace ModernOpenGLSample._3MySceneControl
                 this.cameraRotation.MouseMove(e.X, e.Y);
             }
 
-            // render the scene for color-coded picking.
-            this.mySceneControl.Scene.Draw(RenderMode.HitTest);
-            // get coded color.
-            byte[] codedColor = new byte[4];
-            this.mySceneControl.OpenGL.ReadPixels(
-                e.X, this.mySceneControl.Height - e.Y - 1, 1, 1,
-                OpenGL.GL_RGBA, OpenGL.GL_UNSIGNED_BYTE, codedColor);
+            {
+                // render the scene for color-coded picking.
+                this.mySceneControl.Scene.Draw(RenderMode.HitTest);
+                // get coded color.
+                byte[] codedColor = new byte[4];
+                this.mySceneControl.OpenGL.ReadPixels(
+                    e.X, this.mySceneControl.Height - e.Y - 1, 1, 1,
+                    OpenGL.GL_RGBA, OpenGL.GL_UNSIGNED_BYTE, codedColor);
 
-            /* // This is how is vertexID coded into color in vertex shader.
-             * 	int objectID = gl_VertexID;
-	            codedColor = vec4(
-		            float(objectID & 0xFF), 
-		            float((objectID >> 8) & 0xFF), 
-	            	float((objectID >> 16) & 0xFF), 
-            		float((objectID >> 24) & 0xFF));
-             */
+                /* // This is how is vertexID coded into color in vertex shader.
+                 * 	int objectID = gl_VertexID;
+                    codedColor = vec4(
+                        float(objectID & 0xFF), 
+                        float((objectID >> 8) & 0xFF), 
+                        float((objectID >> 16) & 0xFF), 
+                        float((objectID >> 24) & 0xFF));
+                 */
 
-            // get vertexID from coded color.
-            // the vertexID is the last vertex that constructs the primitive.
-            // see http://www.cnblogs.com/bitzhuwei/p/modern-opengl-picking-primitive-in-VBO-2.html
-            var vertexID = 0;
-            //var shiftedR = (int)codedColor[0];
-            //var shiftedG = (int)codedColor[1] << 8;
-            //var shiftedB = (int)codedColor[2] << 16;
-            //var shiftedA = (int)codedColor[3] << 24;
-            var shiftedR = codedColor[0];
-            var shiftedG = codedColor[1] << 8;
-            var shiftedB = codedColor[2] << 16;
-            var shiftedA = codedColor[3] << 24;
-            vertexID = shiftedR + shiftedG + shiftedB + shiftedA;
+                // get vertexID from coded color.
+                // the vertexID is the last vertex that constructs the primitive.
+                // see http://www.cnblogs.com/bitzhuwei/p/modern-opengl-picking-primitive-in-VBO-2.html
+                var vertexID = 0;
+                //var shiftedR = (int)codedColor[0];
+                //var shiftedG = (int)codedColor[1] << 8;
+                //var shiftedB = (int)codedColor[2] << 16;
+                //var shiftedA = (int)codedColor[3] << 24;
+                var shiftedR = codedColor[0];
+                var shiftedG = codedColor[1] << 8;
+                var shiftedB = codedColor[2] << 16;
+                var shiftedA = codedColor[3] << 24;
+                vertexID = shiftedR + shiftedG + shiftedB + shiftedA;
 
-            // get picked primitive.
-            IPickedPrimitive picked = null;
-            picked = this.mySceneControl.Scene.Pick(vertexID);
+                // get picked primitive.
+                IPickedPrimitive picked = null;
+                picked = this.mySceneControl.Scene.Pick(vertexID);
 
-            // print result.
-            var strColor = string.Format("R:{0},G:{1},B:{2},A:{3}",
-                codedColor[0], codedColor[1], codedColor[2], codedColor[3]);
-            this.txtInfo.Text = string.Format("{1}{0}vertex ID:{0}={2}{0}+{3}{0}+{4}{0}+{5}{0}={6}{0}+{7}{0}+{8}{0}+{9}{0}={10}{0}Picked:{0}{11}",
-                Environment.NewLine, strColor,
-                codedColor[0], codedColor[1] + " << 8", codedColor[2] + " << 16", codedColor[3] + " << 24",
-                shiftedR, shiftedG, shiftedB, shiftedA, vertexID, picked);
+                // print result.
+                var strColor = string.Format("R:{0},G:{1},B:{2},A:{3}",
+                    codedColor[0], codedColor[1], codedColor[2], codedColor[3]);
+                this.txtInfo.Text = string.Format("{1}{0}vertex ID:{0}={2}{0}+{3}{0}+{4}{0}+{5}{0}={6}{0}+{7}{0}+{8}{0}+{9}{0}={10}{0}Picked:{0}{11}",
+                    Environment.NewLine, strColor,
+                    codedColor[0], codedColor[1] + " << 8", codedColor[2] + " << 16", codedColor[3] + " << 24",
+                    shiftedR, shiftedG, shiftedB, shiftedA, vertexID, picked);
+            }
+
+            // Use this to simplify picking.
+            {
+                IPickedPrimitive picked = this.mySceneControl.Pick(e.X, e.Y);
+                this.txtInfo.Text = string.Format("{0}", picked);
+            }
         }
 
         private void openGLControl_MouseUp(object sender, MouseEventArgs e)

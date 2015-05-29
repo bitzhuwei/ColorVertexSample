@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using SharpGL.SceneGraph.Core;
 
 namespace SharpGL.SceneComponent
 {
@@ -105,6 +106,47 @@ namespace SharpGL.SceneComponent
         {
             get { return scene; }
             set { scene = value; }
+        }
+
+        /// <summary>
+        /// Get picked primitive at specified screen location.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public IPickedPrimitive Pick(int x, int y)
+        {
+            // render the scene for color-coded picking.
+            this.Scene.Draw(RenderMode.HitTest);
+            // get coded color.
+            byte[] codedColor = new byte[4];
+            this.OpenGL.ReadPixels(x, this.Height - y - 1, 1, 1,
+                OpenGL.GL_RGBA, OpenGL.GL_UNSIGNED_BYTE, codedColor);
+
+            /* // This is how is vertexID coded into color in vertex shader.
+             * 	int objectID = gl_VertexID;
+	            codedColor = vec4(
+		            float(objectID & 0xFF), 
+		            float((objectID >> 8) & 0xFF), 
+	            	float((objectID >> 16) & 0xFF), 
+            		float((objectID >> 24) & 0xFF));
+             */
+
+            // get vertexID from coded color.
+            // the vertexID is the last vertex that constructs the primitive.
+            // see http://www.cnblogs.com/bitzhuwei/p/modern-opengl-picking-primitive-in-VBO-2.html
+            var vertexID = 0;
+            var shiftedR = codedColor[0];
+            var shiftedG = codedColor[1] << 8;
+            var shiftedB = codedColor[2] << 16;
+            var shiftedA = codedColor[3] << 24;
+            vertexID = shiftedR + shiftedG + shiftedB + shiftedA;
+
+            // get picked primitive.
+            IPickedPrimitive picked = null;
+            picked = this.Scene.Pick(vertexID);
+
+            return picked;
         }
     }
 

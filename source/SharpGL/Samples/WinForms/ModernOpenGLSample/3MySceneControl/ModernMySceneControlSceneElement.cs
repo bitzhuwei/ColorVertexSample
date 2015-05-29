@@ -327,17 +327,10 @@ namespace ModernOpenGLSample._3MySceneControl
 
         IPickedPrimitive IColorCodedPicking.Pick(int vertexID)
         {
-            if (vertexID < 0) // Illigal ID.
-            { return null; }
-
             IColorCodedPicking pickElement = this;
 
-            if (vertexID < pickElement.PickingBaseID) // ID is in some previous element.
-            { return null; }
-
-            if (pickElement.PickingBaseID + pickElement.PrimitiveCount <= vertexID) // ID is in some subsequent element.
-            { return null; }
-
+            int lastVertexID = pickElement.GetLastVertexIDOfPickedPrimitive(vertexID);
+            if (lastVertexID < 0) { return null; }
 
             PickedPrimitive picked = new PickedPrimitive();
 
@@ -347,7 +340,7 @@ namespace ModernOpenGLSample._3MySceneControl
             if (vertexCount == -1) { vertexCount = this.vertices.Length / 3; }
 
             float[] positions = new float[vertexCount * 3];
-            for (int i = vertexID * 3 + 2, j = positions.Length - 1; j >= 0; i--, j--)
+            for (int i = lastVertexID * 3 + 2, j = positions.Length - 1; j >= 0; i--, j--)
             {
                 if (i < 0)
                 { i += this.vertices.Length; }
@@ -378,11 +371,21 @@ namespace ModernOpenGLSample._3MySceneControl
         /// </summary>
         public float[] positions { get; set; }
 
+        /// <summary>
+        /// The element that this picked primitive belongs to.
+        /// </summary>
+        public IColorCodedPicking Element { get; set; }
+
+#if DEBUG
+        public int VertexID { get; set; }
+#endif
+
         public override string ToString()
         {
-            string result = string.Format("{0}:{1}", Type, positions.PrintPositions());
+            string result = string.Format("{0}:{1}|belong to:{2}", Type, positions.PrintPositions(), Element);
             return result;
             //return base.ToString();
         }
+
     }
 }
