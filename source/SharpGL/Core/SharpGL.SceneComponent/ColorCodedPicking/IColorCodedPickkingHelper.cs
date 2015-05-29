@@ -14,27 +14,27 @@ namespace SharpGL.SceneComponent
 
         /// <summary>
         /// Get last vertex's id of picked Primitive if it belongs to this <paramref name="picking"/> instance.
-        /// <para>Returns -1 if <paramref name="vertexID"/> is an illigal number or the <paramref name="vertexID"/> is in some other element.</para>
+        /// <para>Returns -1 if <paramref name="stageVertexID"/> is an illigal number or the <paramref name="stageVertexID"/> is in some other element.</para>
         /// </summary>
         /// <param name="picking"></param>
-        /// <param name="vertexID"></param>
+        /// <param name="stageVertexID"></param>
         /// <returns></returns>
-        public static int GetLastVertexIDOfPickedPrimitive(this IColorCodedPicking picking, int vertexID)
+        public static int GetLastVertexIDOfPickedPrimitive(this IColorCodedPicking picking, int stageVertexID)
         {
             int lastVertexID = invalid;
 
             if (picking == null) { return lastVertexID; }
 
-            if (vertexID < 0) // Illigal ID.
+            if (stageVertexID < 0) // Illigal ID.
             { return lastVertexID; }
 
-            if (vertexID < picking.PickingBaseID) // ID is in some previous element.
+            if (stageVertexID < picking.PickingBaseID) // ID is in some previous element.
             { return lastVertexID; }
 
-            if (picking.PickingBaseID + picking.PrimitiveCount <= vertexID) // ID is in some subsequent element.
+            if (picking.PickingBaseID + picking.PrimitiveCount <= stageVertexID) // ID is in some subsequent element.
             { return lastVertexID; }
 
-            lastVertexID = vertexID - picking.PickingBaseID;
+            lastVertexID = stageVertexID - picking.PickingBaseID;
 
             return lastVertexID;
         }

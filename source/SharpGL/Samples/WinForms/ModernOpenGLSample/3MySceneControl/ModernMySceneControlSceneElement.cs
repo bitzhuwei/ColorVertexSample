@@ -325,11 +325,11 @@ namespace ModernOpenGLSample._3MySceneControl
             get { return this.vertices.Length / 3; }
         }
 
-        IPickedPrimitive IColorCodedPicking.Pick(int vertexID)
+        IPickedPrimitive IColorCodedPicking.Pick(int stageVertexID)
         {
             IColorCodedPicking pickElement = this;
 
-            int lastVertexID = pickElement.GetLastVertexIDOfPickedPrimitive(vertexID);
+            int lastVertexID = pickElement.GetLastVertexIDOfPickedPrimitive(stageVertexID);
             if (lastVertexID < 0) { return null; }
 
             PickedPrimitive picked = new PickedPrimitive();

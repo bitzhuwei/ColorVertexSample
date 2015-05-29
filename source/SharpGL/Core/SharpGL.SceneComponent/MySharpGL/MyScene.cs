@@ -205,34 +205,34 @@ namespace SharpGL.SceneComponent
         }
 
         /// <summary>
-        /// Get picked primitive by <paramref name="vertexID"/> as the last vertex that constructs the primitive.
+        /// Get picked primitive by <paramref name="stageVertexID"/> as the last vertex that constructs the primitive.
         /// </summary>
-        /// <param name="vertexID">The last vertex that constructs the primitive.</param>
+        /// <param name="stageVertexID">The last vertex that constructs the primitive.</param>
         /// <returns></returns>
-        public IPickedPrimitive Pick(int vertexID)
+        public IPickedPrimitive Pick(int stageVertexID)
         {
-            if (vertexID < 0) { return null; }
+            if (stageVertexID < 0) { return null; }
 
             IPickedPrimitive picked = null;
 
             SceneElement element = this.SceneContainer;
-            picked = Pick(element, vertexID);
+            picked = Pick(element, stageVertexID);
 
             return picked;
         }
 
-        private IPickedPrimitive Pick(SceneElement element, int vertexID)
+        private IPickedPrimitive Pick(SceneElement element, int stageVertexID)
         {
             IPickedPrimitive result = null;
             IColorCodedPicking picking = element as IColorCodedPicking;
             if (picking != null)
             {
-                result = picking.Pick(vertexID);
+                result = picking.Pick(stageVertexID);
                 if (result != null)
                 {
                     result.Element = picking;
 #if DEBUG
-                    result.VertexID = vertexID;
+                    result.VertexID = stageVertexID;
 #endif
                 }
             }
@@ -241,7 +241,7 @@ namespace SharpGL.SceneComponent
             {
                 foreach (var item in element.Children)
                 {
-                    result = Pick(item, vertexID);
+                    result = Pick(item, stageVertexID);
                     if (result != null)
                     { break; }
                 }

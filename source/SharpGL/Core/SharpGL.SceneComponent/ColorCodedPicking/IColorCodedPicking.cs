@@ -23,10 +23,10 @@ namespace SharpGL.SceneComponent
 
         /// <summary>
         /// Get the primitive according to vertex's id.
-        /// <para>Note: the <paramref name="vertexID"/> refers to the last vertex that constructs the primitive.</para>
+        /// <para>Note: the <paramref name="stageVertexID"/> refers to the last vertex that constructs the primitive.</para>
         /// </summary>
-        /// <param name="vertexID"></param>
+        /// <param name="stageVertexID"></param>
         /// <returns></returns>
-        IPickedPrimitive Pick(int vertexID);
+        IPickedPrimitive Pick(int stageVertexID);
     }
 }
