@@ -34,7 +34,7 @@ namespace ModernOpenGLSample._3MySceneControl
             // prepare scene's settings.
             this.mySceneControl.Scene.SceneContainer.Children.Clear();
             this.mySceneControl.Scene.SceneContainer.Effects.Clear();
-            this.mySceneControl.Scene.ClearColor = new GLColor(0.4f, 0.6f, 0.9f, 0.0f);
+            this.mySceneControl.Scene.ClearColor = new GLColor(0.4f, 0.6f, 0.9f, 0.5f);
 
             // prepare models' elements.
             this.sceneElement.Initialise(this.mySceneControl.OpenGL,
