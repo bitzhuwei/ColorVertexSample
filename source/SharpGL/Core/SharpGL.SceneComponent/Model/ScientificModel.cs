@@ -10,7 +10,7 @@ using SharpGL.SceneGraph.Core;
 namespace SharpGL.SceneComponent
 {
     /// <summary>
-    /// Generic model for shader+VBO rendering.
+    /// Generic model that contains positions, colors and a bouding box.
     /// </summary>
     public class ScientificModel
     {
@@ -50,7 +50,7 @@ namespace SharpGL.SceneComponent
         public float[] Colors { get; protected set; }
 
         /// <summary>
-        /// Generic model for shader+VBO rendering.
+        /// Generic model that contains positions, colors and a bouding box.
         /// </summary>
         /// <param name="vertexCount"></param>
         /// <param name="mode"></param>
