@@ -30,6 +30,13 @@ namespace SharpGL.VertexBuffers
             gl.EnableVertexAttribArray(attributeIndex);
         }
 
+        public unsafe void SetData(OpenGL gl, uint attributeIndex, int size, IntPtr data, bool isNormalised, int stride)
+        {
+            gl.BufferData(OpenGL.GL_ARRAY_BUFFER, size, data, OpenGL.GL_STATIC_DRAW);
+            gl.VertexAttribPointer(attributeIndex, stride, OpenGL.GL_FLOAT, isNormalised, 0, IntPtr.Zero);
+            gl.EnableVertexAttribArray(attributeIndex);
+        }
+
         public void Bind(OpenGL gl)
         {
             gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, vertexBufferObject);
@@ -51,5 +58,6 @@ namespace SharpGL.VertexBuffers
         }
 
         private uint vertexBufferObject;
+
     }
 }
