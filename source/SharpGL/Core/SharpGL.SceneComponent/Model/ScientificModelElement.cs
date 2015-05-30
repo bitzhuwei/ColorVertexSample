@@ -164,7 +164,7 @@ namespace SharpGL.SceneComponent
 
             modelMatrix = mat4.identity();
 
-            gl.PointSize(3);
+            //gl.PointSize(3);
 
             var shader = (renderMode == RenderMode.HitTest) ? pickingShaderProgram : shaderProgram;
             //  Bind the shader, set the matrices.
