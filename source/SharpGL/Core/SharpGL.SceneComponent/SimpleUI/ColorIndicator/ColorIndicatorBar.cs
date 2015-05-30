@@ -189,13 +189,13 @@ namespace SharpGL.SceneComponent
 
 
             if (rectModel != null)
-            { rectModel.RenderVertexArray(gl, renderMode); }
+            { rectModel.RenderLegacyOpoenGL(gl, renderMode); }
 
             if (verticalLines != null)
-            { verticalLines.RenderVertexArray(gl, renderMode); }
+            { verticalLines.RenderLegacyOpoenGL(gl, renderMode); }
 
             if (horizontalLines != null)
-            { horizontalLines.RenderVertexArray(gl, renderMode); }
+            { horizontalLines.RenderLegacyOpoenGL(gl, renderMode); }
         }
 
     }
