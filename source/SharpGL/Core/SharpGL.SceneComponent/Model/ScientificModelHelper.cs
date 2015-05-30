@@ -70,10 +70,6 @@ namespace SharpGL.SceneComponent
                 model.Colors[i * 3 + 0] = (float)random.NextDouble();
                 model.Colors[i * 3 + 1] = (float)random.NextDouble();
                 model.Colors[i * 3 + 2] = (float)random.NextDouble();
-
-                //model.Colors[i * 3 + 0] = 1;
-                //model.Colors[i * 3 + 1] = (float)random.NextDouble();
-                //model.Colors[i * 3 + 2] = (float)random.NextDouble();
             }
         }
     }
