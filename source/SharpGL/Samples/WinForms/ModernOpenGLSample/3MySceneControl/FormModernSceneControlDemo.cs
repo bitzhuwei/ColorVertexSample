@@ -119,11 +119,6 @@ namespace ModernOpenGLSample._3MySceneControl
                     shiftedR, shiftedG, shiftedB, shiftedA, vertexID, picked);
             }
 
-            //// Use this to simplify picking.
-            //{
-            //    IPickedPrimitive picked = this.mySceneControl.Pick(e.X, e.Y);
-            //    this.txtInfo.Text = string.Format("{0}", picked);
-            //}
         }
 
         private void openGLControl_MouseUp(object sender, MouseEventArgs e)
