@@ -97,7 +97,16 @@ namespace SharpGL.SceneComponent
 
             if (render)
             { ManualRender(this); }
+
+            if (!(e.X == lastX && e.Y == lastY))
+            {
+                this.PickedPrimitive = this.Pick(e.X, e.Y);
+                lastX = e.X;
+                lastY = e.Y;
+            }
         }
+        private int lastX = -1;
+        private int lastY = -1;
 
         void ScientificVisual3DControl_MouseDown(object sender, MouseEventArgs e)
         {
@@ -368,6 +377,48 @@ namespace SharpGL.SceneComponent
             //// force CameraRotation to udpate.
             //this.CameraRotation.Camera = this.Scene.CurrentCamera;
             ManualRender(this);
+        }
+
+        public IPickedPrimitive PickedPrimitive { get; set; }
+
+        /// <summary>
+        /// Get picked primitive at specified screen location.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        private IPickedPrimitive Pick(int x, int y)
+        {
+            // render the scene for color-coded picking.
+            this.Scene.Draw(RenderMode.HitTest);
+            // get coded color.
+            byte[] codedColor = new byte[4];
+            this.OpenGL.ReadPixels(x, this.Height - y - 1, 1, 1,
+                OpenGL.GL_RGBA, OpenGL.GL_UNSIGNED_BYTE, codedColor);
+
+            /* // This is how is vertexID coded into color in vertex shader.
+             * 	int objectID = gl_VertexID;
+	            codedColor = vec4(
+		            float(objectID & 0xFF), 
+		            float((objectID >> 8) & 0xFF), 
+	            	float((objectID >> 16) & 0xFF), 
+            		float((objectID >> 24) & 0xFF));
+             */
+
+            // get vertexID from coded color.
+            // the vertexID is the last vertex that constructs the primitive.
+            // see http://www.cnblogs.com/bitzhuwei/p/modern-opengl-picking-primitive-in-VBO-2.html
+            var shiftedR = (uint)codedColor[0];
+            var shiftedG = (uint)codedColor[1] << 8;
+            var shiftedB = (uint)codedColor[2] << 16;
+            var shiftedA = (uint)codedColor[3] << 24;
+            var stageVertexID = shiftedR + shiftedG + shiftedB + shiftedA;
+
+            // get picked primitive.
+            IPickedPrimitive picked = null;
+            picked = this.Scene.Pick((int)stageVertexID);
+
+            return picked;
         }
     }
 }
