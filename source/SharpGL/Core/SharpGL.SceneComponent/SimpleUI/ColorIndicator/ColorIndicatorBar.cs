@@ -170,7 +170,7 @@ namespace SharpGL.SceneComponent
             this.rectModel = rectModel;
         }
 
-        public const int barWidth = 1000;
+        public const int barWidth = 100;
         public const int barHeight = 30;
 
         private ScientificModel rectModel;
