@@ -35,7 +35,7 @@ namespace ColorVertexSample
 
         private void InitializeSceneControl()
         {
-            var root = this.sceneControl.Scene.SceneContainer;
+            var root = this.mySceneControl.Scene.SceneContainer;
             root.Children.Clear();
             root.Effects.Clear();
             //InitializeSceneAttributes(root);
@@ -45,7 +45,7 @@ namespace ColorVertexSample
 
             {
                 var pointModel = ColorVertexSample.Model.PointModel.Create(100, 100, 100, 0, -5, 5);
-                ScientificModelElement element = new ScientificModelElement(pointModel);
+                ScientificModelElement element = new ScientificModelElement(pointModel, this.mySceneControl.Scene.CurrentCamera);
                 this.modelContainer.AddChild(element);
                 this.modelContainer.BoundingBox.Extend(pointModel.BoundingBox.MaxPosition);
                 this.modelContainer.BoundingBox.Extend(pointModel.BoundingBox.MinPosition);
@@ -61,44 +61,44 @@ namespace ColorVertexSample
             //this.sceneControl.Scene.CurrentCamera = camera;
 
             this.cameraRotation = new SatelliteRotation();
-            this.cameraRotation.Camera = this.sceneControl.Scene.CurrentCamera as ScientificCamera;
+            this.cameraRotation.Camera = this.mySceneControl.Scene.CurrentCamera as ScientificCamera;
 
-            this.sceneControl.MouseDown += ScientificVisual3DControl_MouseDown;
-            this.sceneControl.MouseMove += ScientificVisual3DControl_MouseMove;
-            this.sceneControl.MouseUp += ScientificVisual3DControl_MouseUp;
-            this.sceneControl.MouseWheel += ScientificVisual3DControl_MouseWheel;
-            this.sceneControl.Resized += ScientificVisual3DControl_Resized;
+            this.mySceneControl.MouseDown += ScientificVisual3DControl_MouseDown;
+            this.mySceneControl.MouseMove += ScientificVisual3DControl_MouseMove;
+            this.mySceneControl.MouseUp += ScientificVisual3DControl_MouseUp;
+            this.mySceneControl.MouseWheel += ScientificVisual3DControl_MouseWheel;
+            this.mySceneControl.Resized += ScientificVisual3DControl_Resized;
         }
 
         void ScientificVisual3DControl_Resized(object sender, EventArgs e)
         {
-            ScientificCamera camera = this.sceneControl.Scene.CurrentCamera;
+            ScientificCamera camera = this.mySceneControl.Scene.CurrentCamera;
 
             if (camera.CameraType == ECameraType.Perspecitive)
             {
                 IPerspectiveViewCamera perspecitive = camera;
-                perspecitive.AdjustCamera(this.modelContainer.BoundingBox, this.sceneControl.OpenGL);
+                perspecitive.AdjustCamera(this.modelContainer.BoundingBox, this.mySceneControl.OpenGL);
             }
             else if (camera.CameraType == ECameraType.Ortho)
             {
                 IOrthoViewCamera orthoCamera = camera;
-                orthoCamera.AdjustCamera(this.modelContainer.BoundingBox, this.sceneControl.OpenGL);
+                orthoCamera.AdjustCamera(this.modelContainer.BoundingBox, this.mySceneControl.OpenGL);
             }
             else
             {
                 throw new NotImplementedException();
             } 
-            ManualRender(this.sceneControl);
+            ManualRender(this.mySceneControl);
         }
 
         void ScientificVisual3DControl_MouseWheel(object sender, MouseEventArgs e)
         {
-            ScientificCamera camera = this.sceneControl.Scene.CurrentCamera;
+            ScientificCamera camera = this.mySceneControl.Scene.CurrentCamera;
             //if (camera == null) { return; }
 
             camera.Scale(e.Delta);
 
-            ManualRender(this.sceneControl);
+            ManualRender(this.mySceneControl);
         }
 
         void ScientificVisual3DControl_MouseUp(object sender, MouseEventArgs e)
@@ -117,7 +117,7 @@ namespace ColorVertexSample
             }
 
             if (render)
-            { ManualRender(this.sceneControl); }
+            { ManualRender(this.mySceneControl); }
         }
 
         void ScientificVisual3DControl_MouseMove(object sender, MouseEventArgs e)
@@ -135,7 +135,7 @@ namespace ColorVertexSample
             }
 
             if (render)
-            { ManualRender(this.sceneControl); }
+            { ManualRender(this.mySceneControl); }
         }
 
         void ScientificVisual3DControl_MouseDown(object sender, MouseEventArgs e)
@@ -147,7 +147,7 @@ namespace ColorVertexSample
                 var cameraRotation = this.CameraRotation;
                 if (cameraRotation != null)
                 {
-                    cameraRotation.SetBounds(this.sceneControl.Width, this.sceneControl.Height);
+                    cameraRotation.SetBounds(this.mySceneControl.Width, this.mySceneControl.Height);
                     cameraRotation.MouseDown(e.X, e.Y);
 
                     render = true;
@@ -155,7 +155,7 @@ namespace ColorVertexSample
             }
 
             if (render)
-            { ManualRender(this.sceneControl); }
+            { ManualRender(this.mySceneControl); }
         }
 
 
@@ -194,9 +194,9 @@ namespace ColorVertexSample
             if (this.rdoPerspective.Checked)
             {
                 //this.sceneControl.CameraType = ECameraType.Perspecitive;
-                var camera  = this.sceneControl.Scene.CurrentCamera as ScientificCamera;
+                var camera  = this.mySceneControl.Scene.CurrentCamera as ScientificCamera;
                 camera.CameraType = ECameraType.Perspecitive;
-                ManualRender(this.sceneControl);
+                ManualRender(this.mySceneControl);
             }
         }
 
@@ -205,45 +205,45 @@ namespace ColorVertexSample
             if (this.rdoOrtho.Checked)
             {
                 //this.sceneControl.CameraType = ECameraType.Ortho;
-                var camera = this.sceneControl.Scene.CurrentCamera as ScientificCamera;
+                var camera = this.mySceneControl.Scene.CurrentCamera as ScientificCamera;
                 camera.CameraType = ECameraType.Ortho;
-                ManualRender(this.sceneControl);
+                ManualRender(this.mySceneControl);
             }
         }
 
         private void btnManualRender_Click(object sender, EventArgs e)
         {
-            ManualRender(this.sceneControl);
+            ManualRender(this.mySceneControl);
         }
 
         private void FormMySceneControlDemo_Load(object sender, EventArgs e)
         {
-            List<ScientificModelElement.Order> orders = new List<ScientificModelElement.Order>()
-            {
-                ScientificModelElement.Order.ModelBoundingBox, 
-                ScientificModelElement.Order.BoundingBoxModel 
-            };
-            foreach (var item in orders)
-            {
-                this.cmbRenderOrder.Items.Add(item);
-            }
+            //List<ScientificModelElement.Order> orders = new List<ScientificModelElement.Order>()
+            //{
+            //    ScientificModelElement.Order.ModelBoundingBox, 
+            //    ScientificModelElement.Order.BoundingBoxModel 
+            //};
+            //foreach (var item in orders)
+            //{
+            //    this.cmbRenderOrder.Items.Add(item);
+            //}
 
-            this.ScientificVisual3DControl_Resized(sceneControl, e);
+            //this.ScientificVisual3DControl_Resized(sceneControl, e);
         }
 
         private void cmbRenderOrder_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ScientificModelElement.Order order = (ScientificModelElement.Order)
-                this.cmbRenderOrder.SelectedItem;
-            foreach (var item in this.modelContainer.Children)
-            {
-                ScientificModelElement element = item as ScientificModelElement;
-                if (element != null)
-                {
-                    element.RenderOrder = order;
-                }
-            }
-            ManualRender(this.sceneControl);
+            //ScientificModelElement.Order order = (ScientificModelElement.Order)
+            //    this.cmbRenderOrder.SelectedItem;
+            //foreach (var item in this.modelContainer.Children)
+            //{
+            //    ScientificModelElement element = item as ScientificModelElement;
+            //    if (element != null)
+            //    {
+            //        element.RenderOrder = order;
+            //    }
+            //}
+            //ManualRender(this.sceneControl);
         }
 
     }

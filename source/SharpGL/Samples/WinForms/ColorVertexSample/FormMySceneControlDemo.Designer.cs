@@ -31,10 +31,10 @@ namespace ColorVertexSample
         {
             this.rdoOrtho = new System.Windows.Forms.RadioButton();
             this.rdoPerspective = new System.Windows.Forms.RadioButton();
-            this.sceneControl = new SharpGL.SceneComponent.MySceneControl();
+            this.mySceneControl = new SharpGL.SceneComponent.MySceneControl();
             this.label1 = new System.Windows.Forms.Label();
             this.cmbRenderOrder = new System.Windows.Forms.ComboBox();
-            ((System.ComponentModel.ISupportInitialize)(this.sceneControl)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mySceneControl)).BeginInit();
             this.SuspendLayout();
             // 
             // rdoOrtho
@@ -64,17 +64,17 @@ namespace ColorVertexSample
             // 
             // sceneControl
             // 
-            this.sceneControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.mySceneControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.sceneControl.DrawFPS = false;
-            this.sceneControl.Location = new System.Drawing.Point(12, 34);
-            this.sceneControl.Name = "sceneControl";
-            this.sceneControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
-            this.sceneControl.RenderContextType = SharpGL.RenderContextType.FBO;
-            this.sceneControl.RenderTrigger = SharpGL.RenderTrigger.Manual;
-            this.sceneControl.Size = new System.Drawing.Size(640, 347);
-            this.sceneControl.TabIndex = 0;
+            this.mySceneControl.DrawFPS = false;
+            this.mySceneControl.Location = new System.Drawing.Point(12, 34);
+            this.mySceneControl.Name = "sceneControl";
+            this.mySceneControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
+            this.mySceneControl.RenderContextType = SharpGL.RenderContextType.FBO;
+            this.mySceneControl.RenderTrigger = SharpGL.RenderTrigger.Manual;
+            this.mySceneControl.Size = new System.Drawing.Size(640, 347);
+            this.mySceneControl.TabIndex = 0;
             // 
             // label1
             // 
@@ -103,11 +103,11 @@ namespace ColorVertexSample
             this.Controls.Add(this.cmbRenderOrder);
             this.Controls.Add(this.rdoOrtho);
             this.Controls.Add(this.rdoPerspective);
-            this.Controls.Add(this.sceneControl);
+            this.Controls.Add(this.mySceneControl);
             this.Name = "FormMySceneControlDemo";
             this.Text = "MySceneControl Demo";
             this.Load += new System.EventHandler(this.FormMySceneControlDemo_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.sceneControl)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mySceneControl)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -115,7 +115,7 @@ namespace ColorVertexSample
 
         #endregion
 
-        private MySceneControl sceneControl;
+        private MySceneControl mySceneControl;
         private System.Windows.Forms.RadioButton rdoOrtho;
         private System.Windows.Forms.RadioButton rdoPerspective;
         private System.Windows.Forms.Label label1;

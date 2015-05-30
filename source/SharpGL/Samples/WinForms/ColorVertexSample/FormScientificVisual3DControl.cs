@@ -29,6 +29,14 @@ namespace ColorVertexSample
             InitializeComponent();
 
             InitilizeViewTypeControl();
+
+            Application.Idle += Application_Idle;
+        }
+
+        void Application_Idle(object sender, EventArgs e)
+        {
+            IPickedPrimitive picked = this.scientificVisual3DControl.PickedPrimitive;
+            this.lblPickedPrimitive.Text = string.Format("Picked:{0}", picked);
         }
 
         private void InitilizeViewTypeControl()
@@ -44,6 +52,7 @@ namespace ColorVertexSample
             }
         }
 
+        int elementCounter = 0;
         private void Create3DObject(object sender, EventArgs e)
         {
             try
@@ -61,7 +70,11 @@ namespace ColorVertexSample
                 PointModel model = PointModel.Create(nx, ny, nz, radius, minValue, maxValue);
 
                 //this.sceneControl.AddScientificModel(model);// This is replaced by codes below.
-                ScientificModelElement element = new ScientificModelElement(model, false, true);
+                //ScientificModelElement element = new ScientificModelElement(
+                    //model, this.scientificVisual3DControl.Scene.CurrentCamera, false, true);
+                ScientificModelElement element = new ScientificModelElement(
+                    model, this.scientificVisual3DControl.Scene.CurrentCamera,false, true);//, ScientificModelElement.Order.ModelBoundingBox);
+                element.Name = string.Format("element {0}", elementCounter++);
                 this.scientificVisual3DControl.AddModelElement(element);
                 // update ModelContainer's BoundingBox.
                 BoundingBox boundingBox = this.scientificVisual3DControl.ModelContainer.BoundingBox;

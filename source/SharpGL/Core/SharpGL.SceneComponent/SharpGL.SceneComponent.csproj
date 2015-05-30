@@ -55,6 +55,7 @@
     </Compile>
     <Compile Include="ColorCodedPicking\IColorCodedPickkingHelper.cs" />
     <Compile Include="ColorCodedPicking\IPickedPrimitive.cs" />
+    <Compile Include="ColorCodedPicking\PickedPrimitive.cs" />
     <Compile Include="ColorCodedPicking\PrimitiveType.cs" />
     <Compile Include="Control\EViewType.cs" />
     <Compile Include="Camera\CameraHelper.cs" />
@@ -76,6 +77,7 @@
     </Compile>
     <Compile Include="ColorCodedPicking\ColorCodedPickingHelper.cs" />
     <Compile Include="ColorCodedPicking\IColorCodedPicking.cs" />
+    <Compile Include="Model\ScientificModelHelper.cs" />
     <Compile Include="MySharpGL\LinearArcBallTransform.cs" />
     <Compile Include="MySharpGL\ArcBallTransform.cs" />
     <Compile Include="MySharpGL\ArcBallTransformEffect.cs" />
@@ -121,6 +123,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Utility\ArrayHelper.cs" />
+    <Compile Include="Utility\ManifestResourceLoader.cs" />
     <Compile Include="Utility\PrimitiveTypeHelper.cs" />
     <Compile Include="Utility\BeginModeHelper.cs" />
     <Content Include="MySharpGL\read-me.txt" />
@@ -129,7 +132,7 @@
     <Compile Include="SimpleUI\ColorIndicator\SimpleUIColorIndicator.cs" />
     <Compile Include="SimpleUI\SimpleUIRect.cs" />
     <Compile Include="SimpleUI\SimpleUIRectArgs.cs" />
-    <Compile Include="Model\PointerScientificModel.cs">
+    <Compile Include="Model\ScientificModel.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -162,6 +165,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Model\Shader.vert" />
+    <EmbeddedResource Include="Model\Shader.frag" />
+    <EmbeddedResource Include="Model\PickingShader.vert" />
+    <EmbeddedResource Include="Model\PickingShader.frag" />
     <None Include="TransformInterface\TransformInterface.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

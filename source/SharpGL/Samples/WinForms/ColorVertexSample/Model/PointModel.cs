@@ -12,7 +12,7 @@ namespace ColorVertexSample.Model
     /// <summary>
     /// Demo class showing model as points.
     /// </summary>
-    public class PointModel : PointerScientificModel
+    public class PointModel : ScientificModel
     {
         protected PointModel(int pointCount, SharpGL.Enumerations.BeginMode mode)
             : base(pointCount, mode)

@@ -46,7 +46,7 @@ namespace ColorVertexSample
 
             {
                 var pointModel = ColorVertexSample.Model.PointModel.Create(100, 100, 100, 0, -5, 5);
-                ScientificModelElement element = new ScientificModelElement(pointModel);
+                ScientificModelElement element = new ScientificModelElement(pointModel,this.sceneControl.Scene.CurrentCamera as ScientificCamera);
                 this.modelContainer.AddChild(element);
                 this.modelContainer.BoundingBox.Extend(pointModel.BoundingBox.MaxPosition);
                 this.modelContainer.BoundingBox.Extend(pointModel.BoundingBox.MinPosition);
@@ -224,32 +224,32 @@ namespace ColorVertexSample
 
         private void FormSceneControlDemo_Load(object sender, EventArgs e)
         {
-            List<ScientificModelElement.Order> orders = new List<ScientificModelElement.Order>()
-            {
-                ScientificModelElement.Order.ModelBoundingBox, 
-                ScientificModelElement.Order.BoundingBoxModel 
-            };
-            foreach (var item in orders)
-            {
-                this.cmbRenderOrder.Items.Add(item);
-            }
+            //List<ScientificModelElement.Order> orders = new List<ScientificModelElement.Order>()
+            //{
+            //    ScientificModelElement.Order.ModelBoundingBox, 
+            //    ScientificModelElement.Order.BoundingBoxModel 
+            //};
+            //foreach (var item in orders)
+            //{
+            //    this.cmbRenderOrder.Items.Add(item);
+            //}
 
-            this.FormSceneControlDemo_Resize(sender, e);
+            //this.FormSceneControlDemo_Resize(sender, e);
         }
 
         private void cmbRenderOrder_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ScientificModelElement.Order order = (ScientificModelElement.Order)
-                this.cmbRenderOrder.SelectedItem;
-            foreach (var item in this.modelContainer.Children)
-            {
-                ScientificModelElement element = item as ScientificModelElement;
-                if(element!=null)
-                {
-                    element.RenderOrder = order;
-                }
-            }
-            ManualRender(this.sceneControl);
+            //ScientificModelElement.Order order = (ScientificModelElement.Order)
+            //    this.cmbRenderOrder.SelectedItem;
+            //foreach (var item in this.modelContainer.Children)
+            //{
+            //    ScientificModelElement element = item as ScientificModelElement;
+            //    if(element!=null)
+            //    {
+            //        element.RenderOrder = order;
+            //    }
+            //}
+            //ManualRender(this.sceneControl);
         }
 
     }

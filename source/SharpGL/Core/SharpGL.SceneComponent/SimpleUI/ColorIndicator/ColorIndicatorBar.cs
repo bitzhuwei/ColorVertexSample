@@ -51,7 +51,7 @@ namespace SharpGL.SceneComponent
             int blockCount = data.GetBlockCount();
             //int blockCount = data.BlockCount;
             int length = blockCount + 1;
-            PointerScientificModel verticalLines = new PointerScientificModel(length * 2, Enumerations.BeginMode.Lines);
+            ScientificModel verticalLines = new ScientificModel(length * 2, Enumerations.BeginMode.Lines);
             Vertex* positions = verticalLines.Positions;
             for (int i = 0; i < length; i++)
             {
@@ -97,7 +97,7 @@ namespace SharpGL.SceneComponent
         unsafe private void GenerateHorizontalLines()
         {
             int length = 4;
-            PointerScientificModel horizontalLines = new PointerScientificModel(length, Enumerations.BeginMode.Lines);
+            ScientificModel horizontalLines = new ScientificModel(length, Enumerations.BeginMode.Lines);
             Vertex* positions = horizontalLines.Positions;
             positions[0].X = 0; positions[0].Y = 0; positions[0].Z = 0;
             positions[1].X = barWidth; positions[1].Y = 0; positions[1].Z = 0;
@@ -125,7 +125,7 @@ namespace SharpGL.SceneComponent
         unsafe private void GenerateRectangles(ColorIndicatorData data)
         {
             int length = data.ColorPalette.Colors.Length;
-            PointerScientificModel rectModel = new PointerScientificModel(length * 2, Enumerations.BeginMode.QuadStrip);
+            ScientificModel rectModel = new ScientificModel(length * 2, Enumerations.BeginMode.QuadStrip);
             Vertex* positions = rectModel.Positions;
             for (int i = 0; i < length; i++)
             {
@@ -161,28 +161,29 @@ namespace SharpGL.SceneComponent
         public const int barWidth = 100;
         public const int barHeight = 30;
 
-        private PointerScientificModel rectModel;
+        private ScientificModel rectModel;
 
-        private PointerScientificModel verticalLines;
+        private ScientificModel verticalLines;
 
-        private PointerScientificModel horizontalLines;
+        private ScientificModel horizontalLines;
 
         public void Render(OpenGL gl, RenderMode renderMode)
         {
             TryUpdate(this.data);
 
-            PointerScientificModel rectModel = this.rectModel;
-            PointerScientificModel verticalLines = this.verticalLines;
-            PointerScientificModel horizontalLines = this.horizontalLines;
+            ScientificModel rectModel = this.rectModel;
+            ScientificModel verticalLines = this.verticalLines;
+            ScientificModel horizontalLines = this.horizontalLines;
+
 
             if (rectModel != null)
-            { rectModel.Render(gl, renderMode); }
+            { rectModel.RenderVertexArray(gl, renderMode); }
 
             if (verticalLines != null)
-            { verticalLines.Render(gl, renderMode); }
+            { verticalLines.RenderVertexArray(gl, renderMode); }
 
             if (horizontalLines != null)
-            { horizontalLines.Render(gl, renderMode); }
+            { horizontalLines.RenderVertexArray(gl, renderMode); }
         }
 
     }

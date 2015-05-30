@@ -12,13 +12,14 @@ namespace SharpGL.SceneComponent
     /// <summary>
     /// Implements <see cref="IScientificModel"/> using unsafe <see cref="Vertex"/>* and <see cref="ByteColor"/>*. 
     /// </summary>
-    public class PointerScientificModel : IScientificModel, IDisposable
+    public class ScientificModel : //IScientificModel, 
+        IDisposable
     {
-        protected IntPtr positions;
-        protected IntPtr colors;
+        internal IntPtr positions;
+        internal IntPtr colors;
         protected bool _disposed;
 
-        public PointerScientificModel(int pointCount, BeginMode mode)
+        public ScientificModel(int pointCount, BeginMode mode)
         {
             if (pointCount <= 0)
                 throw new ArgumentException("size can not less equal to zero");
@@ -37,15 +38,15 @@ namespace SharpGL.SceneComponent
                 IntPtr ptrColors = new IntPtr(colorBytes);
                 this.colors = Marshal.AllocHGlobal(ptrColors);
             }
-            this.PointCount = pointCount;
+            this.VertexCount = pointCount;
             this.BoundingBox = new BoundingBox();
 
-            this.mode = mode;
+            this.Mode = mode;
         }
 
       
 
-        public int PointCount { get; protected set; }
+        public int VertexCount { get; protected set; }
 
 
         public unsafe Vertex* Positions
@@ -92,45 +93,47 @@ namespace SharpGL.SceneComponent
             }
         }
 
-        ~PointerScientificModel()
+        ~ScientificModel()
         {
             Dispose(false);
         }
 
-        public BeginMode mode { get; set; }
+        public BeginMode Mode { get; set; }
 
-        public int PrimitivesCount { get; set; }
+        //public int PrimitivesCount { get; set; }
 
 
-        #region IScientificModel 成员
+        //#region IScientificModel 成员
 
-        public virtual void Render(SharpGL.OpenGL gl, RenderMode renderMode)
-        {
-            if (this.PointCount <= 0)
-                return;
-
-            // render with Vertex Array(not VAO)
-            gl.Enable(OpenGL.GL_POINT_SPRITE_ARB);
-
-            gl.EnableClientState(OpenGL.GL_VERTEX_ARRAY);
-            gl.EnableClientState(OpenGL.GL_COLOR_ARRAY);
-
-            gl.VertexPointer(3, OpenGL.GL_FLOAT, 0, this.positions);
-            gl.ColorPointer(3, OpenGL.GL_BYTE, 0, this.colors);
-
-            gl.DrawArrays((uint)mode, 0, this.PointCount);
-
-            gl.DisableClientState(OpenGL.GL_VERTEX_ARRAY);
-            gl.DisableClientState(OpenGL.GL_COLOR_ARRAY);
-        }
-
-        //public virtual void AdjustCamera(SharpGL.OpenGL gl, SceneGraph.Cameras.Camera camera)
+        //public virtual void Render(SharpGL.OpenGL gl, RenderMode renderMode)
         //{
+        //    if (this.VertexCount <= 0)
+        //        return;
+
+        //    // render with Vertex Array(not VAO)
+        //    gl.Enable(OpenGL.GL_POINT_SPRITE_ARB);
+
+        //    gl.EnableClientState(OpenGL.GL_VERTEX_ARRAY);
+        //    gl.EnableClientState(OpenGL.GL_COLOR_ARRAY);
+
+        //    gl.VertexPointer(3, OpenGL.GL_FLOAT, 0, this.positions);
+        //    gl.ColorPointer(3, OpenGL.GL_BYTE, 0, this.colors);
+
+        //    gl.DrawArrays((uint)Mode, 0, this.VertexCount);
+
+        //    gl.DisableClientState(OpenGL.GL_VERTEX_ARRAY);
+        //    gl.DisableClientState(OpenGL.GL_COLOR_ARRAY);
         //}
 
-        public IBoundingBox BoundingBox { get; internal set; }
+        ////public virtual void AdjustCamera(SharpGL.OpenGL gl, SceneGraph.Cameras.Camera camera)
+        ////{
+        ////}
+
+        //public IBoundingBox BoundingBox { get; internal set; }
         
-        #endregion
+        //#endregion
+
+        public IBoundingBox BoundingBox { get; internal set; }
 
     }
 }

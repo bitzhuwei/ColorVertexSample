@@ -47,17 +47,17 @@ namespace DepthTestWithOrtho
             //}
             {
                 var model = Model.PointModel.Create(verticesCount, 1, 1, 1, -3, -1);
-                var element = new ScientificModelElement(model);
+                var element = new ScientificModelElement(model, this.scientificControl.Scene.CurrentCamera);
                 this.scientificControl.AddModelElement(element);
             }
             {
                 var model = Model.PointModel.Create(verticesCount, 1, 1, 1, -1, 1);
-                var element = new ScientificModelElement(model);
+                var element = new ScientificModelElement(model, this.scientificControl.Scene.CurrentCamera);
                 this.scientificControl.AddModelElement(element);
             }
             {
                 var model = Model.PointModel.Create(verticesCount, 1, 1, 1, 1, 3);
-                var element = new ScientificModelElement(model);
+                var element = new ScientificModelElement(model, this.scientificControl.Scene.CurrentCamera);
                 this.scientificControl.AddModelElement(element);
             }
 

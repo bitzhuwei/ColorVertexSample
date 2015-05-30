@@ -19,7 +19,7 @@ namespace ColorVertexSample.Model
 
             unsafe
             {
-                for (long i = 0; i < model.PointCount; i++)
+                for (long i = 0; i < model.VertexCount; i++)
                 {
                     float x = minValue + ((float)positionRandom.NextDouble()) * (maxValue - minValue);
                     float y = minValue + ((float)positionRandom.NextDouble()) * (maxValue - minValue);
