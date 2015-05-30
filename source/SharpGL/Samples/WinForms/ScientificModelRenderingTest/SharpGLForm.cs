@@ -24,8 +24,10 @@ namespace ScientificModelRenderingTest
         {
             InitializeComponent();
 
-            ScientificModelHelper.Build(model, new SharpGL.SceneGraph.Vertex(-5, -5, -5),
-                new SharpGL.SceneGraph.Vertex(5, 5, 5));
+            int radius = 1;
+            ScientificModelHelper.Build(model,
+                new SharpGL.SceneGraph.Vertex(-radius, -radius, -radius),
+                new SharpGL.SceneGraph.Vertex(radius, radius, radius));
         }
 
         /// <summary>
@@ -47,10 +49,9 @@ namespace ScientificModelRenderingTest
             //  Rotate around the Y axis.
             gl.Rotate(rotation, 0.0f, 1.0f, 0.0f);
 
-            ////  Draw a coloured pyramid.
-            //DrawPyramid(gl);
+            //  Draw a coloured pyramid.
+            DrawPyramid(gl);
 
-            gl.PointSize(4);
             this.model.RenderVertexArray(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
 
             //  Nudge the rotation.
@@ -59,7 +60,7 @@ namespace ScientificModelRenderingTest
 
         private void DrawPyramid(OpenGL gl)
         {
-            gl.Begin(OpenGL.GL_TRIANGLES);
+            gl.Begin(OpenGL.GL_LINE_LOOP);
             gl.Color(1.0f, 0.0f, 0.0f);
             gl.Vertex(0.0f, 1.0f, 0.0f);
             gl.Color(0.0f, 1.0f, 0.0f);

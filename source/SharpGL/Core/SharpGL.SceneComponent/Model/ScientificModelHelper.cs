@@ -27,23 +27,28 @@ namespace SharpGL.SceneComponent
             gl.EnableClientState(OpenGL.GL_VERTEX_ARRAY);
             gl.EnableClientState(OpenGL.GL_COLOR_ARRAY);
 
+            var list = new IntPtr[2];
             {
                 IntPtr p = Marshal.AllocHGlobal(model.Positions.Length * sizeof(float));
                 Marshal.Copy(model.Positions, 0, p, model.Positions.Length);
                 gl.VertexPointer(3, OpenGL.GL_FLOAT, 0, p);
-                Marshal.FreeHGlobal(p);
+                list[0] = p;
             }
             {
                 IntPtr p = Marshal.AllocHGlobal(model.Colors.Length * sizeof(float));
                 Marshal.Copy(model.Colors, 0, p, model.Colors.Length);
-                gl.ColorPointer(3, OpenGL.GL_BYTE, 0, p);
-                Marshal.FreeHGlobal(p);
+                gl.ColorPointer(3, OpenGL.GL_FLOAT, 0, p);
+                list[1] = p;
             }
 
+       
             gl.DrawArrays((uint)model.Mode, 0, model.VertexCount);
-
+        
             gl.DisableClientState(OpenGL.GL_VERTEX_ARRAY);
             gl.DisableClientState(OpenGL.GL_COLOR_ARRAY);
+
+            Marshal.FreeHGlobal(list[0]);
+            Marshal.FreeHGlobal(list[1]);
         }
 
         public static void Build(ScientificModel model, Vertex minPosition, Vertex maxPosition)
@@ -65,6 +70,10 @@ namespace SharpGL.SceneComponent
                 model.Colors[i * 3 + 0] = (float)random.NextDouble();
                 model.Colors[i * 3 + 1] = (float)random.NextDouble();
                 model.Colors[i * 3 + 2] = (float)random.NextDouble();
+
+                //model.Colors[i * 3 + 0] = 1;
+                //model.Colors[i * 3 + 1] = (float)random.NextDouble();
+                //model.Colors[i * 3 + 2] = (float)random.NextDouble();
             }
         }
     }
