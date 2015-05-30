@@ -50,7 +50,7 @@ namespace SharpGL.SceneComponent
         public float[] Colors { get; protected set; }
 
         /// <summary>
-        /// Gets or sets primitive's rendering type.
+        /// Generic model for shader+VBO rendering.
         /// </summary>
         /// <param name="vertexCount"></param>
         /// <param name="mode"></param>
