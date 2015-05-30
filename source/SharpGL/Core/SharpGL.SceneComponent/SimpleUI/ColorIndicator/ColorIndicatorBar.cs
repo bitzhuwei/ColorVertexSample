@@ -52,43 +52,46 @@ namespace SharpGL.SceneComponent
             //int blockCount = data.BlockCount;
             int length = blockCount + 1;
             ScientificModel verticalLines = new ScientificModel(length * 2, Enumerations.BeginMode.Lines);
-            Vertex* positions = verticalLines.Positions;
-            for (int i = 0; i < length; i++)
+            float[] positions = verticalLines.Positions;
+            for (int i = 0; i < length*3; i+=3)
             {
                 if (i + 1 != length)
                 {
                     if (data.MaxValue != data.MinValue)
                     {
-                        positions[i * 2].X = barWidth * (i * data.Step / (data.MaxValue - data.MinValue));
+                        positions[i * 2 + 0] = barWidth * (i * data.Step / (data.MaxValue - data.MinValue));
                     }
                     else
                     {
-                        positions[i * 2].X = barWidth * 0;
+                        positions[i * 2 + 0] = barWidth * 0;
                     }
                 }
                 else
                 {
-                    positions[i * 2].X = barWidth;
+                    positions[i * 2 + 0] = barWidth;
                 }
-                positions[i * 2].Y = -9;
-                positions[i * 2].Z = 0;
-                positions[i * 2 + 1].X = positions[i * 2].X;
-                positions[i * 2 + 1].Y = barHeight;
-                positions[i * 2 + 1].Z = 0;
+                positions[i * 2 + 1] = -9;
+                positions[i * 2 + 2] = 0;
+                positions[i * 2 + 1 + 0] = positions[i * 2 + 0];
+                positions[i * 2 + 1 + 1] = barHeight;
+                positions[i * 2 + 1 + 2] = 0;
             }
             // move the vertical lines' center to (0, 0, 0)
-            for (int i = 0; i < length * 2; i++)
+            for (int i = 0; i < length * 2 * 3; i+=3)
             {
-                positions[i].X -= barWidth / 2;
-                positions[i].Y -= barHeight / 2;
+                positions[i + 0] -= barWidth / 2;
+                positions[i + 1] -= barHeight / 2;
             }
 
-            ByteColor* colors = verticalLines.Colors;
-            for (int i = 0; i < length * 2; i++)
+            float[] colors = verticalLines.Colors;
+            for (int i = 0; i < length * 2 * 3; i += 3)
             {
-                colors[i].red = byte.MaxValue / 2;
-                colors[i].green = byte.MaxValue / 2;
-                colors[i].blue = byte.MaxValue / 2;
+                colors[i + 0] = byte.MaxValue / 2;
+                colors[i + 1] = byte.MaxValue / 2;
+                colors[i + 2] = byte.MaxValue / 2;
+                //colors[i].red = byte.MaxValue / 2;
+                //colors[i].green = byte.MaxValue / 2;
+                //colors[i].blue = byte.MaxValue / 2;
             }
 
             this.verticalLines = verticalLines;
@@ -98,25 +101,34 @@ namespace SharpGL.SceneComponent
         {
             int length = 4;
             ScientificModel horizontalLines = new ScientificModel(length, Enumerations.BeginMode.Lines);
-            Vertex* positions = horizontalLines.Positions;
-            positions[0].X = 0; positions[0].Y = 0; positions[0].Z = 0;
-            positions[1].X = barWidth; positions[1].Y = 0; positions[1].Z = 0;
-            positions[2].X = 0; positions[2].Y = barHeight; positions[2].Z = 0;
-            positions[3].X = barWidth;
-            positions[3].Y = barHeight;
-            positions[3].Z = 0;
+            float[] positions = horizontalLines.Positions;
+            //positions[0].X = 0; positions[0].Y = 0; positions[0].Z = 0;
+            //positions[1].X = barWidth; positions[1].Y = 0; positions[1].Z = 0;
+            //positions[2].X = 0; positions[2].Y = barHeight; positions[2].Z = 0;
+            //positions[3].X = barWidth;
+            //positions[3].Y = barHeight;
+            //positions[3].Z = 0;
+            positions[0 + 0] = 0; positions[0 + 1] = 0; positions[0 + 2] = 0;
+            positions[1 + 0] = barWidth; positions[1 + 1] = 0; positions[1 + 2] = 0;
+            positions[2 + 0] = 0; positions[2 + 1] = barHeight; positions[2 + 2] = 0;
+            positions[3 + 0] = barWidth;
+            positions[3 + 1] = barHeight;
+            positions[3 + 2] = 0;
             // move the horizontal white lines' center to (0, 0, 0)
-            for (int i = 0; i < length; i++)
+            for (int i = 0; i < length*3; i+=3)
             {
-                positions[i].X -= barWidth / 2;
-                positions[i].Y -= barHeight / 2;
+                positions[i + 0] -= barWidth / 2;
+                positions[i + 1] -= barHeight / 2;
             }
-            ByteColor* colors = horizontalLines.Colors;
-            for (int i = 0; i < length; i++)
+            float[] colors = horizontalLines.Colors;
+            for (int i = 0; i < length * 3; i+= 3)
             {
-                colors[i].red = byte.MaxValue / 2;
-                colors[i].green = byte.MaxValue / 2;
-                colors[i].blue = byte.MaxValue / 2;
+                colors[i + 0] = byte.MaxValue / 2;
+                colors[i + 1] = byte.MaxValue / 2;
+                colors[i + 2] = byte.MaxValue / 2;
+                //colors[i].red = byte.MaxValue / 2;
+                //colors[i].green = byte.MaxValue / 2;
+                //colors[i].blue = byte.MaxValue / 2;
             }
 
             this.horizontalLines = horizontalLines;
@@ -126,33 +138,33 @@ namespace SharpGL.SceneComponent
         {
             int length = data.ColorPalette.Colors.Length;
             ScientificModel rectModel = new ScientificModel(length * 2, Enumerations.BeginMode.QuadStrip);
-            Vertex* positions = rectModel.Positions;
-            for (int i = 0; i < length; i++)
+            float[] positions = rectModel.Positions;
+            for (int i = 0; i < length * 3; i += 3)
             {
-                positions[i * 2].X = barWidth * data.ColorPalette.Coords[i];
-                positions[i * 2].Y = 0;
-                positions[i * 2].Z = 0;
-                positions[i * 2 + 1].X = positions[i * 2].X;
-                positions[i * 2 + 1].Y = barHeight;
-                positions[i * 2 + 1].Z = 0;
+                positions[i * 2 + 0] = barWidth * data.ColorPalette.Coords[i / 3];
+                positions[i * 2 + 1] = 0;
+                positions[i * 2 + 2] = 0;
+                positions[i * 2 + 1 + 0] = positions[i * 2];
+                positions[i * 2 + 1 + 1] = barHeight;
+                positions[i * 2 + 1 + 2] = 0;
             }
             // move the rectangles' center to (0, 0, 0)
-            for (int i = 0; i < length * 2; i++)
+            for (int i = 0; i < length * 2*3; i+=3)
             {
-                positions[i].X -= barWidth / 2;
-                positions[i].Y -= barHeight / 2;
-            }
+                positions[i+0] -= barWidth / 2;
+                positions[i+1] -= barHeight / 2;
+            }              
 
-            ByteColor* colors = rectModel.Colors;
-            for (int i = 0; i < length; i++)
+            float[] colors = rectModel.Colors;
+            for (int i = 0; i < length * 3; i += 3)
             {
-                GLColor color = data.ColorPalette.Colors[i];
-                colors[i * 2].red = (byte)(color.R * byte.MaxValue / 2);
-                colors[i * 2].green = (byte)(color.G * byte.MaxValue / 2);
-                colors[i * 2].blue = (byte)(color.B * byte.MaxValue / 2);
-                colors[i * 2 + 1].red = (byte)(color.R * byte.MaxValue / 2);
-                colors[i * 2 + 1].green = (byte)(color.G * byte.MaxValue / 2);
-                colors[i * 2 + 1].blue = (byte)(color.B * byte.MaxValue / 2);
+                GLColor color = data.ColorPalette.Colors[i / 3];
+                colors[i * 2 + 0] = (byte)(color.R * byte.MaxValue / 2);
+                colors[i * 2 + 1] = (byte)(color.G * byte.MaxValue / 2);
+                colors[i * 2 + 2] = (byte)(color.B * byte.MaxValue / 2);
+                colors[i * 2 + 1 + 0] = (byte)(color.R * byte.MaxValue / 2);
+                colors[i * 2 + 1 + 1] = (byte)(color.G * byte.MaxValue / 2);
+                colors[i * 2 + 1 + 2] = (byte)(color.B * byte.MaxValue / 2);
             }
 
             this.rectModel = rectModel;

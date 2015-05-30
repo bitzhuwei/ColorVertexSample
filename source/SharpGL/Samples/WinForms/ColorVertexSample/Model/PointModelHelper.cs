@@ -19,6 +19,9 @@ namespace ColorVertexSample.Model
 
             unsafe
             {
+                float[] positions = model.Positions;
+                float[] colors = model.Colors;
+
                 for (long i = 0; i < model.VertexCount; i++)
                 {
                     float x = minValue + ((float)positionRandom.NextDouble()) * (maxValue - minValue);
@@ -37,18 +40,19 @@ namespace ColorVertexSample.Model
                     if (z < min.Z) min.Z = z;
                     if (z > max.Z) max.Z = z;
 
-                    Vertex* positions = model.Positions;
-                    positions[i].X = x;
-                    positions[i].Y = y;
-                    positions[i].Z = z;
+                    positions[i * 3 + 0] = x;
+                    positions[i * 3 + 1] = y;
+                    positions[i * 3 + 2] = z;
 
-                    ByteColor* colors = model.Colors;
                     //colors[i].red = (byte)colorRandom.Next(0, 256 / 2);// 256 / 2 is max color in byte.
                     //colors[i].green = (byte)colorRandom.Next(0, 256 / 2);
                     //colors[i].blue = (byte)colorRandom.Next(0, 256 / 2);
-                    colors[i].red = (byte)(255 / 2 * ((float)(i % nx) / nx));  //(byte)colorRandom.Next(0, 256 / 2);// 256 / 2 is max color in byte.
-                    colors[i].green = (byte)(255 / 2 * ((float)(i / nx % ny) / ny));//(byte)colorRandom.Next(0, 256 / 2);
-                    colors[i].blue = (byte)(255 / 2 * ((float)(i / nx / ny % nz) / nz));//(byte)colorRandom.Next(0, 256 / 2);
+                    //colors[i].red = (byte)(255 / 2 * ((float)(i % nx) / nx));  //(byte)colorRandom.Next(0, 256 / 2);// 256 / 2 is max color in byte.
+                    //colors[i].green = (byte)(255 / 2 * ((float)(i / nx % ny) / ny));//(byte)colorRandom.Next(0, 256 / 2);
+                    //colors[i].blue = (byte)(255 / 2 * ((float)(i / nx / ny % nz) / nz));//(byte)colorRandom.Next(0, 256 / 2);
+                    colors[i * 3 + 0] = (2 / 2 * ((float)(i % nx) / nx));  //(byte)colorRandom.Next(0, 256 / 2);// 256 / 2 is max color in byte.
+                    colors[i * 3 + 1] = (2 / 2 * ((float)(i / nx % ny) / ny));//(byte)colorRandom.Next(0, 256 / 2);
+                    colors[i * 3 + 2] = (2 / 2 * ((float)(i / nx / ny % nz) / nz));//(byte)colorRandom.Next(0, 256 / 2);
 
                 }
 

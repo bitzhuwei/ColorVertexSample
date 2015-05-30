@@ -103,15 +103,17 @@ namespace SharpGL.SceneComponent
                 var vertexDataBuffer = new VertexBuffer();
                 vertexDataBuffer.Create(gl);
                 vertexDataBuffer.Bind(gl);
-                vertexDataBuffer.SetData(gl, 0, 
-                    this.Model.VertexCount * sizeof(Vertex), (IntPtr)this.Model.Positions, false, 3, OpenGL.GL_FLOAT);
+                //vertexDataBuffer.SetData(gl, 0, 
+                    //this.Model.VertexCount * sizeof(Vertex), (IntPtr)this.Model.Positions, false, 3, OpenGL.GL_FLOAT);
+                vertexDataBuffer.SetData(gl, 0, this.Model.Positions, false, 3);
 
                 //  Now do the same for the colour data.
                 var colourDataBuffer = new VertexBuffer();
                 colourDataBuffer.Create(gl);
                 colourDataBuffer.Bind(gl);
-                colourDataBuffer.SetData(gl, 1,
-                    this.Model.VertexCount * sizeof(ByteColor), (IntPtr)this.Model.Colors, false, 3, OpenGL.GL_BYTE);
+                //colourDataBuffer.SetData(gl, 1,
+                    //this.Model.VertexCount * sizeof(ByteColor), (IntPtr)this.Model.Colors, false, 3, OpenGL.GL_BYTE);
+                colourDataBuffer.SetData(gl, 1, this.Model.Colors, false, 3);
 
                 //  Unbind the vertex array, we've finished specifying data for it.
                 vertexBufferArray.Unbind(gl);
@@ -274,28 +276,29 @@ namespace SharpGL.SceneComponent
 
             unsafe
             {
-                Vertex* modelPositions = model.Positions;
-                ByteColor* modelColors = model.Colors;
-                for (int i = lastVertexID, j = vertexCount - 1; j >= 0; i--, j--)
+                float[] modelPositions = model.Positions;
+                float[] modelColors = model.Colors;
+                for (int i = lastVertexID * 3 + 2, j = positions.Length - 1; j >= 0; i--, j--)
                 {
                     if (i < 0)
-                    { i += model.VertexCount; }
-
-                    positions[j * 3] = modelPositions[i].X;
-                    positions[j * 3 + 1] = modelPositions[i].Y;
-                    positions[j * 3 + 2] = modelPositions[i].Z;
-                    colors[j * 3] = modelColors[i].red;
-                    colors[j * 3 + 1] = modelColors[i].green;
-                    colors[j * 3 + 2] = modelColors[i].blue;
+                    { i += modelPositions.Length; }
+                    positions[j] = modelPositions[i];
+                    colors[j] = modelColors[i];
                 }
-            }
-            //for (int i = lastVertexID * 3 + 2, j = positions.Length - 1; j >= 0; i--, j--)
-            //{
-            //    if (i < 0)
-            //    { i += this.vertices.Length; }
-            //    positions[j] = this.vertices[i];
-            //}
+                //for (int i = lastVertexID, j = vertexCount - 1; j >= 0; i--, j--)
+                //{
+                //    if (i < 0)
+                //    { i += model.VertexCount; }
 
+                //    positions[j * 3] = modelPositions[i].X;
+                //    positions[j * 3 + 1] = modelPositions[i].Y;
+                //    positions[j * 3 + 2] = modelPositions[i].Z;
+                //    colors[j * 3] = modelColors[i].red;
+                //    colors[j * 3 + 1] = modelColors[i].green;
+                //    colors[j * 3 + 2] = modelColors[i].blue;
+                //}
+            }
+           
             primitive.positions = positions;
             primitive.colors = colors;
 
