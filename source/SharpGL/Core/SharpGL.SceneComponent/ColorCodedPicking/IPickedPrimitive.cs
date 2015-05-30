@@ -30,7 +30,7 @@ namespace SharpGL.SceneComponent
         /// <summary>
         /// The last vertex's id that constructs the picked primitive.
         /// </summary>
-        int VertexID { get; set; }
+        int StageVertexID { get; set; }
 #endif
     }
 }

@@ -377,7 +377,7 @@ namespace ModernOpenGLSample._3MySceneControl
         public IColorCodedPicking Element { get; set; }
 
 #if DEBUG
-        public int VertexID { get; set; }
+        public int StageVertexID { get; set; }
 #endif
 
         public override string ToString()

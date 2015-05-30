@@ -232,7 +232,7 @@ namespace SharpGL.SceneComponent
                 {
                     result.Element = picking;
 #if DEBUG
-                    result.VertexID = stageVertexID;
+                    result.StageVertexID = stageVertexID;
 #endif
                 }
             }
