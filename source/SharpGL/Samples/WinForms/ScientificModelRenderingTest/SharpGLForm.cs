@@ -16,7 +16,11 @@ namespace ScientificModelRenderingTest
     /// </summary>
     public partial class SharpGLForm : Form
     {
-        ScientificModel model = new ScientificModel(100, SharpGL.Enumerations.BeginMode.LineLoop);
+        ScientificModel legacyModel = new ScientificModel(100, SharpGL.Enumerations.BeginMode.Lines);
+        ScientificModel vertexArrayModel = new ScientificModel(100, SharpGL.Enumerations.BeginMode.Points);
+        ScientificModel VBOModel = new ScientificModel(100, SharpGL.Enumerations.BeginMode.LineLoop);
+        ScientificModelElement element;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SharpGLForm"/> class.
         /// </summary>
@@ -25,9 +29,27 @@ namespace ScientificModelRenderingTest
             InitializeComponent();
 
             int radius = 1;
-            ScientificModelHelper.Build(model,
+            ScientificModelHelper.Build(legacyModel,
+               new SharpGL.SceneGraph.Vertex(-radius, -0, -radius),
+               new SharpGL.SceneGraph.Vertex(radius, 0, radius));
+
+            ScientificModelHelper.Build(vertexArrayModel,
+               new SharpGL.SceneGraph.Vertex(-radius, -radius, -radius),
+               new SharpGL.SceneGraph.Vertex(radius, radius, radius));
+
+            ScientificModelHelper.Build(VBOModel,
                 new SharpGL.SceneGraph.Vertex(-radius, -radius, -radius),
                 new SharpGL.SceneGraph.Vertex(radius, radius, radius));
+            ScientificCamera camera = new ScientificCamera(ECameraType.Perspecitive);
+            camera.Target = new SharpGL.SceneGraph.Vertex(0, 0, 0);
+            camera.Position = new SharpGL.SceneGraph.Vertex(-2, 2, -2);
+            camera.UpVector = new SharpGL.SceneGraph.Vertex(0, 1, 0);
+            IPerspectiveViewCamera perspective = camera;
+            perspective.AspectRatio = (double)Width / (double)Height;
+            perspective.Far = 100;
+            perspective.Near = 0.01;
+            perspective.FieldOfView = 60;
+            this.element = new ScientificModelElement(VBOModel, camera);
         }
 
         /// <summary>
@@ -52,7 +74,15 @@ namespace ScientificModelRenderingTest
             //  Draw a coloured pyramid.
             DrawPyramid(gl);
 
-            this.model.RenderVertexArray(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
+            gl.LineWidth(3);// LINES
+            this.legacyModel.RenderLegacyOpoenGL(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
+
+            gl.PointSize(20);// POINTS
+            this.vertexArrayModel.RenderVertexArray(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
+
+            gl.LineWidth(1);// LINE_STRIP
+            SharpGL.SceneGraph.Core.IRenderable renderable = this.element;
+            renderable.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
 
             //  Nudge the rotation.
             rotation += 3.0f;

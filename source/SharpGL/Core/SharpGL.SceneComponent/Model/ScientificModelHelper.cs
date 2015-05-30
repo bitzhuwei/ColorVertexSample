@@ -51,6 +51,35 @@ namespace SharpGL.SceneComponent
             Marshal.FreeHGlobal(list[1]);
         }
 
+        /// <summary>
+        /// Render model with legacy opengl(glVertex() ...).
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="gl"></param>
+        /// <param name="renderMode"></param>
+        public static void RenderLegacyOpoenGL(this ScientificModel model, OpenGL gl, RenderMode renderMode)
+        {
+            if (model == null) { return; }
+            if (model.VertexCount <= 0) { return; }
+
+            float[] positions = model.Positions;
+            float[] colors = model.Colors;
+
+            gl.Begin(model.Mode);
+            for (int i = 0; i < model.VertexCount; i++)
+            {
+                gl.Color(colors[i * 3], colors[i * 3 + 1], colors[i * 3 + 2]);
+                gl.Vertex(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
+            }
+            gl.End();
+        }
+
+        /// <summary>
+        /// Generate random positions and colors for specified model.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="minPosition">minimum position in model's vertices.</param>
+        /// <param name="maxPosition">maximum position in model's vertices.</param>
         public static void Build(ScientificModel model, Vertex minPosition, Vertex maxPosition)
         {
             if (model == null) { return; }
