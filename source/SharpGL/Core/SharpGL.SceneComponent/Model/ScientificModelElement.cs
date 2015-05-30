@@ -20,19 +20,13 @@ namespace SharpGL.SceneComponent
         /// </summary>
         public ScientificModel Model { get; set; }
 
-        public bool RenderBoundingBox { get; set; }
-
         public bool RenderModel { get; set; }
 
-        public Order RenderOrder { get; set; }
-
-        public ScientificModelElement(ScientificModel model, IScientificCamera camera, bool renderBoundingBox = true, bool renderModel = true, Order order = ScientificModelElement.Order.ModelBoundingBox)
+        public ScientificModelElement(ScientificModel model, IScientificCamera camera, bool renderModel = true)
         {
             this.Model = model;
             this.Camera = camera;
-            this.RenderBoundingBox = renderBoundingBox;
             this.RenderModel = renderModel;
-            this.RenderOrder = order;
         }
 
 
@@ -142,6 +136,8 @@ namespace SharpGL.SceneComponent
 
         void IRenderable.Render(OpenGL gl, RenderMode renderMode)
         {
+            if (!this.RenderModel) { return; }
+
             if(!initialised)
             {
                 this.Initialise(gl);

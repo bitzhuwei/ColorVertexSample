@@ -69,10 +69,8 @@ namespace ColorVertexSample
                 PointModel model = PointModel.Create(nx, ny, nz, radius, minValue, maxValue);
 
                 //this.sceneControl.AddScientificModel(model);// This is replaced by codes below.
-                //ScientificModelElement element = new ScientificModelElement(
-                    //model, this.scientificVisual3DControl.Scene.CurrentCamera, false, true);
                 ScientificModelElement element = new ScientificModelElement(
-                    model, this.scientificVisual3DControl.Scene.CurrentCamera,false, true);//, ScientificModelElement.Order.ModelBoundingBox);
+                    model, this.scientificVisual3DControl.Scene.CurrentCamera);
                 element.Name = string.Format("element {0}", elementCounter++);
                 this.scientificVisual3DControl.AddModelElement(element);
                 // update ModelContainer's BoundingBox.
