@@ -145,17 +145,19 @@ namespace SharpGL.SceneComponent
                 if (hasMaterial != null && hasMaterial.Material != null)
                 { hasMaterial.Material.Push(gl); }
 
-                IColorCodedPicking picking = null;
                 if (renderMode == RenderMode.HitTest)
                 {
-                    picking = sceneElement as IColorCodedPicking;
-                    if (picking != null) picking.PickingBaseID = info.RenderedPrimitiveCount;
+                    IColorCodedPicking picking = sceneElement as IColorCodedPicking;
+                    if (picking != null)
+                    {
+                        picking.PickingBaseID = info.RenderedPrimitiveCount;
 
-                    //  If the element can be rendered, render it.
-                    IRenderable renderable = sceneElement as IRenderable;
-                    if (renderable != null) renderable.Render(gl, renderMode);
+                        //  If the element can be rendered, render it.
+                        IRenderable renderable = sceneElement as IRenderable;
+                        if (renderable != null) renderable.Render(gl, renderMode);
 
-                    if (picking != null) info.RenderedPrimitiveCount += picking.PrimitiveCount;
+                        info.RenderedPrimitiveCount += picking.PrimitiveCount;
+                    }
                 }
                 else
                 {
