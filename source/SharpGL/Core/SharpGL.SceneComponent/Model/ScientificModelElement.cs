@@ -104,14 +104,14 @@ namespace SharpGL.SceneComponent
                 vertexDataBuffer.Create(gl);
                 vertexDataBuffer.Bind(gl);
                 vertexDataBuffer.SetData(gl, 0, 
-                    this.Model.VertexCount * sizeof(Vertex), (IntPtr)this.Model.Positions, false, 3);
+                    this.Model.VertexCount * sizeof(Vertex), (IntPtr)this.Model.Positions, false, 3, OpenGL.GL_FLOAT);
 
                 //  Now do the same for the colour data.
                 var colourDataBuffer = new VertexBuffer();
                 colourDataBuffer.Create(gl);
                 colourDataBuffer.Bind(gl);
                 colourDataBuffer.SetData(gl, 1,
-                    this.Model.VertexCount * sizeof(ByteColor), (IntPtr)this.Model.Colors, false, 3);
+                    this.Model.VertexCount * sizeof(ByteColor), (IntPtr)this.Model.Colors, false, 3, OpenGL.GL_BYTE);
 
                 //  Unbind the vertex array, we've finished specifying data for it.
                 vertexBufferArray.Unbind(gl);
@@ -257,23 +257,25 @@ namespace SharpGL.SceneComponent
             ScientificModel model = this.Model;
             if (model == null) { return null; }
 
-            IColorCodedPicking pickElement = this;
+            IColorCodedPicking picking = this;
 
-            int lastVertexID = pickElement.GetLastVertexIDOfPickedPrimitive(stageVertexID);
+            int lastVertexID = picking.GetLastVertexIDOfPickedPrimitive(stageVertexID);
             if (lastVertexID < 0) { return null; }
 
-            PickedPrimitive picked = new PickedPrimitive();
+            PickedPrimitive primitive = new PickedPrimitive();
 
-            picked.Type = BeginModeHelper.ToPrimitiveType(model.Mode);
+            primitive.Type = BeginModeHelper.ToPrimitiveType(model.Mode);
 
-            int vertexCount = PrimitiveTypeHelper.GetVertexCount(picked.Type);
+            int vertexCount = PrimitiveTypeHelper.GetVertexCount(primitive.Type);
             if (vertexCount == -1) { vertexCount = model.VertexCount; }
 
             float[] positions = new float[vertexCount * 3];
+            float[] colors = new float[vertexCount * 3];
 
             unsafe
             {
                 Vertex* modelPositions = model.Positions;
+                ByteColor* modelColors = model.Colors;
                 for (int i = lastVertexID, j = vertexCount - 1; j >= 0; i--, j--)
                 {
                     if (i < 0)
@@ -282,6 +284,9 @@ namespace SharpGL.SceneComponent
                     positions[j * 3] = modelPositions[i].X;
                     positions[j * 3 + 1] = modelPositions[i].Y;
                     positions[j * 3 + 2] = modelPositions[i].Z;
+                    colors[j * 3] = modelColors[i].red;
+                    colors[j * 3 + 1] = modelColors[i].green;
+                    colors[j * 3 + 2] = modelColors[i].blue;
                 }
             }
             //for (int i = lastVertexID * 3 + 2, j = positions.Length - 1; j >= 0; i--, j--)
@@ -291,10 +296,10 @@ namespace SharpGL.SceneComponent
             //    positions[j] = this.vertices[i];
             //}
 
-            picked.positions = positions;
+            primitive.positions = positions;
+            primitive.colors = colors;
 
-            return picked;
-            throw new NotImplementedException();
+            return primitive;
         }
 
         #endregion
