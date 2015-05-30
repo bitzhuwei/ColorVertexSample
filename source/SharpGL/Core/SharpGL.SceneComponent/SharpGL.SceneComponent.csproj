@@ -73,7 +73,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Model\IBoundingBox.cs" />
-    <Compile Include="Model\IScientificModel.cs" />
     <Compile Include="Model\ScientificModelElement.cs">
       <SubType>Code</SubType>
     </Compile>

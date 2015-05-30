@@ -11,7 +11,7 @@ using System.Text;
 namespace SharpGL.SceneComponent
 {
     /// <summary>
-    /// Render the <see cref="IScientificModel"/>.
+    /// scene element that holds a <see cref="ScientificModel"/>.
     /// </summary>
     public class ScientificModelElement : SceneElement, IRenderable, IColorCodedPicking
     {
