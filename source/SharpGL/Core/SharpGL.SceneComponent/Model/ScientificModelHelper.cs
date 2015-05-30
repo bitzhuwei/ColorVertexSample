@@ -1,4 +1,5 @@
-﻿using SharpGL.SceneGraph.Core;
+﻿using SharpGL.SceneGraph;
+using SharpGL.SceneGraph.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,6 +44,28 @@ namespace SharpGL.SceneComponent
 
             gl.DisableClientState(OpenGL.GL_VERTEX_ARRAY);
             gl.DisableClientState(OpenGL.GL_COLOR_ARRAY);
+        }
+
+        public static void Build(ScientificModel model, Vertex minPosition, Vertex maxPosition)
+        {
+            if (model == null) { return; }
+
+            Random random = new Random();
+
+            for (int i = 0; i < model.VertexCount; i++)
+            {
+                var x = (maxPosition.X - minPosition.X) * random.NextDouble() + minPosition.X;
+                var y = (maxPosition.Y - minPosition.Y) * random.NextDouble() + minPosition.Y;
+                var z = (maxPosition.Z - minPosition.Z) * random.NextDouble() + minPosition.Z;
+
+                model.Positions[i * 3 + 0] = (float)x;
+                model.Positions[i * 3 + 1] = (float)y;
+                model.Positions[i * 3 + 2] = (float)z;
+
+                model.Colors[i * 3 + 0] = (float)random.NextDouble();
+                model.Colors[i * 3 + 1] = (float)random.NextDouble();
+                model.Colors[i * 3 + 2] = (float)random.NextDouble();
+            }
         }
     }
 }

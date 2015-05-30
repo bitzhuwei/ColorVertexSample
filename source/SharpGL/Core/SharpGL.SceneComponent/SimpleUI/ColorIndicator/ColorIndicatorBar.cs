@@ -53,7 +53,7 @@ namespace SharpGL.SceneComponent
             int length = blockCount + 1;
             ScientificModel verticalLines = new ScientificModel(length * 2, Enumerations.BeginMode.Lines);
             float[] positions = verticalLines.Positions;
-            for (int i = 0; i < length*3; i+=3)
+            for (int i = 0; i < length * 3; i += 3)
             {
                 if (i + 1 != length)
                 {
@@ -77,7 +77,7 @@ namespace SharpGL.SceneComponent
                 positions[i * 2 + 1 + 2] = 0;
             }
             // move the vertical lines' center to (0, 0, 0)
-            for (int i = 0; i < length * 2 * 3; i+=3)
+            for (int i = 0; i < length * 2 * 3; i += 3)
             {
                 positions[i + 0] -= barWidth / 2;
                 positions[i + 1] -= barHeight / 2;
@@ -115,13 +115,13 @@ namespace SharpGL.SceneComponent
             positions[3 + 1] = barHeight;
             positions[3 + 2] = 0;
             // move the horizontal white lines' center to (0, 0, 0)
-            for (int i = 0; i < length*3; i+=3)
+            for (int i = 0; i < length * 3; i += 3)
             {
                 positions[i + 0] -= barWidth / 2;
                 positions[i + 1] -= barHeight / 2;
             }
             float[] colors = horizontalLines.Colors;
-            for (int i = 0; i < length * 3; i+= 3)
+            for (int i = 0; i < length * 3; i += 3)
             {
                 colors[i + 0] = byte.MaxValue / 2;
                 colors[i + 1] = byte.MaxValue / 2;
@@ -149,11 +149,11 @@ namespace SharpGL.SceneComponent
                 positions[i * 2 + 1 + 2] = 0;
             }
             // move the rectangles' center to (0, 0, 0)
-            for (int i = 0; i < length * 2*3; i+=3)
+            for (int i = 0; i < length * 2 * 3; i += 3)
             {
-                positions[i+0] -= barWidth / 2;
-                positions[i+1] -= barHeight / 2;
-            }              
+                positions[i + 0] -= barWidth / 2;
+                positions[i + 1] -= barHeight / 2;
+            }
 
             float[] colors = rectModel.Colors;
             for (int i = 0; i < length * 3; i += 3)

@@ -45,6 +45,7 @@ namespace SharpGL.SceneComponent
 
         /// <summary>
         /// Gets color array.
+        /// <para>Color values range from 0 to 1.</para>
         /// </summary>
         public float[] Colors { get; protected set; }
 
