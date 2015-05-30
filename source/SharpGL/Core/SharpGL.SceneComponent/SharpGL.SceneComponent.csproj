@@ -66,6 +66,8 @@
       <DependentUpon>ScientificControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Control\ScientificControlHelper.cs" />
+    <Compile Include="Model\ConcreteModels\PointModel.cs" />
+    <Compile Include="Model\ConcreteModels\PointModelHelper.cs" />
     <Compile Include="Model\ModelContainer.cs" />
     <Compile Include="Model\BoundingBox.cs">
       <SubType>Code</SubType>
@@ -123,6 +125,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Utility\ArrayHelper.cs" />
+    <Compile Include="Utility\FloatHelper.cs" />
     <Compile Include="Utility\ManifestResourceLoader.cs" />
     <Compile Include="Utility\PrimitiveTypeHelper.cs" />
     <Compile Include="Utility\BeginModeHelper.cs" />

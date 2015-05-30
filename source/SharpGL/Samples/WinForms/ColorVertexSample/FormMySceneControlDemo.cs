@@ -44,7 +44,7 @@ namespace ColorVertexSample
             root.AddChild(this.modelContainer);
 
             {
-                var pointModel = ColorVertexSample.Model.PointModel.Create(100, 100, 100, 0, -5, 5);
+                var pointModel = PointModel.Create(100, 100, 100, 0, -5, 5);
                 ScientificModelElement element = new ScientificModelElement(pointModel, this.mySceneControl.Scene.CurrentCamera);
                 this.modelContainer.AddChild(element);
                 this.modelContainer.BoundingBox.Extend(pointModel.BoundingBox.MaxPosition);

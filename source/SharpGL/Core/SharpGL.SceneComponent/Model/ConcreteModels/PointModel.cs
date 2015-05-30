@@ -7,7 +7,7 @@ using SharpGL.SceneGraph;
 using SharpGL.SceneComponent;
 using SharpGL.SceneGraph.Cameras;
 
-namespace ColorVertexSample.Model
+namespace SharpGL.SceneComponent
 {
     /// <summary>
     /// Demo class showing model as points.

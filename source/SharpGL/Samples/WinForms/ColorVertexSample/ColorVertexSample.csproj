@@ -69,10 +69,6 @@
     <Compile Include="FormScientificVisual3DControl.Designer.cs">
       <DependentUpon>FormScientificVisual3DControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\PointModel.cs" />
-    <Compile Include="Model\PointModelHelper.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormMySceneControlDemo.resx">

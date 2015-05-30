@@ -382,7 +382,7 @@ namespace ModernOpenGLSample._3MySceneControl
 
         public override string ToString()
         {
-            string result = string.Format("{0}:{1}|belong to:{2}", Type, positions.PrintPositions(), Element);
+            string result = string.Format("{0}:{1}|belong to:{2}", Type, positions.PrintVectors(), Element);
             return result;
             //return base.ToString();
         }

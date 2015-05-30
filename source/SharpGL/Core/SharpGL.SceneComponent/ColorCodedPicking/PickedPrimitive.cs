@@ -41,8 +41,8 @@ namespace SharpGL.SceneComponent
             var colors = this.colors;
             if (colors == null) { colors = new float[0]; }
 
-            string strPositions = positions.PrintPositions();
-            string strColors = colors.PrintPositions();
+            string strPositions = positions.PrintVectors();
+            string strColors = colors.PrintVectors();
 
 #if DEBUG
             int stageVertexID = this.StageVertexID;

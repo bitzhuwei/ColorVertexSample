@@ -15,7 +15,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ColorVertexSample.Model;
 using SharpGL.SceneGraph.Assets;
 using SharpGL.SceneGraph.Quadrics;
 using SharpGL.SceneComponent;

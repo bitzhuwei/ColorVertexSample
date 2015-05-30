@@ -81,8 +81,6 @@
     </Compile>
     <Compile Include="ModelDemo.cs" />
     <Compile Include="ModelDemoHelper.cs" />
-    <Compile Include="Model\PointModel.cs" />
-    <Compile Include="Model\PointModelHelper.cs" />
     <Compile Include="FormOpenGLControl.cs">
       <SubType>Form</SubType>
     </Compile>
