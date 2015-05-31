@@ -395,6 +395,12 @@ namespace SharpGL.SceneComponent
             byte[] codedColor = new byte[4];
             this.OpenGL.ReadPixels(x, this.Height - y - 1, 1, 1,
                 OpenGL.GL_RGBA, OpenGL.GL_UNSIGNED_BYTE, codedColor);
+            if (codedColor[0] == byte.MaxValue && codedColor[1] == byte.MaxValue
+                && codedColor[2] == byte.MaxValue && codedColor[3] == byte.MaxValue)
+            {
+                // This is when (x, y) is on background and no primitive is picked.
+                return null;
+            }
 
             /* // This is how is vertexID coded into color in vertex shader.
              * 	int objectID = gl_VertexID;
