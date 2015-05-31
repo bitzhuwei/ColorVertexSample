@@ -26,9 +26,11 @@ namespace SharpGL.SceneComponent
         /// </summary>
         public IColorCodedPicking Element { get; set; }
 
-#if DEBUG
+        /// <summary>
+        /// The last vertex's id that constructs the picked primitive.
+        /// <para>This id is in scene's all <see cref="IColorCodedPicking"/>s' order.</para>
+        /// </summary>
         public int StageVertexID { get; set; }
-#endif
 
         /// <summary>
         /// Gets or sets colors of this primitive.
@@ -44,7 +46,6 @@ namespace SharpGL.SceneComponent
             string strPositions = positions.PrintVectors();
             string strColors = colors.PrintVectors();
 
-#if DEBUG
             int stageVertexID = this.StageVertexID;
             IColorCodedPicking picking = this.Element;
 
@@ -55,14 +56,6 @@ namespace SharpGL.SceneComponent
             string result = string.Format("{0}:{1}|{2}|ID:{3}/{4}|∈{5}",
                 GeometryType, strPositions, strColors, lastVertexID, stageVertexID, Element);
             return result;
-
-#else
-
-            string result = string.Format("{0}:{1}|{2}|∈:{3}",
-                Type, strPositions, strColors, Element);
-            return result;
-#endif
-
             //return base.ToString();
         }
 

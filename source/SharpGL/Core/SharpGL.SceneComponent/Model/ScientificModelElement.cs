@@ -262,16 +262,18 @@ namespace SharpGL.SceneComponent
 
             PickedPrimitive primitive = new PickedPrimitive();
 
+            // complete the primitive's content as a result.
             primitive.GeometryType = model.Mode.ToGeometryType();
-
-            int vertexCount = primitive.GeometryType.GetVertexCount();
-            if (vertexCount == -1) { vertexCount = model.VertexCount; }
-
-            float[] positions = new float[vertexCount * 3];
-            float[] colors = new float[vertexCount * 3];
-
-            unsafe
+            primitive.StageVertexID = stageVertexID;
+            primitive.Element = this;
+            // Fill primitive's positions and colors. This maybe changes much more than lines above in second dev.
             {
+                int vertexCount = primitive.GeometryType.GetVertexCount();
+                if (vertexCount == -1) { vertexCount = model.VertexCount; }
+
+                float[] positions = new float[vertexCount * 3];
+                float[] colors = new float[vertexCount * 3];
+
                 float[] modelPositions = model.Positions;
                 float[] modelColors = model.Colors;
                 for (int i = lastVertexID * 3 + 2, j = positions.Length - 1; j >= 0; i--, j--)
@@ -281,22 +283,10 @@ namespace SharpGL.SceneComponent
                     positions[j] = modelPositions[i];
                     colors[j] = modelColors[i];
                 }
-                //for (int i = lastVertexID, j = vertexCount - 1; j >= 0; i--, j--)
-                //{
-                //    if (i < 0)
-                //    { i += model.VertexCount; }
 
-                //    positions[j * 3] = modelPositions[i].X;
-                //    positions[j * 3 + 1] = modelPositions[i].Y;
-                //    positions[j * 3 + 2] = modelPositions[i].Z;
-                //    colors[j * 3] = modelColors[i].red;
-                //    colors[j * 3 + 1] = modelColors[i].green;
-                //    colors[j * 3 + 2] = modelColors[i].blue;
-                //}
+                primitive.positions = positions;
+                primitive.colors = colors;
             }
-           
-            primitive.positions = positions;
-            primitive.colors = colors;
 
             return primitive;
         }

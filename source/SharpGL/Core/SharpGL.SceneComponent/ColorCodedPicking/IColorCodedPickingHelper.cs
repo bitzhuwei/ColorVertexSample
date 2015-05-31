@@ -8,13 +8,13 @@ namespace SharpGL.SceneComponent
     /// <summary>
     /// This helps to get last vertex's id of picked primitive.
     /// </summary>
-    public static class IColorCodedPickkingHelper
+    public static class IColorCodedPickingHelper
     {
         const int invalid = -1;
 
         /// <summary>
-        /// Get last vertex's id of picked Primitive if it belongs to this <paramref name="picking"/> instance.
-        /// <para>Returns -1 if <paramref name="stageVertexID"/> is an illigal number or in some other element.</para>
+        /// Returns last vertex's id of picked primitive if the primitive represented by <paramref name="stageVertexID"/> belongs to this <paramref name="picking"/> instance.
+        /// <para>Returns -1 if <paramref name="stageVertexID"/> is an illigal number or the primitive is in some other element.</para>
         /// </summary>
         /// <param name="picking"></param>
         /// <param name="stageVertexID"></param>
