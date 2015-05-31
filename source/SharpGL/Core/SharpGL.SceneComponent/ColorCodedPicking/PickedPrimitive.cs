@@ -49,9 +49,9 @@ namespace SharpGL.SceneComponent
             int stageVertexID = this.StageVertexID;
             IColorCodedPicking picking = this.Element;
 
-            int lastVertexID = -1;
+            string lastVertexID = "?";
             if (picking != null)
-            { lastVertexID = picking.GetLastVertexIDOfPickedPrimitive(stageVertexID); }
+            { lastVertexID = string.Format("{0}", picking.GetLastVertexIDOfPickedPrimitive(stageVertexID)); }
 
             string result = string.Format("{0}:{1}|{2}|ID:{3}/{4}|∈{5}",
                 GeometryType, strPositions, strColors, lastVertexID, stageVertexID, Element);
