@@ -14,7 +14,7 @@ namespace SharpGL.SceneComponent
 
         /// <summary>
         /// Get last vertex's id of picked Primitive if it belongs to this <paramref name="picking"/> instance.
-        /// <para>Returns -1 if <paramref name="stageVertexID"/> is an illigal number or the <paramref name="stageVertexID"/> is in some other element.</para>
+        /// <para>Returns -1 if <paramref name="stageVertexID"/> is an illigal number or in some other element.</para>
         /// </summary>
         /// <param name="picking"></param>
         /// <param name="stageVertexID"></param>
