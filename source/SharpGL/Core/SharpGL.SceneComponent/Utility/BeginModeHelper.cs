@@ -7,46 +7,45 @@ namespace SharpGL.SceneComponent
 {
     public static class BeginModeHelper
     {
-
         /// <summary>
-        /// Convert <see cref="BeginMode"/> to <see cref="<PrimitiveType"/>.
+        /// Convert <see cref="BeginMode"/> to <see cref="PrimitiveType"/>.
         /// </summary>
         /// <param name="mode"></param>
         /// <returns></returns>
-        public static PrimitiveType ToPrimitiveType(SharpGL.Enumerations.BeginMode mode)
+        public static GeometryTypes ToGeometryType(this SharpGL.Enumerations.BeginMode mode)
         {
-            PrimitiveType result = PrimitiveType.Point;
+            GeometryTypes result = GeometryTypes.Point;
             switch (mode)
             {
                 case SharpGL.Enumerations.BeginMode.Points:
-                    result = PrimitiveType.Point;
+                    result = GeometryTypes.Point;
                     break;
                 case SharpGL.Enumerations.BeginMode.Lines:
-                    result = PrimitiveType.Line;
+                    result = GeometryTypes.Line;
                     break;
                 case SharpGL.Enumerations.BeginMode.LineLoop:
-                    result = PrimitiveType.Line;
+                    result = GeometryTypes.Line;
                     break;
                 case SharpGL.Enumerations.BeginMode.LineStrip:
-                    result = PrimitiveType.Line;
+                    result = GeometryTypes.Line;
                     break;
                 case SharpGL.Enumerations.BeginMode.Triangles:
-                    result = PrimitiveType.Triangle;
+                    result = GeometryTypes.Triangle;
                     break;
                 case SharpGL.Enumerations.BeginMode.TriangleString:
-                    result = PrimitiveType.Triangle;
+                    result = GeometryTypes.Triangle;
                     break;
                 case SharpGL.Enumerations.BeginMode.TriangleFan:
-                    result = PrimitiveType.Triangle;
+                    result = GeometryTypes.Triangle;
                     break;
                 case SharpGL.Enumerations.BeginMode.Quads:
-                    result = PrimitiveType.Quad;
+                    result = GeometryTypes.Quad;
                     break;
                 case SharpGL.Enumerations.BeginMode.QuadStrip:
-                    result = PrimitiveType.Quad;
+                    result = GeometryTypes.Quad;
                     break;
                 case SharpGL.Enumerations.BeginMode.Polygon:
-                    result = PrimitiveType.Polygon;
+                    result = GeometryTypes.Polygon;
                     break;
                 default:
                     throw new NotImplementedException();
@@ -61,7 +60,7 @@ namespace SharpGL.SceneComponent
         /// <param name="mode"></param>
         /// <param name="vertexCount"></param>
         /// <returns></returns>
-        public static int GetPrimitiveCount(SharpGL.Enumerations.BeginMode mode, int vertexCount)
+        public static int GetPrimitiveCount(this SharpGL.Enumerations.BeginMode mode, int vertexCount)
         {
             if (vertexCount <= 0) { return 0; }
 

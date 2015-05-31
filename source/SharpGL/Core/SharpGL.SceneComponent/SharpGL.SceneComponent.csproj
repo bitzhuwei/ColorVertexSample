@@ -56,7 +56,7 @@
     <Compile Include="ColorCodedPicking\IColorCodedPickkingHelper.cs" />
     <Compile Include="ColorCodedPicking\IPickedPrimitive.cs" />
     <Compile Include="ColorCodedPicking\PickedPrimitive.cs" />
-    <Compile Include="ColorCodedPicking\PrimitiveType.cs" />
+    <Compile Include="ColorCodedPicking\GeometryTypes.cs" />
     <Compile Include="Control\EViewType.cs" />
     <Compile Include="Camera\CameraHelper.cs" />
     <Compile Include="Control\ScientificControl.cs">
@@ -125,7 +125,7 @@
     <Compile Include="Utility\ArrayHelper.cs" />
     <Compile Include="Utility\FloatHelper.cs" />
     <Compile Include="Utility\ManifestResourceLoader.cs" />
-    <Compile Include="Utility\PrimitiveTypeHelper.cs" />
+    <Compile Include="Utility\GeometryTypesHelper.cs" />
     <Compile Include="Utility\BeginModeHelper.cs" />
     <Content Include="MySharpGL\read-me.txt" />
     <Compile Include="SimpleUI\Axis\SimpleUIAxis.cs" />

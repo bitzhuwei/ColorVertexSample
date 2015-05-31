@@ -334,9 +334,9 @@ namespace ModernOpenGLSample._3MySceneControl
 
             PickedPrimitive picked = new PickedPrimitive();
 
-            picked.Type = BeginModeHelper.ToPrimitiveType(this.mode);
+            picked.GeometryType = this.mode.ToGeometryType();
 
-            int vertexCount = PrimitiveTypeHelper.GetVertexCount(picked.Type);
+            int vertexCount = picked.GeometryType.GetVertexCount();
             if (vertexCount == -1) { vertexCount = this.vertices.Length / 3; }
 
             float[] positions = new float[vertexCount * 3];

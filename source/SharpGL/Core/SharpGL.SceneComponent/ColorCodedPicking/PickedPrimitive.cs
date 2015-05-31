@@ -12,9 +12,9 @@ namespace SharpGL.SceneComponent
     public class PickedPrimitive : IPickedPrimitive
     {
         /// <summary>
-        /// Gets or sets primitive's type.
+        /// Gets or sets primitive's geometry type.
         /// </summary>
-        public PrimitiveType Type { get; set; }
+        public GeometryTypes GeometryType { get; set; }
 
         /// <summary>
         /// Gets or sets positions of this primitive.
@@ -53,7 +53,7 @@ namespace SharpGL.SceneComponent
             { lastVertexID = picking.GetLastVertexIDOfPickedPrimitive(stageVertexID); }
 
             string result = string.Format("{0}:{1}|{2}|ID:{3}/{4}|∈{5}",
-                Type, strPositions, strColors, lastVertexID, stageVertexID, Element);
+                GeometryType, strPositions, strColors, lastVertexID, stageVertexID, Element);
             return result;
 
 #else

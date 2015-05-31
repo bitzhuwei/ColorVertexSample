@@ -12,9 +12,9 @@ namespace SharpGL.SceneComponent
     public interface IPickedPrimitive
     {
         /// <summary>
-        /// Gets or sets primitive's type.
+        /// Gets or sets primitive's geometry type.
         /// </summary>
-        PrimitiveType Type { get; set; }
+        GeometryTypes GeometryType { get; set; }
 
         /// <summary>
         /// Gets or sets positions of this primitive's vertices.

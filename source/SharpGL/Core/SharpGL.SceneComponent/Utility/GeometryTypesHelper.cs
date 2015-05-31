@@ -5,33 +5,33 @@ using System.Text;
 
 namespace SharpGL.SceneComponent
 {
-    public static class PrimitiveTypeHelper
+    public static class GeometryTypesHelper
     {
         /// <summary>
         /// Get vertex count of specified primitive's type.
-        /// <para>returns -1 if type if <see cref="PrimitiveType.Polygon"/>.</para>
+        /// <para>returns -1 if type if <see cref="Geometry.Polygon"/>.</para>
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static int GetVertexCount(PrimitiveType type)
+        public static int GetVertexCount(this GeometryTypes type)
         {
             int result = -1;
 
             switch (type)
             {
-                case PrimitiveType.Point:
+                case GeometryTypes.Point:
                     result = 1;
                     break;
-                case PrimitiveType.Line:
+                case GeometryTypes.Line:
                     result = 2;
                     break;
-                case PrimitiveType.Triangle:
+                case GeometryTypes.Triangle:
                     result = 3;
                     break;
-                case PrimitiveType.Quad:
+                case GeometryTypes.Quad:
                     result = 4;
                     break;
-                case PrimitiveType.Polygon:
+                case GeometryTypes.Polygon:
                     result = -1;
                     break;
                 default:

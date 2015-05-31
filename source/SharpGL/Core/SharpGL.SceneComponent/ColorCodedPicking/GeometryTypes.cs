@@ -5,7 +5,10 @@ using System.Text;
 
 namespace SharpGL.SceneComponent
 {
-    public enum PrimitiveType
+    /// <summary>
+    /// Enumeration for geometry types.
+    /// </summary>
+    public enum GeometryTypes
     { 
         /// <summary>
         /// a point.

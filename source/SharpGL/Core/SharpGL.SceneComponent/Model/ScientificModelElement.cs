@@ -262,9 +262,9 @@ namespace SharpGL.SceneComponent
 
             PickedPrimitive primitive = new PickedPrimitive();
 
-            primitive.Type = BeginModeHelper.ToPrimitiveType(model.Mode);
+            primitive.GeometryType = model.Mode.ToGeometryType();
 
-            int vertexCount = PrimitiveTypeHelper.GetVertexCount(primitive.Type);
+            int vertexCount = primitive.GeometryType.GetVertexCount();
             if (vertexCount == -1) { vertexCount = model.VertexCount; }
 
             float[] positions = new float[vertexCount * 3];
