@@ -46,17 +46,20 @@ namespace DepthTestWithOrtho
             //    this.scientificControl.AddModelElement(model);
             //}
             {
-                var model = PointModel.Create(verticesCount, 1, 1, 1, -3, -1);
+                var model = new ScientificModel(verticesCount, SharpGL.Enumerations.BeginMode.Points);
+                model.Build(new Vertex(-3, -3, -3), new Vertex(-1, -1, -1));
                 var element = new ScientificModelElement(model, this.scientificControl.Scene.CurrentCamera);
                 this.scientificControl.AddModelElement(element);
             }
             {
-                var model = PointModel.Create(verticesCount, 1, 1, 1, -1, 1);
+                var model = new ScientificModel(verticesCount, SharpGL.Enumerations.BeginMode.Points);
+                model.Build(new Vertex(-1, -1, -1), new Vertex(1, 1, 1));
                 var element = new ScientificModelElement(model, this.scientificControl.Scene.CurrentCamera);
                 this.scientificControl.AddModelElement(element);
             }
             {
-                var model = PointModel.Create(verticesCount, 1, 1, 1, 1, 3);
+                var model = new ScientificModel(verticesCount, SharpGL.Enumerations.BeginMode.Points);
+                model.Build(new Vertex(1, 1, 1), new Vertex(3, 3, 3));
                 var element = new ScientificModelElement(model, this.scientificControl.Scene.CurrentCamera);
                 this.scientificControl.AddModelElement(element);
             }

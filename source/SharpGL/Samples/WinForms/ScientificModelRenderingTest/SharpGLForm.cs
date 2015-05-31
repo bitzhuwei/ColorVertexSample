@@ -29,15 +29,15 @@ namespace ScientificModelRenderingTest
             InitializeComponent();
 
             int radius = 1;
-            ScientificModelHelper.Build(legacyModel,
+            legacyModel.Build(
                new SharpGL.SceneGraph.Vertex(-radius, -0, -radius),
                new SharpGL.SceneGraph.Vertex(radius, 0, radius));
 
-            ScientificModelHelper.Build(vertexArrayModel,
-               new SharpGL.SceneGraph.Vertex(-radius, -radius, -radius),
-               new SharpGL.SceneGraph.Vertex(radius, radius, radius));
+            vertexArrayModel.Build(
+                new SharpGL.SceneGraph.Vertex(-radius, -radius, -radius),
+                new SharpGL.SceneGraph.Vertex(radius, radius, radius));
 
-            ScientificModelHelper.Build(VBOModel,
+            VBOModel.Build(
                 new SharpGL.SceneGraph.Vertex(-radius, -radius, -radius),
                 new SharpGL.SceneGraph.Vertex(radius, radius, radius));
             ScientificCamera camera = new ScientificCamera(ECameraType.Perspecitive);
@@ -75,7 +75,7 @@ namespace ScientificModelRenderingTest
             DrawPyramid(gl);
 
             gl.LineWidth(3);// LINES
-            this.legacyModel.RenderLegacyOpoenGL(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
+            this.legacyModel.RenderLegacyOpenGL(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
 
             gl.PointSize(20);// POINTS
             this.vertexArrayModel.RenderVertexArray(gl, SharpGL.SceneGraph.Core.RenderMode.Render);

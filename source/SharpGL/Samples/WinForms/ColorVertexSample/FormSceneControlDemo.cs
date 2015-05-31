@@ -45,12 +45,12 @@ namespace ColorVertexSample
             root.AddChild(this.modelContainer);
 
             {
-                var pointModel = PointModel.Create(100, 100, 100, 0, -5, 5);
+                var model = new ScientificModel(100 * 100 * 100, BeginMode.Points);
                 ScientificModelElement element = new ScientificModelElement(
-                    pointModel,this.sceneControl.Scene.CurrentCamera as ScientificCamera);
+                    model, this.sceneControl.Scene.CurrentCamera as ScientificCamera);
                 this.modelContainer.AddChild(element);
-                this.modelContainer.BoundingBox.Extend(pointModel.BoundingBox.MaxPosition);
-                this.modelContainer.BoundingBox.Extend(pointModel.BoundingBox.MinPosition);
+                this.modelContainer.BoundingBox.Extend(model.BoundingBox.MaxPosition);
+                this.modelContainer.BoundingBox.Extend(model.BoundingBox.MinPosition);
             }
 
             var camera = new ScientificCamera()

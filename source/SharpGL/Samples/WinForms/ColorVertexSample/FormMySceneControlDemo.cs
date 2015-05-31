@@ -44,12 +44,13 @@ namespace ColorVertexSample
             root.AddChild(this.modelContainer);
 
             {
-                var pointModel = PointModel.Create(100, 100, 100, 0, -5, 5);
+                var model = new ScientificModel(100 * 100 * 100, BeginMode.Points);
+                model.Build(new Vertex(-5, -5, -5), new Vertex(5, 5, 5));
                 ScientificModelElement element = new ScientificModelElement(
-                    pointModel, this.mySceneControl.Scene.CurrentCamera);
+                    model, this.mySceneControl.Scene.CurrentCamera);
                 this.modelContainer.AddChild(element);
-                this.modelContainer.BoundingBox.Extend(pointModel.BoundingBox.MaxPosition);
-                this.modelContainer.BoundingBox.Extend(pointModel.BoundingBox.MinPosition);
+                this.modelContainer.BoundingBox.Extend(model.BoundingBox.MaxPosition);
+                this.modelContainer.BoundingBox.Extend(model.BoundingBox.MinPosition);
             }
 
             // Diff: MySceneControl don't need this.

@@ -66,7 +66,12 @@ namespace ColorVertexSample
                 if (minValue >= maxValue)
                     throw new ArgumentException("min value equal or equal to maxValue");
 
-                PointModel model = PointModel.Create(nx, ny, nz, radius, minValue, maxValue);
+                int vertexCount = nx * ny * nz;
+                Vertex min = new Vertex(minValue, minValue, minValue);
+                Vertex max = new Vertex(maxValue, maxValue, maxValue);
+
+                ScientificModel model = new ScientificModel(vertexCount, BeginMode.Points);
+                model.Build(min, max);
 
                 //this.sceneControl.AddScientificModel(model);// This is replaced by codes below.
                 ScientificModelElement element = new ScientificModelElement(

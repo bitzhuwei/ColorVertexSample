@@ -66,13 +66,13 @@
       <DependentUpon>ScientificControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Control\ScientificControlHelper.cs" />
-    <Compile Include="Model\ConcreteModels\PointModel.cs" />
-    <Compile Include="Model\ConcreteModels\PointModelHelper.cs" />
     <Compile Include="Model\ModelContainer.cs" />
     <Compile Include="Model\BoundingBox.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Model\IBoundingBox.cs" />
+    <Compile Include="Model\ModelHelper\ScientificModelRendererHelper.cs" />
+    <Compile Include="Model\ModelHelper\ScientificModelBuildHelper.cs" />
     <Compile Include="Model\ScientificModelElement.cs">
       <SubType>Code</SubType>
     </Compile>
