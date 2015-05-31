@@ -150,13 +150,13 @@ namespace SharpGL.SceneComponent
                     IColorCodedPicking picking = sceneElement as IColorCodedPicking;
                     if (picking != null)
                     {
-                        picking.PickingBaseID = info.RenderedPrimitiveCount;
+                        picking.PickingBaseID = info.RenderedVertexCount;
 
                         //  If the element can be rendered, render it.
                         IRenderable renderable = sceneElement as IRenderable;
                         if (renderable != null) renderable.Render(gl, renderMode);
 
-                        info.RenderedPrimitiveCount += picking.PrimitiveCount;
+                        info.RenderedVertexCount += picking.VertexCount;
                     }
                 }
                 else

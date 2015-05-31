@@ -14,19 +14,19 @@ namespace SharpGL.SceneComponent
         /// <summary>
         /// Gets or sets how many vertices have been rendered during hit test.
         /// </summary>
-        public virtual int RenderedPrimitiveCount { get; set; }
+        public virtual int RenderedVertexCount { get; set; }
 
         /// <summary>
         /// Reset this instance's fields' values to initial state so that it can be used again during rendering.
         /// </summary>
         public virtual void Reset()
         {
-            RenderedPrimitiveCount = 0;
+            RenderedVertexCount = 0;
         }
 
         public override string ToString()
         {
-            return string.Format("rendered {0} primitives during hit test(picking).", RenderedPrimitiveCount);
+            return string.Format("rendered {0} primitives during hit test(picking).", RenderedVertexCount);
             //return base.ToString();
         }
     }

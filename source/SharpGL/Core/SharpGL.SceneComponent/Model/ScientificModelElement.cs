@@ -245,9 +245,9 @@ namespace SharpGL.SceneComponent
 
         int IColorCodedPicking.PickingBaseID { get; set; }
 
-        int IColorCodedPicking.PrimitiveCount
+        int IColorCodedPicking.VertexCount
         {
-            get { return BeginModeHelper.GetPrimitiveCount(this.Model.Mode, this.Model.VertexCount); }
+            get { return this.Model.VertexCount; }
         }
 
         IPickedPrimitive IColorCodedPicking.Pick(int stageVertexID)

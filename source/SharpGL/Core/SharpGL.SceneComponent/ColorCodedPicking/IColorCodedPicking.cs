@@ -17,9 +17,9 @@ namespace SharpGL.SceneComponent
         int PickingBaseID { get; set; }
 
         /// <summary>
-        /// Gets Primitive's count of this element.
+        /// Gets vertex's count in this element's model's VBO representing positions.
         /// </summary>
-        int PrimitiveCount { get; }
+        int VertexCount { get; }
 
         /// <summary>
         /// Get the primitive according to vertex's id.
