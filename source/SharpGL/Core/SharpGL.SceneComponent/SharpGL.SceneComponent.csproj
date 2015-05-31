@@ -78,7 +78,6 @@
     </Compile>
     <Compile Include="ColorCodedPicking\ColorCodedPickingHelper.cs" />
     <Compile Include="ColorCodedPicking\IColorCodedPicking.cs" />
-    <Compile Include="Model\ScientificModelHelper.cs" />
     <Compile Include="MySharpGL\LinearArcBallTransform.cs" />
     <Compile Include="MySharpGL\ArcBallTransform.cs" />
     <Compile Include="MySharpGL\ArcBallTransformEffect.cs" />
