@@ -33,7 +33,7 @@ namespace SharpGL.SceneComponent
             if (picking != null)
             { lastVertexID = string.Format("{0}", picking.GetLastVertexIDOfPickedPrimitive(stageVertexID)); }
 
-            string result = string.Format("{0}:{1}|{2}|ID:{3}/{4}|∈{5}",
+            string result = string.Format("{0}: P: {1} C: {2} ID:{3}/{4} ∈{5}",
                 GeometryType, strPositions, strColors, lastVertexID, stageVertexID, Element);
 
             return result;

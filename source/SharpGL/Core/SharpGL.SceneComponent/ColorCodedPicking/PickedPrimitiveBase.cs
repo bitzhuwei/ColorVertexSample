@@ -36,11 +36,8 @@ namespace SharpGL.SceneComponent
         {
             var positions = this.positions;
             if (positions == null) { positions = new float[0]; }
-            //var colors = this.colors;
-            //if (colors == null) { colors = new float[0]; }
 
             string strPositions = positions.PrintVectors();
-            //string strColors = colors.PrintVectors();
 
             int stageVertexID = this.StageVertexID;
             IColorCodedPicking picking = this.Element;
@@ -49,9 +46,7 @@ namespace SharpGL.SceneComponent
             if (picking != null)
             { lastVertexID = string.Format("{0}", picking.GetLastVertexIDOfPickedPrimitive(stageVertexID)); }
 
-            //string result = string.Format("{0}:{1}|{2}|ID:{3}/{4}|∈{5}",
-            //    GeometryType, strPositions, strColors, lastVertexID, stageVertexID, Element);
-            string result = string.Format("{0}:{1}|ID:{2}/{3}|∈{4}",
+            string result = string.Format("{0}: P: {1} ID:{2}/{3} ∈{4}",
                 GeometryType, strPositions, lastVertexID, stageVertexID, Element);
             return result;
             //return base.ToString();
