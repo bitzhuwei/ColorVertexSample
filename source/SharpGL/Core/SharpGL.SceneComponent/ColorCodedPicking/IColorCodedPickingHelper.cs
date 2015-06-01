@@ -54,15 +54,20 @@ namespace SharpGL.SceneComponent
             this IColorCodedPicking element, Enumerations.BeginMode mode, int stageVertexID)
             where T : PickedPrimitiveBase, new()
         {
-            if (element == null) { return null; }
-            int lastVertexID = element.GetLastVertexIDOfPickedPrimitive(stageVertexID);
-            if (lastVertexID < 0) { return null; }
+            T primitive = null;
 
-            T primitive = new T();
+            if (element != null)
+            {
+                int lastVertexID = element.GetLastVertexIDOfPickedPrimitive(stageVertexID);
+                if (lastVertexID >= 0)
+                {
+                    primitive = new T();
 
-            primitive.GeometryType = mode.ToGeometryType();
-            primitive.StageVertexID = stageVertexID;
-            primitive.Element = element;
+                    primitive.GeometryType = mode.ToGeometryType();
+                    primitive.StageVertexID = stageVertexID;
+                    primitive.Element = element;
+                }
+            }
 
             return primitive;
         }
@@ -95,16 +100,17 @@ namespace SharpGL.SceneComponent
                 float[] primitivPositions = new float[vertexCount * 3];
 
                 int lastVertexID = element.GetLastVertexIDOfPickedPrimitive(stageVertexID);
-                if (lastVertexID < 0) { lastVertexID = positions.Length / 3; }
-
-                for (int i = lastVertexID * 3 + 2, j = primitivPositions.Length - 1; j >= 0; i--, j--)
+                if (lastVertexID >= 0)
                 {
-                    if (i < 0)
-                    { i += positions.Length; }
-                    primitivPositions[j] = positions[i];
-                }
+                    for (int i = lastVertexID * 3 + 2, j = primitivPositions.Length - 1; j >= 0; i--, j--)
+                    {
+                        if (i < 0)
+                        { i += positions.Length; }
+                        primitivPositions[j] = positions[i];
+                    }
 
-                primitive.positions = primitivPositions;
+                    primitive.positions = primitivPositions;
+                }
             }
 
             return primitive;

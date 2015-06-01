@@ -270,13 +270,14 @@ namespace SharpGL.SceneComponent
                 float[] modelColors = model.Colors;
 
                 int lastVertexID = element.GetLastVertexIDOfPickedPrimitive(stageVertexID);
-                if (lastVertexID < 0) { return null; }
-
-                for (int i = lastVertexID * 3 + 2, j = colors.Length - 1; j >= 0; i--, j--)
+                if (lastVertexID >= 0) 
                 {
-                    if (i < 0)
-                    { i += colors.Length; }
-                    colors[j] = modelColors[i];
+                    for (int i = lastVertexID * 3 + 2, j = colors.Length - 1; j >= 0; i--, j--)
+                    {
+                        if (i < 0)
+                        { i += colors.Length; }
+                        colors[j] = modelColors[i];
+                    }
                 }
 
                 primitive.colors = colors;
