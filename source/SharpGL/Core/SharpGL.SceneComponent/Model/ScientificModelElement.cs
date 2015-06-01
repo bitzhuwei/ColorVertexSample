@@ -281,7 +281,6 @@ namespace SharpGL.SceneComponent
                 primitive.colors = colors;
             }
 
-
             return primitive;
         }
 
