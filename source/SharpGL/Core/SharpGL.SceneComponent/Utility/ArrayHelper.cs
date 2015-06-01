@@ -50,7 +50,7 @@ namespace System
                 if (counter % dimension == 0)
                 { builder.Append("; "); }
                 else
-                { builder.Append(","); }
+                { builder.Append(", "); }
             }
 
             return builder.ToString();
