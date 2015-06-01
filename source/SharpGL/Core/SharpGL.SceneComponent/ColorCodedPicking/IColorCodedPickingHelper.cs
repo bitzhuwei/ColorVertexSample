@@ -74,8 +74,8 @@ namespace SharpGL.SceneComponent
 
         /// <summary>
         /// Get the primitive of <paramref name="element"/> according to vertex's id.
-        /// <para>Returns <code>null</code> if <paramref name="element"/> is null or <paramref name="stageVertexID"/> is not in the range of this <paramref name="element"/>.</para>
-        /// <para>Note: the <paramref name="stageVertexID"/> Refers to the last vertex that constructs the primitive. And it's unique in scene's all elements.</para>
+        /// <para>Returns <code>null</code> if <paramref name="element"/> is null or <paramref name="stageVertexID"/> does not belong to any of this <paramref name="element"/>'s vertices.</para>
+        /// <para>Note: the <paramref name="stageVertexID"/> refers to the last vertex that constructs the primitive. And it's unique in scene's all elements.</para>
         /// </summary>
         /// <typeparam name="T">Subclass of <see cref="PickedPrimitiveBase"/></typeparam>
         /// <param name="element">the scene's element that contains the primitive.</param>
