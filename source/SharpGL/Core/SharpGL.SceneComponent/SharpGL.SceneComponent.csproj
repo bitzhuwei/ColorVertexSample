@@ -55,7 +55,8 @@
     </Compile>
     <Compile Include="ColorCodedPicking\IColorCodedPickingHelper.cs" />
     <Compile Include="ColorCodedPicking\IPickedPrimitive.cs" />
-    <Compile Include="ColorCodedPicking\PickedPrimitive.cs" />
+    <Compile Include="ColorCodedPicking\PickedPrimitiveBase.cs" />
+    <Compile Include="ColorCodedPicking\PickedPrimitiveColored.cs" />
     <Compile Include="ColorCodedPicking\GeometryTypes.cs" />
     <Compile Include="Control\EViewType.cs" />
     <Compile Include="Camera\CameraHelper.cs" />
@@ -76,7 +77,6 @@
     <Compile Include="Model\ScientificModelElement.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ColorCodedPicking\ColorCodedPickingHelper.cs" />
     <Compile Include="ColorCodedPicking\IColorCodedPicking.cs" />
     <Compile Include="MySharpGL\LinearArcBallTransform.cs" />
     <Compile Include="MySharpGL\ArcBallTransform.cs" />

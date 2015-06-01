@@ -252,39 +252,33 @@ namespace SharpGL.SceneComponent
 
         IPickedPrimitive IColorCodedPicking.Pick(int stageVertexID)
         {
-            ScientificModel model = this.Model;
-            if (model == null) { return null; }
+            IColorCodedPicking element = this as IColorCodedPicking;
+            PickedPrimitiveColored primitive = element.TryPick<PickedPrimitiveColored>(
+                this.Model.Mode, stageVertexID, this.Model.Positions);
 
-            IColorCodedPicking picking = this;
+            if (primitive == null) { return null; }
 
-            int lastVertexID = picking.GetLastVertexIDOfPickedPrimitive(stageVertexID);
-            if (lastVertexID < 0) { return null; }
-
-            PickedPrimitive primitive = new PickedPrimitive();
-
-            // complete the primitive's content as a result.
-            primitive.GeometryType = model.Mode.ToGeometryType();
-            primitive.StageVertexID = stageVertexID;
-            primitive.Element = this;
             // Fill primitive's positions and colors. This maybe changes much more than lines above in second dev.
             {
+                ScientificModel model = this.Model;
+
                 int vertexCount = primitive.GeometryType.GetVertexCount();
                 if (vertexCount == -1) { vertexCount = model.VertexCount; }
 
-                float[] positions = new float[vertexCount * 3];
                 float[] colors = new float[vertexCount * 3];
 
-                float[] modelPositions = model.Positions;
                 float[] modelColors = model.Colors;
-                for (int i = lastVertexID * 3 + 2, j = positions.Length - 1; j >= 0; i--, j--)
+
+                int lastVertexID = element.GetLastVertexIDOfPickedPrimitive(stageVertexID);
+                if (lastVertexID < 0) { return null; }
+
+                for (int i = lastVertexID * 3 + 2, j = colors.Length - 1; j >= 0; i--, j--)
                 {
                     if (i < 0)
-                    { i += modelPositions.Length; }
-                    positions[j] = modelPositions[i];
+                    { i += colors.Length; }
                     colors[j] = modelColors[i];
                 }
 
-                primitive.positions = positions;
                 primitive.colors = colors;
             }
 

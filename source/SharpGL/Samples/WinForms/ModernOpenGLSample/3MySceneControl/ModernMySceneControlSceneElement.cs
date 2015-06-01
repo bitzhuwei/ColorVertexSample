@@ -106,7 +106,7 @@ namespace ModernOpenGLSample._3MySceneControl
             CreateVertices(gl);
         }
 
-        float[] vertices;//= new float[18];
+        float[] positions;//= new float[18];
         float[] colors;//= new float[18]; // Colors for our vertices  
 
         //private int pickingBaseID;
@@ -119,7 +119,7 @@ namespace ModernOpenGLSample._3MySceneControl
         private void CreateVertices(OpenGL gl)
         {
             //GeneratePoints(out vertices, out  colors);
-            GenerateModel(out vertices, out colors);
+            GenerateModel(out positions, out colors);
 
             //  Create the vertex array object.
             vertexBufferArray = new VertexBufferArray();
@@ -130,7 +130,7 @@ namespace ModernOpenGLSample._3MySceneControl
             var vertexDataBuffer = new VertexBuffer();
             vertexDataBuffer.Create(gl);
             vertexDataBuffer.Bind(gl);
-            vertexDataBuffer.SetData(gl, 0, vertices, false, 3);
+            vertexDataBuffer.SetData(gl, 0, positions, false, 3);
 
             //  Now do the same for the colour data.
             var colourDataBuffer = new VertexBuffer();
@@ -259,7 +259,7 @@ namespace ModernOpenGLSample._3MySceneControl
             vertexBufferArray.Bind(gl);
 
             //  Draw the square.
-            gl.DrawArrays((uint)this.mode, 0, vertices.Length / 3);
+            gl.DrawArrays((uint)this.mode, 0, positions.Length / 3);
 
             //  Unbind our vertex array and shader.
             vertexBufferArray.Unbind(gl);
@@ -322,34 +322,41 @@ namespace ModernOpenGLSample._3MySceneControl
 
         int IColorCodedPicking.VertexCount
         {
-            get { return this.vertices.Length / 3; }
+            get { return this.positions.Length / 3; }
         }
 
         IPickedPrimitive IColorCodedPicking.Pick(int stageVertexID)
         {
-            IColorCodedPicking pickElement = this;
+            IColorCodedPicking element = this as IColorCodedPicking;
+            PickedPrimitiveColored primitive = element.TryPick<PickedPrimitiveColored>(
+                this.mode, stageVertexID, this.positions);
 
-            int lastVertexID = pickElement.GetLastVertexIDOfPickedPrimitive(stageVertexID);
-            if (lastVertexID < 0) { return null; }
+            if (primitive == null) { return null; }
 
-            PickedPrimitive picked = new PickedPrimitive();
-
-            picked.GeometryType = this.mode.ToGeometryType();
-
-            int vertexCount = picked.GeometryType.GetVertexCount();
-            if (vertexCount == -1) { vertexCount = this.vertices.Length / 3; }
-
-            float[] positions = new float[vertexCount * 3];
-            for (int i = lastVertexID * 3 + 2, j = positions.Length - 1; j >= 0; i--, j--)
+            // Fill primitive's positions and colors. This maybe changes much more than lines above in second dev.
             {
-                if (i < 0)
-                { i += this.vertices.Length; }
-                positions[j] = this.vertices[i];
+                float[] modelColors = this.colors;
+
+                int vertexCount = primitive.GeometryType.GetVertexCount();
+                if (vertexCount == -1) { vertexCount = modelColors.Length / 3; }
+
+                float[] colors = new float[vertexCount * 3];
+
+
+                int lastVertexID = element.GetLastVertexIDOfPickedPrimitive(stageVertexID);
+                if (lastVertexID < 0) { return null; }
+
+                for (int i = lastVertexID * 3 + 2, j = colors.Length - 1; j >= 0; i--, j--)
+                {
+                    if (i < 0)
+                    { i += modelColors.Length; }
+                    colors[j] = modelColors[i];
+                }
+
+                primitive.colors = colors;
             }
 
-            picked.positions = positions;
-
-            return picked;
+            return primitive;
         }
 
         #endregion
