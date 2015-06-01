@@ -259,6 +259,8 @@ namespace SharpGL.SceneComponent
             if (primitive == null) { return null; }
 
             // Fill primitive's positions and colors. This maybe changes much more than lines above in second dev.
+            int lastVertexID = element.GetLastVertexIDOfPickedPrimitive(stageVertexID);
+            if (lastVertexID >= 0)
             {
                 ScientificModel model = this.Model;
 
@@ -269,19 +271,16 @@ namespace SharpGL.SceneComponent
 
                 float[] modelColors = model.Colors;
 
-                int lastVertexID = element.GetLastVertexIDOfPickedPrimitive(stageVertexID);
-                if (lastVertexID >= 0) 
+                for (int i = lastVertexID * 3 + 2, j = colors.Length - 1; j >= 0; i--, j--)
                 {
-                    for (int i = lastVertexID * 3 + 2, j = colors.Length - 1; j >= 0; i--, j--)
-                    {
-                        if (i < 0)
-                        { i += colors.Length; }
-                        colors[j] = modelColors[i];
-                    }
+                    if (i < 0)
+                    { i += colors.Length; }
+                    colors[j] = modelColors[i];
                 }
 
                 primitive.colors = colors;
             }
+
 
             return primitive;
         }

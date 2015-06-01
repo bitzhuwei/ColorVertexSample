@@ -94,14 +94,12 @@ namespace SharpGL.SceneComponent
             // Fill primitive's positions and colors. This maybe changes much more than lines above in second dev.
             if (primitive != null)
             {
-                int vertexCount = primitive.GeometryType.GetVertexCount();
-                if (vertexCount == -1) { vertexCount = positions.Length / 3; }
-
-                float[] primitivPositions = new float[vertexCount * 3];
-
                 int lastVertexID = element.GetLastVertexIDOfPickedPrimitive(stageVertexID);
                 if (lastVertexID >= 0)
                 {
+                    int vertexCount = primitive.GeometryType.GetVertexCount();
+                    if (vertexCount == -1) { vertexCount = positions.Length / 3; }
+                    float[] primitivPositions = new float[vertexCount * 3];
                     for (int i = lastVertexID * 3 + 2, j = primitivPositions.Length - 1; j >= 0; i--, j--)
                     {
                         if (i < 0)
