@@ -34,7 +34,7 @@ namespace ColorVertexSample
 
         void Application_Idle(object sender, EventArgs e)
         {
-            IPickedPrimitive picked = this.scientificVisual3DControl.PickedPrimitive;
+            IPickedGeometry picked = this.scientificVisual3DControl.PickedPrimitive;
             this.lblPickedPrimitive.Text = string.Format("Picked:{0}", picked);
         }
 

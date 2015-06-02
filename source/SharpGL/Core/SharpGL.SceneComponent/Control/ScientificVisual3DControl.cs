@@ -379,7 +379,7 @@ namespace SharpGL.SceneComponent
             ManualRender(this);
         }
 
-        public IPickedPrimitive PickedPrimitive { get; set; }
+        public IPickedGeometry PickedPrimitive { get; set; }
 
         /// <summary>
         /// Get picked primitive at specified screen location.
@@ -387,7 +387,7 @@ namespace SharpGL.SceneComponent
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        private IPickedPrimitive Pick(int x, int y)
+        private IPickedGeometry Pick(int x, int y)
         {
             // render the scene for color-coded picking.
             this.Scene.Draw(RenderMode.HitTest);
@@ -421,7 +421,7 @@ namespace SharpGL.SceneComponent
             var stageVertexID = shiftedR + shiftedG + shiftedB + shiftedA;
 
             // get picked primitive.
-            IPickedPrimitive picked = null;
+            IPickedGeometry picked = null;
             picked = this.Scene.Pick((int)stageVertexID);
 
             return picked;

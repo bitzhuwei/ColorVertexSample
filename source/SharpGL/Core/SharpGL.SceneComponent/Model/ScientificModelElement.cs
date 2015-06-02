@@ -250,10 +250,10 @@ namespace SharpGL.SceneComponent
             return this.Model.VertexCount;
         }
 
-        IPickedPrimitive IColorCodedPicking.Pick(int stageVertexID)
+        IPickedGeometry IColorCodedPicking.Pick(int stageVertexID)
         {
             IColorCodedPicking element = this as IColorCodedPicking;
-            PickedPrimitiveColored primitive = element.TryPick<PickedPrimitiveColored>(
+            PickedGeometryColored primitive = element.TryPick<PickedGeometryColored>(
                 this.Model.Mode, stageVertexID, this.Model.Positions);
 
             if (primitive == null) { return null; }

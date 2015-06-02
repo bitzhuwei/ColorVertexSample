@@ -211,11 +211,11 @@ namespace SharpGL.SceneComponent
         /// </summary>
         /// <param name="stageVertexID">The last vertex that constructs the primitive.</param>
         /// <returns></returns>
-        public IPickedPrimitive Pick(int stageVertexID)
+        public IPickedGeometry Pick(int stageVertexID)
         {
             if (stageVertexID < 0) { return null; }
 
-            IPickedPrimitive picked = null;
+            IPickedGeometry picked = null;
 
             SceneElement element = this.SceneContainer;
             picked = Pick(element, stageVertexID);
@@ -223,9 +223,9 @@ namespace SharpGL.SceneComponent
             return picked;
         }
 
-        private IPickedPrimitive Pick(SceneElement element, int stageVertexID)
+        private IPickedGeometry Pick(SceneElement element, int stageVertexID)
         {
-            IPickedPrimitive result = null;
+            IPickedGeometry result = null;
             IColorCodedPicking picking = element as IColorCodedPicking;
             if (picking != null)
             {

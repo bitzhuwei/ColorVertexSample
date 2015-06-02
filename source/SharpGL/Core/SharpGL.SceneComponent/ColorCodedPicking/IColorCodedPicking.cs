@@ -29,6 +29,6 @@ namespace SharpGL.SceneComponent
         /// </summary>
         /// <param name="stageVertexID">Refers to the last vertex that constructs the primitive. And it's unique in scene's all elements.</param>
         /// <returns></returns>
-        IPickedPrimitive Pick(int stageVertexID);
+        IPickedGeometry Pick(int stageVertexID);
     }
 }

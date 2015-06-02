@@ -107,7 +107,7 @@ namespace ModernOpenGLSample._3MySceneControl
                 vertexID = shiftedR + shiftedG + shiftedB + shiftedA;
 
                 // get picked primitive.
-                IPickedPrimitive picked = null;
+                IPickedGeometry picked = null;
                 picked = this.mySceneControl.Scene.Pick(vertexID);
 
                 // print result.

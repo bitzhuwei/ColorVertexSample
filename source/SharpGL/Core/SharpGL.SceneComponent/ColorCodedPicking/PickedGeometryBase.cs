@@ -9,7 +9,7 @@ namespace SharpGL.SceneComponent
     /// The color-coded picking result.
     /// <para>Representing a primitive.</para>
     /// </summary>
-    public abstract class PickedPrimitiveBase : IPickedPrimitive
+    public abstract class PickedGeometryBase : IPickedGeometry
     {
         /// <summary>
         /// Gets or sets primitive's geometry type.

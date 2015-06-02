@@ -325,10 +325,10 @@ namespace ModernOpenGLSample._3MySceneControl
             return this.positions.Length / 3;
         }
 
-        IPickedPrimitive IColorCodedPicking.Pick(int stageVertexID)
+        IPickedGeometry IColorCodedPicking.Pick(int stageVertexID)
         {
             IColorCodedPicking element = this as IColorCodedPicking;
-            PickedPrimitiveColored primitive = element.TryPick<PickedPrimitiveColored>(
+            PickedGeometryColored primitive = element.TryPick<PickedGeometryColored>(
                 this.mode, stageVertexID, this.positions);
 
             if (primitive == null) { return null; }

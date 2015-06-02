@@ -6,10 +6,10 @@ using System.Text;
 namespace SharpGL.SceneComponent
 {
     /// <summary>
-    /// The color-coded picking result.
-    /// <para>Representing a primitive.</para>
+    /// The picked geometry of color-coded picking.
+    /// <para>Representing a basic geometry.</para>
     /// </summary>
-    public interface IPickedPrimitive
+    public interface IPickedGeometry
     {
         /// <summary>
         /// Gets or sets primitive's geometry type.
@@ -22,7 +22,7 @@ namespace SharpGL.SceneComponent
         float[] positions { get; set; }
 
         /// <summary>
-        /// The scene's element from which this <see cref="IPickedPrimitive"/>'s instance is picked.
+        /// The scene's element from which this <see cref="IPickedGeometry"/>'s instance is picked.
         /// </summary>
         IColorCodedPicking Element { get; set; }
 

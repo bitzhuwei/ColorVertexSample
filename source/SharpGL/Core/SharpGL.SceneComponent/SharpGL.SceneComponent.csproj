@@ -54,9 +54,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ColorCodedPicking\IColorCodedPickingHelper.cs" />
-    <Compile Include="ColorCodedPicking\IPickedPrimitive.cs" />
-    <Compile Include="ColorCodedPicking\PickedPrimitiveBase.cs" />
-    <Compile Include="ColorCodedPicking\PickedPrimitiveColored.cs" />
+    <Compile Include="ColorCodedPicking\IPickedGeometry.cs" />
+    <Compile Include="ColorCodedPicking\PickedGeometryBase.cs" />
+    <Compile Include="ColorCodedPicking\PickedGeometryColored.cs" />
     <Compile Include="ColorCodedPicking\GeometryTypes.cs" />
     <Compile Include="Control\EViewType.cs" />
     <Compile Include="Camera\CameraHelper.cs" />
