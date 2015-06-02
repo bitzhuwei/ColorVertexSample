@@ -116,6 +116,7 @@ namespace SharpGL.SceneComponent
 
 
         /// <summary>
+        /// Get primitive's index(start from 0) according to <paramref name="lastVertexID"/> and <paramref name="mode"/>.
         /// <para>Returns -1, -2 if failed.</para>
         /// </summary>
         /// <param name="element"></param>
