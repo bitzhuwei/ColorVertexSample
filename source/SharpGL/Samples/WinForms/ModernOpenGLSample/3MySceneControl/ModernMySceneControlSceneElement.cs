@@ -320,9 +320,9 @@ namespace ModernOpenGLSample._3MySceneControl
 
         int IColorCodedPicking.PickingBaseID { get; set; }
 
-        int IColorCodedPicking.VertexCount
+        int IColorCodedPicking.GetVertexCount()
         {
-            get { return this.positions.Length / 3; }
+            return this.positions.Length / 3;
         }
 
         IPickedPrimitive IColorCodedPicking.Pick(int stageVertexID)

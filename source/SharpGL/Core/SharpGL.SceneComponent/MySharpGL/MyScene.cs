@@ -156,7 +156,7 @@ namespace SharpGL.SceneComponent
                         IRenderable renderable = sceneElement as IRenderable;
                         if (renderable != null) renderable.Render(gl, renderMode);
 
-                        info.RenderedVertexCount += picking.VertexCount;
+                        info.RenderedVertexCount += picking.GetVertexCount();
                     }
                 }
                 else

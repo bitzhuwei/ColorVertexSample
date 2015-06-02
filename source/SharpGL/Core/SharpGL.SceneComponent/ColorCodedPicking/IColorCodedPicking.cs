@@ -12,14 +12,15 @@ namespace SharpGL.SceneComponent
     {
         /// <summary>
         /// Gets or internal sets how many primitived have been rendered till now during hit test.
-        /// <para>This will be set up by <see cref="MyScene.Draw(RenderMode.HitTest)"/>, so just use the get method.</para>
+        /// <para>This will be set up by <see cref="MyScene.Draw(RenderMode.HitTest)"/>, so just use it to set shader's uniform variable.</para>
         /// </summary>
         int PickingBaseID { get; set; }
 
         /// <summary>
-        /// Gets vertex's count in this element's model's VBO representing positions.
+        /// Gets vertices' count in this element's VBO representing positions.
         /// </summary>
-        int VertexCount { get; }
+        /// <returns></returns>
+        int GetVertexCount();
 
         /// <summary>
         /// Get the primitive according to vertex's id.

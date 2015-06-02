@@ -31,7 +31,7 @@ namespace SharpGL.SceneComponent
             if (stageVertexID < element.PickingBaseID) // ID is in some previous element.
             { return lastVertexID; }
 
-            if (element.PickingBaseID + element.VertexCount <= stageVertexID) // ID is in some subsequent element.
+            if (element.PickingBaseID + element.GetVertexCount() <= stageVertexID) // ID is in some subsequent element.
             { return lastVertexID; }
 
             lastVertexID = stageVertexID - element.PickingBaseID;
