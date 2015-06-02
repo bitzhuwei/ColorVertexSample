@@ -113,5 +113,69 @@ namespace SharpGL.SceneComponent
 
             return primitive;
         }
+
+
+        /// <summary>
+        /// <para>Returns -1, -2 if failed.</para>
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="mode"></param>
+        /// <param name="lastVertexID">Refers to the last vertex that constructs the primitive.
+        /// <para>Ranges from 0 to (<paramref name="element"/>'s vertices' count - 1).</para></param>
+        /// <returns></returns>
+        public static int GetPrimitiveIndex(this IColorCodedPicking element, SharpGL.Enumerations.BeginMode mode, int lastVertexID)
+        {
+            int result = -1;
+            if (element == null || lastVertexID < 0) { return result; }
+
+            int vertexCount = element.GetVertexCount();
+
+            if (lastVertexID < vertexCount)
+            {
+                switch (mode)
+                {
+                    case SharpGL.Enumerations.BeginMode.Points:
+                        // vertexID should range from 0 to vertexCount - 1.
+                        result = lastVertexID;
+                        break;
+                    case SharpGL.Enumerations.BeginMode.Lines:
+                        // vertexID should range from 0 to vertexCount - 1.
+                        result = lastVertexID / 2;
+                        break;
+                    case SharpGL.Enumerations.BeginMode.LineLoop:
+                        // vertexID should range from 0 to vertexCount.
+                        if (lastVertexID == 0) // This is the last primitive.
+                        { result = vertexCount - 1; }
+                        else
+                        { result = lastVertexID - 1; }
+                        break;
+                    case SharpGL.Enumerations.BeginMode.LineStrip:
+                        result = lastVertexID - 1;// If lastVertexID is 0, this returns -1.
+                        break;
+                    case SharpGL.Enumerations.BeginMode.Triangles:
+                        result = lastVertexID / 3;
+                        break;
+                    case SharpGL.Enumerations.BeginMode.TriangleString:
+                        result = lastVertexID - 2;// if lastVertexID is 0 or 1, this returns -2 or -1.
+                        break;
+                    case SharpGL.Enumerations.BeginMode.TriangleFan:
+                        result = lastVertexID - 2;// if lastVertexID is 0 or 1, this returns -2 or -1.
+                        break;
+                    case SharpGL.Enumerations.BeginMode.Quads:
+                        result = lastVertexID / 4;
+                        break;
+                    case SharpGL.Enumerations.BeginMode.QuadStrip:
+                        result = lastVertexID / 2 - 1;// If lastVertexID is 0 or 1, this returns -1.
+                        break;
+                    case SharpGL.Enumerations.BeginMode.Polygon:
+                        result = 0;
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+
+            return result;
+        }
     }
 }
