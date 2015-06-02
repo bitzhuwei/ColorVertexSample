@@ -8,7 +8,7 @@ namespace SharpGL.SceneComponent
     public static class BeginModeHelper
     {
         /// <summary>
-        /// Convert <see cref="BeginMode"/> to <see cref="PrimitiveType"/>.
+        /// Convert <see cref="BeginMode"/> to <see cref="GeometryTypes"/>.
         /// </summary>
         /// <param name="mode"></param>
         /// <returns></returns>
