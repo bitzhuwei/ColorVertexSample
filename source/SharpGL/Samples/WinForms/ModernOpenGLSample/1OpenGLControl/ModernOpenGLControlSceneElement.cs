@@ -65,8 +65,8 @@ namespace ModernOpenGLSample._1OpenGLControl
             }
             {
                 //  Create the shader program.
-                var vertexShaderSource = ManifestResourceLoader.LoadTextFile("PickingShader.vert");
-                var fragmentShaderSource = ManifestResourceLoader.LoadTextFile("PickingShader.frag");
+                var vertexShaderSource = ColorCodedPickingShaderHelper.GetShaderSource(ColorCodedPickingShaderHelper.ShaderTypes.VertexShader);
+                var fragmentShaderSource = ColorCodedPickingShaderHelper.GetShaderSource(ColorCodedPickingShaderHelper.ShaderTypes.FragmentShader);
                 var shaderProgram = new ShaderProgram();
                 shaderProgram.Create(gl, vertexShaderSource, fragmentShaderSource, null);
                 shaderProgram.BindAttributeLocation(gl, attributeIndexPosition, "in_Position");

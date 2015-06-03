@@ -76,8 +76,8 @@ namespace SharpGL.SceneComponent
             }
             {
                 //  Create the picking shader program.
-                var vertexShaderSource = ManifestResourceLoader.LoadTextFile(@"Model\PickingShader.vert");
-                var fragmentShaderSource = ManifestResourceLoader.LoadTextFile(@"Model\PickingShader.frag");
+                var vertexShaderSource = ColorCodedPickingShaderHelper.GetShaderSource(ColorCodedPickingShaderHelper.ShaderTypes.VertexShader);
+                var fragmentShaderSource = ColorCodedPickingShaderHelper.GetShaderSource(ColorCodedPickingShaderHelper.ShaderTypes.FragmentShader);
                 var shaderProgram = new ShaderProgram();
                 shaderProgram.Create(gl, vertexShaderSource, fragmentShaderSource, null);
                 shaderProgram.BindAttributeLocation(gl, attributeIndexPosition, "in_Position");

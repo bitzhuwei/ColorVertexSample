@@ -53,6 +53,7 @@
     <Compile Include="Camera\SatelliteRotation.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ColorCodedPicking\ColorCodedPickingShaderHelper.cs" />
     <Compile Include="ColorCodedPicking\IColorCodedPickingHelper.cs" />
     <Compile Include="ColorCodedPicking\IPickedGeometry.cs" />
     <Compile Include="ColorCodedPicking\PickedGeometryBase.cs" />
@@ -168,8 +169,8 @@
   <ItemGroup>
     <EmbeddedResource Include="Model\Shader.vert" />
     <EmbeddedResource Include="Model\Shader.frag" />
-    <EmbeddedResource Include="Model\PickingShader.vert" />
-    <EmbeddedResource Include="Model\PickingShader.frag" />
+    <EmbeddedResource Include="ColorCodedPicking\PickingShader.vert" />
+    <EmbeddedResource Include="ColorCodedPicking\PickingShader.frag" />
     <None Include="TransformInterface\TransformInterface.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
