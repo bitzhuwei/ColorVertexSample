@@ -126,7 +126,7 @@
     <Compile Include="Utility\ArrayHelper.cs" />
     <Compile Include="Utility\FloatHelper.cs" />
     <Compile Include="Utility\ManifestResourceLoader.cs" />
-    <Compile Include="Utility\GeometryTypesHelper.cs" />
+    <Compile Include="ColorCodedPicking\GeometryTypesHelper.cs" />
     <Compile Include="Utility\BeginModeHelper.cs" />
     <Content Include="MySharpGL\read-me.txt" />
     <Compile Include="SimpleUI\Axis\SimpleUIAxis.cs" />
