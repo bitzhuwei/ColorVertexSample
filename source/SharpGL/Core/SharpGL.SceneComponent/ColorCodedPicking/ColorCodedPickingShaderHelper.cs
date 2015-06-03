@@ -5,11 +5,27 @@ using System.Text;
 
 namespace SharpGL.SceneComponent
 {
+    /// <summary>
+    /// Helps to get shader's source code for color coded picking.
+    /// </summary>
     public class ColorCodedPickingShaderHelper
     {
 
+        /// <summary>
+        /// vertex shader's cache.
+        /// </summary>
         static string vertexShader = null;
+
+        /// <summary>
+        /// fragmente shader's cache.
+        /// </summary>
         static string fragmentShader = null;
+
+        /// <summary>
+        /// Gets shader's source code for color coded picking.
+        /// </summary>
+        /// <param name="shaderType"></param>
+        /// <returns></returns>
         public static string GetShaderSource(ShaderTypes shaderType)
         {
             string result = string.Empty;
@@ -42,6 +58,7 @@ namespace SharpGL.SceneComponent
             VertexShader,
             FragmentShader,
         }
+
     }
 
 }
