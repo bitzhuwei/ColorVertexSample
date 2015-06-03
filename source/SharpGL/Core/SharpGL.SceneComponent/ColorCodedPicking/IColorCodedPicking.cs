@@ -8,7 +8,7 @@ namespace SharpGL.SceneComponent
     /// <summary>
     /// Scene element that implemented this interface will take part in color-coded picking when using <see cref="MyScene.Draw(RenderMode.HitTest);"/>.
     /// </summary>
-    public interface IColorCodedPicking
+    public interface IColorCodedPicking : SharpGL.SceneGraph.Core.IRenderable
     {
         /// <summary>
         /// Gets or internal sets how many primitived have been rendered till now during hit test.

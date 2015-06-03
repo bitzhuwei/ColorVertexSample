@@ -13,7 +13,7 @@ namespace SharpGL.SceneComponent
     /// <summary>
     /// scene element that holds a <see cref="ScientificModel"/>.
     /// </summary>
-    public class ScientificModelElement : SceneElement, IRenderable, IColorCodedPicking
+    public class ScientificModelElement : SceneElement, IColorCodedPicking
     {
         /// <summary>
         /// The model shown in <see cref="ScientificVisual3DControl"/>.

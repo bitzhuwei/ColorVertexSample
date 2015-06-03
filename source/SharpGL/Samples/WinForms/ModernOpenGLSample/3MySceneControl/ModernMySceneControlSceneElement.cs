@@ -17,7 +17,7 @@ namespace ModernOpenGLSample._3MySceneControl
     /// <para>Use <see cref="IHasObjectSpace"/> and <see cref="IScientificCamera"/> to update projection and view matrices.</para>
     /// <para>This element can be picked.</para>
     /// </summary>
-    class ModernMySceneControlSceneElement : SceneElement, IRenderable, IColorCodedPicking //, IHasModernObjectSpace
+    class ModernMySceneControlSceneElement : SceneElement, IColorCodedPicking //, IHasModernObjectSpace
     {
         public BeginMode mode;
 

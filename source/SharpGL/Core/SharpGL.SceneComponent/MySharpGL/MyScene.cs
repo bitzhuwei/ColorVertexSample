@@ -152,9 +152,11 @@ namespace SharpGL.SceneComponent
                     {
                         picking.PickingBaseID = info.RenderedVertexCount;
 
-                        //  If the element can be rendered, render it.
-                        IRenderable renderable = sceneElement as IRenderable;
-                        if (renderable != null) renderable.Render(gl, renderMode);
+                        //  render the element.
+                        IRenderable renderable = picking;
+                        renderable.Render(gl, renderMode);
+                        //IRenderable renderable = sceneElement as IRenderable;
+                        //if (renderable != null) renderable.Render(gl, renderMode);
 
                         info.RenderedVertexCount += picking.GetVertexCount();
                     }
