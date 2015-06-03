@@ -180,10 +180,9 @@ namespace SharpGL.SceneComponent
         }
 
         /// <summary>
-        /// Get primitive's count according to specified <paramref name="mode"/> and <paramref name="vertexCount"/>.
+        /// Get primitive's count according to specified <paramref name="mode"/>.
         /// </summary>
         /// <param name="mode"></param>
-        /// <param name="vertexCount"></param>
         /// <returns></returns>
         public static int GetPrimitiveCount(this IColorCodedPicking element, SharpGL.Enumerations.BeginMode mode)
         {
