@@ -48,9 +48,14 @@ namespace System
                 builder.Append(item.ToShortString());
                 counter++;
                 if (counter % dimension == 0)
-                { builder.Append("; "); }
+                { 
+                    builder.Append("; ");
+                    counter = 0;
+                }
                 else
-                { builder.Append(", "); }
+                { 
+                    builder.Append(", "); 
+                }
             }
 
             return builder.ToString();
