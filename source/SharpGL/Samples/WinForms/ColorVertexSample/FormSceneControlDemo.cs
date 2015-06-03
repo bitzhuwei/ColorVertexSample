@@ -75,12 +75,12 @@ namespace ColorVertexSample
         {
             ScientificCamera camera = this.sceneControl.Scene.CurrentCamera as ScientificCamera;
 
-            if (camera.CameraType == ECameraType.Perspecitive)
+            if (camera.CameraType == CameraTypes.Perspecitive)
             {
                 IPerspectiveViewCamera perspecitive = camera;
                 perspecitive.AdjustCamera(this.modelContainer.BoundingBox, this.sceneControl.OpenGL);
             }
-            else if (camera.CameraType == ECameraType.Ortho)
+            else if (camera.CameraType == CameraTypes.Ortho)
             {
                 IOrthoViewCamera orthoCamera = camera;
                 orthoCamera.AdjustCamera(this.modelContainer.BoundingBox, this.sceneControl.OpenGL);
@@ -196,7 +196,7 @@ namespace ColorVertexSample
             {
                 //this.sceneControl.CameraType = ECameraType.Perspecitive;
                 var camera  = this.sceneControl.Scene.CurrentCamera as ScientificCamera;
-                camera.CameraType = ECameraType.Perspecitive;
+                camera.CameraType = CameraTypes.Perspecitive;
                 ManualRender(this.sceneControl);
             }
         }
@@ -207,7 +207,7 @@ namespace ColorVertexSample
             {
                 //this.sceneControl.CameraType = ECameraType.Ortho;
                 var camera = this.sceneControl.Scene.CurrentCamera as ScientificCamera;
-                camera.CameraType = ECameraType.Ortho;
+                camera.CameraType = CameraTypes.Ortho;
                 ManualRender(this.sceneControl);
             }
         }

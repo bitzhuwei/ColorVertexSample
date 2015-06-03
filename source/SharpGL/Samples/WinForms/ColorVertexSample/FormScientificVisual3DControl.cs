@@ -45,7 +45,7 @@ namespace ColorVertexSample
                 this.cmbViewType.Items.Add(item);
             }
 
-            foreach (string item in Enum.GetNames(typeof(ECameraType)))
+            foreach (string item in Enum.GetNames(typeof(CameraTypes)))
             {
                 this.cmbCameraType.Items.Add(item);
             }
@@ -155,7 +155,7 @@ namespace ColorVertexSample
         private void cmbCameraType_SelectedIndexChanged(object sender, EventArgs e)
         {
             string selected = this.cmbCameraType.SelectedItem.ToString();
-            ECameraType cameraType = (ECameraType)Enum.Parse(typeof(ECameraType), selected);
+            CameraTypes cameraType = (CameraTypes)Enum.Parse(typeof(CameraTypes), selected);
             this.scientificVisual3DControl.CameraType = cameraType;
         }
 

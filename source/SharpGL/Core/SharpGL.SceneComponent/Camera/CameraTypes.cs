@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SharpGL.SceneComponent
 {
-    public enum ECameraType
+    public enum CameraTypes
     {
         Perspecitive,
         Ortho,

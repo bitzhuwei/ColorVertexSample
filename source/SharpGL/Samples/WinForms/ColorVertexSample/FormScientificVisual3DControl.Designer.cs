@@ -79,7 +79,7 @@
             // 
             // scientificVisual3DControl
             // 
-            this.scientificVisual3DControl.CameraType = SharpGL.SceneComponent.ECameraType.Perspecitive;
+            this.scientificVisual3DControl.CameraType = SharpGL.SceneComponent.CameraTypes.Perspecitive;
             this.tableLayoutPanel1.SetColumnSpan(this.scientificVisual3DControl, 2);
             this.scientificVisual3DControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.scientificVisual3DControl.DrawFPS = false;

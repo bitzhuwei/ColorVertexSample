@@ -44,7 +44,7 @@
             this.scientificControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.scientificControl.CameraType = SharpGL.SceneComponent.ECameraType.Perspecitive;
+            this.scientificControl.CameraType = SharpGL.SceneComponent.CameraTypes.Perspecitive;
             this.scientificControl.DrawFPS = true;
             this.scientificControl.Location = new System.Drawing.Point(159, 0);
             this.scientificControl.Name = "scientificControl";

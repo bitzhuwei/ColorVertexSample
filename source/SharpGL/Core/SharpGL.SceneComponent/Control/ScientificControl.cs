@@ -293,7 +293,7 @@ namespace SharpGL.SceneComponent
         /// <summary>
         /// Gets or sets camera's view type.
         /// </summary>
-        public ECameraType CameraType
+        public CameraTypes CameraType
         {
             get { return this.Scene.CurrentCamera.CameraType; }
             set
@@ -320,12 +320,12 @@ namespace SharpGL.SceneComponent
                 this.viewType = value;
                 ScientificCamera camera = this.Scene.CurrentCamera;
 
-                if (camera.CameraType == ECameraType.Perspecitive)
+                if (camera.CameraType == CameraTypes.Perspecitive)
                 {
                     IPerspectiveViewCamera perspecitive = camera;
                     perspecitive.ApplyViewType(this.modelContainer.BoundingBox, this.OpenGL, value);
                 }
-                else if (camera.CameraType == ECameraType.Ortho)
+                else if (camera.CameraType == CameraTypes.Ortho)
                 {
                     IOrthoViewCamera orthoCamera = camera;
                     orthoCamera.ApplyViewType(this.modelContainer.BoundingBox, this.OpenGL, value);
@@ -355,12 +355,12 @@ namespace SharpGL.SceneComponent
         {
             ScientificCamera camera = this.Scene.CurrentCamera;
 
-            if (camera.CameraType == ECameraType.Perspecitive)
+            if (camera.CameraType == CameraTypes.Perspecitive)
             {
                 IPerspectiveViewCamera perspecitive = camera;
                 perspecitive.AdjustCamera(this.modelContainer.BoundingBox, this.OpenGL);
             }
-            else if (camera.CameraType == ECameraType.Ortho)
+            else if (camera.CameraType == CameraTypes.Ortho)
             {
                 IOrthoViewCamera orthoCamera = camera;
                 orthoCamera.AdjustCamera(this.modelContainer.BoundingBox, this.OpenGL);

@@ -146,13 +146,13 @@ namespace SharpGL.SceneComponent
             IScientificCamera camera = this.Camera;
             if (camera != null)
             {
-                if (camera.CameraType == ECameraType.Perspecitive)
+                if (camera.CameraType == CameraTypes.Perspecitive)
                 {
                     IPerspectiveViewCamera perspective = camera;
                     this.projectionMatrix = perspective.GetProjectionMat4();
                     this.viewMatrix = perspective.GetViewMat4();
                 }
-                else if (camera.CameraType == ECameraType.Ortho)
+                else if (camera.CameraType == CameraTypes.Ortho)
                 {
                     IOrthoViewCamera ortho = camera;
                     this.projectionMatrix = ortho.GetProjectionMat4();

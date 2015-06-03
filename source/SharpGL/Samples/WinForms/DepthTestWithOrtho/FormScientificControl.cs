@@ -73,7 +73,7 @@ namespace DepthTestWithOrtho
 
         private void SharpGLForm_Load(object sender, EventArgs e)
         {
-            var cameraTypes = new ECameraType[] { ECameraType.Ortho, ECameraType.Perspecitive };
+            var cameraTypes = new CameraTypes[] { CameraTypes.Ortho, CameraTypes.Perspecitive };
             foreach (var item in cameraTypes)
             {
                 this.cmbCameraType.Items.Add(item);
@@ -82,8 +82,8 @@ namespace DepthTestWithOrtho
 
         private void cmbCameraType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var type = (ECameraType)this.cmbCameraType.SelectedItem;
-            this.groupBox1.Visible = type == ECameraType.Ortho;
+            var type = (CameraTypes)this.cmbCameraType.SelectedItem;
+            this.groupBox1.Visible = type == CameraTypes.Ortho;
             this.scientificControl.CameraType = type;
         }
 

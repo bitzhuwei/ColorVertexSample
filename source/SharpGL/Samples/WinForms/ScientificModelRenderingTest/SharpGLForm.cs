@@ -40,7 +40,7 @@ namespace ScientificModelRenderingTest
             VBOModel.Build(
                 new SharpGL.SceneGraph.Vertex(-radius, -radius, -radius),
                 new SharpGL.SceneGraph.Vertex(radius, radius, radius));
-            ScientificCamera camera = new ScientificCamera(ECameraType.Perspecitive);
+            ScientificCamera camera = new ScientificCamera(CameraTypes.Perspecitive);
             camera.Target = new SharpGL.SceneGraph.Vertex(0, 0, 0);
             camera.Position = new SharpGL.SceneGraph.Vertex(-2, 2, -2);
             camera.UpVector = new SharpGL.SceneGraph.Vertex(0, 1, 0);

@@ -18,7 +18,7 @@ namespace ModernOpenGLSample._1OpenGLControl
 
         public ModernOpenGLControlSceneElement()
         {
-            ScientificCamera camera = new ScientificCamera(ECameraType.Perspecitive);
+            ScientificCamera camera = new ScientificCamera(CameraTypes.Perspecitive);
             camera.Position = new SharpGL.SceneGraph.Vertex(0, 0, 5);
             camera.Target = new SharpGL.SceneGraph.Vertex();
             camera.UpVector = new SharpGL.SceneGraph.Vertex(0, 1, 0);
