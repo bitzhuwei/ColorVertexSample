@@ -10,10 +10,8 @@ namespace SharpGL.SceneComponent
     /// </summary>
     public static class IColorCodedPickingHelper
     {
-        const int invalid = -1;
-
         /// <summary>
-        /// Returns last vertex's id of picked primitive if the primitive represented by <paramref name="stageVertexID"/> belongs to this <paramref name="element"/> instance.
+        /// Returns last vertex's id of picked geometry if the geometry represented by <paramref name="stageVertexID"/> belongs to this <paramref name="element"/> instance.
         /// <para>Returns false if <paramref name="stageVertexID"/> the primitive is in some other element.</para>
         /// </summary>
         /// <param name="element"></param>
@@ -59,24 +57,24 @@ namespace SharpGL.SceneComponent
         /// <returns></returns>
         public static T TryPick<T>(
             this IColorCodedPicking element, Enumerations.BeginMode mode, uint stageVertexID)
-            where T : PickedGeometryBase, new()
+            where T : IPickedGeometry, new()
         {
-            T primitive = null;
+            T pickedGeometry = default(T);
 
             if (element != null)
             {
                 uint lastVertexID;
-                if(element.GetLastVertexIDOfPickedGeometry(stageVertexID, out lastVertexID))
+                if (element.GetLastVertexIDOfPickedGeometry(stageVertexID, out lastVertexID))
                 {
-                    primitive = new T();
+                    pickedGeometry = new T();
 
-                    primitive.GeometryType = mode.ToGeometryType();
-                    primitive.StageVertexID = stageVertexID;
-                    primitive.Element = element;
+                    pickedGeometry.GeometryType = mode.ToGeometryType();
+                    pickedGeometry.StageVertexID = stageVertexID;
+                    pickedGeometry.Element = element;
                 }
             }
 
-            return primitive;
+            return pickedGeometry;
         }
 
         /// <summary>
@@ -92,7 +90,7 @@ namespace SharpGL.SceneComponent
         /// <returns></returns>
         public static T TryPick<T>(
             this IColorCodedPicking element, Enumerations.BeginMode mode, uint stageVertexID, float[] positions)
-            where T : PickedGeometryBase, new()
+            where T : IPickedGeometry, new()
         {
             if (positions == null) { throw new ArgumentNullException("positions"); }
 
@@ -102,7 +100,7 @@ namespace SharpGL.SceneComponent
             if (pickedGeometry != null)
             {
                 uint lastVertexID;
-                if(element.GetLastVertexIDOfPickedGeometry(stageVertexID, out lastVertexID))
+                if (element.GetLastVertexIDOfPickedGeometry(stageVertexID, out lastVertexID))
                 {
                     int vertexCount = pickedGeometry.GeometryType.GetVertexCount();
                     if (vertexCount == -1) { vertexCount = positions.Length / 3; }
@@ -111,7 +109,7 @@ namespace SharpGL.SceneComponent
                     for (int j = (geometryPositions.Length - 1); j >= 0; i--, j--)
                     {
                         if (i == uint.MaxValue)// This is when mode is GL_LINE_LOOP.
-                        { i+= (uint)positions.Length - 1; }
+                        { i = (uint)positions.Length - 1; }
                         geometryPositions[j] = positions[i];
                     }
 

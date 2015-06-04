@@ -348,7 +348,7 @@ namespace ModernOpenGLSample._3MySceneControl
                 for (int j = (geometryColors.Length - 1); j >= 0; i--, j--)
                 {
                     if (i == uint.MaxValue)// This is when mode is GL_LINE_LOOP.
-                    { i += (uint)modelColors.Length - 1; }
+                    { i = (uint)modelColors.Length - 1; }
                     geometryColors[j] = modelColors[i];
                 }
 

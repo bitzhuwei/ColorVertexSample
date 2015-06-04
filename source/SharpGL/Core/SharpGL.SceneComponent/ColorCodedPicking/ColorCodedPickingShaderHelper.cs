@@ -8,7 +8,7 @@ namespace SharpGL.SceneComponent
     /// <summary>
     /// Helps to get shader's source code for color coded picking.
     /// </summary>
-    public class ColorCodedPickingShaderHelper
+    public sealed class ColorCodedPickingShaderHelper
     {
 
         /// <summary>
