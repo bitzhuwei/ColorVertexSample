@@ -31,11 +31,6 @@ namespace DepthTestWithOrtho
             (new FormMySceneControl()).Show();
         }
 
-        private void btnScientificControl_Click(object sender, EventArgs e)
-        {
-            (new FormScientificControl()).Show();
-        }
-
         private void btnScientificVisual3DControl_Click(object sender, EventArgs e)
         {
             (new FormScientificVisual3DControl()).Show();
