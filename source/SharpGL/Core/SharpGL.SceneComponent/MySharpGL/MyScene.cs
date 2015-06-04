@@ -225,37 +225,35 @@ namespace SharpGL.SceneComponent
         {
             if (stageVertexID < 0) { return null; }
 
-            IPickedGeometry picked = null;
-
             SceneElement element = this.SceneContainer;
-            picked = Pick(element, stageVertexID);
+            IPickedGeometry pickedGeometry = Pick(element, stageVertexID);
 
-            return picked;
+            return pickedGeometry;
         }
 
         private IPickedGeometry Pick(SceneElement element, uint stageVertexID)
         {
-            IPickedGeometry result = null;
-            IColorCodedPicking picking = element as IColorCodedPicking;
-            if (picking != null)
+            IPickedGeometry pickedGeometry = null;
+            IColorCodedPicking pickingElement = element as IColorCodedPicking;
+            if (pickingElement != null)
             {
-                result = picking.Pick(stageVertexID);
+                pickedGeometry = pickingElement.Pick(stageVertexID);
             }
 
-            if (result == null)
+            if (pickedGeometry == null)
             {
                 if (element != null)
                 {
                     foreach (var item in element.Children)
                     {
-                        result = Pick(item, stageVertexID);
-                        if (result != null)
+                        pickedGeometry = Pick(item, stageVertexID);
+                        if (pickedGeometry != null)
                         { break; }
                     }
                 }
             }
 
-            return result;
+            return pickedGeometry;
         }
     }
 }
