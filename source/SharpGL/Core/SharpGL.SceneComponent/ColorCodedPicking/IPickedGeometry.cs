@@ -30,6 +30,6 @@ namespace SharpGL.SceneComponent
         /// The last vertex's id that constructs the picked primitive.
         /// <para>This id is in scene's all <see cref="IColorCodedPicking"/>s' order.</para>
         /// </summary>
-        int StageVertexID { get; set; }
+        uint StageVertexID { get; set; }
     }
 }

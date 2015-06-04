@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.scientificVisual3DControl = new SharpGL.SceneComponent.ScientificVisual3DControl();
             this.panel1 = new System.Windows.Forms.Panel();
             this.cmbCameraType = new System.Windows.Forms.ComboBox();
             this.cmbViewType = new System.Windows.Forms.ComboBox();
@@ -53,10 +52,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblPickedPrimitive = new System.Windows.Forms.ToolStripStatusLabel();
+            this.scientificVisual3DControl = new SharpGL.SceneComponent.ScientificVisual3DControl();
             this.tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.scientificVisual3DControl)).BeginInit();
             this.panel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.scientificVisual3DControl)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -74,25 +74,8 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 85F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(693, 443);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(769, 443);
             this.tableLayoutPanel1.TabIndex = 0;
-            // 
-            // scientificVisual3DControl
-            // 
-            this.scientificVisual3DControl.CameraType = SharpGL.SceneComponent.CameraTypes.Perspecitive;
-            this.tableLayoutPanel1.SetColumnSpan(this.scientificVisual3DControl, 2);
-            this.scientificVisual3DControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.scientificVisual3DControl.DrawFPS = false;
-            this.scientificVisual3DControl.Location = new System.Drawing.Point(3, 88);
-            this.scientificVisual3DControl.Name = "scientificVisual3DControl";
-            this.scientificVisual3DControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
-            this.scientificVisual3DControl.PickedPrimitive = null;
-            this.scientificVisual3DControl.RenderBoundingBox = true;
-            this.scientificVisual3DControl.RenderContextType = SharpGL.RenderContextType.FBO;
-            this.scientificVisual3DControl.RenderTrigger = SharpGL.RenderTrigger.Manual;
-            this.scientificVisual3DControl.Size = new System.Drawing.Size(687, 352);
-            this.scientificVisual3DControl.TabIndex = 0;
-            this.scientificVisual3DControl.ViewType = SharpGL.SceneComponent.EViewType.UserView;
             // 
             // panel1
             // 
@@ -120,7 +103,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(687, 79);
+            this.panel1.Size = new System.Drawing.Size(763, 79);
             this.panel1.TabIndex = 1;
             // 
             // cmbCameraType
@@ -163,7 +146,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblDebugInfo.Location = new System.Drawing.Point(660, 35);
             this.lblDebugInfo.Name = "lblDebugInfo";
-            this.lblDebugInfo.Size = new System.Drawing.Size(24, 41);
+            this.lblDebugInfo.Size = new System.Drawing.Size(100, 41);
             this.lblDebugInfo.TabIndex = 17;
             this.lblDebugInfo.Text = "debug info";
             this.lblDebugInfo.Click += new System.EventHandler(this.lblDebugInfo_Click);
@@ -315,7 +298,7 @@
             this.lblPickedPrimitive});
             this.statusStrip1.Location = new System.Drawing.Point(0, 446);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(693, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(769, 22);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -325,22 +308,39 @@
             this.lblPickedPrimitive.Size = new System.Drawing.Size(49, 17);
             this.lblPickedPrimitive.Text = "Picked:";
             // 
+            // scientificVisual3DControl
+            // 
+            this.scientificVisual3DControl.CameraType = SharpGL.SceneComponent.CameraTypes.Perspecitive;
+            this.tableLayoutPanel1.SetColumnSpan(this.scientificVisual3DControl, 2);
+            this.scientificVisual3DControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scientificVisual3DControl.DrawFPS = false;
+            this.scientificVisual3DControl.Location = new System.Drawing.Point(3, 88);
+            this.scientificVisual3DControl.Name = "scientificVisual3DControl";
+            this.scientificVisual3DControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
+            this.scientificVisual3DControl.PickedPrimitive = null;
+            this.scientificVisual3DControl.RenderBoundingBox = true;
+            this.scientificVisual3DControl.RenderContextType = SharpGL.RenderContextType.FBO;
+            this.scientificVisual3DControl.RenderTrigger = SharpGL.RenderTrigger.Manual;
+            this.scientificVisual3DControl.Size = new System.Drawing.Size(763, 352);
+            this.scientificVisual3DControl.TabIndex = 0;
+            this.scientificVisual3DControl.ViewType = SharpGL.SceneComponent.EViewType.UserView;
+            // 
             // FormScientificVisual3DControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(693, 468);
+            this.ClientSize = new System.Drawing.Size(769, 468);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.MinimumSize = new System.Drawing.Size(16, 38);
             this.Name = "FormScientificVisual3DControl";
             this.Text = "ScientificVisual3DControl Demo.";
             this.tableLayoutPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.scientificVisual3DControl)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.scientificVisual3DControl)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

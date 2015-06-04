@@ -243,45 +243,46 @@ namespace SharpGL.SceneComponent
 
         #region IColorCodedPicking 成员
 
-        int IColorCodedPicking.PickingBaseID { get; set; }
+        uint IColorCodedPicking.PickingBaseID { get; set; }
 
-        int IColorCodedPicking.GetVertexCount()
+        uint IColorCodedPicking.GetVertexCount()
         {
-            return this.Model.VertexCount;
+            return (uint)this.Model.VertexCount;
         }
 
-        IPickedGeometry IColorCodedPicking.Pick(int stageVertexID)
+        IPickedGeometry IColorCodedPicking.Pick(uint stageVertexID)
         {
             IColorCodedPicking element = this as IColorCodedPicking;
-            PickedGeometryColored primitive = element.TryPick<PickedGeometryColored>(
+            PickedGeometryColored pickedGeometry = element.TryPick<PickedGeometryColored>(
                 this.Model.Mode, stageVertexID, this.Model.Positions);
 
-            if (primitive == null) { return null; }
+            if (pickedGeometry == null) { return null; }
 
             // Fill primitive's positions and colors. This maybe changes much more than lines above in second dev.
-            int lastVertexID = element.GetLastVertexIDOfPickedPrimitive(stageVertexID);
-            if (lastVertexID >= 0)
+            uint lastVertexID;
+            if(element.GetLastVertexIDOfPickedPrimitive(stageVertexID, out lastVertexID))
             {
                 ScientificModel model = this.Model;
 
-                int vertexCount = primitive.GeometryType.GetVertexCount();
+                int vertexCount = pickedGeometry.GeometryType.GetVertexCount();
                 if (vertexCount == -1) { vertexCount = model.VertexCount; }
 
-                float[] colors = new float[vertexCount * 3];
+                float[] geometryColors = new float[vertexCount * 3];
 
                 float[] modelColors = model.Colors;
 
-                for (int i = lastVertexID * 3 + 2, j = colors.Length - 1; j >= 0; i--, j--)
+                uint i = lastVertexID * 3 + 2;
+                for (int j = (geometryColors.Length - 1); j >= 0; i--, j--)
                 {
-                    if (i < 0)
-                    { i += colors.Length; }
-                    colors[j] = modelColors[i];
+                    if (i == uint.MaxValue)// This is when mode is GL_LINE_LOOP.
+                    { i += (uint)modelColors.Length - 1; }
+                    geometryColors[j] = modelColors[i];
                 }
 
-                primitive.colors = colors;
+                pickedGeometry.colors = geometryColors;
             }
 
-            return primitive;
+            return pickedGeometry;
         }
 
         #endregion

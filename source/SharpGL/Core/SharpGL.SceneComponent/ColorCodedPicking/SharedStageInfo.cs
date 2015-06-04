@@ -14,7 +14,7 @@ namespace SharpGL.SceneComponent
         /// <summary>
         /// Gets or sets how many vertices have been rendered during hit test.
         /// </summary>
-        public virtual int RenderedVertexCount { get; set; }
+        public virtual uint RenderedVertexCount { get; set; }
 
         /// <summary>
         /// Reset this instance's fields' values to initial state so that it can be used again during rendering.

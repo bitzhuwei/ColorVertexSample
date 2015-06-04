@@ -14,29 +14,30 @@ namespace SharpGL.SceneComponent
 
         /// <summary>
         /// Returns last vertex's id of picked primitive if the primitive represented by <paramref name="stageVertexID"/> belongs to this <paramref name="element"/> instance.
-        /// <para>Returns -1 if <paramref name="stageVertexID"/> is an illigal number or the primitive is in some other element.</para>
+        /// <para>Returns false if <paramref name="stageVertexID"/> the primitive is in some other element.</para>
         /// </summary>
         /// <param name="element"></param>
         /// <param name="stageVertexID"></param>
+        /// <param name="lastVertexID"></param>
         /// <returns></returns>
-        public static int GetLastVertexIDOfPickedPrimitive(this IColorCodedPicking element, int stageVertexID)
+        public static bool GetLastVertexIDOfPickedPrimitive(this IColorCodedPicking element, uint stageVertexID, out uint lastVertexID)
         {
-            int lastVertexID = invalid;
+            lastVertexID = uint.MaxValue;
 
-            if (element == null) { return lastVertexID; }
+            if (element == null) { return false; }
 
-            if (stageVertexID < 0) // Illigal ID.
-            { return lastVertexID; }
+            //if (stageVertexID < 0) // Illigal ID.
+            //{ return lastVertexID; }
 
             if (stageVertexID < element.PickingBaseID) // ID is in some previous element.
-            { return lastVertexID; }
+            { return false; }
 
-            if (element.PickingBaseID + element.GetVertexCount() <= stageVertexID) // ID is in some subsequent element.
-            { return lastVertexID; }
-
+            uint vertexCount = element.GetVertexCount();
             lastVertexID = stageVertexID - element.PickingBaseID;
+            if(vertexCount <= lastVertexID) // ID is in some subsequent element.
+            { return false; }
 
-            return lastVertexID;
+            return true;
         }
 
         /// <summary>
@@ -51,15 +52,15 @@ namespace SharpGL.SceneComponent
         /// <param name="stageVertexID">Refers to the last vertex that constructs the primitive. And it's unique in scene's all elements.</param>
         /// <returns></returns>
         public static T TryPick<T>(
-            this IColorCodedPicking element, Enumerations.BeginMode mode, int stageVertexID)
+            this IColorCodedPicking element, Enumerations.BeginMode mode, uint stageVertexID)
             where T : PickedGeometryBase, new()
         {
             T primitive = null;
 
             if (element != null)
             {
-                int lastVertexID = element.GetLastVertexIDOfPickedPrimitive(stageVertexID);
-                if (lastVertexID >= 0)
+                uint lastVertexID;
+                if(element.GetLastVertexIDOfPickedPrimitive(stageVertexID, out lastVertexID))
                 {
                     primitive = new T();
 
@@ -84,52 +85,54 @@ namespace SharpGL.SceneComponent
         /// <param name="positions">element's vertices' position array.</param>
         /// <returns></returns>
         public static T TryPick<T>(
-            this IColorCodedPicking element, Enumerations.BeginMode mode, int stageVertexID, float[] positions)
+            this IColorCodedPicking element, Enumerations.BeginMode mode, uint stageVertexID, float[] positions)
             where T : PickedGeometryBase, new()
         {
             if (positions == null) { throw new ArgumentNullException("positions"); }
 
-            T primitive = element.TryPick<T>(mode, stageVertexID);
+            T pickedGeometry = element.TryPick<T>(mode, stageVertexID);
 
             // Fill primitive's positions and colors. This maybe changes much more than lines above in second dev.
-            if (primitive != null)
+            if (pickedGeometry != null)
             {
-                int lastVertexID = element.GetLastVertexIDOfPickedPrimitive(stageVertexID);
-                if (lastVertexID >= 0)
+                uint lastVertexID;
+                if(element.GetLastVertexIDOfPickedPrimitive(stageVertexID, out lastVertexID))
                 {
-                    int vertexCount = primitive.GeometryType.GetVertexCount();
+                    int vertexCount = pickedGeometry.GeometryType.GetVertexCount();
                     if (vertexCount == -1) { vertexCount = positions.Length / 3; }
-                    float[] primitivPositions = new float[vertexCount * 3];
-                    for (int i = lastVertexID * 3 + 2, j = primitivPositions.Length - 1; j >= 0; i--, j--)
+                    float[] geometryPositions = new float[vertexCount * 3];
+                    uint i = lastVertexID * 3 + 2;
+                    for (int j = (geometryPositions.Length - 1); j >= 0; i--, j--)
                     {
-                        if (i < 0)
-                        { i += positions.Length; }
-                        primitivPositions[j] = positions[i];
+                        if (i == uint.MaxValue)// This is when mode is GL_LINE_LOOP.
+                        { i+= (uint)positions.Length - 1; }
+                        geometryPositions[j] = positions[i];
                     }
 
-                    primitive.positions = primitivPositions;
+                    pickedGeometry.positions = geometryPositions;
                 }
             }
 
-            return primitive;
+            return pickedGeometry;
         }
 
 
         /// <summary>
         /// Get primitive's index(start from 0) according to <paramref name="lastVertexID"/> and <paramref name="mode"/>.
-        /// <para>Returns -1, -2 if failed.</para>
+        /// <para>Returns false if failed.</para>
         /// </summary>
         /// <param name="element"></param>
         /// <param name="mode"></param>
         /// <param name="lastVertexID">Refers to the last vertex that constructs the primitive.
         /// <para>Ranges from 0 to (<paramref name="element"/>'s vertices' count - 1).</para></param>
+        /// <param name="index"></param>
         /// <returns></returns>
-        public static int GetPrimitiveIndex(this IColorCodedPicking element, SharpGL.Enumerations.BeginMode mode, int lastVertexID)
+        public static bool GetPrimitiveIndex(this IColorCodedPicking element, SharpGL.Enumerations.BeginMode mode, uint lastVertexID, out uint index)
         {
-            int result = -1;
-            if (element == null || lastVertexID < 0) { return result; }
+            index = uint.MaxValue;
+            if (element == null) { return false; }
 
-            int vertexCount = element.GetVertexCount();
+            uint vertexCount = element.GetVertexCount();
 
             if (lastVertexID < vertexCount)
             {
@@ -137,99 +140,102 @@ namespace SharpGL.SceneComponent
                 {
                     case SharpGL.Enumerations.BeginMode.Points:
                         // vertexID should range from 0 to vertexCount - 1.
-                        result = lastVertexID;
+                        index = lastVertexID;
                         break;
                     case SharpGL.Enumerations.BeginMode.Lines:
                         // vertexID should range from 0 to vertexCount - 1.
-                        result = lastVertexID / 2;
+                        index = lastVertexID / 2;
                         break;
                     case SharpGL.Enumerations.BeginMode.LineLoop:
                         // vertexID should range from 0 to vertexCount.
                         if (lastVertexID == 0) // This is the last primitive.
-                        { result = vertexCount - 1; }
+                        { index = vertexCount - 1; }
                         else
-                        { result = lastVertexID - 1; }
+                        { index = lastVertexID - 1; }
                         break;
                     case SharpGL.Enumerations.BeginMode.LineStrip:
-                        result = lastVertexID - 1;// If lastVertexID is 0, this returns -1.
+                        index = lastVertexID - 1;// If lastVertexID is 0, this returns -1.
                         break;
                     case SharpGL.Enumerations.BeginMode.Triangles:
-                        result = lastVertexID / 3;
+                        index = lastVertexID / 3;
                         break;
                     case SharpGL.Enumerations.BeginMode.TriangleString:
-                        result = lastVertexID - 2;// if lastVertexID is 0 or 1, this returns -2 or -1.
+                        index = lastVertexID - 2;// if lastVertexID is 0 or 1, this returns -2 or -1.
                         break;
                     case SharpGL.Enumerations.BeginMode.TriangleFan:
-                        result = lastVertexID - 2;// if lastVertexID is 0 or 1, this returns -2 or -1.
+                        index = lastVertexID - 2;// if lastVertexID is 0 or 1, this returns -2 or -1.
                         break;
                     case SharpGL.Enumerations.BeginMode.Quads:
-                        result = lastVertexID / 4;
+                        index = lastVertexID / 4;
                         break;
                     case SharpGL.Enumerations.BeginMode.QuadStrip:
-                        result = lastVertexID / 2 - 1;// If lastVertexID is 0 or 1, this returns -1.
+                        index = lastVertexID / 2 - 1;// If lastVertexID is 0 or 1, this returns -1.
                         break;
                     case SharpGL.Enumerations.BeginMode.Polygon:
-                        result = 0;
+                        index = 0;
                         break;
                     default:
                         throw new NotImplementedException();
                 }
             }
 
-            return result;
+            return true;
         }
 
         /// <summary>
         /// Get primitive's count according to specified <paramref name="mode"/>.
+        /// <para>Returns false if the <paramref name="element"/> is null.</para>
         /// </summary>
+        /// <param name="element"></param>
         /// <param name="mode"></param>
+        /// <param name="count"></param>
         /// <returns></returns>
-        public static int GetPrimitiveCount(this IColorCodedPicking element, SharpGL.Enumerations.BeginMode mode)
+        public static bool GetPrimitiveCount(this IColorCodedPicking element, SharpGL.Enumerations.BeginMode mode, out uint count)
         {
-            int result = 0;
+            bool result = false;
+            count = uint.MaxValue;
 
             if (element != null)
             {
-                int vertexCount = element.GetVertexCount();
+                uint vertexCount = element.GetVertexCount();
 
-                if (vertexCount > 0)
+                switch (mode)
                 {
-                    switch (mode)
-                    {
-                        case SharpGL.Enumerations.BeginMode.Points:
-                            result = vertexCount;
-                            break;
-                        case SharpGL.Enumerations.BeginMode.Lines:
-                            result = vertexCount / 2;
-                            break;
-                        case SharpGL.Enumerations.BeginMode.LineLoop:
-                            result = vertexCount;
-                            break;
-                        case SharpGL.Enumerations.BeginMode.LineStrip:
-                            result = vertexCount - 1;
-                            break;
-                        case SharpGL.Enumerations.BeginMode.Triangles:
-                            result = vertexCount / 3;
-                            break;
-                        case SharpGL.Enumerations.BeginMode.TriangleString:
-                            result = vertexCount - 2;
-                            break;
-                        case SharpGL.Enumerations.BeginMode.TriangleFan:
-                            result = vertexCount - 2;
-                            break;
-                        case SharpGL.Enumerations.BeginMode.Quads:
-                            result = vertexCount / 4;
-                            break;
-                        case SharpGL.Enumerations.BeginMode.QuadStrip:
-                            result = vertexCount / 2 - 1;
-                            break;
-                        case SharpGL.Enumerations.BeginMode.Polygon:
-                            result = 1;
-                            break;
-                        default:
-                            throw new NotImplementedException();
-                    }
+                    case SharpGL.Enumerations.BeginMode.Points:
+                        count = vertexCount;
+                        break;
+                    case SharpGL.Enumerations.BeginMode.Lines:
+                        count = vertexCount / 2;
+                        break;
+                    case SharpGL.Enumerations.BeginMode.LineLoop:
+                        count = vertexCount;
+                        break;
+                    case SharpGL.Enumerations.BeginMode.LineStrip:
+                        count = vertexCount - 1;
+                        break;
+                    case SharpGL.Enumerations.BeginMode.Triangles:
+                        count = vertexCount / 3;
+                        break;
+                    case SharpGL.Enumerations.BeginMode.TriangleString:
+                        count = vertexCount - 2;
+                        break;
+                    case SharpGL.Enumerations.BeginMode.TriangleFan:
+                        count = vertexCount - 2;
+                        break;
+                    case SharpGL.Enumerations.BeginMode.Quads:
+                        count = vertexCount / 4;
+                        break;
+                    case SharpGL.Enumerations.BeginMode.QuadStrip:
+                        count = vertexCount / 2 - 1;
+                        break;
+                    case SharpGL.Enumerations.BeginMode.Polygon:
+                        count = 1;
+                        break;
+                    default:
+                        throw new NotImplementedException();
                 }
+
+                result = true;
             }
 
             return result;

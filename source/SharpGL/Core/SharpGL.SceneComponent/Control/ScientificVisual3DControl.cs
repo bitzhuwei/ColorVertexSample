@@ -414,17 +414,17 @@ namespace SharpGL.SceneComponent
             // get vertexID from coded color.
             // the vertexID is the last vertex that constructs the primitive.
             // see http://www.cnblogs.com/bitzhuwei/p/modern-opengl-picking-primitive-in-VBO-2.html
-            var shiftedR = (uint)codedColor[0];
-            var shiftedG = (uint)codedColor[1] << 8;
-            var shiftedB = (uint)codedColor[2] << 16;
-            var shiftedA = (uint)codedColor[3] << 24;
-            var stageVertexID = shiftedR + shiftedG + shiftedB + shiftedA;
+            uint shiftedR = (uint)codedColor[0];
+            uint shiftedG = (uint)codedColor[1] << 8;
+            uint shiftedB = (uint)codedColor[2] << 16;
+            uint shiftedA = (uint)codedColor[3] << 24;
+            uint stageVertexID = shiftedR + shiftedG + shiftedB + shiftedA;
 
             // get picked primitive.
-            IPickedGeometry picked = null;
-            picked = this.Scene.Pick((int)stageVertexID);
+            IPickedGeometry pickedGeometry = null;
+            pickedGeometry = this.Scene.Pick(stageVertexID);
 
-            return picked;
+            return pickedGeometry;
         }
     }
 }

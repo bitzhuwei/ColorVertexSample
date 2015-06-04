@@ -99,16 +99,15 @@ namespace ModernOpenGLSample._3MySceneControl
                 // get vertexID from coded color.
                 // the vertexID is the last vertex that constructs the primitive.
                 // see http://www.cnblogs.com/bitzhuwei/p/modern-opengl-picking-primitive-in-VBO-2.html
-                var vertexID = 0;
-                var shiftedR = codedColor[0];
-                var shiftedG = codedColor[1] << 8;
-                var shiftedB = codedColor[2] << 16;
-                var shiftedA = codedColor[3] << 24;
-                vertexID = shiftedR + shiftedG + shiftedB + shiftedA;
+                uint shiftedR = (uint)codedColor[0];
+                uint shiftedG = (uint)codedColor[1] << 8;
+                uint shiftedB = (uint)codedColor[2] << 16;
+                uint shiftedA = (uint)codedColor[3] << 24;
+                uint vertexID = shiftedR + shiftedG + shiftedB + shiftedA;
 
                 // get picked primitive.
-                IPickedGeometry picked = null;
-                picked = this.mySceneControl.Scene.Pick(vertexID);
+                IPickedGeometry pickedGeometry = null;
+                pickedGeometry = this.mySceneControl.Scene.Pick(vertexID);
 
                 // print result.
                 var strColor = string.Format("R:{0},G:{1},B:{2},A:{3}",
@@ -116,7 +115,7 @@ namespace ModernOpenGLSample._3MySceneControl
                 this.txtInfo.Text = string.Format("{1}{0}vertex ID:{0}={2}{0}+{3}{0}+{4}{0}+{5}{0}={6}{0}+{7}{0}+{8}{0}+{9}{0}={10}{0}Picked:{0}{11}",
                     Environment.NewLine, strColor,
                     codedColor[0], codedColor[1] + " << 8", codedColor[2] + " << 16", codedColor[3] + " << 24",
-                    shiftedR, shiftedG, shiftedB, shiftedA, vertexID, picked);
+                    shiftedR, shiftedG, shiftedB, shiftedA, vertexID, pickedGeometry);
             }
 
         }
