@@ -23,21 +23,27 @@ namespace SharpGL.SceneComponent
         public static bool GetLastVertexIDOfPickedGeometry(this IColorCodedPicking element, uint stageVertexID, out uint lastVertexID)
         {
             lastVertexID = uint.MaxValue;
+            bool result = false;
 
-            if (element == null) { return false; }
+            if (element != null)
+            {
+                if (stageVertexID < element.PickingBaseID) // ID is in some previous element.
+                { return false; }
 
-            //if (stageVertexID < 0) // Illigal ID.
-            //{ return lastVertexID; }
+                uint vertexCount = element.GetVertexCount();
+                uint id = stageVertexID - element.PickingBaseID;
+                if (id < vertexCount)
+                {
+                    lastVertexID = id;
+                    result = true;
+                }
+                else // ID is in some subsequent element.
+                {
+                    result = false;
+                }
+            }
 
-            if (stageVertexID < element.PickingBaseID) // ID is in some previous element.
-            { return false; }
-
-            uint vertexCount = element.GetVertexCount();
-            lastVertexID = stageVertexID - element.PickingBaseID;
-            if(vertexCount <= lastVertexID) // ID is in some subsequent element.
-            { return false; }
-
-            return true;
+            return result;
         }
 
         /// <summary>
