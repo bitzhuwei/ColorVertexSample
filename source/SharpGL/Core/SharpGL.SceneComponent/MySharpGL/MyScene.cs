@@ -60,15 +60,15 @@ namespace SharpGL.SceneComponent
                 {
                     // When picking on a position that no model exists, 
                     // the picked color would be
-                    // =255
-                    // +255 << 8
-                    // +255 << 16
-                    // +255 << 24
-                    // =255
-                    // +65280
-                    // +16711680
-                    // +4278190080
-                    // =4294967295
+                    // = 255
+                    // + 255 << 8
+                    // + 255 << 16
+                    // + 255 << 24
+                    // = 255
+                    // + 65280
+                    // + 16711680
+                    // + 4278190080
+                    // = 4294967295
                     // This makes it easier to determin whether we picked something or not.
                     gl.ClearColor(1, 1, 1, 1);
                 }
@@ -155,10 +155,18 @@ namespace SharpGL.SceneComponent
                         //  render the element.
                         IRenderable renderable = picking;
                         renderable.Render(gl, renderMode);
-                        //IRenderable renderable = sceneElement as IRenderable;
-                        //if (renderable != null) renderable.Render(gl, renderMode);
 
-                        info.RenderedVertexCount += picking.GetVertexCount();
+                        uint rendered = info.RenderedVertexCount + picking.GetVertexCount();
+                        if (info.RenderedVertexCount <= rendered)
+                        {
+                            info.RenderedVertexCount = rendered;
+                        }
+                        else
+                        {
+                            throw new OverflowException(
+                                string.Format("Too many geometries({0} + {1} > {2}) for color coded picking.",
+                                    info.RenderedVertexCount, picking.GetVertexCount(), uint.MaxValue));
+                        }
                     }
                 }
                 else
