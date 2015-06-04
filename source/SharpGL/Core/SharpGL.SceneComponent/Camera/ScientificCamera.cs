@@ -147,7 +147,7 @@ namespace SharpGL.SceneComponent
         public void Scale(int delta)
         {
             ScientificCamera camera = this;
-            if (camera.CameraType == CameraTypes.Perspecitive)
+            //if (camera.CameraType == CameraTypes.Perspecitive)
             {
                 var target2Position = camera.Position - camera.Target;
                 if (target2Position.Magnitude () < 0.01)
@@ -168,7 +168,7 @@ namespace SharpGL.SceneComponent
                 orthoCamera.Far += lengthDiff;
                 orthoCamera.Near += lengthDiff;
             }
-            else if (camera.CameraType == CameraTypes.Ortho)
+            //else if (camera.CameraType == CameraTypes.Ortho)
             {
                 IOrthoCamera orthoCamera = camera;
                 double distanceX = orthoCamera.Right - orthoCamera.Left;
