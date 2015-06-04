@@ -323,7 +323,7 @@
             this.scientificVisual3DControl.RenderTrigger = SharpGL.RenderTrigger.Manual;
             this.scientificVisual3DControl.Size = new System.Drawing.Size(763, 352);
             this.scientificVisual3DControl.TabIndex = 0;
-            this.scientificVisual3DControl.ViewType = SharpGL.SceneComponent.EViewType.UserView;
+            this.scientificVisual3DControl.ViewType = SharpGL.SceneComponent.ViewTypes.UserView;
             // 
             // FormScientificVisual3DControl
             // 

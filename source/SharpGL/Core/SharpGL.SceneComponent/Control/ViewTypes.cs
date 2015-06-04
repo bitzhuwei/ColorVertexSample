@@ -5,7 +5,10 @@ using System.Text;
 
 namespace SharpGL.SceneComponent
 {
-    public enum EViewType
+    /// <summary>
+    /// View types.
+    /// </summary>
+    public enum ViewTypes
     {
         UserView,
         Top,

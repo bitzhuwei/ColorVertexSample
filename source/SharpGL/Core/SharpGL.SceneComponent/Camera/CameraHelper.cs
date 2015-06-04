@@ -210,7 +210,7 @@ namespace SharpGL.SceneComponent
         /// <param name="openGL"></param>
         /// <param name="viewType"></param>
         public static void ApplyViewType(this IPerspectiveViewCamera camera, IBoundingBox boundingBox,
-            OpenGL openGL, EViewType viewType)
+            OpenGL openGL, ViewTypes viewType)
         {
             float sizeX, sizeY, sizeZ;
             boundingBox.GetBoundDimensions(out sizeX, out sizeY, out sizeZ);
@@ -267,7 +267,7 @@ namespace SharpGL.SceneComponent
         /// <param name="openGL"></param>
         /// <param name="viewType"></param>
         public static void ApplyViewType(this IOrthoViewCamera camera, IBoundingBox boundingBox,
-            OpenGL openGL, EViewType viewType)
+            OpenGL openGL, ViewTypes viewType)
         {
             float sizeX, sizeY, sizeZ;
             boundingBox.GetBoundDimensions(out sizeX, out sizeY, out sizeZ);
@@ -386,37 +386,37 @@ namespace SharpGL.SceneComponent
         //    camera.UpVector = upVector;
         //}
 
-        private static void GetBackAndUp(out Vertex target2Position, out Vertex upVector, EViewType viewType)
+        private static void GetBackAndUp(out Vertex target2Position, out Vertex upVector, ViewTypes viewType)
         {
             switch (viewType)
             {
-                case EViewType.UserView:
+                case ViewTypes.UserView:
                     //UserView 定义为从顶视图开始，绕X 轴旋转30 度，在绕Z 轴45 度，并且能看到整个模型的虚拟模型空间。
                     target2Position = new Vertex((float)Math.Sqrt(3), (float)Math.Sqrt(3), -1);
                     target2Position.Normalize();
                     upVector = new Vertex(0, 0, -1);
                     break;
-                case EViewType.Top:
+                case ViewTypes.Top:
                     target2Position = new Vertex(0, 0, -1);
                     upVector = new Vertex(0, -1, 0);
                     break;
-                case EViewType.Bottom:
+                case ViewTypes.Bottom:
                     target2Position = new Vertex(0, 0, 1);
                     upVector = new Vertex(0, -1, 0);
                     break;
-                case EViewType.Left:
+                case ViewTypes.Left:
                     target2Position = new Vertex(-1, 0, 0);
                     upVector = new Vertex(0, 0, -1);
                     break;
-                case EViewType.Right:
+                case ViewTypes.Right:
                     target2Position = new Vertex(1, 0, 0);
                     upVector = new Vertex(0, 0, -1);
                     break;
-                case EViewType.Front:
+                case ViewTypes.Front:
                     target2Position = new Vertex(0, 1, 0);
                     upVector = new Vertex(0, 0, -1);
                     break;
-                case EViewType.Back:
+                case ViewTypes.Back:
                     target2Position = new Vertex(0, -1, 0);
                     upVector = new Vertex(0, 0, -1);
                     break;

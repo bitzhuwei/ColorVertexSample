@@ -33,7 +33,7 @@ namespace SharpGL.SceneComponent
         public ModelContainer ModelContainer
         { get { return this.modelContainer; } }
 
-        private EViewType viewType;
+        private ViewTypes viewType;
 
         public ScientificVisual3DControl()
         {
@@ -317,7 +317,7 @@ namespace SharpGL.SceneComponent
         /// <summary>
         /// Gets or sets view type(top, bottom, left, right, front, back and userView).
         /// </summary>
-        public EViewType ViewType
+        public ViewTypes ViewType
         {
             get { return this.viewType; }
             set

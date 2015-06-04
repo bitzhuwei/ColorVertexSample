@@ -40,7 +40,7 @@ namespace ColorVertexSample
 
         private void InitilizeViewTypeControl()
         {
-            foreach (string item in Enum.GetNames(typeof(EViewType)))
+            foreach (string item in Enum.GetNames(typeof(ViewTypes)))
             {
                 this.cmbViewType.Items.Add(item);
             }
@@ -96,7 +96,7 @@ namespace ColorVertexSample
                         modelBoundingBox.MaxPosition.Z);
                 }
                 // update ViewType to UserView.
-                this.scientificVisual3DControl.ViewType = EViewType.UserView;
+                this.scientificVisual3DControl.ViewType = ViewTypes.UserView;
 
                 this.scientificVisual3DControl.SetColorIndicator(minValue, maxValue, step);
             }
@@ -148,7 +148,7 @@ namespace ColorVertexSample
         private void cmbViewType_SelectedIndexChanged(object sender, EventArgs e)
         {
             string selected = this.cmbViewType.SelectedItem.ToString();
-            EViewType viewType = (EViewType)Enum.Parse(typeof(EViewType), selected);
+            ViewTypes viewType = (ViewTypes)Enum.Parse(typeof(ViewTypes), selected);
             this.scientificVisual3DControl.ViewType = viewType;
         }
 

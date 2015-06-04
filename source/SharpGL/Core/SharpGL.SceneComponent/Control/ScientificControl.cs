@@ -307,12 +307,12 @@ namespace SharpGL.SceneComponent
             }
         }
 
-        private EViewType viewType;
+        private ViewTypes viewType;
 
         /// <summary>
         /// Gets or sets view type(top, bottom, left, right, front, back and userView).
         /// </summary>
-        public EViewType ViewType
+        public ViewTypes ViewType
         {
             get { return this.viewType; }
             set

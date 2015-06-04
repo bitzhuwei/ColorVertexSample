@@ -54,7 +54,7 @@
             this.scientificControl.RenderTrigger = SharpGL.RenderTrigger.TimerBased;
             this.scientificControl.Size = new System.Drawing.Size(597, 361);
             this.scientificControl.TabIndex = 0;
-            this.scientificControl.ViewType = SharpGL.SceneComponent.EViewType.UserView;
+            this.scientificControl.ViewType = SharpGL.SceneComponent.ViewTypes.UserView;
             // 
             // cmbCameraType
             // 
