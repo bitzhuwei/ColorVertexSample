@@ -50,7 +50,7 @@ namespace SharpGL.SceneComponent
         /// <para>Note: the <paramref name="stageVertexID"/> Refers to the last vertex that constructs the primitive. And it's unique in scene's all elements.</para>
         /// <para>Note: The result's positions property is not set up as there will be different kinds of storage mode for positions(float[], IntPtr, etc). You have to initialize the positions property and fill correct position information afterwards.</para>
         /// </summary>
-        /// <typeparam name="T">Subclass of <see cref="PickedGeometryBase"/></typeparam>
+        /// <typeparam name="T">Subclass of <see cref="IPickedGeometry"/></typeparam>
         /// <param name="element">the scene's element that contains the primitive.</param>
         /// <param name="mode">specifies what type of primitive it is.</param>
         /// <param name="stageVertexID">Refers to the last vertex that constructs the primitive. And it's unique in scene's all elements.</param>
@@ -82,7 +82,7 @@ namespace SharpGL.SceneComponent
         /// <para>Returns <code>null</code> if <paramref name="element"/> is null or <paramref name="stageVertexID"/> does not belong to any of this <paramref name="element"/>'s vertices.</para>
         /// <para>Note: the <paramref name="stageVertexID"/> refers to the last vertex that constructs the primitive. And it's unique in scene's all elements.</para>
         /// </summary>
-        /// <typeparam name="T">Subclass of <see cref="PickedGeometryBase"/></typeparam>
+        /// <typeparam name="T">Subclass of <see cref="IPickedGeometry"/></typeparam>
         /// <param name="element">the scene's element that contains the primitive.</param>
         /// <param name="mode">specifies what type of primitive it is.</param>
         /// <param name="stageVertexID">Refers to the last vertex that constructs the primitive. And it's unique in scene's all elements.</param>
