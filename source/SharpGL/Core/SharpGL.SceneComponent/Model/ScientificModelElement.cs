@@ -260,7 +260,7 @@ namespace SharpGL.SceneComponent
 
             // Fill primitive's positions and colors. This maybe changes much more than lines above in second dev.
             uint lastVertexID;
-            if(element.GetLastVertexIDOfPickedPrimitive(stageVertexID, out lastVertexID))
+            if(element.GetLastVertexIDOfPickedGeometry(stageVertexID, out lastVertexID))
             {
                 ScientificModel model = this.Model;
 

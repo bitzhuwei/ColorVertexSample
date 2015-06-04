@@ -20,7 +20,7 @@ namespace SharpGL.SceneComponent
         /// <param name="stageVertexID"></param>
         /// <param name="lastVertexID"></param>
         /// <returns></returns>
-        public static bool GetLastVertexIDOfPickedPrimitive(this IColorCodedPicking element, uint stageVertexID, out uint lastVertexID)
+        public static bool GetLastVertexIDOfPickedGeometry(this IColorCodedPicking element, uint stageVertexID, out uint lastVertexID)
         {
             lastVertexID = uint.MaxValue;
 
@@ -60,7 +60,7 @@ namespace SharpGL.SceneComponent
             if (element != null)
             {
                 uint lastVertexID;
-                if(element.GetLastVertexIDOfPickedPrimitive(stageVertexID, out lastVertexID))
+                if(element.GetLastVertexIDOfPickedGeometry(stageVertexID, out lastVertexID))
                 {
                     primitive = new T();
 
@@ -96,7 +96,7 @@ namespace SharpGL.SceneComponent
             if (pickedGeometry != null)
             {
                 uint lastVertexID;
-                if(element.GetLastVertexIDOfPickedPrimitive(stageVertexID, out lastVertexID))
+                if(element.GetLastVertexIDOfPickedGeometry(stageVertexID, out lastVertexID))
                 {
                     int vertexCount = pickedGeometry.GeometryType.GetVertexCount();
                     if (vertexCount == -1) { vertexCount = positions.Length / 3; }

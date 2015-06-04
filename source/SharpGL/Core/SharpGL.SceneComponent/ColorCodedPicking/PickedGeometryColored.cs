@@ -33,7 +33,7 @@ namespace SharpGL.SceneComponent
             if (picking != null)
             {
                 uint tmp;
-                if (picking.GetLastVertexIDOfPickedPrimitive(stageVertexID, out tmp))
+                if (picking.GetLastVertexIDOfPickedGeometry(stageVertexID, out tmp))
                 {
                     lastVertexID = string.Format("{0}", tmp);
                 }

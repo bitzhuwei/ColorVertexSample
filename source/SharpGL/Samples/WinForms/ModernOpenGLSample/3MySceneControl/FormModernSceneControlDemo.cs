@@ -103,11 +103,11 @@ namespace ModernOpenGLSample._3MySceneControl
                 uint shiftedG = (uint)codedColor[1] << 8;
                 uint shiftedB = (uint)codedColor[2] << 16;
                 uint shiftedA = (uint)codedColor[3] << 24;
-                uint vertexID = shiftedR + shiftedG + shiftedB + shiftedA;
+                uint stageVertexID = shiftedR + shiftedG + shiftedB + shiftedA;
 
                 // get picked primitive.
                 IPickedGeometry pickedGeometry = null;
-                pickedGeometry = this.mySceneControl.Scene.Pick(vertexID);
+                pickedGeometry = this.mySceneControl.Scene.Pick(stageVertexID);
 
                 // print result.
                 var strColor = string.Format("R:{0},G:{1},B:{2},A:{3}",
@@ -115,7 +115,7 @@ namespace ModernOpenGLSample._3MySceneControl
                 this.txtInfo.Text = string.Format("{1}{0}vertex ID:{0}={2}{0}+{3}{0}+{4}{0}+{5}{0}={6}{0}+{7}{0}+{8}{0}+{9}{0}={10}{0}Picked:{0}{11}",
                     Environment.NewLine, strColor,
                     codedColor[0], codedColor[1] + " << 8", codedColor[2] + " << 16", codedColor[3] + " << 24",
-                    shiftedR, shiftedG, shiftedB, shiftedA, vertexID, pickedGeometry);
+                    shiftedR, shiftedG, shiftedB, shiftedA, stageVertexID, pickedGeometry);
             }
 
         }
