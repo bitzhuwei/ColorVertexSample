@@ -236,11 +236,14 @@ namespace SharpGL.SceneComponent
 
             if (result == null)
             {
-                foreach (var item in element.Children)
+                if (element != null)
                 {
-                    result = Pick(item, stageVertexID);
-                    if (result != null)
-                    { break; }
+                    foreach (var item in element.Children)
+                    {
+                        result = Pick(item, stageVertexID);
+                        if (result != null)
+                        { break; }
+                    }
                 }
             }
 
