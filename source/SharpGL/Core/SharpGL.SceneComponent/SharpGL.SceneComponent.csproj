@@ -121,6 +121,7 @@
     <Compile Include="Utility\ManifestResourceLoader.cs" />
     <Compile Include="ColorCodedPicking\GeometryTypesHelper.cs" />
     <Compile Include="Utility\BeginModeHelper.cs" />
+    <Content Include="Camera\Camera.png" />
     <Content Include="MySharpGL\read-me.txt" />
     <Compile Include="SimpleUI\Axis\SimpleUIAxis.cs" />
     <Compile Include="SimpleUI\ColorIndicator\ColorPalette.cs" />
@@ -164,6 +165,7 @@
     <EmbeddedResource Include="Model\Shader.frag" />
     <EmbeddedResource Include="ColorCodedPicking\PickingShader.vert" />
     <EmbeddedResource Include="ColorCodedPicking\PickingShader.frag" />
+    <None Include="Camera\Camera.cd" />
     <None Include="TransformInterface\TransformInterface.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
