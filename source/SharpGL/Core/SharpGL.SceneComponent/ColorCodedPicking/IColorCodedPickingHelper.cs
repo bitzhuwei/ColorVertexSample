@@ -122,7 +122,7 @@ namespace SharpGL.SceneComponent
 
 
         /// <summary>
-        /// Get primitive's index(start from 0) according to <paramref name="lastVertexID"/> and <paramref name="mode"/>.
+        /// Get geometry's index(start from 0) according to <paramref name="lastVertexID"/> and <paramref name="mode"/>.
         /// <para>Returns false if failed.</para>
         /// </summary>
         /// <param name="element"></param>
@@ -131,7 +131,7 @@ namespace SharpGL.SceneComponent
         /// <para>Ranges from 0 to (<paramref name="element"/>'s vertices' count - 1).</para></param>
         /// <param name="index"></param>
         /// <returns></returns>
-        public static bool GetPrimitiveIndex(this IColorCodedPicking element, SharpGL.Enumerations.BeginMode mode, uint lastVertexID, out uint index)
+        public static bool GetGeometryIndex(this IColorCodedPicking element, SharpGL.Enumerations.BeginMode mode, uint lastVertexID, out uint index)
         {
             index = uint.MaxValue;
             if (element == null) { return false; }
@@ -187,14 +187,14 @@ namespace SharpGL.SceneComponent
         }
 
         /// <summary>
-        /// Get primitive's count according to specified <paramref name="mode"/>.
+        /// Get geometry's count according to specified <paramref name="mode"/>.
         /// <para>Returns false if the <paramref name="element"/> is null.</para>
         /// </summary>
         /// <param name="element"></param>
         /// <param name="mode"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        public static bool GetPrimitiveCount(this IColorCodedPicking element, SharpGL.Enumerations.BeginMode mode, out uint count)
+        public static bool GetGeometryCount(this IColorCodedPicking element, SharpGL.Enumerations.BeginMode mode, out uint count)
         {
             bool result = false;
             count = uint.MaxValue;
