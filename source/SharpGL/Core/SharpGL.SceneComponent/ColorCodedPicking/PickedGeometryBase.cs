@@ -30,7 +30,7 @@ namespace SharpGL.SceneComponent
         /// <summary>
         /// The element that this picked primitive belongs to.
         /// </summary>
-        public virtual IColorCodedPicking Element { get; set; }
+        public virtual IColorCodedPicking From { get; set; }
 
         public override string ToString()
         {
@@ -40,7 +40,7 @@ namespace SharpGL.SceneComponent
             string strPositions = positions.PrintVectors();
 
             uint stageVertexID = this.StageVertexID;
-            IColorCodedPicking picking = this.Element;
+            IColorCodedPicking picking = this.From;
 
             string lastVertexID = "?";
             if (picking != null)
@@ -53,7 +53,7 @@ namespace SharpGL.SceneComponent
             }
 
             string result = string.Format("{0}: P: {1} ID:{2}/{3} ∈{4}",
-                GeometryType, strPositions, lastVertexID, stageVertexID, Element);
+                GeometryType, strPositions, lastVertexID, stageVertexID, From);
             return result;
             //return base.ToString();
         }

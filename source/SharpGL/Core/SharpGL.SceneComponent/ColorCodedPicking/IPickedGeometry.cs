@@ -24,7 +24,7 @@ namespace SharpGL.SceneComponent
         /// <summary>
         /// The scene's element from which this <see cref="IPickedGeometry"/>'s instance is picked.
         /// </summary>
-        IColorCodedPicking Element { get; set; }
+        IColorCodedPicking From { get; set; }
 
         /// <summary>
         /// The last vertex's id that constructs the picked primitive.

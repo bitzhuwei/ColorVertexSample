@@ -70,7 +70,7 @@ namespace SharpGL.SceneComponent
 
                     pickedGeometry.GeometryType = mode.ToGeometryType();
                     pickedGeometry.StageVertexID = stageVertexID;
-                    pickedGeometry.Element = element;
+                    pickedGeometry.From = element;
                 }
             }
 
