@@ -148,26 +148,7 @@ namespace SharpGL.SceneComponent
                 if (renderMode == RenderMode.HitTest)
                 {
                     IColorCodedPicking picking = sceneElement as IColorCodedPicking;
-                    if (picking != null)
-                    {
-                        picking.PickingBaseID = info.RenderedVertexCount;
-
-                        //  render the element.
-                        IRenderable renderable = picking;
-                        renderable.Render(gl, renderMode);
-
-                        uint rendered = info.RenderedVertexCount + picking.GetVertexCount();
-                        if (info.RenderedVertexCount <= rendered)
-                        {
-                            info.RenderedVertexCount = rendered;
-                        }
-                        else
-                        {
-                            throw new OverflowException(
-                                string.Format("Too many geometries({0} + {1} > {2}) for color coded picking.",
-                                    info.RenderedVertexCount, picking.GetVertexCount(), uint.MaxValue));
-                        }
-                    }
+                    info.RenderForPicking(picking, gl, renderMode);
                 }
                 else
                 {
