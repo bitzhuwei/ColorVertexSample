@@ -8,8 +8,8 @@ namespace SharpGL.SceneComponent
     public static class GeometryTypesHelper
     {
         /// <summary>
-        /// Get vertex count of specified primitive's type.
-        /// <para>returns -1 if type if <see cref="Geometry.Polygon"/>.</para>
+        /// Get vertex count of specified geometry's type.
+        /// <para>returns -1 if type is <see cref="Geometry.Polygon"/>.</para>
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
