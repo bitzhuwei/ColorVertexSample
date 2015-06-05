@@ -142,6 +142,7 @@
     </Compile>
     <Compile Include="Control\ScientificVisual3DControlHelper.cs" />
     <Content Include="SimpleUI\read-me.txt" />
+    <Content Include="TransformInterface\TransformInterface.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SharpGL.SceneGraph\SharpGL.SceneGraph.csproj">
