@@ -105,6 +105,8 @@ namespace PolygonOffset
 
         private void DrawPolygonAndBox(OpenGL gl)
         {
+            bool offset = this.offset;
+
             if (offset)
             {
                 gl.Enable(OpenGL.GL_POLYGON_OFFSET_FILL);
