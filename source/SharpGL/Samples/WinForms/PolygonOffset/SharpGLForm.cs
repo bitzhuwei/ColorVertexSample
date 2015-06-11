@@ -30,7 +30,7 @@ namespace PolygonOffset
 
             this.satelliteRotation.Camera = camera;
 
-            camera.Position = new SharpGL.SceneGraph.Vertex(-5, 5, -5);
+            camera.Position = new SharpGL.SceneGraph.Vertex(-2, 2, -2);
             camera.Target = new SharpGL.SceneGraph.Vertex();
             camera.UpVector = new SharpGL.SceneGraph.Vertex(0, 1, 0);
 
@@ -40,6 +40,16 @@ namespace PolygonOffset
             this.openGLControl.MouseMove += openGLControl_MouseMove;
             this.openGLControl.MouseUp += openGLControl_MouseUp;
             this.openGLControl.MouseWheel += openGLControl_MouseWheel;
+
+            this.openGLControl.KeyDown += openGLControl_KeyDown;
+        }
+
+        void openGLControl_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.A)
+            {
+                offset = !offset;
+            }
         }
 
         void openGLControl_MouseWheel(object sender, MouseEventArgs e)
@@ -87,8 +97,14 @@ namespace PolygonOffset
             //  Rotate around the Y axis.
             gl.Rotate(rotation, 0.0f, 1.0f, 0.0f);
 
-            DrawPyramid(gl);
+            //DrawPyramid(gl);
 
+            DrawPolygonAndBox(gl);
+
+        }
+
+        private void DrawPolygonAndBox(OpenGL gl)
+        {
             if (offset)
             {
                 gl.Enable(OpenGL.GL_POLYGON_OFFSET_FILL);
@@ -144,7 +160,6 @@ namespace PolygonOffset
 
             if (offset)
                 gl.Disable(OpenGL.GL_POLYGON_OFFSET_LINE);
-
         }
 
         void drawBox(OpenGL gl)
@@ -224,7 +239,7 @@ namespace PolygonOffset
             gl.End();
 
             //  Nudge the rotation.
-            rotation += 3.0f;
+            //rotation += 3.0f;
         }
 
 
@@ -279,7 +294,7 @@ namespace PolygonOffset
         /// <summary>
         /// The current rotation.
         /// </summary>
-        private float rotation = 0.0f;
+        private float rotation = 180.0f;
 
         /// <summary>
         /// determins whether enalbe or disable polygon offset.
