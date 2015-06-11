@@ -39,6 +39,13 @@ namespace PolygonOffset
             this.openGLControl.MouseDown += openGLControl_MouseDown;
             this.openGLControl.MouseMove += openGLControl_MouseMove;
             this.openGLControl.MouseUp += openGLControl_MouseUp;
+            this.openGLControl.MouseWheel += openGLControl_MouseWheel;
+        }
+
+        void openGLControl_MouseWheel(object sender, MouseEventArgs e)
+        {
+            this.camera.Scale(e.Delta);
+            this.openGLControl_Resized(sender, e);
         }
 
         void openGLControl_MouseUp(object sender, MouseEventArgs e)
@@ -51,19 +58,7 @@ namespace PolygonOffset
             this.satelliteRotation.MouseMove(e.X, e.Y);
             if (this.satelliteRotation.mouseDownFlag)
             {
-                //  Get the OpenGL object.
-                OpenGL gl = openGLControl.OpenGL;
-
-                //  Set the projection matrix.
-                gl.MatrixMode(OpenGL.GL_PROJECTION);
-
-                //  Load the identity.
-                gl.LoadIdentity();
-
-                camera.TransformProjectionMatrix(gl);
-
-                //  Set the modelview matrix.
-                gl.MatrixMode(OpenGL.GL_MODELVIEW);
+                this.openGLControl_Resized(sender, e);
             }
         }
 
