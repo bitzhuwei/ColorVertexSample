@@ -43,7 +43,16 @@ namespace SharpGL.SceneComponent
             IBoundingBox boundingBox = this.boundingBox;
             if (boundingBox == null) { return; }
 
+            //gl.Enable(OpenGL.GL_POLYGON_OFFSET_LINE);
+            //gl.PolygonOffset(-1.0f, -1.0f);
+            //int [] results = new int[2];
+            //gl.GetInteger(Enumerations.GetTarget.PolygonMode, results);
+            //gl.PolygonMode(OpenGL.GL_FRONT_AND_BACK, OpenGL.GL_LINE);
+
             boundingBox.Render(gl, renderMode);
+
+            //gl.PolygonMode(OpenGL.GL_FRONT_AND_BACK, (uint)results[0]);
+            //gl.Disable(OpenGL.GL_POLYGON_OFFSET_LINE);
         }
 
         #endregion
