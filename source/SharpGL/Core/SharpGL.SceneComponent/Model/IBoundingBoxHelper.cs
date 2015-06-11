@@ -33,7 +33,7 @@ namespace SharpGL.SceneComponent
             vector *= (1 + factor);
             Vertex newMax = min + vector;
             Vertex newMin = max - vector;
-            boundingBox.Set(min.X, min.Y, min.Z, max.X, max.Y, max.Z);
+            boundingBox.Set(newMin.X, newMin.Y, newMin.Z, newMax.X, newMax.Y, newMax.Z);
         }
     }
 }
