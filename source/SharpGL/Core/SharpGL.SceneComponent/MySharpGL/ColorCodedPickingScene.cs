@@ -12,13 +12,13 @@ namespace SharpGL.SceneComponent
     /// replace of <see cref="SharpGL.SceneGraph.Scene"/>
     /// <see cref="MyScene"/> pushes and pops <see cref="IBindable"/> scene elements.</para>
     /// </summary>
-    public class MyScene : SharpGL.SceneGraph.Scene
+    public class ColorCodedPickingScene : SharpGL.SceneGraph.Scene
     {
         /// <summary>
         /// 
         /// </summary>
         /// <param name="isClear">Execute gl.ClearColor() and gl.Clear() if true.</param>
-        public MyScene(SharedStageInfo stagetInfo = null, bool isClear = true)
+        public ColorCodedPickingScene(SharedStageInfo stagetInfo = null, bool isClear = true)
         {
             if (stagetInfo != null)
             {

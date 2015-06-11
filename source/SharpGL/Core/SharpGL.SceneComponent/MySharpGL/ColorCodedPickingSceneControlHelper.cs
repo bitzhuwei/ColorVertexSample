@@ -14,7 +14,7 @@ namespace SharpGL.SceneComponent
     /// The scene helper can be used to create scene presets, 
     /// such as designer, application, etc
     /// </summary>
-    public class MySceneControlHelper
+    public class ColorCodedPickingSceneControlHelper
     {
         /// <summary>
         /// Initialises a modeling scene. A modeling scene has:
@@ -23,7 +23,7 @@ namespace SharpGL.SceneComponent
         ///  - A design time grid and axis.
         /// </summary>
         /// <param name="scene">The scene.</param>
-        public static void InitialiseModelingScene(MyScene scene)
+        public static void InitialiseModelingScene(ColorCodedPickingScene scene)
         {
             //  Create the 'Look At' camera
             var lookAtCamera = new ScientificCamera()

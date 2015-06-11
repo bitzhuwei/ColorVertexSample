@@ -6,7 +6,7 @@ using System.Text;
 namespace SharpGL.SceneComponent
 {
     /// <summary>
-    /// This type's instance is used in <see cref="MyScene.Draw(RenderMode.HitTest)"/>
+    /// This type's instance is used in <see cref="ColorCodedPickingScene.Draw(RenderMode.HitTest)"/>
     /// by <see cref="IColorCodedPicking"/> so that sceneElements can get their updated PickingBaseID.
     /// </summary>
     public class SharedStageInfo

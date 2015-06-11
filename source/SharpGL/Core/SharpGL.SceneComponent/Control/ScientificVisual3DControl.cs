@@ -20,7 +20,7 @@ namespace SharpGL.SceneComponent
     /// <para>Set the <see cref="ScientificModel"/> property to view a model.</para>
     /// <para>这个控件在Perspective模式的camera下，Line会被大量的点覆盖。这个问题是由于场景范围太大造成的，也可能有一些其它原因，暂时不知道如今彻底解决。</para>
     /// </summary>
-    public partial class ScientificVisual3DControl : MySceneControl
+    public partial class ScientificVisual3DControl : ColorCodedPickingSceneControl
     {
         /// <summary>
         /// maintains bounding box that contains all models.
@@ -185,7 +185,7 @@ namespace SharpGL.SceneComponent
         /// <summary>
         /// holds UI elements(axis, color indicator etc).
         /// </summary>
-        internal MyScene UIScene { get; set; }
+        internal ColorCodedPickingScene UIScene { get; set; }
 
         /// <summary>
         /// rotate and translate camera on a sphere, whose center is camera's Target.

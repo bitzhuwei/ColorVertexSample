@@ -12,7 +12,7 @@ namespace SharpGL.SceneComponent
     {
         /// <summary>
         /// Gets or internal sets how many primitived have been rendered till now during hit test.
-        /// <para>This will be set up by <see cref="MyScene.Draw(RenderMode.HitTest)"/>, so just use it to set shader's uniform variable.</para>
+        /// <para>This will be set up by <see cref="ColorCodedPickingScene.Draw(RenderMode.HitTest)"/>, so just use it to set shader's uniform variable.</para>
         /// </summary>
         uint PickingBaseID { get; set; }
 

@@ -13,11 +13,11 @@ namespace SharpGL.SceneComponent
     /// <summary>
     /// replace of <see cref="SharpGL.WinForms.SceneControl"/>
     /// <para>Invoke base.OnSizeChanged to update opengl's view size.</para>
-    /// <para>Use <see cref="MyScene"/> instead of Scene. <see cref="MyScene"/> pushes and pops <see cref="IBindable"/> scene elements.</para>
+    /// <para>Use <see cref="ColorCodedPickingScene"/> instead of Scene. <see cref="ColorCodedPickingScene"/> pushes and pops <see cref="IBindable"/> scene elements.</para>
     /// </summary>
-    public partial class MySceneControl : OpenGLControl
+    public partial class ColorCodedPickingSceneControl : OpenGLControl
     {
-        public MySceneControl()
+        public ColorCodedPickingSceneControl()
         {
             // This call is required by the Windows.Forms Form Designer.
             InitializeComponent();
@@ -29,7 +29,7 @@ namespace SharpGL.SceneComponent
             this.scene.OpenGL = this.OpenGL;
 
             //  Initialise the scene.
-            MySceneControlHelper.InitialiseModelingScene(scene);
+            ColorCodedPickingSceneControlHelper.InitialiseModelingScene(scene);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -99,10 +99,10 @@ namespace SharpGL.SceneComponent
         /// <summary>
         /// This is the scene itself.
         /// </summary>
-        private MyScene scene = new MyScene();
+        private ColorCodedPickingScene scene = new ColorCodedPickingScene();
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public MyScene Scene
+        public ColorCodedPickingScene Scene
         {
             get { return scene; }
             set { scene = value; }

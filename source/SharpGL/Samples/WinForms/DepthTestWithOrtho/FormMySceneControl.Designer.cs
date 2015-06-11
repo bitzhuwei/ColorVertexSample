@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.mySceneControl = new SharpGL.SceneComponent.MySceneControl();
+            this.mySceneControl = new SharpGL.SceneComponent.ColorCodedPickingSceneControl();
             this.cmbCameraType = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtZFar = new System.Windows.Forms.TextBox();
@@ -140,7 +140,7 @@
 
         #endregion
 
-        private SharpGL.SceneComponent.MySceneControl mySceneControl;
+        private SharpGL.SceneComponent.ColorCodedPickingSceneControl mySceneControl;
         private System.Windows.Forms.ComboBox cmbCameraType;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox txtZFar;

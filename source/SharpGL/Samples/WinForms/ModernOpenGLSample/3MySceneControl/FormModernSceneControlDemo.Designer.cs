@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.mySceneControl = new SharpGL.SceneComponent.MySceneControl();
+            this.mySceneControl = new SharpGL.SceneComponent.ColorCodedPickingSceneControl();
             this.txtInfo = new System.Windows.Forms.TextBox();
             this.cmbBeginMode = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.mySceneControl)).BeginInit();
@@ -91,7 +91,7 @@
 
         #endregion
 
-        private SharpGL.SceneComponent.MySceneControl mySceneControl;
+        private SharpGL.SceneComponent.ColorCodedPickingSceneControl mySceneControl;
         private System.Windows.Forms.TextBox txtInfo;
         private System.Windows.Forms.ComboBox cmbBeginMode;
     }

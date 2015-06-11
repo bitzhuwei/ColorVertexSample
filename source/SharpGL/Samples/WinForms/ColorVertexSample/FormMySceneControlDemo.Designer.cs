@@ -31,7 +31,7 @@ namespace ColorVertexSample
         {
             this.rdoOrtho = new System.Windows.Forms.RadioButton();
             this.rdoPerspective = new System.Windows.Forms.RadioButton();
-            this.mySceneControl = new SharpGL.SceneComponent.MySceneControl();
+            this.mySceneControl = new SharpGL.SceneComponent.ColorCodedPickingSceneControl();
             this.label1 = new System.Windows.Forms.Label();
             this.cmbRenderOrder = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.mySceneControl)).BeginInit();
@@ -115,7 +115,7 @@ namespace ColorVertexSample
 
         #endregion
 
-        private MySceneControl mySceneControl;
+        private ColorCodedPickingSceneControl mySceneControl;
         private System.Windows.Forms.RadioButton rdoOrtho;
         private System.Windows.Forms.RadioButton rdoPerspective;
         private System.Windows.Forms.Label label1;

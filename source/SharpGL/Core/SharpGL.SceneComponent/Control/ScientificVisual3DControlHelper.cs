@@ -18,7 +18,7 @@ namespace SharpGL.SceneComponent
         {
             if (scientificVisual3DControl == null) { return; }
 
-            MyScene UIScene = new MyScene();
+            ColorCodedPickingScene UIScene = new ColorCodedPickingScene();
             SceneElement root = UIScene.SceneContainer;
             UIScene.IsClear = false;
             root.Name = "UI Scene's container";
@@ -92,7 +92,7 @@ namespace SharpGL.SceneComponent
         {
             if (scientificVisual3DControl == null) { return; }
 
-            MyScene scene = scientificVisual3DControl.Scene;
+            ColorCodedPickingScene scene = scientificVisual3DControl.Scene;
             scene.SceneContainer.Name = "Scene's container";
             scene.SceneContainer.Children.Clear();
             scene.SceneContainer.Effects.Clear();
