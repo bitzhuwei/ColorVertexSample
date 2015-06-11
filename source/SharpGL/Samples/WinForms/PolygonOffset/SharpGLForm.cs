@@ -92,6 +92,114 @@ namespace PolygonOffset
             //  Rotate around the Y axis.
             gl.Rotate(rotation, 0.0f, 1.0f, 0.0f);
 
+            DrawPyramid(gl);
+
+            if (offset)
+            {
+                gl.Enable(OpenGL.GL_POLYGON_OFFSET_FILL);
+                gl.PolygonOffset(1.0f, 1.0f);
+            }
+
+            gl.Color(1.0f, 0.0f, 0.0f);
+            gl.PolygonMode(OpenGL.GL_FRONT_AND_BACK, OpenGL.GL_FILL);
+            drawBox(gl);
+
+            if (offset)
+                gl.Disable(OpenGL.GL_POLYGON_OFFSET_FILL);
+
+            gl.Color(0.0f, 1.0f, 0.0f);
+            gl.PushMatrix();
+            gl.Translate(-0.25f, -0.25f, 0.5f);
+            gl.Scale(0.5f, 0.5f, 0.5f);
+            drawPolygon(gl);
+            gl.PopMatrix();
+
+            gl.Color(1.0f, 1.0f, 0.0f);
+            gl.PushMatrix();
+            gl.Translate(0.25f, 0.25f, 0.5f);
+            gl.Scale(0.5f, 0.5f, 0.5f);
+            drawPolygon(gl);
+            gl.PopMatrix();
+
+            if (offset)
+            {
+                gl.Enable(OpenGL.GL_POLYGON_OFFSET_FILL);
+                gl.PolygonOffset(-1.0f, -1.0f);
+            }
+
+            gl.Color(0.0f, 0.0f, 1.0f);
+            gl.PushMatrix();
+            gl.Translate(0.0f, 0.0f, 0.5f);
+            gl.Scale(0.5f, 0.5f, 0.5f);
+            drawPolygon(gl);
+            gl.PopMatrix();
+
+            if (offset)
+                gl.Disable(OpenGL.GL_POLYGON_OFFSET_FILL);
+
+            if (offset)
+            {
+                gl.Enable(OpenGL.GL_POLYGON_OFFSET_LINE);
+                gl.PolygonOffset(-1.0f, -1.0f);
+            }
+
+            gl.Color(0.0f, 0.0f, 0.0f);
+            gl.PolygonMode(OpenGL.GL_FRONT_AND_BACK, OpenGL.GL_LINE);
+            drawBox(gl);
+
+            if (offset)
+                gl.Disable(OpenGL.GL_POLYGON_OFFSET_LINE);
+
+        }
+
+        void drawBox(OpenGL gl)
+        {
+            gl.Begin(OpenGL.GL_QUADS);
+            // FRONT
+            gl.Vertex(-0.5f, -0.5f, 0.5f);
+            gl.Vertex(0.5f, -0.5f, 0.5f);
+            gl.Vertex(0.5f, 0.5f, 0.5f);
+            gl.Vertex(-0.5f, 0.5f, 0.5f);
+            // BACK
+            gl.Vertex(-0.5f, -0.5f, -0.5f);
+            gl.Vertex(-0.5f, 0.5f, -0.5f);
+            gl.Vertex(0.5f, 0.5f, -0.5f);
+            gl.Vertex(0.5f, -0.5f, -0.5f);
+            // LEFT
+            gl.Vertex(-0.5f, -0.5f, 0.5f);
+            gl.Vertex(-0.5f, 0.5f, 0.5f);
+            gl.Vertex(-0.5f, 0.5f, -0.5f);
+            gl.Vertex(-0.5f, -0.5f, -0.5f);
+            // RIGHT
+            gl.Vertex(0.5f, -0.5f, -0.5f);
+            gl.Vertex(0.5f, 0.5f, -0.5f);
+            gl.Vertex(0.5f, 0.5f, 0.5f);
+            gl.Vertex(0.5f, -0.5f, 0.5f);
+            // TOP
+            gl.Vertex(-0.5f, 0.5f, 0.5f);
+            gl.Vertex(0.5f, 0.5f, 0.5f);
+            gl.Vertex(0.5f, 0.5f, -0.5f);
+            gl.Vertex(-0.5f, 0.5f, -0.5f);
+            // BOTTOM
+            gl.Vertex(-0.5f, -0.5f, 0.5f);
+            gl.Vertex(-0.5f, -0.5f, -0.5f);
+            gl.Vertex(0.5f, -0.5f, -0.5f);
+            gl.Vertex(0.5f, -0.5f, 0.5f);
+            gl.End();
+        }
+
+        void drawPolygon(OpenGL gl)
+        {
+            gl.Begin(OpenGL.GL_QUADS);
+            gl.Vertex(-0.5f, -0.5f, 0.0f);
+            gl.Vertex(0.5f, -0.5f, 0.0f);
+            gl.Vertex(0.5f, 0.5f, 0.0f);
+            gl.Vertex(-0.5f, 0.5f, 0.0f);
+            gl.End();
+        }
+
+        private void DrawPyramid(OpenGL gl)
+        {
             //  Draw a coloured pyramid.
             gl.Begin(OpenGL.GL_TRIANGLES);
             gl.Color(1.0f, 0.0f, 0.0f);
@@ -178,5 +286,9 @@ namespace PolygonOffset
         /// </summary>
         private float rotation = 0.0f;
 
+        /// <summary>
+        /// determins whether enalbe or disable polygon offset.
+        /// </summary>
+        private bool offset = true;
     }
 }
