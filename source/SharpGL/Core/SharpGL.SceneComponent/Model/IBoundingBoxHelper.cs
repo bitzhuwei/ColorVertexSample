@@ -8,6 +8,11 @@ namespace SharpGL.SceneComponent
 {
     public static class IBoundingBoxHelper
     {
+        /// <summary>
+        /// Expands the <see cref="IBoundingBox"/>'s values.
+        /// </summary>
+        /// <param name="boundingBox"></param>
+        /// <param name="factor">0 for no expanding.</param>
         public static void Expand(this IBoundingBox boundingBox, float factor = 0.1f)
         {
             if (boundingBox == null) { return; }
