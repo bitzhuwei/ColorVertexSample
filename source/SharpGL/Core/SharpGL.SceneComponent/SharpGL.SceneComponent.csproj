@@ -61,6 +61,7 @@
     <Compile Include="ColorCodedPicking\GeometryTypes.cs" />
     <Compile Include="Control\ViewTypes.cs" />
     <Compile Include="Camera\CameraHelper.cs" />
+    <Compile Include="Model\IBoundingBoxHelper.cs" />
     <Compile Include="Model\ModelContainer.cs" />
     <Compile Include="Model\BoundingBox.cs">
       <SubType>Code</SubType>

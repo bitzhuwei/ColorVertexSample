@@ -36,6 +36,7 @@ namespace ColorVertexSample
         {
             IPickedGeometry picked = this.scientificVisual3DControl.PickedPrimitive;
             this.lblPickedPrimitive.Text = string.Format("Picked:{0}", picked);
+            this.lblPickingInfo.Text = string.Format("Picked:{0}", picked);
         }
 
         private void InitilizeViewTypeControl()
@@ -95,6 +96,8 @@ namespace ColorVertexSample
                         modelBoundingBox.MaxPosition.Y,
                         modelBoundingBox.MaxPosition.Z);
                 }
+                boundingBox.Expand();
+
                 // update ViewType to UserView.
                 this.scientificVisual3DControl.ViewType = ViewTypes.UserView;
 
@@ -131,7 +134,7 @@ namespace ColorVertexSample
 
         private void lblDebugInfo_MouseClick(object sender, MouseEventArgs e)
         {
-            if(e.Button== System.Windows.Forms.MouseButtons.Right)
+            if (e.Button == System.Windows.Forms.MouseButtons.Right)
             {
                 bool depthTest = this.scientificVisual3DControl.OpenGL.IsEnabled(OpenGL.GL_DEPTH_TEST);
                 StringBuilder builder = new StringBuilder();
@@ -158,7 +161,6 @@ namespace ColorVertexSample
             CameraTypes cameraType = (CameraTypes)Enum.Parse(typeof(CameraTypes), selected);
             this.scientificVisual3DControl.CameraType = cameraType;
         }
-
 
     }
 }
