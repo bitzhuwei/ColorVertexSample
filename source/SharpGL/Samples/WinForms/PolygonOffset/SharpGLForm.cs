@@ -257,7 +257,7 @@ namespace PolygonOffset
             OpenGL gl = openGLControl.OpenGL;
 
             //  Set the clear color.
-            gl.ClearColor(0, 0, 0, 0);
+            gl.ClearColor(0.4f, 0.6f, 0.9f, 0.5f);
         }
 
         /// <summary>
