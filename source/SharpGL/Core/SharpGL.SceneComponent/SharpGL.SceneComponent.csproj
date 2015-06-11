@@ -77,13 +77,7 @@
     <Compile Include="MySharpGL\ArcBallTransformEffect.cs" />
     <Compile Include="ByteColor.cs" />
     <Compile Include="Camera\CameraTypes.cs" />
-    <Compile Include="MySharpGL\MyOpenGLControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="MySharpGL\MyOpenGLControl.Designer.cs">
-      <DependentUpon>MyOpenGLControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MySharpGL\MySceneControlHelper.cs" />
+    <Compile Include="MySharpGL\ColorCodedPickingSceneControlHelper.cs" />
     <Compile Include="ColorCodedPicking\SharedStageInfo.cs" />
     <Compile Include="SimpleUI\ColorIndicator\ColorIndicatorBar.cs">
       <SubType>Code</SubType>
@@ -94,12 +88,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="SimpleUI\Axis\CylinderAxis.cs" />
-    <Compile Include="MySharpGL\MyScene.cs" />
-    <Compile Include="MySharpGL\MySceneControl.cs">
+    <Compile Include="MySharpGL\ColorCodedPickingScene.cs" />
+    <Compile Include="MySharpGL\ColorCodedPickingSceneControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MySharpGL\MySceneControl.Designer.cs">
-      <DependentUpon>MySceneControl.cs</DependentUpon>
+    <Compile Include="MySharpGL\ColorCodedPickingSceneControl.Designer.cs">
+      <DependentUpon>ColorCodedPickingSceneControl.cs</DependentUpon>
     </Compile>
     <Compile Include="TransformInterface\IMouseLinearTransform.cs">
       <SubType>Code</SubType>
