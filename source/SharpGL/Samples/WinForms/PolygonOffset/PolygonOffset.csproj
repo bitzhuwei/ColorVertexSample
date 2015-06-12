@@ -47,6 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Camera\SatelliteRotation.cs" />
+    <Compile Include="Camera\ScientificCamera.cs" />
     <Compile Include="SharpGLForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -81,10 +83,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Core\SharpGL.SceneComponent\SharpGL.SceneComponent.csproj">
-      <Project>{8f81c853-d378-443d-9dfd-475db916cabd}</Project>
-      <Name>SharpGL.SceneComponent</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Core\SharpGL.SceneGraph\SharpGL.SceneGraph.csproj">
       <Project>{47bcaa39-edad-4404-b6bd-4742b0abb523}</Project>
       <Name>SharpGL.SceneGraph</Name>
@@ -92,10 +90,6 @@
     <ProjectReference Include="..\..\..\Core\SharpGL.WinForms\SharpGL.WinForms.csproj">
       <Project>{b2984a6d-ad1c-4be9-94ab-ba002b338751}</Project>
       <Name>SharpGL.WinForms</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Core\SharpGLM\SharpGLM.csproj">
-      <Project>{d15e2fee-512e-4804-8687-bcbdbedbeb7b}</Project>
-      <Name>SharpGLM</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Core\SharpGL\SharpGL.csproj">
       <Project>{5ef45533-e2c7-46f2-b4a3-b8f36cd406e0}</Project>

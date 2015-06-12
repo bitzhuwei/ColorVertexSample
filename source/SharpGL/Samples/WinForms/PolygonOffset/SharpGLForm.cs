@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using SharpGL;
-using SharpGL.SceneComponent;
 
 namespace PolygonOffset
 {
@@ -16,8 +15,8 @@ namespace PolygonOffset
     /// </summary>
     public partial class SharpGLForm : Form
     {
-        SharpGL.SceneComponent.SatelliteRotation satelliteRotation = new SharpGL.SceneComponent.SatelliteRotation();
-        SharpGL.SceneComponent.ScientificCamera camera = new SharpGL.SceneComponent.ScientificCamera(SharpGL.SceneComponent.CameraTypes.Perspecitive);
+        SatelliteRotation satelliteRotation = new SatelliteRotation();
+        ScientificCamera camera = new ScientificCamera();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SharpGLForm"/> class.
@@ -26,7 +25,7 @@ namespace PolygonOffset
         {
             InitializeComponent();
 
-            SharpGL.SceneComponent.ScientificCamera camera = this.camera;
+            ScientificCamera camera = this.camera;
 
             this.satelliteRotation.Camera = camera;
 
@@ -271,26 +270,17 @@ namespace PolygonOffset
         {
             //  TODO: Set the projection matrix here.
 
-            SharpGL.SceneComponent.ScientificCamera camera = this.camera;
-            SharpGL.SceneComponent.IPerspectiveViewCamera perspective = camera;
-            perspective.AspectRatio = (double)Width / (double)Height;
-            perspective.Far = 100;
-            perspective.Near = 0.01;
-            perspective.FieldOfView = 60;
+            ScientificCamera camera = this.camera;
+            camera.AspectRatio = (double)Width / (double)Height;
+            camera.Far = 100;
+            camera.Near = 0.01;
+            camera.FieldOfView = 60;
 
             //  Get the OpenGL object.
             OpenGL gl = openGLControl.OpenGL;
 
-            //  Set the projection matrix.
-            gl.MatrixMode(OpenGL.GL_PROJECTION);
+            camera.Project(gl);
 
-            //  Load the identity.
-            gl.LoadIdentity();
-
-            camera.TransformProjectionMatrix(gl);
-
-            //  Set the modelview matrix.
-            gl.MatrixMode(OpenGL.GL_MODELVIEW);
         }
 
         /// <summary>
