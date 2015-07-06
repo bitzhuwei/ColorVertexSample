@@ -55,6 +55,7 @@ namespace GeometryModel.Builder
 
         public static HexahedronGridder BuildGridder(HexahedronGridderSource source)
         {
+            Random random = new Random();
 
             int NI = source.NX;
             int NJ = source.NY;
@@ -81,7 +82,11 @@ namespace GeometryModel.Builder
                 cell.blb = source.PointBLB(i, j, k);
                 cell.brb = source.PointBRB(i, j, k);
                 cell.gridIndex = index;
-                cells[index]=cell;
+
+                // set random color for now
+                cell.color = new SharpGL.SceneGraph.GLColor((float)random.NextDouble(), (float)random.NextDouble(), (float)random.NextDouble(), (float)random.NextDouble());
+
+                cells[index] = cell;
             }
             HexahedronGridder gridder = new HexahedronGridder();
             gridder.Cells = cells;

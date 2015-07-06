@@ -181,7 +181,11 @@ namespace SharpGL.SceneComponent
             vertexBufferArray.Bind(gl);
 
             //  Draw the square.
-            gl.DrawArrays((uint)this.Model.Mode, 0, this.Model.VertexCount);
+            ScientificModel model = this.Model;
+            if (model.First != null && model.Count != null && model.PrimitiveCount > 0)
+            { gl.MultiDrawArrays((uint)model.Mode, model.First, model.Count, model.PrimitiveCount); }
+            else
+            { gl.DrawArrays((uint)this.Model.Mode, 0, this.Model.VertexCount); }
 
             //  Unbind our vertex array and shader.
             vertexBufferArray.Unbind(gl);

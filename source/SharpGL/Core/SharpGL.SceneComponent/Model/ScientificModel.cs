@@ -50,6 +50,21 @@ namespace SharpGL.SceneComponent
         public float[] Colors { get; protected set; }
 
         /// <summary>
+        /// MultiDrawArray()
+        /// </summary>
+        public int[] First { get; set; }
+
+        /// <summary>
+        /// MultiDrawArray()
+        /// </summary>
+        public int[] Count { get; set; }
+
+        /// <summary>
+        /// MultiDrawArray()
+        /// </summary>
+        public int PrimitiveCount { get; set; }
+
+        /// <summary>
         /// Generic model that contains positions, colors and a bouding box.
         /// </summary>
         /// <param name="vertexCount"></param>
