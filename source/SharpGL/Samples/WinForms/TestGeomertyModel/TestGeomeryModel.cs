@@ -5,6 +5,7 @@ using GeometryModel.Builder;
 using GeometryModel.Gridder;
 using GeometryModel.GLPrimitive;
 using SharpGL.SceneGraph;
+using System.Runtime.InteropServices;
 
 namespace TestGeomertyModel
 {
@@ -45,6 +46,16 @@ namespace TestGeomertyModel
                System.Console.WriteLine(FormatVertex(cell.blb));
                System.Console.WriteLine(FormatVertex(cell.brb));
             }
+        }
+
+        [TestMethod]
+        public void TestStructSize()
+        {
+            
+            int size = Marshal.SizeOf(typeof(Hexahedron));
+            System.Console.WriteLine("sizeof(Hexahedron):"+size);
+            System.Console.WriteLine("sizeof(Vertex):" + Marshal.SizeOf(typeof(Vertex)));
+            System.Console.WriteLine("sizeof(GLColor):"+Marshal.SizeOf(typeof(GLColor)));
         }
     }
 }
