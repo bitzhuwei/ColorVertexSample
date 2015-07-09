@@ -81,6 +81,11 @@ namespace SharpGL.SceneComponent
             { ManualRender(this); }
         }
 
+        /// <summary>
+        /// 是否启用Picking。
+        /// </summary>
+        public bool EnablePicking { get; set; }
+
         void ScientificVisual3DControl_MouseMove(object sender, MouseEventArgs e)
         {
             bool render = false;
@@ -98,13 +103,17 @@ namespace SharpGL.SceneComponent
             if (render)
             { ManualRender(this); }
 
-            if (!(e.X == lastX && e.Y == lastY))
+            if (this.EnablePicking)
             {
-                this.PickedPrimitive = this.Pick(e.X, e.Y);
-                lastX = e.X;
-                lastY = e.Y;
+                if (!(e.X == lastX && e.Y == lastY))
+                {
+                    this.PickedPrimitive = this.Pick(e.X, e.Y);
+                    lastX = e.X;
+                    lastY = e.Y;
+                }
             }
         }
+
         private int lastX = -1;
         private int lastY = -1;
 
