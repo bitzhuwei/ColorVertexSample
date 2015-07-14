@@ -88,14 +88,14 @@ namespace YieldingGeometryModel
             positionBuffer.Create(gl);
             positionBuffer.Bind(gl);
             //positionBuffer.SetData(gl, (uint)attributeIndexPosition, positions.length, positions.ptr, false, vertexDimension);
-            positionBuffer.SetData(gl, 0u, this.positions, false, 3);
+            positionBuffer.SetData(gl, (uint)attributeIndexPosition, this.positions, false, 3);
 
             //  Now do the same for the color data.
             var colorBuffer = new VertexBuffer();
             colorBuffer.Create(gl);
             colorBuffer.Bind(gl);
             //colorBuffer.SetData(gl, (uint)attributeIndexColor, colors.length, colors.ptr, false, colorDimension);
-            colorBuffer.SetData(gl, 1u, this.colors, false, 3);
+            colorBuffer.SetData(gl, (uint)attributeIndexColor, this.colors, false, 3);
 
             //  Unbind the vertex array, we've finished specifying data for it.
             vao.Unbind(gl);
