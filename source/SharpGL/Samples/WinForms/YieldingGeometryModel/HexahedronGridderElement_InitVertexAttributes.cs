@@ -123,6 +123,9 @@ namespace YieldingGeometryModel
                         positions[gridderElementIndex + (vertexIndex++)] = vertex.X;
                         positions[gridderElementIndex + (vertexIndex++)] = vertex.Y;
                         positions[gridderElementIndex + (vertexIndex++)] = vertex.Z;
+
+                        // 顺便处理boundingbox.
+                        this.boundingBox.Extend(vertex);
                     }
                 }
                 // 计算颜色信息。

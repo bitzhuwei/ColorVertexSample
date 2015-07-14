@@ -21,7 +21,7 @@ namespace YieldingGeometryModel
     /// 用于渲染六面体网格。
     /// Rendering gridder of hexadrons.
     /// </summary>
-    public partial class HexahedronGridderElement : SceneElement, IRenderable
+    public partial class HexahedronGridderElement : SceneElement, IRenderable, IBoundingBox
     {
 
         //  The projection, view and model matrices.
@@ -103,7 +103,6 @@ namespace YieldingGeometryModel
 
 
         #endregion
-
 
     }
 }

@@ -53,6 +53,7 @@
     <Compile Include="DataSource\GridderSource.cs" />
     <Compile Include="DataSource\HexahedronGridderSource.cs" />
     <Compile Include="GLPrimitive\Hexadron.cs" />
+    <Compile Include="HexahedronGridderElement_IBoundingBox.cs" />
     <Compile Include="HexahedronGridderElement_DrawWithVAO.cs" />
     <Compile Include="HexahedronGridderElement_UpdateMatrixes.cs" />
     <Compile Include="HexahedronGridderElement_InitVertexAttributes.cs" />
