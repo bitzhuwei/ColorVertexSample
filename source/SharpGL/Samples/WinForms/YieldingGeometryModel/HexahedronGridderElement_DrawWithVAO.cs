@@ -38,15 +38,15 @@ namespace YieldingGeometryModel
 
             //  Draw the square.
             // TODO: draw hexahedron
-            //ScientificModel model = this.Model;
-            //if (model.First != null && model.Count != null && model.PrimitiveCount > 0)
-            //{ gl.MultiDrawArrays((uint)model.Mode, model.First, model.Count, model.PrimitiveCount); }
-            //else
-            //{ gl.DrawArrays((uint)this.Model.Mode, 0, this.Model.VertexCount); }
+            indexDataBuffer.Bind(gl);
+            gl.Enable(OpenGL.GL_PRIMITIVE_RESTART);
+            gl.PrimitiveRestartIndex(ushort.MaxValue);// 截断三角形带的索引值。
+            gl.DrawElements(OpenGL.GL_TRIANGLE_STRIP, indexes.Length, OpenGL.GL_UNSIGNED_SHORT, IntPtr.Zero);
 
             //  Unbind our vertex array and shader.
             vertexBufferArray.Unbind(gl);
             shader.Unbind(gl);
+            gl.Disable(OpenGL.GL_PRIMITIVE_RESTART);
         }
 
     }

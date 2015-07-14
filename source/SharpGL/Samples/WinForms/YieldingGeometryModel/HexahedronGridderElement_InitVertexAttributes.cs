@@ -46,10 +46,6 @@ namespace YieldingGeometryModel
             //UnmanagedArray positionArrayWrapper;
             //UnmanagedArray colorArrayWrapper;
             //UnmanagedArray indexeArrayWrapper;
-            float[] positions = null;
-            float[] colors = null;
-            ushort[] indexes = null;// 先用unshort，等其他问题都解决了再换成uint.
-            InitArrays(out positions, out colors, out indexes);
 
             InitVAO(gl, positions, colors, indexes);
         }
@@ -134,8 +130,8 @@ namespace YieldingGeometryModel
                     for (int vertexIndex = 0; vertexIndex < vertexCountInHexahedron; vertexIndex++)
                     {
                         colors[gridderElementIndex + vertexIndex * elementCountInVertex + 0] = color.R;
-                        colors[gridderElementIndex + vertexIndex * elementCountInVertex + 1] = color.R;
-                        colors[gridderElementIndex + vertexIndex * elementCountInVertex + 2] = color.R;
+                        colors[gridderElementIndex + vertexIndex * elementCountInVertex + 1] = color.G;
+                        colors[gridderElementIndex + vertexIndex * elementCountInVertex + 2] = color.B;
                     }
                 }
 

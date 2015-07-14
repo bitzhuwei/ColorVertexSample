@@ -47,7 +47,19 @@ namespace YieldingGeometryModel.Builder
                 //cell.gridIndex = index;
 
                 // set random color for now
-                cell.color = new SharpGL.SceneGraph.GLColor((float)random.NextDouble(), (float)random.NextDouble(), (float)random.NextDouble(), (float)random.NextDouble());
+                //cell.color = new SharpGL.SceneGraph.GLColor((float)random.NextDouble(), (float)random.NextDouble(), (float)random.NextDouble(), (float)random.NextDouble());
+                //float r = (float)random.Next(0, int.MaxValue) / (float)int.MaxValue;
+                //float g = (float)random.Next(0, int.MaxValue) / (float)int.MaxValue;
+                //float b = (float)random.Next(0, int.MaxValue) / (float)int.MaxValue;
+                //float a = (float)random.Next(0, int.MaxValue) / (float)int.MaxValue;
+                //cell.color = new SharpGL.SceneGraph.GLColor(r, g, b, a);
+                byte[] bytes = new byte[4];
+                random.NextBytes(bytes);
+                cell.color = new SharpGL.SceneGraph.GLColor(
+                    (0.0f + bytes[0]) / byte.MaxValue,
+                    (0.0f + bytes[1]) / byte.MaxValue,
+                    (0.0f + bytes[2]) / byte.MaxValue,
+                    (0.0f + bytes[3]) / byte.MaxValue);
 
                 yield return cell;
                 //cells[index] = cell;
@@ -57,11 +69,7 @@ namespace YieldingGeometryModel.Builder
             //gridder.IJKCellsMap = gridCellMap;
             //return gridder;
 
-
         }
-
-
-
 
     }
 }
