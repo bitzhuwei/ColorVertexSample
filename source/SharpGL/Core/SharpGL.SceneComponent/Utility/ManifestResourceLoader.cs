@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
 using System.Reflection;
 
 namespace SharpGL.SceneComponent
@@ -15,9 +17,13 @@ namespace SharpGL.SceneComponent
         /// <returns>The contents of the manifest resource.</returns>
         public static string LoadTextFile(string textFileName)
         {
-            var executingAssembly = Assembly.GetExecutingAssembly();
-            var pathToDots = textFileName.Replace("\\", ".");
-            var location = string.Format("{0}.{1}", executingAssembly.GetName().Name, pathToDots);
+            StackTrace stack = new StackTrace();
+            StackFrame frame = stack.GetFrame(1);
+            MethodBase method = frame.GetMethod();
+            Type type = method.ReflectedType;
+            Assembly executingAssembly = type.Assembly; //Assembly.GetExecutingAssembly();
+            string pathToDots = textFileName.Replace("\\", ".");
+            string location = string.Format("{0}.{1}", executingAssembly.GetName().Name, pathToDots);
 
             using (var stream = executingAssembly.GetManifestResourceStream(location))
             {
