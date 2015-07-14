@@ -54,7 +54,7 @@
     <Compile Include="DataSource\HexahedronGridderSource.cs" />
     <Compile Include="GLPrimitive\Hexadron.cs" />
     <Compile Include="HexahedronGridderElement.cs" />
-    <Compile Include="IntPtrWrapper.cs" />
+    <Compile Include="UnmanagedArray.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
