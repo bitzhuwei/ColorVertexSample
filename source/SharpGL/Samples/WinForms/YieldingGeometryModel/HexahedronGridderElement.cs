@@ -24,7 +24,7 @@ namespace YieldingGeometryModel
         private bool preparedForRendering = false;
         private float[] positions;
         private float[] colors;
-        private int[] indexes;
+        //private int[] indexes;
         private IntPtrWrapper indexesWrapper;
 
         private HexahedronGridderSource source;
@@ -73,7 +73,8 @@ namespace YieldingGeometryModel
         {
             gl.Enable(OpenGL.GL_PRIMITIVE_RESTART);
             gl.PrimitiveRestartIndex(uint.MaxValue);
-            var count = indexes.Length / (triangleStrip + 1);
+            //var count = indexes.Length / (triangleStrip + 1);
+            var count = indexesWrapper.length / (sizeof(uint) * (triangleStrip + 1));
             gl.DrawElements(OpenGL.GL_TRIANGLE_STRIP, count, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
         }
 
@@ -111,7 +112,8 @@ namespace YieldingGeometryModel
             uint[] indexVBO = new uint[1];
             gl.GenBuffers(1, indexVBO);
             gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, indexVBO[0]);
-            BufferData(gl, OpenGL.GL_ELEMENT_ARRAY_BUFFER, this.indexes, OpenGL.GL_STATIC_DRAW);
+            //BufferData(gl, OpenGL.GL_ELEMENT_ARRAY_BUFFER, this.indexes, OpenGL.GL_STATIC_DRAW);
+            gl.BufferData(OpenGL.GL_ELEMENT_ARRAY_BUFFER, this.indexesWrapper.length, this.indexesWrapper.pointer, OpenGL.GL_STATIC_DRAW);
 
         }
         public void BufferData(OpenGL gl, uint target, int[] data, uint usage)
@@ -167,7 +169,7 @@ namespace YieldingGeometryModel
             // 稍后将用InPtr代替float[]
             float[] positions = new float[arrayLength];
             float[] colors = new float[arrayLength];
-            int[] indexes = new int[indexLength];
+            //int[] indexes = new int[indexLength];
             IntPtrWrapper indexesWrapper = new IntPtrWrapper();
             indexesWrapper.pointer = Marshal.AllocHGlobal(indexLength * sizeof(uint));
             indexesWrapper.length = indexLength * sizeof(uint);
@@ -223,7 +225,7 @@ namespace YieldingGeometryModel
 
             this.positions = positions;
             this.colors = colors;
-            this.indexes = indexes;
+            //this.indexes = indexes;
             this.indexesWrapper = indexesWrapper;
             //this.indexesWrapper
         }
