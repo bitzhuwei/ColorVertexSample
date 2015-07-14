@@ -97,7 +97,6 @@
     <Compile Include="FormScientificVisual3DControl.Designer.cs">
       <DependentUpon>FormScientificVisual3DControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="HexahedronGridderHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VertexHelper.cs" />
@@ -156,9 +155,9 @@
       <Project>{5ef45533-e2c7-46f2-b4a3-b8f36cd406e0}</Project>
       <Name>SharpGL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GeometryModel\GeometryModel.csproj">
-      <Project>{48474623-ffdd-4cbd-ad39-79cd201d3a27}</Project>
-      <Name>GeometryModel</Name>
+    <ProjectReference Include="..\YieldingGeometryModel\YieldingGeometryModel.csproj">
+      <Project>{19decd3d-c2b6-4a9a-88e1-2113718447d1}</Project>
+      <Name>YieldingGeometryModel</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

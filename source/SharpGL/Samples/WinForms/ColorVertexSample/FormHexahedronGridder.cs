@@ -18,9 +18,7 @@ using System.Windows.Forms;
 using SharpGL.SceneGraph.Assets;
 using SharpGL.SceneGraph.Quadrics;
 using SharpGL.SceneComponent;
-using GeometryModel;
-using GeometryModel.Gridder;
-using GeometryModel.Builder;
+using YieldingGeometryModel;
 
 namespace ColorVertexSample
 {
@@ -90,19 +88,17 @@ namespace ColorVertexSample
                 catesianSource.DY = dy;
                 catesianSource.DZ = dz;
 
-                HexahedronGridder gridder = HexahedronGridderBuilder.BuildGridder(catesianSource);
-                ScientificModel model = HexahedronGridderHelper.GetModel(gridder);
+                //HexahedronGridder gridder = HexahedronGridderBuilder.BuildGridder(catesianSource);
+                //ScientificModel model = HexahedronGridderHelper.GetModel(gridder);
 
-                //ScientificModel model = new ScientificModel()
-
-                //this.sceneControl.AddScientificModel(model);// This is replaced by codes below.
-                ScientificModelElement element = new ScientificModelElement(
-                    model, this.scientificVisual3DControl.Scene.CurrentCamera);
+                //ScientificModelElement element = new ScientificModelElement(
+                    //model, this.scientificVisual3DControl.Scene.CurrentCamera);
+                HexahedronGridderElement element = new HexahedronGridderElement(catesianSource, this.scientificVisual3DControl.Scene.CurrentCamera);
                 element.Name = string.Format("element {0}", elementCounter++);
                 this.scientificVisual3DControl.AddModelElement(element);
                 // update ModelContainer's BoundingBox.
                 BoundingBox boundingBox = this.scientificVisual3DControl.ModelContainer.BoundingBox;
-                IBoundingBox modelBoundingBox = model.BoundingBox;
+                IBoundingBox modelBoundingBox = element as IBoundingBox; // model.BoundingBox;
                 if (this.scientificVisual3DControl.ModelContainer.Children.Count > 1)
                 {
                     boundingBox.Extend(modelBoundingBox.MinPosition);
@@ -123,8 +119,8 @@ namespace ColorVertexSample
                 this.scientificVisual3DControl.ViewType = ViewTypes.UserView;
 
                 //this.scientificVisual3DControl.SetColorIndicator(minValue, maxValue, step);
-                var min = model.BoundingBox.MinPosition.MinField();
-                var max = model.BoundingBox.MaxPosition.MaxField();
+                var min = modelBoundingBox.MinPosition.MinField();
+                var max = modelBoundingBox.MaxPosition.MaxField();
                 this.scientificVisual3DControl.SetColorIndicator(min, max, step);
             }
             catch (Exception error)
