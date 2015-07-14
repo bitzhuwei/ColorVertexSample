@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using YieldingGeometryModel.Builder;
@@ -23,7 +24,7 @@ namespace YieldingGeometryModel
         private bool preparedForRendering = false;
         private float[] positions;
         private float[] colors;
-        private float[] indexes;
+        private int[] indexes;
 
         private HexahedronGridderSource source;
         private ShaderProgram shaderProgram;
@@ -69,7 +70,10 @@ namespace YieldingGeometryModel
         /// <param name="renderMode"></param>
         private void DoRender(OpenGL gl, RenderMode renderMode)
         {
-
+            gl.Enable(OpenGL.GL_PRIMITIVE_RESTART);
+            gl.PrimitiveRestartIndex(uint.MaxValue);
+            var count = indexes.Length / (triangleStrip + 1);
+            gl.DrawElements(OpenGL.GL_TRIANGLE_STRIP, count, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
         }
 
         /// <summary>
@@ -101,8 +105,23 @@ namespace YieldingGeometryModel
             vao.Unbind(gl);
             gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, 0);
             gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, 0);
-        }
 
+
+            uint[] indexVBO = new uint[1];
+            gl.GenBuffers(1, indexVBO);
+            gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, indexVBO[0]);
+            BufferData(gl, OpenGL.GL_ELEMENT_ARRAY_BUFFER, this.indexes, OpenGL.GL_STATIC_DRAW);
+
+        }
+        public void BufferData(OpenGL gl, uint target, int[] data, uint usage)
+        {
+            var dataSize = data.Length * sizeof(int);
+            IntPtr p = Marshal.AllocHGlobal(dataSize);
+            Marshal.Copy(data, 0, p, data.Length);
+            gl.BufferData(target, dataSize, p, usage);
+            //GetDelegateFor<glBufferData>()(target, dataSize, p, usage);
+            Marshal.FreeHGlobal(p);
+        }
         /// <summary>
         /// 初始化Shader。
         /// </summary>
@@ -121,25 +140,35 @@ namespace YieldingGeometryModel
         }
 
         /// <summary>
+        /// 元素内的顶点数
+        /// </summary>
+        const int vertexCountInHexahedron = 8; 
+        /// <summary>
+        /// 顶点的元素数
+        /// </summary>
+        const int elementCountInVertex = 3; 
+        /// <summary>
+        /// 用三角形带画六面体，需要14个顶点（索引值）
+        /// </summary>
+        const int triangleStrip = 14;
+
+        /// <summary>
         /// 准备各项顶点属性。
         /// </summary>
         /// <param name="source"></param>
         private void PrepareVertexAttributes(HexahedronGridderSource source)
         {
-            const int vertexCountInHexahedron = 8;// 元素内的顶点数
-            const int elementCountInVertex = 3;// 顶点的元素数
-            int arrayLength = source.DimenSize * vertexCountInHexahedron * elementCountInVertex;
+            uint arrayLength = (uint)(source.DimenSize * vertexCountInHexahedron * elementCountInVertex);
 
-            const int triangleStrip = 14;
             // 用三角形带画六面体，需要14个顶点（索引值），为切断三角形带，还需要附加一个。
-            int indexLength = source.DimenSize * (triangleStrip + 1);
+            uint indexLength = (uint)(source.DimenSize * (triangleStrip + 1));
 
             // 稍后将用InPtr代替float[]
             float[] positions = new float[arrayLength];
             float[] colors = new float[arrayLength];
-            float[] indexes = new float[indexLength];
+            int[] indexes = new int[indexLength];
 
-            int gridderElementIndex = 0;
+            uint gridderElementIndex = 0;
             foreach (Hexahedron hexahedron in source.GetGridderCells())
             {
                 // 计算位置信息。
