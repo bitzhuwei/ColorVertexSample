@@ -27,7 +27,7 @@ namespace YieldingGeometryModel
         public IntPtr pointer;
 
         /// <summary>
-        /// 数组元素数 * 元素长度。
+        /// 申请到的字节数。（数组元素数 * 元素长度）。
         /// </summary>
         public int byteLength;
 
@@ -55,8 +55,11 @@ namespace YieldingGeometryModel
                 //TODO: Managed cleanup code here, while managed refs still valid
             }
             //TODO: Unmanaged cleanup code here
-            Marshal.FreeHGlobal(this.pointer);
-
+            IntPtr ptr = this.pointer;
+            this.pointer = IntPtr.Zero;
+            this.byteLength = 0;
+            Marshal.FreeHGlobal(ptr);
+            
             disposed = true;
         }
 
