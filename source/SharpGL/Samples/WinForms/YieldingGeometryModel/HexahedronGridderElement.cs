@@ -1,7 +1,11 @@
-﻿using SharpGL.SceneGraph;
+﻿using SharpGL;
+using SharpGL.SceneGraph;
 using SharpGL.SceneGraph.Core;
+using SharpGL.Shaders;
+using SharpGL.VertexBuffers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +25,12 @@ namespace YieldingGeometryModel
         private float[] colors;
         private float[] indexes;
 
+        private HexahedronGridderSource source;
+        private ShaderProgram shaderProgram;
+        //  Constants that specify the attribute indexes.
+        protected uint attributeIndexPosition = 0;
+        protected uint attributeIndexColor = 1;
+
         /// <summary>
         /// 用于渲染六面体网格。
         /// Rendering gridder of hexadrons. 
@@ -28,7 +38,86 @@ namespace YieldingGeometryModel
         /// <param name="source">用于生成网格内所有元素的数据源。</param>
         public HexahedronGridderElement(HexahedronGridderSource source)
         {
-            PrepareVertexAttributes(source);
+            this.source = source;
+        }
+
+
+        #region IRenderable 成员
+
+        void IRenderable.Render(SharpGL.OpenGL gl, RenderMode renderMode)
+        {
+            if (renderMode != RenderMode.Render) { return; }
+
+            if (!preparedForRendering)
+            {
+                PrepareVertexAttributes(this.source);
+                this.shaderProgram = InitializeShaderProgram(gl);
+                CreateVAO(gl);
+                preparedForRendering = true;
+            }
+
+            DoRender(gl, renderMode);
+        }
+
+
+        #endregion
+
+        /// <summary>
+        /// 执行渲染。
+        /// </summary>
+        /// <param name="gl"></param>
+        /// <param name="renderMode"></param>
+        private void DoRender(OpenGL gl, RenderMode renderMode)
+        {
+
+        }
+
+        /// <summary>
+        /// 创建VAO和VBO。
+        /// </summary>
+        /// <param name="gl"></param>
+        private void CreateVAO(OpenGL gl)
+        {
+            //  Create the vertex array object(VAO).
+            var vao = new VertexBufferArray();
+            vao.Create(gl);
+            vao.Bind(gl);
+
+            //  Create a vertex buffer(VBO) for the position data.
+            var positionBuffer = new VertexBuffer();
+            positionBuffer.Create(gl);
+            positionBuffer.Bind(gl);
+            //positionBuffer.SetData(gl, (uint)attributeIndexPosition, positions.length, positions.ptr, false, vertexDimension);
+            positionBuffer.SetData(gl, 0u, this.positions, false, 3);
+
+            //  Now do the same for the color data.
+            var colorBuffer = new VertexBuffer();
+            colorBuffer.Create(gl);
+            colorBuffer.Bind(gl);
+            //colorBuffer.SetData(gl, (uint)attributeIndexColor, colors.length, colors.ptr, false, colorDimension);
+            colorBuffer.SetData(gl, 1u, this.colors, false, 3);
+
+            //  Unbind the vertex array, we've finished specifying data for it.
+            vao.Unbind(gl);
+            gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, 0);
+            gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, 0);
+        }
+
+        /// <summary>
+        /// 初始化Shader。
+        /// </summary>
+        private ShaderProgram InitializeShaderProgram(OpenGL gl)
+        {
+            var vertexShaderSource = File.ReadAllText(@"HexahedronGridder.vert");
+            var fragmentShaderSource = File.ReadAllText(@"HexahedronGridder.frag");
+            shaderProgram = new ShaderProgram();
+            shaderProgram.Create(gl, vertexShaderSource, fragmentShaderSource, null);
+            shaderProgram.BindAttributeLocation(gl, attributeIndexPosition, "in_Position");
+            shaderProgram.BindAttributeLocation(gl, attributeIndexColor, "in_Color");
+            //gl.BindFragDataLocation(shaderProgram.ShaderProgramObject, 0, "out_Color");
+            shaderProgram.AssertValid(gl);
+
+            return shaderProgram;
         }
 
         /// <summary>
@@ -77,8 +166,10 @@ namespace YieldingGeometryModel
                 gridderElementIndex += vertexCountInHexahedron * elementCountInVertex;
             }
 
+            // 计算索引信息。
             for (int i = 0; i < indexLength / (triangleStrip + 1); i++)
             {
+                // 索引值的指定必须配合hexahedron.GetVertexes()的次序。
                 indexes[i * (triangleStrip + 1) + 00] = (i * vertexCountInHexahedron) + 0;
                 indexes[i * (triangleStrip + 1) + 01] = (i * vertexCountInHexahedron) + 2;
                 indexes[i * (triangleStrip + 1) + 02] = (i * vertexCountInHexahedron) + 4;
@@ -100,21 +191,5 @@ namespace YieldingGeometryModel
             this.colors = colors;
             this.indexes = indexes;
         }
-
-        #region IRenderable 成员
-
-        void IRenderable.Render(SharpGL.OpenGL gl, RenderMode renderMode)
-        {
-            if (renderMode != RenderMode.Render) { return; }
-
-            if (!preparedForRendering)
-            {
-
-            }
-            
-
-        }
-
-        #endregion
     }
 }

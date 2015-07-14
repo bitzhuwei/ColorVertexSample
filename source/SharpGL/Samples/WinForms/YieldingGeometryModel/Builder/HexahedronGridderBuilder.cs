@@ -10,6 +10,13 @@ namespace YieldingGeometryModel.Builder
 {
     public static class HexahedronGridderBuilder
     {
+
+        /// <summary>
+        /// 依次获取网格内的所有六面体。
+        /// Get hexahedrons of gridder from specified source successively.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
         public static IEnumerable<Hexahedron> GetGridderCells(this HexahedronGridderSource source)
         {
             Random random = new Random();
