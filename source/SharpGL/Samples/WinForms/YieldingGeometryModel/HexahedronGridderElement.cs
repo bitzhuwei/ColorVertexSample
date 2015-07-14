@@ -35,6 +35,7 @@ namespace YieldingGeometryModel
 
         //  The vertex buffer array which contains the vertex and colour buffers.
         VertexBufferArray vertexBufferArray;
+        IndexBuffer indexDataBuffer;
 
         //  The shader program for our vertex and fragment shader.
         private ShaderProgram shaderProgram;
