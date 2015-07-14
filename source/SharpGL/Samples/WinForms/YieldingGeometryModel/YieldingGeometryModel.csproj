@@ -40,6 +40,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Builder\HexahedronGridderBuilder.cs" />
+    <None Include="HexahedronGridder.frag" />
+    <None Include="HexahedronGridder.vert" />
     <Compile Include="Class1.cs" />
     <Compile Include="DataSource\CatesianGridderSource.cs" />
     <Compile Include="DataSource\CornerPointGridderSource.cs" />
