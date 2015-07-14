@@ -46,10 +46,14 @@
     <Compile Include="DataSource\GridderSource.cs" />
     <Compile Include="DataSource\HexahedronGridderSource.cs" />
     <Compile Include="GLPrimitive\Hexadron.cs" />
-    <Compile Include="Gridder\HexahedronGridder.cs" />
+    <Compile Include="HexahedronGridderElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Core\SharpGL.SceneComponent\SharpGL.SceneComponent.csproj">
+      <Project>{8f81c853-d378-443d-9dfd-475db916cabd}</Project>
+      <Name>SharpGL.SceneComponent</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Core\SharpGL.SceneGraph\SharpGL.SceneGraph.csproj">
       <Project>{47bcaa39-edad-4404-b6bd-4742b0abb523}</Project>
       <Name>SharpGL.SceneGraph</Name>

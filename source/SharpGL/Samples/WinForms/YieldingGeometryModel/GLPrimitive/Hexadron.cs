@@ -12,6 +12,56 @@ namespace YieldingGeometryModel.GLPrimitive
     /// </summary>
     public struct Hexahedron
     {
+
+        /// <summary>
+        /// 依次获取此六面体的8个顶点。
+        /// Get vertexs of this hexahedron successively.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Vertex> GetVertexes()
+        {
+            /// <summary>
+            /// front left top
+            /// </summary>
+            yield return flt;
+
+            /// <summary>
+            /// front right top
+            /// </summary>
+            yield return frt;
+
+            /// <summary>
+            /// front left bottom
+            /// </summary>
+            yield return flb;
+
+            /// <summary>
+            /// front right bottom
+            /// </summary>
+            yield return frb;
+
+            /// <summary>
+            /// back left top
+            /// </summary>
+            yield return blt;
+
+            /// <summary>
+            /// back right top
+            /// </summary>
+            yield return brt;
+
+            /// <summary>
+            /// back left bottom
+            /// </summary>
+            yield return blb;
+
+
+            /// <summary>
+            /// back right bottom
+            /// </summary>
+            yield return brb;
+        }
+
         /// <summary>
         /// front left top
         /// </summary>
