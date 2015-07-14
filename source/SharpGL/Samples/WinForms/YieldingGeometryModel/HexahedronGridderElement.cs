@@ -1,4 +1,6 @@
-﻿using SharpGL;
+﻿using GlmNet;
+using SharpGL;
+using SharpGL.SceneComponent;
 using SharpGL.SceneGraph;
 using SharpGL.SceneGraph.Core;
 using SharpGL.Shaders;
@@ -21,239 +23,161 @@ namespace YieldingGeometryModel
     /// </summary>
     public class HexahedronGridderElement : SceneElement, IRenderable
     {
-        private bool preparedForRendering = false;
-        private float[] positions;
-        private float[] colors;
-        //private int[] indexes;
-        private IntPtrWrapper indexesWrapper;
-
-        private HexahedronGridderSource source;
-        private ShaderProgram shaderProgram;
-        //  Constants that specify the attribute indexes.
-        protected uint attributeIndexPosition = 0;
-        protected uint attributeIndexColor = 1;
-
         /// <summary>
-        /// 用于渲染六面体网格。
-        /// Rendering gridder of hexadrons. 
+        /// The model shown in <see cref="ScientificVisual3DControl"/>.
         /// </summary>
-        /// <param name="source">用于生成网格内所有元素的数据源。</param>
-        public HexahedronGridderElement(HexahedronGridderSource source)
+        public ScientificModel Model { get; set; }
+
+        public bool RenderModel { get; set; }
+
+        public HexahedronGridderElement(ScientificModel model, IScientificCamera camera, bool renderModel = true)
         {
-            this.source = source;
+            this.Model = model;
+            this.Camera = camera;
+            this.RenderModel = renderModel;
         }
 
+
+        //  The projection, view and model matrices.
+        mat4 projectionMatrix;
+        mat4 viewMatrix;
+        mat4 modelMatrix;
+
+        //  Constants that specify the attribute indexes.
+        const uint attributeIndexPosition = 0;
+        const uint attributeIndexColour = 1;
+
+        //  The vertex buffer array which contains the vertex and colour buffers.
+        VertexBufferArray vertexBufferArray;
+
+        //  The shader program for our vertex and fragment shader.
+        private ShaderProgram shaderProgram;
+        private ShaderProgram pickingShaderProgram;
+        private bool initialised;
+
+        /// <summary>
+        /// <para>Use <see cref="IHasObjectSpace"/> and <see cref="IScientificCamera"/> to update projection and view matrices.</para>
+        /// </summary>
+        public IScientificCamera Camera { get; set; }
+
+        /// <summary>
+        /// Initialises the scene.
+        /// </summary>
+        /// <param name="gl">The OpenGL instance.</param>
+        public void Initialise(OpenGL gl)
+        {
+            //  Set a blue clear colour.
+            gl.ClearColor(0.4f, 0.6f, 0.9f, 0.5f);
+
+            {
+                //  Create the shader program.
+                var vertexShaderSource = ManifestResourceLoader.LoadTextFile(@"Model\Shader.vert");
+                var fragmentShaderSource = ManifestResourceLoader.LoadTextFile(@"Model\Shader.frag");
+                var shaderProgram = new ShaderProgram();
+                shaderProgram.Create(gl, vertexShaderSource, fragmentShaderSource, null);
+                shaderProgram.BindAttributeLocation(gl, attributeIndexPosition, "in_Position");
+                shaderProgram.BindAttributeLocation(gl, attributeIndexColour, "in_Color");
+                shaderProgram.AssertValid(gl);
+                this.shaderProgram = shaderProgram;
+            }
+            {
+                //  Create the picking shader program.
+                var vertexShaderSource = ColorCodedPickingShaderHelper.GetShaderSource(ColorCodedPickingShaderHelper.ShaderTypes.VertexShader);
+                var fragmentShaderSource = ColorCodedPickingShaderHelper.GetShaderSource(ColorCodedPickingShaderHelper.ShaderTypes.FragmentShader);
+                var shaderProgram = new ShaderProgram();
+                shaderProgram.Create(gl, vertexShaderSource, fragmentShaderSource, null);
+                shaderProgram.BindAttributeLocation(gl, attributeIndexPosition, "in_Position");
+                shaderProgram.BindAttributeLocation(gl, attributeIndexColour, "in_Color");
+                shaderProgram.AssertValid(gl);
+                this.pickingShaderProgram = shaderProgram;
+            }
+
+            unsafe
+            {
+                //  Create the vertex array object.
+                vertexBufferArray = new VertexBufferArray();
+                vertexBufferArray.Create(gl);
+                vertexBufferArray.Bind(gl);
+
+                //  Create a vertex buffer for the vertex data.
+                var vertexDataBuffer = new VertexBuffer();
+                vertexDataBuffer.Create(gl);
+                vertexDataBuffer.Bind(gl);
+                vertexDataBuffer.SetData(gl, 0, this.Model.Positions, false, 3);
+
+                //  Now do the same for the colour data.
+                var colourDataBuffer = new VertexBuffer();
+                colourDataBuffer.Create(gl);
+                colourDataBuffer.Bind(gl);
+                colourDataBuffer.SetData(gl, 1, this.Model.Colors, false, 3);
+
+                //  Unbind the vertex array, we've finished specifying data for it.
+                vertexBufferArray.Unbind(gl);
+            }
+
+            this.initialised = true;
+        }
 
         #region IRenderable 成员
 
-        void IRenderable.Render(SharpGL.OpenGL gl, RenderMode renderMode)
+        void IRenderable.Render(OpenGL gl, RenderMode renderMode)
         {
-            if (renderMode != RenderMode.Render) { return; }
+            if (!this.RenderModel) { return; }
 
-            if (!preparedForRendering)
+            if (!initialised)
             {
-                PrepareVertexAttributes(this.source);
-                this.shaderProgram = InitializeShaderProgram(gl);
-                CreateVAO(gl);
-                preparedForRendering = true;
+                this.Initialise(gl);
+            }
+            // Update matrices.
+            IScientificCamera camera = this.Camera;
+            if (camera != null)
+            {
+                if (camera.CameraType == CameraTypes.Perspecitive)
+                {
+                    IPerspectiveViewCamera perspective = camera;
+                    this.projectionMatrix = perspective.GetProjectionMat4();
+                    this.viewMatrix = perspective.GetViewMat4();
+                }
+                else if (camera.CameraType == CameraTypes.Ortho)
+                {
+                    IOrthoViewCamera ortho = camera;
+                    this.projectionMatrix = ortho.GetProjectionMat4();
+                    this.viewMatrix = ortho.GetViewMat4();
+                }
+                else
+                { throw new NotImplementedException(); }
             }
 
-            DoRender(gl, renderMode);
-        }
+            modelMatrix = mat4.identity();
 
+            //gl.PointSize(3);
+
+            var shader = (renderMode == RenderMode.HitTest) ? pickingShaderProgram : shaderProgram;
+            //  Bind the shader, set the matrices.
+            shader.Bind(gl);
+            shader.SetUniformMatrix4(gl, "projectionMatrix", projectionMatrix.to_array());
+            shader.SetUniformMatrix4(gl, "viewMatrix", viewMatrix.to_array());
+            shader.SetUniformMatrix4(gl, "modelMatrix", modelMatrix.to_array());
+            if (renderMode == RenderMode.HitTest)
+            {
+                shader.SetUniform1(gl, "pickingBaseID", ((IColorCodedPicking)this).PickingBaseID);
+            }
+
+            //  Bind the out vertex array.
+            vertexBufferArray.Bind(gl);
+
+            //  Draw the square.
+            ScientificModel model = this.Model;
+            if (model.First != null && model.Count != null && model.PrimitiveCount > 0)
+            { gl.MultiDrawArrays((uint)model.Mode, model.First, model.Count, model.PrimitiveCount); }
+            else
+            { gl.DrawArrays((uint)this.Model.Mode, 0, this.Model.VertexCount); }
+
+            //  Unbind our vertex array and shader.
+            vertexBufferArray.Unbind(gl);
+            shader.Unbind(gl);
+        }
 
         #endregion
-
-        /// <summary>
-        /// 执行渲染。
-        /// </summary>
-        /// <param name="gl"></param>
-        /// <param name="renderMode"></param>
-        private void DoRender(OpenGL gl, RenderMode renderMode)
-        {
-            gl.Enable(OpenGL.GL_PRIMITIVE_RESTART);
-            gl.PrimitiveRestartIndex(uint.MaxValue);
-            //var count = indexes.Length / (triangleStrip + 1);
-            var count = indexesWrapper.length / (sizeof(uint) * (triangleStrip + 1));
-            gl.DrawElements(OpenGL.GL_TRIANGLE_STRIP, count, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
-        }
-
-        /// <summary>
-        /// 创建VAO和VBO。
-        /// </summary>
-        /// <param name="gl"></param>
-        private void CreateVAO(OpenGL gl)
-        {
-            //  Create the vertex array object(VAO).
-            var vao = new VertexBufferArray();
-            vao.Create(gl);
-            vao.Bind(gl);
-
-            //  Create a vertex buffer(VBO) for the position data.
-            var positionBuffer = new VertexBuffer();
-            positionBuffer.Create(gl);
-            positionBuffer.Bind(gl);
-            //positionBuffer.SetData(gl, (uint)attributeIndexPosition, positions.length, positions.ptr, false, vertexDimension);
-            positionBuffer.SetData(gl, (uint)attributeIndexPosition, this.positions, false, 3);
-
-            //  Now do the same for the color data.
-            var colorBuffer = new VertexBuffer();
-            colorBuffer.Create(gl);
-            colorBuffer.Bind(gl);
-            //colorBuffer.SetData(gl, (uint)attributeIndexColor, colors.length, colors.ptr, false, colorDimension);
-            colorBuffer.SetData(gl, (uint)attributeIndexColor, this.colors, false, 3);
-
-            //  Unbind the vertex array, we've finished specifying data for it.
-            vao.Unbind(gl);
-            gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, 0);
-            gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, 0);
-
-
-            uint[] indexVBO = new uint[1];
-            gl.GenBuffers(1, indexVBO);
-            gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, indexVBO[0]);
-            //BufferData(gl, OpenGL.GL_ELEMENT_ARRAY_BUFFER, this.indexes, OpenGL.GL_STATIC_DRAW);
-            gl.BufferData(OpenGL.GL_ELEMENT_ARRAY_BUFFER, this.indexesWrapper.length, this.indexesWrapper.pointer, OpenGL.GL_STATIC_DRAW);
-
-        }
-        public void BufferData(OpenGL gl, uint target, int[] data, uint usage)
-        {
-            var dataSize = data.Length * sizeof(int);
-            IntPtr p = Marshal.AllocHGlobal(dataSize);
-            Marshal.Copy(data, 0, p, data.Length);
-            gl.BufferData(target, dataSize, p, usage);
-            //GetDelegateFor<glBufferData>()(target, dataSize, p, usage);
-            Marshal.FreeHGlobal(p);
-        }
-        /// <summary>
-        /// 初始化Shader。
-        /// </summary>
-        private ShaderProgram InitializeShaderProgram(OpenGL gl)
-        {
-            var vertexShaderSource = File.ReadAllText(@"HexahedronGridder.vert");
-            var fragmentShaderSource = File.ReadAllText(@"HexahedronGridder.frag");
-            shaderProgram = new ShaderProgram();
-            shaderProgram.Create(gl, vertexShaderSource, fragmentShaderSource, null);
-            shaderProgram.BindAttributeLocation(gl, attributeIndexPosition, "in_Position");
-            shaderProgram.BindAttributeLocation(gl, attributeIndexColor, "in_Color");
-            //gl.BindFragDataLocation(shaderProgram.ShaderProgramObject, 0, "out_Color");
-            shaderProgram.AssertValid(gl);
-
-            return shaderProgram;
-        }
-
-        /// <summary>
-        /// 元素内的顶点数
-        /// </summary>
-        const int vertexCountInHexahedron = 8;
-        /// <summary>
-        /// 顶点的元素数
-        /// </summary>
-        const int elementCountInVertex = 3;
-        /// <summary>
-        /// 用三角形带画六面体，需要14个顶点（索引值）
-        /// </summary>
-        const int triangleStrip = 14;
-
-        /// <summary>
-        /// 准备各项顶点属性。
-        /// </summary>
-        /// <param name="source"></param>
-        private void PrepareVertexAttributes(HexahedronGridderSource source)
-        {
-            int arrayLength = (int)(source.DimenSize * vertexCountInHexahedron * elementCountInVertex);
-
-            // 用三角形带画六面体，需要14个顶点（索引值），为切断三角形带，还需要附加一个。
-            int indexLength = (int)(source.DimenSize * (triangleStrip + 1));
-
-            // 稍后将用InPtr代替float[]
-            float[] positions = new float[arrayLength];
-            float[] colors = new float[arrayLength];
-            //int[] indexes = new int[indexLength];
-            IntPtrWrapper indexesWrapper = new IntPtrWrapper();
-            indexesWrapper.pointer = Marshal.AllocHGlobal(indexLength * sizeof(uint));
-            indexesWrapper.length = indexLength * sizeof(uint);
-
-            uint gridderElementIndex = 0;
-            foreach (Hexahedron hexahedron in source.GetGridderCells())
-            {
-                // 计算位置信息。
-                {
-                    int vertexIndex = 0;
-                    foreach (Vertex vertex in hexahedron.GetVertexes())
-                    {
-                        positions[gridderElementIndex + (vertexIndex++)] = vertex.X;
-                        positions[gridderElementIndex + (vertexIndex++)] = vertex.Y;
-                        positions[gridderElementIndex + (vertexIndex++)] = vertex.Z;
-                    }
-                }
-                // 计算颜色信息。
-                {
-                    GLColor color = hexahedron.color;
-                    for (int vertexIndex = 0; vertexIndex < vertexCountInHexahedron; vertexIndex++)
-                    {
-                        colors[gridderElementIndex + vertexIndex * elementCountInVertex + 0] = color.R;
-                        colors[gridderElementIndex + vertexIndex * elementCountInVertex + 1] = color.R;
-                        colors[gridderElementIndex + vertexIndex * elementCountInVertex + 2] = color.R;
-                    }
-                }
-
-                gridderElementIndex += vertexCountInHexahedron * elementCountInVertex;
-            }
-
-            //// 计算索引信息。
-            //for (int i = 0; i < indexLength / (triangleStrip + 1); i++)
-            //{
-            //    // 索引值的指定必须配合hexahedron.GetVertexes()的次序。
-            //    indexes[i * (triangleStrip + 1) + 00] = (i * vertexCountInHexahedron) + 0;
-            //    indexes[i * (triangleStrip + 1) + 01] = (i * vertexCountInHexahedron) + 2;
-            //    indexes[i * (triangleStrip + 1) + 02] = (i * vertexCountInHexahedron) + 4;
-            //    indexes[i * (triangleStrip + 1) + 03] = (i * vertexCountInHexahedron) + 6;
-            //    indexes[i * (triangleStrip + 1) + 04] = (i * vertexCountInHexahedron) + 7;
-            //    indexes[i * (triangleStrip + 1) + 05] = (i * vertexCountInHexahedron) + 2;
-            //    indexes[i * (triangleStrip + 1) + 06] = (i * vertexCountInHexahedron) + 3;
-            //    indexes[i * (triangleStrip + 1) + 07] = (i * vertexCountInHexahedron) + 0;
-            //    indexes[i * (triangleStrip + 1) + 08] = (i * vertexCountInHexahedron) + 1;
-            //    indexes[i * (triangleStrip + 1) + 09] = (i * vertexCountInHexahedron) + 4;
-            //    indexes[i * (triangleStrip + 1) + 10] = (i * vertexCountInHexahedron) + 5;
-            //    indexes[i * (triangleStrip + 1) + 11] = (i * vertexCountInHexahedron) + 7;
-            //    indexes[i * (triangleStrip + 1) + 12] = (i * vertexCountInHexahedron) + 1;
-            //    indexes[i * (triangleStrip + 1) + 13] = (i * vertexCountInHexahedron) + 3;
-            //    indexes[i * (triangleStrip + 1) + 14] = int.MaxValue;// 截断三角形带的索引值。
-            //}
-            PrepareIndexes(indexesWrapper);
-
-            this.positions = positions;
-            this.colors = colors;
-            //this.indexes = indexes;
-            this.indexesWrapper = indexesWrapper;
-            //this.indexesWrapper
-        }
-
-        private unsafe void PrepareIndexes(IntPtrWrapper indexexWrapper)
-        {
-            uint* indexes = (uint*)(indexexWrapper.pointer);
-
-            // 计算索引信息。
-            for (int i = 0; i < indexesWrapper.length / (sizeof(uint) * (triangleStrip + 1)); i++)
-            {
-                // 索引值的指定必须配合hexahedron.GetVertexes()的次序。
-                indexes[i * (triangleStrip + 1) + 00] = (uint)((i * vertexCountInHexahedron) + 0);
-                indexes[i * (triangleStrip + 1) + 01] = (uint)((i * vertexCountInHexahedron) + 2);
-                indexes[i * (triangleStrip + 1) + 02] = (uint)((i * vertexCountInHexahedron) + 4);
-                indexes[i * (triangleStrip + 1) + 03] = (uint)((i * vertexCountInHexahedron) + 6);
-                indexes[i * (triangleStrip + 1) + 04] = (uint)((i * vertexCountInHexahedron) + 7);
-                indexes[i * (triangleStrip + 1) + 05] = (uint)((i * vertexCountInHexahedron) + 2);
-                indexes[i * (triangleStrip + 1) + 06] = (uint)((i * vertexCountInHexahedron) + 3);
-                indexes[i * (triangleStrip + 1) + 07] = (uint)((i * vertexCountInHexahedron) + 0);
-                indexes[i * (triangleStrip + 1) + 08] = (uint)((i * vertexCountInHexahedron) + 1);
-                indexes[i * (triangleStrip + 1) + 09] = (uint)((i * vertexCountInHexahedron) + 4);
-                indexes[i * (triangleStrip + 1) + 10] = (uint)((i * vertexCountInHexahedron) + 5);
-                indexes[i * (triangleStrip + 1) + 11] = (uint)((i * vertexCountInHexahedron) + 7);
-                indexes[i * (triangleStrip + 1) + 12] = (uint)((i * vertexCountInHexahedron) + 1);
-                indexes[i * (triangleStrip + 1) + 13] = (uint)((i * vertexCountInHexahedron) + 3);
-                indexes[i * (triangleStrip + 1) + 14] = uint.MaxValue;// 截断三角形带的索引值。
-            }
-        }
     }
 }

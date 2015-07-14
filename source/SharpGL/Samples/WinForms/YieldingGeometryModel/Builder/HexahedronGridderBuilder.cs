@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using YieldingGeometryModel.GLPrimitive;
-//using YieldingGeometryModel.Gridder;
 
 namespace YieldingGeometryModel.Builder
 {
