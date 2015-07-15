@@ -63,36 +63,14 @@ namespace ColorVertexSample
                 int nz = System.Convert.ToInt32(tbNZ.Text);
                 float step = System.Convert.ToSingle(tbColorIndicatorStep.Text);
                 float radius = System.Convert.ToSingle(this.tbRadius.Text);
-                //float minValue = System.Convert.ToSingle(this.tbRangeMin.Text);
-                //float maxValue = System.Convert.ToSingle(this.tbRangeMax.Text);
-                //if (minValue >= maxValue)
-                //throw new ArgumentException("min value equal or equal to maxValue");
 
-                //int vertexCount = nx * ny * nz;
-                //Vertex min = new Vertex(minValue, minValue, minValue);
-                //Vertex max = new Vertex(maxValue, maxValue, maxValue);
-
-                //ScientificModel model = new ScientificModel(vertexCount, BeginMode.Points);
-                //model.Build(min, max);
-
-                // use HexahedronGridder to fill ScientificModel's content.
                 float dx = System.Convert.ToSingle(this.tbDX.Text);
                 float dy = System.Convert.ToSingle(this.gbDY.Text);
                 float dz = System.Convert.ToSingle(this.tbDZ.Text);
-                CatesianGridderSource catesianSource = new CatesianGridderSource();
+                // use CatesianGridderSource to fill HexahedronGridderElement's content.
+                CatesianGridderSource catesianSource = new CatesianGridderSource() 
+                { NX = nx, NY = ny, NZ = nz, DX = dx, DY = dy, DZ = dz, };
 
-                catesianSource.NX = nx;
-                catesianSource.NY = ny;
-                catesianSource.NZ = nz;
-                catesianSource.DX = dx;
-                catesianSource.DY = dy;
-                catesianSource.DZ = dz;
-
-                //HexahedronGridder gridder = HexahedronGridderBuilder.BuildGridder(catesianSource);
-                //ScientificModel model = HexahedronGridderHelper.GetModel(gridder);
-
-                //ScientificModelElement element = new ScientificModelElement(
-                    //model, this.scientificVisual3DControl.Scene.CurrentCamera);
                 HexahedronGridderElement element = new HexahedronGridderElement(catesianSource, this.scientificVisual3DControl.Scene.CurrentCamera);
                 element.Name = string.Format("element {0}", elementCounter++);
                 this.scientificVisual3DControl.AddModelElement(element);
@@ -118,7 +96,6 @@ namespace ColorVertexSample
                 // update ViewType to UserView.
                 this.scientificVisual3DControl.ViewType = ViewTypes.UserView;
 
-                //this.scientificVisual3DControl.SetColorIndicator(minValue, maxValue, step);
                 var min = modelBoundingBox.MinPosition.MinField();
                 var max = modelBoundingBox.MaxPosition.MaxField();
                 this.scientificVisual3DControl.SetColorIndicator(min, max, step);
