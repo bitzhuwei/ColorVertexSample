@@ -25,13 +25,13 @@ namespace YieldingGeometryModel
     {
 
         /// <summary>
-        /// 元素内的顶点数
+        /// 元素内的顶点数。（8）
         /// </summary>
         const int vertexCountInHexahedron = 8;
         /// <summary>
-        /// 顶点的元素数
+        /// 顶点的分量数。（3）
         /// </summary>
-        const int elementCountInVertex = 3;
+        const int componentCountInVertex = 3;
         /// <summary>
         /// 用三角形带画六面体，需要14个顶点（索引值）
         /// </summary>
@@ -43,10 +43,6 @@ namespace YieldingGeometryModel
         /// <param name="gl"></param>
         unsafe private void InitVertexAttributes(OpenGL gl)
         {
-            //UnmanagedArray positionArrayWrapper;
-            //UnmanagedArray colorArrayWrapper;
-            //UnmanagedArray indexeArrayWrapper;
-
             InitVAO(gl, positions, colors, this.indexArray);
 
             this.indexArray.Dispose();
@@ -65,9 +61,7 @@ namespace YieldingGeometryModel
                 indexDataBuffer = new IndexBuffer();
                 indexDataBuffer.Create(gl);
                 indexDataBuffer.Bind(gl);
-                //indexDataBuffer.SetData(gl, indexArray);
-                gl.BufferData(OpenGL.GL_ELEMENT_ARRAY_BUFFER, indexArray.byteLength, indexArray.pointer, OpenGL.GL_STATIC_DRAW);
-                //Marshal.FreeHGlobal(p);
+                gl.BufferData(OpenGL.GL_ELEMENT_ARRAY_BUFFER, indexArray.ByteLength, indexArray.Pointer, OpenGL.GL_STATIC_DRAW);
             }
 
             {
@@ -103,19 +97,11 @@ namespace YieldingGeometryModel
         /// <param name="indexes"></param>
         private void InitArrays(out float[] positions, out float[] colors, out UnmanagedArray indexes)
         {
-            int arrayLength = (int)(source.DimenSize * vertexCountInHexahedron * elementCountInVertex);
-
-            // 用三角形带画六面体，需要14个顶点（索引值），为切断三角形带，还需要附加一个。
-            int indexLength = (int)(source.DimenSize * (triangleStrip + 1));
+            int arrayLength = (int)(source.DimenSize * vertexCountInHexahedron * componentCountInVertex);
 
             // 稍后将用InPtr代替float[]
             positions = new float[arrayLength];
             colors = new float[arrayLength];
-            indexes = new UnmanagedArray(indexLength * sizeof(ushort)); //new ushort[indexLength];
-            //var x = new UnmanagedArray(indexLength*sizeof(ushort), ushort);
-            //indexesWrapper = new IntPtrWrapper();
-            //indexesWrapper.pointer = Marshal.AllocHGlobal(indexLength * sizeof(uint));
-            //indexesWrapper.length = indexLength * sizeof(uint);
 
             uint gridderElementIndex = 0;
             foreach (Hexahedron hexahedron in source.GetGridderCells())
@@ -138,97 +124,51 @@ namespace YieldingGeometryModel
                     GLColor color = hexahedron.color;
                     for (int vertexIndex = 0; vertexIndex < vertexCountInHexahedron; vertexIndex++)
                     {
-                        colors[gridderElementIndex + vertexIndex * elementCountInVertex + 0] = color.R;
-                        colors[gridderElementIndex + vertexIndex * elementCountInVertex + 1] = color.G;
-                        colors[gridderElementIndex + vertexIndex * elementCountInVertex + 2] = color.B;
+                        colors[gridderElementIndex + vertexIndex * componentCountInVertex + 0] = color.R;
+                        colors[gridderElementIndex + vertexIndex * componentCountInVertex + 1] = color.G;
+                        colors[gridderElementIndex + vertexIndex * componentCountInVertex + 2] = color.B;
                     }
                 }
 
-                gridderElementIndex += vertexCountInHexahedron * elementCountInVertex;
+                gridderElementIndex += vertexCountInHexahedron * componentCountInVertex;
             }
 
-            // 计算索引信息。
-            //for (int i = 0; i < indexLength / (triangleStrip + 1); i++)
-            //{
-            //    // 索引值的指定必须配合hexahedron.GetVertexes()的次序。
-            //    indexes[i * (triangleStrip + 1) + 00] = (ushort)((i * vertexCountInHexahedron) + 0);
-            //    indexes[i * (triangleStrip + 1) + 01] = (ushort)((i * vertexCountInHexahedron) + 2);
-            //    indexes[i * (triangleStrip + 1) + 02] = (ushort)((i * vertexCountInHexahedron) + 4);
-            //    indexes[i * (triangleStrip + 1) + 03] = (ushort)((i * vertexCountInHexahedron) + 6);
-            //    indexes[i * (triangleStrip + 1) + 04] = (ushort)((i * vertexCountInHexahedron) + 7);
-            //    indexes[i * (triangleStrip + 1) + 05] = (ushort)((i * vertexCountInHexahedron) + 2);
-            //    indexes[i * (triangleStrip + 1) + 06] = (ushort)((i * vertexCountInHexahedron) + 3);
-            //    indexes[i * (triangleStrip + 1) + 07] = (ushort)((i * vertexCountInHexahedron) + 0);
-            //    indexes[i * (triangleStrip + 1) + 08] = (ushort)((i * vertexCountInHexahedron) + 1);
-            //    indexes[i * (triangleStrip + 1) + 09] = (ushort)((i * vertexCountInHexahedron) + 4);
-            //    indexes[i * (triangleStrip + 1) + 10] = (ushort)((i * vertexCountInHexahedron) + 5);
-            //    indexes[i * (triangleStrip + 1) + 11] = (ushort)((i * vertexCountInHexahedron) + 7);
-            //    indexes[i * (triangleStrip + 1) + 12] = (ushort)((i * vertexCountInHexahedron) + 1);
-            //    indexes[i * (triangleStrip + 1) + 13] = (ushort)((i * vertexCountInHexahedron) + 3);
-            //    indexes[i * (triangleStrip + 1) + 14] = ushort.MaxValue;// 截断三角形带的索引值。
-            //}
-            InitIndexArray(indexes);
+            InitIndexArray(out indexes);
 
-            //this.positions = positions;
-            //this.colors = colors;
-            //this.indexes = indexes;
-            //this.indexesWrapper = indexesWrapper;
-            //this.indexesWrapper
         }
 
-        private unsafe void InitIndexArray(UnmanagedArray indexArray)
+        /// <summary>
+        /// 初始化索引数组。
+        /// </summary>
+        /// <param name="indexArray"></param>
+        private unsafe void InitIndexArray(out UnmanagedArray indexArray)
         {
-            //ushort* indexes = (ushort*)(indexArray.pointer);
-            ushort* indexes = (ushort*)indexArray.pointer.ToPointer();
+            // 用三角形带画六面体，需要14个顶点（索引值），为切断三角形带，还需要附加一个。
+            int indexCount = (int)(source.DimenSize * (triangleStrip + 1));
+
+            indexArray = new UnmanagedArray(indexCount, sizeof(uint));
+            uint* indexes = (uint*)indexArray.Pointer.ToPointer();
 
             // 计算索引信息。
-            int elementCount = indexArray.byteLength / sizeof(ushort);
-            for (int i = 0; i < elementCount / ((triangleStrip + 1)); i++)
+            for (int i = 0; i < indexArray.ElementCount / ((triangleStrip + 1)); i++)
             {
                 // 索引值的指定必须配合hexahedron.GetVertexes()的次序。
-                indexes[i * (triangleStrip + 1) + 00] = (ushort)((i * vertexCountInHexahedron) + 0);
-                indexes[i * (triangleStrip + 1) + 01] = (ushort)((i * vertexCountInHexahedron) + 2);
-                indexes[i * (triangleStrip + 1) + 02] = (ushort)((i * vertexCountInHexahedron) + 4);
-                indexes[i * (triangleStrip + 1) + 03] = (ushort)((i * vertexCountInHexahedron) + 6);
-                indexes[i * (triangleStrip + 1) + 04] = (ushort)((i * vertexCountInHexahedron) + 7);
-                indexes[i * (triangleStrip + 1) + 05] = (ushort)((i * vertexCountInHexahedron) + 2);
-                indexes[i * (triangleStrip + 1) + 06] = (ushort)((i * vertexCountInHexahedron) + 3);
-                indexes[i * (triangleStrip + 1) + 07] = (ushort)((i * vertexCountInHexahedron) + 0);
-                indexes[i * (triangleStrip + 1) + 08] = (ushort)((i * vertexCountInHexahedron) + 1);
-                indexes[i * (triangleStrip + 1) + 09] = (ushort)((i * vertexCountInHexahedron) + 4);
-                indexes[i * (triangleStrip + 1) + 10] = (ushort)((i * vertexCountInHexahedron) + 5);
-                indexes[i * (triangleStrip + 1) + 11] = (ushort)((i * vertexCountInHexahedron) + 7);
-                indexes[i * (triangleStrip + 1) + 12] = (ushort)((i * vertexCountInHexahedron) + 1);
-                indexes[i * (triangleStrip + 1) + 13] = (ushort)((i * vertexCountInHexahedron) + 3);
-                indexes[i * (triangleStrip + 1) + 14] = ushort.MaxValue;// 截断三角形带的索引值。
+                indexes[i * (triangleStrip + 1) + 00] = (uint)((i * vertexCountInHexahedron) + 0);
+                indexes[i * (triangleStrip + 1) + 01] = (uint)((i * vertexCountInHexahedron) + 2);
+                indexes[i * (triangleStrip + 1) + 02] = (uint)((i * vertexCountInHexahedron) + 4);
+                indexes[i * (triangleStrip + 1) + 03] = (uint)((i * vertexCountInHexahedron) + 6);
+                indexes[i * (triangleStrip + 1) + 04] = (uint)((i * vertexCountInHexahedron) + 7);
+                indexes[i * (triangleStrip + 1) + 05] = (uint)((i * vertexCountInHexahedron) + 2);
+                indexes[i * (triangleStrip + 1) + 06] = (uint)((i * vertexCountInHexahedron) + 3);
+                indexes[i * (triangleStrip + 1) + 07] = (uint)((i * vertexCountInHexahedron) + 0);
+                indexes[i * (triangleStrip + 1) + 08] = (uint)((i * vertexCountInHexahedron) + 1);
+                indexes[i * (triangleStrip + 1) + 09] = (uint)((i * vertexCountInHexahedron) + 4);
+                indexes[i * (triangleStrip + 1) + 10] = (uint)((i * vertexCountInHexahedron) + 5);
+                indexes[i * (triangleStrip + 1) + 11] = (uint)((i * vertexCountInHexahedron) + 7);
+                indexes[i * (triangleStrip + 1) + 12] = (uint)((i * vertexCountInHexahedron) + 1);
+                indexes[i * (triangleStrip + 1) + 13] = (uint)((i * vertexCountInHexahedron) + 3);
+                indexes[i * (triangleStrip + 1) + 14] = uint.MaxValue;// 截断三角形带的索引值。
             }
         }
-
-        //private unsafe void InitIndexArray(UnmanagedArray indexArray)
-        //{
-        //    uint* indexes = (uint*)(indexArray.pointer);
-
-        //    // 计算索引信息。
-        //int elementCount = indexArray.byteLength / sizeof(uint);
-            //for (int i = 0; i < elementCount / ((triangleStrip + 1)); i++)
-        //    {
-        //        // 索引值的指定必须配合hexahedron.GetVertexes()的次序。
-        //        indexes[i * (triangleStrip + 1) + 00] = (uint)((i * vertexCountInHexahedron) + 0);
-        //        indexes[i * (triangleStrip + 1) + 01] = (uint)((i * vertexCountInHexahedron) + 2);
-        //        indexes[i * (triangleStrip + 1) + 02] = (uint)((i * vertexCountInHexahedron) + 4);
-        //        indexes[i * (triangleStrip + 1) + 03] = (uint)((i * vertexCountInHexahedron) + 6);
-        //        indexes[i * (triangleStrip + 1) + 04] = (uint)((i * vertexCountInHexahedron) + 7);
-        //        indexes[i * (triangleStrip + 1) + 05] = (uint)((i * vertexCountInHexahedron) + 2);
-        //        indexes[i * (triangleStrip + 1) + 06] = (uint)((i * vertexCountInHexahedron) + 3);
-        //        indexes[i * (triangleStrip + 1) + 07] = (uint)((i * vertexCountInHexahedron) + 0);
-        //        indexes[i * (triangleStrip + 1) + 08] = (uint)((i * vertexCountInHexahedron) + 1);
-        //        indexes[i * (triangleStrip + 1) + 09] = (uint)((i * vertexCountInHexahedron) + 4);
-        //        indexes[i * (triangleStrip + 1) + 10] = (uint)((i * vertexCountInHexahedron) + 5);
-        //        indexes[i * (triangleStrip + 1) + 11] = (uint)((i * vertexCountInHexahedron) + 7);
-        //        indexes[i * (triangleStrip + 1) + 12] = (uint)((i * vertexCountInHexahedron) + 1);
-        //        indexes[i * (triangleStrip + 1) + 13] = (uint)((i * vertexCountInHexahedron) + 3);
-        //        indexes[i * (triangleStrip + 1) + 14] = uint.MaxValue;// 截断三角形带的索引值。
-        //    }
-        //}
     }
 }

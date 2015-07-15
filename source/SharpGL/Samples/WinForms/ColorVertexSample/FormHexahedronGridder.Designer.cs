@@ -86,6 +86,7 @@
             this.tableLayoutPanel1.SetColumnSpan(this.scientificVisual3DControl, 2);
             this.scientificVisual3DControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.scientificVisual3DControl.DrawFPS = false;
+            this.scientificVisual3DControl.EnablePicking = false;
             this.scientificVisual3DControl.Location = new System.Drawing.Point(3, 111);
             this.scientificVisual3DControl.Name = "scientificVisual3DControl";
             this.scientificVisual3DControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;

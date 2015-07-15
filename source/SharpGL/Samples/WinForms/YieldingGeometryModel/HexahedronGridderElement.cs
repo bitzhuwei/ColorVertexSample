@@ -39,7 +39,7 @@ namespace YieldingGeometryModel
         float[] positions;
         float[] colors;
         //ushort[] indexes;// 先用unshort，等其他问题都解决了再换成uint.
-        UnmanagedArray indexArray;// 代替ushort[] indexes// 先用unshort，等其他问题都解决了再换成uint.
+        UnmanagedArray indexArray;
 
         //  The shader program for our vertex and fragment shader.
         private ShaderProgram shaderProgram;
@@ -76,9 +76,6 @@ namespace YieldingGeometryModel
         /// <param name="gl">The OpenGL instance.</param>
         public void Initialise(OpenGL gl)
         {
-            ////  Set a blue clear colour.
-            //gl.ClearColor(0.4f, 0.6f, 0.9f, 0.5f);
-
             //  Create the shader program.
             InitShader(gl);
             //  Create the picking shader program.

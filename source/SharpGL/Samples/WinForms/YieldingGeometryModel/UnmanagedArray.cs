@@ -12,25 +12,34 @@ namespace YieldingGeometryModel
     /// </summary>
     public class UnmanagedArray : IDisposable
     {
+
         /// <summary>
         /// 用于记录非托管的数组。
         /// </summary>
-        /// <param name="byteLength">所需的内存中的字节数。</param>
-        public UnmanagedArray(int byteLength)
+        /// <param name="elementCount">元素数目。</param>
+        /// <param name="elementSize">单个元素的字节数。</param>
+        public UnmanagedArray(int elementCount, int elementSize)
         {
-            this.pointer = Marshal.AllocHGlobal(byteLength);
-            this.byteLength = byteLength;
+            int length = elementCount * elementSize;
+            this.ElementCount = elementCount;
+            this.ByteLength = length;
+            this.Pointer = Marshal.AllocHGlobal(length);
         }
+
         /// <summary>
         /// 数组指针。
         /// </summary>
-        public IntPtr pointer;
+        public IntPtr Pointer { get; set; }
 
         /// <summary>
-        /// 申请到的字节数。（数组元素数 * 元素长度）。
+        /// 申请到的字节数。（元素数目 * 单个元素的字节数）。
         /// </summary>
-        public int byteLength;
+        public int ByteLength { get; set; }
 
+        /// <summary>
+        /// 元素数目。
+        /// </summary>
+        public int ElementCount { get; private set; }
 
         #region IDisposable Members
 
@@ -52,14 +61,14 @@ namespace YieldingGeometryModel
 
             if (disposing)
             {
-                //TODO: Managed cleanup code here, while managed refs still valid
+                //Managed cleanup code here, while managed refs still valid
             }
-            //TODO: Unmanaged cleanup code here
-            IntPtr ptr = this.pointer;
-            this.pointer = IntPtr.Zero;
-            this.byteLength = 0;
+            //Unmanaged cleanup code here
+            IntPtr ptr = this.Pointer;
+            this.Pointer = IntPtr.Zero;
+            this.ByteLength = 0;
             Marshal.FreeHGlobal(ptr);
-            
+
             disposed = true;
         }
 
@@ -78,6 +87,6 @@ namespace YieldingGeometryModel
         }
 
         #endregion
-				
+
     }
 }
