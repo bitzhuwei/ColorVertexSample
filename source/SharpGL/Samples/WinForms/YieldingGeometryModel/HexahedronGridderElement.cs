@@ -42,6 +42,11 @@ namespace YieldingGeometryModel
         /// Index buffer.
         /// </summary>
         IndexBuffer indexDataBuffer;
+
+        /// <summary>
+        /// 索引元素的数目。
+        /// Count of elements in index buffer array.
+        /// </summary>
         int indexArrayElementCount;
 
         //  The shader program for our vertex and fragment shader.
