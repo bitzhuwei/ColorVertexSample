@@ -47,7 +47,7 @@ namespace YieldingGeometryModel
             //UnmanagedArray colorArrayWrapper;
             //UnmanagedArray indexeArrayWrapper;
 
-            InitVAO(gl, positions, colors, indexes);
+            InitVAO(gl, positions, colors, this.indexArray);
         }
 
         /// <summary>
@@ -56,35 +56,41 @@ namespace YieldingGeometryModel
         /// <param name="gl"></param>
         /// <param name="positions"></param>
         /// <param name="colors"></param>
-        /// <param name="indexes"></param>
-        unsafe private void InitVAO(OpenGL gl, float[] positions, float[] colors, ushort[] indexes)
+        /// <param name="indexArray"></param>
+        unsafe private void InitVAO(OpenGL gl, float[] positions, float[] colors, UnmanagedArray indexArray)
         {
-            indexDataBuffer = new IndexBuffer();
-            indexDataBuffer.Create(gl);
-            indexDataBuffer.Bind(gl);
-            indexDataBuffer.SetData(gl, indexes);
+            {
+                indexDataBuffer = new IndexBuffer();
+                indexDataBuffer.Create(gl);
+                indexDataBuffer.Bind(gl);
+                //indexDataBuffer.SetData(gl, indexArray);
+                gl.BufferData(OpenGL.GL_ELEMENT_ARRAY_BUFFER, indexArray.byteLength, indexArray.pointer, OpenGL.GL_STATIC_DRAW);
+                //Marshal.FreeHGlobal(p);
+            }
 
-            //  Create the vertex array object.
-            vertexBufferArray = new VertexBufferArray();
-            vertexBufferArray.Create(gl);
-            vertexBufferArray.Bind(gl);
+            {
+                //  Create the vertex array object.
+                vertexBufferArray = new VertexBufferArray();
+                vertexBufferArray.Create(gl);
+                vertexBufferArray.Bind(gl);
 
-            //  Create a vertex buffer for the vertex data.
-            var vertexDataBuffer = new VertexBuffer();
-            vertexDataBuffer.Create(gl);
-            vertexDataBuffer.Bind(gl);
-            // TODO: set data
-            vertexDataBuffer.SetData(gl, 0, positions, false, 3);
+                //  Create a vertex buffer for the vertex data.
+                var vertexDataBuffer = new VertexBuffer();
+                vertexDataBuffer.Create(gl);
+                vertexDataBuffer.Bind(gl);
+                // TODO: set data
+                vertexDataBuffer.SetData(gl, 0, positions, false, 3);
 
-            //  Now do the same for the colour data.
-            var colourDataBuffer = new VertexBuffer();
-            colourDataBuffer.Create(gl);
-            colourDataBuffer.Bind(gl);
-            // TODO: set data
-            colourDataBuffer.SetData(gl, 1, colors, false, 3);
+                //  Now do the same for the colour data.
+                var colourDataBuffer = new VertexBuffer();
+                colourDataBuffer.Create(gl);
+                colourDataBuffer.Bind(gl);
+                // TODO: set data
+                colourDataBuffer.SetData(gl, 1, colors, false, 3);
 
-            //  Unbind the vertex array, we've finished specifying data for it.
-            vertexBufferArray.Unbind(gl);
+                //  Unbind the vertex array, we've finished specifying data for it.
+                vertexBufferArray.Unbind(gl);
+            }
         }
 
         /// <summary>
@@ -93,7 +99,7 @@ namespace YieldingGeometryModel
         /// <param name="positions"></param>
         /// <param name="colors"></param>
         /// <param name="indexes"></param>
-        private void InitArrays(out float[] positions, out float[] colors, out ushort[] indexes)
+        private void InitArrays(out float[] positions, out float[] colors, out UnmanagedArray indexes)
         {
             int arrayLength = (int)(source.DimenSize * vertexCountInHexahedron * elementCountInVertex);
 
@@ -103,7 +109,8 @@ namespace YieldingGeometryModel
             // 稍后将用InPtr代替float[]
             positions = new float[arrayLength];
             colors = new float[arrayLength];
-            indexes = new ushort[indexLength];
+            indexes = new UnmanagedArray(indexLength * sizeof(ushort)); //new ushort[indexLength];
+            //var x = new UnmanagedArray(indexLength*sizeof(ushort), ushort);
             //indexesWrapper = new IntPtrWrapper();
             //indexesWrapper.pointer = Marshal.AllocHGlobal(indexLength * sizeof(uint));
             //indexesWrapper.length = indexLength * sizeof(uint);
@@ -139,7 +146,42 @@ namespace YieldingGeometryModel
             }
 
             // 计算索引信息。
-            for (int i = 0; i < indexLength / (triangleStrip + 1); i++)
+            //for (int i = 0; i < indexLength / (triangleStrip + 1); i++)
+            //{
+            //    // 索引值的指定必须配合hexahedron.GetVertexes()的次序。
+            //    indexes[i * (triangleStrip + 1) + 00] = (ushort)((i * vertexCountInHexahedron) + 0);
+            //    indexes[i * (triangleStrip + 1) + 01] = (ushort)((i * vertexCountInHexahedron) + 2);
+            //    indexes[i * (triangleStrip + 1) + 02] = (ushort)((i * vertexCountInHexahedron) + 4);
+            //    indexes[i * (triangleStrip + 1) + 03] = (ushort)((i * vertexCountInHexahedron) + 6);
+            //    indexes[i * (triangleStrip + 1) + 04] = (ushort)((i * vertexCountInHexahedron) + 7);
+            //    indexes[i * (triangleStrip + 1) + 05] = (ushort)((i * vertexCountInHexahedron) + 2);
+            //    indexes[i * (triangleStrip + 1) + 06] = (ushort)((i * vertexCountInHexahedron) + 3);
+            //    indexes[i * (triangleStrip + 1) + 07] = (ushort)((i * vertexCountInHexahedron) + 0);
+            //    indexes[i * (triangleStrip + 1) + 08] = (ushort)((i * vertexCountInHexahedron) + 1);
+            //    indexes[i * (triangleStrip + 1) + 09] = (ushort)((i * vertexCountInHexahedron) + 4);
+            //    indexes[i * (triangleStrip + 1) + 10] = (ushort)((i * vertexCountInHexahedron) + 5);
+            //    indexes[i * (triangleStrip + 1) + 11] = (ushort)((i * vertexCountInHexahedron) + 7);
+            //    indexes[i * (triangleStrip + 1) + 12] = (ushort)((i * vertexCountInHexahedron) + 1);
+            //    indexes[i * (triangleStrip + 1) + 13] = (ushort)((i * vertexCountInHexahedron) + 3);
+            //    indexes[i * (triangleStrip + 1) + 14] = ushort.MaxValue;// 截断三角形带的索引值。
+            //}
+            InitIndexArray(indexes);
+
+            //this.positions = positions;
+            //this.colors = colors;
+            //this.indexes = indexes;
+            //this.indexesWrapper = indexesWrapper;
+            //this.indexesWrapper
+        }
+
+        private unsafe void InitIndexArray(UnmanagedArray indexArray)
+        {
+            //ushort* indexes = (ushort*)(indexArray.pointer);
+            ushort* indexes = (ushort*)indexArray.pointer.ToPointer();
+
+            // 计算索引信息。
+            int elementCount = indexArray.byteLength / sizeof(ushort);
+            for (int i = 0; i < elementCount / ((triangleStrip + 1)); i++)
             {
                 // 索引值的指定必须配合hexahedron.GetVertexes()的次序。
                 indexes[i * (triangleStrip + 1) + 00] = (ushort)((i * vertexCountInHexahedron) + 0);
@@ -158,21 +200,15 @@ namespace YieldingGeometryModel
                 indexes[i * (triangleStrip + 1) + 13] = (ushort)((i * vertexCountInHexahedron) + 3);
                 indexes[i * (triangleStrip + 1) + 14] = ushort.MaxValue;// 截断三角形带的索引值。
             }
-            //InitIndexArray(indexesWrapper);
-
-            //this.positions = positions;
-            //this.colors = colors;
-            //this.indexes = indexes;
-            //this.indexesWrapper = indexesWrapper;
-            //this.indexesWrapper
         }
 
-        //private unsafe void InitIndexArray(IntPtrWrapper indexexWrapper)
+        //private unsafe void InitIndexArray(UnmanagedArray indexArray)
         //{
-        //    uint* indexes = (uint*)(indexexWrapper.pointer);
+        //    uint* indexes = (uint*)(indexArray.pointer);
 
         //    // 计算索引信息。
-        //    for (int i = 0; i < indexeArrayWrapper.length / (sizeof(uint) * (triangleStrip + 1)); i++)
+        //int elementCount = indexArray.byteLength / sizeof(uint);
+            //for (int i = 0; i < elementCount / ((triangleStrip + 1)); i++)
         //    {
         //        // 索引值的指定必须配合hexahedron.GetVertexes()的次序。
         //        indexes[i * (triangleStrip + 1) + 00] = (uint)((i * vertexCountInHexahedron) + 0);

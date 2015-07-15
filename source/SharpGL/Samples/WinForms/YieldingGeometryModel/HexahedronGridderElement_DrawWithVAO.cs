@@ -41,7 +41,8 @@ namespace YieldingGeometryModel
             indexDataBuffer.Bind(gl);
             gl.Enable(OpenGL.GL_PRIMITIVE_RESTART);
             gl.PrimitiveRestartIndex(ushort.MaxValue);// 截断三角形带的索引值。
-            gl.DrawElements(OpenGL.GL_TRIANGLE_STRIP, indexes.Length, OpenGL.GL_UNSIGNED_SHORT, IntPtr.Zero);
+            //gl.DrawElements(OpenGL.GL_TRIANGLE_STRIP, indexes.Length, OpenGL.GL_UNSIGNED_SHORT, IntPtr.Zero);
+            gl.DrawElements(OpenGL.GL_TRIANGLE_STRIP, this.indexArray.byteLength / (sizeof(ushort)), OpenGL.GL_UNSIGNED_SHORT, IntPtr.Zero);
 
             //  Unbind our vertex array and shader.
             vertexBufferArray.Unbind(gl);
