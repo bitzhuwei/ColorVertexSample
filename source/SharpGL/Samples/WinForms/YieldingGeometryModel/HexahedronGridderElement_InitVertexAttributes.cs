@@ -43,8 +43,10 @@ namespace YieldingGeometryModel
         /// <param name="gl"></param>
         unsafe private void InitVertexAttributes(OpenGL gl)
         {
-            InitVAO(gl, positions, colors, this.indexArray);
+            InitVAO(gl, this.positionArray, this.colorArray, this.indexArray);
 
+            this.positionArray.Dispose();
+            this.colorArray.Dispose();
             this.indexArray.Dispose();
         }
 
@@ -55,7 +57,7 @@ namespace YieldingGeometryModel
         /// <param name="positions"></param>
         /// <param name="colors"></param>
         /// <param name="indexArray"></param>
-        unsafe private void InitVAO(OpenGL gl, float[] positions, float[] colors, UnmanagedArray indexArray)
+        unsafe private void InitVAO(OpenGL gl, UnmanagedArray positions, UnmanagedArray colors, UnmanagedArray indexArray)
         {
             {
                 indexDataBuffer = new IndexBuffer();
@@ -74,15 +76,15 @@ namespace YieldingGeometryModel
                 var vertexDataBuffer = new VertexBuffer();
                 vertexDataBuffer.Create(gl);
                 vertexDataBuffer.Bind(gl);
-                // TODO: set data
-                vertexDataBuffer.SetData(gl, 0, positions, false, 3);
+                //vertexDataBuffer.SetData(gl, 0, positions, false, 3);
+                vertexDataBuffer.SetData(gl, 0, positionArray.ByteLength, positionArray.Pointer, false, 3, OpenGL.GL_STATIC_DRAW);
 
                 //  Now do the same for the colour data.
                 var colourDataBuffer = new VertexBuffer();
                 colourDataBuffer.Create(gl);
                 colourDataBuffer.Bind(gl);
-                // TODO: set data
-                colourDataBuffer.SetData(gl, 1, colors, false, 3);
+                //colourDataBuffer.SetData(gl, 1, colors, false, 3);
+                colourDataBuffer.SetData(gl, 1, colorArray.ByteLength, colorArray.Pointer, false, 3, OpenGL.GL_STATIC_DRAW);
 
                 //  Unbind the vertex array, we've finished specifying data for it.
                 vertexBufferArray.Unbind(gl);
@@ -94,14 +96,16 @@ namespace YieldingGeometryModel
         /// </summary>
         /// <param name="positions"></param>
         /// <param name="colors"></param>
-        /// <param name="indexes"></param>
-        private void InitArrays(out float[] positions, out float[] colors, out UnmanagedArray indexes)
+        /// <param name="indexArray"></param>
+        unsafe private void InitArrays(out UnmanagedArray positionArray, out UnmanagedArray colorArray, out UnmanagedArray indexArray)
         {
             int arrayLength = (int)(source.DimenSize * vertexCountInHexahedron * componentCountInVertex);
 
             // 稍后将用InPtr代替float[]
-            positions = new float[arrayLength];
-            colors = new float[arrayLength];
+            positionArray = new UnmanagedArray(arrayLength, sizeof(float));
+            colorArray = new UnmanagedArray(arrayLength, sizeof(float));
+            float* positions = (float*)positionArray.Pointer.ToPointer();
+            float* colors = (float*)colorArray.Pointer.ToPointer();
 
             uint gridderElementIndex = 0;
             foreach (Hexahedron hexahedron in source.GetGridderCells())
@@ -133,7 +137,7 @@ namespace YieldingGeometryModel
                 gridderElementIndex += vertexCountInHexahedron * componentCountInVertex;
             }
 
-            InitIndexArray(out indexes);
+            InitIndexArray(out indexArray);
 
         }
 

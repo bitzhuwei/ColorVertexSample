@@ -36,9 +36,11 @@ namespace YieldingGeometryModel
         //  The vertex buffer array which contains the vertex and colour buffers.
         VertexBufferArray vertexBufferArray;
         IndexBuffer indexDataBuffer;
-        float[] positions;
-        float[] colors;
+        //float[] positions;
+        //float[] colors;
         //ushort[] indexes;// 先用unshort，等其他问题都解决了再换成uint.
+        UnmanagedArray positionArray;
+        UnmanagedArray colorArray;
         UnmanagedArray indexArray;
 
         //  The shader program for our vertex and fragment shader.
@@ -67,7 +69,7 @@ namespace YieldingGeometryModel
             this.source = source;
             this.camera = camera;
 
-            InitArrays(out this.positions, out this.colors, out this.indexArray);
+            InitArrays(out this.positionArray, out this.colorArray, out this.indexArray);
         }
 
         /// <summary>
