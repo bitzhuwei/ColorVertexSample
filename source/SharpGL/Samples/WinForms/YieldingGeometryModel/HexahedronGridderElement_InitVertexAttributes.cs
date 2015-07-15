@@ -48,6 +48,8 @@ namespace YieldingGeometryModel
             //UnmanagedArray indexeArrayWrapper;
 
             InitVAO(gl, positions, colors, this.indexArray);
+
+            this.indexArray.Dispose();
         }
 
         /// <summary>
