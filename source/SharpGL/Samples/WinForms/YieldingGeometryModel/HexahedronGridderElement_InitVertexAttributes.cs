@@ -78,11 +78,14 @@ namespace YieldingGeometryModel
         private void InitializeIndexArray(OpenGL gl)
         {
             UnmanagedArray indexArray = InitIndexArray();
-            indexDataBuffer = new IndexBuffer();
+            IndexBuffer indexDataBuffer = new IndexBuffer();
             indexDataBuffer.Create(gl);
             indexDataBuffer.Bind(gl);
             gl.BufferData(OpenGL.GL_ELEMENT_ARRAY_BUFFER, indexArray.ByteLength, indexArray.Pointer, OpenGL.GL_STATIC_DRAW);
+
             this.indexArrayElementCount = indexArray.ElementCount;
+            this.indexDataBuffer = indexDataBuffer;
+
             indexArray.Dispose();
         }
 

@@ -52,12 +52,6 @@ namespace YieldingGeometryModel
 
             modelMatrix = mat4.identity();
 
-            var shader = (renderMode == RenderMode.HitTest) ? pickingShaderProgram : shaderProgram;
-            //  Bind the shader, set the matrices.
-            shader.Bind(gl);
-            shader.SetUniformMatrix4(gl, "projectionMatrix", projectionMatrix.to_array());
-            shader.SetUniformMatrix4(gl, "viewMatrix", viewMatrix.to_array());
-            shader.SetUniformMatrix4(gl, "modelMatrix", modelMatrix.to_array());
         }
 
     }

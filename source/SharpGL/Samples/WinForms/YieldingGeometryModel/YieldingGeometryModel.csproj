@@ -43,7 +43,6 @@
     <Compile Include="Builder\HexahedronGridderBuilder.cs" />
     <EmbeddedResource Include="HexahedronGridder.frag" />
     <EmbeddedResource Include="HexahedronGridder.vert" />
-    <Compile Include="Class1.cs" />
     <Compile Include="DataSource\CatesianGridderSource.cs" />
     <Compile Include="DataSource\CornerPointGridderSource.cs" />
     <Compile Include="DataSource\GridderSource.cs" />

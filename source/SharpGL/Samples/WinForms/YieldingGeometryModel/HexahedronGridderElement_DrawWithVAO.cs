@@ -31,8 +31,6 @@ namespace YieldingGeometryModel
         /// <param name="renderMode"></param>
         private void DrawWithVAO(OpenGL gl, RenderMode renderMode)
         {
-            var shader = (renderMode == RenderMode.HitTest) ? pickingShaderProgram : shaderProgram;
-
             //  Bind the out vertex array.
             vertexBufferArray.Bind(gl);
 
@@ -44,7 +42,6 @@ namespace YieldingGeometryModel
 
             //  Unbind our vertex array and shader.
             vertexBufferArray.Unbind(gl);
-            shader.Unbind(gl);
             gl.Disable(OpenGL.GL_PRIMITIVE_RESTART);
         }
 

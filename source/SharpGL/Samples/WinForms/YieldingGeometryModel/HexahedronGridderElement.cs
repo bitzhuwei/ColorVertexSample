@@ -34,14 +34,14 @@ namespace YieldingGeometryModel
         const uint attributeIndexColour = 1;
 
         //  The vertex buffer array which contains the vertex and colour buffers.
+        /// <summary>
+        /// VAO.
+        /// </summary>
         VertexBufferArray vertexBufferArray;
+        /// <summary>
+        /// Index buffer.
+        /// </summary>
         IndexBuffer indexDataBuffer;
-        //float[] positions;
-        //float[] colors;
-        //ushort[] indexes;// 先用unshort，等其他问题都解决了再换成uint.
-        //UnmanagedArray positionArray;
-        //UnmanagedArray colorArray;
-        //UnmanagedArray indexArray;
         int indexArrayElementCount;
 
         //  The shader program for our vertex and fragment shader.
@@ -110,7 +110,17 @@ namespace YieldingGeometryModel
             // Update matrices.
             UpdateMatrixes(gl, renderMode);
 
+            var shader = (renderMode == RenderMode.HitTest) ? pickingShaderProgram : shaderProgram;
+
+            //  Bind the shader, set the matrices.
+            shader.Bind(gl);
+            shader.SetUniformMatrix4(gl, "projectionMatrix", projectionMatrix.to_array());
+            shader.SetUniformMatrix4(gl, "viewMatrix", viewMatrix.to_array());
+            shader.SetUniformMatrix4(gl, "modelMatrix", modelMatrix.to_array());
+
             DrawWithVAO(gl, renderMode);
+
+            shader.Unbind(gl);
         }
 
 
