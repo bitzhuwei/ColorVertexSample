@@ -72,8 +72,12 @@ namespace ColorVertexSample
                 { NX = nx, NY = ny, NZ = nz, DX = dx, DY = dy, DZ = dz, };
 
                 HexahedronGridderElement element = new HexahedronGridderElement(catesianSource, this.scientificVisual3DControl.Scene.CurrentCamera);
+                element.Initialise(this.scientificVisual3DControl.OpenGL);
+
                 element.Name = string.Format("element {0}", elementCounter++);
+
                 this.scientificVisual3DControl.AddModelElement(element);
+
                 // update ModelContainer's BoundingBox.
                 BoundingBox boundingBox = this.scientificVisual3DControl.ModelContainer.BoundingBox;
                 IBoundingBox modelBoundingBox = element as IBoundingBox; // model.BoundingBox;

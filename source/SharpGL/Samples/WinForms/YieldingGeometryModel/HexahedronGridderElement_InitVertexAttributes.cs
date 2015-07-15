@@ -38,119 +38,126 @@ namespace YieldingGeometryModel
         const int triangleStrip = 14;
 
         /// <summary>
-        /// init vertex attributes.
+        /// 初始化VAO并立即释放内存。
         /// </summary>
         /// <param name="gl"></param>
-        unsafe private void InitVertexAttributes(OpenGL gl)
+        private void InitializeVAO(OpenGL gl)
         {
-            InitVAO(gl, this.positionArray, this.colorArray, this.indexArray);
+            //  Create the vertex array object.
+            vertexBufferArray = new VertexBufferArray();
+            vertexBufferArray.Create(gl);
+            vertexBufferArray.Bind(gl);
 
-            this.positionArray.Dispose();
-            this.colorArray.Dispose();
-            this.indexArray.Dispose();
+            //  Create a vertex buffer for the vertex data.
+            UnmanagedArray positionArray = InitPositionArray();
+            var vertexDataBuffer = new VertexBuffer();
+            vertexDataBuffer.Create(gl);
+            vertexDataBuffer.Bind(gl);
+            //vertexDataBuffer.SetData(gl, 0, positions, false, 3);
+            vertexDataBuffer.SetData(gl, 0, positionArray.ByteLength, positionArray.Pointer, false, 3, OpenGL.GL_STATIC_DRAW);
+            positionArray.Dispose();
+
+            //  Now do the same for the colour data.
+            UnmanagedArray colorArray = InitColorArray();
+            var colourDataBuffer = new VertexBuffer();
+            colourDataBuffer.Create(gl);
+            colourDataBuffer.Bind(gl);
+            //colourDataBuffer.SetData(gl, 1, colors, false, 3);
+            colourDataBuffer.SetData(gl, 1, colorArray.ByteLength, colorArray.Pointer, false, 3, OpenGL.GL_STATIC_DRAW);
+            colorArray.Dispose();
+
+            //  Unbind the vertex array, we've finished specifying data for it.
+            vertexBufferArray.Unbind(gl);
+
         }
 
         /// <summary>
-        /// 初始化VAO。
+        /// 初始化索引并立即释放内存。
         /// </summary>
         /// <param name="gl"></param>
-        /// <param name="positions"></param>
-        /// <param name="colors"></param>
-        /// <param name="indexArray"></param>
-        unsafe private void InitVAO(OpenGL gl, UnmanagedArray positions, UnmanagedArray colors, UnmanagedArray indexArray)
+        private void InitializeIndexArray(OpenGL gl)
         {
-            {
-                indexDataBuffer = new IndexBuffer();
-                indexDataBuffer.Create(gl);
-                indexDataBuffer.Bind(gl);
-                gl.BufferData(OpenGL.GL_ELEMENT_ARRAY_BUFFER, indexArray.ByteLength, indexArray.Pointer, OpenGL.GL_STATIC_DRAW);
-            }
-
-            {
-                //  Create the vertex array object.
-                vertexBufferArray = new VertexBufferArray();
-                vertexBufferArray.Create(gl);
-                vertexBufferArray.Bind(gl);
-
-                //  Create a vertex buffer for the vertex data.
-                var vertexDataBuffer = new VertexBuffer();
-                vertexDataBuffer.Create(gl);
-                vertexDataBuffer.Bind(gl);
-                //vertexDataBuffer.SetData(gl, 0, positions, false, 3);
-                vertexDataBuffer.SetData(gl, 0, positionArray.ByteLength, positionArray.Pointer, false, 3, OpenGL.GL_STATIC_DRAW);
-
-                //  Now do the same for the colour data.
-                var colourDataBuffer = new VertexBuffer();
-                colourDataBuffer.Create(gl);
-                colourDataBuffer.Bind(gl);
-                //colourDataBuffer.SetData(gl, 1, colors, false, 3);
-                colourDataBuffer.SetData(gl, 1, colorArray.ByteLength, colorArray.Pointer, false, 3, OpenGL.GL_STATIC_DRAW);
-
-                //  Unbind the vertex array, we've finished specifying data for it.
-                vertexBufferArray.Unbind(gl);
-            }
+            UnmanagedArray indexArray = InitIndexArray();
+            indexDataBuffer = new IndexBuffer();
+            indexDataBuffer.Create(gl);
+            indexDataBuffer.Bind(gl);
+            gl.BufferData(OpenGL.GL_ELEMENT_ARRAY_BUFFER, indexArray.ByteLength, indexArray.Pointer, OpenGL.GL_STATIC_DRAW);
+            this.indexArrayElementCount = indexArray.ElementCount;
+            indexArray.Dispose();
         }
 
         /// <summary>
-        /// 初始化各项属性数组。
+        /// 计算color数组。
         /// </summary>
-        /// <param name="positions"></param>
-        /// <param name="colors"></param>
-        /// <param name="indexArray"></param>
-        unsafe private void InitArrays(out UnmanagedArray positionArray, out UnmanagedArray colorArray, out UnmanagedArray indexArray)
+        /// <returns></returns>
+        unsafe private UnmanagedArray InitColorArray()
         {
             int arrayLength = (int)(source.DimenSize * vertexCountInHexahedron * componentCountInVertex);
 
-            // 稍后将用InPtr代替float[]
-            positionArray = new UnmanagedArray(arrayLength, sizeof(float));
-            colorArray = new UnmanagedArray(arrayLength, sizeof(float));
-            float* positions = (float*)positionArray.Pointer.ToPointer();
+            UnmanagedArray colorArray = new UnmanagedArray(arrayLength, sizeof(float));
             float* colors = (float*)colorArray.Pointer.ToPointer();
 
             uint gridderElementIndex = 0;
             foreach (Hexahedron hexahedron in source.GetGridderCells())
             {
-                // 计算位置信息。
-                {
-                    int vertexIndex = 0;
-                    foreach (Vertex vertex in hexahedron.GetVertexes())
-                    {
-                        positions[gridderElementIndex + (vertexIndex++)] = vertex.X;
-                        positions[gridderElementIndex + (vertexIndex++)] = vertex.Y;
-                        positions[gridderElementIndex + (vertexIndex++)] = vertex.Z;
-
-                        // 顺便处理boundingbox.
-                        this.boundingBox.Extend(vertex);
-                    }
-                }
                 // 计算颜色信息。
+                GLColor color = hexahedron.color;
+                for (int vertexIndex = 0; vertexIndex < vertexCountInHexahedron; vertexIndex++)
                 {
-                    GLColor color = hexahedron.color;
-                    for (int vertexIndex = 0; vertexIndex < vertexCountInHexahedron; vertexIndex++)
-                    {
-                        colors[gridderElementIndex + vertexIndex * componentCountInVertex + 0] = color.R;
-                        colors[gridderElementIndex + vertexIndex * componentCountInVertex + 1] = color.G;
-                        colors[gridderElementIndex + vertexIndex * componentCountInVertex + 2] = color.B;
-                    }
+                    colors[gridderElementIndex + vertexIndex * componentCountInVertex + 0] = color.R;
+                    colors[gridderElementIndex + vertexIndex * componentCountInVertex + 1] = color.G;
+                    colors[gridderElementIndex + vertexIndex * componentCountInVertex + 2] = color.B;
                 }
 
                 gridderElementIndex += vertexCountInHexahedron * componentCountInVertex;
             }
 
-            InitIndexArray(out indexArray);
-
+            return colorArray;
         }
 
         /// <summary>
-        /// 初始化索引数组。
+        /// 计算position数组。
+        /// </summary>
+        /// <returns></returns>
+        unsafe private UnmanagedArray InitPositionArray()
+        {
+            int arrayLength = (int)(source.DimenSize * vertexCountInHexahedron * componentCountInVertex);
+
+            // 稍后将用InPtr代替float[]
+            UnmanagedArray positionArray = new UnmanagedArray(arrayLength, sizeof(float));
+            float* positions = (float*)positionArray.Pointer.ToPointer();
+
+            uint gridderElementIndex = 0;
+            foreach (Hexahedron hexahedron in source.GetGridderCells())
+            {
+                // 计算位置信息。
+                int vertexIndex = 0;
+                foreach (Vertex vertex in hexahedron.GetVertexes())
+                {
+                    positions[gridderElementIndex + (vertexIndex++)] = vertex.X;
+                    positions[gridderElementIndex + (vertexIndex++)] = vertex.Y;
+                    positions[gridderElementIndex + (vertexIndex++)] = vertex.Z;
+
+                    // 顺便处理boundingbox.
+                    this.boundingBox.Extend(vertex);
+                }
+
+                gridderElementIndex += vertexCountInHexahedron * componentCountInVertex;
+            }
+
+            return positionArray;
+        }
+
+        /// <summary>
+        /// 计算index数组。
         /// </summary>
         /// <param name="indexArray"></param>
-        private unsafe void InitIndexArray(out UnmanagedArray indexArray)
+        private unsafe UnmanagedArray InitIndexArray()
         {
             // 用三角形带画六面体，需要14个顶点（索引值），为切断三角形带，还需要附加一个。
             int indexCount = (int)(source.DimenSize * (triangleStrip + 1));
 
-            indexArray = new UnmanagedArray(indexCount, sizeof(uint));
+            UnmanagedArray indexArray = new UnmanagedArray(indexCount, sizeof(uint));
             uint* indexes = (uint*)indexArray.Pointer.ToPointer();
 
             // 计算索引信息。
@@ -173,6 +180,8 @@ namespace YieldingGeometryModel
                 indexes[i * (triangleStrip + 1) + 13] = (uint)((i * vertexCountInHexahedron) + 3);
                 indexes[i * (triangleStrip + 1) + 14] = uint.MaxValue;// 截断三角形带的索引值。
             }
+
+            return indexArray;
         }
     }
 }

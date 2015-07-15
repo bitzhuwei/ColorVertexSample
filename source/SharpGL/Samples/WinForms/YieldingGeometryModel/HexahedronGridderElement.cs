@@ -39,9 +39,10 @@ namespace YieldingGeometryModel
         //float[] positions;
         //float[] colors;
         //ushort[] indexes;// 先用unshort，等其他问题都解决了再换成uint.
-        UnmanagedArray positionArray;
-        UnmanagedArray colorArray;
-        UnmanagedArray indexArray;
+        //UnmanagedArray positionArray;
+        //UnmanagedArray colorArray;
+        //UnmanagedArray indexArray;
+        int indexArrayElementCount;
 
         //  The shader program for our vertex and fragment shader.
         private ShaderProgram shaderProgram;
@@ -66,14 +67,14 @@ namespace YieldingGeometryModel
         /// <param name="camera"></param>
         public HexahedronGridderElement(HexahedronGridderSource source, IScientificCamera camera)
         {
+            if (source == null) { throw new ArgumentNullException("source"); }
+
             this.source = source;
             this.camera = camera;
-
-            InitArrays(out this.positionArray, out this.colorArray, out this.indexArray);
         }
 
         /// <summary>
-        /// Initialises the scene.
+        /// 初始化Shader、Index和VAO。
         /// </summary>
         /// <param name="gl">The OpenGL instance.</param>
         public void Initialise(OpenGL gl)
@@ -82,8 +83,14 @@ namespace YieldingGeometryModel
             InitShader(gl);
             //  Create the picking shader program.
             InitPickingShader(gl);
-            // init vertex attributes.
-            InitVertexAttributes(gl);
+
+            // 初始化索引并立即释放内存
+            InitializeIndexArray(gl);
+
+            // 初始化VAO并立即释放内存
+            InitializeVAO(gl);
+
+            this.initialised = true;
         }
 
 
