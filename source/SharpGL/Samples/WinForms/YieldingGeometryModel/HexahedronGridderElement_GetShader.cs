@@ -7,29 +7,18 @@ using SharpGL.Shaders;
 using SharpGL.VertexBuffers;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using YieldingGeometryModel.Builder;
 using YieldingGeometryModel.GLPrimitive;
 
+
 namespace YieldingGeometryModel
 {
-    /// <summary>
-    /// 用于渲染六面体网格。
-    /// Rendering gridder of hexadrons.
-    /// </summary>
-    public partial class HexahedronGridderElement : SceneElement, IRenderable
+    public partial class HexahedronGridderElement
     {
-
-        /// <summary>
-        /// 更新矩阵。
-        /// </summary>
-        /// <param name="gl"></param>
-        /// <param name="renderMode"></param>
-        private void UpdateMatrixes(OpenGL gl, RenderMode renderMode)
+        protected override ShaderProgram GetShader(OpenGL gl, RenderMode renderMode)
         {
             IScientificCamera camera = this.camera;
             if (camera != null)
@@ -52,6 +41,14 @@ namespace YieldingGeometryModel
 
             modelMatrix = mat4.identity();
 
+            ShaderProgram shader = this.shader;
+            //  Bind the shader, set the matrices.
+            shader.Bind(gl);
+            shader.SetUniformMatrix4(gl, "projectionMatrix", projectionMatrix.to_array());
+            shader.SetUniformMatrix4(gl, "viewMatrix", viewMatrix.to_array());
+            shader.SetUniformMatrix4(gl, "modelMatrix", modelMatrix.to_array());
+
+            return shader;
         }
 
     }

@@ -7,23 +7,17 @@ using SharpGL.Shaders;
 using SharpGL.VertexBuffers;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using YieldingGeometryModel.Builder;
 using YieldingGeometryModel.GLPrimitive;
 
+
 namespace YieldingGeometryModel
 {
-    /// <summary>
-    /// 用于渲染六面体网格。
-    /// Rendering gridder of hexadrons.
-    /// </summary>
     public partial class HexahedronGridderElement
     {
-
         BoundingBox boundingBox = new BoundingBox();
 
         #region IBoundingBox 成员

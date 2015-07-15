@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace YieldingGeometryModel
+namespace SharpGL.SceneComponent
 {
     /// <summary>
     /// 用于记录非托管的数组。

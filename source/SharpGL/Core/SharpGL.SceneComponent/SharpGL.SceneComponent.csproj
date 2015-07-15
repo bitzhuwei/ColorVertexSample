@@ -82,6 +82,7 @@
     <Compile Include="Control\ViewTypes.cs" />
     <Compile Include="Camera\CameraHelper.cs" />
     <Compile Include="Model\IBoundingBoxHelper.cs" />
+    <Compile Include="Model\IndexedVAOElement.cs" />
     <Compile Include="Model\ModelContainer.cs" />
     <Compile Include="Model\BoundingBox.cs">
       <SubType>Code</SubType>
@@ -93,6 +94,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ColorCodedPicking\IColorCodedPicking.cs" />
+    <Compile Include="Model\UnmanagedArray.cs" />
     <Compile Include="MySharpGL\LinearArcBallTransform.cs" />
     <Compile Include="MySharpGL\ArcBallTransform.cs" />
     <Compile Include="MySharpGL\ArcBallTransformEffect.cs" />
