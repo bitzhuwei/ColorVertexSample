@@ -46,6 +46,9 @@ namespace YieldingGeometryModel
         //  Constants that specify the attribute indexes.
         const uint attributeIndexPosition = 0;
         const uint attributeIndexColour = 1;
+        const uint attributeIndexVisible = 2;
+
+        uint indexVisualBuffer;
 
         /// <summary>
         /// 用于渲染六面体网格。
