@@ -163,5 +163,29 @@ namespace ColorVertexSample
             this.scientificVisual3DControl.CameraType = cameraType;
         }
 
+        private void scientificVisual3DControl_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 'r')
+            {
+                // 随机显示某些hexahedron
+                foreach (var item in this.scientificVisual3DControl.ModelContainer.Children)
+                {
+                    HexahedronGridderElement element = item as HexahedronGridderElement;
+                    if(element!=null)
+                    {
+                        YieldingGeometryModel.Builder.HexahedronGridderElementHelper.RandomVisibility(element, this.scientificVisual3DControl.OpenGL);
+                    }
+                }
+
+                this.scientificVisual3DControl.Invalidate();
+            }
+        }
+
+        private void FormHexahedronGridder_Load(object sender, EventArgs e)
+        {
+            string message = string.Format("{0}", "Add模型后，可通过'R'键观察随机隐藏hexahedron的情形。");
+            MessageBox.Show(message, "Tip", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+        }
+
     }
 }

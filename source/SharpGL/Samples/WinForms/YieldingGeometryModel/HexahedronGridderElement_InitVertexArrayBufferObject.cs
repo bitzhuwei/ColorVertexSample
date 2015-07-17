@@ -56,17 +56,17 @@ namespace YieldingGeometryModel
 
             // Now do the same for the index's visual signal data.
             {
-                UnmanagedArray indexVisualArray = InitVisualArray();
+                UnmanagedArray visualArray = InitVisualArray();
 
                 uint[] ids = new uint[1];
                 gl.GenBuffers(1, ids);
                 gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, ids[0]);
 
-                gl.BufferData(OpenGL.GL_ARRAY_BUFFER, indexVisualArray.ByteLength, indexVisualArray.Pointer, OpenGL.GL_DYNAMIC_READ);
+                gl.BufferData(OpenGL.GL_ARRAY_BUFFER, visualArray.ByteLength, visualArray.Pointer, OpenGL.GL_DYNAMIC_READ);
                 gl.VertexAttribPointer(attributeIndexVisible, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
                 gl.EnableVertexAttribArray(attributeIndexVisible);
 
-                indexVisualArray.Dispose();
+                visualArray.Dispose();
 
                 this.visualBuffer = ids[0];
             }
@@ -92,9 +92,6 @@ namespace YieldingGeometryModel
                 foreach (Vertex vertex in hexahedron.GetVertexes())
                 {
                     visuals[gridderElementIndex + (vertexIndex++)] = signal ? 1 : 0;
-
-                    // 顺便处理boundingbox.
-                    this.boundingBox.Extend(vertex);
                 }
 
                 // TODO: 此signal应由具体业务提供。

@@ -22,8 +22,8 @@ namespace YieldingGeometryModel
     /// </summary>
     public partial class HexahedronGridderElement : IndexedVAOElement, IBoundingBox
     {
-        private HexahedronGridderSource source;
-        private IScientificCamera camera;
+        internal HexahedronGridderSource source;
+        internal IScientificCamera camera;
         //private ShaderProgram pickingShader;
         //  The projection, view and model matrices.
         mat4 projectionMatrix;
@@ -33,22 +33,22 @@ namespace YieldingGeometryModel
         /// <summary>
         /// 元素内的顶点数。（8）
         /// </summary>
-        const int vertexCountInHexahedron = 8;
+        internal const int vertexCountInHexahedron = 8;
         /// <summary>
         /// 顶点的分量数。（3）
         /// </summary>
-        const int componentCountInVertex = 3;
+        internal const int componentCountInVertex = 3;
         /// <summary>
         /// 用三角形带画六面体，需要14个顶点（索引值）
         /// </summary>
-        const int triangleStrip = 14;
+        internal const int triangleStrip = 14;
 
         //  Constants that specify the attribute indexes.
-        const uint attributeIndexPosition = 0;
-        const uint attributeIndexColour = 1;
-        const uint attributeIndexVisible = 2;
+        internal const uint attributeIndexPosition = 0;
+        internal const uint attributeIndexColour = 1;
+        internal const uint attributeIndexVisible = 2;
 
-        uint visualBuffer;
+        internal uint visualBuffer;
 
         /// <summary>
         /// 用于渲染六面体网格。

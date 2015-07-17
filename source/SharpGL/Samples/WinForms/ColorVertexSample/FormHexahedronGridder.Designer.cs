@@ -97,6 +97,7 @@
             this.scientificVisual3DControl.Size = new System.Drawing.Size(763, 329);
             this.scientificVisual3DControl.TabIndex = 0;
             this.scientificVisual3DControl.ViewType = SharpGL.SceneComponent.ViewTypes.UserView;
+            this.scientificVisual3DControl.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.scientificVisual3DControl_KeyPress);
             // 
             // panel1
             // 
@@ -371,6 +372,7 @@
             this.MinimumSize = new System.Drawing.Size(16, 38);
             this.Name = "FormHexahedronGridder";
             this.Text = "ScientificVisual3DControl Demo.";
+            this.Load += new System.EventHandler(this.FormHexahedronGridder_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.scientificVisual3DControl)).EndInit();
             this.panel1.ResumeLayout(false);
