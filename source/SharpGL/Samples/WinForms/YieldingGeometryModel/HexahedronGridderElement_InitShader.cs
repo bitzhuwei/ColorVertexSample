@@ -27,6 +27,7 @@ namespace YieldingGeometryModel
                 shaderProgram.Create(gl, vertexShaderSource, fragmentShaderSource, null);
                 shaderProgram.BindAttributeLocation(gl, attributeIndexPosition, "in_Position");
                 shaderProgram.BindAttributeLocation(gl, attributeIndexColour, "in_Color");
+                shaderProgram.BindAttributeLocation(gl, attributeIndexVisible, "in_visible");//控制顶点可见性。
                 shaderProgram.AssertValid(gl);
                 shader = shaderProgram;
             }

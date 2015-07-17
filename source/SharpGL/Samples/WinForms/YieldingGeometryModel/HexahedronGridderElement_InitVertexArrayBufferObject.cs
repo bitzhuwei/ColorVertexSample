@@ -36,12 +36,6 @@ namespace YieldingGeometryModel
                 gl.VertexAttribPointer(attributeIndexPosition, 3, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
                 gl.EnableVertexAttribArray(attributeIndexPosition);
 
-                //var positionBuffer = new VertexBuffer();
-                //positionBuffer.Create(gl);
-                //positionBuffer.Bind(gl);
-                ////vertexDataBuffer.SetData(gl, 0, positions, false, 3);
-                //positionBuffer.SetData(gl, 0, positionArray.ByteLength, positionArray.Pointer, false, 3, OpenGL.GL_STATIC_DRAW);
-
                 positionArray.Dispose();
             }
 
@@ -62,60 +56,57 @@ namespace YieldingGeometryModel
 
             // Now do the same for the index's visual signal data.
             {
-                UnmanagedArray indexVisualArray = InitIndexVisualArray();
+                UnmanagedArray indexVisualArray = InitVisualArray();
 
                 uint[] ids = new uint[1];
                 gl.GenBuffers(1, ids);
                 gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, ids[0]);
 
                 gl.BufferData(OpenGL.GL_ARRAY_BUFFER, indexVisualArray.ByteLength, indexVisualArray.Pointer, OpenGL.GL_DYNAMIC_READ);
-                gl.VertexAttribPointer(attributeIndexVisible, 1, OpenGL.GL_BYTE, false, 0, IntPtr.Zero);
+                gl.VertexAttribPointer(attributeIndexVisible, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
                 gl.EnableVertexAttribArray(attributeIndexVisible);
 
                 indexVisualArray.Dispose();
 
-                this.indexVisualBuffer = ids[0];
+                this.visualBuffer = ids[0];
             }
 
             //  Unbind the vertex array, we've finished specifying data for it.
             gl.BindVertexArray(0);
         }
 
-        unsafe private UnmanagedArray InitIndexVisualArray()
+        unsafe private UnmanagedArray InitVisualArray()
         {
-            // 用三角形带画六面体，需要14个顶点（索引值），为切断三角形带，还需要附加一个。
-            int indexCount = (int)(source.DimenSize * (triangleStrip + 1));
+            int arrayLength = (int)(source.DimenSize * vertexCountInHexahedron);
 
-            UnmanagedArray indexArray = new UnmanagedArray(indexCount, sizeof(byte));
-            byte* indexes = (byte*)indexArray.Pointer.ToPointer();
+            UnmanagedArray visualArray = new UnmanagedArray(arrayLength, sizeof(float));
+            float* visuals = (float*)visualArray.Pointer.ToPointer();
 
             bool signal = true;
 
-            // 计算索引信息。
-            for (int i = 0; i < indexArray.ElementCount / ((triangleStrip + 1)); i++)
+            uint gridderElementIndex = 0;
+            foreach (Hexahedron hexahedron in source.GetGridderCells())
             {
-                // 索引值的指定必须配合hexahedron.GetVertexes()的次序。
-                indexes[i * (triangleStrip + 1) + 00] = (byte)(signal ? 1 : 0);
-                indexes[i * (triangleStrip + 1) + 01] = (byte)(signal ? 1 : 0);
-                indexes[i * (triangleStrip + 1) + 02] = (byte)(signal ? 1 : 0);
-                indexes[i * (triangleStrip + 1) + 03] = (byte)(signal ? 1 : 0);
-                indexes[i * (triangleStrip + 1) + 04] = (byte)(signal ? 1 : 0);
-                indexes[i * (triangleStrip + 1) + 05] = (byte)(signal ? 1 : 0);
-                indexes[i * (triangleStrip + 1) + 06] = (byte)(signal ? 1 : 0);
-                indexes[i * (triangleStrip + 1) + 07] = (byte)(signal ? 1 : 0);
-                indexes[i * (triangleStrip + 1) + 08] = (byte)(signal ? 1 : 0);
-                indexes[i * (triangleStrip + 1) + 09] = (byte)(signal ? 1 : 0);
-                indexes[i * (triangleStrip + 1) + 10] = (byte)(signal ? 1 : 0);
-                indexes[i * (triangleStrip + 1) + 11] = (byte)(signal ? 1 : 0);
-                indexes[i * (triangleStrip + 1) + 12] = (byte)(signal ? 1 : 0);
-                indexes[i * (triangleStrip + 1) + 13] = (byte)(signal ? 1 : 0);
-                indexes[i * (triangleStrip + 1) + 14] = (byte)(signal ? 1 : 0);
+                // 计算位置信息。
+                int vertexIndex = 0;
+                foreach (Vertex vertex in hexahedron.GetVertexes())
+                {
+                    visuals[gridderElementIndex + (vertexIndex++)] = signal ? 1 : 0;
 
-                signal = !signal;
+                    // 顺便处理boundingbox.
+                    this.boundingBox.Extend(vertex);
+                }
+
+                // TODO: 此signal应由具体业务提供。
+                signal = (random.NextDouble() > 0.8);
+
+                gridderElementIndex += vertexCountInHexahedron;
             }
 
-            return indexArray;
+            return visualArray;
         }
+
+        Random random = new Random();
 
         unsafe private UnmanagedArray InitColorArray()
         {
@@ -146,7 +137,6 @@ namespace YieldingGeometryModel
         {
             int arrayLength = (int)(source.DimenSize * vertexCountInHexahedron * componentCountInVertex);
 
-            // 稍后将用InPtr代替float[]
             UnmanagedArray positionArray = new UnmanagedArray(arrayLength, sizeof(float));
             float* positions = (float*)positionArray.Pointer.ToPointer();
 

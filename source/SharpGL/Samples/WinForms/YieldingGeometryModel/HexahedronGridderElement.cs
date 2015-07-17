@@ -48,7 +48,7 @@ namespace YieldingGeometryModel
         const uint attributeIndexColour = 1;
         const uint attributeIndexVisible = 2;
 
-        uint indexVisualBuffer;
+        uint visualBuffer;
 
         /// <summary>
         /// 用于渲染六面体网格。
