@@ -23,20 +23,20 @@ namespace YieldingGeometryModel.Builder
 
                 float* visuals = (float*)visualArray.ToPointer();
 
-                bool signal = true;
+                bool signal;
 
                 uint gridderElementIndex = 0;
                 foreach (Hexahedron hexahedron in element.source.GetGridderCells())
                 {
+                    // TODO: 此signal应由具体业务提供。
+                    signal = (random.NextDouble() > 0.8);
+
                     // 计算位置信息。
                     int vertexIndex = 0;
                     foreach (Vertex vertex in hexahedron.GetVertexes())
                     {
                         visuals[gridderElementIndex + (vertexIndex++)] = signal ? 1 : 0;
                     }
-
-                    // TODO: 此signal应由具体业务提供。
-                    signal = (random.NextDouble() > 0.8);
 
                     gridderElementIndex += HexahedronGridderElement.vertexCountInHexahedron;
                 }
