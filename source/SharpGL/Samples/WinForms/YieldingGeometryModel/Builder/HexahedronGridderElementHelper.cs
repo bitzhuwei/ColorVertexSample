@@ -11,8 +11,14 @@ namespace YieldingGeometryModel.Builder
 {
     public static class HexahedronGridderElementHelper
     {
+        /// <summary>
+        /// 随机决定此gridder内的各个元素的可见性。
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="gl"></param>
+        /// <param name="probability">可见度，范围为0 ~ 1，0为全部不可见，1为全部可见。</param>
         public static void RandomVisibility(this HexahedronGridderElement element, OpenGL
-             gl)
+             gl, double probability)
         {
             gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, element.visualBuffer);
             IntPtr visualArray = gl.MapBuffer(OpenGL.GL_ARRAY_BUFFER, OpenGL.GL_READ_WRITE);
@@ -29,7 +35,7 @@ namespace YieldingGeometryModel.Builder
                 foreach (Hexahedron hexahedron in element.source.GetGridderCells())
                 {
                     // TODO: 此signal应由具体业务提供。
-                    signal = (random.NextDouble() > 0.8);
+                    signal = (random.NextDouble() < probability);
 
                     // 计算位置信息。
                     int vertexIndex = 0;

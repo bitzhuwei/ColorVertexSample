@@ -173,7 +173,7 @@ namespace ColorVertexSample
                     HexahedronGridderElement element = item as HexahedronGridderElement;
                     if(element!=null)
                     {
-                        YieldingGeometryModel.Builder.HexahedronGridderElementHelper.RandomVisibility(element, this.scientificVisual3DControl.OpenGL);
+                        YieldingGeometryModel.Builder.HexahedronGridderElementHelper.RandomVisibility(element, this.scientificVisual3DControl.OpenGL, 0.2);
                     }
                 }
 
