@@ -37,7 +37,7 @@ namespace YieldingGeometryModel.Builder
                     // TODO: 此signal应由具体业务提供。
                     signal = (random.NextDouble() < probability);
 
-                    // 计算位置信息。
+                    // 计算visual信息。
                     int vertexIndex = 0;
                     foreach (Vertex vertex in hexahedron.GetVertexes())
                     {
