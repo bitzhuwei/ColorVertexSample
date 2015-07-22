@@ -18,6 +18,9 @@ namespace YieldingGeometryModel
 {
     public partial class HexahedronGridderElement
     {
+
+      
+
         protected override void InitVertexArrayBufferObject(SharpGL.OpenGL gl, out uint[] vao)
         {
             vao = new uint[1];
@@ -149,7 +152,7 @@ namespace YieldingGeometryModel
                     positions[gridderElementIndex + (vertexIndex++)] = vertex.Z;
 
                     // 顺便处理boundingbox.
-                    this.boundingBox.Extend(vertex);
+                    //this.boundingBox.Extend(vertex);
                 }
 
                 gridderElementIndex += vertexCountInHexahedron * componentCountInVertex;

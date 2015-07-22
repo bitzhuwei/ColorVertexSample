@@ -1,14 +1,20 @@
 ﻿using SharpGL;
 using SharpGL.SceneComponent;
+using SharpGL.SceneComponent.Model;
+using SharpGL.SceneComponent.Utility;
 using SharpGL.Shaders;
+using SharpGL.VertexBuffers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SharpGL.SceneComponent
 {
+
+    
     /// <summary>
     /// 用Shader+VAO+index array buffer object进行渲染的元素。
     /// </summary>
@@ -18,6 +24,29 @@ namespace SharpGL.SceneComponent
         /// vertex array buffer object.
         /// </summary>
         protected uint[] vao;
+
+        private  uint  vertexArrayObject = 0;
+
+        private  uint  vertexsBufferObject = 0;
+
+        private  uint  colorsBufferObject = 0;
+
+        private  uint  visiblesBufferObject = 0;
+
+        private  uint  triangleBufferObject = 0;
+
+        private  int   triangleIndexCount = 0;
+
+
+        private bool IsRenderable()
+        {
+           
+            if (vertexArrayObject == 0||vertexsBufferObject==0||colorsBufferObject==0
+                ||triangleBufferObject==0||triangleBufferObject==0||triangleIndexCount==0)
+                return false;
+             return  true;
+            
+        }
 
         /// <summary>
         /// element array buffer object.
@@ -37,22 +66,111 @@ namespace SharpGL.SceneComponent
 
         protected ShaderProgram shader;
 
+        //  Constants that specify the attribute indexes.
+        public  const uint ATTRIB_INDEX_POSITION = 0;
+        public  const uint ATTRIB_INDEX_COLOUR = 1;
+        public  const uint ATTRIB_INDEX_VISIBLE = 2;
+
         protected bool isInitialized = false;
 
+        private int method = 1;
+        
+
+
+        private void InitVertexes(OpenGL gl,Vertex3DArray vertexes,ColorArray colorArray, FloatArray visibles)
+        {
+            uint[] vao = new uint[1];
+            gl.GenVertexArrays(vao.Length, vao);
+            gl.BindVertexArray(vao[0]);
+
+            this.vertexArrayObject = vao[0];
+            uint[] vboVertex = new uint[1];
+            gl.GenBuffers(vboVertex.Length, vboVertex);
+            gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, vboVertex[0]);
+            gl.BufferData(OpenGL.GL_ARRAY_BUFFER, vertexes.Size, vertexes.Header, OpenGL.GL_STATIC_DRAW);
+            gl.VertexAttribPointer(ATTRIB_INDEX_POSITION, 3, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
+            gl.EnableVertexAttribArray(ATTRIB_INDEX_POSITION);
+            this.vertexsBufferObject = vboVertex[0];
+
+
+            uint[] vboColor = new uint[1];
+            gl.GenBuffers(vboColor.Length, vboColor);
+            gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, vboColor[0]);
+            gl.BufferData(OpenGL.GL_ARRAY_BUFFER, colorArray.Size, colorArray.Header, OpenGL.GL_DYNAMIC_DRAW);
+            gl.VertexAttribPointer(ATTRIB_INDEX_COLOUR, 4, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
+            gl.EnableVertexAttribArray(ATTRIB_INDEX_COLOUR);
+            this.colorsBufferObject = vboColor[0];
+
+            uint[] vboVisual = new uint[1];
+            gl.GenBuffers(vboVisual.Length, vboVisual);
+            gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, vboVisual[0]);
+            gl.BufferData(OpenGL.GL_ARRAY_BUFFER, visibles.Size, visibles.Header, OpenGL.GL_DYNAMIC_READ);
+            gl.VertexAttribPointer(ATTRIB_INDEX_VISIBLE, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
+            gl.EnableVertexAttribArray(ATTRIB_INDEX_VISIBLE);
+            this.visiblesBufferObject = vboVisual[0];
+
+            gl.BindVertexArray(0);
+        }
+
+        private void InitTrianglesBuffer(OpenGL gl, UIntArray TriangleStrip)
+        {
+            uint[] triangleBuffer = new uint[1];
+            gl.GenBuffers(triangleBuffer.Length, triangleBuffer);
+            gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, triangleBuffer[0]);
+            gl.BufferData(OpenGL.GL_ELEMENT_ARRAY_BUFFER, TriangleStrip.Size, TriangleStrip.Header, OpenGL.GL_STATIC_DRAW);
+            this.triangleIndexCount = TriangleStrip.Count;
+            this.triangleBufferObject = triangleBuffer[0];
+        }
+
+
+        public void UpdateColorBuffer(OpenGL gl, ColorArray colors, FloatArray visibles)
+        {
+            if (this.visiblesBufferObject == 0 || this.colorsBufferObject == 0)
+                return;
+            gl.MakeCurrent();
+            gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, this.visiblesBufferObject);
+            IntPtr destVisibles = gl.MapBuffer(OpenGL.GL_ARRAY_BUFFER, OpenGL.GL_READ_WRITE);
+            MemoryHelper.CopyMemory(destVisibles, visibles.Header, (uint)visibles.Size);
+            gl.UnmapBuffer(OpenGL.GL_ARRAY_BUFFER);
+
+            gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, this.colorsBufferObject);
+            IntPtr destColors = gl.MapBuffer(OpenGL.GL_ARRAY_BUFFER,OpenGL.GL_READ_WRITE);
+            MemoryHelper.CopyMemory(destColors, colors.Header, (uint)colors.Size);
+            gl.UnmapBuffer(OpenGL.GL_ARRAY_BUFFER);
+
+        }
+
+
+       
+
         /// <summary>
-        /// 初始化VAO、EBO、Shader。
+        /// 初始化VAO、EBO、Shader. Deprecated;
         /// </summary>
         /// <param name="gl"></param>
         public void Initialize(OpenGL gl)
         {
             InitShader(gl, out this.shader);
-
+           
             InitElementArrayBufferObject(gl, out this.ebo, out this.primitiveMode, out this.indexArrayElementCount);
 
             InitVertexArrayBufferObject(gl, out this.vao);
-
+            this.primitiveMode = OpenGL.GL_TRIANGLE_STRIP;
             this.isInitialized = true;
+            this.method = 1;
         }
+
+        public void Initialize(OpenGL gl, TriangleMesh mesh)
+        {
+            gl.MakeCurrent();
+            this.shader = this.CreateShaderProgram(gl);
+            this.InitVertexes(gl, mesh.Vertexes, mesh.VertexColors, mesh.Visibles);
+            this.InitTrianglesBuffer(gl, mesh.StripTriangles);
+            this.primitiveMode = OpenGL.GL_TRIANGLE_STRIP;
+            this.isInitialized = true;
+            this.method = 2;
+        }
+
+        
 
         /// <summary>
         /// 创建顶点数组缓存对象（VAO）。
@@ -80,6 +198,14 @@ namespace SharpGL.SceneComponent
         /// <returns></returns>
         protected abstract void InitShader(OpenGL gl, out ShaderProgram shader);
 
+
+        /// <summary>
+        /// 创建Shader,返回OpenGL Shader对象,如果失败抛出异常
+        /// </summary>
+        /// <param name="gl"></param>
+        /// <returns></returns>
+        protected abstract ShaderProgram CreateShaderProgram(OpenGL gl);
+
         #region IRenderable 成员
 
         /// <summary>
@@ -89,11 +215,22 @@ namespace SharpGL.SceneComponent
         /// <param name="renderMode"></param>
         public virtual void Render(SharpGL.OpenGL gl, SharpGL.SceneGraph.Core.RenderMode renderMode)
         {
-            if(!this.isInitialized)
+            if(this.method == 1)
+              this.RenderZhuwei(gl, renderMode);
+            if(this.method == 2)
+              this.RenderWithStruct(gl, renderMode);
+        }
+
+        public void RenderZhuwei(SharpGL.OpenGL gl, SharpGL.SceneGraph.Core.RenderMode renderMode)
+        {
+            if (!this.isInitialized)
             {
                 this.Initialize(gl);
                 this.isInitialized = true;
             }
+
+            //if (!this.IsRenderable())
+            //return;
 
             ShaderProgram shader = GetShader(gl, renderMode);
             shader.Bind(gl);
@@ -101,9 +238,10 @@ namespace SharpGL.SceneComponent
             // 用VAO+EBO进行渲染。
             //  Bind the out vertex array.
             gl.BindVertexArray(vao[0]);
-
+           
             //  Draw the square.
             gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, ebo[0]);
+           
 
             // 启用Primitive restart
             gl.Enable(OpenGL.GL_PRIMITIVE_RESTART);
@@ -115,6 +253,43 @@ namespace SharpGL.SceneComponent
             gl.Disable(OpenGL.GL_PRIMITIVE_RESTART);
 
             shader.Unbind(gl);
+            
+
+        }
+
+        public void RenderWithStruct(SharpGL.OpenGL gl, SharpGL.SceneGraph.Core.RenderMode renderMode)
+        {
+            if (!this.isInitialized)
+            {
+                this.Initialize(gl);
+                this.isInitialized = true;
+            }
+
+            //if (!this.IsRenderable())
+            //return;
+
+            ShaderProgram shader = GetShader(gl, renderMode);
+            shader.Bind(gl);
+
+            // 用VAO+EBO进行渲染。
+            //  Bind the out vertex array.
+            //gl.BindVertexArray(vao[0]);
+            gl.BindVertexArray(vertexArrayObject);
+            //  Draw the square.
+            //gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, ebo[0]);
+            gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, this.triangleBufferObject);
+
+            // 启用Primitive restart
+            gl.Enable(OpenGL.GL_PRIMITIVE_RESTART);
+            gl.PrimitiveRestartIndex(uint.MaxValue);// 截断图元（四边形带、三角形带等）的索引值。
+            gl.DrawElements(this.primitiveMode, this.triangleIndexCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
+
+            //  Unbind our vertex array and shader.
+            gl.BindVertexArray(0);
+            gl.Disable(OpenGL.GL_PRIMITIVE_RESTART);
+
+            shader.Unbind(gl);
+
         }
 
         /// <summary>

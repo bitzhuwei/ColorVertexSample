@@ -18,6 +18,25 @@ namespace YieldingGeometryModel
 {
     public partial class HexahedronGridderElement
     {
+
+        /// <summary>
+        /// 取代InitShader
+        /// </summary>
+        /// <param name="gl"></param>
+        /// <returns></returns>
+        protected override ShaderProgram CreateShaderProgram(OpenGL gl)
+        {
+            String vertexShaderSource = ManifestResourceLoader.LoadTextFile(@"HexahedronGridder2.vert");
+            String fragmentShaderSource = ManifestResourceLoader.LoadTextFile(@"HexahedronGridder2.frag");
+            ShaderProgram shaderProgram = new ShaderProgram();
+            shaderProgram.Create(gl, vertexShaderSource, fragmentShaderSource, null);
+            shaderProgram.BindAttributeLocation(gl, IndexedVAOElement.ATTRIB_INDEX_POSITION, "in_Position");
+            shaderProgram.BindAttributeLocation(gl, IndexedVAOElement.ATTRIB_INDEX_COLOUR, "in_Color");
+            shaderProgram.BindAttributeLocation(gl, IndexedVAOElement.ATTRIB_INDEX_VISIBLE, "in_visible");//控制顶点可见性。
+            shaderProgram.AssertValid(gl);
+            return shaderProgram;
+        }
+
         protected override void InitShader(SharpGL.OpenGL gl, out SharpGL.Shaders.ShaderProgram shader)
         {
             {

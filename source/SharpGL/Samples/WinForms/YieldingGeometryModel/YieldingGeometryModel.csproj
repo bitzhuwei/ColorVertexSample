@@ -44,6 +44,7 @@
     <EmbeddedResource Include="HexahedronGridder.frag" />
     <EmbeddedResource Include="HexahedronGridder.vert" />
     <Compile Include="Builder\HexahedronGridderElementHelper.cs" />
+    <Compile Include="Color.cs" />
     <Compile Include="DataSource\CatesianGridderSource.cs" />
     <Compile Include="DataSource\CornerPointGridderSource.cs" />
     <Compile Include="DataSource\GridderSource.cs" />
@@ -74,6 +75,10 @@
       <Project>{5ef45533-e2c7-46f2-b4a3-b8f36cd406e0}</Project>
       <Name>SharpGL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="HexahedronGridder2.frag" />
+    <EmbeddedResource Include="HexahedronGridder2.vert" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -19,6 +19,7 @@ using SharpGL.SceneGraph.Assets;
 using SharpGL.SceneGraph.Quadrics;
 using SharpGL.SceneComponent;
 using YieldingGeometryModel;
+using YieldingGeometryModel.Builder;
 
 namespace ColorVertexSample
 {
@@ -38,6 +39,41 @@ namespace ColorVertexSample
             IPickedGeometry picked = this.scientificVisual3DControl.PickedPrimitive;
             this.lblPickedPrimitive.Text = string.Format("Picked:{0}", picked);
             this.lblPickingInfo.Text = string.Format("Picked:{0}", picked);
+        }
+
+        private unsafe void DebugMesh(MeshGeometry mesh)
+        {
+             System.Console.WriteLine("---------Positions-----------------");
+             Vertex3DArray array = mesh.Vertexes;
+             for (int i = 0; i < array.Count; i++)
+             {
+                 Vertex3D v = *array[i];
+                 System.Console.WriteLine(string.Format("({0},{1},{2})", v.X, v.Y, v.Z));
+             }
+             System.Console.WriteLine("---------Colors-----------------");
+             ColorArray colors = mesh.VertexColors;
+             for (int i = 0; i < colors.Count; i++)
+             {
+                 ColorF c = *colors[i];
+                 System.Console.WriteLine(string.Format("({0},{1},{2},{3})", c.R, c.G, c.B,c.A));
+             }
+             System.Console.WriteLine("---------visibles-----------------");
+             FloatArray visibles = mesh.Visibles;
+             for (int i = 0; i < visibles.Count; i++)
+             {
+                 float c = *visibles[i];
+                 System.Console.WriteLine(string.Format("({0})", c));
+             }
+
+             System.Console.WriteLine("---------TriangleTrip-----------------");
+             UIntArray triangles = mesh.StripTriangles;
+             for (int i = 0; i < triangles.Count; i++)
+             {
+                 uint t = *triangles[i];
+                 System.Console.WriteLine(string.Format("({0})", t));
+             }
+
+
         }
 
         private void InitilizeViewTypeControl()
@@ -71,38 +107,63 @@ namespace ColorVertexSample
                 CatesianGridderSource catesianSource = new CatesianGridderSource() 
                 { NX = nx, NY = ny, NZ = nz, DX = dx, DY = dy, DZ = dz, };
 
-                HexahedronGridderElement element = new HexahedronGridderElement(catesianSource, this.scientificVisual3DControl.Scene.CurrentCamera);
-                element.Initialize(this.scientificVisual3DControl.OpenGL);
+                ///模拟获得网格属性
+                int minValue = 100;
+                int maxValue = 10000;
+                step = (maxValue * 1.0f - minValue * 1.0f) / 10;
+                int[] gridIndexes;
+                float[] gridValues;
+                //设置色标的范围
+                this.scientificVisual3DControl.SetColorIndicator(minValue, maxValue,step);
+                //获得每个网格上的属性值
+                HexahedronGridderHelper.RandomValue(catesianSource.DimenSize, minValue, maxValue, out gridIndexes, out gridValues);
+                ColorF[] colors = new ColorF[catesianSource.DimenSize];
+                for (int i = 0; i < colors.Length; i++)
+                {
+                    colors[i] = (ColorF)this.scientificVisual3DControl.MapToColor(gridValues[i]);
+                }
 
-                element.Name = string.Format("element {0}", elementCounter++);
+                MeshGeometry mesh = HexahedronGridderHelper.CreateMesh(catesianSource);
+                mesh.VertexColors = HexahedronGridderHelper.FromColors(catesianSource, gridIndexes, colors, mesh.Visibles);
+                //this.DebugMesh(mesh);
 
-                this.scientificVisual3DControl.AddModelElement(element);
+
+               
+                HexahedronGridderElement hexaGridder = new HexahedronGridderElement(catesianSource, this.scientificVisual3DControl.Scene.CurrentCamera);
+
+                //method1
+                //hexaGridder.Initialize(this.scientificVisual3DControl.OpenGL);
+
+                //method2
+                hexaGridder.Initialize(this.scientificVisual3DControl.OpenGL, mesh);
+               
+                //hexaGridder.SetBoundingBox(mesh.Min, mesh.Max);
+
+
+                //element.Initialize(this.scientificVisual3DControl.OpenGL);
+
+                hexaGridder.Name = string.Format("element {0}", elementCounter++);
+
+                this.scientificVisual3DControl.AddModelElement(hexaGridder);
 
                 // update ModelContainer's BoundingBox.
                 BoundingBox boundingBox = this.scientificVisual3DControl.ModelContainer.BoundingBox;
-                IBoundingBox modelBoundingBox = element as IBoundingBox; // model.BoundingBox;
                 if (this.scientificVisual3DControl.ModelContainer.Children.Count > 1)
                 {
-                    boundingBox.Extend(modelBoundingBox.MinPosition);
-                    boundingBox.Extend(modelBoundingBox.MaxPosition);
+                    boundingBox.Extend(mesh.Min);
+                    boundingBox.Extend(mesh.Max);
                 }
                 else
                 {
-                    boundingBox.Set(modelBoundingBox.MinPosition.X,
-                        modelBoundingBox.MinPosition.Y,
-                        modelBoundingBox.MinPosition.Z,
-                        modelBoundingBox.MaxPosition.X,
-                        modelBoundingBox.MaxPosition.Y,
-                        modelBoundingBox.MaxPosition.Z);
+                    boundingBox.SetBounds(mesh.Min, mesh.Max);
                 }
-                boundingBox.Expand();
+                //boundingBox.Expand();
 
                 // update ViewType to UserView.
                 this.scientificVisual3DControl.ViewType = ViewTypes.UserView;
 
-                var min = modelBoundingBox.MinPosition.MinField();
-                var max = modelBoundingBox.MaxPosition.MaxField();
-                this.scientificVisual3DControl.SetColorIndicator(min, max, step);
+                mesh.Dispose();
+                
             }
             catch (Exception error)
             {
@@ -178,6 +239,45 @@ namespace ColorVertexSample
                 }
 
                 this.scientificVisual3DControl.Invalidate();
+            }
+
+
+            if(e.KeyChar == 'c')
+            {
+                OpenGL gl = this.scientificVisual3DControl.OpenGL;
+
+               List<HexahedronGridderElement> elements = this.scientificVisual3DControl.ModelContainer.Traverse<HexahedronGridderElement>().ToList<HexahedronGridderElement>();
+               if (elements.Count > 0)
+               {
+                   HexahedronGridderElement gridder = elements[0];
+                   HexahedronGridderSource  source = gridder.Source;
+                   FloatArray visibles =  HexahedronGridderHelper.GridVisibleFromActive(source);
+
+                   //随机生成不完整网格的属性。
+                   int propCount = source.DimenSize / 2;
+                   if (propCount <= 0)
+                       return;
+
+                   int minValue = 5000;
+                   int maxValue = 10000;
+                   int[] gridIndexes;
+                   float[] gridValues;
+                   HexahedronGridderHelper.RandomValue(propCount, minValue, maxValue, out gridIndexes, out gridValues);
+                   float step = (maxValue - minValue) / 10.0f;
+                   this.scientificVisual3DControl.SetColorIndicator(minValue, maxValue, step);
+
+                   ColorF[] colors = new ColorF[propCount];
+                   for (int i = 0; i < colors.Length; i++)
+                   {
+                       colors[i] = (ColorF)this.scientificVisual3DControl.MapToColor(gridValues[i]);
+                   }
+
+                   ColorArray colorArray = HexahedronGridderHelper.FromColors(source, gridIndexes, colors, visibles);
+                   gridder.UpdateColorBuffer(gl, colorArray, visibles);
+                   colorArray.Dispose();
+                   visibles.Dispose();
+                   this.scientificVisual3DControl.Invalidate();
+               }
             }
         }
 

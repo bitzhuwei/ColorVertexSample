@@ -177,6 +177,12 @@ namespace SharpGL.SceneComponent
             gl.PopAttrib();
         }
 
+        public void SetBounds(Vertex min, Vertex max)
+        {
+            this.minPosition = min;
+            this.maxPosition = max;
+        }
+
         public void Set(float minX = 0, float minY = 0, float minZ = 0, float maxX = 0, float maxY = 0, float maxZ = 0)
         {
             this.minPosition.X = minX;

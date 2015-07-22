@@ -11,6 +11,10 @@ namespace YieldingGeometryModel.Builder
 {
     public static class HexahedronGridderElementHelper
     {
+
+
+
+
         /// <summary>
         /// 随机决定此gridder内的各个元素的可见性。
         /// </summary>

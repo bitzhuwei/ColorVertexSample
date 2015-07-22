@@ -20,7 +20,7 @@ namespace YieldingGeometryModel
     /// 用于渲染六面体网格。
     /// Rendering gridder of hexadrons.
     /// </summary>
-    public partial class HexahedronGridderElement : IndexedVAOElement, IBoundingBox
+    public partial class HexahedronGridderElement : IndexedVAOElement
     {
         internal HexahedronGridderSource source;
         internal IScientificCamera camera;
@@ -60,6 +60,15 @@ namespace YieldingGeometryModel
 
             this.source = source;
             this.camera = camera;
+        }
+
+
+        public HexahedronGridderSource Source
+        {
+            get
+            {
+                return this.source;
+            }
         }
 
     }

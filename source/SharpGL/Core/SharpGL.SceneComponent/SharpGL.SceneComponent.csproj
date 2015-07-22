@@ -82,6 +82,7 @@
     <Compile Include="Control\ViewTypes.cs" />
     <Compile Include="Camera\CameraHelper.cs" />
     <Compile Include="Model\IBoundingBoxHelper.cs" />
+    <Compile Include="Model\IMesh.cs" />
     <Compile Include="Model\IndexedVAOElement.cs" />
     <Compile Include="Model\ModelContainer.cs" />
     <Compile Include="Model\BoundingBox.cs">
@@ -138,6 +139,7 @@
     <Compile Include="Utility\ManifestResourceLoader.cs" />
     <Compile Include="ColorCodedPicking\GeometryTypesHelper.cs" />
     <Compile Include="Utility\BeginModeHelper.cs" />
+    <Compile Include="Utility\MemoryHelper.cs" />
     <Content Include="Camera\Camera.png" />
     <Content Include="ColorCodedPicking\ColorCodedPicking.png" />
     <Content Include="MySharpGL\read-me.txt" />

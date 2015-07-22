@@ -362,6 +362,13 @@ namespace SharpGL.SceneComponent
             ManualRender(this);
         }
 
+        public GLColor MapToColor(float value)
+        {
+           return  this.uiColorIndicator.Data.ColorPalette.MapToColor(value, this.uiColorIndicator.Data.MinValue, this.uiColorIndicator.Data.MaxValue);
+        }
+
+        
+
         /// <summary>
         /// Update camera when resized, model container's bounding box updated, etc.
         /// </summary>

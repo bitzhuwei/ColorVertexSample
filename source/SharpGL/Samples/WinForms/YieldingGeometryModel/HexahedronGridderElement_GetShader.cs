@@ -40,7 +40,6 @@ namespace YieldingGeometryModel
             }
 
             modelMatrix = mat4.identity();
-
             ShaderProgram shader = this.shader;
             //  Bind the shader, set the matrices.
             shader.Bind(gl);
