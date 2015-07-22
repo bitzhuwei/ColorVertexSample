@@ -1,18 +1,11 @@
-#if __VERSION__ >= 130
+#version 150 core
 in vec3 in_Position;
 in vec3 in_Color;
 out vec3 pass_Color;
 out vec2 pass_position;
 out float pass_pointSize;
-
-#else 
-attribute vec3 in_Position;
-attribute vec3 in_Color;  
-varying vec3 pass_Color;
-varying vec2 pass_position;
-varying float pass_pointSize;
-
-#endif
+in float in_visible;
+out float pass_visible;
 
 uniform float basePointSize;
 uniform mat4 projectionMatrix;
@@ -26,4 +19,5 @@ void main(void) {
 	vec4 cameraPosition = viewMatrix * modelMatrix * vec4(in_Position, 1.0);
 	gl_PointSize = basePointSize * 13 / (cameraPosition.z * projectionMatrix[2][3] + projectionMatrix[3][3]);
 	pass_pointSize = gl_PointSize;
+	pass_visible = in_visible;
 }

@@ -36,13 +36,13 @@ namespace SharpGL.SceneComponent
     public struct ColorF
     {
 
-        public float R { get; private set; }
+        public float R;
 
-        public float G { get; private set; }
+        public float G;
 
-        public float B { get; private set; }
+        public float B;
 
-        public float A { get; private set; }
+        public float A;
 
         public static implicit operator ColorF(GLColor color)
         {

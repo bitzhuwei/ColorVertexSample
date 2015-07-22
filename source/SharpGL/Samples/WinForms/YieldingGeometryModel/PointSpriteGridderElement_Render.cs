@@ -42,16 +42,16 @@ namespace YieldingGeometryModel
 
             modelMatrix = mat4.identity();
 
-            gl.Enable(OpenGL.GL_VERTEX_PROGRAM_POINT_SIZE);
-            gl.Enable(OpenGL.GL_POINT_SPRITE_ARB);
-            gl.TexEnv(OpenGL.GL_POINT_SPRITE_ARB, OpenGL.GL_COORD_REPLACE_ARB, OpenGL.GL_TRUE);
+            //gl.Enable(OpenGL.GL_VERTEX_PROGRAM_POINT_SIZE);
+            //gl.Enable(OpenGL.GL_POINT_SPRITE_ARB);
+            //gl.TexEnv(OpenGL.GL_POINT_SPRITE_ARB, OpenGL.GL_COORD_REPLACE_ARB, OpenGL.GL_TRUE);
 
-            gl.Enable(OpenGL.GL_BLEND);
-            gl.BlendEquation(OpenGL.GL_FUNC_ADD_EXT);
-            gl.BlendFuncSeparate(OpenGL.GL_SRC_ALPHA, OpenGL.GL_ONE_MINUS_SRC_ALPHA, OpenGL.GL_ONE, OpenGL.GL_ONE);
+            //gl.Enable(OpenGL.GL_BLEND);
+            //gl.BlendEquation(OpenGL.GL_FUNC_ADD_EXT);
+            //gl.BlendFuncSeparate(OpenGL.GL_SRC_ALPHA, OpenGL.GL_ONE_MINUS_SRC_ALPHA, OpenGL.GL_ONE, OpenGL.GL_ONE);
 
 
-            this.texture.Bind(gl);
+            //this.texture.Bind(gl);
 
             int[] viewport;
             var projectionMatrix = GetProjectionMatrix(gl, out viewport);
@@ -78,10 +78,10 @@ namespace YieldingGeometryModel
         protected override void AfterRendering(OpenGL gl, RenderMode renderMode)
         {
             shader.Unbind(gl);
-            gl.Disable(OpenGL.GL_BLEND);
-            gl.Disable(OpenGL.GL_VERTEX_PROGRAM_POINT_SIZE);
-            gl.Disable(OpenGL.GL_POINT_SPRITE_ARB);
-            gl.BindTexture(OpenGL.GL_TEXTURE_2D, 0);
+            //gl.Disable(OpenGL.GL_BLEND);
+            //gl.Disable(OpenGL.GL_VERTEX_PROGRAM_POINT_SIZE);
+            //gl.Disable(OpenGL.GL_POINT_SPRITE_ARB);
+            //gl.BindTexture(OpenGL.GL_TEXTURE_2D, 0);
         }
 
         protected mat4 GetProjectionMatrix(OpenGL gl, out int[] viewport)

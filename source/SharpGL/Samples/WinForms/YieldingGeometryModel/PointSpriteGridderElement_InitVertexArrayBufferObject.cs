@@ -48,7 +48,7 @@ namespace YieldingGeometryModel
                 gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, ids[0]);
 
                 gl.BufferData(OpenGL.GL_ARRAY_BUFFER, mesh.VertexColors.ByteLength, mesh.VertexColors.Header, OpenGL.GL_STATIC_DRAW);
-                gl.VertexAttribPointer(attributeIndexColour, 3, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
+                gl.VertexAttribPointer(attributeIndexColour, 4, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
                 gl.EnableVertexAttribArray(attributeIndexColour);
             }
 
