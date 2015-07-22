@@ -206,6 +206,20 @@ namespace SharpGL.SceneComponent
         /// <returns></returns>
         protected abstract ShaderProgram CreateShaderProgram(OpenGL gl);
 
+        /// <summary>
+        /// 在IRenderable.Render()即将执行时会调用此方法。
+        /// </summary>
+        /// <param name="gl"></param>
+        /// <param name="renderMode"></param>
+        protected abstract void BeforeRendering(SharpGL.OpenGL gl, SharpGL.SceneGraph.Core.RenderMode renderMode);
+
+        /// <summary>
+        /// 在IRenderable.Render()执行完毕时会调用此方法。
+        /// </summary>
+        /// <param name="gl"></param>
+        /// <param name="renderMode"></param>
+        protected abstract void AfterRendering(SharpGL.OpenGL gl, SharpGL.SceneGraph.Core.RenderMode renderMode);
+
         #region IRenderable 成员
 
         /// <summary>
@@ -215,24 +229,28 @@ namespace SharpGL.SceneComponent
         /// <param name="renderMode"></param>
         public virtual void Render(SharpGL.OpenGL gl, SharpGL.SceneGraph.Core.RenderMode renderMode)
         {
-            if(this.method == 1)
-              this.RenderZhuwei(gl, renderMode);
-            if(this.method == 2)
-              this.RenderWithStruct(gl, renderMode);
-        }
-
-        public void RenderZhuwei(SharpGL.OpenGL gl, SharpGL.SceneGraph.Core.RenderMode renderMode)
-        {
             if (!this.isInitialized)
             {
                 this.Initialize(gl);
                 this.isInitialized = true;
             }
 
+            BeforeRendering(gl, renderMode);
+
+            if(this.method == 1)
+              this.RenderZhuwei(gl, renderMode);
+            if(this.method == 2)
+              this.RenderWithStruct(gl, renderMode);
+
+            AfterRendering(gl, renderMode);
+        }
+
+        public void RenderZhuwei(SharpGL.OpenGL gl, SharpGL.SceneGraph.Core.RenderMode renderMode)
+        {
             //if (!this.IsRenderable())
             //return;
 
-            ShaderProgram shader = GetShader(gl, renderMode);
+            ShaderProgram shader = this.shader;// GetShader(gl, renderMode);
             shader.Bind(gl);
 
             // 用VAO+EBO进行渲染。
@@ -259,16 +277,11 @@ namespace SharpGL.SceneComponent
 
         public void RenderWithStruct(SharpGL.OpenGL gl, SharpGL.SceneGraph.Core.RenderMode renderMode)
         {
-            if (!this.isInitialized)
-            {
-                this.Initialize(gl);
-                this.isInitialized = true;
-            }
-
+ 
             //if (!this.IsRenderable())
             //return;
 
-            ShaderProgram shader = GetShader(gl, renderMode);
+            ShaderProgram shader = this.shader; //GetShader(gl, renderMode);
             shader.Bind(gl);
 
             // 用VAO+EBO进行渲染。
@@ -292,13 +305,13 @@ namespace SharpGL.SceneComponent
 
         }
 
-        /// <summary>
-        /// 获取即将用于<see cref="IRenderable.Render"/>的Shader。可在此处更新Shader。
-        /// </summary>
-        /// <param name="gl"></param>
-        /// <param name="renderMode"></param>
-        /// <returns></returns>
-        protected abstract ShaderProgram GetShader(OpenGL gl, SharpGL.SceneGraph.Core.RenderMode renderMode);
+        ///// <summary>
+        ///// 获取即将用于<see cref="IRenderable.Render"/>的Shader。可在此处更新Shader。
+        ///// </summary>
+        ///// <param name="gl"></param>
+        ///// <param name="renderMode"></param>
+        ///// <returns></returns>
+        //protected abstract ShaderProgram GetShader(OpenGL gl, SharpGL.SceneGraph.Core.RenderMode renderMode);
 
         #endregion
 

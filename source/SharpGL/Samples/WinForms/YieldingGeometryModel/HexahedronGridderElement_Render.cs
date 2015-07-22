@@ -16,9 +16,10 @@ using YieldingGeometryModel.GLPrimitive;
 
 namespace YieldingGeometryModel
 {
-    public partial class HexahedronGridderElement
+    public partial class HexahedronGridderElement 
     {
-        protected override ShaderProgram GetShader(OpenGL gl, RenderMode renderMode)
+
+        protected override void BeforeRendering(OpenGL gl, RenderMode renderMode)
         {
             IScientificCamera camera = this.camera;
             if (camera != null)
@@ -46,9 +47,10 @@ namespace YieldingGeometryModel
             shader.SetUniformMatrix4(gl, "projectionMatrix", projectionMatrix.to_array());
             shader.SetUniformMatrix4(gl, "viewMatrix", viewMatrix.to_array());
             shader.SetUniformMatrix4(gl, "modelMatrix", modelMatrix.to_array());
-
-            return shader;
         }
 
+        protected override void AfterRendering(OpenGL gl, RenderMode renderMode)
+        {
+        }
     }
 }

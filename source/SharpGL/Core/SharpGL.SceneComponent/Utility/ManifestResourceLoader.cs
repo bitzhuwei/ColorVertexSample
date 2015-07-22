@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Reflection;
 
@@ -31,6 +32,24 @@ namespace SharpGL.SceneComponent
                 {
                     return reader.ReadToEnd();
                 }
+            }
+        }
+
+        public static Bitmap LoadBitmap(string filename)
+        {
+            StackTrace stack = new StackTrace();
+            StackFrame frame = stack.GetFrame(1);
+            MethodBase method = frame.GetMethod();
+            Type type = method.ReflectedType;
+            Assembly executingAssembly = type.Assembly; //Assembly.GetExecutingAssembly();
+            string pathToDots = filename.Replace("\\", ".");
+            string location = string.Format("{0}.{1}", executingAssembly.GetName().Name, pathToDots);
+
+            using (Stream stream = executingAssembly.GetManifestResourceStream(location))
+            {
+                Image image = Bitmap.FromStream(stream);
+                Bitmap bmp = image as Bitmap;
+                return bmp;
             }
         }
     }

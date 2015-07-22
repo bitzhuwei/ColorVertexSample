@@ -104,8 +104,9 @@ namespace ColorVertexSample
                 float dy = System.Convert.ToSingle(this.gbDY.Text);
                 float dz = System.Convert.ToSingle(this.tbDZ.Text);
                 // use CatesianGridderSource to fill HexahedronGridderElement's content.
-                CatesianGridderSource catesianSource = new CatesianGridderSource() 
-                { NX = nx, NY = ny, NZ = nz, DX = dx, DY = dy, DZ = dz, };
+                //CatesianGridderSource source = new CatesianGridderSource() 
+                //{ NX = nx, NY = ny, NZ = nz, DX = dx, DY = dy, DZ = dz, };
+                DemoPointSpriteGridderSource source = new DemoPointSpriteGridderSource() { NX = nx, NY = ny, NZ = nz, };
 
                 ///模拟获得网格属性
                 int minValue = 100;
@@ -114,37 +115,41 @@ namespace ColorVertexSample
                 int[] gridIndexes;
                 float[] gridValues;
                 //设置色标的范围
-                this.scientificVisual3DControl.SetColorIndicator(minValue, maxValue,step);
+                this.scientificVisual3DControl.SetColorIndicator(minValue, maxValue, step);
                 //获得每个网格上的属性值
-                HexahedronGridderHelper.RandomValue(catesianSource.DimenSize, minValue, maxValue, out gridIndexes, out gridValues);
-                ColorF[] colors = new ColorF[catesianSource.DimenSize];
+                HexahedronGridderHelper.RandomValue(source.DimenSize, minValue, maxValue, out gridIndexes, out gridValues);
+                ColorF[] colors = new ColorF[source.DimenSize];
                 for (int i = 0; i < colors.Length; i++)
                 {
                     colors[i] = (ColorF)this.scientificVisual3DControl.MapToColor(gridValues[i]);
                 }
 
-                MeshGeometry mesh = HexahedronGridderHelper.CreateMesh(catesianSource);
-                mesh.VertexColors = HexahedronGridderHelper.FromColors(catesianSource, gridIndexes, colors, mesh.Visibles);
-                //this.DebugMesh(mesh);
+                //// use HexahedronGridderElement
+                //MeshGeometry mesh = HexahedronGridderHelper.CreateMesh(source);
+                //mesh.VertexColors = HexahedronGridderHelper.FromColors(source, gridIndexes, colors, mesh.Visibles);
+                ////this.DebugMesh(mesh);
 
+                //HexahedronGridderElement gridderElement = new HexahedronGridderElement(source, this.scientificVisual3DControl.Scene.CurrentCamera);
 
-               
-                HexahedronGridderElement hexaGridder = new HexahedronGridderElement(catesianSource, this.scientificVisual3DControl.Scene.CurrentCamera);
+                ////method1
+                ////gridderElement.Initialize(this.scientificVisual3DControl.OpenGL);
 
-                //method1
-                //hexaGridder.Initialize(this.scientificVisual3DControl.OpenGL);
+                ////method2
+                //gridderElement.Initialize(this.scientificVisual3DControl.OpenGL, mesh);
 
-                //method2
-                hexaGridder.Initialize(this.scientificVisual3DControl.OpenGL, mesh);
-               
-                //hexaGridder.SetBoundingBox(mesh.Min, mesh.Max);
+                //gridderElement.SetBoundingBox(mesh.Min, mesh.Max);
 
+                // use PointSpriteGridderElement
+                MeshGeometry mesh = PointSpriteGridderElementHelper.CreateMesh(source);
+                mesh.VertexColors = PointSpriteGridderElementHelper.FromColors(source, gridIndexes, colors, mesh.Visibles);
 
-                //element.Initialize(this.scientificVisual3DControl.OpenGL);
+                PointSpriteGridderElement gridderElement = new PointSpriteGridderElement(source, this.scientificVisual3DControl.Scene.CurrentCamera);
+                gridderElement.Initialize(this.scientificVisual3DControl.OpenGL, mesh);
 
-                hexaGridder.Name = string.Format("element {0}", elementCounter++);
+                //
+                gridderElement.Name = string.Format("element {0}", elementCounter++);
 
-                this.scientificVisual3DControl.AddModelElement(hexaGridder);
+                this.scientificVisual3DControl.AddModelElement(gridderElement);
 
                 // update ModelContainer's BoundingBox.
                 BoundingBox boundingBox = this.scientificVisual3DControl.ModelContainer.BoundingBox;
@@ -163,7 +168,7 @@ namespace ColorVertexSample
                 this.scientificVisual3DControl.ViewType = ViewTypes.UserView;
 
                 mesh.Dispose();
-                
+
             }
             catch (Exception error)
             {
