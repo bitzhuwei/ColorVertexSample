@@ -2,20 +2,24 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SharpGL.SceneComponent
 {
-    [StructLayout(LayoutKind.Sequential,Pack=1)]
+    /// <summary>
+    /// 顺序布局的Vertex，便于<see cref="UnmanagedArray"/>操作。
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public struct Vertex3D
     {
         public float X;
         public float Y;
         public float Z;
 
-        public static explicit operator Vertex3D(Vertex v)
+        public static implicit operator Vertex3D(Vertex v)
         {
             Vertex3D d;
             d.X = v.X;
@@ -25,263 +29,221 @@ namespace SharpGL.SceneComponent
         }
     }
 
-
     /// <summary>
-    /// 连续内存的数组
+    /// 顺序布局的GLColor，便于<see cref="UnmanagedArray"/>操作。
     /// </summary>
-    public class Array : IDisposable
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public struct ColorF
     {
 
-        private int count=0;
+        public float R { get; private set; }
 
-        private int itemSize=0;
+        public float G { get; private set; }
 
-        protected IntPtr head = IntPtr.Zero;
+        public float B { get; private set; }
 
+        public float A { get; private set; }
 
-        public Array(int count, int itemSize)
+        public static implicit operator ColorF(GLColor color)
         {
-            if(itemSize<=0)
-                throw new ArgumentException("itemSize is not illegal");
-            this.head = Marshal.AllocHGlobal(count*itemSize);
-            this.count = count;
-            this.itemSize = itemSize;
+            ColorF c = new ColorF() { R = color.R, G = color.G, B = color.B, A = color.A };
+            return c;
         }
 
-        /// <summary>
-        /// 数组所占用的字节数
-        /// </summary>
-        public int Size
-        {
-            get
-            {
-                return count * itemSize;
-            }
-        }
-
-        /// <summary>
-        /// head pointer of the first element
-        /// </summary>
-        public IntPtr Header
-        {
-            get
-            {
-                return this.head;
-            }
-        }
-
-        public unsafe void* this[int index]
-        {
-            get
-            {
-                if (index < 0 || index >= this.count)
-                   throw new IndexOutOfRangeException("out of range");
-
-                return (void*)(this.Header + (index * itemSize));
-            }
-        }
-
-        public int Count
-        {
-            get
-            {
-                return this.count;
-            }
-        }
-
-
-
-
-        /// <summary>
-        /// Dispose data
-        /// </summary>
-        public void Dispose()
-        {
-            this.Dispose(true);
-        }
-
-        private bool disposed = false;
-
-        private void Free()
-        {
-            if (this.head != IntPtr.Zero)
-            {
-                Marshal.FreeHGlobal(this.head);
-                this.head = IntPtr.Zero;
-                this.count = 0;
-            }
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!this.disposed)
-            {
-                if (disposing)
-                {
-                    // Dispose managed resources.
-
-                }
-                this.Free();
-                this.disposed = true;
-            }
-        }
     }
 
-
-    public class Vertex3DArray : Array
+    /// <summary>
+    /// 元素类型为<see cref="SharpGL.SceneComponent.Vertex3D"/>的非托管数组。
+    /// </summary>
+    public class Vertex3DArray : UnmanagedArray
     {
         public unsafe Vertex3DArray(int count)
             : base(count, sizeof(Vertex3D))
         {
         }
 
-        public new unsafe Vertex3D* this[int index]
+        public unsafe Vertex3D* this[int index]
         {
             get
             {
-                return (Vertex3D*)base[index];
+                return (Vertex3D*)base.Get(index);
             }
         }
     }
 
-
-    public class ColorArray : Array
+    /// <summary>
+    /// 元素类型为<see cref="SharpGL.SceneComponent.ColorF"/>的非托管数组。
+    /// </summary>
+    public class ColorFArray : UnmanagedArray
     {
-        public unsafe ColorArray(int count):base(count,sizeof(ColorF)){
+        public unsafe ColorFArray(int count)
+            : base(count, sizeof(ColorF))
+        {
 
         }
-        public new unsafe ColorF* this[int index]
+        public unsafe ColorF* this[int index]
         {
             get
             {
-                return (ColorF*)base[index];
+                return (ColorF*)base.Get(index);
             }
         }
     }
 
-    public class FloatArray : Array
+    /// <summary>
+    /// 元素类型为float的非托管数组。
+    /// </summary>
+    public class FloatArray : UnmanagedArray
     {
-        public unsafe FloatArray(int count):base(count,sizeof(float))
+        public unsafe FloatArray(int count)
+            : base(count, sizeof(float))
         {
 
         }
 
-        public new unsafe float* this[int index]
+        public unsafe float* this[int index]
         {
             get
             {
-                return (float*)base[index];
+                return (float*)base.Get(index);
             }
         }
     }
 
-    public class IntArray : Array
+    /// <summary>
+    /// 元素类型为Int32的非托管数组。
+    /// </summary>
+    public class IntArray : UnmanagedArray
     {
         public unsafe IntArray(int count)
             : base(count, sizeof(int))
         {
         }
 
-        
-        public new unsafe int* this[int index]
+
+        public unsafe int* this[int index]
         {
             get
             {
-                return (int*)base[index];
+                return (int*)base.Get(index);
             }
         }
     }
 
-    public class ByteArray : Array
+    /// <summary>
+    /// 元素类型为Byte的非托管数组。
+    /// </summary>
+    public class ByteArray : UnmanagedArray
     {
         public unsafe ByteArray(int count)
-            : base(count, sizeof(byte))
+            : base(count, sizeof(Byte))
         {
         }
 
-        public new unsafe byte* this[int index]
+        public unsafe Byte* this[int index]
         {
             get
             {
-                return (byte*)base[index];
+                return (Byte*)base.Get(index);
             }
         }
 
     }
 
-    public class UIntArray : Array
+    /// <summary>
+    /// 元素类型为UInt32的非托管数组。
+    /// </summary>
+    public class UIntArray : UnmanagedArray
     {
-        public unsafe UIntArray(int count):base(count,sizeof(uint)){
+        public unsafe UIntArray(int count)
+            : base(count, sizeof(UInt32))
+        {
         }
 
-        public new unsafe uint* this[int index]
+        public unsafe UInt32* this[int index]
         {
             get
             {
-                return (uint*)base[index];
+                return (UInt32*)base.Get(index);
             }
         }
 
-
     }
-    
-
-
-
 
     /// <summary>
     /// 用于记录非托管的数组。
     /// </summary>
-    public class UnmanagedArray : IDisposable
+    public abstract class UnmanagedArray : IDisposable
     {
 
-        protected int count;
-
-       
         /// <summary>
-        /// memsize of per element
+        /// 单个元素的字节数。
         /// </summary>
-        private  int elementSize;
+        private int elementSize;
 
         /// <summary>
         /// 用于记录非托管的数组。
         /// </summary>
         /// <param name="elementCount">元素数目。</param>
         /// <param name="elementSize">单个元素的字节数。</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public UnmanagedArray(int elementCount, int elementSize)
         {
-            
-            int memSize = elementCount * elementSize;
-            this.count = elementCount;
+            this.Count = elementCount;
             this.elementSize = elementSize;
-            this.ByteLength = memSize;
-            this.Pointer = Marshal.AllocHGlobal(memSize);
+
+            int memSize = elementCount * elementSize;
+            this.Header = Marshal.AllocHGlobal(memSize);
+
+            allocatedArrays.Add(this);
+        }
+
+        private static readonly List<UnmanagedArray> allocatedArrays = new List<UnmanagedArray>();
+
+        /// <summary>
+        /// 立即释放所有<see cref="UnmanagedArray"/>。
+        /// </summary>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public static void FreeAll()
+        {
+            foreach (var item in allocatedArrays)
+            {
+                item.Dispose();
+            }
+            allocatedArrays.Clear();
         }
 
         /// <summary>
         /// 数组指针。
         /// </summary>
-        public IntPtr Pointer { get; private set; }
+        public IntPtr Header { get; private set; }
 
         /// <summary>
         /// 申请到的字节数。（元素数目 * 单个元素的字节数）。
         /// </summary>
-        public int ByteLength { get; set; }
-
-
-       
-        /// <summary>
-        /// 元素数
-        /// </summary>
-        public int ElementCount {
-
-            get
-            {
-               return this.count;
-            }
+        public int ByteLength
+        {
+            get { return this.Count * this.elementSize; }
         }
 
-        
+        /// <summary>
+        /// 元素数目。
+        /// </summary>
+        public int Count { get; private set; }
+
+        /// <summary>
+        /// 获取索引为<paramref name="index"/>的元素。
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        protected unsafe void* Get(int index)
+        {
+            if (index < 0 || index >= this.Count)
+                throw new IndexOutOfRangeException("out of range");
+
+            var pElement = this.Header + (index * elementSize);
+            return pElement.ToPointer();
+        }
 
         #region IDisposable Members
 
@@ -306,17 +268,16 @@ namespace SharpGL.SceneComponent
                 //Managed cleanup code here, while managed refs still valid
             }
             //Unmanaged cleanup code here
-            IntPtr ptr = this.Pointer;
-            this.Pointer = IntPtr.Zero;
-            this.ByteLength = 0;
+            IntPtr ptr = this.Header;
 
-            if (this.Pointer != IntPtr.Zero)
+            if (ptr != IntPtr.Zero)
             {
+                this.Count = 0;
+                this.Header = IntPtr.Zero;
                 Marshal.FreeHGlobal(ptr);
-                this.Pointer = IntPtr.Zero;
-                this.count = 0;
-                
+
             }
+
             disposed = true;
         }
 
@@ -338,5 +299,5 @@ namespace SharpGL.SceneComponent
 
     }
 
-    
+
 }

@@ -39,7 +39,7 @@ namespace SharpGL.SceneComponent.Model
             set;
         }
 
-        public abstract ColorArray VertexColors
+        public abstract ColorFArray VertexColors
         {
             get;
             set;

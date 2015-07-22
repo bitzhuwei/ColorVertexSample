@@ -51,7 +51,7 @@ namespace ColorVertexSample
                  System.Console.WriteLine(string.Format("({0},{1},{2})", v.X, v.Y, v.Z));
              }
              System.Console.WriteLine("---------Colors-----------------");
-             ColorArray colors = mesh.VertexColors;
+             ColorFArray colors = mesh.VertexColors;
              for (int i = 0; i < colors.Count; i++)
              {
                  ColorF c = *colors[i];
@@ -272,7 +272,7 @@ namespace ColorVertexSample
                        colors[i] = (ColorF)this.scientificVisual3DControl.MapToColor(gridValues[i]);
                    }
 
-                   ColorArray colorArray = HexahedronGridderHelper.FromColors(source, gridIndexes, colors, visibles);
+                   ColorFArray colorArray = HexahedronGridderHelper.FromColors(source, gridIndexes, colors, visibles);
                    gridder.UpdateColorBuffer(gl, colorArray, visibles);
                    colorArray.Dispose();
                    visibles.Dispose();

@@ -25,10 +25,10 @@ namespace YieldingGeometryModel
             ebo = new uint[1];
             gl.GenBuffers(1, ebo);
             gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, ebo[0]);
-            gl.BufferData(OpenGL.GL_ELEMENT_ARRAY_BUFFER, indexArray.ByteLength, indexArray.Pointer, OpenGL.GL_STATIC_DRAW);
+            gl.BufferData(OpenGL.GL_ELEMENT_ARRAY_BUFFER, indexArray.ByteLength, indexArray.Header, OpenGL.GL_STATIC_DRAW);
 
             mode = OpenGL.GL_TRIANGLE_STRIP;
-            indexArrayElementCount = indexArray.ElementCount;
+            indexArrayElementCount = indexArray.Count;
 
             indexArray.Dispose();
         }
@@ -38,11 +38,11 @@ namespace YieldingGeometryModel
             // 用三角形带画六面体，需要14个顶点（索引值），为切断三角形带，还需要附加一个。
             int indexCount = (int)(source.DimenSize * (triangleStrip + 1));
 
-            UnmanagedArray indexArray = new UnmanagedArray(indexCount, sizeof(uint));
-            uint* indexes = (uint*)indexArray.Pointer.ToPointer();
+            UnmanagedArray indexArray = new UIntArray(indexCount); //new UnmanagedArray(indexCount, sizeof(uint));
+            uint* indexes = (uint*)indexArray.Header.ToPointer();
 
             // 计算索引信息。
-            for (int i = 0; i < indexArray.ElementCount / ((triangleStrip + 1)); i++)
+            for (int i = 0; i < indexArray.Count / ((triangleStrip + 1)); i++)
             {
                 // 索引值的指定必须配合hexahedron.GetVertexes()的次序。
                 indexes[i * (triangleStrip + 1) + 00] = (uint)((i * vertexCountInHexahedron) + 0);

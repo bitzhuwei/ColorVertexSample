@@ -23,7 +23,7 @@ namespace YieldingGeometryModel.Builder
         /// <summary>
         /// 颜色
         /// </summary>
-        private ColorArray vertexColors;
+        private ColorFArray vertexColors;
 
 
 
@@ -165,7 +165,7 @@ namespace YieldingGeometryModel.Builder
 
         
 
-        public override ColorArray VertexColors
+        public override ColorFArray VertexColors
         {
             get { return this.vertexColors; }
             set
@@ -229,9 +229,9 @@ namespace YieldingGeometryModel.Builder
 
 
 
-        public static ColorArray FromColors(HexahedronGridderSource source,int[] gridIndexes, ColorF[] colors,FloatArray visibles)
+        public static ColorFArray FromColors(HexahedronGridderSource source,int[] gridIndexes, ColorF[] colors,FloatArray visibles)
         {
-            ColorArray colorArray = new ColorArray(source.DimenSize*HEXAHEDRON_VERTEX_COUNT);
+            ColorFArray colorArray = new ColorFArray(source.DimenSize*HEXAHEDRON_VERTEX_COUNT);
             ByteArray hasColorArray = new ByteArray(source.DimenSize);
             unsafe{
                 

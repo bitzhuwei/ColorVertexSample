@@ -77,7 +77,7 @@ namespace SharpGL.SceneComponent
         
 
 
-        private void InitVertexes(OpenGL gl,Vertex3DArray vertexes,ColorArray colorArray, FloatArray visibles)
+        private void InitVertexes(OpenGL gl,Vertex3DArray vertexes,ColorFArray colorArray, FloatArray visibles)
         {
             uint[] vao = new uint[1];
             gl.GenVertexArrays(vao.Length, vao);
@@ -87,7 +87,7 @@ namespace SharpGL.SceneComponent
             uint[] vboVertex = new uint[1];
             gl.GenBuffers(vboVertex.Length, vboVertex);
             gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, vboVertex[0]);
-            gl.BufferData(OpenGL.GL_ARRAY_BUFFER, vertexes.Size, vertexes.Header, OpenGL.GL_STATIC_DRAW);
+            gl.BufferData(OpenGL.GL_ARRAY_BUFFER, vertexes.ByteLength, vertexes.Header, OpenGL.GL_STATIC_DRAW);
             gl.VertexAttribPointer(ATTRIB_INDEX_POSITION, 3, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
             gl.EnableVertexAttribArray(ATTRIB_INDEX_POSITION);
             this.vertexsBufferObject = vboVertex[0];
@@ -96,7 +96,7 @@ namespace SharpGL.SceneComponent
             uint[] vboColor = new uint[1];
             gl.GenBuffers(vboColor.Length, vboColor);
             gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, vboColor[0]);
-            gl.BufferData(OpenGL.GL_ARRAY_BUFFER, colorArray.Size, colorArray.Header, OpenGL.GL_DYNAMIC_DRAW);
+            gl.BufferData(OpenGL.GL_ARRAY_BUFFER, colorArray.ByteLength, colorArray.Header, OpenGL.GL_DYNAMIC_DRAW);
             gl.VertexAttribPointer(ATTRIB_INDEX_COLOUR, 4, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
             gl.EnableVertexAttribArray(ATTRIB_INDEX_COLOUR);
             this.colorsBufferObject = vboColor[0];
@@ -104,7 +104,7 @@ namespace SharpGL.SceneComponent
             uint[] vboVisual = new uint[1];
             gl.GenBuffers(vboVisual.Length, vboVisual);
             gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, vboVisual[0]);
-            gl.BufferData(OpenGL.GL_ARRAY_BUFFER, visibles.Size, visibles.Header, OpenGL.GL_DYNAMIC_READ);
+            gl.BufferData(OpenGL.GL_ARRAY_BUFFER, visibles.ByteLength, visibles.Header, OpenGL.GL_DYNAMIC_READ);
             gl.VertexAttribPointer(ATTRIB_INDEX_VISIBLE, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
             gl.EnableVertexAttribArray(ATTRIB_INDEX_VISIBLE);
             this.visiblesBufferObject = vboVisual[0];
@@ -117,25 +117,25 @@ namespace SharpGL.SceneComponent
             uint[] triangleBuffer = new uint[1];
             gl.GenBuffers(triangleBuffer.Length, triangleBuffer);
             gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, triangleBuffer[0]);
-            gl.BufferData(OpenGL.GL_ELEMENT_ARRAY_BUFFER, TriangleStrip.Size, TriangleStrip.Header, OpenGL.GL_STATIC_DRAW);
+            gl.BufferData(OpenGL.GL_ELEMENT_ARRAY_BUFFER, TriangleStrip.ByteLength, TriangleStrip.Header, OpenGL.GL_STATIC_DRAW);
             this.triangleIndexCount = TriangleStrip.Count;
             this.triangleBufferObject = triangleBuffer[0];
         }
 
 
-        public void UpdateColorBuffer(OpenGL gl, ColorArray colors, FloatArray visibles)
+        public void UpdateColorBuffer(OpenGL gl, ColorFArray colors, FloatArray visibles)
         {
             if (this.visiblesBufferObject == 0 || this.colorsBufferObject == 0)
                 return;
             gl.MakeCurrent();
             gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, this.visiblesBufferObject);
             IntPtr destVisibles = gl.MapBuffer(OpenGL.GL_ARRAY_BUFFER, OpenGL.GL_READ_WRITE);
-            MemoryHelper.CopyMemory(destVisibles, visibles.Header, (uint)visibles.Size);
+            MemoryHelper.CopyMemory(destVisibles, visibles.Header, (uint)visibles.ByteLength);
             gl.UnmapBuffer(OpenGL.GL_ARRAY_BUFFER);
 
             gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, this.colorsBufferObject);
             IntPtr destColors = gl.MapBuffer(OpenGL.GL_ARRAY_BUFFER,OpenGL.GL_READ_WRITE);
-            MemoryHelper.CopyMemory(destColors, colors.Header, (uint)colors.Size);
+            MemoryHelper.CopyMemory(destColors, colors.Header, (uint)colors.ByteLength);
             gl.UnmapBuffer(OpenGL.GL_ARRAY_BUFFER);
 
         }

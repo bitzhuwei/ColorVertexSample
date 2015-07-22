@@ -35,7 +35,7 @@ namespace YieldingGeometryModel
                 gl.GenBuffers(1, ids);
                 gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, ids[0]);
 
-                gl.BufferData(OpenGL.GL_ARRAY_BUFFER, positionArray.ByteLength, positionArray.Pointer, OpenGL.GL_STATIC_DRAW);
+                gl.BufferData(OpenGL.GL_ARRAY_BUFFER, positionArray.ByteLength, positionArray.Header, OpenGL.GL_STATIC_DRAW);
                 gl.VertexAttribPointer(attributeIndexPosition, 3, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
                 gl.EnableVertexAttribArray(attributeIndexPosition);
 
@@ -50,7 +50,7 @@ namespace YieldingGeometryModel
                 gl.GenBuffers(1, ids);
                 gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, ids[0]);
 
-                gl.BufferData(OpenGL.GL_ARRAY_BUFFER, colorArray.ByteLength, colorArray.Pointer, OpenGL.GL_STATIC_DRAW);
+                gl.BufferData(OpenGL.GL_ARRAY_BUFFER, colorArray.ByteLength, colorArray.Header, OpenGL.GL_STATIC_DRAW);
                 gl.VertexAttribPointer(attributeIndexColour, 3, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
                 gl.EnableVertexAttribArray(attributeIndexColour);
 
@@ -65,7 +65,7 @@ namespace YieldingGeometryModel
                 gl.GenBuffers(1, ids);
                 gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, ids[0]);
 
-                gl.BufferData(OpenGL.GL_ARRAY_BUFFER, visualArray.ByteLength, visualArray.Pointer, OpenGL.GL_DYNAMIC_READ);
+                gl.BufferData(OpenGL.GL_ARRAY_BUFFER, visualArray.ByteLength, visualArray.Header, OpenGL.GL_DYNAMIC_READ);
                 gl.VertexAttribPointer(attributeIndexVisible, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
                 gl.EnableVertexAttribArray(attributeIndexVisible);
 
@@ -82,8 +82,8 @@ namespace YieldingGeometryModel
         {
             int arrayLength = (int)(source.DimenSize * vertexCountInHexahedron);
 
-            UnmanagedArray visualArray = new UnmanagedArray(arrayLength, sizeof(float));
-            float* visuals = (float*)visualArray.Pointer.ToPointer();
+            UnmanagedArray visualArray = new FloatArray(arrayLength);// new UnmanagedArray(arrayLength, sizeof(float));
+            float* visuals = (float*)visualArray.Header.ToPointer();
 
             bool signal = true;
 
@@ -112,8 +112,8 @@ namespace YieldingGeometryModel
         {
             int arrayLength = (int)(source.DimenSize * vertexCountInHexahedron * componentCountInVertex);
 
-            UnmanagedArray colorArray = new UnmanagedArray(arrayLength, sizeof(float));
-            float* colors = (float*)colorArray.Pointer.ToPointer();
+            UnmanagedArray colorArray = new FloatArray(arrayLength);// new UnmanagedArray(arrayLength, sizeof(float));
+            float* colors = (float*)colorArray.Header.ToPointer();
 
             uint gridderElementIndex = 0;
             foreach (Hexahedron hexahedron in source.GetGridderCells())
@@ -137,8 +137,8 @@ namespace YieldingGeometryModel
         {
             int arrayLength = (int)(source.DimenSize * vertexCountInHexahedron * componentCountInVertex);
 
-            UnmanagedArray positionArray = new UnmanagedArray(arrayLength, sizeof(float));
-            float* positions = (float*)positionArray.Pointer.ToPointer();
+            UnmanagedArray positionArray = new FloatArray(arrayLength);// new UnmanagedArray(arrayLength, sizeof(float));
+            float* positions = (float*)positionArray.Header.ToPointer();
 
             uint gridderElementIndex = 0;
             foreach (Hexahedron hexahedron in source.GetGridderCells())
