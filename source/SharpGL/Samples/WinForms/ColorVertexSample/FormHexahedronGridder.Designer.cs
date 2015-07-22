@@ -89,7 +89,7 @@
             this.scientificVisual3DControl.EnablePicking = false;
             this.scientificVisual3DControl.Location = new System.Drawing.Point(3, 111);
             this.scientificVisual3DControl.Name = "scientificVisual3DControl";
-            this.scientificVisual3DControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
+            this.scientificVisual3DControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL3_3;
             this.scientificVisual3DControl.PickedPrimitive = null;
             this.scientificVisual3DControl.RenderBoundingBox = true;
             this.scientificVisual3DControl.RenderContextType = SharpGL.RenderContextType.FBO;
