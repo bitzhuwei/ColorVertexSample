@@ -42,10 +42,6 @@ namespace YieldingGeometryModel
                 if (radius >= 0) { attributeIndexRadius = (uint)radius; }
                 int visible = shaderProgram.GetAttributeLocation(gl, "in_visible");
                 if (visible >= 0) { attributeIndexVisible = (uint)visible; }
-                //shaderProgram.BindAttributeLocation(gl, attributeIndexPosition, "in_Position");
-                //shaderProgram.BindAttributeLocation(gl, attributeIndexColour, "in_Color");
-                //shaderProgram.BindAttributeLocation(gl, attributeIndexVisible, "in_visible");//控制顶点可见性。
-                //shaderProgram.BindAttributeLocation(gl, attributeIndexRadius, "in_radius");//圆的半径。
                 shaderProgram.AssertValid(gl);
                 shader = shaderProgram;
             }

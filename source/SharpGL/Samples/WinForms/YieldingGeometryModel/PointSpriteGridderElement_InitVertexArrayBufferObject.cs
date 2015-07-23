@@ -21,8 +21,6 @@ namespace YieldingGeometryModel
     {
         protected override void InitVertexArrayBufferObject(OpenGL gl, out uint mode, out uint[] vao, out int primitiveCount, PointSpriteMesh mesh)
         {
-            //mode = OpenGL.GL_TRIANGLE_STRIP;//.GL_POINTS;
-            //mode = OpenGL.GL_LINE_STRIP;
             mode = OpenGL.GL_POINTS;
 
             vao = new uint[1];
