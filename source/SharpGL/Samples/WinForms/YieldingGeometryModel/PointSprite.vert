@@ -13,7 +13,14 @@ uniform mat4 modelMatrix;
 void main(void) {
 	gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(in_Position, 1.0);
 	//gl_PointSize = gl_VertexID % 10;//
-	//gl_PointSize = in_radius;
+	//if (in_radius >= 1)
+	{
+	//	gl_PointSize = in_radius;
+	}
+	//else
+	{
+	//	gl_PointSize = gl_VertexID % 10;
+	}
 
 	pass_Color = in_Color;
 	//pass_visible = in_visible;

@@ -65,15 +65,15 @@ namespace YieldingGeometryModel
 
             //    this.visualBuffer = ids[0];
             //}
-            //{
-            //    uint[] ids = new uint[1];
-            //    gl.GenBuffers(1, ids);
-            //    gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, ids[0]);
+            {
+                uint[] ids = new uint[1];
+                gl.GenBuffers(1, ids);
+                gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, ids[0]);
 
-            //    gl.BufferData(OpenGL.GL_ARRAY_BUFFER, mesh.RadiusArray.ByteLength, mesh.RadiusArray.Header, OpenGL.GL_STATIC_DRAW);
-            //    gl.VertexAttribPointer(attributeIndexRadius, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
-            //    gl.EnableVertexAttribArray(attributeIndexRadius);
-            //}
+                gl.BufferData(OpenGL.GL_ARRAY_BUFFER, mesh.RadiusArray.ByteLength, mesh.RadiusArray.Header, OpenGL.GL_STATIC_DRAW);
+                gl.VertexAttribPointer(attributeIndexRadius, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
+                gl.EnableVertexAttribArray(attributeIndexRadius);
+            }
 
             //  Unbind the vertex array, we've finished specifying data for it.
             gl.BindVertexArray(0);

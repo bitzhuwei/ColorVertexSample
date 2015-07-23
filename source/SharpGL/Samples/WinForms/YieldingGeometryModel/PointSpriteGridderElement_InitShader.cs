@@ -34,8 +34,13 @@ namespace YieldingGeometryModel
                 var fragmentShaderSource = ManifestResourceLoader.LoadTextFile(@"PointSprite.frag");
                 var shaderProgram = new ShaderProgram();
                 shaderProgram.Create(gl, vertexShaderSource, fragmentShaderSource, null);
-                shaderProgram.BindAttributeLocation(gl, attributeIndexPosition, "in_Position");
-                shaderProgram.BindAttributeLocation(gl, attributeIndexColour, "in_Color");
+                int position = shaderProgram.GetAttributeLocation(gl, "in_Position");
+                if (position >= 0) { attributeIndexPosition = (uint)position; }
+                int color = shaderProgram.GetAttributeLocation(gl, "in_Color");
+                if (color >= 0) { attributeIndexColour = (uint)color; }
+
+                //shaderProgram.BindAttributeLocation(gl, attributeIndexPosition, "in_Position");
+                //shaderProgram.BindAttributeLocation(gl, attributeIndexColour, "in_Color");
                 //shaderProgram.BindAttributeLocation(gl, attributeIndexVisible, "in_visible");//控制顶点可见性。
                 //shaderProgram.BindAttributeLocation(gl, attributeIndexRadius, "in_radius");//圆的半径。
                 shaderProgram.AssertValid(gl);
