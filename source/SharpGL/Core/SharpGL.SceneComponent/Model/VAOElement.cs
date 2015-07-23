@@ -18,7 +18,7 @@ namespace SharpGL.SceneComponent
     /// <summary>
     /// 用Shader+VAO进行渲染的元素。
     /// </summary>
-    public abstract class VAOElement : SharpGL.SceneGraph.Core.SceneElement, SharpGL.SceneGraph.Core.IRenderable
+    public abstract class VAOElement<TMesh> : SharpGL.SceneGraph.Core.SceneElement, SharpGL.SceneGraph.Core.IRenderable where TMesh : class
     {
         /// <summary>
         /// vertex array buffer object.
@@ -33,17 +33,13 @@ namespace SharpGL.SceneComponent
 
         protected ShaderProgram shader;
 
-        //  Constants that specify the attribute indexes.
-        public  const uint ATTRIB_INDEX_POSITION = 0;
-        public  const uint ATTRIB_INDEX_COLOUR = 1;
-
         protected bool isInitialized = false;
 
         /// <summary>
         /// 初始化VAO、EBO、Shader. Deprecated;
         /// </summary>
         /// <param name="gl"></param>
-        public void Initialize(OpenGL gl, TriangleMesh mesh)
+        public void Initialize(OpenGL gl, TMesh mesh)
         {
             InitShader(gl, out this.shader);
 
@@ -60,7 +56,7 @@ namespace SharpGL.SceneComponent
         /// <param name="vao">必须设置VAO</param>
         /// <param name="primitiveCount">元素的数目。Count of elements.</param>
         /// <returns></returns>
-        protected abstract void InitVertexArrayBufferObject(OpenGL gl, out uint mode, out uint[] vao, out int primitiveCount, TriangleMesh mesh);
+        protected abstract void InitVertexArrayBufferObject(OpenGL gl, out uint mode, out uint[] vao, out int primitiveCount, TMesh mesh);
 
         /// <summary>
         /// 创建Shader。

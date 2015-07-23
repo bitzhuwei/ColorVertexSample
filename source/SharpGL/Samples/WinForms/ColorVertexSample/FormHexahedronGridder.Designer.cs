@@ -89,7 +89,7 @@
             this.scientificVisual3DControl.EnablePicking = false;
             this.scientificVisual3DControl.Location = new System.Drawing.Point(3, 111);
             this.scientificVisual3DControl.Name = "scientificVisual3DControl";
-            this.scientificVisual3DControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL3_3;
+            this.scientificVisual3DControl.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
             this.scientificVisual3DControl.PickedPrimitive = null;
             this.scientificVisual3DControl.RenderBoundingBox = true;
             this.scientificVisual3DControl.RenderContextType = SharpGL.RenderContextType.FBO;
@@ -267,7 +267,7 @@
             this.tbNZ.Name = "tbNZ";
             this.tbNZ.Size = new System.Drawing.Size(60, 21);
             this.tbNZ.TabIndex = 5;
-            this.tbNZ.Text = "85";
+            this.tbNZ.Text = "8";
             // 
             // gbDY
             // 
@@ -301,7 +301,7 @@
             this.tbNY.Name = "tbNY";
             this.tbNY.Size = new System.Drawing.Size(60, 21);
             this.tbNY.TabIndex = 3;
-            this.tbNY.Text = "22";
+            this.tbNY.Text = "10";
             // 
             // tbDX
             // 

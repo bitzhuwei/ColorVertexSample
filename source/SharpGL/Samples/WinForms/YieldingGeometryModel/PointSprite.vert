@@ -1,23 +1,20 @@
 #version 150 core
-in vec3 in_Position;
-in vec3 in_Color;
-out vec3 pass_Color;
-out vec2 pass_position;
-out float pass_pointSize;
-in float in_visible;
-out float pass_visible;
 
-uniform float basePointSize;
+in vec3  in_Position;
+in vec4  in_Color;
+//in float in_visible;
+//in float in_radius;
+out vec4 pass_Color;
+//out float pass_visible;
 uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 modelMatrix;
 
 void main(void) {
-    gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(in_Position, 1.0);
+	gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(in_Position, 1.0);
+	//gl_PointSize = gl_VertexID % 10;//
+	//gl_PointSize = in_radius;
+
 	pass_Color = in_Color;
-	pass_position = vec2(gl_Position.x / gl_Position.w, gl_Position.y / gl_Position.w);
-	vec4 cameraPosition = viewMatrix * modelMatrix * vec4(in_Position, 1.0);
-	gl_PointSize = basePointSize * 13 / (cameraPosition.z * projectionMatrix[2][3] + projectionMatrix[3][3]);
-	pass_pointSize = gl_PointSize;
-	pass_visible = in_visible;
+	//pass_visible = in_visible;
 }

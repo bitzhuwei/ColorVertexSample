@@ -1,4 +1,5 @@
 ﻿using SharpGL.SceneComponent;
+using SharpGL.SceneComponent.Model;
 using SharpGL.SceneGraph;
 using System;
 using System.Collections.Generic;
@@ -27,16 +28,19 @@ namespace YieldingGeometryModel.Builder
                 max.Z = value.Z;
         }
 
-        public static MeshGeometry CreateMesh(this PointSpriteGridderSource source)
+        public static PointSpriteMesh CreateMesh(this PointSpriteGridderSource source)
         {
             if (source.DimenSize <= 0)
                 return null;
 
             //每个圆需要1个位置顶点。
-            Vertex3DArray vertexes = new Vertex3DArray(source.DimenSize * PointSpriteGridderElement.vertexCountPerElement);
+            Vertex3DArray positions = new Vertex3DArray(source.DimenSize * PointSpriteGridderElement.vertexCountPerElement);
 
             //是否可见
             FloatArray visibles = new FloatArray(source.DimenSize * PointSpriteGridderElement.vertexCountPerElement);
+
+            //半径
+            FloatArray radiusArray = new FloatArray(source.DimenSize * PointSpriteGridderElement.vertexCountPerElement);
 
             Vertex min = new Vertex();
             Vertex max = new Vertex();
@@ -62,21 +66,27 @@ namespace YieldingGeometryModel.Builder
 
                     int cellOffset = gridIndex * PointSpriteGridderElement.vertexCountPerElement;
 
-                    *vertexes[cellOffset + 0] = position;
+                    *positions[cellOffset + 0] = position;
 
                     float visible = source.IsActiveBlock(i, j, k) == true ? 1.0f : 0;
                     *visibles[cellOffset + 0] = visible;
+
+                    *radiusArray[cellOffset + 0] = random.Next(1, 10);
                 }
             }
 
-            MeshGeometry mesh = new MeshGeometry();
-            mesh.Vertexes = vertexes;
+            PointSpriteMesh mesh = new PointSpriteMesh();
+            mesh.PositionArray = positions;
+            mesh.VisibleArray = visibles;
+            mesh.RadiusArray = radiusArray;
+
             mesh.Min = min;
             mesh.Max = max;
-            mesh.Visibles = visibles;
 
             return mesh;
         }
+
+        static Random random = new Random();
 
         public static ColorFArray FromColors(PointSpriteGridderSource source, int[] gridIndexes, ColorF[] colors, FloatArray visibles)
         {

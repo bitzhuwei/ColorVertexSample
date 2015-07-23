@@ -53,24 +53,27 @@ namespace YieldingGeometryModel
 
             //this.texture.Bind(gl);
 
-            int[] viewport;
-            var projectionMatrix = GetProjectionMatrix(gl, out viewport);
-            var cameraPosition = GetCameraPosition();
-            var basePointSize = 30f;
+            //int[] viewport=new int[4];
+            //gl.GetInteger(OpenGL.GL_VIEWPORT, viewport);
+
+            //var projectionMatrix = GetProjectionMatrix(gl, out viewport);
+            //var viewMatrix = GetViewMatrix();
+            //var cameraPosition = GetCameraPosition();
+            //var basePointSize = 30f;
             //var Color = new float[] { 1, 0, 0 };
             //var lightDir = new float[] { 1, 1, 1 };
 
             ShaderProgram shader = this.shader;
 
             shader.Bind(gl);
-            shader.SetUniform1(gl, "tex", this.texture.TextureName);
+            //shader.SetUniform1(gl, "tex", this.texture.TextureName);
             shader.SetUniformMatrix4(gl, "projectionMatrix", projectionMatrix.to_array());
             shader.SetUniformMatrix4(gl, "viewMatrix", viewMatrix.to_array());
             shader.SetUniformMatrix4(gl, "modelMatrix", modelMatrix.to_array());
-            shader.SetUniform1(gl, "basePointSize", basePointSize);
-            shader.SetUniform3(gl, "cameraPosition", cameraPosition.x, cameraPosition.y, cameraPosition.z);
-            shader.SetUniform1(gl, "canvasWidth", viewport[2]);
-            shader.SetUniform1(gl, "canvasHeight", viewport[3]);
+            //shader.SetUniform1(gl, "basePointSize", basePointSize);
+            //shader.SetUniform3(gl, "cameraPosition", cameraPosition.x, cameraPosition.y, cameraPosition.z);
+            //shader.SetUniform1(gl, "canvasWidth", viewport[2]);
+            //shader.SetUniform1(gl, "canvasHeight", viewport[3]);
             //shaderProgram.SetUniform3(gl, "Color", Color[0], Color[1], Color[2]);
             //shaderProgram.SetUniform3(gl, "lighDir", lightDir[0], lightDir[1], lightDir[2]);
         }
@@ -84,26 +87,26 @@ namespace YieldingGeometryModel
             //gl.BindTexture(OpenGL.GL_TEXTURE_2D, 0);
         }
 
-        protected mat4 GetProjectionMatrix(OpenGL gl, out int[] viewport)
-        {
-            //  get perspective projection matrix.
-            viewport = new int[4];
-            gl.GetInteger(OpenGL.GL_VIEWPORT, viewport);
-            const float rads = (60.0f / 360.0f) * (float)Math.PI * 2.0f;
-            var projectionMatrix = glm.perspective(rads, (float)viewport[2] / (float)viewport[3], 0.01f, 1000.0f);
-            return projectionMatrix;
-        }
+        //protected mat4 GetProjectionMatrix(OpenGL gl, out int[] viewport)
+        //{
+        //    //  get perspective projection matrix.
+        //    viewport = new int[4];
+        //    gl.GetInteger(OpenGL.GL_VIEWPORT, viewport);
+        //    const float rads = (60.0f / 360.0f) * (float)Math.PI * 2.0f;
+        //    var projectionMatrix = glm.perspective(rads, (float)viewport[2] / (float)viewport[3], 0.01f, 1000.0f);
+        //    return projectionMatrix;
+        //}
 
-        protected mat4 GetViewMatrix()
-        {
-            var viewMatrix = glm.lookAt(GetCameraPosition(),
-                new vec3(0, 0, 0), new vec3(0, 0, -1));
-            return viewMatrix;
-        }
+        //protected mat4 GetViewMatrix()
+        //{
+        //    var viewMatrix = glm.lookAt(GetCameraPosition(),
+        //        new vec3(0, 0, 0), new vec3(0, 0, -1));
+        //    return viewMatrix;
+        //}
 
-        protected vec3 GetCameraPosition()
-        {
-            return new vec3(-12.5f, 12.5f, -12.5f);
-        }
+        //protected vec3 GetCameraPosition()
+        //{
+        //    return new vec3(-12.5f, 12.5f, -12.5f);
+        //}
     }
 }

@@ -20,6 +20,7 @@ using SharpGL.SceneGraph.Quadrics;
 using SharpGL.SceneComponent;
 using YieldingGeometryModel;
 using YieldingGeometryModel.Builder;
+using SharpGL.SceneComponent.Model;
 
 namespace ColorVertexSample
 {
@@ -72,6 +73,40 @@ namespace ColorVertexSample
                  uint t = *triangles[i];
                  System.Console.WriteLine(string.Format("({0})", t));
              }
+
+
+        }
+        private unsafe void DebugMesh(PointSpriteMesh mesh)
+        {
+            System.Console.WriteLine("---------Positions-----------------");
+            Vertex3DArray array = mesh.PositionArray;
+            for (int i = 0; i < array.Count; i++)
+            {
+                Vertex3D v = *array[i];
+                System.Console.WriteLine(string.Format("({0},{1},{2})", v.X, v.Y, v.Z));
+            }
+            System.Console.WriteLine("---------Colors-----------------");
+            ColorFArray colors = mesh.ColorArray;
+            for (int i = 0; i < colors.Count; i++)
+            {
+                ColorF c = *colors[i];
+                System.Console.WriteLine(string.Format("({0},{1},{2},{3})", c.R, c.G, c.B, c.A));
+            }
+            System.Console.WriteLine("---------visibles-----------------");
+            FloatArray visibles = mesh.VisibleArray;
+            for (int i = 0; i < visibles.Count; i++)
+            {
+                float c = *visibles[i];
+                System.Console.WriteLine(string.Format("({0})", c));
+            }
+
+            System.Console.WriteLine("---------TriangleTrip-----------------");
+            FloatArray triangles = mesh.RadiusArray;
+            for (int i = 0; i < triangles.Count; i++)
+            {
+                float t = *triangles[i];
+                System.Console.WriteLine(string.Format("({0})", t));
+            }
 
 
         }
@@ -140,11 +175,12 @@ namespace ColorVertexSample
                 //gridderElement.SetBoundingBox(mesh.Min, mesh.Max);
 
                 // use PointSpriteGridderElement
-                MeshGeometry mesh = PointSpriteGridderElementHelper.CreateMesh(source);
-                mesh.VertexColors = PointSpriteGridderElementHelper.FromColors(source, gridIndexes, colors, mesh.Visibles);
+                PointSpriteMesh mesh = PointSpriteGridderElementHelper.CreateMesh(source);
+                mesh.ColorArray = PointSpriteGridderElementHelper.FromColors(source, gridIndexes, colors, mesh.VisibleArray);
 
                 PointSpriteGridderElement gridderElement = new PointSpriteGridderElement(source, this.scientificVisual3DControl.Scene.CurrentCamera);
                 gridderElement.Initialize(this.scientificVisual3DControl.OpenGL, mesh);
+                //DebugMesh(mesh);
 
                 //
                 gridderElement.Name = string.Format("element {0}", elementCounter++);

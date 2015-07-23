@@ -1,5 +1,6 @@
 ﻿using GlmNet;
 using SharpGL.SceneComponent;
+using SharpGL.SceneComponent.Model;
 using SharpGL.SceneGraph.Assets;
 using System;
 using System.Collections.Generic;
@@ -9,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace YieldingGeometryModel
 {
-    public partial class PointSpriteGridderElement : VAOElement
+    public partial class PointSpriteGridderElement : VAOElement<PointSpriteMesh>, IBoundingBox
     {
-        private Texture texture;
+        //private Texture texture;
         internal IScientificCamera camera;
         //private ShaderProgram pickingShader;
         //  The projection, view and model matrices.
@@ -23,19 +24,12 @@ namespace YieldingGeometryModel
         /// 元素内的顶点数。（1）
         /// </summary>
         internal const int vertexCountPerElement = 1;
-        /// <summary>
-        /// 顶点的分量数。（3）
-        /// </summary>
-        internal const int componentCountInVertex = 3;
-        ///// <summary>
-        ///// 用三角形带画六面体，需要14个顶点（索引值）
-        ///// </summary>
-        //internal const int triangleStrip = 14;
 
         //  Constants that specify the attribute indexes.
         internal const uint attributeIndexPosition = 0;
         internal const uint attributeIndexColour = 1;
-        internal const uint attributeIndexVisible = 2;
+        //internal const uint attributeIndexVisible = 2;
+        //internal const uint attributeIndexRadius = 3;
 
         internal uint visualBuffer;
 

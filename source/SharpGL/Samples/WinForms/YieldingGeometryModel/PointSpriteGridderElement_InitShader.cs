@@ -24,10 +24,10 @@ namespace YieldingGeometryModel
         protected override void InitShader(SharpGL.OpenGL gl, out SharpGL.Shaders.ShaderProgram shader)
         {
             {
-                Bitmap bmp = ManifestResourceLoader.LoadBitmap("PointSprite.png");
-                this.texture = new Texture();
-                this.texture.Create(gl, bmp);
-                bmp.Dispose();
+                //Bitmap bmp = ManifestResourceLoader.LoadBitmap("PointSprite.png");
+                //this.texture = new Texture();
+                //this.texture.Create(gl, bmp);
+                //bmp.Dispose();
 
                 //  Create the shader program.
                 var vertexShaderSource = ManifestResourceLoader.LoadTextFile(@"PointSprite.vert");
@@ -36,7 +36,8 @@ namespace YieldingGeometryModel
                 shaderProgram.Create(gl, vertexShaderSource, fragmentShaderSource, null);
                 shaderProgram.BindAttributeLocation(gl, attributeIndexPosition, "in_Position");
                 shaderProgram.BindAttributeLocation(gl, attributeIndexColour, "in_Color");
-                shaderProgram.BindAttributeLocation(gl, attributeIndexVisible, "in_visible");//控制顶点可见性。
+                //shaderProgram.BindAttributeLocation(gl, attributeIndexVisible, "in_visible");//控制顶点可见性。
+                //shaderProgram.BindAttributeLocation(gl, attributeIndexRadius, "in_radius");//圆的半径。
                 shaderProgram.AssertValid(gl);
                 shader = shaderProgram;
             }

@@ -171,6 +171,7 @@ namespace SharpGL.SceneComponent.SimpleUI.ColorIndicator
 
             double total = r + g + b;
             color.Set((float)(r / total), (float)(g / total), (float)(b / total));
+            color.A = 1.0f;
             return color;
 
         }

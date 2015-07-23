@@ -18,10 +18,10 @@ namespace YieldingGeometryModel
 {
     public partial class PointSpriteGridderElement
     {
-        //BoundingBox boundingBox = new BoundingBox();
+        BoundingBox boundingBox = new BoundingBox();
 
         #region IBoundingBox 成员
-        /*
+        
         Vertex IBoundingBox.MaxPosition
         {
             get { return boundingBox.MaxPosition; }
@@ -56,7 +56,7 @@ namespace YieldingGeometryModel
         {
             boundingBox.SetBounds(min, max);
         }
-        */
+        
         #endregion
 
     }
