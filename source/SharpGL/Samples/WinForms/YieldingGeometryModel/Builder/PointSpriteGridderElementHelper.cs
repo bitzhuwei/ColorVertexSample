@@ -71,6 +71,7 @@ namespace YieldingGeometryModel.Builder
                     float visible = source.IsActiveBlock(i, j, k) == true ? 1.0f : 0;
                     *visibles[cellOffset + 0] = visible;
 
+                    // TODO: 此处应由具体业务决定。
                     *radiusArray[cellOffset + 0] = random.Next(1, 10);
                 }
             }

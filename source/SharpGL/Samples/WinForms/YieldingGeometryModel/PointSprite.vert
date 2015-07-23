@@ -3,7 +3,7 @@
 in vec3  in_Position;
 in vec4  in_Color;
 //in float in_visible;
-//in float in_radius;
+in float in_radius;
 out vec4 pass_Color;
 //out float pass_visible;
 uniform mat4 projectionMatrix;
@@ -15,7 +15,7 @@ void main(void) {
 	//gl_PointSize = gl_VertexID % 10;//
 	//if (in_radius >= 1)
 	{
-	//	gl_PointSize = in_radius;
+		gl_PointSize = in_radius;
 	}
 	//else
 	{

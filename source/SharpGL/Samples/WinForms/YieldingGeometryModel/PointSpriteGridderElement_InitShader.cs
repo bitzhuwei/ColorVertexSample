@@ -38,7 +38,8 @@ namespace YieldingGeometryModel
                 if (position >= 0) { attributeIndexPosition = (uint)position; }
                 int color = shaderProgram.GetAttributeLocation(gl, "in_Color");
                 if (color >= 0) { attributeIndexColour = (uint)color; }
-
+                int radius = shaderProgram.GetAttributeLocation(gl, "in_radius");
+                if (radius >= 0) { attributeIndexRadius = (uint)radius; }
                 //shaderProgram.BindAttributeLocation(gl, attributeIndexPosition, "in_Position");
                 //shaderProgram.BindAttributeLocation(gl, attributeIndexColour, "in_Color");
                 //shaderProgram.BindAttributeLocation(gl, attributeIndexVisible, "in_visible");//控制顶点可见性。
