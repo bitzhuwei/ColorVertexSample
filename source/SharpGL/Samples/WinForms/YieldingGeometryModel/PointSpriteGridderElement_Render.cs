@@ -42,13 +42,14 @@ namespace YieldingGeometryModel
 
             modelMatrix = mat4.identity();
 
-            //gl.Enable(OpenGL.GL_VERTEX_PROGRAM_POINT_SIZE);
-            //gl.Enable(OpenGL.GL_POINT_SPRITE_ARB);
-            //gl.TexEnv(OpenGL.GL_POINT_SPRITE_ARB, OpenGL.GL_COORD_REPLACE_ARB, OpenGL.GL_TRUE);
-
-            //gl.Enable(OpenGL.GL_BLEND);
-            //gl.BlendEquation(OpenGL.GL_FUNC_ADD_EXT);
-            //gl.BlendFuncSeparate(OpenGL.GL_SRC_ALPHA, OpenGL.GL_ONE_MINUS_SRC_ALPHA, OpenGL.GL_ONE, OpenGL.GL_ONE);
+            gl.Enable(OpenGL.GL_VERTEX_PROGRAM_POINT_SIZE);
+            gl.Enable(OpenGL.GL_POINT_SPRITE_ARB);
+            gl.TexEnv(OpenGL.GL_POINT_SPRITE_ARB, OpenGL.GL_COORD_REPLACE_ARB, OpenGL.GL_TRUE);
+            gl.Enable(OpenGL.GL_POINT_SMOOTH);
+            gl.Hint(OpenGL.GL_POINT_SMOOTH_HINT, OpenGL.GL_NICEST);
+            gl.Enable(OpenGL.GL_BLEND);
+            gl.BlendEquation(OpenGL.GL_FUNC_ADD_EXT);
+            gl.BlendFuncSeparate(OpenGL.GL_SRC_ALPHA, OpenGL.GL_ONE_MINUS_SRC_ALPHA, OpenGL.GL_ONE, OpenGL.GL_ONE);
 
 
             this.texture.Bind(gl);
@@ -70,9 +71,10 @@ namespace YieldingGeometryModel
         protected override void AfterRendering(OpenGL gl, RenderMode renderMode)
         {
             shader.Unbind(gl);
-            //gl.Disable(OpenGL.GL_BLEND);
-            //gl.Disable(OpenGL.GL_VERTEX_PROGRAM_POINT_SIZE);
-            //gl.Disable(OpenGL.GL_POINT_SPRITE_ARB);
+            gl.Disable(OpenGL.GL_BLEND);
+            gl.Disable(OpenGL.GL_VERTEX_PROGRAM_POINT_SIZE);
+            gl.Disable(OpenGL.GL_POINT_SPRITE_ARB);
+            gl.Disable(OpenGL.GL_POINT_SMOOTH);
             gl.BindTexture(OpenGL.GL_TEXTURE_2D, 0);
         }
 
