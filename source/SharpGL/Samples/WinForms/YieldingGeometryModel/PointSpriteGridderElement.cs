@@ -12,7 +12,7 @@ namespace YieldingGeometryModel
 {
     public partial class PointSpriteGridderElement : VAOElement<PointSpriteMesh>, IBoundingBox
     {
-        //private Texture texture;
+        private Texture texture;
         internal IScientificCamera camera;
         //private ShaderProgram pickingShader;
         //  The projection, view and model matrices.

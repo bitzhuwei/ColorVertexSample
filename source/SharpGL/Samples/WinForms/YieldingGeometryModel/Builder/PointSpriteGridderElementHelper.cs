@@ -107,7 +107,7 @@ namespace YieldingGeometryModel.Builder
                     *visibles[cellOffset + 0] = cellOffset % 2 == 0 ? 1 : 0;// visible;
 
                     // TODO: 此处应由具体业务决定。
-                    *radiusArray[cellOffset + 0] = random.Next(1, 10);
+                    *radiusArray[cellOffset + 0] = random.Next(1, 20);
                 }
             }
 
