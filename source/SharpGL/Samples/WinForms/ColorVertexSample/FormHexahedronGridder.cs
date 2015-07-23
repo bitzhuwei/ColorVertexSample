@@ -272,10 +272,19 @@ namespace ColorVertexSample
                 // 随机显示某些hexahedron
                 foreach (var item in this.scientificVisual3DControl.ModelContainer.Children)
                 {
-                    HexahedronGridderElement element = item as HexahedronGridderElement;
-                    if(element!=null)
                     {
-                        YieldingGeometryModel.Builder.HexahedronGridderElementHelper.RandomVisibility(element, this.scientificVisual3DControl.OpenGL, 0.2);
+                        HexahedronGridderElement element = item as HexahedronGridderElement;
+                        if (element != null)
+                        {
+                            YieldingGeometryModel.Builder.HexahedronGridderElementHelper.RandomVisibility(element, this.scientificVisual3DControl.OpenGL, 0.2);
+                        }
+                    }
+                    {
+                        PointSpriteGridderElement element = item as PointSpriteGridderElement;
+                        if(element!=null)
+                        {
+                            YieldingGeometryModel.Builder.PointSpriteGridderElementHelper.RandomVisibility(element, this.scientificVisual3DControl.OpenGL, 0.2);
+                        }
                     }
                 }
 

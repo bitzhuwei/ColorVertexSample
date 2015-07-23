@@ -28,7 +28,7 @@ namespace YieldingGeometryModel
         //  Constants that specify the attribute indexes.
         internal uint attributeIndexPosition = 0;
         internal uint attributeIndexColour = 1;
-        //internal uint attributeIndexVisible = 2;
+        internal uint attributeIndexVisible = 2;
         internal uint attributeIndexRadius = 3;
 
         internal uint visualBuffer;

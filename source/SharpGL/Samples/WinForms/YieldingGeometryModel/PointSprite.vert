@@ -2,10 +2,10 @@
 
 in vec3  in_Position;
 in vec4  in_Color;
-//in float in_visible;
+in float in_visible;
 in float in_radius;
 out vec4 pass_Color;
-//out float pass_visible;
+out float pass_visible;
 uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 modelMatrix;
@@ -23,5 +23,5 @@ void main(void) {
 	}
 
 	pass_Color = in_Color;
-	//pass_visible = in_visible;
+	pass_visible = in_visible;
 }

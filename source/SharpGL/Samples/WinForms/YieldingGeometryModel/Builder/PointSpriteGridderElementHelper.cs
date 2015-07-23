@@ -1,4 +1,5 @@
-﻿using SharpGL.SceneComponent;
+﻿using SharpGL;
+using SharpGL.SceneComponent;
 using SharpGL.SceneComponent.Model;
 using SharpGL.SceneGraph;
 using System;
@@ -11,6 +12,40 @@ namespace YieldingGeometryModel.Builder
 {
     public static class PointSpriteGridderElementHelper
     {
+
+        /// <summary>
+        /// 随机决定此gridder内的各个元素的可见性。
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="gl"></param>
+        /// <param name="probability">可见度，范围为0 ~ 1，0为全部不可见，1为全部可见。</param>
+        public static void RandomVisibility(this PointSpriteGridderElement element, OpenGL
+             gl, double probability)
+        {
+            gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, element.visualBuffer);
+            IntPtr visualArray = gl.MapBuffer(OpenGL.GL_ARRAY_BUFFER, OpenGL.GL_READ_WRITE);
+
+            unsafe
+            {
+                int arrayLength = (int)(element.Source.DimenSize * PointSpriteGridderElement.vertexCountPerElement);
+
+                float* visuals = (float*)visualArray.ToPointer();
+
+                bool signal;
+
+                for (int gridIndex = 0; gridIndex < element.Source.DimenSize; gridIndex++)
+                {
+                    // TODO: 此signal应由具体业务提供。
+                    signal = (random.NextDouble() < probability);
+
+                    // 计算visual信息。
+                    visuals[gridIndex + 0] = signal ? 1 : 0;
+                }
+            }
+
+            gl.UnmapBuffer(OpenGL.GL_ARRAY_BUFFER);
+        }
+
         public static void MinMax(Vertex value, ref Vertex min, ref Vertex max)
         {
 
@@ -69,7 +104,7 @@ namespace YieldingGeometryModel.Builder
                     *positions[cellOffset + 0] = position;
 
                     float visible = source.IsActiveBlock(i, j, k) == true ? 1.0f : 0;
-                    *visibles[cellOffset + 0] = visible;
+                    *visibles[cellOffset + 0] = cellOffset % 2 == 0 ? 1 : 0;// visible;
 
                     // TODO: 此处应由具体业务决定。
                     *radiusArray[cellOffset + 0] = random.Next(1, 10);

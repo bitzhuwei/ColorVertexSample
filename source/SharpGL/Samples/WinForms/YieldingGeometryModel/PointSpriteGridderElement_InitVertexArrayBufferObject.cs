@@ -53,18 +53,18 @@ namespace YieldingGeometryModel
                 gl.EnableVertexAttribArray(attributeIndexColour);
             }
 
-            //// Now do the same for the index's visual signal data.
-            //{
-            //    uint[] ids = new uint[1];
-            //    gl.GenBuffers(1, ids);
-            //    gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, ids[0]);
+            // Now do the same for the index's visual signal data.
+            {
+                uint[] ids = new uint[1];
+                gl.GenBuffers(1, ids);
+                gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, ids[0]);
 
-            //    gl.BufferData(OpenGL.GL_ARRAY_BUFFER, mesh.VisibleArray.ByteLength, mesh.VisibleArray.Header, OpenGL.GL_DYNAMIC_READ);
-            //    gl.VertexAttribPointer(attributeIndexVisible, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
-            //    gl.EnableVertexAttribArray(attributeIndexVisible);
+                gl.BufferData(OpenGL.GL_ARRAY_BUFFER, mesh.VisibleArray.ByteLength, mesh.VisibleArray.Header, OpenGL.GL_DYNAMIC_READ);
+                gl.VertexAttribPointer(attributeIndexVisible, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
+                gl.EnableVertexAttribArray(attributeIndexVisible);
 
-            //    this.visualBuffer = ids[0];
-            //}
+                this.visualBuffer = ids[0];
+            }
             {
                 uint[] ids = new uint[1];
                 gl.GenBuffers(1, ids);
