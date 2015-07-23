@@ -21,6 +21,8 @@ namespace YieldingGeometryModel
 
         protected override void BeforeRendering(OpenGL gl, RenderMode renderMode)
         {
+            this.visualBuffer = base.visiblesBufferObject;
+
             IScientificCamera camera = this.camera;
             if (camera != null)
             {

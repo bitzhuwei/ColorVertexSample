@@ -31,7 +31,7 @@ namespace SharpGL.SceneComponent
 
         private  uint  colorsBufferObject = 0;
 
-        private  uint  visiblesBufferObject = 0;
+        protected uint  visiblesBufferObject = 0;
 
         private  uint  triangleBufferObject = 0;
 
