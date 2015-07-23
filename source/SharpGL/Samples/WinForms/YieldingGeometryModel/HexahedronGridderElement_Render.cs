@@ -47,10 +47,14 @@ namespace YieldingGeometryModel
             shader.SetUniformMatrix4(gl, "projectionMatrix", projectionMatrix.to_array());
             shader.SetUniformMatrix4(gl, "viewMatrix", viewMatrix.to_array());
             shader.SetUniformMatrix4(gl, "modelMatrix", modelMatrix.to_array());
+
+            gl.Enable(OpenGL.GL_POLYGON_SMOOTH);
+            gl.Hint(OpenGL.GL_POLYGON_SMOOTH_HINT, OpenGL.GL_NICEST);
         }
 
         protected override void AfterRendering(OpenGL gl, RenderMode renderMode)
         {
+            gl.Disable(OpenGL.GL_POLYGON_SMOOTH);
         }
     }
 }
