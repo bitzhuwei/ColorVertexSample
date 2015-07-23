@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace YieldingGeometryModel
 {
-    public partial class PointSpriteGridderElement : VAOElement<PointSpriteMesh>, IBoundingBox
+    public partial class PointSpriteGridderElement : VAOElement<PointSpriteMesh>//, IBoundingBox
     {
         private Texture texture;
         internal IScientificCamera camera;

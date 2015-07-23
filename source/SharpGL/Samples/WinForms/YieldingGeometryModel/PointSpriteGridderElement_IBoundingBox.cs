@@ -22,40 +22,40 @@ namespace YieldingGeometryModel
 
         #region IBoundingBox 成员
         
-        Vertex IBoundingBox.MaxPosition
-        {
-            get { return boundingBox.MaxPosition; }
-        }
+        //Vertex IBoundingBox.MaxPosition
+        //{
+        //    get { return boundingBox.MaxPosition; }
+        //}
 
-        Vertex IBoundingBox.MinPosition
-        {
-            get { return boundingBox.MinPosition; }
-        }
+        //Vertex IBoundingBox.MinPosition
+        //{
+        //    get { return boundingBox.MinPosition; }
+        //}
 
-        void IBoundingBox.GetCenter(out float x, out float y, out float z)
-        {
-            boundingBox.GetCenter(out x, out y, out z);
-        }
+        //void IBoundingBox.GetCenter(out float x, out float y, out float z)
+        //{
+        //    boundingBox.GetCenter(out x, out y, out z);
+        //}
 
-        void IBoundingBox.GetBoundDimensions(out float xSize, out float ySize, out float zSize)
-        {
-            boundingBox.GetBoundDimensions(out xSize, out ySize, out zSize);
-        }
+        //void IBoundingBox.GetBoundDimensions(out float xSize, out float ySize, out float zSize)
+        //{
+        //    boundingBox.GetBoundDimensions(out xSize, out ySize, out zSize);
+        //}
 
-        void IBoundingBox.Render(OpenGL gl, RenderMode renderMode)
-        {
-            boundingBox.Render(gl, renderMode);
-        }
+        //void IBoundingBox.Render(OpenGL gl, RenderMode renderMode)
+        //{
+        //    boundingBox.Render(gl, renderMode);
+        //}
 
-        void IBoundingBox.Set(float minX, float minY, float minZ, float maxX, float maxY, float maxZ)
-        {
-            boundingBox.Set(minX, minY, minZ, maxX, maxY, maxZ);
-        }
+        //void IBoundingBox.Set(float minX, float minY, float minZ, float maxX, float maxY, float maxZ)
+        //{
+        //    boundingBox.Set(minX, minY, minZ, maxX, maxY, maxZ);
+        //}
 
-        public void SetBoundingBox(Vertex min, Vertex max)
-        {
-            boundingBox.SetBounds(min, max);
-        }
+        //public void SetBoundingBox(Vertex min, Vertex max)
+        //{
+        //    boundingBox.SetBounds(min, max);
+        //}
         
         #endregion
 
