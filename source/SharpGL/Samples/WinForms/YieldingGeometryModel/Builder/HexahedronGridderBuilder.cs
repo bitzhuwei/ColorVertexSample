@@ -197,6 +197,7 @@ namespace YieldingGeometryModel.Builder
                 min.Y = value.Y;
             if(value.Z < min.Z)
                 min.Z = value.Z;
+
             if(value.X > max.X)
                 max.X = value.X;
             if(value.Y > max.Y)
@@ -348,10 +349,11 @@ namespace YieldingGeometryModel.Builder
                     Vertex p5 = source.PointBRT(i,j,k);
                     Vertex p6 = source.PointBLB(i,j,k);
                     Vertex p7 = source.PointBRB(i,j,k);
+                    if(source.IsActiveBlock(i,j,k)){
                     if(!assigned){
                        assigned = true;
-                       min = p1;
-                       max = p1;
+                       min = p0;
+                       max = p0;
                     }
                     MinMax(p0,ref min,ref max);
                     MinMax(p1,ref min,ref max);
@@ -361,6 +363,7 @@ namespace YieldingGeometryModel.Builder
                     MinMax(p5,ref min,ref max);
                     MinMax(p6,ref min,ref max);
                     MinMax(p7,ref min,ref max);
+                    }
 
                     int cellOffset = gridIndex * HEXAHEDRON_VERTEX_COUNT;
 

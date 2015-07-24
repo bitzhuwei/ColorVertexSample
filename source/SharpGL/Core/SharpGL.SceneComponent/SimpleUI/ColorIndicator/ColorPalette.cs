@@ -111,17 +111,17 @@ namespace SharpGL.SceneComponent.SimpleUI.ColorIndicator
         /// <param name="x1"></param>
         /// <param name="y1"></param>
         /// <returns></returns>
-        private static double LineSlope(double y2, double y1, double dx)
+        private static float LineSlope(float y2, float y1, float dx)
         {
             return (y2 - y1) / dx;
         }
 
-        public static GLColor MapToColor(GLColor[] colors,float[] coords, double value, double minValue, double maxValue)
+        public static GLColor MapToColor(GLColor[] colors,float[] coords, float value, float minValue, float maxValue)
         {
             if (colors.Length < 2)
                 throw new ArgumentException("template colors size error");
 
-            double d = maxValue - minValue;
+            float d = maxValue - minValue;
             if (d < 0.0f)
                 throw new ArgumentException("fault value range");
 
@@ -133,23 +133,23 @@ namespace SharpGL.SceneComponent.SimpleUI.ColorIndicator
             if (d == 0.0d)
                 return colors[0];
 
-            double dx = value - minValue;
+            float dx = value - minValue;
 
-            double x = dx / d;
+            float x = dx / d;
             if(x<=0.000000001d)
-                return colors[0];
+              return colors[0];
 
             bool find = false;
-            double xi=0.0d, xi1=0.0d;
-            GLColor yi=colors[0], yi1=colors[1];
+            float x1=0.0f, x2=0.0f;
+            GLColor y1=colors[0], y2=colors[1];
 
             for (int i = 0; i < coords.Length - 1; i++)
             {
-                xi = coords[i];
-                xi1 = coords[i + 1];
-                yi = colors[i];
-                yi1 = colors[i + 1];
-                if (x >= xi && x <= xi1)
+                x1 = coords[i];
+                x2 = coords[i + 1];
+                y1 = colors[i];
+                y2 = colors[i + 1];
+                if (x >= x1 && x <= x2)
                 {
                     find = true;
                     break;
@@ -158,21 +158,20 @@ namespace SharpGL.SceneComponent.SimpleUI.ColorIndicator
             if (!find)
                 throw new ArgumentException("not found colors,template fault default not in[0,1] ?");
 
-
-            double dxi = x - xi;
             
-            GLColor color = new GLColor();
-            double kr = LineSlope(yi1.R, yi.R, dxi);
-            double kg = LineSlope(yi1.G, yi.G, dxi);
-            double kb = LineSlope(yi1.B, yi.B, dxi);
-            double r = yi.R + kr * (x - xi);
-            double g = yi.G + kg * (x - xi);
-            double b = yi.B + kb * (x - xi);
 
-            double total = r + g + b;
-            color.Set((float)(r / total), (float)(g / total), (float)(b / total));
-            color.A = 1.0f;
-            return color;
+            dx = x2 - x1;
+            float kr = LineSlope(y2.R, y1.R, dx);
+            float kg = LineSlope(y2.G, y1.G, dx);
+            float kb = LineSlope(y2.B, y1.B, dx);
+            float ka = LineSlope(y2.A, y1.A, dx);
+            float r = y1.R + kr * (x - x1);
+            float g = y1.G + kg * (x - x1);
+            float b = y1.B + kb * (x - x1);
+            float a = y1.A + ka * (x - x1);
+
+            return new GLColor(r,g,b,a);
+           
 
         }
     }
