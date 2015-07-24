@@ -139,9 +139,8 @@ namespace ColorVertexSample
                 float dy = System.Convert.ToSingle(this.gbDY.Text);
                 float dz = System.Convert.ToSingle(this.tbDZ.Text);
                 // use CatesianGridderSource to fill HexahedronGridderElement's content.
-                //CatesianGridderSource source = new CatesianGridderSource() 
-                //{ NX = nx, NY = ny, NZ = nz, DX = dx, DY = dy, DZ = dz, };
-                DemoPointSpriteGridderSource source = new DemoPointSpriteGridderSource() { NX = nx, NY = ny, NZ = nz, };
+                CatesianGridderSource source = new CatesianGridderSource() { NX = nx, NY = ny, NZ = nz, DX = dx, DY = dy, DZ = dz, };
+                //DemoPointSpriteGridderSource source = new DemoPointSpriteGridderSource() { NX = nx, NY = ny, NZ = nz, };
 
                 ///模拟获得网格属性
                 int minValue = 100;
@@ -159,28 +158,28 @@ namespace ColorVertexSample
                     colors[i] = (ColorF)this.scientificVisual3DControl.MapToColor(gridValues[i]);
                 }
 
-                //// use HexahedronGridderElement
-                //MeshGeometry mesh = HexahedronGridderHelper.CreateMesh(source);
-                //mesh.VertexColors = HexahedronGridderHelper.FromColors(source, gridIndexes, colors, mesh.Visibles);
-                ////this.DebugMesh(mesh);
+                // use HexahedronGridderElement
+                MeshGeometry mesh = HexahedronGridderHelper.CreateMesh(source);
+                mesh.VertexColors = HexahedronGridderHelper.FromColors(source, gridIndexes, colors, mesh.Visibles);
+                //this.DebugMesh(mesh);
 
-                //HexahedronGridderElement gridderElement = new HexahedronGridderElement(source, this.scientificVisual3DControl.Scene.CurrentCamera);
+                HexahedronGridderElement gridderElement = new HexahedronGridderElement(source, this.scientificVisual3DControl.Scene.CurrentCamera);
 
-                ////method1
-                ////gridderElement.Initialize(this.scientificVisual3DControl.OpenGL);
+                //method1
+                //gridderElement.Initialize(this.scientificVisual3DControl.OpenGL);
 
-                ////method2
-                //gridderElement.Initialize(this.scientificVisual3DControl.OpenGL, mesh);
+                //method2
+                gridderElement.Initialize(this.scientificVisual3DControl.OpenGL, mesh);
 
                 //gridderElement.SetBoundingBox(mesh.Min, mesh.Max);
 
-                // use PointSpriteGridderElement
-                PointSpriteMesh mesh = PointSpriteGridderElementHelper.CreateMesh(source);
-                mesh.ColorArray = PointSpriteGridderElementHelper.FromColors(source, gridIndexes, colors, mesh.VisibleArray);
+                //// use PointSpriteGridderElement
+                //PointSpriteMesh mesh = PointSpriteGridderElementHelper.CreateMesh(source);
+                //mesh.ColorArray = PointSpriteGridderElementHelper.FromColors(source, gridIndexes, colors, mesh.VisibleArray);
 
-                PointSpriteGridderElement gridderElement = new PointSpriteGridderElement(source, this.scientificVisual3DControl.Scene.CurrentCamera);
-                gridderElement.Initialize(this.scientificVisual3DControl.OpenGL, mesh);
-                //DebugMesh(mesh);
+                //PointSpriteGridderElement gridderElement = new PointSpriteGridderElement(source, this.scientificVisual3DControl.Scene.CurrentCamera);
+                //gridderElement.Initialize(this.scientificVisual3DControl.OpenGL, mesh);
+                ////DebugMesh(mesh);
 
                 //
                 gridderElement.Name = string.Format("element {0}", elementCounter++);
