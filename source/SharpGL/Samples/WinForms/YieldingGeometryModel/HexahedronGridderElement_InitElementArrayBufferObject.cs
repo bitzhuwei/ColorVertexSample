@@ -21,7 +21,7 @@ namespace YieldingGeometryModel
 
         protected override void InitElementArrayBufferObject(OpenGL gl, out uint[] ebo, out uint mode, out int indexArrayElementCount)
         {
-            UnmanagedArray indexArray = InitIndexArray();
+            UnmanagedArray<uint> indexArray = InitIndexArray();
             ebo = new uint[1];
             gl.GenBuffers(1, ebo);
             gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, ebo[0]);
@@ -33,12 +33,12 @@ namespace YieldingGeometryModel
             indexArray.Dispose();
         }
 
-        unsafe private UnmanagedArray InitIndexArray()
+        unsafe private UnmanagedArray<uint> InitIndexArray()
         {
             // 用三角形带画六面体，需要14个顶点（索引值），为切断三角形带，还需要附加一个。
             int indexCount = (int)(source.DimenSize * (triangleStrip + 1));
 
-            UnmanagedArray indexArray = new UIntArray(indexCount); //new UnmanagedArray(indexCount, sizeof(uint));
+            UnmanagedArray<uint> indexArray = new UnmanagedArray<uint>(indexCount); //new UnmanagedArray(indexCount, sizeof(uint));
             uint* indexes = (uint*)indexArray.Header.ToPointer();
 
             // 计算索引信息。

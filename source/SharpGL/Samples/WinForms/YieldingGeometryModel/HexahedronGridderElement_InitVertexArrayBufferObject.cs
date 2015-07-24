@@ -29,7 +29,7 @@ namespace YieldingGeometryModel
 
             //  Create a vertex buffer for the vertex data.
             {
-                UnmanagedArray positionArray = InitPositionArray();
+                UnmanagedArray<float> positionArray = InitPositionArray();
 
                 uint[] ids = new uint[1];
                 gl.GenBuffers(1, ids);
@@ -44,7 +44,7 @@ namespace YieldingGeometryModel
 
             //  Now do the same for the colour data.
             {
-                UnmanagedArray colorArray = InitColorArray();
+                UnmanagedArray<float> colorArray = InitColorArray();
 
                 uint[] ids = new uint[1];
                 gl.GenBuffers(1, ids);
@@ -59,7 +59,7 @@ namespace YieldingGeometryModel
 
             // Now do the same for the index's visual signal data.
             {
-                UnmanagedArray visualArray = InitVisualArray();
+                UnmanagedArray<float> visualArray = InitVisualArray();
 
                 uint[] ids = new uint[1];
                 gl.GenBuffers(1, ids);
@@ -78,11 +78,11 @@ namespace YieldingGeometryModel
             gl.BindVertexArray(0);
         }
 
-        unsafe private UnmanagedArray InitVisualArray()
+        unsafe private UnmanagedArray<float> InitVisualArray()
         {
             int arrayLength = (int)(source.DimenSize * vertexCountInHexahedron);
 
-            UnmanagedArray visualArray = new FloatArray(arrayLength);// new UnmanagedArray(arrayLength, sizeof(float));
+            UnmanagedArray<float> visualArray = new UnmanagedArray<float>(arrayLength);// new UnmanagedArray(arrayLength, sizeof(float));
             float* visuals = (float*)visualArray.Header.ToPointer();
 
             bool signal = true;
@@ -108,11 +108,11 @@ namespace YieldingGeometryModel
 
         Random random = new Random();
 
-        unsafe private UnmanagedArray InitColorArray()
+        unsafe private UnmanagedArray<float> InitColorArray()
         {
             int arrayLength = (int)(source.DimenSize * vertexCountInHexahedron * componentCountInVertex);
 
-            UnmanagedArray colorArray = new FloatArray(arrayLength);// new UnmanagedArray(arrayLength, sizeof(float));
+            UnmanagedArray<float> colorArray = new UnmanagedArray<float>(arrayLength);// new UnmanagedArray(arrayLength, sizeof(float));
             float* colors = (float*)colorArray.Header.ToPointer();
 
             uint gridderElementIndex = 0;
@@ -133,11 +133,11 @@ namespace YieldingGeometryModel
             return colorArray;
         }
 
-        unsafe private UnmanagedArray InitPositionArray()
+        unsafe private UnmanagedArray<float> InitPositionArray()
         {
             int arrayLength = (int)(source.DimenSize * vertexCountInHexahedron * componentCountInVertex);
 
-            UnmanagedArray positionArray = new FloatArray(arrayLength);// new UnmanagedArray(arrayLength, sizeof(float));
+            UnmanagedArray<float> positionArray = new UnmanagedArray<float>(arrayLength);// new UnmanagedArray(arrayLength, sizeof(float));
             float* positions = (float*)positionArray.Header.ToPointer();
 
             uint gridderElementIndex = 0;

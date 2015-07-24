@@ -45,66 +45,66 @@ namespace ColorVertexSample
         private unsafe void DebugMesh(MeshGeometry mesh)
         {
              System.Console.WriteLine("---------Positions-----------------");
-             Vertex3DArray array = mesh.Vertexes;
+             UnmanagedArray<Vertex> array = mesh.Vertexes;
              for (int i = 0; i < array.Count; i++)
              {
-                 Vertex3D v = *array[i];
+                 Vertex v = array[i];
                  System.Console.WriteLine(string.Format("({0},{1},{2})", v.X, v.Y, v.Z));
              }
              System.Console.WriteLine("---------Colors-----------------");
-             ColorFArray colors = mesh.VertexColors;
+             UnmanagedArray<ColorF> colors = mesh.VertexColors;
              for (int i = 0; i < colors.Count; i++)
              {
-                 ColorF c = *colors[i];
+                 ColorF c = colors[i];
                  System.Console.WriteLine(string.Format("({0},{1},{2},{3})", c.R, c.G, c.B,c.A));
              }
              System.Console.WriteLine("---------visibles-----------------");
-             FloatArray visibles = mesh.Visibles;
+             UnmanagedArray<float> visibles = mesh.Visibles;
              for (int i = 0; i < visibles.Count; i++)
              {
-                 float c = *visibles[i];
+                 float c = visibles[i];
                  System.Console.WriteLine(string.Format("({0})", c));
              }
 
              System.Console.WriteLine("---------TriangleTrip-----------------");
-             UIntArray triangles = mesh.StripTriangles;
+             UnmanagedArray<uint> triangles = mesh.StripTriangles;
              for (int i = 0; i < triangles.Count; i++)
              {
-                 uint t = *triangles[i];
+                 uint t = triangles[i];
                  System.Console.WriteLine(string.Format("({0})", t));
              }
 
 
         }
-        private unsafe void DebugMesh(PointSpriteMesh mesh)
+        private void DebugMesh(PointSpriteMesh mesh)
         {
             System.Console.WriteLine("---------Positions-----------------");
-            Vertex3DArray array = mesh.PositionArray;
+            UnmanagedArray<Vertex> array = mesh.PositionArray;
             for (int i = 0; i < array.Count; i++)
             {
-                Vertex3D v = *array[i];
+                Vertex v = array[i];
                 System.Console.WriteLine(string.Format("({0},{1},{2})", v.X, v.Y, v.Z));
             }
             System.Console.WriteLine("---------Colors-----------------");
-            ColorFArray colors = mesh.ColorArray;
+            UnmanagedArray<ColorF> colors = mesh.ColorArray;
             for (int i = 0; i < colors.Count; i++)
             {
-                ColorF c = *colors[i];
+                ColorF c = colors[i];
                 System.Console.WriteLine(string.Format("({0},{1},{2},{3})", c.R, c.G, c.B, c.A));
             }
             System.Console.WriteLine("---------visibles-----------------");
-            FloatArray visibles = mesh.VisibleArray;
+            UnmanagedArray<float> visibles = mesh.VisibleArray;
             for (int i = 0; i < visibles.Count; i++)
             {
-                float c = *visibles[i];
+                float c = visibles[i];
                 System.Console.WriteLine(string.Format("({0})", c));
             }
 
             System.Console.WriteLine("---------TriangleTrip-----------------");
-            FloatArray triangles = mesh.RadiusArray;
+            UnmanagedArray<float> triangles = mesh.RadiusArray;
             for (int i = 0; i < triangles.Count; i++)
             {
-                float t = *triangles[i];
+                float t = triangles[i];
                 System.Console.WriteLine(string.Format("({0})", t));
             }
 
@@ -300,7 +300,7 @@ namespace ColorVertexSample
                {
                    HexahedronGridderElement gridder = elements[0];
                    HexahedronGridderSource  source = gridder.Source;
-                   FloatArray visibles =  HexahedronGridderHelper.GridVisibleFromActive(source);
+                   UnmanagedArray<float> visibles = HexahedronGridderHelper.GridVisibleFromActive(source);
 
                    //随机生成不完整网格的属性。
                    int propCount = source.DimenSize / 2;
@@ -321,7 +321,7 @@ namespace ColorVertexSample
                        colors[i] = (ColorF)this.scientificVisual3DControl.MapToColor(gridValues[i]);
                    }
 
-                   ColorFArray colorArray = HexahedronGridderHelper.FromColors(source, gridIndexes, colors, visibles);
+                   UnmanagedArray<ColorF> colorArray = HexahedronGridderHelper.FromColors(source, gridIndexes, colors, visibles);
                    gridder.UpdateColorBuffer(gl, colorArray, visibles);
                    colorArray.Dispose();
                    visibles.Dispose();

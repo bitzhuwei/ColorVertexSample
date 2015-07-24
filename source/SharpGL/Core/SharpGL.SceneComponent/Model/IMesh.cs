@@ -10,13 +10,13 @@ namespace SharpGL.SceneComponent.Model
     public class PointSpriteMesh : IDisposable
     {
 
-        public Vertex3DArray PositionArray;
+        public UnmanagedArray<Vertex> PositionArray;
 
-        public ColorFArray ColorArray;
+        public UnmanagedArray<ColorF> ColorArray;
 
-        public FloatArray RadiusArray;
+        public UnmanagedArray<float> RadiusArray;
 
-        public FloatArray VisibleArray;
+        public UnmanagedArray<float> VisibleArray;
 
         public Vertex Min;
 
@@ -79,42 +79,17 @@ namespace SharpGL.SceneComponent.Model
 
     public abstract class TriangleMesh
     {
-        public abstract Vertex3DArray Vertexes
-        {
-            get;
-            set;
-        }
+        public abstract UnmanagedArray<Vertex> Vertexes { get; set; }
 
+        public abstract UnmanagedArray<uint> StripTriangles { get; set; }
 
-        public abstract UIntArray StripTriangles
-        {
-            get;
-            set;
-        }
+        public abstract UnmanagedArray<float> Visibles { get; set; }
 
-        public abstract FloatArray Visibles
-        {
-            get;
-            set;
-        }
+        public abstract Vertex Min { get; set; }
 
-        public abstract Vertex Min
-        {
-            get;
-            set;
-        }
+        public abstract Vertex Max { get; set; }
 
-        public abstract Vertex Max
-        {
-            get;
-            set;
-        }
-
-        public abstract ColorFArray VertexColors
-        {
-            get;
-            set;
-        }
+        public abstract UnmanagedArray<ColorF> VertexColors { get; set; }
 
     }
 }

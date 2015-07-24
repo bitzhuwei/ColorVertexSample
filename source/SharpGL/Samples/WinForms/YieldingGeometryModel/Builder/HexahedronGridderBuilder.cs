@@ -15,93 +15,25 @@ namespace YieldingGeometryModel.Builder
     {
 
         /// <summary>
-        /// 点的集合
-        /// </summary>
-        private Vertex3DArray vertexes;
-
-
-        /// <summary>
         /// 颜色
         /// </summary>
-        private ColorFArray vertexColors;
+        public override UnmanagedArray<ColorF> VertexColors { get; set; }
 
+        /// <summary>
+        /// 点的集合
+        /// </summary>
+        public override UnmanagedArray<Vertex> Vertexes { get; set; }
 
+        public override UnmanagedArray<uint> StripTriangles { get; set; }
 
-        private UIntArray triangles;
+        public override Vertex Min { get; set; }
+
+        public override Vertex Max { get; set; }
 
         /// <summary>
         /// 控制网格是否显示，大小为DimenSize
         /// </summary>
-        private FloatArray visibles;
-
-
-        private Vertex min;
-
-        private Vertex max;
-
-
-        public override Vertex3DArray Vertexes
-        {
-            get
-            {
-                return vertexes;
-            }
-            set
-            {
-                this.vertexes = value;
-            }
-        }
-
-        public override UIntArray StripTriangles
-        {
-            get
-            {
-                return this.triangles;
-            }
-            set
-            {
-                this.triangles = value;
-            }
-        }
-
-        public override Vertex Min
-        {
-            get
-            {
-                return this.min;
-            }
-            set
-            {
-                this.min = value;
-            }
-        }
-
-        public override Vertex Max
-        {
-            get
-            {
-                return this.max;
-            }
-            set
-            {
-                this.max = value;
-            }
-        }
-
-        public override FloatArray Visibles
-        {
-            get
-            {
-                return this.visibles;
-            }
-            set
-            {
-                this.visibles = value;
-            }
-        }
-
-
-
+        public override UnmanagedArray<float> Visibles { get; set; }
 
         /// <summary>
         /// Dispose data
@@ -114,28 +46,28 @@ namespace YieldingGeometryModel.Builder
         private void Free()
         {
 
-            if (vertexes != null)
+            if (Vertexes != null)
             {
-                vertexes.Dispose();
-                vertexes = null;
+                Vertexes.Dispose();
+                Vertexes = null;
             }
 
 
-            if (vertexColors != null)
+            if (VertexColors != null)
             {
-                vertexColors.Dispose();
-                vertexColors = null;
+                VertexColors.Dispose();
+                VertexColors = null;
             }
 
-            if (triangles != null)
+            if (StripTriangles != null)
             {
-                triangles.Dispose();
+                StripTriangles.Dispose();
             }
 
-            if (visibles != null)
+            if (Visibles != null)
             {
-                visibles.Dispose();
-                visibles = null;
+                Visibles.Dispose();
+                Visibles = null;
             }
         }
 
@@ -154,25 +86,6 @@ namespace YieldingGeometryModel.Builder
         }
         private bool disposed = false;
 
-
-        
-
-        
-
-       
-
-       
-
-        
-
-        public override ColorFArray VertexColors
-        {
-            get { return this.vertexColors; }
-            set
-            {
-                this.vertexColors = value;
-            }
-        }
     }
        
 
@@ -230,10 +143,10 @@ namespace YieldingGeometryModel.Builder
 
 
 
-        public static ColorFArray FromColors(HexahedronGridderSource source,int[] gridIndexes, ColorF[] colors,FloatArray visibles)
+        public static UnmanagedArray<ColorF> FromColors(HexahedronGridderSource source, int[] gridIndexes, ColorF[] colors, UnmanagedArray<float> visibles)
         {
-            ColorFArray colorArray = new ColorFArray(source.DimenSize*HEXAHEDRON_VERTEX_COUNT);
-            ByteArray hasColorArray = new ByteArray(source.DimenSize);
+            UnmanagedArray<ColorF> colorArray = new UnmanagedArray<ColorF>(source.DimenSize * HEXAHEDRON_VERTEX_COUNT);
+            UnmanagedArray<byte> hasColorArray = new UnmanagedArray<byte>(source.DimenSize);
             unsafe{
                 
                 //是否有颜色
@@ -242,34 +155,52 @@ namespace YieldingGeometryModel.Builder
                 for (i = 0; i < gridIndexes.Length; i++)
                 {
                     int gridIndex = gridIndexes[i];
-                    *hasColorArray[gridIndex] = 1;
+                    //*hasColorArray[gridIndex] = 1;
+                    hasColorArray[gridIndex] = 1;
                     int cellOffset = gridIndex * HEXAHEDRON_VERTEX_COUNT;
                     ColorF cf = colors[i];
 
-                    *colorArray[cellOffset+0]= cf;
-                    *colorArray[cellOffset+1]= cf;
-                    *colorArray[cellOffset+2]= cf;
-                    *colorArray[cellOffset+3]= cf;
-                    *colorArray[cellOffset+4]= cf;
-                    *colorArray[cellOffset+5]= cf;
-                    *colorArray[cellOffset+6]= cf;
-                    *colorArray[cellOffset+7]= cf;
+                    //*colorArray[cellOffset+0]= cf;
+                    //*colorArray[cellOffset+1]= cf;
+                    //*colorArray[cellOffset+2]= cf;
+                    //*colorArray[cellOffset+3]= cf;
+                    //*colorArray[cellOffset+4]= cf;
+                    //*colorArray[cellOffset+5]= cf;
+                    //*colorArray[cellOffset+6]= cf;
+                    //*colorArray[cellOffset+7]= cf;
+                    colorArray[cellOffset + 0] = cf;
+                    colorArray[cellOffset + 1] = cf;
+                    colorArray[cellOffset + 2] = cf;
+                    colorArray[cellOffset + 3] = cf;
+                    colorArray[cellOffset + 4] = cf;
+                    colorArray[cellOffset + 5] = cf;
+                    colorArray[cellOffset + 6] = cf;
+                    colorArray[cellOffset + 7] = cf;
                 }
                 int j,k;
                 for (int gridIndex = 0; gridIndex < source.DimenSize; gridIndex++)
                 {
                     int cellOffset = gridIndex * HEXAHEDRON_VERTEX_COUNT;
                     source.InvertIJK(gridIndex,out i, out j, out k);
-                    if (*hasColorArray[gridIndex] == 0||!source.IsActiveBlock(i,j,k))
+                    //if (*hasColorArray[gridIndex] == 0||!source.IsActiveBlock(i,j,k))
+                    if (hasColorArray[gridIndex] == 0 || !source.IsActiveBlock(i, j, k))
                     {
-                        *visibles[cellOffset + 0] = 0;
-                        *visibles[cellOffset + 1] = 0;
-                        *visibles[cellOffset + 2] = 0;
-                        *visibles[cellOffset + 3] = 0;
-                        *visibles[cellOffset + 4] = 0;
-                        *visibles[cellOffset + 5] = 0;
-                        *visibles[cellOffset + 6] = 0;
-                        *visibles[cellOffset + 7] = 0;
+                        //*visibles[cellOffset + 0] = 0;
+                        //*visibles[cellOffset + 1] = 0;
+                        //*visibles[cellOffset + 2] = 0;
+                        //*visibles[cellOffset + 3] = 0;
+                        //*visibles[cellOffset + 4] = 0;
+                        //*visibles[cellOffset + 5] = 0;
+                        //*visibles[cellOffset + 6] = 0;
+                        //*visibles[cellOffset + 7] = 0;
+                        visibles[cellOffset + 0] = 0;
+                        visibles[cellOffset + 1] = 0;
+                        visibles[cellOffset + 2] = 0;
+                        visibles[cellOffset + 3] = 0;
+                        visibles[cellOffset + 4] = 0;
+                        visibles[cellOffset + 5] = 0;
+                        visibles[cellOffset + 6] = 0;
+                        visibles[cellOffset + 7] = 0;
                     }
 
                 }
@@ -279,9 +210,9 @@ namespace YieldingGeometryModel.Builder
             return colorArray;
         }
 
-        public static FloatArray GridVisibleFromActive(HexahedronGridderSource source)
+        public static UnmanagedArray<float> GridVisibleFromActive(HexahedronGridderSource source)
         {
-            FloatArray visibles = new FloatArray(source.DimenSize * HEXAHEDRON_VERTEX_COUNT);
+            UnmanagedArray<float> visibles = new UnmanagedArray<float>(source.DimenSize * HEXAHEDRON_VERTEX_COUNT);
             unsafe
             {
                 int i, j, k;
@@ -290,14 +221,22 @@ namespace YieldingGeometryModel.Builder
                     source.InvertIJK(gridIndex, out i, out j, out k);
                     int visible = source.IsActiveBlock(i, j, k) == true ? 1 : 0;
                     int offset = gridIndex * HEXAHEDRON_VERTEX_COUNT;
-                    *visibles[offset + 0] = visible;
-                    *visibles[offset + 1] = visible;
-                    *visibles[offset + 2] = visible;
-                    *visibles[offset + 3] = visible;
-                    *visibles[offset + 4] = visible;
-                    *visibles[offset + 5] = visible;
-                    *visibles[offset + 6] = visible;
-                    *visibles[offset + 7] = visible;
+                    //*visibles[offset + 0] = visible;
+                    //*visibles[offset + 1] = visible;
+                    //*visibles[offset + 2] = visible;
+                    //*visibles[offset + 3] = visible;
+                    //*visibles[offset + 4] = visible;
+                    //*visibles[offset + 5] = visible;
+                    //*visibles[offset + 6] = visible;
+                    //*visibles[offset + 7] = visible;
+                    visibles[offset + 0] = visible;
+                    visibles[offset + 1] = visible;
+                    visibles[offset + 2] = visible;
+                    visibles[offset + 3] = visible;
+                    visibles[offset + 4] = visible;
+                    visibles[offset + 5] = visible;
+                    visibles[offset + 6] = visible;
+                    visibles[offset + 7] = visible;
                 }
             }
             return visibles;
@@ -312,17 +251,17 @@ namespace YieldingGeometryModel.Builder
                 return null;
 
              //每个六面体有8个点
-            Vertex3DArray vertexes = new Vertex3DArray(source.DimenSize*HEXAHEDRON_VERTEX_COUNT);
+            UnmanagedArray<Vertex> vertexes = new UnmanagedArray<Vertex>(source.DimenSize * HEXAHEDRON_VERTEX_COUNT);
 
 
             //是否六面体是否可见
-            FloatArray visibles = new FloatArray(source.DimenSize*HEXAHEDRON_VERTEX_COUNT);
+            UnmanagedArray<float> visibles = new UnmanagedArray<float>(source.DimenSize * HEXAHEDRON_VERTEX_COUNT);
 
             //三角形条带索引个数
             int triangleStripIndexCount = source.DimenSize * (HEXAHEDRON_TRIANGLE_STRIP + 1);
 
             //三角形条带索引数组
-            UIntArray triangleStripIndexes = new UIntArray(triangleStripIndexCount);
+            UnmanagedArray<uint> triangleStripIndexes = new UnmanagedArray<uint>(triangleStripIndexCount);
 
             Vertex min = new Vertex();
             Vertex max = new Vertex();
@@ -367,47 +306,76 @@ namespace YieldingGeometryModel.Builder
 
                     int cellOffset = gridIndex * HEXAHEDRON_VERTEX_COUNT;
 
-                    *vertexes[cellOffset + 0] = (Vertex3D)p0;
-                    *vertexes[cellOffset + 1] = (Vertex3D)p1;
-                    *vertexes[cellOffset + 2] = (Vertex3D)p2;
-                    *vertexes[cellOffset + 3] = (Vertex3D)p3;
-                    *vertexes[cellOffset + 4] = (Vertex3D)p4;
-                    *vertexes[cellOffset + 5] = (Vertex3D)p5;
-                    *vertexes[cellOffset + 6] = (Vertex3D)p6;
-                    *vertexes[cellOffset + 7] = (Vertex3D)p7;
-
+                    //*vertexes[cellOffset + 0] = (Vertex3D)p0;
+                    //*vertexes[cellOffset + 1] = (Vertex3D)p1;
+                    //*vertexes[cellOffset + 2] = (Vertex3D)p2;
+                    //*vertexes[cellOffset + 3] = (Vertex3D)p3;
+                    //*vertexes[cellOffset + 4] = (Vertex3D)p4;
+                    //*vertexes[cellOffset + 5] = (Vertex3D)p5;
+                    //*vertexes[cellOffset + 6] = (Vertex3D)p6;
+                    //*vertexes[cellOffset + 7] = (Vertex3D)p7;
+                    vertexes[cellOffset + 0] = p0;
+                    vertexes[cellOffset + 1] = p1;
+                    vertexes[cellOffset + 2] = p2;
+                    vertexes[cellOffset + 3] = p3;
+                    vertexes[cellOffset + 4] = p4;
+                    vertexes[cellOffset + 5] = p5;
+                    vertexes[cellOffset + 6] = p6;
+                    vertexes[cellOffset + 7] = p7;
 
 
 
                     float visible = source.IsActiveBlock(i, j, k) == true ? 1.0f : 0;
-                    *visibles[cellOffset + 0] = visible;
-                    *visibles[cellOffset + 1] = visible;
-                    *visibles[cellOffset + 2] = visible;
-                    *visibles[cellOffset + 3] = visible;
-                    *visibles[cellOffset + 4] = visible;
-                    *visibles[cellOffset + 5] = visible;
-                    *visibles[cellOffset + 6] = visible;
-                    *visibles[cellOffset + 7] = visible;
-
+                    //*visibles[cellOffset + 0] = visible;
+                    //*visibles[cellOffset + 1] = visible;
+                    //*visibles[cellOffset + 2] = visible;
+                    //*visibles[cellOffset + 3] = visible;
+                    //*visibles[cellOffset + 4] = visible;
+                    //*visibles[cellOffset + 5] = visible;
+                    //*visibles[cellOffset + 6] = visible;
+                    //*visibles[cellOffset + 7] = visible;
+                    visibles[cellOffset + 0] = visible;
+                    visibles[cellOffset + 1] = visible;
+                    visibles[cellOffset + 2] = visible;
+                    visibles[cellOffset + 3] = visible;
+                    visibles[cellOffset + 4] = visible;
+                    visibles[cellOffset + 5] = visible;
+                    visibles[cellOffset + 6] = visible;
+                    visibles[cellOffset + 7] = visible;
 
 
 
                     int cellTriangleOffset = (int)gridIndex * (HEXAHEDRON_TRIANGLE_STRIP + 1);
-                    *triangleStripIndexes[cellTriangleOffset + 0] = (uint)cellOffset + 0;
-                    *triangleStripIndexes[cellTriangleOffset + 1] = (uint)cellOffset + 2;
-                    *triangleStripIndexes[cellTriangleOffset + 2] = (uint)cellOffset + 4;
-                    *triangleStripIndexes[cellTriangleOffset + 3] = (uint)cellOffset + 6;
-                    *triangleStripIndexes[cellTriangleOffset + 4] = (uint)cellOffset + 7;
-                    *triangleStripIndexes[cellTriangleOffset + 5] = (uint)cellOffset + 2;
-                    *triangleStripIndexes[cellTriangleOffset + 6] = (uint)cellOffset + 3;
-                    *triangleStripIndexes[cellTriangleOffset + 7] = (uint)cellOffset + 0;
-                    *triangleStripIndexes[cellTriangleOffset + 8] = (uint)cellOffset + 1;
-                    *triangleStripIndexes[cellTriangleOffset + 9] = (uint)cellOffset + 4;
-                    *triangleStripIndexes[cellTriangleOffset + 10] = (uint)cellOffset + 5;
-                    *triangleStripIndexes[cellTriangleOffset + 11] = (uint)cellOffset + 7;
-                    *triangleStripIndexes[cellTriangleOffset + 12] = (uint)cellOffset + 1;
-                    *triangleStripIndexes[cellTriangleOffset + 13] = (uint)cellOffset + 3;
-                    *triangleStripIndexes[cellTriangleOffset + 14] = (uint)uint.MaxValue;
+                    //*triangleStripIndexes[cellTriangleOffset + 0] = (uint)cellOffset + 0;
+                    //*triangleStripIndexes[cellTriangleOffset + 1] = (uint)cellOffset + 2;
+                    //*triangleStripIndexes[cellTriangleOffset + 2] = (uint)cellOffset + 4;
+                    //*triangleStripIndexes[cellTriangleOffset + 3] = (uint)cellOffset + 6;
+                    //*triangleStripIndexes[cellTriangleOffset + 4] = (uint)cellOffset + 7;
+                    //*triangleStripIndexes[cellTriangleOffset + 5] = (uint)cellOffset + 2;
+                    //*triangleStripIndexes[cellTriangleOffset + 6] = (uint)cellOffset + 3;
+                    //*triangleStripIndexes[cellTriangleOffset + 7] = (uint)cellOffset + 0;
+                    //*triangleStripIndexes[cellTriangleOffset + 8] = (uint)cellOffset + 1;
+                    //*triangleStripIndexes[cellTriangleOffset + 9] = (uint)cellOffset + 4;
+                    //*triangleStripIndexes[cellTriangleOffset + 10] = (uint)cellOffset + 5;
+                    //*triangleStripIndexes[cellTriangleOffset + 11] = (uint)cellOffset + 7;
+                    //*triangleStripIndexes[cellTriangleOffset + 12] = (uint)cellOffset + 1;
+                    //*triangleStripIndexes[cellTriangleOffset + 13] = (uint)cellOffset + 3;
+                    //*triangleStripIndexes[cellTriangleOffset + 14] = (uint)uint.MaxValue;
+                    triangleStripIndexes[cellTriangleOffset + 0] = (uint)cellOffset + 0;
+                    triangleStripIndexes[cellTriangleOffset + 1] = (uint)cellOffset + 2;
+                    triangleStripIndexes[cellTriangleOffset + 2] = (uint)cellOffset + 4;
+                    triangleStripIndexes[cellTriangleOffset + 3] = (uint)cellOffset + 6;
+                    triangleStripIndexes[cellTriangleOffset + 4] = (uint)cellOffset + 7;
+                    triangleStripIndexes[cellTriangleOffset + 5] = (uint)cellOffset + 2;
+                    triangleStripIndexes[cellTriangleOffset + 6] = (uint)cellOffset + 3;
+                    triangleStripIndexes[cellTriangleOffset + 7] = (uint)cellOffset + 0;
+                    triangleStripIndexes[cellTriangleOffset + 8] = (uint)cellOffset + 1;
+                    triangleStripIndexes[cellTriangleOffset + 9] = (uint)cellOffset + 4;
+                    triangleStripIndexes[cellTriangleOffset + 10] = (uint)cellOffset + 5;
+                    triangleStripIndexes[cellTriangleOffset + 11] = (uint)cellOffset + 7;
+                    triangleStripIndexes[cellTriangleOffset + 12] = (uint)cellOffset + 1;
+                    triangleStripIndexes[cellTriangleOffset + 13] = (uint)cellOffset + 3;
+                    triangleStripIndexes[cellTriangleOffset + 14] = (uint)uint.MaxValue;
                 }
             }
 
@@ -427,30 +395,45 @@ namespace YieldingGeometryModel.Builder
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        public static UIntArray TriangleStripFrom(HexahedronGridderSource source)
+        public static UnmanagedArray<uint> TriangleStripFrom(HexahedronGridderSource source)
         {
             int indexCount = source.DimenSize * (HEXAHEDRON_TRIANGLE_STRIP + 1);
-            UIntArray indexes = new UIntArray(indexCount);
+            UnmanagedArray<uint> indexes = new UnmanagedArray<uint>(indexCount);
             unsafe
             {
                 for (uint gridIndex = 0; gridIndex < source.DimenSize; gridIndex++)
                 {
                     int cellOffset =  (int)gridIndex * (HEXAHEDRON_TRIANGLE_STRIP + 1);
-                    *indexes[cellOffset + 0] = (uint)cellOffset + 0;
-                    *indexes[cellOffset + 1] = (uint)cellOffset + 2;
-                    *indexes[cellOffset + 2] = (uint)cellOffset + 4;
-                    *indexes[cellOffset + 3] = (uint)cellOffset + 6;
-                    *indexes[cellOffset + 4] = (uint)cellOffset + 7;
-                    *indexes[cellOffset + 5] = (uint)cellOffset + 2;
-                    *indexes[cellOffset + 6] = (uint)cellOffset + 3;
-                    *indexes[cellOffset + 7] = (uint)cellOffset + 0;
-                    *indexes[cellOffset + 8] = (uint)cellOffset + 1;
-                    *indexes[cellOffset + 9] = (uint)cellOffset + 4;
-                    *indexes[cellOffset + 10] =(uint)cellOffset + 5;
-                    *indexes[cellOffset + 11] =(uint)cellOffset + 7;
-                    *indexes[cellOffset + 12] =(uint)cellOffset + 1;
-                    *indexes[cellOffset + 13] =(uint)cellOffset + 3;
-                    *indexes[cellOffset + 14] =(uint) int.MaxValue;
+                    //*indexes[cellOffset + 0] = (uint)cellOffset + 0;
+                    //*indexes[cellOffset + 1] = (uint)cellOffset + 2;
+                    //*indexes[cellOffset + 2] = (uint)cellOffset + 4;
+                    //*indexes[cellOffset + 3] = (uint)cellOffset + 6;
+                    //*indexes[cellOffset + 4] = (uint)cellOffset + 7;
+                    //*indexes[cellOffset + 5] = (uint)cellOffset + 2;
+                    //*indexes[cellOffset + 6] = (uint)cellOffset + 3;
+                    //*indexes[cellOffset + 7] = (uint)cellOffset + 0;
+                    //*indexes[cellOffset + 8] = (uint)cellOffset + 1;
+                    //*indexes[cellOffset + 9] = (uint)cellOffset + 4;
+                    //*indexes[cellOffset + 10] =(uint)cellOffset + 5;
+                    //*indexes[cellOffset + 11] =(uint)cellOffset + 7;
+                    //*indexes[cellOffset + 12] =(uint)cellOffset + 1;
+                    //*indexes[cellOffset + 13] =(uint)cellOffset + 3;
+                    //*indexes[cellOffset + 14] =(uint) int.MaxValue;
+                    indexes[cellOffset + 0] = (uint)cellOffset + 0;
+                    indexes[cellOffset + 1] = (uint)cellOffset + 2;
+                    indexes[cellOffset + 2] = (uint)cellOffset + 4;
+                    indexes[cellOffset + 3] = (uint)cellOffset + 6;
+                    indexes[cellOffset + 4] = (uint)cellOffset + 7;
+                    indexes[cellOffset + 5] = (uint)cellOffset + 2;
+                    indexes[cellOffset + 6] = (uint)cellOffset + 3;
+                    indexes[cellOffset + 7] = (uint)cellOffset + 0;
+                    indexes[cellOffset + 8] = (uint)cellOffset + 1;
+                    indexes[cellOffset + 9] = (uint)cellOffset + 4;
+                    indexes[cellOffset + 10] = (uint)cellOffset + 5;
+                    indexes[cellOffset + 11] = (uint)cellOffset + 7;
+                    indexes[cellOffset + 12] = (uint)cellOffset + 1;
+                    indexes[cellOffset + 13] = (uint)cellOffset + 3;
+                    indexes[cellOffset + 14] = (uint)int.MaxValue;
                 }
 
             }

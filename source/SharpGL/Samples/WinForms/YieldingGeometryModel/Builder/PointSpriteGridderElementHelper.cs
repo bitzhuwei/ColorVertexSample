@@ -69,13 +69,13 @@ namespace YieldingGeometryModel.Builder
                 return null;
 
             //每个圆需要1个位置顶点。
-            Vertex3DArray positions = new Vertex3DArray(source.DimenSize * PointSpriteGridderElement.vertexCountPerElement);
+            UnmanagedArray<Vertex> positions = new UnmanagedArray<Vertex>(source.DimenSize * PointSpriteGridderElement.vertexCountPerElement);
 
             //是否可见
-            FloatArray visibles = new FloatArray(source.DimenSize * PointSpriteGridderElement.vertexCountPerElement);
+            UnmanagedArray<float> visibles = new UnmanagedArray<float>(source.DimenSize * PointSpriteGridderElement.vertexCountPerElement);
 
             //半径
-            FloatArray radiusArray = new FloatArray(source.DimenSize * PointSpriteGridderElement.vertexCountPerElement);
+            UnmanagedArray<float> radiusArray = new UnmanagedArray<float>(source.DimenSize * PointSpriteGridderElement.vertexCountPerElement);
 
             Vertex min = new Vertex();
             Vertex max = new Vertex();
@@ -101,13 +101,13 @@ namespace YieldingGeometryModel.Builder
 
                     int cellOffset = gridIndex * PointSpriteGridderElement.vertexCountPerElement;
 
-                    *positions[cellOffset + 0] = position;
+                    positions[cellOffset + 0] = position;
 
                     float visible = source.IsActiveBlock(i, j, k) == true ? 1.0f : 0;
-                    *visibles[cellOffset + 0] = cellOffset % 2 == 0 ? 1 : 0;// visible;
+                    visibles[cellOffset + 0] = cellOffset % 2 == 0 ? 1 : 0;// visible;
 
                     // TODO: 此处应由具体业务决定。
-                    *radiusArray[cellOffset + 0] = random.Next(1, 20);
+                    radiusArray[cellOffset + 0] = random.Next(1, 20);
                 }
             }
 
@@ -124,10 +124,10 @@ namespace YieldingGeometryModel.Builder
 
         static Random random = new Random();
 
-        public static ColorFArray FromColors(PointSpriteGridderSource source, int[] gridIndexes, ColorF[] colors, FloatArray visibles)
+        public static UnmanagedArray<ColorF> FromColors(PointSpriteGridderSource source, int[] gridIndexes, ColorF[] colors, UnmanagedArray<float> visibles)
         {
-            ColorFArray colorArray = new ColorFArray(source.DimenSize * PointSpriteGridderElement.vertexCountPerElement);
-            ByteArray hasColorArray = new ByteArray(source.DimenSize);
+            UnmanagedArray<ColorF> colorArray = new UnmanagedArray<ColorF>(source.DimenSize * PointSpriteGridderElement.vertexCountPerElement);
+            UnmanagedArray<byte> hasColorArray = new UnmanagedArray<byte>(source.DimenSize);
             unsafe
             {
 
@@ -137,20 +137,20 @@ namespace YieldingGeometryModel.Builder
                 for (i = 0; i < gridIndexes.Length; i++)
                 {
                     int gridIndex = gridIndexes[i];
-                    *hasColorArray[gridIndex] = 1;
+                    hasColorArray[gridIndex] = 1;
                     int cellOffset = gridIndex * PointSpriteGridderElement.vertexCountPerElement;
                     ColorF cf = colors[i];
 
-                    *colorArray[cellOffset + 0] = cf;
+                    colorArray[cellOffset + 0] = cf;
                 }
                 int j, k;
                 for (int gridIndex = 0; gridIndex < source.DimenSize; gridIndex++)
                 {
                     int cellOffset = gridIndex * PointSpriteGridderElement.vertexCountPerElement;
                     source.InvertIJK(gridIndex, out i, out j, out k);
-                    if (*hasColorArray[gridIndex] == 0 || !source.IsActiveBlock(i, j, k))
+                    if (hasColorArray[gridIndex] == 0 || !source.IsActiveBlock(i, j, k))
                     {
-                        *visibles[cellOffset + 0] = 0;
+                        visibles[cellOffset + 0] = 0;
                     }
 
                 }

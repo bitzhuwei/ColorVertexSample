@@ -2,6 +2,7 @@
 using SharpGL.SceneComponent;
 using SharpGL.SceneComponent.Model;
 using SharpGL.SceneComponent.Utility;
+using SharpGL.SceneGraph;
 using SharpGL.Shaders;
 using SharpGL.VertexBuffers;
 using System;
@@ -74,10 +75,10 @@ namespace SharpGL.SceneComponent
         protected bool isInitialized = false;
 
         private int method = 1;
-        
 
 
-        private void InitVertexes(OpenGL gl,Vertex3DArray vertexes,ColorFArray colorArray, FloatArray visibles)
+
+        private void InitVertexes(OpenGL gl, UnmanagedArray<Vertex> vertexes, UnmanagedArray<ColorF> colorArray, UnmanagedArray<float> visibles)
         {
             uint[] vao = new uint[1];
             gl.GenVertexArrays(vao.Length, vao);
@@ -112,7 +113,7 @@ namespace SharpGL.SceneComponent
             gl.BindVertexArray(0);
         }
 
-        private void InitTrianglesBuffer(OpenGL gl, UIntArray TriangleStrip)
+        private void InitTrianglesBuffer(OpenGL gl, UnmanagedArray<uint> TriangleStrip)
         {
             uint[] triangleBuffer = new uint[1];
             gl.GenBuffers(triangleBuffer.Length, triangleBuffer);
@@ -123,7 +124,7 @@ namespace SharpGL.SceneComponent
         }
 
 
-        public void UpdateColorBuffer(OpenGL gl, ColorFArray colors, FloatArray visibles)
+        public void UpdateColorBuffer(OpenGL gl, UnmanagedArray<ColorF> colors, UnmanagedArray<float> visibles)
         {
             if (this.visiblesBufferObject == 0 || this.colorsBufferObject == 0)
                 return;
