@@ -1,6 +1,7 @@
 ﻿using GlmNet;
 using SharpGL;
 using SharpGL.SceneComponent;
+using SharpGL.SceneComponent.Model;
 using SharpGL.SceneGraph;
 using SharpGL.SceneGraph.Core;
 using SharpGL.Shaders;
@@ -20,9 +21,34 @@ namespace YieldingGeometryModel
     /// 用于渲染六面体网格。
     /// Rendering gridder of hexadrons.
     /// </summary>
-    public partial class HexahedronGridderElement : IndexedVAOElement
+    public partial class HexahedronGridderElement : SharpGL.SceneGraph.Core.SceneElement, SharpGL.SceneGraph.Core.IRenderable
     {
-        internal HexahedronGridderSource source;
+        private uint vertexArrayObject = 0;
+
+        private uint vertexsBufferObject = 0;
+
+        private uint colorsBufferObject = 0;
+
+        protected uint visiblesBufferObject = 0;
+
+        private uint triangleStripIndexBuffer = 0;
+
+        private uint lineIndexBuffer = 0;
+
+        private int triangleIndexCount = 0;
+
+        private int lineIndexCount = 0;
+
+        ///// <summary>
+        ///// Specifies what kind of primitives to render. Symbolic constants OpenGL.POINTS, OpenGL.LINE_STRIP, OpenGL.LINE_LOOP, OpenGL.LINES, OpenGL.TRIANGLE_STRIP, OpenGL.TRIANGLE_FAN, OpenGL.TRIANGLES, OpenGL.QUAD_STRIP, OpenGL.QUADS, and OpenGL.POLYGON are accepted
+        ///// </summary>
+        //protected uint primitiveMode;
+
+        protected ShaderProgram shader;
+
+        protected bool isInitialized = false;
+
+        //internal HexahedronGridderSource source;
         internal IScientificCamera camera;
         //private ShaderProgram pickingShader;
         //  The projection, view and model matrices.
@@ -43,10 +69,21 @@ namespace YieldingGeometryModel
         /// </summary>
         internal const int triangleStrip = 14;
 
+        ////  Constants that specify the attribute indexes.
+        //internal const uint attributeIndexPosition = 0;
+        //internal const uint attributeIndexColour = 1;
+        //internal const uint attributeIndexVisible = 2;
         //  Constants that specify the attribute indexes.
-        internal const uint attributeIndexPosition = 0;
-        internal const uint attributeIndexColour = 1;
-        internal const uint attributeIndexVisible = 2;
+        public const uint ATTRIB_INDEX_POSITION = 0;
+        public const uint ATTRIB_INDEX_COLOUR = 1;
+        public const uint ATTRIB_INDEX_VISIBLE = 2;
+        private HexahedronGridderSource source;
+
+        public HexahedronGridderSource Source
+        {
+            get { return source; }
+            set { source = value; }
+        }
 
         internal uint visualBuffer;
 
@@ -63,13 +100,20 @@ namespace YieldingGeometryModel
         }
 
 
-        public HexahedronGridderSource Source
+        public void Initialize(OpenGL gl, TriangleMesh mesh)
         {
-            get
-            {
-                return this.source;
-            }
+            gl.MakeCurrent();
+            this.shader = this.CreateShaderProgram(gl);
+            this.InitVertexes(gl, mesh.Vertexes, mesh.VertexColors, mesh.Visibles);
+            this.InitTrianglesBuffer(gl, mesh.StripTriangles);
+
+            //this.primitiveMode = OpenGL.GL_TRIANGLE_STRIP;
+
+            this.isInitialized = true;
         }
 
+
+
+       
     }
 }

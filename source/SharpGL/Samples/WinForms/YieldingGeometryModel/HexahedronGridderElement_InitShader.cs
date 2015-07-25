@@ -24,7 +24,7 @@ namespace YieldingGeometryModel
         /// </summary>
         /// <param name="gl"></param>
         /// <returns></returns>
-        protected override ShaderProgram CreateShaderProgram(OpenGL gl)
+        protected ShaderProgram CreateShaderProgram(OpenGL gl)
         {
             String vertexShaderSource = ManifestResourceLoader.LoadTextFile(@"HexahedronGridder2.vert");
             String fragmentShaderSource = ManifestResourceLoader.LoadTextFile(@"HexahedronGridder2.frag");
@@ -37,30 +37,30 @@ namespace YieldingGeometryModel
             return shaderProgram;
         }
 
-        protected override void InitShader(SharpGL.OpenGL gl, out SharpGL.Shaders.ShaderProgram shader)
-        {
-            {
-                var vertexShaderSource = ManifestResourceLoader.LoadTextFile(@"HexahedronGridder.vert");
-                var fragmentShaderSource = ManifestResourceLoader.LoadTextFile(@"HexahedronGridder.frag");
-                var shaderProgram = new ShaderProgram();
-                shaderProgram.Create(gl, vertexShaderSource, fragmentShaderSource, null);
-                shaderProgram.BindAttributeLocation(gl, attributeIndexPosition, "in_Position");
-                shaderProgram.BindAttributeLocation(gl, attributeIndexColour, "in_Color");
-                shaderProgram.BindAttributeLocation(gl, attributeIndexVisible, "in_visible");//控制顶点可见性。
-                shaderProgram.AssertValid(gl);
-                shader = shaderProgram;
-            }
-            //{
-            //    var vertexShaderSource = ColorCodedPickingShaderHelper.GetShaderSource(ColorCodedPickingShaderHelper.ShaderTypes.VertexShader);
-            //    var fragmentShaderSource = ColorCodedPickingShaderHelper.GetShaderSource(ColorCodedPickingShaderHelper.ShaderTypes.FragmentShader);
-            //    var shaderProgram = new ShaderProgram();
-            //    shaderProgram.Create(gl, vertexShaderSource, fragmentShaderSource, null);
-            //    shaderProgram.BindAttributeLocation(gl, attributeIndexPosition, "in_Position");
-            //    shaderProgram.BindAttributeLocation(gl, attributeIndexColour, "in_Color");
-            //    shaderProgram.AssertValid(gl);
-            //    this.pickingShader = shaderProgram;
-            //}
-        }
+        //protected override void InitShader(SharpGL.OpenGL gl, out SharpGL.Shaders.ShaderProgram shader)
+        //{
+        //    {
+        //        var vertexShaderSource = ManifestResourceLoader.LoadTextFile(@"HexahedronGridder.vert");
+        //        var fragmentShaderSource = ManifestResourceLoader.LoadTextFile(@"HexahedronGridder.frag");
+        //        var shaderProgram = new ShaderProgram();
+        //        shaderProgram.Create(gl, vertexShaderSource, fragmentShaderSource, null);
+        //        shaderProgram.BindAttributeLocation(gl, attributeIndexPosition, "in_Position");
+        //        shaderProgram.BindAttributeLocation(gl, attributeIndexColour, "in_Color");
+        //        shaderProgram.BindAttributeLocation(gl, attributeIndexVisible, "in_visible");//控制顶点可见性。
+        //        shaderProgram.AssertValid(gl);
+        //        shader = shaderProgram;
+        //    }
+        //    //{
+        //    //    var vertexShaderSource = ColorCodedPickingShaderHelper.GetShaderSource(ColorCodedPickingShaderHelper.ShaderTypes.VertexShader);
+        //    //    var fragmentShaderSource = ColorCodedPickingShaderHelper.GetShaderSource(ColorCodedPickingShaderHelper.ShaderTypes.FragmentShader);
+        //    //    var shaderProgram = new ShaderProgram();
+        //    //    shaderProgram.Create(gl, vertexShaderSource, fragmentShaderSource, null);
+        //    //    shaderProgram.BindAttributeLocation(gl, attributeIndexPosition, "in_Position");
+        //    //    shaderProgram.BindAttributeLocation(gl, attributeIndexColour, "in_Color");
+        //    //    shaderProgram.AssertValid(gl);
+        //    //    this.pickingShader = shaderProgram;
+        //    //}
+        //}
 
     }
 }

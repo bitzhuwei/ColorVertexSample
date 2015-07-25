@@ -25,14 +25,14 @@ namespace YieldingGeometryModel.Builder
 
             unsafe
             {
-                int arrayLength = (int)(element.source.DimenSize * HexahedronGridderElement.vertexCountInHexahedron);
+                int arrayLength = (int)(element.Source.DimenSize * HexahedronGridderElement.vertexCountInHexahedron);
 
                 float* visuals = (float*)visualArray.ToPointer();
 
                 bool signal;
 
                 uint gridderElementIndex = 0;
-                foreach (Hexahedron hexahedron in element.source.GetGridderCells())
+                foreach (Hexahedron hexahedron in element.Source.GetGridderCells())
                 {
                     // TODO: 此signal应由具体业务提供。
                     signal = (random.NextDouble() < probability);
