@@ -40,7 +40,7 @@ namespace SharpGL.SceneComponent
 
             this.Target = new Vertex(0, 0, 0);
             this.UpVector = new Vertex(0, 1, 0);
-            this.Position = new Vertex(0, 0, 0);
+            this.Position = new Vertex(0, 0, 1);
 
             this.CameraType = cameraType;
         }

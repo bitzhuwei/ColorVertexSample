@@ -42,11 +42,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Builder\HexahedronGridderBuilder.cs" />
+    <Compile Include="Well.cs" />
     <EmbeddedResource Include="HexahedronGridder.frag" />
     <EmbeddedResource Include="HexahedronGridder.vert" />
     <Compile Include="Builder\HexahedronGridderElementHelper.cs" />
     <Compile Include="Builder\PointSpriteGridderElementHelper.cs" />
-    <Compile Include="Color.cs" />
     <Compile Include="CylinderElement.cs" />
     <Compile Include="DataSource\DemoPointSpriteGridderSource.cs" />
     <Compile Include="DataSource\CatesianGridderSource.cs" />
@@ -100,6 +100,10 @@
   <ItemGroup>
     <EmbeddedResource Include="CylinderElement.frag" />
     <EmbeddedResource Include="CylinderElement.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Well.frag" />
+    <EmbeddedResource Include="Well.vert" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

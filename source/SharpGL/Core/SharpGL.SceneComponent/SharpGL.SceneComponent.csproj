@@ -64,6 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Camera\Camera2Matrix.cs" />
     <Compile Include="Camera\IOrthoCamera.cs" />
     <Compile Include="Camera\IPerspectiveCamera.cs" />
     <Compile Include="Camera\IOrthoViewCamera.cs" />
