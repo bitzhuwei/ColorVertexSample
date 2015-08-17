@@ -46,7 +46,7 @@ namespace YieldingGeometryModel
             //uint* indexes = (uint*)indexArray.Header.ToPointer();
 
             // 计算索引信息。
-            for (int i = 0; i < indexArray.Count / ((lineStrip)); i++)
+            for (int i = 0; i < indexArray.Length / ((lineStrip)); i++)
             {
                 // 索引值的指定必须配合hexahedron.GetVertexes()的次序。
                 indexArray[i * (lineStrip ) + 00] = (uint)((i * vertexCountInHexahedron) + 0);

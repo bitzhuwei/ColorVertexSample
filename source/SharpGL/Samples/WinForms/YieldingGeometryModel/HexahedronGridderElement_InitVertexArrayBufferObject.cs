@@ -62,7 +62,7 @@ namespace YieldingGeometryModel
                 gl.GenBuffers(triangleBuffer.Length, triangleBuffer);
                 gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, triangleBuffer[0]);
                 gl.BufferData(OpenGL.GL_ELEMENT_ARRAY_BUFFER, TriangleStrip.ByteLength, TriangleStrip.Header, OpenGL.GL_STATIC_DRAW);
-                this.triangleIndexCount = TriangleStrip.Count;
+                this.triangleIndexCount = TriangleStrip.Length;
                 this.triangleStripIndexBuffer = triangleBuffer[0];
             }
             {
@@ -73,7 +73,7 @@ namespace YieldingGeometryModel
                 gl.BufferData(OpenGL.GL_ELEMENT_ARRAY_BUFFER, indexArray.ByteLength, indexArray.Header, OpenGL.GL_STATIC_DRAW);
 
                 this.lineIndexBuffer = ebo[0];
-                this.lineIndexCount = indexArray.Count;
+                this.lineIndexCount = indexArray.Length;
 
                 indexArray.Dispose();
             }

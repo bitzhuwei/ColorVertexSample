@@ -27,7 +27,7 @@ namespace YieldingGeometryModel
             gl.GenVertexArrays(1, vao);
             gl.BindVertexArray(vao[0]);
 
-            primitiveCount = mesh.PositionArray.Count;
+            primitiveCount = mesh.PositionArray.Length;
 
             //  Create a vertex buffer for the vertex data.
             {

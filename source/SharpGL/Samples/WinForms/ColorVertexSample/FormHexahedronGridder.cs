@@ -46,21 +46,21 @@ namespace ColorVertexSample
         {
              System.Console.WriteLine("---------Positions-----------------");
              UnmanagedArray<Vertex> array = mesh.Vertexes;
-             for (int i = 0; i < array.Count; i++)
+             for (int i = 0; i < array.Length; i++)
              {
                  Vertex v = array[i];
                  System.Console.WriteLine(string.Format("({0},{1},{2})", v.X, v.Y, v.Z));
              }
              System.Console.WriteLine("---------Colors-----------------");
              UnmanagedArray<ColorF> colors = mesh.VertexColors;
-             for (int i = 0; i < colors.Count; i++)
+             for (int i = 0; i < colors.Length; i++)
              {
                  ColorF c = colors[i];
                  System.Console.WriteLine(string.Format("({0},{1},{2},{3})", c.R, c.G, c.B,c.A));
              }
              System.Console.WriteLine("---------visibles-----------------");
              UnmanagedArray<float> visibles = mesh.Visibles;
-             for (int i = 0; i < visibles.Count; i++)
+             for (int i = 0; i < visibles.Length; i++)
              {
                  float c = visibles[i];
                  System.Console.WriteLine(string.Format("({0})", c));
@@ -68,7 +68,7 @@ namespace ColorVertexSample
 
              System.Console.WriteLine("---------TriangleTrip-----------------");
              UnmanagedArray<uint> triangles = mesh.StripTriangles;
-             for (int i = 0; i < triangles.Count; i++)
+             for (int i = 0; i < triangles.Length; i++)
              {
                  uint t = triangles[i];
                  System.Console.WriteLine(string.Format("({0})", t));
@@ -80,21 +80,21 @@ namespace ColorVertexSample
         {
             System.Console.WriteLine("---------Positions-----------------");
             UnmanagedArray<Vertex> array = mesh.PositionArray;
-            for (int i = 0; i < array.Count; i++)
+            for (int i = 0; i < array.Length; i++)
             {
                 Vertex v = array[i];
                 System.Console.WriteLine(string.Format("({0},{1},{2})", v.X, v.Y, v.Z));
             }
             System.Console.WriteLine("---------Colors-----------------");
             UnmanagedArray<ColorF> colors = mesh.ColorArray;
-            for (int i = 0; i < colors.Count; i++)
+            for (int i = 0; i < colors.Length; i++)
             {
                 ColorF c = colors[i];
                 System.Console.WriteLine(string.Format("({0},{1},{2},{3})", c.R, c.G, c.B, c.A));
             }
             System.Console.WriteLine("---------visibles-----------------");
             UnmanagedArray<float> visibles = mesh.VisibleArray;
-            for (int i = 0; i < visibles.Count; i++)
+            for (int i = 0; i < visibles.Length; i++)
             {
                 float c = visibles[i];
                 System.Console.WriteLine(string.Format("({0})", c));
@@ -102,7 +102,7 @@ namespace ColorVertexSample
 
             System.Console.WriteLine("---------TriangleTrip-----------------");
             UnmanagedArray<float> triangles = mesh.RadiusArray;
-            for (int i = 0; i < triangles.Count; i++)
+            for (int i = 0; i < triangles.Length; i++)
             {
                 float t = triangles[i];
                 System.Console.WriteLine(string.Format("({0})", t));

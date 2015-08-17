@@ -47,6 +47,7 @@
     <Compile Include="Builder\HexahedronGridderElementHelper.cs" />
     <Compile Include="Builder\PointSpriteGridderElementHelper.cs" />
     <Compile Include="Color.cs" />
+    <Compile Include="CylinderElement.cs" />
     <Compile Include="DataSource\DemoPointSpriteGridderSource.cs" />
     <Compile Include="DataSource\CatesianGridderSource.cs" />
     <Compile Include="DataSource\CornerPointGridderSource.cs" />
@@ -95,6 +96,10 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="PointSprite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CylinderElement.frag" />
+    <EmbeddedResource Include="CylinderElement.vert" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

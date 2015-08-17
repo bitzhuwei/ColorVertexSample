@@ -119,7 +119,7 @@ namespace SharpGL.SceneComponent
             gl.GenBuffers(triangleBuffer.Length, triangleBuffer);
             gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, triangleBuffer[0]);
             gl.BufferData(OpenGL.GL_ELEMENT_ARRAY_BUFFER, TriangleStrip.ByteLength, TriangleStrip.Header, OpenGL.GL_STATIC_DRAW);
-            this.triangleIndexCount = TriangleStrip.Count;
+            this.triangleIndexCount = TriangleStrip.Length;
             this.triangleBufferObject = triangleBuffer[0];
         }
 
