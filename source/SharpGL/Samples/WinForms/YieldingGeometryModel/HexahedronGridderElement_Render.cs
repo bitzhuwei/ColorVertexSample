@@ -18,6 +18,7 @@ namespace YieldingGeometryModel
 {
     public partial class HexahedronGridderElement 
     {
+        public bool renderWireframe = false;
 
         protected void BeforeRendering(OpenGL gl, RenderMode renderMode)
         {
@@ -78,15 +79,18 @@ namespace YieldingGeometryModel
             gl.BindVertexArray(0);
             gl.Disable(OpenGL.GL_PRIMITIVE_RESTART);
 
-            gl.BindVertexArray(vertexArrayObject);
+            if (this.renderWireframe)
+            {
+                gl.BindVertexArray(vertexArrayObject);
 
-            gl.DisableVertexAttribArray(ATTRIB_INDEX_COLOUR);
-            gl.VertexAttrib3(ATTRIB_INDEX_COLOUR, 1.0f, 1.0f, 1.0f);
+                gl.DisableVertexAttribArray(ATTRIB_INDEX_COLOUR);
+                gl.VertexAttrib3(ATTRIB_INDEX_COLOUR, 1.0f, 1.0f, 1.0f);
 
-            gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, this.lineIndexBuffer);
-            gl.DrawElements(OpenGL.GL_LINES, this.lineIndexCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
+                gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, this.lineIndexBuffer);
+                gl.DrawElements(OpenGL.GL_LINES, this.lineIndexCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
 
-            gl.BindVertexArray(0);
+                gl.BindVertexArray(0);
+            }
 
             
             AfterRendering(gl, renderMode);
