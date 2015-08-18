@@ -19,6 +19,9 @@ namespace YieldingGeometryModel
 {
     public partial class HexahedronGridderElement
     {
+        private int vertexCount;
+        private int[] firsts;
+        private int[] counts;
 
         private void InitVertexes(OpenGL gl, UnmanagedArray<Vertex> vertexes, UnmanagedArray<ColorF> colorArray, UnmanagedArray<float> visibles)
         {
@@ -35,6 +38,18 @@ namespace YieldingGeometryModel
             gl.EnableVertexAttribArray(ATTRIB_INDEX_POSITION);
             this.vertexsBufferObject = vboVertex[0];
 
+            this.vertexCount = vertexes.Length;
+            this.firsts = new int[vertexes.Length / 8];
+            this.counts = new int[vertexes.Length / 8];
+            for (int i = 0; i < this.firsts.Length; i++)
+            {
+                firsts[i] = i * 8;
+                if (firsts[i] > this.vertexCount)
+                {
+                    Console.WriteLine("adsf");
+                }
+                this.counts[i] = 8;
+            }
 
             uint[] vboColor = new uint[1];
             gl.GenBuffers(vboColor.Length, vboColor);
@@ -53,30 +68,6 @@ namespace YieldingGeometryModel
             this.visiblesBufferObject = vboVisual[0];
 
             gl.BindVertexArray(0);
-        }
-
-        private void InitTrianglesBuffer(OpenGL gl, UnmanagedArray<uint> TriangleStrip)
-        {
-            {
-                uint[] triangleBuffer = new uint[1];
-                gl.GenBuffers(triangleBuffer.Length, triangleBuffer);
-                gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, triangleBuffer[0]);
-                gl.BufferData(OpenGL.GL_ELEMENT_ARRAY_BUFFER, TriangleStrip.ByteLength, TriangleStrip.Header, OpenGL.GL_STATIC_DRAW);
-                this.triangleIndexCount = TriangleStrip.Length;
-                this.triangleStripIndexBuffer = triangleBuffer[0];
-            }
-            {
-                UnmanagedArray<uint> indexArray = InitLineGridderIndex();
-                uint[] ebo = new uint[1];
-                gl.GenBuffers(1, ebo);
-                gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, ebo[0]);
-                gl.BufferData(OpenGL.GL_ELEMENT_ARRAY_BUFFER, indexArray.ByteLength, indexArray.Header, OpenGL.GL_STATIC_DRAW);
-
-                this.lineIndexBuffer = ebo[0];
-                this.lineIndexCount = indexArray.Length;
-
-                indexArray.Dispose();
-            }
         }
 
         public void UpdateColorBuffer(OpenGL gl, UnmanagedArray<ColorF> colors, UnmanagedArray<float> visibles)

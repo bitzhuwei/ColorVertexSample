@@ -31,13 +31,13 @@ namespace YieldingGeometryModel
 
         protected uint visiblesBufferObject = 0;
 
-        private uint triangleStripIndexBuffer = 0;
+        //private uint triangleStripIndexBuffer = 0;
 
-        private uint lineIndexBuffer = 0;
+        //private uint lineIndexBuffer = 0;
 
-        private int triangleIndexCount = 0;
+        //private int triangleIndexCount = 0;
 
-        private int lineIndexCount = 0;
+        //private int lineIndexCount = 0;
 
         ///// <summary>
         ///// Specifies what kind of primitives to render. Symbolic constants OpenGL.POINTS, OpenGL.LINE_STRIP, OpenGL.LINE_LOOP, OpenGL.LINES, OpenGL.TRIANGLE_STRIP, OpenGL.TRIANGLE_FAN, OpenGL.TRIANGLES, OpenGL.QUAD_STRIP, OpenGL.QUADS, and OpenGL.POLYGON are accepted
@@ -105,15 +105,12 @@ namespace YieldingGeometryModel
             gl.MakeCurrent();
             this.shader = this.CreateShaderProgram(gl);
             this.InitVertexes(gl, mesh.Vertexes, mesh.VertexColors, mesh.Visibles);
-            this.InitTrianglesBuffer(gl, mesh.StripTriangles);
-
-            //this.primitiveMode = OpenGL.GL_TRIANGLE_STRIP;
 
             this.isInitialized = true;
         }
 
 
 
-       
+
     }
 }

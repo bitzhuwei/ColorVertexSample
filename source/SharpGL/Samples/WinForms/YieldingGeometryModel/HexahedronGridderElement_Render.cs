@@ -16,7 +16,7 @@ using YieldingGeometryModel.GLPrimitive;
 
 namespace YieldingGeometryModel
 {
-    public partial class HexahedronGridderElement 
+    public partial class HexahedronGridderElement
     {
         public bool renderWireframe = false;
 
@@ -61,38 +61,31 @@ namespace YieldingGeometryModel
         {
             BeforeRendering(gl, renderMode);
 
-            // 用VAO+EBO进行渲染。
-            //  Bind the out vertex array.
             gl.BindVertexArray(vertexArrayObject);
 
-            gl.EnableVertexAttribArray(ATTRIB_INDEX_COLOUR);
+            gl.MultiDrawArrays(OpenGL.GL_QUAD_STRIP, this.firsts, this.counts, this.firsts.Length);
 
-            //  Draw the square.
-            gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, this.triangleStripIndexBuffer);
-
-            // 启用Primitive restart
-            gl.Enable(OpenGL.GL_PRIMITIVE_RESTART);
-            gl.PrimitiveRestartIndex(uint.MaxValue);// 截断图元（四边形带、三角形带等）的索引值。
-            gl.DrawElements(OpenGL.GL_TRIANGLE_STRIP, this.triangleIndexCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
-
-            //  Unbind our vertex array and shader.
             gl.BindVertexArray(0);
-            gl.Disable(OpenGL.GL_PRIMITIVE_RESTART);
 
             if (this.renderWireframe)
             {
+                gl.PolygonMode(SharpGL.Enumerations.FaceMode.FrontAndBack, SharpGL.Enumerations.PolygonMode.Lines);
+
                 gl.BindVertexArray(vertexArrayObject);
 
                 gl.DisableVertexAttribArray(ATTRIB_INDEX_COLOUR);
                 gl.VertexAttrib3(ATTRIB_INDEX_COLOUR, 1.0f, 1.0f, 1.0f);
 
-                gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, this.lineIndexBuffer);
-                gl.DrawElements(OpenGL.GL_LINES, this.lineIndexCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
+                gl.MultiDrawArrays(OpenGL.GL_QUAD_STRIP, this.firsts, this.counts, this.firsts.Length);
+
+                gl.EnableVertexAttribArray(ATTRIB_INDEX_COLOUR);
 
                 gl.BindVertexArray(0);
+
+                gl.PolygonMode(SharpGL.Enumerations.FaceMode.FrontAndBack, SharpGL.Enumerations.PolygonMode.Filled);
             }
 
-            
+
             AfterRendering(gl, renderMode);
         }
 

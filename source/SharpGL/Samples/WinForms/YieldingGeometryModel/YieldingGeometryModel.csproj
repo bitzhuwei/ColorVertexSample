@@ -74,7 +74,6 @@
     <Compile Include="PointSpriteGridderElement_IBoundingBox.cs" />
     <Compile Include="HexahedronGridderElement_IBoundingBox.cs" />
     <Compile Include="HexahedronGridderElement_InitShader.cs" />
-    <Compile Include="HexahedronGridderElement_InitElementArrayBufferObject.cs" />
     <Compile Include="HexahedronGridderElement_InitVertexArrayBufferObject.cs" />
     <Compile Include="HexahedronGridderElement.cs" />
     <Compile Include="PointSpriteGridderElement.cs" />

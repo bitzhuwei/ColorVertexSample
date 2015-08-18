@@ -11,7 +11,7 @@ using YieldingGeometryModel.GLPrimitive;
 namespace YieldingGeometryModel.Builder
 {
 
-    public class MeshGeometry : TriangleMesh,IDisposable 
+    public class MeshGeometry : TriangleMesh, IDisposable
     {
 
         /// <summary>
@@ -87,35 +87,26 @@ namespace YieldingGeometryModel.Builder
         private bool disposed = false;
 
     }
-       
-
 
     public class HexahedronGridderHelper
     {
+        public const int HEXAHEDRON_VERTEX_COUNT = 16;
 
-        public const int HEXAHEDRON_TRIANGLE_STRIP = 14;
+        public static void MinMax(Vertex value, ref Vertex min, ref Vertex max)
+        {
 
-        public const int HEXAHEDRON_VERTEX_COUNT = 8;
-
-
-
-        
-
-
-        public static void MinMax(Vertex value, ref Vertex min, ref Vertex max){
-           
-            if(value.X < min.X)
+            if (value.X < min.X)
                 min.X = value.X;
-            if(value.Y < min.Y)
+            if (value.Y < min.Y)
                 min.Y = value.Y;
-            if(value.Z < min.Z)
+            if (value.Z < min.Z)
                 min.Z = value.Z;
 
-            if(value.X > max.X)
+            if (value.X > max.X)
                 max.X = value.X;
-            if(value.Y > max.Y)
+            if (value.Y > max.Y)
                 max.Y = value.Y;
-            if(value.Z > max.Z)
+            if (value.Z > max.Z)
                 max.Z = value.Z;
         }
 
@@ -127,31 +118,29 @@ namespace YieldingGeometryModel.Builder
         /// <param name="maxValue"></param>
         /// <param name="gridIndexes"></param>
         /// <param name="gridValues"></param>
-        public static void RandomValue(int size, int minValue, int  maxValue, out int[] gridIndexes, out float[] gridValues)
+        public static void RandomValue(int size, int minValue, int maxValue, out int[] gridIndexes, out float[] gridValues)
         {
             Random random = new Random();
             gridIndexes = new int[size];
             gridValues = new float[size];
             for (int i = 0; i < size; i++)
             {
-                float value = random.Next(minValue, maxValue)*1.0f;
+                float value = random.Next(minValue, maxValue) * 1.0f;
                 gridIndexes[i] = i;
                 gridValues[i] = value;
             }
         }
 
-
-
-
         public static UnmanagedArray<ColorF> FromColors(HexahedronGridderSource source, int[] gridIndexes, ColorF[] colors, UnmanagedArray<float> visibles)
         {
             UnmanagedArray<ColorF> colorArray = new UnmanagedArray<ColorF>(source.DimenSize * HEXAHEDRON_VERTEX_COUNT);
             UnmanagedArray<byte> hasColorArray = new UnmanagedArray<byte>(source.DimenSize);
-            unsafe{
-                
+            unsafe
+            {
+
                 //是否有颜色
 
-                int i=0;
+                int i = 0;
                 for (i = 0; i < gridIndexes.Length; i++)
                 {
                     int gridIndex = gridIndexes[i];
@@ -160,14 +149,6 @@ namespace YieldingGeometryModel.Builder
                     int cellOffset = gridIndex * HEXAHEDRON_VERTEX_COUNT;
                     ColorF cf = colors[i];
 
-                    //*colorArray[cellOffset+0]= cf;
-                    //*colorArray[cellOffset+1]= cf;
-                    //*colorArray[cellOffset+2]= cf;
-                    //*colorArray[cellOffset+3]= cf;
-                    //*colorArray[cellOffset+4]= cf;
-                    //*colorArray[cellOffset+5]= cf;
-                    //*colorArray[cellOffset+6]= cf;
-                    //*colorArray[cellOffset+7]= cf;
                     colorArray[cellOffset + 0] = cf;
                     colorArray[cellOffset + 1] = cf;
                     colorArray[cellOffset + 2] = cf;
@@ -176,23 +157,22 @@ namespace YieldingGeometryModel.Builder
                     colorArray[cellOffset + 5] = cf;
                     colorArray[cellOffset + 6] = cf;
                     colorArray[cellOffset + 7] = cf;
+                    colorArray[cellOffset + 8] = cf;
+                    colorArray[cellOffset + 9] = cf;
+                    colorArray[cellOffset + 10] = cf;
+                    colorArray[cellOffset + 11] = cf;
+                    colorArray[cellOffset + 12] = cf;
+                    colorArray[cellOffset + 13] = cf;
+                    colorArray[cellOffset + 14] = cf;
+                    colorArray[cellOffset + 15] = cf;
                 }
-                int j,k;
+                int j, k;
                 for (int gridIndex = 0; gridIndex < source.DimenSize; gridIndex++)
                 {
                     int cellOffset = gridIndex * HEXAHEDRON_VERTEX_COUNT;
-                    source.InvertIJK(gridIndex,out i, out j, out k);
-                    //if (*hasColorArray[gridIndex] == 0||!source.IsActiveBlock(i,j,k))
+                    source.InvertIJK(gridIndex, out i, out j, out k);
                     if (hasColorArray[gridIndex] == 0 || !source.IsActiveBlock(i, j, k))
                     {
-                        //*visibles[cellOffset + 0] = 0;
-                        //*visibles[cellOffset + 1] = 0;
-                        //*visibles[cellOffset + 2] = 0;
-                        //*visibles[cellOffset + 3] = 0;
-                        //*visibles[cellOffset + 4] = 0;
-                        //*visibles[cellOffset + 5] = 0;
-                        //*visibles[cellOffset + 6] = 0;
-                        //*visibles[cellOffset + 7] = 0;
                         visibles[cellOffset + 0] = 0;
                         visibles[cellOffset + 1] = 0;
                         visibles[cellOffset + 2] = 0;
@@ -201,6 +181,14 @@ namespace YieldingGeometryModel.Builder
                         visibles[cellOffset + 5] = 0;
                         visibles[cellOffset + 6] = 0;
                         visibles[cellOffset + 7] = 0;
+                        visibles[cellOffset + 8] = 0;
+                        visibles[cellOffset + 9] = 0;
+                        visibles[cellOffset + 10] = 0;
+                        visibles[cellOffset + 11] = 0;
+                        visibles[cellOffset + 12] = 0;
+                        visibles[cellOffset + 13] = 0;
+                        visibles[cellOffset + 14] = 0;
+                        visibles[cellOffset + 15] = 0;
                     }
 
                 }
@@ -221,14 +209,6 @@ namespace YieldingGeometryModel.Builder
                     source.InvertIJK(gridIndex, out i, out j, out k);
                     int visible = source.IsActiveBlock(i, j, k) == true ? 1 : 0;
                     int offset = gridIndex * HEXAHEDRON_VERTEX_COUNT;
-                    //*visibles[offset + 0] = visible;
-                    //*visibles[offset + 1] = visible;
-                    //*visibles[offset + 2] = visible;
-                    //*visibles[offset + 3] = visible;
-                    //*visibles[offset + 4] = visible;
-                    //*visibles[offset + 5] = visible;
-                    //*visibles[offset + 6] = visible;
-                    //*visibles[offset + 7] = visible;
                     visibles[offset + 0] = visible;
                     visibles[offset + 1] = visible;
                     visibles[offset + 2] = visible;
@@ -237,6 +217,14 @@ namespace YieldingGeometryModel.Builder
                     visibles[offset + 5] = visible;
                     visibles[offset + 6] = visible;
                     visibles[offset + 7] = visible;
+                    visibles[offset + 8] = visible;
+                    visibles[offset + 9] = visible;
+                    visibles[offset + 10] = visible;
+                    visibles[offset + 11] = visible;
+                    visibles[offset + 12] = visible;
+                    visibles[offset + 13] = visible;
+                    visibles[offset + 14] = visible;
+                    visibles[offset + 15] = visible;
                 }
             }
             return visibles;
@@ -250,90 +238,71 @@ namespace YieldingGeometryModel.Builder
             if (source.DimenSize <= 0)
                 return null;
 
-             //每个六面体有8个点
+            //每个六面体有8个点
             UnmanagedArray<Vertex> vertexes = new UnmanagedArray<Vertex>(source.DimenSize * HEXAHEDRON_VERTEX_COUNT);
-
 
             //是否六面体是否可见
             UnmanagedArray<float> visibles = new UnmanagedArray<float>(source.DimenSize * HEXAHEDRON_VERTEX_COUNT);
-
-            //三角形条带索引个数
-            int triangleStripIndexCount = source.DimenSize * (HEXAHEDRON_TRIANGLE_STRIP + 1);
-
-            //三角形条带索引数组
-            UnmanagedArray<uint> triangleStripIndexes = new UnmanagedArray<uint>(triangleStripIndexCount);
 
             Vertex min = new Vertex();
             Vertex max = new Vertex();
             min.X = 0; min.Y = 0; min.Z = 0;
             max.X = 1; max.Y = 1; max.Z = -1;
 
-
             unsafe
             {
-                int i,j,k;
+                int i, j, k;
                 bool assigned = false;
                 //顺序很重要
                 for (int gridIndex = 0; gridIndex < source.DimenSize; gridIndex++)
                 {
-
-
-
                     source.InvertIJK(gridIndex, out i, out j, out k);
-                    Vertex p0 = source.PointFLT(i,j,k);
-                    Vertex p1 = source.PointFRT(i,j,k);
-                    Vertex p2 = source.PointFLB(i,j,k);
-                    Vertex p3 = source.PointFRB(i,j,k);
-                    Vertex p4 = source.PointBLT(i,j,k);
-                    Vertex p5 = source.PointBRT(i,j,k);
-                    Vertex p6 = source.PointBLB(i,j,k);
-                    Vertex p7 = source.PointBRB(i,j,k);
-                    if(source.IsActiveBlock(i,j,k)){
-                    if(!assigned){
-                       assigned = true;
-                       min = p0;
-                       max = p0;
-                    }
-                    MinMax(p0,ref min,ref max);
-                    MinMax(p1,ref min,ref max);
-                    MinMax(p2,ref min,ref max);
-                    MinMax(p3,ref min,ref max);
-                    MinMax(p4,ref min,ref max);
-                    MinMax(p5,ref min,ref max);
-                    MinMax(p6,ref min,ref max);
-                    MinMax(p7,ref min,ref max);
+                    Vertex p0 = source.PointFLT(i, j, k);
+                    Vertex p1 = source.PointFRT(i, j, k);
+                    Vertex p2 = source.PointFLB(i, j, k);
+                    Vertex p3 = source.PointFRB(i, j, k);
+                    Vertex p4 = source.PointBLT(i, j, k);
+                    Vertex p5 = source.PointBRT(i, j, k);
+                    Vertex p6 = source.PointBLB(i, j, k);
+                    Vertex p7 = source.PointBRB(i, j, k);
+                    if (source.IsActiveBlock(i, j, k))
+                    {
+                        if (!assigned)
+                        {
+                            assigned = true;
+                            min = p0;
+                            max = p0;
+                        }
+                        MinMax(p0, ref min, ref max);
+                        MinMax(p1, ref min, ref max);
+                        MinMax(p2, ref min, ref max);
+                        MinMax(p3, ref min, ref max);
+                        MinMax(p4, ref min, ref max);
+                        MinMax(p5, ref min, ref max);
+                        MinMax(p6, ref min, ref max);
+                        MinMax(p7, ref min, ref max);
                     }
 
                     int cellOffset = gridIndex * HEXAHEDRON_VERTEX_COUNT;
 
-                    //*vertexes[cellOffset + 0] = (Vertex3D)p0;
-                    //*vertexes[cellOffset + 1] = (Vertex3D)p1;
-                    //*vertexes[cellOffset + 2] = (Vertex3D)p2;
-                    //*vertexes[cellOffset + 3] = (Vertex3D)p3;
-                    //*vertexes[cellOffset + 4] = (Vertex3D)p4;
-                    //*vertexes[cellOffset + 5] = (Vertex3D)p5;
-                    //*vertexes[cellOffset + 6] = (Vertex3D)p6;
-                    //*vertexes[cellOffset + 7] = (Vertex3D)p7;
                     vertexes[cellOffset + 0] = p0;
-                    vertexes[cellOffset + 1] = p1;
-                    vertexes[cellOffset + 2] = p2;
-                    vertexes[cellOffset + 3] = p3;
-                    vertexes[cellOffset + 4] = p4;
-                    vertexes[cellOffset + 5] = p5;
-                    vertexes[cellOffset + 6] = p6;
-                    vertexes[cellOffset + 7] = p7;
-
-
+                    vertexes[cellOffset + 1] = p4;
+                    vertexes[cellOffset + 2] = p1;
+                    vertexes[cellOffset + 3] = p5;
+                    vertexes[cellOffset + 4] = p3;
+                    vertexes[cellOffset + 5] = p7;
+                    vertexes[cellOffset + 6] = p2;
+                    vertexes[cellOffset + 7] = p6;
+                    vertexes[cellOffset + 8] = p1;
+                    vertexes[cellOffset + 9] = p3;
+                    vertexes[cellOffset + 10] = p0;
+                    vertexes[cellOffset + 11] = p2;
+                    vertexes[cellOffset + 12] = p4;
+                    vertexes[cellOffset + 13] = p6;
+                    vertexes[cellOffset + 14] = p5;
+                    vertexes[cellOffset + 15] = p7;
 
                     float visible = source.IsActiveBlock(i, j, k) == true ? 1.0f : 0;
-                    //*visibles[cellOffset + 0] = visible;
-                    //*visibles[cellOffset + 1] = visible;
-                    //*visibles[cellOffset + 2] = visible;
-                    //*visibles[cellOffset + 3] = visible;
-                    //*visibles[cellOffset + 4] = visible;
-                    //*visibles[cellOffset + 5] = visible;
-                    //*visibles[cellOffset + 6] = visible;
-                    //*visibles[cellOffset + 7] = visible;
                     visibles[cellOffset + 0] = visible;
                     visibles[cellOffset + 1] = visible;
                     visibles[cellOffset + 2] = visible;
@@ -342,107 +311,26 @@ namespace YieldingGeometryModel.Builder
                     visibles[cellOffset + 5] = visible;
                     visibles[cellOffset + 6] = visible;
                     visibles[cellOffset + 7] = visible;
+                    visibles[cellOffset + 8] = visible;
+                    visibles[cellOffset + 9] = visible;
+                    visibles[cellOffset + 10] = visible;
+                    visibles[cellOffset + 11] = visible;
+                    visibles[cellOffset + 12] = visible;
+                    visibles[cellOffset + 13] = visible;
+                    visibles[cellOffset + 14] = visible;
+                    visibles[cellOffset + 15] = visible;
 
-
-
-                    int cellTriangleOffset = (int)gridIndex * (HEXAHEDRON_TRIANGLE_STRIP + 1);
-                    //*triangleStripIndexes[cellTriangleOffset + 0] = (uint)cellOffset + 0;
-                    //*triangleStripIndexes[cellTriangleOffset + 1] = (uint)cellOffset + 2;
-                    //*triangleStripIndexes[cellTriangleOffset + 2] = (uint)cellOffset + 4;
-                    //*triangleStripIndexes[cellTriangleOffset + 3] = (uint)cellOffset + 6;
-                    //*triangleStripIndexes[cellTriangleOffset + 4] = (uint)cellOffset + 7;
-                    //*triangleStripIndexes[cellTriangleOffset + 5] = (uint)cellOffset + 2;
-                    //*triangleStripIndexes[cellTriangleOffset + 6] = (uint)cellOffset + 3;
-                    //*triangleStripIndexes[cellTriangleOffset + 7] = (uint)cellOffset + 0;
-                    //*triangleStripIndexes[cellTriangleOffset + 8] = (uint)cellOffset + 1;
-                    //*triangleStripIndexes[cellTriangleOffset + 9] = (uint)cellOffset + 4;
-                    //*triangleStripIndexes[cellTriangleOffset + 10] = (uint)cellOffset + 5;
-                    //*triangleStripIndexes[cellTriangleOffset + 11] = (uint)cellOffset + 7;
-                    //*triangleStripIndexes[cellTriangleOffset + 12] = (uint)cellOffset + 1;
-                    //*triangleStripIndexes[cellTriangleOffset + 13] = (uint)cellOffset + 3;
-                    //*triangleStripIndexes[cellTriangleOffset + 14] = (uint)uint.MaxValue;
-                    triangleStripIndexes[cellTriangleOffset + 0] = (uint)cellOffset + 0;
-                    triangleStripIndexes[cellTriangleOffset + 1] = (uint)cellOffset + 2;
-                    triangleStripIndexes[cellTriangleOffset + 2] = (uint)cellOffset + 4;
-                    triangleStripIndexes[cellTriangleOffset + 3] = (uint)cellOffset + 6;
-                    triangleStripIndexes[cellTriangleOffset + 4] = (uint)cellOffset + 7;
-                    triangleStripIndexes[cellTriangleOffset + 5] = (uint)cellOffset + 2;
-                    triangleStripIndexes[cellTriangleOffset + 6] = (uint)cellOffset + 3;
-                    triangleStripIndexes[cellTriangleOffset + 7] = (uint)cellOffset + 0;
-                    triangleStripIndexes[cellTriangleOffset + 8] = (uint)cellOffset + 1;
-                    triangleStripIndexes[cellTriangleOffset + 9] = (uint)cellOffset + 4;
-                    triangleStripIndexes[cellTriangleOffset + 10] = (uint)cellOffset + 5;
-                    triangleStripIndexes[cellTriangleOffset + 11] = (uint)cellOffset + 7;
-                    triangleStripIndexes[cellTriangleOffset + 12] = (uint)cellOffset + 1;
-                    triangleStripIndexes[cellTriangleOffset + 13] = (uint)cellOffset + 3;
-                    triangleStripIndexes[cellTriangleOffset + 14] = (uint)uint.MaxValue;
                 }
             }
 
             MeshGeometry mesh = new MeshGeometry();
             mesh.Vertexes = vertexes;
-            mesh.StripTriangles = triangleStripIndexes;
-            mesh.Min= min;
+            mesh.Min = min;
             mesh.Max = max;
             mesh.Visibles = visibles;
 
             return mesh;
         }
-
-
-        /// <summary>
-        /// 使用条带三角形描述描述一个网格
-        /// </summary>
-        /// <param name="source"></param>
-        /// <returns></returns>
-        public static UnmanagedArray<uint> TriangleStripFrom(HexahedronGridderSource source)
-        {
-            int indexCount = source.DimenSize * (HEXAHEDRON_TRIANGLE_STRIP + 1);
-            UnmanagedArray<uint> indexes = new UnmanagedArray<uint>(indexCount);
-            unsafe
-            {
-                for (uint gridIndex = 0; gridIndex < source.DimenSize; gridIndex++)
-                {
-                    int cellOffset =  (int)gridIndex * (HEXAHEDRON_TRIANGLE_STRIP + 1);
-                    //*indexes[cellOffset + 0] = (uint)cellOffset + 0;
-                    //*indexes[cellOffset + 1] = (uint)cellOffset + 2;
-                    //*indexes[cellOffset + 2] = (uint)cellOffset + 4;
-                    //*indexes[cellOffset + 3] = (uint)cellOffset + 6;
-                    //*indexes[cellOffset + 4] = (uint)cellOffset + 7;
-                    //*indexes[cellOffset + 5] = (uint)cellOffset + 2;
-                    //*indexes[cellOffset + 6] = (uint)cellOffset + 3;
-                    //*indexes[cellOffset + 7] = (uint)cellOffset + 0;
-                    //*indexes[cellOffset + 8] = (uint)cellOffset + 1;
-                    //*indexes[cellOffset + 9] = (uint)cellOffset + 4;
-                    //*indexes[cellOffset + 10] =(uint)cellOffset + 5;
-                    //*indexes[cellOffset + 11] =(uint)cellOffset + 7;
-                    //*indexes[cellOffset + 12] =(uint)cellOffset + 1;
-                    //*indexes[cellOffset + 13] =(uint)cellOffset + 3;
-                    //*indexes[cellOffset + 14] =(uint) int.MaxValue;
-                    indexes[cellOffset + 0] = (uint)cellOffset + 0;
-                    indexes[cellOffset + 1] = (uint)cellOffset + 2;
-                    indexes[cellOffset + 2] = (uint)cellOffset + 4;
-                    indexes[cellOffset + 3] = (uint)cellOffset + 6;
-                    indexes[cellOffset + 4] = (uint)cellOffset + 7;
-                    indexes[cellOffset + 5] = (uint)cellOffset + 2;
-                    indexes[cellOffset + 6] = (uint)cellOffset + 3;
-                    indexes[cellOffset + 7] = (uint)cellOffset + 0;
-                    indexes[cellOffset + 8] = (uint)cellOffset + 1;
-                    indexes[cellOffset + 9] = (uint)cellOffset + 4;
-                    indexes[cellOffset + 10] = (uint)cellOffset + 5;
-                    indexes[cellOffset + 11] = (uint)cellOffset + 7;
-                    indexes[cellOffset + 12] = (uint)cellOffset + 1;
-                    indexes[cellOffset + 13] = (uint)cellOffset + 3;
-                    indexes[cellOffset + 14] = (uint)int.MaxValue;
-                }
-
-            }
-            return indexes;
-        }
-
-
-        
-
 
     }
 
@@ -450,14 +338,14 @@ namespace YieldingGeometryModel.Builder
     public static class HexahedronGridderBuilder
     {
 
-        
+
         /// <summary>
         /// 依次获取网格内的所有六面体。
         /// Get hexahedrons of gridder from specified source successively.
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        public static IEnumerable<Hexahedron> 
+        public static IEnumerable<Hexahedron>
             GetGridderCells(this HexahedronGridderSource source)
         {
             Random random = new Random();
