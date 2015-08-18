@@ -65,6 +65,12 @@
     <Compile Include="FormMySceneControlDemo.Designer.cs">
       <DependentUpon>FormMySceneControlDemo.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormPointSpriteFontElement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPointSpriteFontElement.Designer.cs">
+      <DependentUpon>FormPointSpriteFontElement.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormPortal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,6 +106,9 @@
     <Compile Include="VertexHelper.cs" />
     <EmbeddedResource Include="FormMySceneControlDemo.resx">
       <DependentUpon>FormMySceneControlDemo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPointSpriteFontElement.resx">
+      <DependentUpon>FormPointSpriteFontElement.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormPortal.resx">
       <DependentUpon>FormPortal.cs</DependentUpon>
