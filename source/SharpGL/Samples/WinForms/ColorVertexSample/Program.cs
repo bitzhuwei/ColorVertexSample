@@ -17,7 +17,7 @@ namespace ColorVertexSample
         [STAThread]
         static void Main()
         {
-            Application.ThreadException += Application_ThreadException;
+            //Application.ThreadException += Application_ThreadException;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new FormPortal());

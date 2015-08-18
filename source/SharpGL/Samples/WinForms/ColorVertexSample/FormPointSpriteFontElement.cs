@@ -41,6 +41,7 @@ namespace ColorVertexSample
             this.rotator = new SatelliteRotation(this.camera);
 
             this.fontElement = new PointSpriteFontElement(this.camera, "hi text!", new SharpGL.SceneGraph.Vertex(0, 0, 0));
+            //this.fontElement = new PointSpriteFontElement(this.camera, "qwertyuiop[]", new SharpGL.SceneGraph.Vertex(0, 0, 0));
             this.fontElement.Initialize(this.openGLControl.OpenGL);
         }
 

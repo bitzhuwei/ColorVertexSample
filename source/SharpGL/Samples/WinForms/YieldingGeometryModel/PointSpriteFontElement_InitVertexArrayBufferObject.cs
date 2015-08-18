@@ -29,17 +29,17 @@ namespace YieldingGeometryModel
 
             //primitiveCount = mesh.PositionArray.Length;
             primitiveCount = 1000;
-
+            int count = 3;
             //  Create a vertex buffer for the vertex data.
             {
-                UnmanagedArray<vec3> positionArray = new UnmanagedArray<vec3>(1000);
-                for (int i = 0; i < 10; i++)
+                UnmanagedArray<vec3> positionArray = new UnmanagedArray<vec3>(count * count * count);
+                for (int i = 0; i < count; i++)
                 {
-                    for (int j = 0; j < 10; j++)
+                    for (int j = 0; j < count; j++)
                     {
-                        for (int k = 0; k < 10; k++)
+                        for (int k = 0; k < count; k++)
                         {
-                            positionArray[i * 100 + j * 10 + k] = new vec3(i - 5, j - 5, k - 5);
+                            positionArray[i * count * count + j * count + k] = new vec3(i - count / 2, j - count / 2, k - count / 2);
                         }
                     }
                 }
@@ -59,8 +59,8 @@ namespace YieldingGeometryModel
 
             //  Now do the same for the colour data.
             {
-                UnmanagedArray<vec4> colorArray = new UnmanagedArray<vec4>(1000);
-                for (int i = 0; i < 1000; i++)
+                UnmanagedArray<vec4> colorArray = new UnmanagedArray<vec4>(count * count * count);
+                for (int i = 0; i < count * count * count; i++)
                 {
                     colorArray[i] = new vec4((float)random.NextDouble(), (float)random.NextDouble(), (float)random.NextDouble(), (float)random.NextDouble());
                 }
@@ -78,8 +78,8 @@ namespace YieldingGeometryModel
 
             // Now do the same for the index's visual signal data.
             {
-                UnmanagedArray<float> visibleArray = new UnmanagedArray<float>(1000);
-                for (int i = 0; i < 1000; i++)
+                UnmanagedArray<float> visibleArray = new UnmanagedArray<float>(count * count * count);
+                for (int i = 0; i < count * count * count; i++)
                 {
                     visibleArray[i] = 1.0f;
                 }
@@ -96,10 +96,11 @@ namespace YieldingGeometryModel
                 this.visualBuffer = ids[0];
             }
             {
-                UnmanagedArray<float> radiusArray = new UnmanagedArray<float>(1000);
-                for (int i = 0; i < 1000; i++)
+                UnmanagedArray<float> radiusArray = new UnmanagedArray<float>(count * count * count);
+                for (int i = 0; i < count * count * count; i++)
                 {
-                    radiusArray[i] = (float)random.NextDouble()*100;
+                    //radiusArray[i] = (float)random.NextDouble()*100;
+                    radiusArray[i] = 100;
                 }
 
                 uint[] ids = new uint[1];
