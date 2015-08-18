@@ -47,6 +47,7 @@
     <Compile Include="FontResources\CharacterInfoHelper.cs" />
     <Compile Include="FontResources\FontResource.cs" />
     <Compile Include="FontResources\KeyValuePairHelper.cs" />
+    <Compile Include="PointSpriteFontElement_InitTexture.cs" />
     <Compile Include="PointSpriteFontElement.cs" />
     <Compile Include="PointSpriteFontElement_IBoundingBox.cs" />
     <Compile Include="PointSpriteFontElement_InitShader.cs" />

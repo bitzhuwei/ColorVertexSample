@@ -61,9 +61,11 @@ namespace YieldingGeometryModel
 
         public void Initialize(SharpGL.OpenGL openGL)
         {
-            this.InitShader(openGL, out this.shaderProgram);
+            this.InitTexture(openGL);
 
-            this.InitVertexArrayBufferObject(openGL, out this.primitiveMode, out this.vao, out this.primitiveCount);
+            this.InitShaderProgram(openGL, out this.shaderProgram);
+
+            this.InitVAO(openGL, out this.primitiveMode, out this.vao, out this.primitiveCount);
         }
 
         public void Render(SharpGL.OpenGL gl, RenderMode renderMode)

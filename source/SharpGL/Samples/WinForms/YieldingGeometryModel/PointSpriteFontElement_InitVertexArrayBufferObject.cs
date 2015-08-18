@@ -19,7 +19,7 @@ namespace YieldingGeometryModel
 {
     public partial class PointSpriteFontElement
     {
-        protected void InitVertexArrayBufferObject(OpenGL gl, out uint mode, out uint[] vao, out int primitiveCount)
+        protected void InitVAO(OpenGL gl, out uint mode, out uint[] vao, out int primitiveCount)
         {
             mode = OpenGL.GL_POINTS;
 
@@ -99,7 +99,7 @@ namespace YieldingGeometryModel
                 UnmanagedArray<float> radiusArray = new UnmanagedArray<float>(1000);
                 for (int i = 0; i < 1000; i++)
                 {
-                    radiusArray[i] = (float)random.NextDouble()*20;
+                    radiusArray[i] = (float)random.NextDouble()*100;
                 }
 
                 uint[] ids = new uint[1];
