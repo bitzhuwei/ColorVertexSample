@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CSharpGL.Objects.SceneElements
+namespace YieldingGeometryModel
 {
     /// <summary>
     /// 圆柱体

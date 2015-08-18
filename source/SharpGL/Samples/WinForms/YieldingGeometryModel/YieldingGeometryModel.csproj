@@ -42,6 +42,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Builder\HexahedronGridderBuilder.cs" />
+    <Compile Include="FontResources\CharacterInfo.cs" />
+    <Compile Include="FontResources\CharacterInfoDictHelper.cs" />
+    <Compile Include="FontResources\CharacterInfoHelper.cs" />
+    <Compile Include="FontResources\FontResource.cs" />
+    <Compile Include="FontResources\KeyValuePairHelper.cs" />
     <Compile Include="Well.cs" />
     <EmbeddedResource Include="HexahedronGridder.frag" />
     <EmbeddedResource Include="HexahedronGridder.vert" />
@@ -104,6 +109,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Well.frag" />
     <EmbeddedResource Include="Well.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="FontResources\LucidaTypewriterRegular.ttf.png" />
+    <EmbeddedResource Include="FontResources\LucidaTypewriterRegular.ttf.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
