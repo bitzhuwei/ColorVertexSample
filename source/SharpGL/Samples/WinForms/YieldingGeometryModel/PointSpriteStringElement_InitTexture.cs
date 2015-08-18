@@ -110,14 +110,11 @@ namespace YieldingGeometryModel
                     CharacterInfo cInfo;
                     if (FontResource.Instance.CharInfoDict.TryGetValue(c, out cInfo))
                     {
-                        //for (int col = 0; col < cInfo.width; col++)
-                        //{
-                        //    for (int row = 0; row < FontResource.Instance.FontHeight; row++)
-                        //    {
-                        //        var color = bigBitmap.GetPixel(cInfo.xoffset + col, cInfo.yoffset + row);
-                        //        contentBitmap.SetPixel(currentWidthPosition + col, currentHeightPosition + row, color);
-                        //    }
-                        //}
+                        if (currentWidthPosition + cInfo.width > contentBitmap.Width)
+                        {
+                            currentWidthPosition = 0;
+                            currentHeightPosition += FontResource.Instance.FontHeight;
+                        }
 
                         gContentBitmap.DrawImage(bigBitmap,
                             new Rectangle(currentWidthPosition, currentHeightPosition, cInfo.width, FontResource.Instance.FontHeight),
@@ -125,11 +122,6 @@ namespace YieldingGeometryModel
                             GraphicsUnit.Pixel);
 
                         currentWidthPosition += cInfo.width + interval;
-                        if (currentWidthPosition >= contentBitmap.Width)
-                        {
-                            currentWidthPosition = 0;
-                            currentHeightPosition += FontResource.Instance.FontHeight;
-                        }
                     }
                 }
                 gContentBitmap.Dispose();
