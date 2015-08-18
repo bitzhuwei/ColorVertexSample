@@ -22,11 +22,17 @@ namespace ColorVertexSample
             InitializeComponent();
 
             this.Load += FormPointSpriteFontElement_Load;
+            this.openGLControl.MouseWheel += openGLControl_MouseWheel;
+        }
+
+        void openGLControl_MouseWheel(object sender, MouseEventArgs e)
+        {
+            this.camera.Scale(e.Delta); 
         }
 
         int elementCounter = 0;
         private SatelliteRotation rotator;
-        private SharpGL.SceneComponent.IScientificCamera camera;
+        private SharpGL.SceneComponent.ScientificCamera camera;
         private PointSpriteFontElement fontElement;
 
         private void FormPointSpriteFontElement_Load(object sender, EventArgs e)
