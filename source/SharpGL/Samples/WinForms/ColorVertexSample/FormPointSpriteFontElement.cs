@@ -40,21 +40,8 @@ namespace ColorVertexSample
             this.camera = new ScientificCamera(CameraTypes.Perspecitive);
             this.rotator = new SatelliteRotation(this.camera);
 
-            int nx = 10;
-            int ny = 10;
-            int nz = 10;
-
-            float dx = 10;
-            float dy = 10;
-            float dz = 10;
-            // use CatesianGridderSource to fill HexahedronGridderElement's content.
-            DemoPointSpriteGridderSource source = new DemoPointSpriteGridderSource() { NX = nx, NY = ny, NZ = nz, };
-
-            // use PointSpriteGridderElement
-            PointSpriteMesh mesh = PointSpriteGridderElementHelper.CreateMesh(source);
-
             this.fontElement = new PointSpriteFontElement("hi text!", new SharpGL.SceneGraph.Vertex(0, 0, 0), this.camera);
-            this.fontElement.Initialize(this.openGLControl.OpenGL, mesh);
+            this.fontElement.Initialize(this.openGLControl.OpenGL);
         }
 
         private void openGLControl_OpenGLDraw(object sender, SharpGL.RenderEventArgs args)

@@ -31,7 +31,7 @@ namespace SharpGL.SceneComponent
         protected uint primitiveMode;
         protected int primitiveCount;
 
-        protected ShaderProgram shader;
+        protected ShaderProgram shaderProgram;
 
         protected bool isInitialized = false;
 
@@ -41,7 +41,7 @@ namespace SharpGL.SceneComponent
         /// <param name="gl"></param>
         public void Initialize(OpenGL gl, TMesh mesh)
         {
-            InitShader(gl, out this.shader);
+            InitShader(gl, out this.shaderProgram);
 
             InitVertexArrayBufferObject(gl, out this.primitiveMode, out this.vao, out this.primitiveCount, mesh);
 
@@ -92,7 +92,7 @@ namespace SharpGL.SceneComponent
 
             BeforeRendering(gl, renderMode);
 
-            ShaderProgram shader = this.shader;// GetShader(gl, renderMode);
+            ShaderProgram shader = this.shaderProgram;// GetShader(gl, renderMode);
             shader.Bind(gl);
 
             // 用VAO+EBO进行渲染。

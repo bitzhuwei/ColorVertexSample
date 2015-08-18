@@ -21,7 +21,7 @@ namespace YieldingGeometryModel
     public partial class PointSpriteFontElement
     {
 
-        protected override void InitShader(SharpGL.OpenGL gl, out SharpGL.Shaders.ShaderProgram shader)
+        protected  void InitShader(SharpGL.OpenGL gl, out SharpGL.Shaders.ShaderProgram shaderProgram)
         {
             {
                 Bitmap bmp = ManifestResourceLoader.LoadBitmap("PointSprite.png");
@@ -32,7 +32,7 @@ namespace YieldingGeometryModel
                 //  Create the shader program.
                 var vertexShaderSource = ManifestResourceLoader.LoadTextFile(@"PointSpriteFontElement.vert");
                 var fragmentShaderSource = ManifestResourceLoader.LoadTextFile(@"PointSpriteFontElement.frag");
-                var shaderProgram = new ShaderProgram();
+                shaderProgram = new ShaderProgram();
                 shaderProgram.Create(gl, vertexShaderSource, fragmentShaderSource, null);
                 int position = shaderProgram.GetAttributeLocation(gl, "in_Position");
                 if (position >= 0) { attributeIndexPosition = (uint)position; }
@@ -43,7 +43,6 @@ namespace YieldingGeometryModel
                 int visible = shaderProgram.GetAttributeLocation(gl, "in_visible");
                 if (visible >= 0) { attributeIndexVisible = (uint)visible; }
                 shaderProgram.AssertValid(gl);
-                shader = shaderProgram;
             }
             //{
             //    var vertexShaderSource = ColorCodedPickingShaderHelper.GetShaderSource(ColorCodedPickingShaderHelper.ShaderTypes.VertexShader);

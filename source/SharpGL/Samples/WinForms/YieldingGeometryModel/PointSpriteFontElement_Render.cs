@@ -19,7 +19,7 @@ namespace YieldingGeometryModel
     public partial class PointSpriteFontElement 
     {
 
-        protected override void BeforeRendering(OpenGL gl, RenderMode renderMode)
+        protected void BeforeRendering(OpenGL gl, RenderMode renderMode)
         {
             IScientificCamera camera = this.camera;
             if (camera != null)
@@ -57,7 +57,7 @@ namespace YieldingGeometryModel
             int[] viewport = new int[4];
             gl.GetInteger(OpenGL.GL_VIEWPORT, viewport);
 
-            ShaderProgram shader = this.shader;
+            ShaderProgram shader = this.shaderProgram;
 
             shader.Bind(gl);
             shader.SetUniform1(gl, "tex", this.texture.TextureName);
@@ -68,9 +68,9 @@ namespace YieldingGeometryModel
             shader.SetUniform1(gl, "canvasHeight", viewport[3] + 0.0f);
         }
 
-        protected override void AfterRendering(OpenGL gl, RenderMode renderMode)
+        protected void AfterRendering(OpenGL gl, RenderMode renderMode)
         {
-            shader.Unbind(gl);
+            shaderProgram.Unbind(gl);
             gl.Disable(OpenGL.GL_BLEND);
             gl.Disable(OpenGL.GL_VERTEX_PROGRAM_POINT_SIZE);
             gl.Disable(OpenGL.GL_POINT_SPRITE_ARB);

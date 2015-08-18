@@ -57,7 +57,7 @@ namespace YieldingGeometryModel
             int[] viewport = new int[4];
             gl.GetInteger(OpenGL.GL_VIEWPORT, viewport);
 
-            ShaderProgram shader = this.shader;
+            ShaderProgram shader = this.shaderProgram;
 
             shader.Bind(gl);
             shader.SetUniform1(gl, "tex", this.texture.TextureName);
@@ -70,7 +70,7 @@ namespace YieldingGeometryModel
 
         protected override void AfterRendering(OpenGL gl, RenderMode renderMode)
         {
-            shader.Unbind(gl);
+            shaderProgram.Unbind(gl);
             gl.Disable(OpenGL.GL_BLEND);
             gl.Disable(OpenGL.GL_VERTEX_PROGRAM_POINT_SIZE);
             gl.Disable(OpenGL.GL_POINT_SPRITE_ARB);
