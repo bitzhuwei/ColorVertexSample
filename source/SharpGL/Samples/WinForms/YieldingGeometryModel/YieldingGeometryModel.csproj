@@ -54,6 +54,7 @@
     <Compile Include="PointSpriteFontElement_InitVertexArrayBufferObject.cs" />
     <Compile Include="PointSpriteFontElement_Render.cs" />
     <Compile Include="Well.cs" />
+    <Compile Include="WellPipe.cs" />
     <EmbeddedResource Include="HexahedronGridder.frag" />
     <EmbeddedResource Include="HexahedronGridder.vert" />
     <Compile Include="Builder\HexahedronGridderElementHelper.cs" />
@@ -113,8 +114,8 @@
     <EmbeddedResource Include="CylinderElement.vert" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Well.frag" />
-    <EmbeddedResource Include="Well.vert" />
+    <EmbeddedResource Include="WellPipe.frag" />
+    <EmbeddedResource Include="WellPipe.vert" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FontResources\LucidaTypewriterRegular.ttf.png" />

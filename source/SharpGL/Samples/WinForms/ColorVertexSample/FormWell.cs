@@ -17,7 +17,6 @@ namespace ColorVertexSample
     public partial class FormWell : Form
     {
         Well wellElement;
-        PointSpriteFontElement textElement;
         ScientificCamera camera;
         SatelliteRotation rotator;
 
@@ -83,7 +82,6 @@ namespace ColorVertexSample
             rotation += 3.0f;
 
             this.wellElement.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
-            this.textElement.Render(gl, SharpGL.SceneGraph.Core.RenderMode.Render);
         }
 
         private static void DrawPyramid(OpenGL gl)
@@ -138,11 +136,8 @@ namespace ColorVertexSample
             GLColor color = new GLColor(
                 (float)random.NextDouble(), (float)random.NextDouble(), (float)random.NextDouble(), (float)random.NextDouble());
             this.wellElement = new Well(
-                pipe, 0.1f, color, "hi well", new Vertex(0, 0, 0), this.camera);
+                pipe, 0.1f, color, "hi well", new Vertex(-1.5f, -1.5f, -1.5f), this.camera);
             this.wellElement.Initialize(gl);
-
-            this.textElement = new PointSpriteFontElement(this.camera, "hi well", new Vertex(-1, -1, -1));
-            this.textElement.Initialize(gl);
         }
 
         static Random random = new Random();
