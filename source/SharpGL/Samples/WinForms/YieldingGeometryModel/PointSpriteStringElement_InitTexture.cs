@@ -71,14 +71,14 @@ namespace YieldingGeometryModel
                 int currentTextureWidth = 0;
                 int currentWidthPosition = 0;
                 int currentHeightPosition = 0;
-                if (totalLength * this.fontSize / FontResource.Instance.FontHeight > maxPointSize)// 超过1行能显示的内容
+                if (totalLength * this.fontSize > maxPointSize * FontResource.Instance.FontHeight)// 超过1行能显示的内容
                 {
                     currentTextureWidth = maxPointSize * FontResource.Instance.FontHeight / this.fontSize;
 
                     int lineCount = (glyphsLength - 1) / currentTextureWidth + 1;
                     // 确保整篇文字的高度在贴图中间。
-                    currentHeightPosition = (currentTextureWidth - FontResource.Instance.FontHeight * lineCount) / 2
-                        - FontResource.Instance.FontHeight / 2;
+                    currentHeightPosition = (currentTextureWidth - FontResource.Instance.FontHeight * lineCount) / 2;
+                    //- FontResource.Instance.FontHeight / 2;
                 }
                 else//只在一行内即可显示所有字符
                 {
