@@ -27,7 +27,7 @@ namespace ColorVertexSample
 
         void openGLControl_MouseWheel(object sender, MouseEventArgs e)
         {
-            this.camera.Scale(e.Delta); 
+            this.camera.Scale(e.Delta);
         }
 
         int elementCounter = 0;
@@ -40,7 +40,7 @@ namespace ColorVertexSample
             this.camera = new ScientificCamera(CameraTypes.Perspecitive);
             this.rotator = new SatelliteRotation(this.camera);
 
-            this.fontElement = new PointSpriteFontElement("hi text!", new SharpGL.SceneGraph.Vertex(0, 0, 0), this.camera);
+            this.fontElement = new PointSpriteFontElement(this.camera, "hi text!", new SharpGL.SceneGraph.Vertex(0, 0, 0));
             this.fontElement.Initialize(this.openGLControl.OpenGL);
         }
 

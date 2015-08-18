@@ -18,7 +18,8 @@ namespace YieldingGeometryModel
     /// </summary>
     public partial class PointSpriteFontElement : SceneElement, IRenderable
     {
-        private Texture texture;
+        //private Texture texture;
+        uint[] texture = new uint[1];
         internal IScientificCamera camera;
         //private ShaderProgram pickingShader;
         //  The projection, view and model matrices.
@@ -48,15 +49,17 @@ namespace YieldingGeometryModel
         /// 用于渲染字符串。
         /// Rendering gridder of hexadrons.
         /// </summary>
-        public PointSpriteFontElement(string text, Vertex position, IScientificCamera camera)
+        public PointSpriteFontElement(IScientificCamera camera, string text, Vertex position, int fontSize = 32)
         {
+            this.camera = camera;
             this.text = text;
             this.position = position;
-            this.camera = camera;
+            this.fontSize = fontSize;
         }
 
         private string text;
         private Vertex position;
+        private int fontSize;
 
 
         public void Initialize(SharpGL.OpenGL openGL)
