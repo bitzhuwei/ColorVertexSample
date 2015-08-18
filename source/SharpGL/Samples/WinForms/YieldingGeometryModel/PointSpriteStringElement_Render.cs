@@ -16,7 +16,7 @@ using YieldingGeometryModel.GLPrimitive;
 
 namespace YieldingGeometryModel
 {
-    public partial class PointSpriteFontElement 
+    public partial class PointSpriteStringElement 
     {
 
         protected void BeforeRendering(OpenGL gl, RenderMode renderMode)

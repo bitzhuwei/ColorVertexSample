@@ -16,7 +16,7 @@ namespace YieldingGeometryModel
     /// <summary>
     /// 用于渲染字符串。
     /// </summary>
-    public partial class PointSpriteFontElement : SceneElement, IRenderable
+    public partial class PointSpriteStringElement : SceneElement, IRenderable
     {
         //private Texture texture;
         uint[] texture = new uint[1];
@@ -49,7 +49,7 @@ namespace YieldingGeometryModel
         /// 用于渲染字符串。
         /// Rendering gridder of hexadrons.
         /// </summary>
-        public PointSpriteFontElement(IScientificCamera camera, string text, Vertex position, int fontSize = 32)
+        public PointSpriteStringElement(IScientificCamera camera, string text, Vertex position, int fontSize = 32)
         {
             this.camera = camera;
             this.text = text;

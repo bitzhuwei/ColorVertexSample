@@ -18,13 +18,13 @@ using YieldingGeometryModel.GLPrimitive;
 
 namespace YieldingGeometryModel
 {
-    public partial class PointSpriteFontElement
+    public partial class PointSpriteStringElement
     {
 
         protected void InitShaderProgram(SharpGL.OpenGL gl, out SharpGL.Shaders.ShaderProgram shaderProgram)
         {
-            var vertexShaderSource = ManifestResourceLoader.LoadTextFile(@"PointSpriteFontElement.vert");
-            var fragmentShaderSource = ManifestResourceLoader.LoadTextFile(@"PointSpriteFontElement.frag");
+            var vertexShaderSource = ManifestResourceLoader.LoadTextFile(@"PointSpriteStringElement.vert");
+            var fragmentShaderSource = ManifestResourceLoader.LoadTextFile(@"PointSpriteStringElement.frag");
             shaderProgram = new ShaderProgram();
             shaderProgram.Create(gl, vertexShaderSource, fragmentShaderSource, null);
             int position = shaderProgram.GetAttributeLocation(gl, "in_Position");

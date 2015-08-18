@@ -47,12 +47,12 @@
     <Compile Include="FontResources\CharacterInfoHelper.cs" />
     <Compile Include="FontResources\FontResource.cs" />
     <Compile Include="FontResources\KeyValuePairHelper.cs" />
-    <Compile Include="PointSpriteFontElement_InitTexture.cs" />
-    <Compile Include="PointSpriteFontElement.cs" />
-    <Compile Include="PointSpriteFontElement_IBoundingBox.cs" />
-    <Compile Include="PointSpriteFontElement_InitShader.cs" />
-    <Compile Include="PointSpriteFontElement_InitVertexArrayBufferObject.cs" />
-    <Compile Include="PointSpriteFontElement_Render.cs" />
+    <Compile Include="PointSpriteStringElement_InitTexture.cs" />
+    <Compile Include="PointSpriteStringElement.cs" />
+    <Compile Include="PointSpriteStringElement_IBoundingBox.cs" />
+    <Compile Include="PointSpriteStringElement_InitShader.cs" />
+    <Compile Include="PointSpriteStringElement_InitVertexArrayBufferObject.cs" />
+    <Compile Include="PointSpriteStringElement_Render.cs" />
     <Compile Include="Well.cs" />
     <Compile Include="WellPipe.cs" />
     <EmbeddedResource Include="HexahedronGridder.frag" />
@@ -124,8 +124,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="PointSpriteFontElement.frag" />
-    <EmbeddedResource Include="PointSpriteFontElement.vert" />
+    <EmbeddedResource Include="PointSpriteStringElement.frag" />
+    <EmbeddedResource Include="PointSpriteStringElement.vert" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

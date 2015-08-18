@@ -33,7 +33,7 @@ namespace ColorVertexSample
         int elementCounter = 0;
         private SatelliteRotation rotator;
         private SharpGL.SceneComponent.ScientificCamera camera;
-        private PointSpriteFontElement fontElement;
+        private PointSpriteStringElement fontElement;
 
         private void FormPointSpriteFontElement_Load(object sender, EventArgs e)
         {
@@ -45,10 +45,10 @@ namespace ColorVertexSample
             //this.fontElement = new PointSpriteFontElement(this.camera, "AAA", new SharpGL.SceneGraph.Vertex(0, 0, 0));
             //this.fontElement = new PointSpriteFontElement(this.camera, "AAAA", new SharpGL.SceneGraph.Vertex(0, 0, 0));
             //this.fontElement = new PointSpriteFontElement(this.camera, "AAAAA", new SharpGL.SceneGraph.Vertex(0, 0, 0));
-            this.fontElement = new PointSpriteFontElement(this.camera, "AAAAAA", new SharpGL.SceneGraph.Vertex(0, 0, 0));
-            this.fontElement = new PointSpriteFontElement(this.camera, "AAAAAAA", new SharpGL.SceneGraph.Vertex(0, 0, 0));
-            this.fontElement = new PointSpriteFontElement(this.camera, "AAAAAAAA", new SharpGL.SceneGraph.Vertex(0, 0, 0));
-            this.fontElement = new PointSpriteFontElement(this.camera, "AAAAAAAAAAAAAAAA", new SharpGL.SceneGraph.Vertex(0, 0, 0));
+            this.fontElement = new PointSpriteStringElement(this.camera, "AAAAAA", new SharpGL.SceneGraph.Vertex(0, 0, 0));
+            this.fontElement = new PointSpriteStringElement(this.camera, "AAAAAAA", new SharpGL.SceneGraph.Vertex(0, 0, 0));
+            this.fontElement = new PointSpriteStringElement(this.camera, "AAAAAAAA", new SharpGL.SceneGraph.Vertex(0, 0, 0));
+            this.fontElement = new PointSpriteStringElement(this.camera, "AAAAAAAAAAAAAAAA", new SharpGL.SceneGraph.Vertex(0, 0, 0));
             //this.fontElement = new PointSpriteFontElement(this.camera, "hi text!", new SharpGL.SceneGraph.Vertex(0, 0, 0));
             //this.fontElement = new PointSpriteFontElement(this.camera, "qwertyuiop[]", new SharpGL.SceneGraph.Vertex(0, 0, 0));
             this.fontElement.Initialize(this.openGLControl.OpenGL);

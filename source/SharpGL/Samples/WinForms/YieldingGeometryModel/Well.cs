@@ -16,7 +16,7 @@ namespace YieldingGeometryModel
     public class Well : SceneElement, IRenderable
     {
         private WellPipe wellPipeElement;
-        private PointSpriteFontElement textElement;
+        private PointSpriteStringElement textElement;
 
         /// <summary>
         /// 蛇形管道（井）+文字显示
@@ -31,7 +31,7 @@ namespace YieldingGeometryModel
         {
             this.wellPipeElement = new WellPipe(pipe, radius, color, camera);
 
-            this.textElement = new PointSpriteFontElement(camera, name, position);
+            this.textElement = new PointSpriteStringElement(camera, name, position);
         }
 
         public void Initialize(OpenGL gl)

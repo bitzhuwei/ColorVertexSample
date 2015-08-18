@@ -17,7 +17,7 @@ using YieldingGeometryModel.GLPrimitive;
 
 namespace YieldingGeometryModel
 {
-    public partial class PointSpriteFontElement
+    public partial class PointSpriteStringElement
     {
         //protected void InitVAO(OpenGL gl, out uint mode, out uint[] vao, out int primitiveCount)
         //{

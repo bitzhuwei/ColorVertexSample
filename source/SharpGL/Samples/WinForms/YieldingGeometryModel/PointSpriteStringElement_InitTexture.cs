@@ -12,7 +12,7 @@ using YieldingGeometryModel.FontResources;
 
 namespace YieldingGeometryModel
 {
-    public partial class PointSpriteFontElement
+    public partial class PointSpriteStringElement
     {
         /// <summary>
         /// TODO: best practice value.
