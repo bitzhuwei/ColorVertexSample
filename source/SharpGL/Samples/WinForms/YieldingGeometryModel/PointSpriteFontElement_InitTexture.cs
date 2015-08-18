@@ -15,17 +15,29 @@ namespace YieldingGeometryModel
     public partial class PointSpriteFontElement
     {
         /// <summary>
-        /// TODO: use static ctor.
+        /// TODO: best practice value.
         /// </summary>
-        private int maxPointSize = 255;
+        private static int maxPointSize = 255;
         private int textureWidth;
 
         private void InitTexture(SharpGL.OpenGL openGL)
         {
+            // test the font rendering procedure.
             //Bitmap bmp = ManifestResourceLoader.LoadBitmap("FontResources.LucidaTypewriterRegular.ttf.png");
             //this.texture = new Texture();
             //this.texture.Create(openGL, bmp);
             //bmp.Dispose();
+
+            // this is not work.
+            //int [] pointSize=new int[2];
+            //openGL.GetInteger(SharpGL.Enumerations.GetTarget.PointSizeRange, pointSize);
+            //maxPointSize = pointSize[1];
+
+            //openGL.PointParameter(OpenGL.GL_POINT_SIZE_MAX_ARB, 255);
+
+            //openGL.GetInteger(SharpGL.Enumerations.GetTarget.PointSizeRange, pointSize);
+            //maxPointSize = pointSize[1];
+
 
             InitTexture(openGL, this.text);
         }
@@ -80,7 +92,7 @@ namespace YieldingGeometryModel
                     }
                     else
                     {
-                        currentWidthPosition = (FontResource.Instance.FontHeight - glyphsLength) / 2;
+                        currentWidthPosition = (currentTextureWidth - glyphsLength) / 2;
                         glyphsLength = FontResource.Instance.FontHeight;
                     }
                 }

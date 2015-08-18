@@ -100,9 +100,9 @@ namespace YieldingGeometryModel
                 for (int i = 0; i < count * count * count; i++)
                 {
                     //radiusArray[i] = (float)random.NextDouble()*100;
-                    radiusArray[i] = 100;
+                    radiusArray[i] = this.textureWidth / 10.0f; //100;
                 }
-
+                     
                 uint[] ids = new uint[1];
                 gl.GenBuffers(1, ids);
                 gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, ids[0]);
