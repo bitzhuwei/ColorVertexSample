@@ -41,7 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builder\VertexHelper.cs" />
     <Compile Include="Builder\HexahedronGridderBuilder.cs" />
+    <Compile Include="DataSource\PointSetGridderSource.cs" />
     <Compile Include="FontResources\CharacterInfo.cs" />
     <Compile Include="FontResources\CharacterInfoDictHelper.cs" />
     <Compile Include="FontResources\CharacterInfoHelper.cs" />
