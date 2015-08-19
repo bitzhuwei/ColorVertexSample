@@ -31,6 +31,7 @@
             this.btnWell = new System.Windows.Forms.Button();
             this.btnFormHexahedronGridder = new System.Windows.Forms.Button();
             this.btnFormPointSpriteFontElement = new System.Windows.Forms.Button();
+            this.btnFormPointSpriteGridderElement = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnWell
@@ -53,7 +54,7 @@
             this.btnFormHexahedronGridder.Name = "btnFormHexahedronGridder";
             this.btnFormHexahedronGridder.Size = new System.Drawing.Size(930, 23);
             this.btnFormHexahedronGridder.TabIndex = 0;
-            this.btnFormHexahedronGridder.Text = "FormHexahedronGridder";
+            this.btnFormHexahedronGridder.Text = "FormHexahedronGridderElement";
             this.btnFormHexahedronGridder.UseVisualStyleBackColor = true;
             this.btnFormHexahedronGridder.Click += new System.EventHandler(this.btnFormHexahedronGridder_Click);
             // 
@@ -61,7 +62,7 @@
             // 
             this.btnFormPointSpriteFontElement.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnFormPointSpriteFontElement.Location = new System.Drawing.Point(12, 70);
+            this.btnFormPointSpriteFontElement.Location = new System.Drawing.Point(12, 99);
             this.btnFormPointSpriteFontElement.Name = "btnFormPointSpriteFontElement";
             this.btnFormPointSpriteFontElement.Size = new System.Drawing.Size(930, 23);
             this.btnFormPointSpriteFontElement.TabIndex = 0;
@@ -69,12 +70,25 @@
             this.btnFormPointSpriteFontElement.UseVisualStyleBackColor = true;
             this.btnFormPointSpriteFontElement.Click += new System.EventHandler(this.btnFormPointSpriteFontElement_Click);
             // 
+            // button1
+            // 
+            this.btnFormPointSpriteGridderElement.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFormPointSpriteGridderElement.Location = new System.Drawing.Point(12, 70);
+            this.btnFormPointSpriteGridderElement.Name = "button1";
+            this.btnFormPointSpriteGridderElement.Size = new System.Drawing.Size(930, 23);
+            this.btnFormPointSpriteGridderElement.TabIndex = 0;
+            this.btnFormPointSpriteGridderElement.Text = "FormPointSpriteGridderElement";
+            this.btnFormPointSpriteGridderElement.UseVisualStyleBackColor = true;
+            this.btnFormPointSpriteGridderElement.Click += new System.EventHandler(this.btnFormPointSpriteGridderElement_Click);
+            // 
             // FormPortal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(954, 432);
             this.Controls.Add(this.btnFormPointSpriteFontElement);
+            this.Controls.Add(this.btnFormPointSpriteGridderElement);
             this.Controls.Add(this.btnFormHexahedronGridder);
             this.Controls.Add(this.btnWell);
             this.Name = "FormPortal";
@@ -88,5 +102,6 @@
         private System.Windows.Forms.Button btnWell;
         private System.Windows.Forms.Button btnFormHexahedronGridder;
         private System.Windows.Forms.Button btnFormPointSpriteFontElement;
+        private System.Windows.Forms.Button btnFormPointSpriteGridderElement;
     }
 }

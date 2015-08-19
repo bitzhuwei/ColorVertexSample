@@ -24,9 +24,9 @@ using SharpGL.SceneComponent.Model;
 
 namespace ColorVertexSample
 {
-    public partial class FormHexahedronGridder : Form
+    public partial class FormPointSpriteGridderElement : Form
     {
-        public FormHexahedronGridder()
+        public FormPointSpriteGridderElement()
         {
             InitializeComponent();
 
@@ -40,75 +40,6 @@ namespace ColorVertexSample
             IPickedGeometry picked = this.scientificVisual3DControl.PickedPrimitive;
             this.lblPickedPrimitive.Text = string.Format("Picked:{0}", picked);
             this.lblPickingInfo.Text = string.Format("Picked:{0}", picked);
-        }
-
-        private unsafe void DebugMesh(MeshGeometry mesh)
-        {
-             System.Console.WriteLine("---------Positions-----------------");
-             UnmanagedArray<Vertex> array = mesh.Vertexes;
-             for (int i = 0; i < array.Length; i++)
-             {
-                 Vertex v = array[i];
-                 System.Console.WriteLine(string.Format("({0},{1},{2})", v.X, v.Y, v.Z));
-             }
-             System.Console.WriteLine("---------Colors-----------------");
-             UnmanagedArray<ColorF> colors = mesh.VertexColors;
-             for (int i = 0; i < colors.Length; i++)
-             {
-                 ColorF c = colors[i];
-                 System.Console.WriteLine(string.Format("({0},{1},{2},{3})", c.R, c.G, c.B,c.A));
-             }
-             System.Console.WriteLine("---------visibles-----------------");
-             UnmanagedArray<float> visibles = mesh.Visibles;
-             for (int i = 0; i < visibles.Length; i++)
-             {
-                 float c = visibles[i];
-                 System.Console.WriteLine(string.Format("({0})", c));
-             }
-
-             System.Console.WriteLine("---------TriangleTrip-----------------");
-             UnmanagedArray<uint> triangles = mesh.StripTriangles;
-             for (int i = 0; i < triangles.Length; i++)
-             {
-                 uint t = triangles[i];
-                 System.Console.WriteLine(string.Format("({0})", t));
-             }
-
-
-        }
-        private void DebugMesh(PointSpriteMesh mesh)
-        {
-            System.Console.WriteLine("---------Positions-----------------");
-            UnmanagedArray<Vertex> array = mesh.PositionArray;
-            for (int i = 0; i < array.Length; i++)
-            {
-                Vertex v = array[i];
-                System.Console.WriteLine(string.Format("({0},{1},{2})", v.X, v.Y, v.Z));
-            }
-            System.Console.WriteLine("---------Colors-----------------");
-            UnmanagedArray<ColorF> colors = mesh.ColorArray;
-            for (int i = 0; i < colors.Length; i++)
-            {
-                ColorF c = colors[i];
-                System.Console.WriteLine(string.Format("({0},{1},{2},{3})", c.R, c.G, c.B, c.A));
-            }
-            System.Console.WriteLine("---------visibles-----------------");
-            UnmanagedArray<float> visibles = mesh.VisibleArray;
-            for (int i = 0; i < visibles.Length; i++)
-            {
-                float c = visibles[i];
-                System.Console.WriteLine(string.Format("({0})", c));
-            }
-
-            System.Console.WriteLine("---------TriangleTrip-----------------");
-            UnmanagedArray<float> triangles = mesh.RadiusArray;
-            for (int i = 0; i < triangles.Length; i++)
-            {
-                float t = triangles[i];
-                System.Console.WriteLine(string.Format("({0})", t));
-            }
-
-
         }
 
         private void InitilizeViewTypeControl()
@@ -139,8 +70,7 @@ namespace ColorVertexSample
                 float dy = System.Convert.ToSingle(this.gbDY.Text);
                 float dz = System.Convert.ToSingle(this.tbDZ.Text);
                 // use CatesianGridderSource to fill HexahedronGridderElement's content.
-                CatesianGridderSource source = new CatesianGridderSource() { NX = nx, NY = ny, NZ = nz, DX = dx, DY = dy, DZ = dz, };
-                //DemoPointSpriteGridderSource source = new DemoPointSpriteGridderSource() { NX = nx, NY = ny, NZ = nz, };
+                DemoPointSpriteGridderSource source = new DemoPointSpriteGridderSource() { NX = nx, NY = ny, NZ = nz, };
 
                 ///模拟获得网格属性
                 int minValue = 100;
@@ -158,28 +88,12 @@ namespace ColorVertexSample
                     colors[i] = (ColorF)this.scientificVisual3DControl.MapToColor(gridValues[i]);
                 }
 
-                // use HexahedronGridderElement
-                MeshGeometry mesh = HexahedronGridderHelper.CreateMesh(source);
-                mesh.VertexColors = HexahedronGridderHelper.FromColors(source, gridIndexes, colors, mesh.Visibles);
-                //this.DebugMesh(mesh);
+                // use PointSpriteGridderElement
+                PointSpriteMesh mesh = PointSpriteGridderElementHelper.CreateMesh(source);
+                mesh.ColorArray = PointSpriteGridderElementHelper.FromColors(source, gridIndexes, colors, mesh.VisibleArray);
 
-                HexahedronGridderElement gridderElement = new HexahedronGridderElement(source, this.scientificVisual3DControl.Scene.CurrentCamera);
-
-                //method1
-                //gridderElement.Initialize(this.scientificVisual3DControl.OpenGL);
-
-                //method2
+                PointSpriteGridderElement gridderElement = new PointSpriteGridderElement(source, this.scientificVisual3DControl.Scene.CurrentCamera);
                 gridderElement.Initialize(this.scientificVisual3DControl.OpenGL, mesh);
-
-                //gridderElement.SetBoundingBox(mesh.Min, mesh.Max);
-
-                //// use PointSpriteGridderElement
-                //PointSpriteMesh mesh = PointSpriteGridderElementHelper.CreateMesh(source);
-                //mesh.ColorArray = PointSpriteGridderElementHelper.FromColors(source, gridIndexes, colors, mesh.VisibleArray);
-
-                //PointSpriteGridderElement gridderElement = new PointSpriteGridderElement(source, this.scientificVisual3DControl.Scene.CurrentCamera);
-                //gridderElement.Initialize(this.scientificVisual3DControl.OpenGL, mesh);
-                ////DebugMesh(mesh);
 
                 //
                 gridderElement.Name = string.Format("element {0}", elementCounter++);
