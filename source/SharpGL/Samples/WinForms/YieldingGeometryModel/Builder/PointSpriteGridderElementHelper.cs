@@ -104,10 +104,10 @@ namespace YieldingGeometryModel.Builder
                     positions[cellOffset + 0] = position;
 
                     float visible = source.IsActiveBlock(i, j, k) == true ? 1.0f : 0;
-                    visibles[cellOffset + 0] = cellOffset % 2 == 0 ? 1 : 0;// visible;
+                    visibles[cellOffset + 0] = visible;
 
                     // TODO: 此处应由具体业务决定。
-                    radiusArray[cellOffset + 0] = random.Next(1, 20);
+                    radiusArray[cellOffset + 0] = source.GetRadius(i, j, k);
                 }
             }
 
@@ -115,10 +115,8 @@ namespace YieldingGeometryModel.Builder
             mesh.PositionArray = positions;
             mesh.VisibleArray = visibles;
             mesh.RadiusArray = radiusArray;
-
             mesh.Min = min;
             mesh.Max = max;
-
             return mesh;
         }
 
