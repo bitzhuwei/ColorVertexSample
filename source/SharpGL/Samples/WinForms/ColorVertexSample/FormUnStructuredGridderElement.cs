@@ -62,6 +62,8 @@ namespace ColorVertexSample
                 String borderTagsName = "ListCVBorder.txt";
                 String modelGrid = "Model.grid";
 
+                var startTime = DateTime.Now;
+
                 string gridPathFileName = Path.Combine(dataRoot, modelGrid);
 
                 string fractionTagPathFileName = Path.Combine(dataRoot, fractionTagsName);
@@ -104,6 +106,8 @@ namespace ColorVertexSample
                 // update ViewType to UserView.
                 this.scientificVisual3DControl.ViewType = ViewTypes.UserView;
 
+                var endTime = DateTime.Now;
+                var interval = endTime.Subtract(startTime);
             }
             catch (Exception error)
             {
