@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using YieldingGeometryModel.Builder;
 using YieldingGeometryModel.DataSource;
 
 namespace YieldingGeometryModel.loader
@@ -113,12 +114,16 @@ namespace YieldingGeometryModel.loader
 
 
 
-        private Vertex[] DoReadVertexes(StreamReader reader, int pointCount)
+        private Vertex[] DoReadVertexes(StreamReader reader, int pointCount,out Vertex min, out Vertex max)
         {
             Vertex[] points = new Vertex[pointCount];
             String data;
+            min = new Vertex() ;
+            max = new Vertex();
+            bool initFlag = false;
             for (int i = 0; i < pointCount; i++)
             {
+
                 data = this.ReadLine(reader);
                 if (data == null)
                     throw new Exception(String.Format("read Points unexpected end"));
@@ -129,6 +134,13 @@ namespace YieldingGeometryModel.loader
                 float y = Convert.ToSingle(values[1]);
                 float z = Convert.ToSingle(values[2]);
                 Vertex p = new Vertex(x, y, z);
+                if (!initFlag)
+                {
+                    min = p;
+                    max = p;
+                    initFlag = true;
+                }
+                VertexHelper.MinMax(p, ref min, ref max);
                 points[i] = p;
                 
             }
@@ -204,15 +216,17 @@ namespace YieldingGeometryModel.loader
             int pointsCount = Convert.ToInt32(headers[0]);
             int triangleCount = Convert.ToInt32(headers[1]);
             int tetraCount = Convert.ToInt32(headers[2]);
-
-            Vertex[] coords =  DoReadVertexes(reader, pointsCount);
+            Vertex min, max;
+            Vertex[] coords =  DoReadVertexes(reader, pointsCount,out min,out max);
             int[][] triangles = this.ReadTriangles(reader, triangleCount);
-            int[][] tetras = this.ReadTetrahedrons(reader, tetraCount);
+            int[][] tetras  = this.ReadTetrahedrons(reader, tetraCount);
 
             UnStructuredGridderSource gridder = new UnStructuredGridderSource();
             gridder.Coords = coords;
             gridder.Triangles = triangles;
             gridder.Tetras = tetras;
+            gridder.Min = min;
+            gridder.Max = max;
             return gridder;
         }
 
