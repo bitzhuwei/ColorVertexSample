@@ -29,20 +29,14 @@ namespace ColorVertexSample
 {
     public partial class FormUnStructuredGridderElement : Form
     {
+        private UnStructuredGridderElement element;
+
         public FormUnStructuredGridderElement()
         {
             InitializeComponent();
 
             InitilizeViewTypeControl();
 
-            Application.Idle += Application_Idle;
-        }
-
-        void Application_Idle(object sender, EventArgs e)
-        {
-            IPickedGeometry picked = this.scientificVisual3DControl.PickedPrimitive;
-            this.lblPickedPrimitive.Text = string.Format("Picked:{0}", picked);
-            this.lblPickingInfo.Text = string.Format("Picked:{0}", picked);
         }
 
         private void InitilizeViewTypeControl()
@@ -58,7 +52,6 @@ namespace ColorVertexSample
             }
         }
 
-        int elementCounter = 0;
         private void Create3DObject(object sender, EventArgs e)
         {
             try
@@ -82,8 +75,8 @@ namespace ColorVertexSample
                 DateTime stop = DateTime.Now;
                 double seconds = (stop.Ticks - start.Ticks) / 1000.0d;
 
-                UnStructuredGridderElement element = new UnStructuredGridderElement(source, this.scientificVisual3DControl.Scene.CurrentCamera);
-                element.Name = string.Format("element {0}", elementCounter++);
+                this.element = new UnStructuredGridderElement(source, this.scientificVisual3DControl.Scene.CurrentCamera) 
+                { Name = "UnStructuredGridderElement}" };
                 element.Initialize(this.scientificVisual3DControl.OpenGL);
 
                 ///模拟获得网格属性
@@ -118,43 +111,10 @@ namespace ColorVertexSample
             }
         }
 
-        private List<string> rangeMin = new List<string>() { "-1000", "1100", "3200" };
-        private List<string> rangeMax = new List<string>() { "1000", "3100", "5200" };
-        private List<string> stepList = new List<string>() { "110", "110", "100" };
-        private int testCaseIndex = 0;
-
-        /// <summary>
-        /// quick way to set min and max value.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void lblDebugInfo_Click(object sender, EventArgs e)
-        {
-            //this.tbRangeMax.Text = rangeMax[testCaseIndex];
-            //this.tbRangeMin.Text = rangeMin[testCaseIndex];
-            this.tbColorIndicatorStep.Text = stepList[testCaseIndex];
-            testCaseIndex = testCaseIndex >= rangeMin.Count - 1 ? 0 : testCaseIndex + 1;
-        }
 
         private void btnClearModels_Click(object sender, EventArgs e)
         {
             this.scientificVisual3DControl.ClearScientificModels();
-        }
-
-        private void lblDebugInfo_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (e.Button == System.Windows.Forms.MouseButtons.Right)
-            {
-                bool depthTest = this.scientificVisual3DControl.OpenGL.IsEnabled(OpenGL.GL_DEPTH_TEST);
-                StringBuilder builder = new StringBuilder();
-                builder.Append(string.Format("depth test: {0}", depthTest ? "enabled" : "disabled"));
-                MessageBox.Show(builder.ToString());
-            }
-        }
-
-        private void chkRenderContainerBox_CheckedChanged(object sender, EventArgs e)
-        {
-            this.scientificVisual3DControl.RenderBoundingBox = this.chkRenderContainerBox.Checked;
         }
 
         private void cmbViewType_SelectedIndexChanged(object sender, EventArgs e)
@@ -171,76 +131,24 @@ namespace ColorVertexSample
             this.scientificVisual3DControl.CameraType = cameraType;
         }
 
-        private void scientificVisual3DControl_KeyPress(object sender, KeyPressEventArgs e)
+        private void chkrenderFractions_CheckedChanged(object sender, EventArgs e)
         {
-            if (e.KeyChar == 'r')
-            {
-                // 随机显示某些hexahedron
-                foreach (var item in this.scientificVisual3DControl.ModelContainer.Children)
-                {
-                    {
-                        HexahedronGridderElement element = item as HexahedronGridderElement;
-                        if (element != null)
-                        {
-                            YieldingGeometryModel.Builder.HexahedronGridderElementHelper.RandomVisibility(element, this.scientificVisual3DControl.OpenGL, 0.2);
-                        }
-                    }
-                    {
-                        PointSpriteGridderElement element = item as PointSpriteGridderElement;
-                        if(element!=null)
-                        {
-                            YieldingGeometryModel.Builder.PointSpriteGridderElementHelper.RandomVisibility(element, this.scientificVisual3DControl.OpenGL, 0.2);
-                        }
-                    }
-                }
-
-                this.scientificVisual3DControl.Invalidate();
-            }
-
-
-            if(e.KeyChar == 'c')
-            {
-                OpenGL gl = this.scientificVisual3DControl.OpenGL;
-
-               List<HexahedronGridderElement> elements = this.scientificVisual3DControl.ModelContainer.Traverse<HexahedronGridderElement>().ToList<HexahedronGridderElement>();
-               if (elements.Count > 0)
-               {
-                   HexahedronGridderElement gridder = elements[0];
-                   HexahedronGridderSource  source = gridder.Source;
-                   UnmanagedArray<float> visibles = HexahedronGridderHelper.GridVisibleFromActive(source);
-
-                   //随机生成不完整网格的属性。
-                   int propCount = source.DimenSize / 2;
-                   if (propCount <= 0)
-                       return;
-
-                   int minValue = 5000;
-                   int maxValue = 10000;
-                   int[] gridIndexes;
-                   float[] gridValues;
-                   HexahedronGridderHelper.RandomValue(propCount, minValue, maxValue, out gridIndexes, out gridValues);
-                   float step = (maxValue - minValue) / 10.0f;
-                   this.scientificVisual3DControl.SetColorIndicator(minValue, maxValue, step);
-
-                   ColorF[] colors = new ColorF[propCount];
-                   for (int i = 0; i < colors.Length; i++)
-                   {
-                       colors[i] = (ColorF)this.scientificVisual3DControl.MapToColor(gridValues[i]);
-                   }
-
-                   UnmanagedArray<ColorF> colorArray = HexahedronGridderHelper.FromColors(source, gridIndexes, colors, visibles);
-                   gridder.UpdateColorBuffer(gl, colorArray, visibles);
-                   colorArray.Dispose();
-                   visibles.Dispose();
-                   this.scientificVisual3DControl.Invalidate();
-               }
-            }
+            this.element.renderFractions = chkrenderFractions.Checked;
         }
 
-        private void FormHexahedronGridder_Load(object sender, EventArgs e)
+        private void chkrenderFractionsWireframe_CheckedChanged(object sender, EventArgs e)
         {
-            string message = string.Format("{0}", "Add模型后，可通过'R'键观察随机隐藏hexahedron的情形。");
-            MessageBox.Show(message, "Tip", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+            this.element.renderFractionsWireframe = this.chkrenderFractionsWireframe.Checked;
+        }
+
+        private void chkrenderTetras_CheckedChanged(object sender, EventArgs e)
+        {
+            this.element.renderTetras = this.chkrenderTetras.Checked;
+        }
+
+        private void chkrenderTetrasWireframe_CheckedChanged(object sender, EventArgs e)
+        {
+            this.element.renderTetrasWireframe = this.chkrenderTetrasWireframe.Checked;
         }
 
     }
