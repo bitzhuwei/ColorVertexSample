@@ -24,15 +24,15 @@ namespace YieldingGeometryModel
     /// </summary>
     public partial class UnStructuredGridderElement : SharpGL.SceneGraph.Core.SceneElement, SharpGL.SceneGraph.Core.IRenderable
     {
-        private uint vertexArrayObject = 0;
+        private uint[] vertexArrayObject = new uint[2];
 
-        private uint positionBufferObject = 0;
+        private uint[] positionBufferObject = new uint[1];
 
-        private uint colorsBufferObject = 0;
+        private uint[] colorsBufferObject = new uint[1];
 
-        private uint fractionsIndexBuffer = 0;
+        //private uint fractionsIndexBuffer = 0;
 
-        private uint tetrasIndexBuffer = 0;
+        //private uint tetrasIndexBuffer = 0;
 
         protected ShaderProgram shaderProgram;
 

@@ -62,14 +62,14 @@ namespace YieldingGeometryModel
         {
             BeforeRendering(gl, renderMode);
 
-            gl.BindVertexArray(vertexArrayObject);
-
             //gl.MultiDrawArrays(OpenGL.GL_QUAD_STRIP, this.firsts, this.counts, this.firsts.Length);
-            if(this.renderFractions)
+            if (this.renderFractions)
             {
+                gl.BindVertexArray(vertexArrayObject[0]);
+
                 gl.DrawElements(OpenGL.GL_TRIANGLES, this.fractionsIndexCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
 
-                if(this.renderFractionsWireframe)
+                if (this.renderFractionsWireframe)
                 {
                     gl.PolygonMode(SharpGL.Enumerations.FaceMode.FrontAndBack, SharpGL.Enumerations.PolygonMode.Lines);
 
@@ -77,23 +77,28 @@ namespace YieldingGeometryModel
 
                     gl.PolygonMode(SharpGL.Enumerations.FaceMode.FrontAndBack, SharpGL.Enumerations.PolygonMode.Filled);
                 }
+
+                gl.BindVertexArray(0);
             }
 
-            //if(this.renderTetras)
-            //{
-            //    gl.DrawElements(OpenGL.GL_TRIANGLES, this.tetrasIndexCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
+            if (this.renderTetras)
+            {
+                gl.BindVertexArray(vertexArrayObject[1]);
 
-            //    if (this.renderTetrasWireframe)
-            //    {
-            //        gl.PolygonMode(SharpGL.Enumerations.FaceMode.FrontAndBack, SharpGL.Enumerations.PolygonMode.Lines);
+                gl.DrawElements(OpenGL.GL_TRIANGLES, this.tetrasIndexCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
 
-            //        gl.DrawElements(OpenGL.GL_TRIANGLES, this.tetrasIndexCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
+                if (this.renderTetrasWireframe)
+                {
+                    gl.PolygonMode(SharpGL.Enumerations.FaceMode.FrontAndBack, SharpGL.Enumerations.PolygonMode.Lines);
 
-            //        gl.PolygonMode(SharpGL.Enumerations.FaceMode.FrontAndBack, SharpGL.Enumerations.PolygonMode.Filled);
-            //    }
-            //}
+                    gl.DrawElements(OpenGL.GL_TRIANGLES, this.tetrasIndexCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
 
-            gl.BindVertexArray(0);
+                    gl.PolygonMode(SharpGL.Enumerations.FaceMode.FrontAndBack, SharpGL.Enumerations.PolygonMode.Filled);
+                }
+
+                gl.BindVertexArray(0);
+            }
+
 
             AfterRendering(gl, renderMode);
         }
