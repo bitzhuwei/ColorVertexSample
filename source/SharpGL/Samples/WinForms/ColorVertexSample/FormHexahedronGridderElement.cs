@@ -140,6 +140,11 @@ namespace ColorVertexSample
                 float dz = System.Convert.ToSingle(this.tbDZ.Text);
                 // use CatesianGridderSource to fill HexahedronGridderElement's content.
                 CatesianGridderSource source = new CatesianGridderSource() { NX = nx, NY = ny, NZ = nz, DX = dx, DY = dy, DZ = dz, };
+                source.IBlocks = GridBlockHelper.CreateBlockCoords(nx);
+                source.JBlocks = GridBlockHelper.CreateBlockCoords(ny);
+                source.KBlocks = GridBlockHelper.CreateBlockCoords(nz);
+
+
                 //DemoPointSpriteGridderSource source = new DemoPointSpriteGridderSource() { NX = nx, NY = ny, NZ = nz, };
 
                 ///模拟获得网格属性
