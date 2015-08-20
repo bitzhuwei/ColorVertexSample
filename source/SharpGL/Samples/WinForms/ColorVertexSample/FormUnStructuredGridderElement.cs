@@ -133,23 +133,36 @@ namespace ColorVertexSample
 
         private void chkrenderFractions_CheckedChanged(object sender, EventArgs e)
         {
-            this.element.renderFractions = chkrenderFractions.Checked;
+            if (this.element != null)
+            {
+                this.element.renderFractions = chkrenderFractions.Checked;
+                this.scientificVisual3DControl.Invalidate();
+            }
         }
 
         private void chkrenderFractionsWireframe_CheckedChanged(object sender, EventArgs e)
         {
-            this.element.renderFractionsWireframe = this.chkrenderFractionsWireframe.Checked;
+            if (this.element != null)
+            {
+                this.element.renderFractionsWireframe = this.chkrenderFractionsWireframe.Checked;
+                this.scientificVisual3DControl.Invalidate();
+            }
         }
-
         private void chkrenderTetras_CheckedChanged(object sender, EventArgs e)
         {
-            this.element.renderTetras = this.chkrenderTetras.Checked;
+            if (this.element != null)
+            {
+                this.element.renderTetras = this.chkrenderTetras.Checked;
+                this.scientificVisual3DControl.Invalidate();
+            }
         }
-
         private void chkrenderTetrasWireframe_CheckedChanged(object sender, EventArgs e)
         {
-            this.element.renderTetrasWireframe = this.chkrenderTetrasWireframe.Checked;
+            if (this.element != null)
+            {
+                this.element.renderTetrasWireframe = this.chkrenderTetrasWireframe.Checked;
+                this.scientificVisual3DControl.Invalidate();
+            }
         }
-
     }
 }

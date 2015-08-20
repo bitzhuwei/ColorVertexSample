@@ -170,9 +170,8 @@
             // 
             // chkrenderTetrasWireframe
             // 
+            this.chkrenderTetrasWireframe.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkrenderTetrasWireframe.AutoSize = true;
-            this.chkrenderTetrasWireframe.Checked = true;
-            this.chkrenderTetrasWireframe.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkrenderTetrasWireframe.Location = new System.Drawing.Point(779, 85);
             this.chkrenderTetrasWireframe.Margin = new System.Windows.Forms.Padding(4);
             this.chkrenderTetrasWireframe.Name = "chkrenderTetrasWireframe";
@@ -184,6 +183,7 @@
             // 
             // chkrenderTetras
             // 
+            this.chkrenderTetras.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkrenderTetras.AutoSize = true;
             this.chkrenderTetras.Checked = true;
             this.chkrenderTetras.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -198,9 +198,8 @@
             // 
             // chkrenderFractionsWireframe
             // 
+            this.chkrenderFractionsWireframe.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkrenderFractionsWireframe.AutoSize = true;
-            this.chkrenderFractionsWireframe.Checked = true;
-            this.chkrenderFractionsWireframe.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkrenderFractionsWireframe.Location = new System.Drawing.Point(779, 31);
             this.chkrenderFractionsWireframe.Margin = new System.Windows.Forms.Padding(4);
             this.chkrenderFractionsWireframe.Name = "chkrenderFractionsWireframe";
@@ -212,6 +211,7 @@
             // 
             // chkrenderFractions
             // 
+            this.chkrenderFractions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkrenderFractions.AutoSize = true;
             this.chkrenderFractions.Checked = true;
             this.chkrenderFractions.CheckState = System.Windows.Forms.CheckState.Checked;

@@ -218,15 +218,15 @@ namespace YieldingGeometryModel
             // coords positions
             {
                 gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, this.positionBufferObject[0]);
-                gl.VertexAttribPointer(in_PositionLocation, 3, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
-                gl.EnableVertexAttribArray(in_PositionLocation);
+                gl.VertexAttribPointer(this.in_PositionLocation, 3, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
+                gl.EnableVertexAttribArray(this.in_PositionLocation);
             }
 
             // coords colors
             {
                 gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, this.colorsBufferObject[0]);
-                gl.VertexAttribPointer(in_ColorLocation, 4, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
-                gl.EnableVertexAttribArray(in_ColorLocation);
+                gl.VertexAttribPointer(this.in_ColorLocation, 4, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
+                gl.EnableVertexAttribArray(this.in_ColorLocation);
             }
 
             // element array for tetras
@@ -244,15 +244,15 @@ namespace YieldingGeometryModel
             // coords positions
             {
                 gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, this.positionBufferObject[0]);
-                gl.VertexAttribPointer(in_PositionLocation, 3, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
-                gl.EnableVertexAttribArray(in_PositionLocation);
+                gl.VertexAttribPointer(this.in_PositionLocation, 3, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
+                gl.EnableVertexAttribArray(this.in_PositionLocation);
             }
 
             // coords colors
             {
                 gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, this.colorsBufferObject[0]);
-                gl.VertexAttribPointer(in_ColorLocation, 4, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
-                gl.EnableVertexAttribArray(in_ColorLocation);
+                gl.VertexAttribPointer(this.in_ColorLocation, 4, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
+                gl.EnableVertexAttribArray(this.in_ColorLocation);
             }
 
             // element array for fractions
