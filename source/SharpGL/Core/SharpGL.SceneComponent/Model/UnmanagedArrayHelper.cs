@@ -37,6 +37,13 @@ namespace SharpGL.SceneComponent
             return header;
         }
 
+        public static unsafe void* LastElement(this UnmanagedArrayBase array)
+        {
+            var last = (void*)(array.Header + (array.ByteLength - array.ByteLength / array.Length));
+
+            return last;
+        }
+
         /// <summary>
         /// 获取非托管数组的最后一个元素的地址再向后一个单位的地址。
         /// </summary>
@@ -44,31 +51,38 @@ namespace SharpGL.SceneComponent
         /// <returns></returns>
         public static unsafe void* TailAddress(this UnmanagedArrayBase array)
         {
-            var last = (void*)(array.Header + array.ByteLength);
+            var tail = (void*)(array.Header + array.ByteLength);
 
-            return last;
+            return tail;
         }
 
         public static void TypicalScene()
         {
-            int length = 100;
+            int length = 1000000;
             UnmanagedArray<int> array = new UnmanagedArray<int>(length);
             UnmanagedArray<int> array2 = new UnmanagedArray<int>(length);
+
+            long tick = DateTime.Now.Ticks;
             for (int i = 0; i < length; i++)
             {
                 array[i] = i;
             }
+            long totalTicks = DateTime.Now.Ticks - tick;
 
+            tick = DateTime.Now.Ticks;
             unsafe
             {
                 int* header = (int*)array2.FirstElement();
+                int* last = (int*)array2.LastElement();
                 int* tailAddress = (int*)array2.TailAddress();
                 int value = 0;
-                for (int* ptr = header; ptr < tailAddress; ptr++)
+                for (int* ptr = header; ptr <= last/*or: ptr < tailAddress*/; ptr++)
                 {
                     *ptr = value++;
                 }
             }
+            long totalTicks2 = DateTime.Now.Ticks - tick;
+            Console.WriteLine("ticks: {0}, {1}", totalTicks, totalTicks2);// unsafe method works faster.
 
             for (int i = 0; i < length; i++)
             {
@@ -81,6 +95,9 @@ namespace SharpGL.SceneComponent
                     Console.WriteLine("something wrong here");
                 }
             }
+
+            array.Dispose();
+            array2.Dispose();
         }
     }
 }

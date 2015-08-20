@@ -45,7 +45,8 @@ namespace YieldingGeometryModel
             var fractions = this.source.Fractions;
             UnmanagedArray<uint> indexArray = new UnmanagedArray<uint>(fractions.Length * 3);
             uint* header = (uint*)indexArray.FirstElement();
-            uint* tail = (uint*)indexArray.TailAddress();
+            //uint* last = (uint*)indexArray.LastElement();
+            //uint* tail = (uint*)indexArray.TailAddress();
 
             int index = 0;
             for (int i = 0; i < fractions.Length; i++)
@@ -79,6 +80,7 @@ namespace YieldingGeometryModel
             var tetras = this.source.Tetras;
             UnmanagedArray<uint> indexArray = new UnmanagedArray<uint>(tetras.Length * 4 * 3);
             uint* header = (uint*)indexArray.FirstElement();
+            uint* last = (uint*)indexArray.LastElement();
             uint* tail = (uint*)indexArray.TailAddress();
 
             //int index = 0;
@@ -100,7 +102,7 @@ namespace YieldingGeometryModel
                     var triangle = triangles[faceIndex];
                     int tmp = tetraIndex * 12 + j * 3;
  
-                    if (header + tmp + 2 < tail)
+                    if (header + tmp + 2 < tail)//or: if (header + tmp + 2 <= last)
                     {
                         //indexArray[tmp + 0] = (uint)triangle[0];
                         //indexArray[tmp + 1] = (uint)triangle[1];
@@ -142,7 +144,8 @@ namespace YieldingGeometryModel
             // random color for now
             UnmanagedArray<vec4> colorArray = new UnmanagedArray<vec4>(coords.Length);
             vec4* header = (vec4*)colorArray.FirstElement();
-            vec4* tail = (vec4*)colorArray.TailAddress();
+            //uint* last = (uint*)colorArray.LastElement();
+            //uint* tail = (uint*)colorArray.TailAddress();
 
             // 根据 每个fraction的三个顶点颜色相同 进行配色
             {
@@ -218,7 +221,8 @@ namespace YieldingGeometryModel
             // coords positions
             UnmanagedArray<vec3> positionArray = new UnmanagedArray<vec3>(coords.Length);
             vec3* header = (vec3*)positionArray.FirstElement();
-            vec3* tail = (vec3*)positionArray.TailAddress();
+            //uint* last = (uint*)positionArray.LastElement();
+            //uint* tail = (uint*)positionArray.TailAddress();
 
             for (int i = 0; i < this.source.Coords.Length; i++)
             {
