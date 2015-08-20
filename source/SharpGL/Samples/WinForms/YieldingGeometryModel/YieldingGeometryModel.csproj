@@ -44,11 +44,13 @@
     <Compile Include="Builder\VertexHelper.cs" />
     <Compile Include="Builder\HexahedronGridderBuilder.cs" />
     <Compile Include="DataSource\PointSetGridderSource.cs" />
+    <Compile Include="DataSource\UnStructuredGridderSource.cs" />
     <Compile Include="FontResources\CharacterInfo.cs" />
     <Compile Include="FontResources\CharacterInfoDictHelper.cs" />
     <Compile Include="FontResources\CharacterInfoHelper.cs" />
     <Compile Include="FontResources\FontResource.cs" />
     <Compile Include="FontResources\KeyValuePairHelper.cs" />
+    <Compile Include="loader\UnstructureGeometryLoader.cs" />
     <Compile Include="PointSpriteStringElement_InitTexture.cs" />
     <Compile Include="PointSpriteStringElement.cs" />
     <Compile Include="PointSpriteStringElement_IBoundingBox.cs" />
@@ -128,6 +130,7 @@
     <EmbeddedResource Include="PointSpriteStringElement.frag" />
     <EmbeddedResource Include="PointSpriteStringElement.vert" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
