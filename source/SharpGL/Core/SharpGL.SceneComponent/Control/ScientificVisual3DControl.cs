@@ -350,7 +350,8 @@ namespace SharpGL.SceneComponent
                 } 
                 //// force CameraRotation to udpate.
                 //this.CameraRotation.Camera = this.Scene.CurrentCamera;
-                ManualRender(this);
+                this.Invalidate();
+                //ManualRender(this);
             }
         }
 

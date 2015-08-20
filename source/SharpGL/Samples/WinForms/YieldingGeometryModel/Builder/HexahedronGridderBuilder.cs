@@ -131,6 +131,14 @@ namespace YieldingGeometryModel.Builder
             }
         }
 
+        /// <summary>
+        /// visibles 如果属性无颜色，修改为不可见
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="gridIndexes"></param>
+        /// <param name="colors"></param>
+        /// <param name="visibles"></param>
+        /// <returns></returns>
         public static UnmanagedArray<ColorF> FromColors(HexahedronGridderSource source, int[] gridIndexes, ColorF[] colors, UnmanagedArray<float> visibles)
         {
             UnmanagedArray<ColorF> colorArray = new UnmanagedArray<ColorF>(source.DimenSize * HEXAHEDRON_VERTEX_COUNT);
@@ -171,7 +179,9 @@ namespace YieldingGeometryModel.Builder
                 {
                     int cellOffset = gridIndex * HEXAHEDRON_VERTEX_COUNT;
                     source.InvertIJK(gridIndex, out i, out j, out k);
-                    if (hasColorArray[gridIndex] == 0 || !source.IsActiveBlock(i, j, k))
+
+                    //无颜色，不可见
+                    if (hasColorArray[gridIndex] == 0)
                     {
                         visibles[cellOffset + 0] = 0;
                         visibles[cellOffset + 1] = 0;
@@ -198,6 +208,12 @@ namespace YieldingGeometryModel.Builder
             return colorArray;
         }
 
+
+        /// <summary>
+        /// 确定网格几何可见，几何不可见
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
         public static UnmanagedArray<float> GridVisibleFromActive(HexahedronGridderSource source)
         {
             UnmanagedArray<float> visibles = new UnmanagedArray<float>(source.DimenSize * HEXAHEDRON_VERTEX_COUNT);
@@ -208,6 +224,10 @@ namespace YieldingGeometryModel.Builder
                 {
                     source.InvertIJK(gridIndex, out i, out j, out k);
                     int visible = source.IsActiveBlock(i, j, k) == true ? 1 : 0;
+                    if (visible > 0)
+                    {
+                        visible = source.IsSliceBlock(i, j, k) == true ? 1 : 0;
+                    }
                     int offset = gridIndex * HEXAHEDRON_VERTEX_COUNT;
                     visibles[offset + 0] = visible;
                     visibles[offset + 1] = visible;
@@ -229,6 +249,8 @@ namespace YieldingGeometryModel.Builder
             }
             return visibles;
         }
+
+        
 
 
 
@@ -303,6 +325,12 @@ namespace YieldingGeometryModel.Builder
                     vertexes[cellOffset + 15] = p7;
 
                     float visible = source.IsActiveBlock(i, j, k) == true ? 1.0f : 0;
+                    if (visible > 0)
+                    {
+                        visible =source.IsSliceBlock(i, j, k) == true ? 1.0f : 0;
+                    }
+
+                    
                     visibles[cellOffset + 0] = visible;
                     visibles[cellOffset + 1] = visible;
                     visibles[cellOffset + 2] = visible;
