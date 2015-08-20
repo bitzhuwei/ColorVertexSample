@@ -84,6 +84,7 @@
     <Compile Include="Camera\CameraHelper.cs" />
     <Compile Include="Model\IBoundingBoxHelper.cs" />
     <Compile Include="Model\IMesh.cs" />
+    <Compile Include="Model\UnmanagedArrayHelper.cs" />
     <Compile Include="Model\VAOElement.cs" />
     <Compile Include="Model\IndexedVAOElement.cs" />
     <Compile Include="Model\ModelContainer.cs" />

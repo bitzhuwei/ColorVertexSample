@@ -40,17 +40,23 @@ namespace YieldingGeometryModel
 
         }
 
-        private void PrepareFractionsIndexBufferObject(OpenGL gl)
+        private unsafe void PrepareFractionsIndexBufferObject(OpenGL gl)
         {
             var fractions = this.source.Fractions;
             UnmanagedArray<uint> indexArray = new UnmanagedArray<uint>(fractions.Length * 3);
+            uint* header = (uint*)indexArray.FirstElement();
+            uint* tail = (uint*)indexArray.TailAddress();
+
             int index = 0;
             for (int i = 0; i < fractions.Length; i++)
             {
                 var triangleIndexes = fractions[i];
-                indexArray[index++] = (uint)triangleIndexes[0];
-                indexArray[index++] = (uint)triangleIndexes[1];
-                indexArray[index++] = (uint)triangleIndexes[2];
+                //indexArray[index++] = (uint)triangleIndexes[0];
+                //indexArray[index++] = (uint)triangleIndexes[1];
+                //indexArray[index++] = (uint)triangleIndexes[2];
+                *(header + index++) = (uint)triangleIndexes[0];
+                *(header + index++) = (uint)triangleIndexes[1];
+                *(header + index++) = (uint)triangleIndexes[2];
                 if (triangleIndexes[3] == -1)
                 {
                     Console.WriteLine("something wrong in your mind");
@@ -66,14 +72,18 @@ namespace YieldingGeometryModel
             indexArray.Dispose();
         }
 
-        private void PrepareTetrasIndexBufferObject(OpenGL gl)
+        private unsafe void PrepareTetrasIndexBufferObject(OpenGL gl)
         {
             //List<int> tetraIndexes = new List<int>();
             var triangles = this.source.Triangles;
             var tetras = this.source.Tetras;
             UnmanagedArray<uint> indexArray = new UnmanagedArray<uint>(tetras.Length * 4 * 3);
+            uint* header = (uint*)indexArray.FirstElement();
+            uint* tail = (uint*)indexArray.TailAddress();
+
             //int index = 0;
-            for (int i = 0; i < tetras.Length; i++)
+            int length = tetras.Length;
+            for (int i = 0; i < length; i++)
             {
                 var tetra = tetras[i];
                 var tetraIndex = tetra[4];
@@ -82,26 +92,31 @@ namespace YieldingGeometryModel
                 {
                     var faceIndex = tetra[j];
 
-                    if (faceIndex >= triangles.Length)
+                    //if (faceIndex >= triangles.Length)
                     {
-                        Console.WriteLine("something wrong in your mind");
+                        //Console.WriteLine("something wrong in your mind");
                     }
 
                     var triangle = triangles[faceIndex];
-                    //indexArray[index++] = (uint)triangle[0];
-                    //indexArray[index++] = (uint)triangle[1];
-                    //indexArray[index++] = (uint)triangle[2];
-                    indexArray[tetraIndex * 12 + j * 3 + 0] = (uint)triangle[0];
-                    indexArray[tetraIndex * 12 + j * 3 + 1] = (uint)triangle[1];
-                    indexArray[tetraIndex * 12 + j * 3 + 2] = (uint)triangle[2];
-
-                    if (tetraIndex * 12 + j * 3 + 2 >= indexArray.Length)
+                    int tmp = tetraIndex * 12 + j * 3;
+ 
+                    if (header + tmp + 2 < tail)
                     {
-                        Console.WriteLine("something wrong in your mind");
+                        //indexArray[tmp + 0] = (uint)triangle[0];
+                        //indexArray[tmp + 1] = (uint)triangle[1];
+                        //indexArray[tmp + 2] = (uint)triangle[2];
+                        *(header + tmp + 0) = (uint)triangle[0];
+                        *(header + tmp + 1) = (uint)triangle[1];
+                        *(header + tmp + 2) = (uint)triangle[2];
                     }
-                    if (triangle[3] == -1)
+
+                    //if (tetraIndex * 12 + j * 3 + 2 >= indexArray.Length)
                     {
-                        Console.WriteLine("something wrong in your mind");
+                        //Console.WriteLine("something wrong in your mind");
+                    }
+                    //if (triangle[3] == -1)
+                    {
+                        //Console.WriteLine("something wrong in your mind");
                     }
                 }
             }
@@ -120,12 +135,14 @@ namespace YieldingGeometryModel
             indexArray.Dispose();
         }
 
-        private void PrepareColorBufferObject(OpenGL gl)
+        private unsafe void PrepareColorBufferObject(OpenGL gl)
         {
             var coords = this.source.Coords;
             // coords colors
             // random color for now
             UnmanagedArray<vec4> colorArray = new UnmanagedArray<vec4>(coords.Length);
+            vec4* header = (vec4*)colorArray.FirstElement();
+            vec4* tail = (vec4*)colorArray.TailAddress();
 
             // 根据 每个fraction的三个顶点颜色相同 进行配色
             {
@@ -176,9 +193,12 @@ namespace YieldingGeometryModel
                         }
 
                         var triangle = triangles[faceIndex];
-                        colorArray[triangle[0]] = color;
-                        colorArray[triangle[1]] = color;
-                        colorArray[triangle[2]] = color;
+                        //colorArray[triangle[0]] = color;
+                        //colorArray[triangle[1]] = color;
+                        //colorArray[triangle[2]] = color;
+                        *(header + triangle[0]) = color;
+                        *(header + triangle[1]) = color;
+                        *(header + triangle[2]) = color;
                     }
                 }
             }
@@ -191,16 +211,20 @@ namespace YieldingGeometryModel
             colorArray.Dispose();
         }
 
-        private Vertex[] PreparePositionBufferObject(OpenGL gl)
+        private unsafe Vertex[] PreparePositionBufferObject(OpenGL gl)
         {
             var coords = this.source.Coords;
 
             // coords positions
             UnmanagedArray<vec3> positionArray = new UnmanagedArray<vec3>(coords.Length);
+            vec3* header = (vec3*)positionArray.FirstElement();
+            vec3* tail = (vec3*)positionArray.TailAddress();
+
             for (int i = 0; i < this.source.Coords.Length; i++)
             {
                 Vertex v = coords[i];
-                positionArray[i] = new vec3(v.X, v.Y, v.Z);
+                //positionArray[i] = new vec3(v.X, v.Y, v.Z);
+                *(header + i) = new vec3(v.X, v.Y, v.Z);
             }
             {
                 gl.GenBuffers(1, this.positionBufferObject);
