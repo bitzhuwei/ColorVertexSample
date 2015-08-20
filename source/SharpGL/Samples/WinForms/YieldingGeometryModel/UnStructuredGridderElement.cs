@@ -30,7 +30,8 @@ namespace YieldingGeometryModel
 
         private uint[] colorsBufferObject = new uint[1];
 
-        //private uint fractionsIndexBuffer = 0;
+        private uint[] fractionsIndexBufferObjects = new uint[1];
+        private uint[] tetrasIndexBufferObjects = new uint[1];
 
         //private uint tetrasIndexBuffer = 0;
 
