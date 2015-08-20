@@ -59,6 +59,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormPointSpriteGridderElement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPointSpriteGridderElement.Designer.cs">
+      <DependentUpon>FormPointSpriteGridderElement.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormMySceneControlDemo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -83,11 +89,11 @@
     <Compile Include="FormSceneControlDemo.Designer.cs">
       <DependentUpon>FormSceneControlDemo.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormHexahedronGridder.cs">
+    <Compile Include="FormHexahedronGridderElement.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormHexahedronGridder.Designer.cs">
-      <DependentUpon>FormHexahedronGridder.cs</DependentUpon>
+    <Compile Include="FormHexahedronGridderElement.Designer.cs">
+      <DependentUpon>FormHexahedronGridderElement.cs</DependentUpon>
     </Compile>
     <Compile Include="FormScientificVisual3DControl.cs">
       <SubType>Form</SubType>
@@ -104,6 +110,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VertexHelper.cs" />
+    <EmbeddedResource Include="FormPointSpriteGridderElement.resx">
+      <DependentUpon>FormPointSpriteGridderElement.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormMySceneControlDemo.resx">
       <DependentUpon>FormMySceneControlDemo.cs</DependentUpon>
     </EmbeddedResource>
@@ -116,8 +125,8 @@
     <EmbeddedResource Include="FormSceneControlDemo.resx">
       <DependentUpon>FormSceneControlDemo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormHexahedronGridder.resx">
-      <DependentUpon>FormHexahedronGridder.cs</DependentUpon>
+    <EmbeddedResource Include="FormHexahedronGridderElement.resx">
+      <DependentUpon>FormHexahedronGridderElement.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormScientificVisual3DControl.resx">
       <DependentUpon>FormScientificVisual3DControl.cs</DependentUpon>

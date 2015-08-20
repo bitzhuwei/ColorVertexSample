@@ -1,6 +1,6 @@
 ﻿namespace ColorVertexSample
 {
-    partial class FormHexahedronGridder
+    partial class FormHexahedronGridderElement
     {
         /// <summary>
         /// Required designer variable.
