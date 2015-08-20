@@ -15,13 +15,13 @@ using YieldingGeometryModel.Builder;
 
 namespace ColorVertexSample
 {
-    public partial class FormPointSpriteFontElement : Form
+    public partial class FormPointSpriteStringElement : Form
     {
-        public FormPointSpriteFontElement()
+        public FormPointSpriteStringElement()
         {
             InitializeComponent();
 
-            this.Load += FormPointSpriteFontElement_Load;
+            this.Load += FormPointSpriteStringElement_Load;
             this.openGLControl.MouseWheel += openGLControl_MouseWheel;
         }
 
@@ -35,7 +35,7 @@ namespace ColorVertexSample
         private SharpGL.SceneComponent.ScientificCamera camera;
         private PointSpriteStringElement fontElement;
 
-        private void FormPointSpriteFontElement_Load(object sender, EventArgs e)
+        private void FormPointSpriteStringElement_Load(object sender, EventArgs e)
         {
             this.camera = new ScientificCamera(CameraTypes.Perspecitive);
             this.rotator = new SatelliteRotation(this.camera);

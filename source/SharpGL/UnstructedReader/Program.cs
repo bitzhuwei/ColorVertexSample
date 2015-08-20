@@ -13,7 +13,7 @@ namespace UnstructedReader
     {
         static void Main(string[] args)
         {
-            String dataRoot = @"C:\simprojs\test2\Case15";
+            String dataRoot = @".";
             String fractionTagsName = "ListCVFracture.txt";
             String borderTagsName = "ListCVBorder.txt";
             String modelGrid = "Model.grid";

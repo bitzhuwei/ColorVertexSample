@@ -59,6 +59,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormUnStructuredGridderElement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormUnStructuredGridderElement.Designer.cs">
+      <DependentUpon>FormUnStructuredGridderElement.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormPointSpriteGridderElement.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,11 +77,11 @@
     <Compile Include="FormMySceneControlDemo.Designer.cs">
       <DependentUpon>FormMySceneControlDemo.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormPointSpriteFontElement.cs">
+    <Compile Include="FormPointSpriteStringElement.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormPointSpriteFontElement.Designer.cs">
-      <DependentUpon>FormPointSpriteFontElement.cs</DependentUpon>
+    <Compile Include="FormPointSpriteStringElement.Designer.cs">
+      <DependentUpon>FormPointSpriteStringElement.cs</DependentUpon>
     </Compile>
     <Compile Include="FormPortal.cs">
       <SubType>Form</SubType>
@@ -111,14 +117,17 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VertexHelper.cs" />
+    <EmbeddedResource Include="FormUnStructuredGridderElement.resx">
+      <DependentUpon>FormUnStructuredGridderElement.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormPointSpriteGridderElement.resx">
       <DependentUpon>FormPointSpriteGridderElement.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMySceneControlDemo.resx">
       <DependentUpon>FormMySceneControlDemo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormPointSpriteFontElement.resx">
-      <DependentUpon>FormPointSpriteFontElement.cs</DependentUpon>
+    <EmbeddedResource Include="FormPointSpriteStringElement.resx">
+      <DependentUpon>FormPointSpriteStringElement.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormPortal.resx">
       <DependentUpon>FormPortal.cs</DependentUpon>

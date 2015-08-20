@@ -57,6 +57,21 @@
     <Compile Include="PointSpriteStringElement_InitShader.cs" />
     <Compile Include="PointSpriteStringElement_InitVertexArrayBufferObject.cs" />
     <Compile Include="PointSpriteStringElement_Render.cs" />
+    <Compile Include="UnStructuredGridderElement.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UnStructuredGridderElement_IBoundingBox.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UnStructuredGridderElement_InitShader.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UnStructuredGridderElement_InitVertexArrayBufferObject.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UnStructuredGridderElement_Render.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Well.cs" />
     <Compile Include="WellPipe.cs" />
     <EmbeddedResource Include="HexahedronGridder.frag" />
@@ -130,7 +145,10 @@
     <EmbeddedResource Include="PointSpriteStringElement.frag" />
     <EmbeddedResource Include="PointSpriteStringElement.vert" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="UnStructuredGridderElement.frag" />
+    <EmbeddedResource Include="UnStructuredGridderElement.vert" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

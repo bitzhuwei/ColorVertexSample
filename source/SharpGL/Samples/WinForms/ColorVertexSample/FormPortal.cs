@@ -27,14 +27,19 @@ namespace ColorVertexSample
             (new FormHexahedronGridderElement()).Show();
         }
 
-        private void btnFormPointSpriteFontElement_Click(object sender, EventArgs e)
+        private void btnFormPointSpriteStringElement_Click(object sender, EventArgs e)
         {
-            (new FormPointSpriteFontElement()).Show();
+            (new FormPointSpriteStringElement()).Show();
         }
 
         private void btnFormPointSpriteGridderElement_Click(object sender, EventArgs e)
         {
             (new FormPointSpriteGridderElement()).Show();
+        }
+
+        private void btnFormUnStructuredGridderElement_Click(object sender, EventArgs e)
+        {
+            (new FormUnStructuredGridderElement()).Show();
         }
     }
 }
