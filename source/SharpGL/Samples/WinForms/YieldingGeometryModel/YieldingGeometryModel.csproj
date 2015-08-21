@@ -121,11 +121,8 @@
     <EmbeddedResource Include="HexahedronGridder2.vert" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="PointSprite.frag" />
-    <EmbeddedResource Include="PointSprite.vert" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="PointSprite.png" />
+    <EmbeddedResource Include="PointSpriteGridderElement.frag" />
+    <EmbeddedResource Include="PointSpriteGridderElement.vert" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="CylinderElement.frag" />

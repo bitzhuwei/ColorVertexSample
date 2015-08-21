@@ -24,14 +24,9 @@ namespace YieldingGeometryModel
         protected override void InitShader(SharpGL.OpenGL gl, out SharpGL.Shaders.ShaderProgram shader)
         {
             {
-                Bitmap bmp = ManifestResourceLoader.LoadBitmap("PointSprite.png");
-                this.texture = new Texture();
-                this.texture.Create(gl, bmp);
-                bmp.Dispose();
-
                 //  Create the shader program.
-                var vertexShaderSource = ManifestResourceLoader.LoadTextFile(@"PointSprite.vert");
-                var fragmentShaderSource = ManifestResourceLoader.LoadTextFile(@"PointSprite.frag");
+                var vertexShaderSource = ManifestResourceLoader.LoadTextFile(@"PointSpriteGridderElement.vert");
+                var fragmentShaderSource = ManifestResourceLoader.LoadTextFile(@"PointSpriteGridderElement.frag");
                 var shaderProgram = new ShaderProgram();
                 shaderProgram.Create(gl, vertexShaderSource, fragmentShaderSource, null);
                 int position = shaderProgram.GetAttributeLocation(gl, "in_Position");
