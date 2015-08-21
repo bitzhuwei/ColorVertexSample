@@ -25,7 +25,9 @@ void main(void) {
 		// remove this discard thing if you want to have a quad instead of a sphere
 		if (length(pointCoord - vec2(0.5, 0.5)) > 0.3)
 		{ discard; }
-		out_Color = texture(tex, pointCoord);
+		//out_Color = texture(tex, pointCoord);
+		vec4 textureColor = texture(tex, pointCoord);
+		out_Color = textureColor * pass_Color;
 	}
 	else
 	{
