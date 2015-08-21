@@ -62,14 +62,20 @@ namespace YieldingGeometryModel
         {
             BeforeRendering(gl, renderMode);
 
+
             //gl.MultiDrawArrays(OpenGL.GL_QUAD_STRIP, this.firsts, this.counts, this.firsts.Length);
             if (this.renderFractions)
             {
+                gl.Enable(OpenGL.GL_POLYGON_OFFSET_FILL);
+                gl.PolygonOffset(1.0f, 1.0f);
+
                 gl.BindVertexArray(vertexArrayObject[0]);
 
                 gl.DrawElements(OpenGL.GL_TRIANGLES, this.fractionsIndexCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
 
                 gl.BindVertexArray(0);
+
+                gl.Disable(OpenGL.GL_POLYGON_OFFSET_FILL);
             }
 
             if (this.renderFractionsWireframe)
@@ -92,11 +98,16 @@ namespace YieldingGeometryModel
 
             if (this.renderTetras)
             {
+                gl.Enable(OpenGL.GL_POLYGON_OFFSET_FILL);
+                gl.PolygonOffset(1.0f, 1.0f);
+
                 gl.BindVertexArray(vertexArrayObject[1]);
 
                 gl.DrawElements(OpenGL.GL_TRIANGLES, this.tetrasIndexCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
 
                 gl.BindVertexArray(0);
+
+                gl.Disable(OpenGL.GL_POLYGON_OFFSET_FILL);
             }
 
             if (this.renderTetrasWireframe)
