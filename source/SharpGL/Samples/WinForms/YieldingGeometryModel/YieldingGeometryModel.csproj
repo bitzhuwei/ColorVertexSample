@@ -57,6 +57,8 @@
     <Compile Include="PointSpriteStringElement_InitShader.cs" />
     <Compile Include="PointSpriteStringElement_InitVertexArrayBufferObject.cs" />
     <Compile Include="PointSpriteStringElement_Render.cs" />
+    <Compile Include="UnStructuredGridderElement_InitTexture.cs" />
+    <Compile Include="UnStructuredGridderElement_Update.cs" />
     <Compile Include="UnStructuredGridderElement.cs">
       <SubType>Code</SubType>
     </Compile>

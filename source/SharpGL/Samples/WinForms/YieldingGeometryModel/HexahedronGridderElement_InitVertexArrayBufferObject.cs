@@ -41,15 +41,15 @@ namespace YieldingGeometryModel
             this.vertexCount = vertexes.Length;
             this.firsts = new int[vertexes.Length / 8];
             this.counts = new int[vertexes.Length / 8];
-            //for (int i = 0; i < this.firsts.Length; i++)
-            //{
-            //    firsts[i] = i * 8;
-            //    if (firsts[i] > this.vertexCount)
-            //    {
-            //        Console.WriteLine("adsf");
-            //    }
-            //    this.counts[i] = 8;
-            //}
+            for (int i = 0; i < this.firsts.Length; i++)
+            {
+                firsts[i] = i * 8;
+                //if (firsts[i] > this.vertexCount)
+                //{
+                //    Console.WriteLine("adsf");
+                //}
+                this.counts[i] = 8;
+            }
 
             uint[] vboColor = new uint[1];
             gl.GenBuffers(vboColor.Length, vboColor);

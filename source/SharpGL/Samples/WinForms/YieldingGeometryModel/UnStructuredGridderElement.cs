@@ -64,6 +64,7 @@ namespace YieldingGeometryModel
 
         public void Initialize(OpenGL gl)
         {
+            this.InitTexture(gl);
             this.shaderProgram = this.CreateShaderProgram(gl);
             this.InitVAO(gl);
 
