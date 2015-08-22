@@ -102,7 +102,7 @@ namespace YieldingGeometryModel
         //            //radiusArray[i] = (float)random.NextDouble()*100;
         //            radiusArray[i] = this.textureWidth / 10.0f; //100;
         //        }
-                     
+
         //        uint[] ids = new uint[1];
         //        gl.GenBuffers(1, ids);
         //        gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, ids[0]);
@@ -126,8 +126,8 @@ namespace YieldingGeometryModel
             gl.BindVertexArray(vao[0]);
 
             //primitiveCount = mesh.PositionArray.Length;
-            primitiveCount = 1000;
             int count = 1;
+            primitiveCount = count * count * count;
             //  Create a vertex buffer for the vertex data.
             {
                 UnmanagedArray<vec3> positionArray = new UnmanagedArray<vec3>(count * count * count);
