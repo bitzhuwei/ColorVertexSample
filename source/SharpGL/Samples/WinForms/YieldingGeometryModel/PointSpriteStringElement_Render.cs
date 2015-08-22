@@ -53,7 +53,7 @@ namespace YieldingGeometryModel
 
 
             //this.texture.Bind(gl);
-            gl.BindTexture(OpenGL.GL_TEXTURE_2D, this.texture[0]);
+            //gl.BindTexture(OpenGL.GL_TEXTURE_2D, this.texture[0]);
 
             int[] viewport = new int[4];
             gl.GetInteger(OpenGL.GL_VIEWPORT, viewport);
