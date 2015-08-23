@@ -1,9 +1,6 @@
 #version 150 core
 
 in vec4 pass_Color;
-in float pass_visible;
-in vec2 pass_position;
-in float pass_pointSize;
 out vec4 out_Color;
 
 uniform sampler2D tex;
