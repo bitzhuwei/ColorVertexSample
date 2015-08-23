@@ -52,7 +52,6 @@ namespace YieldingGeometryModel
             gl.BlendFuncSeparate(OpenGL.GL_SRC_ALPHA, OpenGL.GL_ONE_MINUS_SRC_ALPHA, OpenGL.GL_ONE, OpenGL.GL_ONE);
 
 
-            //this.texture.Bind(gl);
             gl.BindTexture(OpenGL.GL_TEXTURE_2D, this.texture[0]);
 
             int[] viewport = new int[4];
@@ -61,7 +60,7 @@ namespace YieldingGeometryModel
             ShaderProgram shader = this.shaderProgram;
 
             shader.Bind(gl);
-            shader.SetUniform1(gl, "tex", this.texture[0]);//.TextureName);
+            shader.SetUniform1(gl, "tex", this.texture[0]);
             shader.SetUniformMatrix4(gl, "projectionMatrix", projectionMatrix.to_array());
             shader.SetUniformMatrix4(gl, "viewMatrix", viewMatrix.to_array());
             shader.SetUniformMatrix4(gl, "modelMatrix", modelMatrix.to_array());
