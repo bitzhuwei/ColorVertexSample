@@ -22,16 +22,17 @@ namespace YieldingGeometryModel
         /// 蛇形管道（井）+文字显示
         /// </summary>
         /// <param name="pipe"></param>
-        /// <param name="radius"></param>
-        /// <param name="color"></param>
+        /// <param name="pipeRadius"></param>
+        /// <param name="pipeColor"></param>
         /// <param name="name"></param>
         /// <param name="position"></param>
         /// <param name="camera"></param>
-        public Well(List<Vertex> pipe, float radius, GLColor color, String name, Vertex position, IScientificCamera camera)
+        public Well(IScientificCamera camera, List<Vertex> pipe, float pipeRadius, GLColor pipeColor, String name, Vertex position,
+            GLColor textColor = null, int fontSize = 32, int maxRowWidth = 256)
         {
-            this.wellPipeElement = new WellPipe(pipe, radius, color, camera);
+            this.wellPipeElement = new WellPipe(pipe, pipeRadius, pipeColor, camera);
 
-            this.textElement = new PointSpriteStringElement(camera, name, position);
+            this.textElement = new PointSpriteStringElement(camera, name, position, textColor, fontSize, maxRowWidth);
         }
 
         public void Initialize(OpenGL gl)

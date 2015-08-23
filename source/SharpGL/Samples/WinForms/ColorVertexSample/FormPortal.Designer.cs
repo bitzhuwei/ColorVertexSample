@@ -43,7 +43,7 @@
             this.btnWell.Name = "btnWell";
             this.btnWell.Size = new System.Drawing.Size(930, 23);
             this.btnWell.TabIndex = 0;
-            this.btnWell.Text = "Well";
+            this.btnWell.Text = "FormWell";
             this.btnWell.UseVisualStyleBackColor = true;
             this.btnWell.Click += new System.EventHandler(this.btnWell_Click);
             // 

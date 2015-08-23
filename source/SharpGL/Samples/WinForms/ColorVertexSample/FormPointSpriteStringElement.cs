@@ -40,17 +40,18 @@ namespace ColorVertexSample
             this.camera = new ScientificCamera(CameraTypes.Perspecitive);
             this.rotator = new SatelliteRotation(this.camera);
 
-            //this.fontElement = new PointSpriteFontElement(this.camera, "A", new SharpGL.SceneGraph.Vertex(0, 0, 0));
-            //this.fontElement = new PointSpriteFontElement(this.camera, "AA", new SharpGL.SceneGraph.Vertex(0, 0, 0));
-            //this.fontElement = new PointSpriteFontElement(this.camera, "AAA", new SharpGL.SceneGraph.Vertex(0, 0, 0));
-            //this.fontElement = new PointSpriteFontElement(this.camera, "AAAA", new SharpGL.SceneGraph.Vertex(0, 0, 0));
-            //this.fontElement = new PointSpriteFontElement(this.camera, "AAAAA", new SharpGL.SceneGraph.Vertex(0, 0, 0));
-            this.fontElement = new PointSpriteStringElement(this.camera, "AAAAAA", new SharpGL.SceneGraph.Vertex(0, 0, 0));
-            this.fontElement = new PointSpriteStringElement(this.camera, "AAAAAAA", new SharpGL.SceneGraph.Vertex(0, 0, 0));
-            this.fontElement = new PointSpriteStringElement(this.camera, "AAAAAAAA", new SharpGL.SceneGraph.Vertex(0, 0, 0));
-            this.fontElement = new PointSpriteStringElement(this.camera, "AAAAAAAAAAAAAAAA", new SharpGL.SceneGraph.Vertex(0, 0, 0));
-            //this.fontElement = new PointSpriteFontElement(this.camera, "hi text!", new SharpGL.SceneGraph.Vertex(0, 0, 0));
-            //this.fontElement = new PointSpriteFontElement(this.camera, "qwertyuiop[]", new SharpGL.SceneGraph.Vertex(0, 0, 0));
+            //this.fontElement = new PointSpriteStringElement(this.camera, "A", new SharpGL.SceneGraph.Vertex(0, 0, 0));
+            //this.fontElement = new PointSpriteStringElement(this.camera, "AA", new SharpGL.SceneGraph.Vertex(0, 0, 0));
+            //this.fontElement = new PointSpriteStringElement(this.camera, "AAA", new SharpGL.SceneGraph.Vertex(0, 0, 0));
+            //this.fontElement = new PointSpriteStringElement(this.camera, "AAAA", new SharpGL.SceneGraph.Vertex(0, 0, 0));
+            //this.fontElement = new PointSpriteStringElement(this.camera, "AAAAA", new SharpGL.SceneGraph.Vertex(0, 0, 0));
+            //this.fontElement = new PointSpriteStringElement(this.camera, "AAAAAA", new SharpGL.SceneGraph.Vertex(0, 0, 0));
+            //this.fontElement = new PointSpriteStringElement(this.camera, "AAAAAAA", new SharpGL.SceneGraph.Vertex(0, 0, 0));
+            //this.fontElement = new PointSpriteStringElement(this.camera, "AAAAAAAA", new SharpGL.SceneGraph.Vertex(0, 0, 0));
+            this.fontElement = new PointSpriteStringElement(
+                this.camera, "AAAAAAAAAAAAAAAA", new SharpGL.SceneGraph.Vertex(0, 0, 0));
+            //this.fontElement = new PointSpriteStringElement(this.camera, "hi text!", new SharpGL.SceneGraph.Vertex(0, 0, 0));
+            //this.fontElement = new PointSpriteStringElement(this.camera, "qwertyuiop[]", new SharpGL.SceneGraph.Vertex(0, 0, 0));
             this.fontElement.Initialize(this.openGLControl.OpenGL);
         }
 

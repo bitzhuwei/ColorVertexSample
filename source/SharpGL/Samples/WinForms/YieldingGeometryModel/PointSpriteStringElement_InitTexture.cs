@@ -14,44 +14,23 @@ namespace YieldingGeometryModel
 {
     public partial class PointSpriteStringElement
     {
-        /// <summary>
-        /// TODO: best practice value.
-        /// </summary>
-        private static int maxPointSize = 255;
         private int textureWidth;
 
-        private void InitTexture(SharpGL.OpenGL openGL)
+        /// <summary>
+        /// TODO: 这里生成的中间贴图太大，有优化的空间
+        /// </summary>
+        /// <param name="content"></param>
+        private void InitTexture(OpenGL gl, string content, int fontSize, int maxRowWidth, FontResource resource)
         {
-            // test the font rendering procedure.
-            //Bitmap bmp = ManifestResourceLoader.LoadBitmap("FontResources.LucidaTypewriterRegular.ttf.png");
-            //this.texture = new Texture();
-            //this.texture.Create(openGL, bmp);
-            //bmp.Dispose();
-
-            // this is not work.
-            //int [] pointSize=new int[2];
-            //openGL.GetInteger(SharpGL.Enumerations.GetTarget.PointSizeRange, pointSize);
-            //maxPointSize = pointSize[1];
-
-            //openGL.PointParameter(OpenGL.GL_POINT_SIZE_MAX_ARB, 255);
-
-            //openGL.GetInteger(SharpGL.Enumerations.GetTarget.PointSizeRange, pointSize);
-            //maxPointSize = pointSize[1];
-
-
-            InitTexture(openGL, this.text);
-        }
-
-        private void InitTexture(SharpGL.OpenGL openGL, string content)
-        {
-            // step 1: get totalWidth
-            int glyphsLength = 0;
+            // step 1: get totalLength
+            int totalLength = 0;
             {
+                int glyphsLength = 0;
                 for (int i = 0; i < content.Length; i++)
                 {
                     char c = content[i];
                     CharacterInfo cInfo;
-                    if (FontResource.Instance.CharInfoDict.TryGetValue(c, out cInfo))
+                    if (fontResource.CharInfoDict.TryGetValue(c, out cInfo))
                     {
                         int glyphWidth = cInfo.width;
                         glyphsLength += glyphWidth;
@@ -61,39 +40,44 @@ namespace YieldingGeometryModel
                 }
 
                 //glyphsLength = (glyphsLength * this.fontSize / FontResource.Instance.FontHeight);
+                int interval = fontResource.FontHeight / 10; if (interval < 1) { interval = 1; }
+                //interval = fontResource.CharInfoDict[' '].width / 10; if (interval < 1) { interval = 1; }
+                totalLength = glyphsLength + interval * (content.Length - 1);
             }
 
             // step 2: setup contentBitmap
             Bitmap contentBitmap = null;
             {
-                int interval = FontResource.Instance.FontHeight / 5; if (interval < 1) { interval = 1; }
-                int totalLength = glyphsLength + interval * (content.Length - 1);
+                int interval = fontResource.FontHeight / 10; if (interval < 1) { interval = 1; }
+                //int totalLength = glyphsLength + interval * (content.Length - 1);
                 int currentTextureWidth = 0;
-                int currentWidthPosition = 0;
-                int currentHeightPosition = 0;
-                if (totalLength * this.fontSize > maxPointSize * FontResource.Instance.FontHeight)// 超过1行能显示的内容
+                int currentWidthPos = 0;
+                int currentHeightPos = 0;
+                if (totalLength * fontSize > maxRowWidth * fontResource.FontHeight)// 超过1行能显示的内容
                 {
-                    currentTextureWidth = maxPointSize * FontResource.Instance.FontHeight / this.fontSize;
+                    currentTextureWidth = maxRowWidth * fontResource.FontHeight / fontSize;
 
-                    int lineCount = (glyphsLength - 1) / currentTextureWidth + 1;
+                    int lineCount = (totalLength - 1) / currentTextureWidth + 1;
                     // 确保整篇文字的高度在贴图中间。
-                    currentHeightPosition = (currentTextureWidth - FontResource.Instance.FontHeight * lineCount) / 2;
+                    currentHeightPos = (currentTextureWidth - fontResource.FontHeight * lineCount) / 2;
                     //- FontResource.Instance.FontHeight / 2;
                 }
                 else//只在一行内即可显示所有字符
                 {
-                    currentTextureWidth = totalLength;
-
-                    if (totalLength >= FontResource.Instance.FontHeight)
+                    if (totalLength >= fontResource.FontHeight)
                     {
+                        currentTextureWidth = totalLength;
+
                         // 确保整篇文字的高度在贴图中间。
-                        currentHeightPosition = (currentTextureWidth - FontResource.Instance.FontHeight) / 2;
+                        currentHeightPos = (currentTextureWidth - fontResource.FontHeight) / 2;
                         //- FontResource.Instance.FontHeight / 2;
                     }
                     else
                     {
-                        currentWidthPosition = (currentTextureWidth - glyphsLength) / 2;
-                        glyphsLength = FontResource.Instance.FontHeight;
+                        currentTextureWidth = fontResource.FontHeight;
+
+                        currentWidthPos = (currentTextureWidth - totalLength) / 2;
+                        //glyphsLength = fontResource.FontHeight;
                     }
                 }
 
@@ -103,57 +87,85 @@ namespace YieldingGeometryModel
 
                 contentBitmap = new Bitmap(currentTextureWidth, currentTextureWidth);
                 Graphics gContentBitmap = Graphics.FromImage(contentBitmap);
-                Bitmap bigBitmap = FontResource.Instance.FontBitmap;
+                Bitmap bigBitmap = fontResource.FontBitmap;
                 for (int i = 0; i < content.Length; i++)
                 {
                     char c = content[i];
                     CharacterInfo cInfo;
-                    if (FontResource.Instance.CharInfoDict.TryGetValue(c, out cInfo))
+                    if (fontResource.CharInfoDict.TryGetValue(c, out cInfo))
                     {
-                        if (currentWidthPosition + cInfo.width > contentBitmap.Width)
+                        if (currentWidthPos + cInfo.width > contentBitmap.Width)
                         {
-                            currentWidthPosition = 0;
-                            currentHeightPosition += FontResource.Instance.FontHeight;
+                            currentWidthPos = 0;
+                            currentHeightPos += fontResource.FontHeight;
                         }
 
                         gContentBitmap.DrawImage(bigBitmap,
-                            new Rectangle(currentWidthPosition, currentHeightPosition, cInfo.width, FontResource.Instance.FontHeight),
-                            new Rectangle(cInfo.xoffset, cInfo.yoffset, cInfo.width, FontResource.Instance.FontHeight),
+                            new Rectangle(currentWidthPos, currentHeightPos, cInfo.width, fontResource.FontHeight),
+                            new Rectangle(cInfo.xoffset, cInfo.yoffset, cInfo.width, fontResource.FontHeight),
                             GraphicsUnit.Pixel);
 
-                        currentWidthPosition += cInfo.width + interval;
+                        currentWidthPos += cInfo.width + interval;
                     }
                 }
                 gContentBitmap.Dispose();
+                //contentBitmap.Save("PointSpriteStringElement-contentBitmap.png");
+                System.Drawing.Bitmap bmp = null;
+                if (totalLength * fontSize > maxRowWidth * fontResource.FontHeight)// 超过1行能显示的内容
+                {
+                    bmp = (System.Drawing.Bitmap)contentBitmap.GetThumbnailImage(
+                        maxRowWidth, maxRowWidth, null, IntPtr.Zero);
+                }
+                else//只在一行内即可显示所有字符
+                {
+                    if (totalLength >= fontResource.FontHeight)
+                    {
+                        bmp = (System.Drawing.Bitmap)contentBitmap.GetThumbnailImage(
+                            totalLength * fontSize / resource.FontHeight,
+                            totalLength * fontSize / resource.FontHeight,
+                            null, IntPtr.Zero);
+
+                    }
+                    else
+                    {
+                        bmp = (System.Drawing.Bitmap)contentBitmap.GetThumbnailImage(
+                            fontSize, fontSize, null, IntPtr.Zero);
+                    }
+                }
+                contentBitmap.Dispose();
+                contentBitmap = bmp;
+                //contentBitmap.Save("PointSpriteStringElement-contentBitmap-scaled.png");
             }
 
             // step 4: get texture's size 
             int targetTextureWidth;
             {
 
-                //	Get the maximum texture size supported by OpenGL.
-                int[] textureMaxSize = { 0 };
-                openGL.GetInteger(OpenGL.GL_MAX_TEXTURE_SIZE, textureMaxSize);
+                ////	Get the maximum texture size supported by OpenGL.
+                //int[] textureMaxSize = { 0 };
+                //GL.GetInteger(GetTarget.MaxTextureSize, textureMaxSize);
 
-                //	Find the target width and height sizes, which is just the highest
-                //	posible power of two that'll fit into the image.
+                ////	Find the target width and height sizes, which is just the highest
+                ////	posible power of two that'll fit into the image.
 
-                targetTextureWidth = textureMaxSize[0];
-                //System.Drawing.Bitmap bitmap = contentBitmap;
-                int scaledWidth = 8 * contentBitmap.Width * this.fontSize / FontResource.Instance.FontHeight;
+                //targetTextureWidth = textureMaxSize[0];
+                ////System.Drawing.Bitmap bitmap = contentBitmap;
+                //int scaledWidth = 8 * contentBitmap.Width * fontSize / fontResource.FontHeight;
 
-                for (int size = 1; size <= textureMaxSize[0]; size *= 2)
-                {
-                    if (scaledWidth < size)
-                    {
-                        targetTextureWidth = size / 2;
-                        break;
-                    }
-                    if (scaledWidth == size)
-                        targetTextureWidth = size;
-                }
+                //for (int size = 1; size <= textureMaxSize[0]; size *= 2)
+                //{
+                //    if (scaledWidth < size)
+                //    {
+                //        targetTextureWidth = size / 2;
+                //        break;
+                //    }
+                //    if (scaledWidth == size)
+                //        targetTextureWidth = size;
+                //}
 
-                this.textureWidth = targetTextureWidth;
+                //this.textureWidth = targetTextureWidth;
+                this.textureWidth = contentBitmap.Width;
+                targetTextureWidth = contentBitmap.Width;
             }
 
             // step 5: scale contentBitmap to right size
@@ -161,35 +173,37 @@ namespace YieldingGeometryModel
             if (contentBitmap.Width != targetTextureWidth || contentBitmap.Height != targetTextureWidth)
             {
                 //  Resize the image.
-                targetImage = (System.Drawing.Bitmap)contentBitmap.GetThumbnailImage(targetTextureWidth, targetTextureWidth, null, IntPtr.Zero);
+                targetImage = (System.Drawing.Bitmap)contentBitmap.GetThumbnailImage(
+                    targetTextureWidth, targetTextureWidth, null, IntPtr.Zero);
             }
 
             // step 6: generate texture
             {
                 //  Lock the image bits (so that we can pass them to OGL).
-                BitmapData bitmapData = targetImage.LockBits(new Rectangle(0, 0, targetImage.Width, targetImage.Height),
+                BitmapData bitmapData = targetImage.LockBits(
+                    new Rectangle(0, 0, targetImage.Width, targetImage.Height),
                     ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
-                //GL.ActiveTexture(GL.GL_TEXTURE0);
-                openGL.GenTextures(1, texture);
-                openGL.BindTexture(OpenGL.GL_TEXTURE_2D, texture[0]);
-                openGL.TexImage2D(OpenGL.GL_TEXTURE_2D, 0, (int)OpenGL.GL_RGBA,
+                //gl.ActiveTexture(gl.GL_TEXTURE0);
+                gl.GenTextures(1, texture);
+                gl.BindTexture(OpenGL.GL_TEXTURE_2D, texture[0]);
+                gl.TexImage2D(OpenGL.GL_TEXTURE_2D, 0, (int)OpenGL.GL_RGBA,
                     targetImage.Width, targetImage.Height, 0, OpenGL.GL_BGRA, OpenGL.GL_UNSIGNED_BYTE,
                     bitmapData.Scan0);
                 //  Unlock the image.
                 targetImage.UnlockBits(bitmapData);
                 /* We require 1 byte alignment when uploading texture data */
-                //GL.PixelStorei(GL.GL_UNPACK_ALIGNMENT, 1);
+                //gl.PixelStorei(OpenGL.GL_UNPACK_ALIGNMENT, 1);
                 /* Clamping to edges is important to prevent artifacts when scaling */
-                openGL.TexParameter(OpenGL.GL_TEXTURE_2D, OpenGL.GL_TEXTURE_WRAP_S, (int)OpenGL.GL_CLAMP_TO_EDGE);
-                openGL.TexParameter(OpenGL.GL_TEXTURE_2D, OpenGL.GL_TEXTURE_WRAP_T, (int)OpenGL.GL_CLAMP_TO_EDGE);
+                gl.TexParameter(OpenGL.GL_TEXTURE_2D, OpenGL.GL_TEXTURE_WRAP_S, (int)OpenGL.GL_CLAMP_TO_EDGE);
+                gl.TexParameter(OpenGL.GL_TEXTURE_2D, OpenGL.GL_TEXTURE_WRAP_T, (int)OpenGL.GL_CLAMP_TO_EDGE);
                 /* Linear filtering usually looks best for text */
-                openGL.TexParameter(OpenGL.GL_TEXTURE_2D, OpenGL.GL_TEXTURE_MIN_FILTER, (int)OpenGL.GL_LINEAR);
-                openGL.TexParameter(OpenGL.GL_TEXTURE_2D, OpenGL.GL_TEXTURE_MAG_FILTER, (int)OpenGL.GL_LINEAR);
+                gl.TexParameter(OpenGL.GL_TEXTURE_2D, OpenGL.GL_TEXTURE_MIN_FILTER, (int)OpenGL.GL_LINEAR);
+                gl.TexParameter(OpenGL.GL_TEXTURE_2D, OpenGL.GL_TEXTURE_MAG_FILTER, (int)OpenGL.GL_LINEAR);
             }
 
             // step 7: release images
             {
-                targetImage.Save("PointSpriteFontElement-TargetImage.png");
+                //targetImage.Save("PointSpriteStringElement-TargetImage.png");
                 if (targetImage != contentBitmap)
                 {
                     targetImage.Dispose();
