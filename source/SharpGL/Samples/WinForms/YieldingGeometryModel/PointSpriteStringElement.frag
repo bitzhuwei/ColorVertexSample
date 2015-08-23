@@ -7,8 +7,6 @@ in float pass_pointSize;
 out vec4 out_Color;
 
 uniform sampler2D tex;
-uniform float canvasWidth;
-uniform float canvasHeight;
 
 void main(void) {
 	float transparency = texture2D(tex, gl_PointCoord).r;

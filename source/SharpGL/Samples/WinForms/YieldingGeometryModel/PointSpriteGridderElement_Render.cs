@@ -51,17 +51,12 @@ namespace YieldingGeometryModel
             gl.BlendEquation(OpenGL.GL_FUNC_ADD_EXT);
             gl.BlendFuncSeparate(OpenGL.GL_SRC_ALPHA, OpenGL.GL_ONE_MINUS_SRC_ALPHA, OpenGL.GL_ONE, OpenGL.GL_ONE);
 
-            int[] viewport = new int[4];
-            gl.GetInteger(OpenGL.GL_VIEWPORT, viewport);
-
             ShaderProgram shader = this.shaderProgram;
 
             shader.Bind(gl);
             shader.SetUniformMatrix4(gl, "projectionMatrix", projectionMatrix.to_array());
             shader.SetUniformMatrix4(gl, "viewMatrix", viewMatrix.to_array());
             shader.SetUniformMatrix4(gl, "modelMatrix", modelMatrix.to_array());
-            shader.SetUniform1(gl, "canvasWidth", viewport[2] + 0.0f);
-            shader.SetUniform1(gl, "canvasHeight", viewport[3] + 0.0f);
         }
 
         protected override void AfterRendering(OpenGL gl, RenderMode renderMode)
