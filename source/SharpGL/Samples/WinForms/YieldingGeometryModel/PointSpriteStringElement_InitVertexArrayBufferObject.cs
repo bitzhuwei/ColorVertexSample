@@ -145,66 +145,66 @@ namespace YieldingGeometryModel
                 positionArray.Dispose();
             }
 
-            //  Now do the same for the colour data.
-            {
-                UnmanagedArray<vec4> colorArray = new UnmanagedArray<vec4>(count * count * count);
-                for (int i = 0; i < count * count * count; i++)
-                {
-                    colorArray[i] = new vec4((float)random.NextDouble(), (float)random.NextDouble(), (float)random.NextDouble(), (float)random.NextDouble());
-                }
-                uint[] ids = new uint[1];
-                gl.GenBuffers(1, ids);
-                gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, ids[0]);
+            ////  Now do the same for the colour data.
+            //{
+            //    UnmanagedArray<vec4> colorArray = new UnmanagedArray<vec4>(count * count * count);
+            //    for (int i = 0; i < count * count * count; i++)
+            //    {
+            //        colorArray[i] = new vec4((float)random.NextDouble(), (float)random.NextDouble(), (float)random.NextDouble(), (float)random.NextDouble());
+            //    }
+            //    uint[] ids = new uint[1];
+            //    gl.GenBuffers(1, ids);
+            //    gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, ids[0]);
 
-                // TODO: mesh.ColorArray may be null!
-                gl.BufferData(OpenGL.GL_ARRAY_BUFFER, colorArray.ByteLength, colorArray.Header, OpenGL.GL_STATIC_DRAW);
-                gl.VertexAttribPointer(attributeIndexColour, 4, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
-                gl.EnableVertexAttribArray(attributeIndexColour);
+            //    // TODO: mesh.ColorArray may be null!
+            //    gl.BufferData(OpenGL.GL_ARRAY_BUFFER, colorArray.ByteLength, colorArray.Header, OpenGL.GL_STATIC_DRAW);
+            //    gl.VertexAttribPointer(attributeIndexColour, 4, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
+            //    gl.EnableVertexAttribArray(attributeIndexColour);
 
-                colorArray.Dispose();
-            }
+            //    colorArray.Dispose();
+            //}
 
-            // Now do the same for the index's visual signal data.
-            {
-                UnmanagedArray<float> visibleArray = new UnmanagedArray<float>(count * count * count);
-                for (int i = 0; i < count * count * count; i++)
-                {
-                    visibleArray[i] = 1.0f;
-                }
-                uint[] ids = new uint[1];
-                gl.GenBuffers(1, ids);
-                gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, ids[0]);
+            //// Now do the same for the index's visual signal data.
+            //{
+            //    UnmanagedArray<float> visibleArray = new UnmanagedArray<float>(count * count * count);
+            //    for (int i = 0; i < count * count * count; i++)
+            //    {
+            //        visibleArray[i] = 1.0f;
+            //    }
+            //    uint[] ids = new uint[1];
+            //    gl.GenBuffers(1, ids);
+            //    gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, ids[0]);
 
-                gl.BufferData(OpenGL.GL_ARRAY_BUFFER, visibleArray.ByteLength, visibleArray.Header, OpenGL.GL_DYNAMIC_READ);
-                gl.VertexAttribPointer(attributeIndexVisible, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
-                gl.EnableVertexAttribArray(attributeIndexVisible);
+            //    gl.BufferData(OpenGL.GL_ARRAY_BUFFER, visibleArray.ByteLength, visibleArray.Header, OpenGL.GL_DYNAMIC_READ);
+            //    gl.VertexAttribPointer(attributeIndexVisible, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
+            //    gl.EnableVertexAttribArray(attributeIndexVisible);
 
-                visibleArray.Dispose();
+            //    visibleArray.Dispose();
 
-                this.visualBuffer = ids[0];
-            }
-            {
-                UnmanagedArray<float> radiusArray = new UnmanagedArray<float>(count * count * count);
-                for (int i = 0; i < count * count * count; i++)
-                {
-                    //radiusArray[i] = (float)random.NextDouble()*100;
-                    radiusArray[i] = this.textureWidth / 10.0f; //100;
-                }
+            //    this.visualBuffer = ids[0];
+            //}
+            //{
+            //    UnmanagedArray<float> radiusArray = new UnmanagedArray<float>(count * count * count);
+            //    for (int i = 0; i < count * count * count; i++)
+            //    {
+            //        //radiusArray[i] = (float)random.NextDouble()*100;
+            //        radiusArray[i] = this.textureWidth / 10.0f; //100;
+            //    }
 
-                uint[] ids = new uint[1];
-                gl.GenBuffers(1, ids);
-                gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, ids[0]);
+            //    uint[] ids = new uint[1];
+            //    gl.GenBuffers(1, ids);
+            //    gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, ids[0]);
 
-                gl.BufferData(OpenGL.GL_ARRAY_BUFFER, radiusArray.ByteLength, radiusArray.Header, OpenGL.GL_STATIC_DRAW);
-                gl.VertexAttribPointer(attributeIndexRadius, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
-                gl.EnableVertexAttribArray(attributeIndexRadius);
+            //    gl.BufferData(OpenGL.GL_ARRAY_BUFFER, radiusArray.ByteLength, radiusArray.Header, OpenGL.GL_STATIC_DRAW);
+            //    gl.VertexAttribPointer(attributeIndexRadius, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
+            //    gl.EnableVertexAttribArray(attributeIndexRadius);
 
-                radiusArray.Dispose();
-            }
+            //    radiusArray.Dispose();
+            //}
 
             //  Unbind the vertex array, we've finished specifying data for it.
             gl.BindVertexArray(0);
         }
-        Random random = new Random();
+        //Random random = new Random();
     }
 }

@@ -64,6 +64,8 @@ namespace YieldingGeometryModel
             shader.SetUniformMatrix4(gl, "projectionMatrix", projectionMatrix.to_array());
             shader.SetUniformMatrix4(gl, "viewMatrix", viewMatrix.to_array());
             shader.SetUniformMatrix4(gl, "modelMatrix", modelMatrix.to_array());
+            shader.SetUniform1(gl, "pointSize", this.textureWidth * 1.0f);
+            shader.SetUniform3(gl, "textColor", this.textColor.x, this.textColor.y, this.textColor.z);
         }
 
         protected void AfterRendering(OpenGL gl, RenderMode renderMode)
