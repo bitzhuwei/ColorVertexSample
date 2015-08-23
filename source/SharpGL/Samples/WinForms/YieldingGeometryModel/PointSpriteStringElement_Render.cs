@@ -65,8 +65,6 @@ namespace YieldingGeometryModel
             shader.SetUniformMatrix4(gl, "projectionMatrix", projectionMatrix.to_array());
             shader.SetUniformMatrix4(gl, "viewMatrix", viewMatrix.to_array());
             shader.SetUniformMatrix4(gl, "modelMatrix", modelMatrix.to_array());
-            shader.SetUniform1(gl, "canvasWidth", viewport[2] + 0.0f);
-            shader.SetUniform1(gl, "canvasHeight", viewport[3] + 0.0f);
         }
 
         protected void AfterRendering(OpenGL gl, RenderMode renderMode)
