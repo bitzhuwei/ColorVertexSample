@@ -19,6 +19,10 @@ namespace YieldingGeometryModel
     public partial class UnStructuredGridderElement
     {
         uint[] textureName = new uint[1];
+        /// <summary>
+        /// This is not used because I failed to make it work.
+        /// </summary>
+        /// <param name="gl"></param>
         void InitTexture(OpenGL gl)
         {
             int xSize = (int)(this.source.Max.X - this.source.Min.X);
