@@ -14,6 +14,8 @@ namespace YieldingGeometryModel.DataSource
 
        private float radius = 0.1f;
 
+       private float originalRadius = 1.0f;
+
        public float Radius
        {
            get
@@ -22,8 +24,20 @@ namespace YieldingGeometryModel.DataSource
            }
            set
            {
-               if(radius >0.0d)
+               if(value >0.0d)
                  this.radius = value;
+           }
+       }
+
+       public float OriginalRadius
+       {
+           get
+           {
+               return this.originalRadius;
+           }
+           set
+           {
+               this.originalRadius = value;
            }
        }
 

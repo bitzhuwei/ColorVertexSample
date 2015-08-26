@@ -122,6 +122,41 @@ namespace YieldingGeometryModel.Builder
 
         static Random random = new Random();
 
+        public static UnmanagedArray<float> FromGeometryVisibles(PointSpriteGridderSource source)
+        {
+            UnmanagedArray<float> visibles = new UnmanagedArray<float>(source.DimenSize);
+            unsafe
+            {
+                int i,j,k;
+                for (int it = 0; it < source.DimenSize; it++)
+                {
+                    source.InvertIJK(it, out i, out j, out k);
+                    if (source.IsActiveBlock(i, j, k))
+                    {
+                        visibles[it] = 1.0f;
+                    }
+                    else
+                    {
+                        visibles[it] = 0.0f;
+                    }
+                }
+            }
+            return visibles;
+        }
+
+
+        public static UnmanagedArray<float> FromRadius(PointSpriteGridderSource source, float radius)
+        {
+            UnmanagedArray<float> radiusArray = new UnmanagedArray<float>(source.DimenSize * PointSpriteGridderElement.vertexCountPerElement);
+            for (int i = 0; i < radiusArray.Length; i++)
+            {
+                radiusArray[i] = radius;
+            }
+
+            return radiusArray;
+
+        }
+
         public static UnmanagedArray<ColorF> FromColors(PointSpriteGridderSource source, int[] gridIndexes, ColorF[] colors, UnmanagedArray<float> visibles)
         {
             UnmanagedArray<ColorF> colorArray = new UnmanagedArray<ColorF>(source.DimenSize * PointSpriteGridderElement.vertexCountPerElement);
@@ -150,7 +185,6 @@ namespace YieldingGeometryModel.Builder
                     {
                         visibles[cellOffset + 0] = 0;
                     }
-
                 }
 
             }

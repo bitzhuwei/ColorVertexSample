@@ -30,7 +30,9 @@ namespace YieldingGeometryModel
         internal uint attributeIndexVisible = 2;
         internal uint attributeIndexRadius = 3;
 
-        internal uint visualBuffer;
+        internal uint colorBuffer = 0;
+        internal uint visualBuffer = 0;
+        internal uint radiusBuffer = 0;
 
         /// <summary>
         /// 用于渲染六面体网格。
