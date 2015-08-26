@@ -33,6 +33,7 @@
             this.btnFormPointSpriteStringElement = new System.Windows.Forms.Button();
             this.btnFormPointSpriteGridderElement = new System.Windows.Forms.Button();
             this.btnFormUnStructuredGridderElement = new System.Windows.Forms.Button();
+            this.btnFormScientificVisual3DControl = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnWell
@@ -43,7 +44,7 @@
             this.btnWell.Name = "btnWell";
             this.btnWell.Size = new System.Drawing.Size(930, 23);
             this.btnWell.TabIndex = 0;
-            this.btnWell.Text = "Well";
+            this.btnWell.Text = "FormWell";
             this.btnWell.UseVisualStyleBackColor = true;
             this.btnWell.Click += new System.EventHandler(this.btnWell_Click);
             // 
@@ -95,11 +96,24 @@
             this.btnFormUnStructuredGridderElement.UseVisualStyleBackColor = true;
             this.btnFormUnStructuredGridderElement.Click += new System.EventHandler(this.btnFormUnStructuredGridderElement_Click);
             // 
+            // btnFormScientificVisual3DControl
+            // 
+            this.btnFormScientificVisual3DControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFormScientificVisual3DControl.Location = new System.Drawing.Point(12, 157);
+            this.btnFormScientificVisual3DControl.Name = "btnFormScientificVisual3DControl";
+            this.btnFormScientificVisual3DControl.Size = new System.Drawing.Size(930, 23);
+            this.btnFormScientificVisual3DControl.TabIndex = 0;
+            this.btnFormScientificVisual3DControl.Text = "FormScientificVisual3DControl";
+            this.btnFormScientificVisual3DControl.UseVisualStyleBackColor = true;
+            this.btnFormScientificVisual3DControl.Click += new System.EventHandler(this.btnFormScientificVisual3DControl_Click);
+            // 
             // FormPortal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(954, 432);
+            this.Controls.Add(this.btnFormScientificVisual3DControl);
             this.Controls.Add(this.btnFormUnStructuredGridderElement);
             this.Controls.Add(this.btnFormPointSpriteStringElement);
             this.Controls.Add(this.btnFormPointSpriteGridderElement);
@@ -118,5 +132,6 @@
         private System.Windows.Forms.Button btnFormPointSpriteStringElement;
         private System.Windows.Forms.Button btnFormPointSpriteGridderElement;
         private System.Windows.Forms.Button btnFormUnStructuredGridderElement;
+        private System.Windows.Forms.Button btnFormScientificVisual3DControl;
     }
 }

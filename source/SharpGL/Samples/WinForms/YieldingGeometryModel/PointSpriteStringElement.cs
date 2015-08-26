@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using YieldingGeometryModel.FontResources;
 
 namespace YieldingGeometryModel
 {
@@ -18,11 +19,16 @@ namespace YieldingGeometryModel
     /// </summary>
     public partial class PointSpriteStringElement : SceneElement, IRenderable
     {
-        //private Texture texture;
+
+        private string content;
+        private Vertex position;
+        private int fontSize;
+        private vec3 textColor;
+        private int maxRowWidth = 255;
+        FontResource fontResource;
+
         uint[] texture = new uint[1];
         internal IScientificCamera camera;
-        //private ShaderProgram pickingShader;
-        //  The projection, view and model matrices.
         ShaderProgram shaderProgram;
         mat4 projectionMatrix;
         mat4 viewMatrix;
@@ -37,34 +43,48 @@ namespace YieldingGeometryModel
         /// </summary>
         internal const int vertexCountPerElement = 1;
 
-        //  Constants that specify the attribute indexes.
         internal uint attributeIndexPosition = 0;
-        internal uint attributeIndexColour = 1;
-        internal uint attributeIndexVisible = 2;
-        internal uint attributeIndexRadius = 3;
-
-        internal uint visualBuffer;
 
         /// <summary>
         /// 用于渲染字符串。
         /// Rendering gridder of hexadrons.
         /// </summary>
-        public PointSpriteStringElement(IScientificCamera camera, string text, Vertex position, int fontSize = 32)
+        public PointSpriteStringElement(
+            //IScientificCamera camera, string text, Vertex position, int fontSize = 32, GLColor textColor = null)
+            IScientificCamera camera,
+            string content, Vertex position, GLColor textColor = null, int fontSize = 32, int maxRowWidth = 256)
         {
+            if (fontSize >= 256) { throw new ArgumentException(); }
+
             this.camera = camera;
-            this.text = text;
+            this.content = content;
             this.position = position;
             this.fontSize = fontSize;
-        }
+            if (textColor == null)
+            {
+                this.textColor = new vec3(1, 1, 1);
+            }
+            else
+            {
+                this.textColor = new vec3(textColor.R, textColor.G, textColor.B);
+            }
 
-        private string text;
-        private Vertex position;
-        private int fontSize;
+            if (0 < maxRowWidth && maxRowWidth < 257)
+            {
+                this.maxRowWidth = maxRowWidth;
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException("max row width must between 0 and 257(not include 0 or 257)");
+            }
+
+            this.fontResource = FontResource.Instance;
+        }
 
 
         public void Initialize(SharpGL.OpenGL openGL)
         {
-            this.InitTexture(openGL);
+            this.InitTexture(openGL, this.content, this.fontSize, this.maxRowWidth, this.fontResource);
 
             this.InitShaderProgram(openGL, out this.shaderProgram);
 

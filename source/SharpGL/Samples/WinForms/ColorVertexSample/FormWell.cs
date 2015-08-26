@@ -133,10 +133,11 @@ namespace ColorVertexSample
             pipe.Add(new Vertex(1, -1, 1));
             pipe.Add(new Vertex(1, -1, -1));
             pipe.Add(new Vertex(-1, -1, -1));
-            GLColor color = new GLColor(
+            GLColor pipeColor = new GLColor(
                 (float)random.NextDouble(), (float)random.NextDouble(), (float)random.NextDouble(), (float)random.NextDouble());
-            this.wellElement = new Well(
-                pipe, 0.1f, color, "hi well", new Vertex(-1.5f, -1.5f, -1.5f), this.camera);
+            this.wellElement = new Well(this.camera,
+                pipe, 0.1f, pipeColor,
+                "hi well", new Vertex(-1.5f, -1.5f, -1.5f), new GLColor(1, 1, 1, 1), 32, 256);
             this.wellElement.Initialize(gl);
         }
 

@@ -29,6 +29,7 @@ namespace ColorVertexSample
 
             InitilizeViewTypeControl();
 
+            this.scientificVisual3DControl.EnablePicking = true;
             Application.Idle += Application_Idle;
         }
 
