@@ -99,6 +99,7 @@
             this.scientificVisual3DControl.Size = new System.Drawing.Size(1015, 411);
             this.scientificVisual3DControl.TabIndex = 0;
             this.scientificVisual3DControl.ViewType = SharpGL.SceneComponent.ViewTypes.UserView;
+            this.scientificVisual3DControl.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.scientificVisual3DControl_KeyPress);
             // 
             // panel1
             // 

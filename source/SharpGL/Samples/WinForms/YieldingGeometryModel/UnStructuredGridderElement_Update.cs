@@ -29,9 +29,9 @@ namespace YieldingGeometryModel
         /// </summary>
         /// <param name="gl"></param>
         /// <param name="colors"></param>
-        public void UpdateColorBuffer(OpenGL gl, UnmanagedArray<vec4> colors)
+        public void UpdateTetrasColorBuffer(OpenGL gl, UnmanagedArray<vec4> colors)
         {
-            gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, this.colorsBufferObject[0]);
+            gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, this.tetrasColorBufferObject[0]);
             IntPtr destColors = gl.MapBuffer(OpenGL.GL_ARRAY_BUFFER, OpenGL.GL_READ_WRITE);
             SharpGL.SceneComponent.Utility.MemoryHelper.CopyMemory(
                 destColors, colors.Header, (uint)colors.ByteLength);
@@ -39,5 +39,19 @@ namespace YieldingGeometryModel
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="gl"></param>
+        /// <param name="colors"></param>
+        public void UpdateFractionsColorBuffer(OpenGL gl, UnmanagedArray<vec4> colors)
+        {
+            gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, this.fractionsColorBufferObject[0]);
+            IntPtr destColors = gl.MapBuffer(OpenGL.GL_ARRAY_BUFFER, OpenGL.GL_READ_WRITE);
+            SharpGL.SceneComponent.Utility.MemoryHelper.CopyMemory(
+                destColors, colors.Header, (uint)colors.ByteLength);
+            gl.UnmapBuffer(OpenGL.GL_ARRAY_BUFFER);
+
+        }
     }
 }

@@ -77,8 +77,7 @@ namespace ColorVertexSample
                 DateTime stop = DateTime.Now;
                 double seconds = (stop.Ticks - start.Ticks) / 1000.0d;
 
-                this.element = new UnStructuredGridderElement(source, this.scientificVisual3DControl.Scene.CurrentCamera) 
-                { Name = "UnStructuredGridderElement}" };
+                this.element = new UnStructuredGridderElement(source, this.scientificVisual3DControl.Scene.CurrentCamera) { Name = "UnStructuredGridderElement}" };
                 element.Initialize(this.scientificVisual3DControl.OpenGL);
 
                 ///模拟获得网格属性
@@ -167,6 +166,19 @@ namespace ColorVertexSample
                 this.element.renderTetrasWireframe = this.chkrenderTetrasWireframe.Checked;
                 this.scientificVisual3DControl.Invalidate();
             }
+        }
+
+        private void scientificVisual3DControl_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            //if (e.KeyChar == 'j')
+            //{
+            //    this.element.CurrentTetrasIndexCount++;
+            //}
+            //else if (e.KeyChar == 'k')
+            //{
+            //    this.element.CurrentTetrasIndexCount--;
+            //}
+            //this.scientificVisual3DControl.Invalidate();
         }
     }
 }
