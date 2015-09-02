@@ -96,6 +96,12 @@
       <DependentUpon>FormModernOpenGLControlDemo.cs</DependentUpon>
     </Compile>
     <Compile Include="3MySceneControl\ModernMySceneControlSceneElement.cs" />
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormModernOpenGLSample.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -115,6 +121,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="1OpenGLControl\FormModernOpenGLControlDemo.resx">
       <DependentUpon>FormModernOpenGLControlDemo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormModernOpenGLSample.resx">
       <DependentUpon>FormModernOpenGLSample.cs</DependentUpon>
