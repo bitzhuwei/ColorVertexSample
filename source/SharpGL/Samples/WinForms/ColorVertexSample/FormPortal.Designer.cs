@@ -34,6 +34,7 @@
             this.btnFormPointSpriteGridderElement = new System.Windows.Forms.Button();
             this.btnFormUnStructuredGridderElement = new System.Windows.Forms.Button();
             this.btnFormScientificVisual3DControl = new System.Windows.Forms.Button();
+            this.btnFormdfmPointSpriteGridderElement = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnWell
@@ -108,6 +109,18 @@
             this.btnFormScientificVisual3DControl.UseVisualStyleBackColor = true;
             this.btnFormScientificVisual3DControl.Click += new System.EventHandler(this.btnFormScientificVisual3DControl_Click);
             // 
+            // btnFormdfmPointSpriteGridderElement
+            // 
+            this.btnFormdfmPointSpriteGridderElement.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFormdfmPointSpriteGridderElement.Location = new System.Drawing.Point(12, 186);
+            this.btnFormdfmPointSpriteGridderElement.Name = "btnFormdfmPointSpriteGridderElement";
+            this.btnFormdfmPointSpriteGridderElement.Size = new System.Drawing.Size(930, 23);
+            this.btnFormdfmPointSpriteGridderElement.TabIndex = 0;
+            this.btnFormdfmPointSpriteGridderElement.Text = "FormdfmPointSpriteGridderElement";
+            this.btnFormdfmPointSpriteGridderElement.UseVisualStyleBackColor = true;
+            this.btnFormdfmPointSpriteGridderElement.Click += new System.EventHandler(this.btnFormdfmPointSpriteGridderElement_Click);
+            // 
             // FormPortal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -116,6 +129,7 @@
             this.Controls.Add(this.btnFormScientificVisual3DControl);
             this.Controls.Add(this.btnFormUnStructuredGridderElement);
             this.Controls.Add(this.btnFormPointSpriteStringElement);
+            this.Controls.Add(this.btnFormdfmPointSpriteGridderElement);
             this.Controls.Add(this.btnFormPointSpriteGridderElement);
             this.Controls.Add(this.btnFormHexahedronGridder);
             this.Controls.Add(this.btnWell);
@@ -133,5 +147,6 @@
         private System.Windows.Forms.Button btnFormPointSpriteGridderElement;
         private System.Windows.Forms.Button btnFormUnStructuredGridderElement;
         private System.Windows.Forms.Button btnFormScientificVisual3DControl;
+        private System.Windows.Forms.Button btnFormdfmPointSpriteGridderElement;
     }
 }

@@ -46,5 +46,14 @@ namespace ColorVertexSample
         {
             (new FormScientificVisual3DControl()).Show();
         }
+
+        private void btnFormdfmPointSpriteGridderElement_Click(object sender, EventArgs e)
+        {
+            var frmSettings = new FormSelectExpectedRadius();
+            if(frmSettings.ShowDialog()== System.Windows.Forms.DialogResult.OK)
+            {
+                (new FormdfmPointSpriteGridderElement(frmSettings.MaxRadius)).Show();
+            }
+        }
     }
 }
