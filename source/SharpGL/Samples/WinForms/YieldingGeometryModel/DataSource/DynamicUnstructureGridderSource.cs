@@ -14,18 +14,17 @@ namespace YieldingGeometryModel.DataSource
     /// nodes为（x,y,z,0)的数组
     /// elements元素为nodes数组的索引,element[ELEMENT_FORMAT3+1](三角形) 或element[ELEMENT_FORMAT4+1](4面体)
     /// fratures元素为node数组的索引, fracture[FRACTURE_FORMAT2+1] (线段） 或fracture[FRACTURE_FORMAT3+1](三角形)]  
-    /// 
     /// elements.Length+fractures.Length = NX*NY*NZ ,通常NY,NZ =1， 所以NX = (elements.length+fratures.length)
     /// </summary>
     public class DynamicUnstructureGridderSource:GridderSource
     {
         private static readonly string[] delimeters = { "\t", " " };
 
-        public const int  ElEMENT_FORMAT3 =3;
-        public const int  ELEMENT_FORMAT4 =4;
+        public const int  ElEMENT_FORMAT3_TRIANGLE =3;
+        public const int  ELEMENT_FORMAT4_TETRAHEDRON =4;
 
-        public const int  FRACTURE_FORMAT2 = 2;
-        public const int  FRACTURE_FORMAT3 = 3;
+        public const int  FRACTURE_FORMAT2_LINE = 2;
+        public const int  FRACTURE_FORMAT3_TRIANGLE = 3;
 
         public const int  MARKER_FRACTURE = 1;
         public const int  MARKER_FAULT = 2;
@@ -220,9 +219,9 @@ namespace YieldingGeometryModel.DataSource
                  if (total != (elemNum + fracNum))
                      throw new FormatException("bad format, not match grid dimens");
 
-                 if (elemFormat != ElEMENT_FORMAT3 && elemFormat != ELEMENT_FORMAT4)
+                 if (elemFormat != ElEMENT_FORMAT3_TRIANGLE && elemFormat != ELEMENT_FORMAT4_TETRAHEDRON)
                      throw new FormatException("bad format, unknown element format");
-                 if (fracFormat != FRACTURE_FORMAT2 && fracFormat != FRACTURE_FORMAT3)
+                 if (fracFormat != FRACTURE_FORMAT2_LINE && fracFormat != FRACTURE_FORMAT3_TRIANGLE)
                      throw new FormatException("bad format, unknown frac format");
 
                 #endregion 
@@ -298,11 +297,6 @@ namespace YieldingGeometryModel.DataSource
             {
                 reader.Close();
             }
-
-
-
-
-         
         }
     }
 }
