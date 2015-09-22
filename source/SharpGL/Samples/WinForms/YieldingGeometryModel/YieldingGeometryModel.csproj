@@ -45,6 +45,7 @@
     <Compile Include="Builder\HexahedronGridderBuilder.cs" />
     <Compile Include="DataSource\dfmPointSpriteGridderSource.cs" />
     <Compile Include="DataSource\PointSetGridderSource.cs" />
+    <Compile Include="DataSource\DynamicUnstructureGridderSource.cs" />
     <Compile Include="DataSource\UnStructuredGridderSource.cs" />
     <Compile Include="FontResources\CharacterInfo.cs" />
     <Compile Include="FontResources\CharacterInfoDictHelper.cs" />
