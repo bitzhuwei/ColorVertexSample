@@ -55,5 +55,10 @@ namespace ColorVertexSample
                 (new FormdfmPointSpriteGridderElement(frmSettings.MaxRadius)).Show();
             }
         }
+
+        private void btnFormDynamicUnStructuredGridderElement_Click(object sender, EventArgs e)
+        {
+            (new FormDynamicUnStructuredGridderElement()).Show();
+        }
     }
 }
