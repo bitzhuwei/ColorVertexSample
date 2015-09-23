@@ -71,6 +71,12 @@
     <Compile Include="FormSelectExpectedRadius.Designer.cs">
       <DependentUpon>FormSelectExpectedRadius.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormDynamicUnStructuredGridderElement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDynamicUnStructuredGridderElement.Designer.cs">
+      <DependentUpon>FormDynamicUnStructuredGridderElement.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormUnStructuredGridderElement.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -134,6 +140,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormSelectExpectedRadius.resx">
       <DependentUpon>FormSelectExpectedRadius.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormDynamicUnStructuredGridderElement.resx">
+      <DependentUpon>FormDynamicUnStructuredGridderElement.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormUnStructuredGridderElement.resx">
       <DependentUpon>FormUnStructuredGridderElement.cs</DependentUpon>

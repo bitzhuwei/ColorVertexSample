@@ -47,6 +47,14 @@
     <Compile Include="DataSource\PointSetGridderSource.cs" />
     <Compile Include="DataSource\DynamicUnstructureGridderSource.cs" />
     <Compile Include="DataSource\UnStructuredGridderSource.cs" />
+    <Compile Include="DynamicUnStructuredGridderElement.cs" />
+    <Compile Include="DynamicUnStructuredGridderElement_IBoundingBox.cs" />
+    <Compile Include="DynamicUnStructuredGridderElement_InitShader.cs" />
+    <Compile Include="DynamicUnStructuredGridderElement_InitTexture.cs" />
+    <Compile Include="DynamicUnStructuredGridderElement_InitVertexArrayBufferObject.cs" />
+    <Compile Include="DynamicUnStructuredGridderElement_InitVertexArrayBufferObject2.cs" />
+    <Compile Include="DynamicUnStructuredGridderElement_Render.cs" />
+    <Compile Include="DynamicUnStructuredGridderElement_Update.cs" />
     <Compile Include="FontResources\CharacterInfo.cs" />
     <Compile Include="FontResources\CharacterInfoDictHelper.cs" />
     <Compile Include="FontResources\CharacterInfoHelper.cs" />
@@ -150,6 +158,10 @@
   <ItemGroup>
     <EmbeddedResource Include="UnStructuredGridderElement.frag" />
     <EmbeddedResource Include="UnStructuredGridderElement.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DynamicUnStructuredGridderElement.frag" />
+    <EmbeddedResource Include="DynamicUnStructuredGridderElement.vert" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
