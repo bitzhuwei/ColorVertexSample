@@ -45,7 +45,7 @@
     <Compile Include="Builder\HexahedronGridderBuilder.cs" />
     <Compile Include="DataSource\dfmPointSpriteGridderSource.cs" />
     <Compile Include="DataSource\PointSetGridderSource.cs" />
-    <Compile Include="DataSource\DynamicUnstructureGridderSource.cs" />
+    <Compile Include="DataSource\DynamicUnstructuredGridderSource.cs" />
     <Compile Include="DataSource\UnStructuredGridderSource.cs" />
     <Compile Include="DynamicUnStructuredGridderElement.cs" />
     <Compile Include="DynamicUnStructuredGridderElement_IBoundingBox.cs" />
@@ -60,6 +60,7 @@
     <Compile Include="FontResources\CharacterInfoHelper.cs" />
     <Compile Include="FontResources\FontResource.cs" />
     <Compile Include="FontResources\KeyValuePairHelper.cs" />
+    <Compile Include="loader\DynamicUnstructureGeometryLoader.cs" />
     <Compile Include="loader\UnstructureGeometryLoader.cs" />
     <Compile Include="PointSpriteStringElement_InitTexture.cs" />
     <Compile Include="PointSpriteStringElement.cs" />

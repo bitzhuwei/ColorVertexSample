@@ -5,18 +5,12 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using YieldingGeometryModel.Builder;
+using YieldingGeometryModel.DataSource;
 
-namespace YieldingGeometryModel.DataSource
+namespace YieldingGeometryModel.loader
 {
-    /// <summary>
-    /// 无结构的四面体网格，包含二维无结构和三维四面体网格的格式,
-    /// 文件内容分为三个段,依次为nodes,elements,fractures.
-    /// nodes为（x,y,z,0)的数组
-    /// elements元素为nodes数组的索引,element[ELEMENT_FORMAT3+1](三角形) 或element[ELEMENT_FORMAT4+1](4面体)
-    /// fratures元素为node数组的索引, fracture[FRACTURE_FORMAT2+1] (线段） 或fracture[FRACTURE_FORMAT3+1](三角形)]  
-    /// elements.Length+fractures.Length = NX*NY*NZ ,通常NY,NZ =1， 所以NX = (elements.length+fratures.length)
-    /// </summary>
-    public class DynamicUnstructureGridderSource : GridderSource
+    public class DynamicUnstructureGeometryLoader
     {
         private static readonly string[] delimeters = { "\t", " " };
 
@@ -30,68 +24,6 @@ namespace YieldingGeometryModel.DataSource
         public const int MARKER_FAULT = 2;
 
         /// <summary>
-        /// 文件头定义: 点的个数
-        /// </summary>
-        public int NodeNum { get; protected set; }
-
-        public Vertex[] Nodes { get; set; }
-
-        /// <summary>
-        /// 如果nodeInElem 为NODE_FORMAT3 时，element部分表示三角形，elem
-        /// </summary>
-        public int ElementNum { get; private set; }
-
-        /// <summary>
-        /// 基质几何结构描述
-        /// </summary>
-        public int[][] Elements { get; private set; }
-
-        /// <summary>
-        /// 基质格式定义
-        /// 当值为ElEMENT_FORMAT3,表示elements段为三角型，此时任意element为elements[i][ELEMENT_FORMAT3+1]，
-        /// ELEMENT_FORMAT4时表示为四面体,此时elements[i][ELEMENT_FORMAT4+1]四面体
-        /// 每个element数组最后一个描述保留，值为0
-        /// </summary>
-        public int ElementFormat { get; private set; }
-
-        /// <summary>
-        /// 断层和裂缝数
-        /// </summary>
-        public int FractureNum { get; private set; }
-
-        public int[][] Fractures { get; private set; }
-
-        /// <summary>
-        /// FRACTURE_FORMAT2是 fractures[i][FRACTURE_FORMAT2+1]
-        /// FRACTURE_FORMAT2是 fractures[i][FRACTURE_FORMAT3+1]
-        /// fracure[]中最后一个数组元素表示MARKER
-        /// </summary>
-        public int FractureFormat { get; private set; }
-
-
-        private static StreamReader Open(String fileName)
-        {
-            StreamReader reader = new StreamReader(new BufferedStream(new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite), 128 * 1024));
-            return reader;
-        }
-
-        private static string ReadLine(StreamReader reader, ref int lineCounter)
-        {
-            string line = null;
-            while ((line = reader.ReadLine()) != null)
-            {
-                lineCounter++;
-                line = line.Trim();
-                if (String.IsNullOrEmpty(line))
-                    continue;
-                else
-                    break;
-            }
-            return line;
-        }
-
-
-        /// <summary>
         /// 
         /// </summary>
         /// <param name="pathFileName"></param>
@@ -99,9 +31,9 @@ namespace YieldingGeometryModel.DataSource
         /// <param name="ny"></param>
         /// <param name="nz"></param>
         /// <returns></returns>
-        public static DynamicUnstructureGridderSource Load(string pathFileName, int nx, int ny, int nz)
+        public static DynamicUnstructuredGridderSource Load(string pathFileName, int nx, int ny, int nz)
         {
-            DynamicUnstructureGridderSource src = new DynamicUnstructureGridderSource();
+            DynamicUnstructuredGridderSource src = new DynamicUnstructuredGridderSource();
             src.NX = nx;
             src.NY = ny;
             src.NZ = nz;
@@ -213,6 +145,27 @@ namespace YieldingGeometryModel.DataSource
             {
                 reader.Close();
             }
+        }
+
+        private static StreamReader Open(String fileName)
+        {
+            StreamReader reader = new StreamReader(new BufferedStream(new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite), 128 * 1024));
+            return reader;
+        }
+
+        private static string ReadLine(StreamReader reader, ref int lineCounter)
+        {
+            string line = null;
+            while ((line = reader.ReadLine()) != null)
+            {
+                lineCounter++;
+                line = line.Trim();
+                if (String.IsNullOrEmpty(line))
+                    continue;
+                else
+                    break;
+            }
+            return line;
         }
     }
 }
