@@ -99,8 +99,8 @@ namespace YieldingGeometryModel
                     gl.GetFloat(SharpGL.Enumerations.GetTarget.LineWidth, originalWidth);
 
                     gl.LineWidth(this.lineWidth);
-                    //gl.DrawArrays(OpenGL.GL_LINES, 0, this.fractionsBufferObjectCount);
-                    gl.DrawArrays(OpenGL.GL_LINES, 0, this.linesCount);
+                    gl.DrawArrays(OpenGL.GL_LINES, 0, this.fractionsBufferObjectCount);
+                    //gl.DrawArrays(OpenGL.GL_LINES, 0, this.linesCount);
 
                     gl.LineWidth(originalWidth[0]);
                 }
@@ -128,8 +128,8 @@ namespace YieldingGeometryModel
                         //gl.GetFloat(SharpGL.Enumerations.GetTarget.LineWidth, originalWidth);
 
                         //gl.LineWidth(this.lineWidth);
-                        //gl.DrawArrays(OpenGL.GL_LINES, 0, this.fractionsBufferObjectCount);
-                        gl.DrawArrays(OpenGL.GL_LINES, 0, this.linesCount);
+                        gl.DrawArrays(OpenGL.GL_LINES, 0, this.fractionsBufferObjectCount);
+                        //gl.DrawArrays(OpenGL.GL_LINES, 0, this.linesCount);
 
                         //gl.LineWidth(originalWidth[0]);
                     }
