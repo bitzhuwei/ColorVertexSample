@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builder\DynamicUnstructuredGridderElementHelper.cs" />
     <Compile Include="Builder\VertexHelper.cs" />
     <Compile Include="Builder\HexahedronGridderBuilder.cs" />
     <Compile Include="DataSource\dfmPointSpriteGridderSource.cs" />
