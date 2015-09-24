@@ -18,6 +18,11 @@ namespace YieldingGeometryModel
 {
     public partial class DynamicUnStructuredGridderElement
     {
+        /// <summary>
+        /// 线段宽度。
+        /// </summary>
+        public float lineWidth = 10.0f;
+
         public bool renderFractions = true;
         public bool renderFractionsWireframe = false;
         public bool renderTetras = true;
@@ -86,7 +91,15 @@ namespace YieldingGeometryModel
 
                 //gl.DrawElements(OpenGL.GL_TRIANGLES, this.fractionsIndexCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
                 if (this.vertexCountPerFraction == 2)
-                { gl.DrawArrays(OpenGL.GL_LINES, 0, this.fractionsBufferObjectCount); }
+                { 
+                    float[] originalWidth = new float[1];
+                    gl.GetFloat(SharpGL.Enumerations.GetTarget.LineWidth, originalWidth);
+
+                    gl.LineWidth(this.lineWidth);
+                    gl.DrawArrays(OpenGL.GL_LINES, 0, this.fractionsBufferObjectCount);
+
+                    gl.LineWidth(originalWidth[0]);
+                }
                 else if (this.vertexCountPerFraction == 3)
                 { gl.DrawArrays(OpenGL.GL_TRIANGLES, 0, this.fractionsBufferObjectCount); }
 
@@ -106,7 +119,15 @@ namespace YieldingGeometryModel
 
                     //gl.DrawElements(OpenGL.GL_TRIANGLES, this.fractionsIndexCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
                     if (this.vertexCountPerFraction == 2)
-                    { gl.DrawArrays(OpenGL.GL_LINES, 0, this.fractionsBufferObjectCount); }
+                    { 
+                        //float[] originalWidth=new float[1];
+                        //gl.GetFloat(SharpGL.Enumerations.GetTarget.LineWidth, originalWidth);
+
+                        //gl.LineWidth(this.lineWidth);
+                        gl.DrawArrays(OpenGL.GL_LINES, 0, this.fractionsBufferObjectCount);
+
+                        //gl.LineWidth(originalWidth[0]);
+                    }
                     else if (this.vertexCountPerFraction == 3)
                     { gl.DrawArrays(OpenGL.GL_TRIANGLES, 0, this.fractionsBufferObjectCount); }
 
