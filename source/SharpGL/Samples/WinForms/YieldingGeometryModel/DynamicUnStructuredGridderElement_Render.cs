@@ -76,6 +76,9 @@ namespace YieldingGeometryModel
         //        }
         //    }
         //}
+
+        public int linesCount = 0;
+
         public void Render(OpenGL gl, RenderMode renderMode)
         {
             BeforeRendering(gl, renderMode);
@@ -96,7 +99,8 @@ namespace YieldingGeometryModel
                     gl.GetFloat(SharpGL.Enumerations.GetTarget.LineWidth, originalWidth);
 
                     gl.LineWidth(this.lineWidth);
-                    gl.DrawArrays(OpenGL.GL_LINES, 0, this.fractionsBufferObjectCount);
+                    //gl.DrawArrays(OpenGL.GL_LINES, 0, this.fractionsBufferObjectCount);
+                    gl.DrawArrays(OpenGL.GL_LINES, 0, this.linesCount);
 
                     gl.LineWidth(originalWidth[0]);
                 }
@@ -124,7 +128,8 @@ namespace YieldingGeometryModel
                         //gl.GetFloat(SharpGL.Enumerations.GetTarget.LineWidth, originalWidth);
 
                         //gl.LineWidth(this.lineWidth);
-                        gl.DrawArrays(OpenGL.GL_LINES, 0, this.fractionsBufferObjectCount);
+                        //gl.DrawArrays(OpenGL.GL_LINES, 0, this.fractionsBufferObjectCount);
+                        gl.DrawArrays(OpenGL.GL_LINES, 0, this.linesCount);
 
                         //gl.LineWidth(originalWidth[0]);
                     }

@@ -118,8 +118,8 @@ namespace YieldingGeometryModel
             Vertex[] coords = source.Nodes;
             //int[][] triangles = this.source.Triangles;
             //int[][] fractions = this.source.Fractions;
-            int[][] fractions = this.source.Fractures;
-            int length = fractions.Length;
+            int[][] fractures = this.source.Fractures;
+            int length = fractures.Length;
             UnmanagedArray<vec3> positionArray = new UnmanagedArray<vec3>(length * vertexCountPerFraction);
             vec3* first = (vec3*)positionArray.FirstElement();
             //vec3* last = (vec3*)positionArray.LastElement();
@@ -130,11 +130,12 @@ namespace YieldingGeometryModel
             {
                 for (int i = 0; i < length; i++)
                 {
-                    var entityIndex = fractions[i];
-                    for (int vertexIndex = 0; vertexIndex < vertexCountPerFraction; vertexIndex++)
+                    var fracture = fractures[i];
+                    for (int j = 0; j < vertexCountPerFraction; j++)
                     {
-                        Vertex vertex = coords[entityIndex[vertexIndex]];
-                        *(currentPosition + vertexIndex) = new vec3(vertex.X, vertex.Y, vertex.Z);
+                        int coordIndex = fracture[j];
+                        Vertex vertex = coords[coordIndex];
+                        *(currentPosition + j) = new vec3(vertex.X, vertex.Y, vertex.Z);
                     }
                     currentPosition += vertexCountPerFraction;
                 }
@@ -143,11 +144,12 @@ namespace YieldingGeometryModel
             {
                 for (int i = 0; i < length; i++)
                 {
-                    var entityIndex = fractions[i];
-                    for (int vertexIndex = 0; vertexIndex < vertexCountPerFraction; vertexIndex++)
+                    var fracture = fractures[i];
+                    for (int j = 0; j < vertexCountPerFraction; j++)
                     {
-                        Vertex vertex = coords[entityIndex[vertexIndex]];
-                        *(currentPosition + vertexIndex) = new vec3(vertex.X, vertex.Y, vertex.Z);
+                        int coordIndex = fracture[j];
+                        Vertex vertex = coords[coordIndex];
+                        *(currentPosition + j) = new vec3(vertex.X, vertex.Y, vertex.Z);
                     }
                     currentPosition += vertexCountPerFraction;
                 }

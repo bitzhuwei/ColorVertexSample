@@ -57,6 +57,7 @@ namespace ColorVertexSample
             try
             {
                 MessageBox.Show("Please make sure you put 'geometry.txt' under the same directory with this exe.");
+                MessageBox.Show("Use 'J' to increase lines, 'K' to decrease lines.");
                 String dataRoot = @".";
                 String modelGrid = "geometry.txt";
 
@@ -165,15 +166,17 @@ namespace ColorVertexSample
 
         private void scientificVisual3DControl_KeyPress(object sender, KeyPressEventArgs e)
         {
-            //if (e.KeyChar == 'j')
-            //{
-            //    this.element.CurrentTetrasIndexCount++;
-            //}
-            //else if (e.KeyChar == 'k')
-            //{
-            //    this.element.CurrentTetrasIndexCount--;
-            //}
-            //this.scientificVisual3DControl.Invalidate();
+            if (e.KeyChar == 'j')
+            {
+                //this.element.CurrentTetrasIndexCount++;
+                this.element.linesCount++;
+            }
+            else if (e.KeyChar == 'k')
+            {
+                //this.element.CurrentTetrasIndexCount--;
+                this.element.linesCount--;
+            }
+            this.scientificVisual3DControl.Invalidate();
         }
     }
 }
