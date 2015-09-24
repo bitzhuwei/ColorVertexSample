@@ -40,13 +40,13 @@ namespace YieldingGeometryModel
         uint in_PositionLocation = 0;
         uint in_ColorLocation = 1;
 
-        UnStructuredGridderSource source;
+        DynamicUnstructuredGridderSource source;
 
         /// <summary>
         /// 用于渲染UnStructuredGridder
         /// Rendering gridder of UnStructuredGridder.
         /// </summary>
-        public DynamicUnStructuredGridderElement(UnStructuredGridderSource source, IScientificCamera camera)
+        public DynamicUnStructuredGridderElement(DynamicUnstructuredGridderSource source, IScientificCamera camera)
         {
             if (source == null) { throw new ArgumentNullException("source"); }
 

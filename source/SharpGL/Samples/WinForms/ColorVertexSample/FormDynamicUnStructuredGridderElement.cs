@@ -56,24 +56,19 @@ namespace ColorVertexSample
         {
             try
             {
-                MessageBox.Show("Please make sure you put 'ListCVFracture.txt', 'ListCVBorder.txt', 'Model.grid' under the same directory with this exe.");
+                MessageBox.Show("Please make sure you put 'geometry.txt' under the same directory with this exe.");
                 String dataRoot = @".";
-                String fractionTagsName = "ListCVFracture.txt";
-                String borderTagsName = "ListCVBorder.txt";
-                String modelGrid = "Model.grid";
+                String modelGrid = "geometry.txt";
 
                 var startTime = DateTime.Now;
 
                 string gridPathFileName = Path.Combine(dataRoot, modelGrid);
 
-                string fractionTagPathFileName = Path.Combine(dataRoot, fractionTagsName);
-
-                string borderTagPathFileName = Path.Combine(dataRoot, borderTagsName);
-
-                UnstructureGeometryLoader loader = new UnstructureGeometryLoader();
+                DynamicUnstructureGeometryLoader loader = new DynamicUnstructureGeometryLoader();
 
                 DateTime start = DateTime.Now;
-                UnStructuredGridderSource source = loader.LoadSource(gridPathFileName, fractionTagPathFileName, borderTagPathFileName);
+                // TODO: 如何取得实际业务中的11716？是否应在LoadSource中指定？
+                DynamicUnstructuredGridderSource source = loader.LoadSource(gridPathFileName, 11716, 1, 1);
                 DateTime stop = DateTime.Now;
                 double seconds = (stop.Ticks - start.Ticks) / 1000.0d;
 

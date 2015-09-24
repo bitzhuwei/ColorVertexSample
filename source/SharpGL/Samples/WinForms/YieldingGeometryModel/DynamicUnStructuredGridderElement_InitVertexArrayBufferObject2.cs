@@ -19,7 +19,7 @@ namespace YieldingGeometryModel
 {
     public partial class DynamicUnStructuredGridderElement
     {
-        
+
         private uint[] vertexArrayObject = new uint[2];
         private uint[] tetrasPositionBufferObject = new uint[1];
         private uint[] tetrasColorBufferObject = new uint[1];
@@ -31,26 +31,46 @@ namespace YieldingGeometryModel
         private int tetrasIndexBufferObjectCount;
         private int fractionsBufferObjectCount;
 
-        const int vertexCountPerTriangle = 3;
-        const int vertexCountPerTetra = 6;
+        /// <summary>
+        /// 2 or 3
+        /// </summary>
+        int vertexCountPerFraction;
+        /// <summary>
+        /// 3 or 6
+        /// </summary>
+        int vertexCountPerTetra;
 
         private void InitVAO(OpenGL gl)
         {
             {
-                int[][] tetras = this.source.Tetras;
+                //int[][] tetras = this.source.Tetras;
+                int[][] tetras = this.source.Elements;
                 int length = tetras.Length;
-                this.tetrasIndexBufferObjectCount = length * (vertexCountPerTetra + 1);
+                if (this.source.ElementFormat == 3)
+                {
+                    vertexCountPerTetra = this.source.ElementFormat;
+                    this.tetrasIndexBufferObjectCount = length * (vertexCountPerTetra);
+                }
+                else if (this.source.ElementFormat == 4)
+                {
+                    vertexCountPerTetra = 6;
+                    this.tetrasIndexBufferObjectCount = length * (vertexCountPerTetra + 1);
+                }
             }
             {
-                int[][] fractions = this.source.Fractions;
+                //int[][] fractions = this.source.Fractions;
+                int[][] fractions = this.source.Fractures;
                 int length = fractions.Length;
-                this.fractionsBufferObjectCount = length * vertexCountPerTriangle;
+                vertexCountPerFraction = this.source.FractureFormat;
+                this.fractionsBufferObjectCount = length * vertexCountPerFraction;
             }
 
+            // 三角形或四面体（四面体需要index buffer object）
             PrepareTetrasPositionBufferObject(gl);
             PrepareTetrasColorBufferObject(gl);
             PrepareTetrasIndexBufferObject(gl);
 
+            // 线段或三角形
             PrepareFractionsPositionBufferObject(gl);
             PrepareFractionsColorBufferObject(gl);
 
@@ -66,28 +86,23 @@ namespace YieldingGeometryModel
         {
             //Vertex[] coords = source.Coords;
             //int[][] triangles = this.source.Triangles;
-            int[][] fractions = this.source.Fractions;
+            //int[][] fractions = this.source.Fractions;
+            int[][] fractions = this.source.Fractures;
             int length = fractions.Length;
-            UnmanagedArray<vec4> colorArray = new UnmanagedArray<vec4>(length * vertexCountPerTriangle);
+            UnmanagedArray<vec4> colorArray = new UnmanagedArray<vec4>(length * vertexCountPerFraction);
             vec4* header = (vec4*)colorArray.FirstElement();
             //vec4* last = (vec4*)colorArray.LastElement();
             //vec4* tail = (vec4*)colorArray.TailAddress();
             vec4* currentPosition = header;
 
-            for (int i = 0; i < fractions.Length; i++)
+            for (int i = 0; i < length; i++)
             {
                 vec4 color = new vec4((float)random.NextDouble(), (float)random.NextDouble(), (float)random.NextDouble(), (float)random.NextDouble());
-                for (int vertexIndex = 0; vertexIndex < 3; vertexIndex++)
+                for (int vertexIndex = 0; vertexIndex < vertexCountPerFraction; vertexIndex++)
                 {
                     *(currentPosition + vertexIndex) = color;
                 }
-                currentPosition += vertexCountPerTriangle;
-
-                var triangleIndex = fractions[i];
-                if (triangleIndex[3] == -1)
-                {
-                    Console.WriteLine("something wrong in your mind");
-                }
+                currentPosition += vertexCountPerFraction;
             }
 
             gl.GenBuffers(1, this.fractionsColorBufferObject);
@@ -99,29 +114,42 @@ namespace YieldingGeometryModel
 
         private unsafe void PrepareFractionsPositionBufferObject(OpenGL gl)
         {
-            Vertex[] coords = source.Coords;
+            //Vertex[] coords = source.Coords;
+            Vertex[] coords = source.Nodes;
             //int[][] triangles = this.source.Triangles;
-            int[][] fractions = this.source.Fractions;
+            //int[][] fractions = this.source.Fractions;
+            int[][] fractions = this.source.Fractures;
             int length = fractions.Length;
-            UnmanagedArray<vec3> positionArray = new UnmanagedArray<vec3>(length * vertexCountPerTriangle);
-            vec3* header = (vec3*)positionArray.FirstElement();
+            UnmanagedArray<vec3> positionArray = new UnmanagedArray<vec3>(length * vertexCountPerFraction);
+            vec3* first = (vec3*)positionArray.FirstElement();
             //vec3* last = (vec3*)positionArray.LastElement();
             //vec3* tail = (vec3*)positionArray.TailAddress();
-            vec3* currentPosition = header;
+            vec3* currentPosition = first;
 
-            for (int i = 0; i < fractions.Length; i++)
+            if (vertexCountPerFraction == 2)// 线段 Lines
             {
-                var triangleIndex = fractions[i];
-                for (int vertexIndex = 0; vertexIndex < 3; vertexIndex++)
+                for (int i = 0; i < length; i++)
                 {
-                    Vertex vertex = coords[triangleIndex[vertexIndex]];
-                    *(currentPosition + vertexIndex) = new vec3(vertex.X, vertex.Y, vertex.Z);
+                    var entityIndex = fractions[i];
+                    for (int vertexIndex = 0; vertexIndex < vertexCountPerFraction; vertexIndex++)
+                    {
+                        Vertex vertex = coords[entityIndex[vertexIndex]];
+                        *(currentPosition + vertexIndex) = new vec3(vertex.X, vertex.Y, vertex.Z);
+                    }
+                    currentPosition += vertexCountPerFraction;
                 }
-                currentPosition += vertexCountPerTriangle;
-
-                if (triangleIndex[3] == -1)
+            }
+            else if (vertexCountPerFraction == 3)// 三角形 Triangles
+            {
+                for (int i = 0; i < length; i++)
                 {
-                    Console.WriteLine("something wrong in your mind");
+                    var entityIndex = fractions[i];
+                    for (int vertexIndex = 0; vertexIndex < vertexCountPerFraction; vertexIndex++)
+                    {
+                        Vertex vertex = coords[entityIndex[vertexIndex]];
+                        *(currentPosition + vertexIndex) = new vec3(vertex.X, vertex.Y, vertex.Z);
+                    }
+                    currentPosition += vertexCountPerFraction;
                 }
             }
 
@@ -134,46 +162,56 @@ namespace YieldingGeometryModel
 
         private unsafe void PrepareTetrasIndexBufferObject(OpenGL gl)
         {
-            Vertex[] coords = source.Coords;
-            int[][] triangles = this.source.Triangles;
-            int[][] tetras = this.source.Tetras;
-            int length = tetras.Length;
-            UnmanagedArray<uint> indexArray = new UnmanagedArray<uint>(length * (vertexCountPerTetra + 1));
-            uint* colorHeader = (uint*)indexArray.FirstElement();
-            //uint* colorLast = (uint*)colorArray.LastElement();
-            //uint* colorTail = (uint*)colorArray.TailAddress();
-            uint* currentPosition = colorHeader;
-
-            for (int i = 0; i < length; i++)
+            if (vertexCountPerTetra == 3)//三角形 triangles
             {
-                for (int vertexIndex = 0; vertexIndex < vertexCountPerTetra; vertexIndex++)
-                {
-                    *(currentPosition + vertexIndex) = (uint)(vertexIndex + i * vertexCountPerTetra);
-                }
-                *(currentPosition + vertexCountPerTetra) = uint.MaxValue;
-                currentPosition += (vertexCountPerTetra + 1);
+                // 三角形不需要索引
             }
+            else if (vertexCountPerTetra == 6)//四面体 triangle_strip
+            {
+                //Vertex[] coords = source.Coords;
+                Vertex[] coords = source.Nodes;
+                //int[][] triangles = this.source.Triangles;
+                //int[][] tetras = this.source.Tetras;
+                int[][] tetras = this.source.Elements;
+                int length = tetras.Length;
+                UnmanagedArray<uint> indexArray = new UnmanagedArray<uint>(length * (vertexCountPerTetra + 1));
+                uint* colorHeader = (uint*)indexArray.FirstElement();
+                //uint* colorLast = (uint*)colorArray.LastElement();
+                //uint* colorTail = (uint*)colorArray.TailAddress();
+                uint* currentPosition = colorHeader;
 
-            gl.GenBuffers(1, this.tetrasIndexBufferObject);
-            gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, this.tetrasIndexBufferObject[0]);
-            gl.BufferData(OpenGL.GL_ELEMENT_ARRAY_BUFFER, indexArray.ByteLength, indexArray.Header, OpenGL.GL_STATIC_DRAW);
+                for (int i = 0; i < length; i++)
+                {
+                    for (int vertexIndex = 0; vertexIndex < vertexCountPerTetra; vertexIndex++)
+                    {
+                        *(currentPosition + vertexIndex) = (uint)(vertexIndex + i * vertexCountPerTetra);
+                    }
+                    *(currentPosition + vertexCountPerTetra) = uint.MaxValue;
+                    currentPosition += (vertexCountPerTetra + 1);
+                }
+                gl.GenBuffers(1, this.tetrasIndexBufferObject);
+                gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, this.tetrasIndexBufferObject[0]);
+                gl.BufferData(OpenGL.GL_ELEMENT_ARRAY_BUFFER, indexArray.ByteLength, indexArray.Header, OpenGL.GL_STATIC_DRAW);
 
-            indexArray.Dispose();
+                indexArray.Dispose();
+            }
         }
 
         private unsafe void PrepareTetrasColorBufferObject(OpenGL gl)
         {
-            Vertex[] coords = source.Coords;
-            int[][] triangles = this.source.Triangles;
-            int[][] tetras = this.source.Tetras;
+            //Vertex[] coords = source.Coords;
+            Vertex[] coords = source.Nodes;
+            //int[][] triangles = this.source.Triangles;
+            //int[][] tetras = this.source.Tetras;
+            int[][] tetras = this.source.Elements;
             int length = tetras.Length;
             // http://www.cnblogs.com/bitzhuwei/gallery/image/159266.html
-            const int vertexCountPerTetra = 6;
+            //const int vertexCountPerTetra = 6;
             UnmanagedArray<vec4> colorArray = new UnmanagedArray<vec4>(length * vertexCountPerTetra);
-            vec4* colorHeader = (vec4*)colorArray.FirstElement();
-            //vec4* colorLast = (vec4*)colorArray.LastElement();
-            //vec4* colorTail = (vec4*)colorArray.TailAddress();
-            vec4* currentPosition = colorHeader;
+            vec4* headPointer = (vec4*)colorArray.FirstElement();
+            //vec4* lastPointer = (vec4*)colorArray.LastElement();
+            //vec4* tailPointer = (vec4*)colorArray.TailAddress();
+            vec4* currentPosition = headPointer;
 
             for (int i = 0; i < length; i++)
             {
@@ -194,9 +232,11 @@ namespace YieldingGeometryModel
 
         private unsafe void PrepareTetrasPositionBufferObject(OpenGL gl)
         {
-            Vertex[] coords = source.Coords;
-            int[][] triangles = this.source.Triangles;
-            int[][] tetras = this.source.Tetras;
+            //Vertex[] coords = source.Coords;
+            Vertex[] coords = source.Nodes;
+            //int[][] triangles = this.source.Triangles;
+            //int[][] tetras = this.source.Tetras;
+            int[][] tetras = this.source.Elements;
             int length = tetras.Length;
             // http://www.cnblogs.com/bitzhuwei/gallery/image/159266.html
             UnmanagedArray<vec3> positionArray = new UnmanagedArray<vec3>(length * vertexCountPerTetra);
@@ -205,44 +245,40 @@ namespace YieldingGeometryModel
             //vec3* positionTail = (vec3*)positionArray.TailAddress();
             vec3* currentPosition = positionHeader;
 
-            int tmpInvalidTetraCount = 0;
-            for (int i = 0; i < length; i++)
+            if (vertexCountPerTetra == 3)//三角形 triangles
             {
-                int[] tetra = tetras[i];
-                int tetraIndex = tetra[4];
-                List<Vertex> positions = new List<Vertex>();
-                // find 4 points positions
-                for (int j = 0; j < 4; j++)
+                for (int i = 0; i < length; i++)
                 {
-                    var faceIndex = tetra[j];
-                    var triangleIndex = triangles[faceIndex];
-
-                    for (int vertexIndex = 0; vertexIndex < 3; vertexIndex++)
+                    int[] tetra = tetras[i];
+                    int vertexIndex = 0;
+                    for (int j = 0; j < vertexCountPerTetra; j++)
                     {
-                        Vertex vertex = coords[triangleIndex[vertexIndex]];
-                        positions.Add(vertex);
+                        int coordIndex = tetra[j] - 1;
+                        Vertex vertex = coords[coordIndex];
+                        *(currentPosition + vertexIndex) = new vec3(vertex.X, vertex.Y, vertex.Z);
+                        vertexIndex++;
                     }
+                    currentPosition += vertexCountPerTetra;
                 }
-                var distincted = positions.Distinct();
-                if (distincted.Count() != 4)
-                {
-                    //Console.WriteLine("not a valid tetra!");
-                    tmpInvalidTetraCount++;
-                }
-                else
+            }
+            else if (vertexCountPerTetra == 6)//四面体 triangle_strip
+            {
+                for (int i = 0; i < length; i++)
                 {
                     // http://www.cnblogs.com/bitzhuwei/gallery/image/159266.html
+                    int[] tetra = tetras[i];
                     int vertexIndex = 0;
-                    foreach (var vertex in distincted)
+                    for (int j = 0; j < 4; j++)
                     {
-                        *(currentPosition + vertexIndex) = new vec3(vertex.X, vertex.Y, vertex.Z);
+                        int coordIndex = tetra[j] - 1;
+                        Vertex coord = coords[coordIndex];
+                        *(currentPosition + vertexIndex) = new vec3(coord.X, coord.Y, coord.Z);
                         vertexIndex++;
                     }
                     *(currentPosition + 4) = *(currentPosition + 0);
                     *(currentPosition + 5) = *(currentPosition + 1);
+                    currentPosition += vertexCountPerTetra;
                 }
-
-                currentPosition += vertexCountPerTetra;
             }
 
             gl.GenBuffers(1, this.tetrasPositionBufferObject);
@@ -271,6 +307,11 @@ namespace YieldingGeometryModel
             }
 
             // index
+            if (this.vertexCountPerTetra == 3)// 三角形，不需要index
+            {
+                // nothing to do.
+            }
+            else if (this.vertexCountPerTetra == 6)// 四面体，需要index
             {
                 gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, this.tetrasIndexBufferObject[0]);
             }

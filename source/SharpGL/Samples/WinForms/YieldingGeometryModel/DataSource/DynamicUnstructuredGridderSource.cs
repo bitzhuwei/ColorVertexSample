@@ -58,5 +58,7 @@ namespace YieldingGeometryModel.DataSource
         /// </summary>
         public int FractureFormat { get; internal set; }
 
+        public Vertex Min { get; internal set; }
+        public Vertex Max { get; internal set; }
     }
 }

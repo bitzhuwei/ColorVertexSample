@@ -407,8 +407,8 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(18, 47);
-            this.Name = "FormUnStructuredGridderElement";
-            this.Text = "UnStructuredGridderElement";
+            this.Name = "FormDynamicUnStructuredGridderElement";
+            this.Text = "DynamicUnStructuredGridderElement";
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.scientificVisual3DControl)).EndInit();
             this.panel1.ResumeLayout(false);

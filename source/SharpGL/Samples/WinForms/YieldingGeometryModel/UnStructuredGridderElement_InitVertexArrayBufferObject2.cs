@@ -139,19 +139,19 @@ namespace YieldingGeometryModel
             int[][] tetras = this.source.Tetras;
             int length = tetras.Length;
             UnmanagedArray<uint> indexArray = new UnmanagedArray<uint>(length * (vertexCountPerTetra + 1));
-            uint* colorHeader = (uint*)indexArray.FirstElement();
-            //uint* colorLast = (uint*)colorArray.LastElement();
-            //uint* colorTail = (uint*)colorArray.TailAddress();
-            uint* currentPosition = colorHeader;
+            uint* headPointer = (uint*)indexArray.FirstElement();
+            //uint* lastPointer = (uint*)indexArray.LastElement();
+            //uint* tailPointer = (uint*)indexArray.TailAddress();
+            uint* current = headPointer;
 
             for (int i = 0; i < length; i++)
             {
                 for (int vertexIndex = 0; vertexIndex < vertexCountPerTetra; vertexIndex++)
                 {
-                    *(currentPosition + vertexIndex) = (uint)(vertexIndex + i * vertexCountPerTetra);
+                    *(current + vertexIndex) = (uint)(vertexIndex + i * vertexCountPerTetra);
                 }
-                *(currentPosition + vertexCountPerTetra) = uint.MaxValue;
-                currentPosition += (vertexCountPerTetra + 1);
+                *(current + vertexCountPerTetra) = uint.MaxValue;
+                current += (vertexCountPerTetra + 1);
             }
 
             gl.GenBuffers(1, this.tetrasIndexBufferObject);

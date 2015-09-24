@@ -31,7 +31,7 @@ namespace YieldingGeometryModel.loader
         /// <param name="ny"></param>
         /// <param name="nz"></param>
         /// <returns></returns>
-        public static DynamicUnstructuredGridderSource Load(string pathFileName, int nx, int ny, int nz)
+        public DynamicUnstructuredGridderSource LoadSource(string pathFileName, int nx, int ny, int nz)
         {
             DynamicUnstructuredGridderSource src = new DynamicUnstructuredGridderSource();
             src.NX = nx;
@@ -55,6 +55,7 @@ namespace YieldingGeometryModel.loader
                     throw new FormatException("bad format, head not match");
 
                 int total = src.DimenSize;
+                //src.NX = total;//TODO：是否应由此处指定NX？
                 int nodeNum, elemNum, elemFormat, fracNum, fracFormat;
 
                 #region read header
@@ -73,6 +74,9 @@ namespace YieldingGeometryModel.loader
 
                 #endregion
 
+                bool gotFirstMin = false; bool gotFirstMax = false;
+                Vertex min = new Vertex(), max = new Vertex();
+
                 #region read nodes
                 Vertex[] nodes = new Vertex[nodeNum];
                 for (int i = 0; i < nodeNum; i++)
@@ -88,8 +92,29 @@ namespace YieldingGeometryModel.loader
                     float y = System.Convert.ToSingle(fields[1]);
                     float z = System.Convert.ToSingle(fields[2]);
                     nodes[i] = new Vertex(x, y, z);
+                    if (!gotFirstMax)
+                    {
+                        max = nodes[i];
+                        gotFirstMax = true;
+                    }
+                    else
+                    {
+                        max = VertexHelper.Max(max, nodes[i]);
+                    }
+                    if (!gotFirstMin)
+                    {
+                        min = nodes[i];
+                        gotFirstMin = true;
+                    }
+                    else
+                    {
+                        min = VertexHelper.Min(min, nodes[i]);
+                    }
                 }
                 #endregion
+
+                src.Min = min;
+                src.Max = max;
 
                 #region read elements
                 int[][] elements = new int[elemNum][];
@@ -147,13 +172,13 @@ namespace YieldingGeometryModel.loader
             }
         }
 
-        private static StreamReader Open(String fileName)
+        private StreamReader Open(String fileName)
         {
             StreamReader reader = new StreamReader(new BufferedStream(new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite), 128 * 1024));
             return reader;
         }
 
-        private static string ReadLine(StreamReader reader, ref int lineCounter)
+        private string ReadLine(StreamReader reader, ref int lineCounter)
         {
             string line = null;
             while ((line = reader.ReadLine()) != null)
@@ -166,6 +191,28 @@ namespace YieldingGeometryModel.loader
                     break;
             }
             return line;
+        }
+
+        class VertexHelper
+        {
+            public static Vertex Min(Vertex current, Vertex other)
+            {
+                var x = Math.Min(current.X, other.X);
+                var y = Math.Min(current.Y, other.Y);
+                var z = Math.Min(current.Z, other.Z);
+
+                return new Vertex(x, y, z);
+            }
+
+            public static Vertex Max(Vertex current, Vertex other)
+            {
+                var x = Math.Max(current.X, other.X);
+                var y = Math.Max(current.Y, other.Y);
+                var z = Math.Max(current.Z, other.Z);
+
+                return new Vertex(x, y, z);
+            }
+
         }
     }
 }

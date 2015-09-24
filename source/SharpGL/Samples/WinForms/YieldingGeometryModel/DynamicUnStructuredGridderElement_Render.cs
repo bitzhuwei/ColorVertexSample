@@ -85,7 +85,10 @@ namespace YieldingGeometryModel
                 gl.BindVertexArray(vertexArrayObject[0]);
 
                 //gl.DrawElements(OpenGL.GL_TRIANGLES, this.fractionsIndexCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
-                gl.DrawArrays(OpenGL.GL_TRIANGLES, 0, this.fractionsBufferObjectCount);
+                if (this.vertexCountPerFraction == 2)
+                { gl.DrawArrays(OpenGL.GL_LINES, 0, this.fractionsBufferObjectCount); }
+                else if (this.vertexCountPerFraction == 3)
+                { gl.DrawArrays(OpenGL.GL_TRIANGLES, 0, this.fractionsBufferObjectCount); }
 
                 gl.BindVertexArray(0);
 
@@ -102,7 +105,10 @@ namespace YieldingGeometryModel
                     gl.VertexAttrib3(this.in_ColorLocation, 1.0f, 1.0f, 1.0f);
 
                     //gl.DrawElements(OpenGL.GL_TRIANGLES, this.fractionsIndexCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
-                    gl.DrawArrays(OpenGL.GL_TRIANGLES, 0, this.fractionsBufferObjectCount);
+                    if (this.vertexCountPerFraction == 2)
+                    { gl.DrawArrays(OpenGL.GL_LINES, 0, this.fractionsBufferObjectCount); }
+                    else if (this.vertexCountPerFraction == 3)
+                    { gl.DrawArrays(OpenGL.GL_TRIANGLES, 0, this.fractionsBufferObjectCount); }
 
                     gl.EnableVertexAttribArray(this.in_ColorLocation);
 
@@ -119,12 +125,19 @@ namespace YieldingGeometryModel
                 gl.BindVertexArray(vertexArrayObject[1]);
 
                 //gl.DrawElements(OpenGL.GL_TRIANGLES, this.tetrasIndexCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
-                gl.Enable(OpenGL.GL_PRIMITIVE_RESTART);
-                gl.PrimitiveRestartIndex(uint.MaxValue);
-                gl.DrawElements(OpenGL.GL_TRIANGLE_STRIP, this.tetrasIndexBufferObjectCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
-                //gl.DrawElements(OpenGL.GL_TRIANGLE_STRIP, this.CurrentTetrasIndexCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
-                //gl.DrawArrays(OpenGL.GL_TRIANGLE_STRIP, 0, this.tetrasIndexBufferObjectCount);
-                gl.Disable(OpenGL.GL_PRIMITIVE_RESTART);
+                if (this.vertexCountPerTetra == 3)
+                {
+                    gl.DrawArrays(OpenGL.GL_TRIANGLES, 0, this.tetrasIndexBufferObjectCount);
+                }
+                else if (this.vertexCountPerTetra == 6)
+                {
+                    gl.Enable(OpenGL.GL_PRIMITIVE_RESTART);
+                    gl.PrimitiveRestartIndex(uint.MaxValue);
+                    gl.DrawElements(OpenGL.GL_TRIANGLE_STRIP, this.tetrasIndexBufferObjectCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
+                    //gl.DrawElements(OpenGL.GL_TRIANGLE_STRIP, this.CurrentTetrasIndexCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
+                    //gl.DrawArrays(OpenGL.GL_TRIANGLE_STRIP, 0, this.tetrasIndexBufferObjectCount);
+                    gl.Disable(OpenGL.GL_PRIMITIVE_RESTART);
+                }
 
                 gl.BindVertexArray(0);
 
@@ -140,13 +153,20 @@ namespace YieldingGeometryModel
                     gl.DisableVertexAttribArray(this.in_ColorLocation);
                     gl.VertexAttrib3(this.in_ColorLocation, 1.0f, 1.0f, 1.0f);
 
-                    gl.Enable(OpenGL.GL_PRIMITIVE_RESTART);
-                    gl.PrimitiveRestartIndex(uint.MaxValue);
-                    gl.DrawElements(OpenGL.GL_TRIANGLE_STRIP, this.tetrasIndexBufferObjectCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
-                    //gl.DrawElements(OpenGL.GL_TRIANGLE_STRIP, this.CurrentTetrasIndexCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
-                    //gl.DrawArrays(OpenGL.GL_TRIANGLE_STRIP, 0, this.tetrasIndexBufferObjectCount);
-                    gl.Disable(OpenGL.GL_PRIMITIVE_RESTART);
-
+                    if (this.vertexCountPerTetra == 3)
+                    {
+                        gl.DrawArrays(OpenGL.GL_TRIANGLES, 0, this.tetrasIndexBufferObjectCount);
+                    }
+                    else if (this.vertexCountPerTetra == 6)
+                    {
+                        gl.Enable(OpenGL.GL_PRIMITIVE_RESTART);
+                        gl.PrimitiveRestartIndex(uint.MaxValue);
+                        gl.DrawElements(OpenGL.GL_TRIANGLE_STRIP, this.tetrasIndexBufferObjectCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
+                        //gl.DrawElements(OpenGL.GL_TRIANGLE_STRIP, this.CurrentTetrasIndexCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
+                        //gl.DrawArrays(OpenGL.GL_TRIANGLE_STRIP, 0, this.tetrasIndexBufferObjectCount);
+                        gl.Disable(OpenGL.GL_PRIMITIVE_RESTART);
+                    }
+                   
                     gl.EnableVertexAttribArray(this.in_ColorLocation);
 
                     gl.PolygonMode(SharpGL.Enumerations.FaceMode.FrontAndBack, SharpGL.Enumerations.PolygonMode.Filled);
