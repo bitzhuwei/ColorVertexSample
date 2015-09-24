@@ -35,6 +35,7 @@
             this.btnFormUnStructuredGridderElement = new System.Windows.Forms.Button();
             this.btnFormScientificVisual3DControl = new System.Windows.Forms.Button();
             this.btnFormdfmPointSpriteGridderElement = new System.Windows.Forms.Button();
+            this.btnFormDynamicUnStructuredGridderElement = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnWell
@@ -121,12 +122,25 @@
             this.btnFormdfmPointSpriteGridderElement.UseVisualStyleBackColor = true;
             this.btnFormdfmPointSpriteGridderElement.Click += new System.EventHandler(this.btnFormdfmPointSpriteGridderElement_Click);
             // 
+            // btnFormDynamicUnStructuredGridderElement
+            // 
+            this.btnFormDynamicUnStructuredGridderElement.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFormDynamicUnStructuredGridderElement.Location = new System.Drawing.Point(12, 215);
+            this.btnFormDynamicUnStructuredGridderElement.Name = "btnFormDynamicUnStructuredGridderElement";
+            this.btnFormDynamicUnStructuredGridderElement.Size = new System.Drawing.Size(930, 23);
+            this.btnFormDynamicUnStructuredGridderElement.TabIndex = 0;
+            this.btnFormDynamicUnStructuredGridderElement.Text = "FormDynamicUnStructuredGridderElement";
+            this.btnFormDynamicUnStructuredGridderElement.UseVisualStyleBackColor = true;
+            this.btnFormDynamicUnStructuredGridderElement.Click += new System.EventHandler(this.btnFormDynamicUnStructuredGridderElement_Click);
+            // 
             // FormPortal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(954, 432);
             this.Controls.Add(this.btnFormScientificVisual3DControl);
+            this.Controls.Add(this.btnFormDynamicUnStructuredGridderElement);
             this.Controls.Add(this.btnFormUnStructuredGridderElement);
             this.Controls.Add(this.btnFormPointSpriteStringElement);
             this.Controls.Add(this.btnFormdfmPointSpriteGridderElement);
@@ -148,5 +162,6 @@
         private System.Windows.Forms.Button btnFormUnStructuredGridderElement;
         private System.Windows.Forms.Button btnFormScientificVisual3DControl;
         private System.Windows.Forms.Button btnFormdfmPointSpriteGridderElement;
+        private System.Windows.Forms.Button btnFormDynamicUnStructuredGridderElement;
     }
 }
