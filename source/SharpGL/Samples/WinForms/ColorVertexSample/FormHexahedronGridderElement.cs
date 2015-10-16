@@ -237,6 +237,8 @@ namespace ColorVertexSample
         private void btnClearModels_Click(object sender, EventArgs e)
         {
             this.scientificVisual3DControl.ClearScientificModels();
+
+            GC.Collect();
         }
 
         private void lblDebugInfo_MouseClick(object sender, MouseEventArgs e)
