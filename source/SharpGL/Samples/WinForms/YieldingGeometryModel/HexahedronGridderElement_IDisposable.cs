@@ -55,12 +55,11 @@ namespace YieldingGeometryModel
                 if (disposing)
                 {
                     // TODO: Dispose managed resources.
+                    CleanManagedRes();
                 } // end if
 
                 // TODO: Dispose unmanaged resources.
-                OpenGL gl=new OpenGL();
-                    
-                this.colorsBufferObject
+                //CleanUnmanagedRes();
             } // end if
 
             this.disposedValue = true;
@@ -68,15 +67,16 @@ namespace YieldingGeometryModel
 
         #endregion
 
-        protected override void CleanUnmanagedRes()
+        protected void CleanUnmanagedRes()
         {
             OpenGL gl = new OpenGL();// this is not cool.
-            gl.InvalidateBufferData(this.positionBufferObj);
-            gl.InvalidateBufferData(this.colorBufferObj);
-            gl.InvalidateBufferData(this.ebo[0]);
+
+            gl.InvalidateBufferData(this.vertexsBufferObject);
+            gl.InvalidateBufferData(this.colorsBufferObject);
+            gl.InvalidateBufferData(this.visiblesBufferObject);
         }
 
-        protected override void CleanManagedRes()
+        protected void CleanManagedRes()
         {
         }
 
