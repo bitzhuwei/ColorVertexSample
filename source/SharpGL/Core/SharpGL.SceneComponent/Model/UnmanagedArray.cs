@@ -137,10 +137,12 @@ namespace SharpGL.SceneComponent
             int memSize = elementCount * elementSize;
             this.Header = Marshal.AllocHGlobal(memSize);
 
-            allocatedArrays.Add(this);
+            //allocatedArrays.Add(this);
+            allocatedArrays.Add(new WeakReference(this));
         }
 
-        private static readonly List<IDisposable> allocatedArrays = new List<IDisposable>();
+        //private static readonly List<IDisposable> allocatedArrays = new List<IDisposable>();
+        private static readonly List<WeakReference> allocatedArrays = new List<WeakReference>();
 
         /// <summary>
         /// 立即释放所有<see cref="UnmanagedArray"/>。
@@ -150,7 +152,15 @@ namespace SharpGL.SceneComponent
         {
             foreach (var item in allocatedArrays)
             {
-                item.Dispose();
+                if (item.IsAlive)
+                {
+                    var disp = item.Target as IDisposable;
+                    if (disp != null)
+                    {
+                        disp.Dispose();
+                    }
+                }
+                //item.Dispose();
             }
             allocatedArrays.Clear();
         }
