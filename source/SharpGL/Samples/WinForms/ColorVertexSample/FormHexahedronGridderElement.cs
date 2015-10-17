@@ -44,35 +44,35 @@ namespace ColorVertexSample
 
         private unsafe void DebugMesh(MeshGeometry mesh)
         {
-             System.Console.WriteLine("---------Positions-----------------");
-             UnmanagedArray<Vertex> array = mesh.Vertexes;
-             for (int i = 0; i < array.Length; i++)
-             {
-                 Vertex v = array[i];
-                 System.Console.WriteLine(string.Format("({0},{1},{2})", v.X, v.Y, v.Z));
-             }
-             System.Console.WriteLine("---------Colors-----------------");
-             UnmanagedArray<ColorF> colors = mesh.VertexColors;
-             for (int i = 0; i < colors.Length; i++)
-             {
-                 ColorF c = colors[i];
-                 System.Console.WriteLine(string.Format("({0},{1},{2},{3})", c.R, c.G, c.B,c.A));
-             }
-             System.Console.WriteLine("---------visibles-----------------");
-             UnmanagedArray<float> visibles = mesh.Visibles;
-             for (int i = 0; i < visibles.Length; i++)
-             {
-                 float c = visibles[i];
-                 System.Console.WriteLine(string.Format("({0})", c));
-             }
+            System.Console.WriteLine("---------Positions-----------------");
+            UnmanagedArray<Vertex> array = mesh.Vertexes;
+            for (int i = 0; i < array.Length; i++)
+            {
+                Vertex v = array[i];
+                System.Console.WriteLine(string.Format("({0},{1},{2})", v.X, v.Y, v.Z));
+            }
+            System.Console.WriteLine("---------Colors-----------------");
+            UnmanagedArray<ColorF> colors = mesh.VertexColors;
+            for (int i = 0; i < colors.Length; i++)
+            {
+                ColorF c = colors[i];
+                System.Console.WriteLine(string.Format("({0},{1},{2},{3})", c.R, c.G, c.B, c.A));
+            }
+            System.Console.WriteLine("---------visibles-----------------");
+            UnmanagedArray<float> visibles = mesh.Visibles;
+            for (int i = 0; i < visibles.Length; i++)
+            {
+                float c = visibles[i];
+                System.Console.WriteLine(string.Format("({0})", c));
+            }
 
-             System.Console.WriteLine("---------TriangleTrip-----------------");
-             UnmanagedArray<uint> triangles = mesh.StripTriangles;
-             for (int i = 0; i < triangles.Length; i++)
-             {
-                 uint t = triangles[i];
-                 System.Console.WriteLine(string.Format("({0})", t));
-             }
+            System.Console.WriteLine("---------TriangleTrip-----------------");
+            UnmanagedArray<uint> triangles = mesh.StripTriangles;
+            for (int i = 0; i < triangles.Length; i++)
+            {
+                uint t = triangles[i];
+                System.Console.WriteLine(string.Format("({0})", t));
+            }
 
 
         }
@@ -234,6 +234,12 @@ namespace ColorVertexSample
             testCaseIndex = testCaseIndex >= rangeMin.Count - 1 ? 0 : testCaseIndex + 1;
         }
 
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            GC.Collect();
+        }
+
         private void btnClearModels_Click(object sender, EventArgs e)
         {
             this.scientificVisual3DControl.ClearScientificModels();
@@ -287,7 +293,7 @@ namespace ColorVertexSample
                     }
                     {
                         PointSpriteGridderElement element = item as PointSpriteGridderElement;
-                        if(element!=null)
+                        if (element != null)
                         {
                             YieldingGeometryModel.Builder.PointSpriteGridderElementHelper.RandomVisibility(element, this.scientificVisual3DControl.OpenGL, 0.2);
                         }
@@ -298,42 +304,42 @@ namespace ColorVertexSample
             }
 
 
-            if(e.KeyChar == 'c')
+            if (e.KeyChar == 'c')
             {
                 OpenGL gl = this.scientificVisual3DControl.OpenGL;
 
-               List<HexahedronGridderElement> elements = this.scientificVisual3DControl.ModelContainer.Traverse<HexahedronGridderElement>().ToList<HexahedronGridderElement>();
-               if (elements.Count > 0)
-               {
-                   HexahedronGridderElement gridder = elements[0];
-                   HexahedronGridderSource  source = gridder.Source;
-                   UnmanagedArray<float> visibles = HexahedronGridderHelper.GridVisibleFromActive(source);
+                List<HexahedronGridderElement> elements = this.scientificVisual3DControl.ModelContainer.Traverse<HexahedronGridderElement>().ToList<HexahedronGridderElement>();
+                if (elements.Count > 0)
+                {
+                    HexahedronGridderElement gridder = elements[0];
+                    HexahedronGridderSource source = gridder.Source;
+                    UnmanagedArray<float> visibles = HexahedronGridderHelper.GridVisibleFromActive(source);
 
-                   //随机生成不完整网格的属性。
-                   int propCount = source.DimenSize / 2;
-                   if (propCount <= 0)
-                       return;
+                    //随机生成不完整网格的属性。
+                    int propCount = source.DimenSize / 2;
+                    if (propCount <= 0)
+                        return;
 
-                   int minValue = 5000;
-                   int maxValue = 10000;
-                   int[] gridIndexes;
-                   float[] gridValues;
-                   HexahedronGridderHelper.RandomValue(propCount, minValue, maxValue, out gridIndexes, out gridValues);
-                   float step = (maxValue - minValue) / 10.0f;
-                   this.scientificVisual3DControl.SetColorIndicator(minValue, maxValue, step);
+                    int minValue = 5000;
+                    int maxValue = 10000;
+                    int[] gridIndexes;
+                    float[] gridValues;
+                    HexahedronGridderHelper.RandomValue(propCount, minValue, maxValue, out gridIndexes, out gridValues);
+                    float step = (maxValue - minValue) / 10.0f;
+                    this.scientificVisual3DControl.SetColorIndicator(minValue, maxValue, step);
 
-                   ColorF[] colors = new ColorF[propCount];
-                   for (int i = 0; i < colors.Length; i++)
-                   {
-                       colors[i] = (ColorF)this.scientificVisual3DControl.MapToColor(gridValues[i]);
-                   }
+                    ColorF[] colors = new ColorF[propCount];
+                    for (int i = 0; i < colors.Length; i++)
+                    {
+                        colors[i] = (ColorF)this.scientificVisual3DControl.MapToColor(gridValues[i]);
+                    }
 
-                   UnmanagedArray<ColorF> colorArray = HexahedronGridderHelper.FromColors(source, gridIndexes, colors, visibles);
-                   gridder.UpdateColorBuffer(gl, colorArray, visibles);
-                   colorArray.Dispose();
-                   visibles.Dispose();
-                   this.scientificVisual3DControl.Invalidate();
-               }
+                    UnmanagedArray<ColorF> colorArray = HexahedronGridderHelper.FromColors(source, gridIndexes, colors, visibles);
+                    gridder.UpdateColorBuffer(gl, colorArray, visibles);
+                    colorArray.Dispose();
+                    visibles.Dispose();
+                    this.scientificVisual3DControl.Invalidate();
+                }
             }
         }
 
