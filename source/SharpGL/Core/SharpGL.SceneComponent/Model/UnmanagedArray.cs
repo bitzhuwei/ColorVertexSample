@@ -152,15 +152,14 @@ namespace SharpGL.SceneComponent
         [MethodImpl(MethodImplOptions.Synchronized)]
         public static void FreeAll()
         {
-            foreach (var pair in allocatedArrays)
+            var list = new List<WeakReference>(allocatedArrays.Values.AsEnumerable());
+            foreach (var item in list)
             {
-                if (pair.Value.IsAlive)
+                //item.Dispose();
+                IDisposable target = item.Target as IDisposable;
+                if (target != null)
                 {
-                    var disp = pair.Value.Target as IDisposable;
-                    if (disp != null)
-                    {
-                        disp.Dispose();
-                    }
+                    target.Dispose();
                 }
             }
 
