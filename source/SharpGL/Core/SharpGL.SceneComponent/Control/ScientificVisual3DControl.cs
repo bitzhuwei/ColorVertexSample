@@ -236,7 +236,12 @@ namespace SharpGL.SceneComponent
         public void ClearScientificModels()
         {
             //this.modelContainer.ClearChild();
-            this.modelContainer.Children.Clear();
+            //this.modelContainer.Children.Clear();
+            var list = new List<SceneElement>(this.modelContainer.Children.AsEnumerable());
+            foreach (var item in list)
+            {
+                this.modelContainer.RemoveChild(item);
+            }
 
             ManualRender(this);
         }
@@ -347,7 +352,7 @@ namespace SharpGL.SceneComponent
                 //else
                 {
                     //throw new NotImplementedException();
-                } 
+                }
                 //// force CameraRotation to udpate.
                 //this.CameraRotation.Camera = this.Scene.CurrentCamera;
                 this.Invalidate();
@@ -365,10 +370,10 @@ namespace SharpGL.SceneComponent
 
         public GLColor MapToColor(float value)
         {
-           return  this.uiColorIndicator.Data.ColorPalette.MapToColor(value, this.uiColorIndicator.Data.MinValue, this.uiColorIndicator.Data.MaxValue);
+            return this.uiColorIndicator.Data.ColorPalette.MapToColor(value, this.uiColorIndicator.Data.MinValue, this.uiColorIndicator.Data.MaxValue);
         }
 
-        
+
 
         /// <summary>
         /// Update camera when resized, model container's bounding box updated, etc.
@@ -421,11 +426,11 @@ namespace SharpGL.SceneComponent
 
             /* // This is how is vertexID coded into color in vertex shader.
              * 	int objectID = gl_VertexID;
-	            codedColor = vec4(
-		            float(objectID & 0xFF), 
-		            float((objectID >> 8) & 0xFF), 
-	            	float((objectID >> 16) & 0xFF), 
-            		float((objectID >> 24) & 0xFF));
+                codedColor = vec4(
+                    float(objectID & 0xFF), 
+                    float((objectID >> 8) & 0xFF), 
+                    float((objectID >> 16) & 0xFF), 
+                    float((objectID >> 24) & 0xFF));
              */
 
             // get vertexID from coded color.

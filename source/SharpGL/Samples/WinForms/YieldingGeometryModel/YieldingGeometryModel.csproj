@@ -80,6 +80,9 @@
     <Compile Include="FontResources\CharacterInfoHelper.cs" />
     <Compile Include="FontResources\FontResource.cs" />
     <Compile Include="FontResources\KeyValuePairHelper.cs" />
+    <Compile Include="HexahedronGridderElement_IDisposable.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="loader\DynamicUnstructureGeometryLoader.cs" />
     <Compile Include="loader\UnstructureGeometryLoader.cs" />
     <Compile Include="PointSpriteStringElement_InitTexture.cs" />

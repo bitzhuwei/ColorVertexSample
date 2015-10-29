@@ -137,10 +137,14 @@ namespace SharpGL.SceneComponent
             int memSize = elementCount * elementSize;
             this.Header = Marshal.AllocHGlobal(memSize);
 
-            allocatedArrays.Add(this);
+            //allocatedArrays.Add(this);
+            //allocatedArrays.Add(new WeakReference(this));
+            allocatedArrays.Add(this.Header, new WeakReference(this));
         }
 
-        private static readonly List<IDisposable> allocatedArrays = new List<IDisposable>();
+        //private static readonly List<IDisposable> allocatedArrays = new List<IDisposable>();
+        //private static readonly List<WeakReference> allocatedArrays = new List<WeakReference>();
+        private static readonly Dictionary<IntPtr, WeakReference> allocatedArrays = new Dictionary<IntPtr, WeakReference>();
 
         /// <summary>
         /// 立即释放所有<see cref="UnmanagedArray"/>。
@@ -148,10 +152,17 @@ namespace SharpGL.SceneComponent
         [MethodImpl(MethodImplOptions.Synchronized)]
         public static void FreeAll()
         {
-            foreach (var item in allocatedArrays)
+            var list = new List<WeakReference>(allocatedArrays.Values.AsEnumerable());
+            foreach (var item in list)
             {
-                item.Dispose();
+                //item.Dispose();
+                IDisposable target = item.Target as IDisposable;
+                if (target != null)
+                {
+                    target.Dispose();
+                }
             }
+
             allocatedArrays.Clear();
         }
 
@@ -190,6 +201,8 @@ namespace SharpGL.SceneComponent
                 this.Length = 0;
                 this.Header = IntPtr.Zero;
                 Marshal.FreeHGlobal(ptr);
+
+                allocatedArrays.Remove(ptr);
             }
 
             disposed = true;

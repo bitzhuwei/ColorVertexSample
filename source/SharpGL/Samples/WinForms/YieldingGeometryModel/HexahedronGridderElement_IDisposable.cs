@@ -16,18 +16,69 @@ using YieldingGeometryModel.GLPrimitive;
 
 namespace YieldingGeometryModel
 {
-    public partial class HexahedronGridderElement 
+    public partial class HexahedronGridderElement : IDisposable
     {
 
-        protected override void CleanUnmanagedRes()
+        #region IDisposable Members
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
         {
-            OpenGL gl = new OpenGL();// this is not cool.
-            gl.InvalidateBufferData(this.positionBufferObj);
-            gl.InvalidateBufferData(this.colorBufferObj);
-            gl.InvalidateBufferData(this.ebo[0]);
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        } // end sub
+
+        /// <summary>
+        /// Destruct instance of the class.
+        /// </summary>
+        ~HexahedronGridderElement()
+        {
+            this.Dispose(false);
         }
 
-        protected override void CleanManagedRes()
+        /// <summary>
+        /// Backing field to track whether Dispose has been called.
+        /// </summary>
+        private bool disposedValue = false;
+
+        /// <summary>
+        /// Dispose managed and unmanaged resources of this instance.
+        /// </summary>
+        /// <param name="disposing">If disposing equals true, managed and unmanaged resources can be disposed. If disposing equals false, only unmanaged resources can be disposed. </param>
+        protected virtual void Dispose(bool disposing)
+        {
+
+            if (this.disposedValue == false)
+            {
+                if (disposing)
+                {
+                    // TODO: Dispose managed resources.
+                    CleanManagedRes();
+                } // end if
+
+                // TODO: Dispose unmanaged resources.
+                //CleanUnmanagedRes();
+            } // end if
+
+            this.disposedValue = true;
+        } // end sub
+
+        #endregion
+
+        protected void CleanUnmanagedRes()
+        {
+            OpenGL gl = new OpenGL();// this is not cool.
+
+            //////gl.InvalidateBufferData(this.vertexsBufferObject);
+            ////gl.InvalidateBufferData(this.colorsBufferObject);
+            //gl.InvalidateBufferData(this.visiblesBufferObject);
+            var buffers = new uint[] { this.vertexsBufferObject, this.colorsBufferObject, this.visiblesBufferObject };
+            gl.DeleteBuffers(buffers.Length, buffers);
+        }
+
+        protected void CleanManagedRes()
         {
         }
 
