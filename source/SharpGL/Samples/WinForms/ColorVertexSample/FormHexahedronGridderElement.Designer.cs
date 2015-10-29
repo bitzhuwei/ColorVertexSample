@@ -82,7 +82,7 @@
             // 
             // scientificVisual3DControl
             // 
-            this.scientificVisual3DControl.CameraType = SharpGL.SceneComponent.CameraTypes.Perspecitive;
+            this.scientificVisual3DControl.CameraType = SharpGL.SceneComponent.CameraTypes.Ortho;
             this.tableLayoutPanel1.SetColumnSpan(this.scientificVisual3DControl, 2);
             this.scientificVisual3DControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.scientificVisual3DControl.DrawFPS = false;
@@ -362,15 +362,15 @@
             this.lblPickedPrimitive.Size = new System.Drawing.Size(49, 17);
             this.lblPickedPrimitive.Text = "Picked:";
             // 
-            // FormHexahedronGridder
+            // FormHexahedronGridderElement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(769, 468);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.MinimumSize = new System.Drawing.Size(16, 38);
-            this.Name = "FormHexahedronGridder";
+            this.MinimumSize = new System.Drawing.Size(16, 39);
+            this.Name = "FormHexahedronGridderElement";
             this.Text = "ScientificVisual3DControl Demo.";
             this.Load += new System.EventHandler(this.FormHexahedronGridder_Load);
             this.tableLayoutPanel1.ResumeLayout(false);

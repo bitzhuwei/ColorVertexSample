@@ -174,7 +174,7 @@ namespace YieldingGeometryModel.loader
 
         private StreamReader Open(String fileName)
         {
-            StreamReader reader = new StreamReader(new BufferedStream(new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite), 128 * 1024));
+            StreamReader reader = new StreamReader(new BufferedStream(new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite,512*1024)));
             return reader;
         }
 

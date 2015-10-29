@@ -50,6 +50,31 @@ namespace YieldingGeometryModel.Builder
                 }
                 return vertexColors;
             }
+
+            if (source.ElementFormat == DynamicUnstructureGeometryLoader.ELEMENT_FORMAT4_TETRAHEDRON)
+            {
+                //每个四面体由6个点组成的三角形条带组成
+                int elementVertexCount = DynamicUnstructureGeometryLoader.ELEMENT_FORMAT4_TETRAHEDRON + 2;
+                int colorOffset = source.FractureNum;
+                int tetraCount = source.ElementNum;
+                UnmanagedArray<vec4> vertexColors = new UnmanagedArray<vec4>(tetraCount * elementVertexCount);
+                vec4* vecColor = (vec4*)vertexColors.FirstElement();
+                for (int i = 0; i < tetraCount; i++)
+                {
+                    ColorF objColor = mixedColors[colorOffset + i];
+                    vec4 vertexColor;
+                    vertexColor.x = objColor.R;
+                    vertexColor.y = objColor.G;
+                    vertexColor.z = objColor.B;
+                    vertexColor.w = objColor.A;
+                    for (int j = 0; j < elementVertexCount; j++)
+                    {
+                        vecColor[i * elementVertexCount + j] = vertexColor;
+                    }
+                }
+                return vertexColors;
+            }
+
             return null;
         }
 
@@ -80,8 +105,30 @@ namespace YieldingGeometryModel.Builder
                 return vertexColors;
             }
 
-
-
+            if (source.FractureFormat == DynamicUnstructureGeometryLoader.FRACTURE_FORMAT3_TRIANGLE)
+            {
+                //每条裂缝或断层的点
+                int fractureVertexCount = source.FractureFormat;
+                //mixedColors中的颜色起始描述的是裂缝和断层的颜色
+                int colorOffset = 0;
+                int fractureCount = source.FractureNum;
+                UnmanagedArray<vec4> vertexColors = new UnmanagedArray<vec4>(fractureCount * fractureVertexCount);
+                vec4* vecColor = (vec4*)vertexColors.FirstElement();
+                for (int i = 0; i < fractureCount; i++)
+                {
+                    ColorF lineColor = mixedColors[colorOffset + i];
+                    vec4 vertexColor;
+                    vertexColor.x = lineColor.R;
+                    vertexColor.y = lineColor.G;
+                    vertexColor.z = lineColor.B;
+                    vertexColor.w = lineColor.A;
+                    for (int j = 0; j < fractureVertexCount; j++)
+                    {
+                        vertexColors[i * fractureVertexCount + j] = vertexColor;
+                    }
+                }
+                return vertexColors;
+            }
             return null;
         }
         

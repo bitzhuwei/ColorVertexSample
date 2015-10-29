@@ -16,6 +16,13 @@ namespace YieldingGeometryModel.DataSource
 
        private float originalRadius = 1.0f;
 
+       /// <summary>
+       /// 模型中每个点的半径大小
+       /// </summary>
+       private float[] modelPointRadius;
+
+       private float[] radiusArray;
+
        public float Radius
        {
            get
@@ -53,6 +60,35 @@ namespace YieldingGeometryModel.DataSource
            }
        }
 
+       public float[] RadiusArray
+       {
+           get
+           {
+               return this.radiusArray;
+           }
+           set
+           {
+               this.radiusArray = value;
+           }
+       }
+
+       public float[] ModelPointRadius
+       {
+           get
+           {
+               return this.modelPointRadius;
+           }
+
+           set
+           {
+               this.modelPointRadius = value;
+           }
+
+       }
+
+      
+
+
 
        public override Vertex GetPosition(int i, int j, int k)
        {
@@ -64,7 +100,11 @@ namespace YieldingGeometryModel.DataSource
 
        public override float GetRadius(int i, int j, int k)
        {
-           return this.radius;
+           if(this.radiusArray == null||this.radiusArray.Length<=0)
+               return this.radius;
+           int gridIndex;
+           IJK2Index(i, j, k, out gridIndex);
+           return this.radiusArray[gridIndex];
        }
 
     }

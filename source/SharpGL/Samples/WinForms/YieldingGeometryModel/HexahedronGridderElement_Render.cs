@@ -69,6 +69,20 @@ namespace YieldingGeometryModel
 
             if (this.renderWireframe)
             {
+                
+                gl.Disable(OpenGL.GL_LINE_STIPPLE);
+                gl.Disable(OpenGL.GL_POLYGON_STIPPLE);
+                
+                gl.Enable(OpenGL.GL_LINE_SMOOTH);
+                gl.Enable(OpenGL.GL_POLYGON_SMOOTH);
+                gl.ShadeModel(SharpGL.Enumerations.ShadeModel.Smooth);
+               
+                gl.Hint(SharpGL.Enumerations.HintTarget.LineSmooth, SharpGL.Enumerations.HintMode.Nicest);
+                gl.Hint(SharpGL.Enumerations.HintTarget.PolygonSmooth, SharpGL.Enumerations.HintMode.Nicest);
+                //gl.BlendFunc(SharpGL.Enumerations.BlendingSourceFactor.SourceAlpha, SharpGL.Enumerations.BlendingDestinationFactor.OneMinusSourceAlpha);
+                //gl.LineWidth(1);
+                
+                
                 gl.PolygonMode(SharpGL.Enumerations.FaceMode.FrontAndBack, SharpGL.Enumerations.PolygonMode.Lines);
 
                 gl.BindVertexArray(vertexArrayObject);
@@ -83,6 +97,7 @@ namespace YieldingGeometryModel
                 gl.BindVertexArray(0);
 
                 gl.PolygonMode(SharpGL.Enumerations.FaceMode.FrontAndBack, SharpGL.Enumerations.PolygonMode.Filled);
+               
             }
 
 

@@ -134,7 +134,7 @@ namespace YieldingGeometryModel
                     for (int j = 0; j < vertexCountPerFraction; j++)
                     {
                         int coordIndex = fracture[j];
-                        Vertex vertex = coords[coordIndex];
+                        Vertex vertex = coords[coordIndex-1];
                         *(currentPosition + j) = new vec3(vertex.X, vertex.Y, vertex.Z);
                     }
                     currentPosition += vertexCountPerFraction;
@@ -148,7 +148,7 @@ namespace YieldingGeometryModel
                     for (int j = 0; j < vertexCountPerFraction; j++)
                     {
                         int coordIndex = fracture[j];
-                        Vertex vertex = coords[coordIndex];
+                        Vertex vertex = coords[coordIndex-1];
                         *(currentPosition + j) = new vec3(vertex.X, vertex.Y, vertex.Z);
                     }
                     currentPosition += vertexCountPerFraction;

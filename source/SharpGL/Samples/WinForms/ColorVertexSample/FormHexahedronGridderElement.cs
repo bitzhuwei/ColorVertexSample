@@ -124,6 +124,16 @@ namespace ColorVertexSample
             }
         }
 
+        private float[] initArray(int size, float value)
+        {
+            float[] result = new float[size];
+            for (int i = 0; i < size; i++)
+            {
+                result[i] = value;
+            }
+            return result;
+        }
+
         int elementCounter = 0;
         private void Create3DObject(object sender, EventArgs e)
         {
@@ -134,12 +144,15 @@ namespace ColorVertexSample
                 int nz = System.Convert.ToInt32(tbNZ.Text);
                 float step = System.Convert.ToSingle(tbColorIndicatorStep.Text);
                 float radius = System.Convert.ToSingle(this.tbRadius.Text);
-
+                int dimenSize = nx * ny * nz;
                 float dx = System.Convert.ToSingle(this.tbDX.Text);
                 float dy = System.Convert.ToSingle(this.gbDY.Text);
                 float dz = System.Convert.ToSingle(this.tbDZ.Text);
+                float[] dxArray = initArray(dimenSize, dx);
+                float[] dyArray = initArray(dimenSize, dy);
+                float[] dzArray = initArray(dimenSize, dz);
                 // use CatesianGridderSource to fill HexahedronGridderElement's content.
-                CatesianGridderSource source = new CatesianGridderSource() { NX = nx, NY = ny, NZ = nz, DX = dx, DY = dy, DZ = dz, };
+                CatesianGridderSource source = new CatesianGridderSource() { NX = nx, NY = ny, NZ = nz, DX = dxArray, DY = dyArray, DZ = dzArray, };
                 source.IBlocks = GridBlockHelper.CreateBlockCoords(nx);
                 source.JBlocks = GridBlockHelper.CreateBlockCoords(ny);
                 source.KBlocks = GridBlockHelper.CreateBlockCoords(nz);
@@ -164,18 +177,23 @@ namespace ColorVertexSample
                 }
 
                 // use HexahedronGridderElement
+                DateTime t0 = DateTime.Now;
                 MeshGeometry mesh = HexahedronGridderHelper.CreateMesh(source);
+                DateTime t1 = DateTime.Now;
+                TimeSpan ts1 = t1 - t0;
+                
                 mesh.VertexColors = HexahedronGridderHelper.FromColors(source, gridIndexes, colors, mesh.Visibles);
                 //this.DebugMesh(mesh);
 
                 HexahedronGridderElement gridderElement = new HexahedronGridderElement(source, this.scientificVisual3DControl.Scene.CurrentCamera);
-
+                gridderElement.renderWireframe = false;
                 //method1
                 //gridderElement.Initialize(this.scientificVisual3DControl.OpenGL);
 
                 //method2
                 gridderElement.Initialize(this.scientificVisual3DControl.OpenGL, mesh);
-
+                DateTime t2 = DateTime.Now;
+               
                 //gridderElement.SetBoundingBox(mesh.Min, mesh.Max);
 
                 //// use PointSpriteGridderElement
@@ -187,10 +205,11 @@ namespace ColorVertexSample
                 ////DebugMesh(mesh);
 
                 //
+                
+
                 gridderElement.Name = string.Format("element {0}", elementCounter++);
-
                 this.scientificVisual3DControl.AddModelElement(gridderElement);
-
+                DateTime t3 = DateTime.Now;
                 // update ModelContainer's BoundingBox.
                 BoundingBox boundingBox = this.scientificVisual3DControl.ModelContainer.BoundingBox;
                 if (this.scientificVisual3DControl.ModelContainer.Children.Count > 1)
@@ -206,8 +225,14 @@ namespace ColorVertexSample
 
                 // update ViewType to UserView.
                 this.scientificVisual3DControl.ViewType = ViewTypes.UserView;
-
                 mesh.Dispose();
+
+                StringBuilder msgBuilder = new StringBuilder();
+                msgBuilder.AppendLine(String.Format("create mesh in {0} secs", (t1 - t0).TotalSeconds));
+                msgBuilder.AppendLine(String.Format("init SceneElement in {0} secs", (t2 - t1).TotalSeconds));
+                msgBuilder.AppendLine(String.Format("total load in {0} secs", (t2 - t0).TotalSeconds));
+                String msg = msgBuilder.ToString();
+                MessageBox.Show(msg, "Summary", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             }
             catch (Exception error)

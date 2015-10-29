@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using YieldingGeometryModel.DataSource;
 
 namespace YieldingGeometryModel.Builder
 {
@@ -154,7 +155,17 @@ namespace YieldingGeometryModel.Builder
             }
 
             return radiusArray;
+        }
 
+        public static UnmanagedArray<float> FromPointRadiusMultipleFactor(PointSetGridderSource source, float factor)
+        {
+            UnmanagedArray<float> radiusArray = new UnmanagedArray<float>(source.DimenSize * PointSpriteGridderElement.vertexCountPerElement);
+            float[] modelPointArray = source.ModelPointRadius;
+            for (int i = 0; i < radiusArray.Length; i++)
+            {
+                radiusArray[i] = modelPointArray[i] * factor;
+            }
+            return radiusArray;
         }
 
         public static UnmanagedArray<ColorF> FromColors(PointSpriteGridderSource source, int[] gridIndexes, ColorF[] colors, UnmanagedArray<float> visibles)

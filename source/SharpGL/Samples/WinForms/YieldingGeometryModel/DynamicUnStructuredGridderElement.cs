@@ -42,6 +42,12 @@ namespace YieldingGeometryModel
 
         DynamicUnstructuredGridderSource source;
 
+
+        public DynamicUnstructuredGridderSource Source
+        {
+            get { return this.source; }
+        }
+
         /// <summary>
         /// 用于渲染UnStructuredGridder
         /// Rendering gridder of UnStructuredGridder.

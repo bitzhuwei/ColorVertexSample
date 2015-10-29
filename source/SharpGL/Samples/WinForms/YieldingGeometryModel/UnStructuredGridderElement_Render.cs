@@ -94,6 +94,16 @@ namespace YieldingGeometryModel
 
             if (this.renderFractionsWireframe)
             {
+                gl.Disable(OpenGL.GL_LINE_STIPPLE);
+                gl.Disable(OpenGL.GL_POLYGON_STIPPLE);
+
+                gl.Enable(OpenGL.GL_LINE_SMOOTH);
+                gl.Enable(OpenGL.GL_POLYGON_SMOOTH);
+                gl.ShadeModel(SharpGL.Enumerations.ShadeModel.Smooth);
+
+                gl.Hint(SharpGL.Enumerations.HintTarget.LineSmooth, SharpGL.Enumerations.HintMode.Nicest);
+                gl.Hint(SharpGL.Enumerations.HintTarget.PolygonSmooth, SharpGL.Enumerations.HintMode.Nicest);
+
                 gl.BindVertexArray(vertexArrayObject[0]);
                 {
                     gl.PolygonMode(SharpGL.Enumerations.FaceMode.FrontAndBack, SharpGL.Enumerations.PolygonMode.Lines);
