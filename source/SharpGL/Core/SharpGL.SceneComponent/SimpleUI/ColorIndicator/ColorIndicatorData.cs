@@ -81,6 +81,34 @@ namespace SharpGL.SceneComponent
             }
         }
 
+        private float logBase = 10;
+
+        public float LogBase
+        {
+            get
+            {
+               return this.logBase;
+            }
+            set
+            {
+               this.logBase = value;
+            }
+        }
+
+        private bool useLogarithmic = false;
+
+        public bool UseLogarithmic
+        {
+            get
+            {
+                return this.useLogarithmic;
+            }
+            set
+            {
+                this.useLogarithmic = value;
+            }
+        }
+      
 
         private float minValue;
         /// <summary>

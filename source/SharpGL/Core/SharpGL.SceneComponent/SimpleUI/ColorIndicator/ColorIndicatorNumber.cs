@@ -41,9 +41,24 @@ namespace SharpGL.SceneComponent
             {
                 string value = null;
                 if (i == blockCount)
-                { value = data.MaxValue.ToString(); }
+                {
+                    if (!data.UseLogarithmic)
+                    {
+                        value = data.MaxValue.ToString();
+                    }
+                    else
+                    {
+                        value = Math.Pow(data.LogBase, data.MaxValue).ToString();
+                    }
+                }
                 else
-                { value = (data.MinValue + data.Step * i).ToString(); }
+                {
+                    float tickValue = data.MinValue + data.Step * i;
+                    if (!data.UseLogarithmic)
+                        value = tickValue.ToString();
+                    else
+                        value = Math.Pow(data.LogBase, tickValue).ToString();
+                }
                 double valueLength = 100.0 * value.Length / fontSize;
                 double x = 0;
                 if (i == blockCount)

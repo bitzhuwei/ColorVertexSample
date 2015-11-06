@@ -365,7 +365,36 @@ namespace SharpGL.SceneComponent
             this.uiColorIndicator.Data.MinValue = minValue;
             this.uiColorIndicator.Data.MaxValue = maxValue;
             this.uiColorIndicator.Data.Step = step;
+            this.uiColorIndicator.Data.UseLogarithmic = false;
+            this.uiColorIndicator.Data.LogBase = 10;
             ManualRender(this);
+        }
+
+        public void SetColorIndicatorParams(float minValue, float maxValue, float step, bool useLogarithmic, float logBase)
+        {
+
+            this.uiColorIndicator.Data.MinValue = minValue;
+            this.uiColorIndicator.Data.MaxValue = maxValue;
+            this.uiColorIndicator.Data.Step = step;
+            this.uiColorIndicator.Data.UseLogarithmic = useLogarithmic;
+            this.uiColorIndicator.Data.LogBase = logBase;
+            ManualRender(this);
+        }
+
+        public void GetColorIndicator(out float minValue, out float maxValue, out float step)
+        {
+            minValue = this.uiColorIndicator.Data.MinValue;
+            maxValue = this.uiColorIndicator.Data.MaxValue;
+            step = this.uiColorIndicator.Data.Step;
+        }
+
+        public void GetColorIndicatorParams(out float minValue, out float maxValue, out float step, out bool useLogarithmic, out float logBase)
+        {
+            minValue = this.uiColorIndicator.Data.MinValue;
+            maxValue = this.uiColorIndicator.Data.MaxValue;
+            step = this.uiColorIndicator.Data.Step;
+            useLogarithmic = this.uiColorIndicator.Data.UseLogarithmic;
+            logBase = this.uiColorIndicator.Data.LogBase;
         }
 
         public GLColor MapToColor(float value)

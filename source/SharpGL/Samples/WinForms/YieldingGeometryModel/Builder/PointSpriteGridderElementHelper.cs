@@ -175,29 +175,40 @@ namespace YieldingGeometryModel.Builder
             unsafe
             {
 
-                //是否有颜色
+                //是否有颜色, 
+                int dimenSize = source.DimenSize;
 
-                int i = 0;
-                for (i = 0; i < gridIndexes.Length; i++)
+                //全部设置为不可见
+                for (int i = 0; i < dimenSize; i++)
+                {
+                    hasColorArray[i] = 0;
+                }
+
+
+                for (int i = 0; i < gridIndexes.Length; i++)
                 {
                     int gridIndex = gridIndexes[i];
                     hasColorArray[gridIndex] = 1;
                     int cellOffset = gridIndex * PointSpriteGridderElement.vertexCountPerElement;
                     ColorF cf = colors[i];
-
                     colorArray[cellOffset + 0] = cf;
                 }
-                int j, k;
-                for (int gridIndex = 0; gridIndex < source.DimenSize; gridIndex++)
                 {
-                    int cellOffset = gridIndex * PointSpriteGridderElement.vertexCountPerElement;
-                    source.InvertIJK(gridIndex, out i, out j, out k);
-                    if (hasColorArray[gridIndex] == 0 || !source.IsActiveBlock(i, j, k))
+                    int i, j, k;
+                    for (int gridIndex = 0; gridIndex < source.DimenSize; gridIndex++)
                     {
-                        visibles[cellOffset + 0] = 0;
+                        int cellOffset = gridIndex * PointSpriteGridderElement.vertexCountPerElement;
+                        source.InvertIJK(gridIndex, out i, out j, out k);
+                        if (hasColorArray[gridIndex] == 0 || !source.IsActiveBlock(i, j, k))
+                        {
+                            visibles[cellOffset + 0] = 0;
+                        }
+                        else
+                        {
+                            visibles[cellOffset + 0] = 1.0f;
+                        }
                     }
                 }
-
             }
             hasColorArray.Dispose();
             return colorArray;
