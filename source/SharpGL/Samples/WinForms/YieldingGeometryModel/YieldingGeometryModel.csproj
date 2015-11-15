@@ -111,6 +111,7 @@
     </Compile>
     <Compile Include="Well.cs" />
     <Compile Include="WellPipe.cs" />
+    <Compile Include="ZippedColorHelper.cs" />
     <EmbeddedResource Include="HexahedronGridder.frag" />
     <EmbeddedResource Include="HexahedronGridder.vert" />
     <Compile Include="Builder\HexahedronGridderElementHelper.cs" />
