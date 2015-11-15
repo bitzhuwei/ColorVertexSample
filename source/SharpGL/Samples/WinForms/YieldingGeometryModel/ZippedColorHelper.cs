@@ -19,12 +19,12 @@ namespace YieldingGeometryModel
         /// <param name="g"></param>
         /// <param name="b"></param>
         /// <param name="a"></param>
-        public static void ParseColor(this uint value, out byte r, out byte g, out byte b, out byte a)
+        public static void ParseColor(this uint value, out byte a, out byte b, out byte g, out byte r)
         {
-            r = (byte)(value >> 24);
-            g = (byte)((value >> 16) & 0xFF);
-            b = (byte)((value >> 8) & 0xFF);
-            a = (byte)((value) & 0xFF);
+            a = (byte)(value >> 24);
+            b = (byte)((value >> 16) & 0xFF);
+            g = (byte)((value >> 8) & 0xFF);
+            r = (byte)((value) & 0xFF);
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace YieldingGeometryModel
         /// <param name="b">0~255</param>
         /// <param name="a">0~255</param>
         /// <returns></returns>
-        public static uint GetZippedColor(byte r, byte g, byte b, byte a)
+        public static uint GetZippedColor(byte a, byte b, byte g, byte r)
         {
             //if (r < 0) { r = 0; }
             //else if (r > 255) { r = 255; }
@@ -50,10 +50,10 @@ namespace YieldingGeometryModel
             //else if (a > 255) { a = 255; }
 
             uint result =
-                (((uint)r) << 24)
-                + (((uint)g) << 16)
-                + (((uint)b) << 8)
-                + (((uint)a));
+                (((uint)a) << 24)
+                + (((uint)b) << 16)
+                + (((uint)g) << 8)
+                + (((uint)r));
 
             return result;
         }
@@ -66,10 +66,10 @@ namespace YieldingGeometryModel
             g = (byte)random.Next(0, 256);
             b = (byte)random.Next(0, 256);
             a = (byte)random.Next(0, 256);
-            uint zippedColor = ZippedColorHelper.GetZippedColor(r, g, b, a);
+            uint zippedColor = ZippedColorHelper.GetZippedColor(a, b, g, r);
 
             byte r2, g2, b2, a2;
-            zippedColor.ParseColor(out r2, out g2, out b2, out a2);
+            zippedColor.ParseColor(out a2, out b2, out g2, out r2);
 
             if (r != r2)
             { throw new Exception(); }
