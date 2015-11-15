@@ -1609,7 +1609,6 @@ namespace SharpGL
         private delegate void glUniform2i(int location, int v0, int v1);
         private delegate void glUniform3i(int location, int v0, int v1, int v2);
         private delegate void glUniform4i(int location, int v0, int v1, int v2, int v3);
-        private delegate void glUniform1ui(int location, uint v0);
         private delegate void glUniform1fv(int location, int count, float[] value);
         private delegate void glUniform2fv(int location, int count, float[] value);
         private delegate void glUniform3fv(int location, int count, float[] value);
@@ -1966,10 +1965,6 @@ namespace SharpGL
         public int GetFragDataLocation(uint program, string name)
         {
             return (int)GetDelegateFor<glGetFragDataLocation>()(program, name);
-        }
-        public void Uniform1(int location, uint v0)
-        {
-            GetDelegateFor<glUniform1ui>()(location, v0);
         }
         public void Uniform2(int location, uint v0, uint v1)
         {
