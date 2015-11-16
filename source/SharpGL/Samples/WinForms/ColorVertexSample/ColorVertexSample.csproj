@@ -65,6 +65,12 @@
     <Compile Include="FormdfmPointSpriteGridderElement.Designer.cs">
       <DependentUpon>FormdfmPointSpriteGridderElement.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormZippedHexahedronGridderElement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormZippedHexahedronGridderElement.Designer.cs">
+      <DependentUpon>FormZippedHexahedronGridderElement.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSelectExpectedRadius.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -137,6 +143,9 @@
     <Compile Include="VertexHelper.cs" />
     <EmbeddedResource Include="FormdfmPointSpriteGridderElement.resx">
       <DependentUpon>FormdfmPointSpriteGridderElement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormZippedHexahedronGridderElement.resx">
+      <DependentUpon>FormZippedHexahedronGridderElement.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSelectExpectedRadius.resx">
       <DependentUpon>FormSelectExpectedRadius.cs</DependentUpon>

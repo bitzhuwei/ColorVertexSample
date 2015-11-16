@@ -60,5 +60,10 @@ namespace ColorVertexSample
         {
             (new FormDynamicUnStructuredGridderElement()).Show();
         }
+
+        private void btnFormZippedHexadronGridderElement_Click(object sender, EventArgs e)
+        {
+            (new FormZippedHexahedronGridderElement()).Show();
+        }
     }
 }

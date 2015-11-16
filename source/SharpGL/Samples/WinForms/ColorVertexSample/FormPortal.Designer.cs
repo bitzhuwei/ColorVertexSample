@@ -36,6 +36,7 @@
             this.btnFormScientificVisual3DControl = new System.Windows.Forms.Button();
             this.btnFormdfmPointSpriteGridderElement = new System.Windows.Forms.Button();
             this.btnFormDynamicUnStructuredGridderElement = new System.Windows.Forms.Button();
+            this.btnFormZippedHexadronGridderElement = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnWell
@@ -134,11 +135,24 @@
             this.btnFormDynamicUnStructuredGridderElement.UseVisualStyleBackColor = true;
             this.btnFormDynamicUnStructuredGridderElement.Click += new System.EventHandler(this.btnFormDynamicUnStructuredGridderElement_Click);
             // 
+            // btnFormZippedHexadronGridderElement
+            // 
+            this.btnFormZippedHexadronGridderElement.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFormZippedHexadronGridderElement.Location = new System.Drawing.Point(12, 244);
+            this.btnFormZippedHexadronGridderElement.Name = "btnFormZippedHexadronGridderElement";
+            this.btnFormZippedHexadronGridderElement.Size = new System.Drawing.Size(930, 23);
+            this.btnFormZippedHexadronGridderElement.TabIndex = 1;
+            this.btnFormZippedHexadronGridderElement.Text = "FormZippedHexahedronGridderElement";
+            this.btnFormZippedHexadronGridderElement.UseVisualStyleBackColor = true;
+            this.btnFormZippedHexadronGridderElement.Click += new System.EventHandler(this.btnFormZippedHexadronGridderElement_Click);
+            // 
             // FormPortal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(954, 432);
+            this.Controls.Add(this.btnFormZippedHexadronGridderElement);
             this.Controls.Add(this.btnFormScientificVisual3DControl);
             this.Controls.Add(this.btnFormDynamicUnStructuredGridderElement);
             this.Controls.Add(this.btnFormUnStructuredGridderElement);
@@ -163,5 +177,6 @@
         private System.Windows.Forms.Button btnFormScientificVisual3DControl;
         private System.Windows.Forms.Button btnFormdfmPointSpriteGridderElement;
         private System.Windows.Forms.Button btnFormDynamicUnStructuredGridderElement;
+        private System.Windows.Forms.Button btnFormZippedHexadronGridderElement;
     }
 }

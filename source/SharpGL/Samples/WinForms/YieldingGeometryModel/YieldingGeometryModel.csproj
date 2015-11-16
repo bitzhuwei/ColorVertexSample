@@ -61,12 +61,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Builder\DynamicUnstructuredGridderElementHelper.cs" />
+    <Compile Include="Builder\ZippedHexahedronGridderBuilder.cs" />
     <Compile Include="Builder\VertexHelper.cs" />
     <Compile Include="Builder\HexahedronGridderBuilder.cs" />
+    <Compile Include="DataSource\ZippedCatesianGridderSource.cs" />
     <Compile Include="DataSource\dfmPointSpriteGridderSource.cs" />
     <Compile Include="DataSource\PointSetGridderSource.cs" />
     <Compile Include="DataSource\DynamicUnstructuredGridderSource.cs" />
     <Compile Include="DataSource\UnStructuredGridderSource.cs" />
+    <Compile Include="DataSource\ZippedHexahedronGridderSource.cs" />
     <Compile Include="DynamicUnStructuredGridderElement.cs" />
     <Compile Include="DynamicUnStructuredGridderElement_IBoundingBox.cs" />
     <Compile Include="DynamicUnStructuredGridderElement_InitShader.cs" />
@@ -112,6 +115,13 @@
     <Compile Include="Well.cs" />
     <Compile Include="WellPipe.cs" />
     <Compile Include="ZippedColorHelper.cs" />
+    <Compile Include="ZippedHexahedronGridderElement.cs" />
+    <Compile Include="ZippedHexahedronGridderElement_IBoundingBox.cs" />
+    <Compile Include="ZippedHexahedronGridderElement_IDisposable.cs" />
+    <Compile Include="ZippedHexahedronGridderElement_InitElementArrayBufferObject.cs" />
+    <Compile Include="ZippedHexahedronGridderElement_InitShader.cs" />
+    <Compile Include="ZippedHexahedronGridderElement_InitVertexArrayBufferObject.cs" />
+    <Compile Include="ZippedHexahedronGridderElement_Render.cs" />
     <EmbeddedResource Include="HexahedronGridder.frag" />
     <EmbeddedResource Include="HexahedronGridder.vert" />
     <Compile Include="Builder\HexahedronGridderElementHelper.cs" />
@@ -187,6 +197,10 @@
   <ItemGroup>
     <EmbeddedResource Include="DynamicUnStructuredGridderElement.frag" />
     <EmbeddedResource Include="DynamicUnStructuredGridderElement.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ZippedHexahedronGridderElement.frag" />
+    <EmbeddedResource Include="ZippedHexahedronGridderElement.vert" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
