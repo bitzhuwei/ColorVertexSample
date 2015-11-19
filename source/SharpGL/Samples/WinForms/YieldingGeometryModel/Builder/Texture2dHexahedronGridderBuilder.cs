@@ -11,29 +11,31 @@ using YieldingGeometryModel.GLPrimitive;
 namespace YieldingGeometryModel.Builder
 {
 
-    public class MeshGeometry : TriangleMesh, IDisposable
+    public class Texture2dMeshGeometry :
+        //TriangleMesh,
+        IDisposable
     {
 
         /// <summary>
         /// 颜色
         /// </summary>
-        public override UnmanagedArray<ColorF> VertexColors { get; set; }
+        public UnmanagedArray<uint> VertexColors { get; set; }
 
         /// <summary>
         /// 点的集合
         /// </summary>
-        public override UnmanagedArray<Vertex> Vertexes { get; set; }
+        public UnmanagedArray<Vertex> Vertexes { get; set; }
 
-        public override UnmanagedArray<uint> StripTriangles { get; set; }
+        public UnmanagedArray<uint> StripTriangles { get; set; }
 
-        public override Vertex Min { get; set; }
+        public Vertex Min { get; set; }
 
-        public override Vertex Max { get; set; }
+        public Vertex Max { get; set; }
 
         /// <summary>
         /// 控制网格是否显示，大小为DimenSize
         /// </summary>
-        public override UnmanagedArray<float> Visibles { get; set; }
+        public UnmanagedArray<float> Visibles { get; set; }
 
         /// <summary>
         /// Dispose data
@@ -88,7 +90,7 @@ namespace YieldingGeometryModel.Builder
 
     }
 
-    public class HexahedronGridderHelper
+    public class Texture2dHexahedronGridderHelper
     {
         public const int HEXAHEDRON_VERTEX_COUNT = 16;
 
@@ -108,6 +110,27 @@ namespace YieldingGeometryModel.Builder
                 max.Y = value.Y;
             if (value.Z > max.Z)
                 max.Z = value.Z;
+        }
+
+        /// <summary>
+        /// 按线性渐变的方式生产size个网格上的属性
+        /// </summary>
+        /// <param name="size"></param>
+        /// <param name="minValue"></param>
+        /// <param name="maxValue"></param>
+        /// <param name="gridIndexes"></param>
+        /// <param name="gridValues"></param>
+        public static void LinearValue(int size, int minValue, int maxValue, out int[] gridIndexes, out float[] gridValues)
+        {
+
+            gridIndexes = new int[size];
+            gridValues = new float[size];
+            for (int i = 0; i < size; i++)
+            {
+                float value = minValue + (maxValue - minValue) * i / size;//random.Next(minValue, maxValue) * 1.0f;
+                gridIndexes[i] = i;
+                gridValues[i] = value;
+            }
         }
 
         /// <summary>
@@ -131,6 +154,16 @@ namespace YieldingGeometryModel.Builder
             }
         }
 
+        static uint ColorF2ZippedColor(ColorF color)
+        {
+            byte r = (byte)(color.R * 255);
+            byte g = (byte)(color.G * 255);
+            byte b = (byte)(color.B * 255);
+            byte a = (byte)(color.A * 255);
+            uint zippedColor = ZippedColorHelper.GetZippedColor(a, b, g, r);
+
+            return zippedColor;
+        }
         /// <summary>
         /// visibles 如果属性无颜色，修改为不可见
         /// </summary>
@@ -139,9 +172,9 @@ namespace YieldingGeometryModel.Builder
         /// <param name="colors"></param>
         /// <param name="visibles"></param>
         /// <returns></returns>
-        public static UnmanagedArray<ColorF> FromColors(HexahedronGridderSource source, int[] gridIndexes, ColorF[] colors, UnmanagedArray<float> visibles)
+        public static UnmanagedArray<uint> FromColors(Texture2dCatesianGridderSource source, int[] gridIndexes, ColorF[] colors, UnmanagedArray<float> visibles)
         {
-            UnmanagedArray<ColorF> colorArray = new UnmanagedArray<ColorF>(source.DimenSize * HEXAHEDRON_VERTEX_COUNT);
+            UnmanagedArray<uint> colorArray = new UnmanagedArray<uint>(source.DimenSize * HEXAHEDRON_VERTEX_COUNT);
             UnmanagedArray<byte> hasColorArray = new UnmanagedArray<byte>(source.DimenSize);
             unsafe
             {
@@ -157,22 +190,23 @@ namespace YieldingGeometryModel.Builder
                     int cellOffset = gridIndex * HEXAHEDRON_VERTEX_COUNT;
                     ColorF cf = colors[i];
 
-                    colorArray[cellOffset + 0] = cf;
-                    colorArray[cellOffset + 1] = cf;
-                    colorArray[cellOffset + 2] = cf;
-                    colorArray[cellOffset + 3] = cf;
-                    colorArray[cellOffset + 4] = cf;
-                    colorArray[cellOffset + 5] = cf;
-                    colorArray[cellOffset + 6] = cf;
-                    colorArray[cellOffset + 7] = cf;
-                    colorArray[cellOffset + 8] = cf;
-                    colorArray[cellOffset + 9] = cf;
-                    colorArray[cellOffset + 10] = cf;
-                    colorArray[cellOffset + 11] = cf;
-                    colorArray[cellOffset + 12] = cf;
-                    colorArray[cellOffset + 13] = cf;
-                    colorArray[cellOffset + 14] = cf;
-                    colorArray[cellOffset + 15] = cf;
+                    uint color = ColorF2ZippedColor(cf);
+                    colorArray[cellOffset + 0] = color;
+                    colorArray[cellOffset + 1] = color;
+                    colorArray[cellOffset + 2] = color;
+                    colorArray[cellOffset + 3] = color;
+                    colorArray[cellOffset + 4] = color;
+                    colorArray[cellOffset + 5] = color;
+                    colorArray[cellOffset + 6] = color;
+                    colorArray[cellOffset + 7] = color;
+                    colorArray[cellOffset + 8] = color;
+                    colorArray[cellOffset + 9] = color;
+                    colorArray[cellOffset + 10] = color;
+                    colorArray[cellOffset + 11] = color;
+                    colorArray[cellOffset + 12] = color;
+                    colorArray[cellOffset + 13] = color;
+                    colorArray[cellOffset + 14] = color;
+                    colorArray[cellOffset + 15] = color;
                 }
                 int j, k;
                 for (int gridIndex = 0; gridIndex < source.DimenSize; gridIndex++)
@@ -250,10 +284,11 @@ namespace YieldingGeometryModel.Builder
             return visibles;
         }
 
-        
 
 
-        public static MeshGeometry CreateMesh(HexahedronGridderSource source)
+
+
+        public static Texture2dMeshGeometry CreateMesh(Texture2dCatesianGridderSource source)
         {
 
             if (source.DimenSize <= 0)
@@ -326,10 +361,10 @@ namespace YieldingGeometryModel.Builder
                     float visible = source.IsActiveBlock(i, j, k) == true ? 1.0f : 0;
                     if (visible > 0)
                     {
-                        visible =source.IsSliceBlock(i, j, k) == true ? 1.0f : 0;
+                        visible = source.IsSliceBlock(i, j, k) == true ? 1.0f : 0;
                     }
 
-                    
+
                     visibles[cellOffset + 0] = visible;
                     visibles[cellOffset + 1] = visible;
                     visibles[cellOffset + 2] = visible;
@@ -350,7 +385,7 @@ namespace YieldingGeometryModel.Builder
                 }
             }
 
-            MeshGeometry mesh = new MeshGeometry();
+            Texture2dMeshGeometry mesh = new Texture2dMeshGeometry();
             mesh.Vertexes = vertexes;
             mesh.Min = min;
             mesh.Max = max;
@@ -361,74 +396,6 @@ namespace YieldingGeometryModel.Builder
 
     }
 
-
-    public static class HexahedronGridderBuilder
-    {
-
-
-        /// <summary>
-        /// 依次获取网格内的所有六面体。
-        /// Get hexahedrons of gridder from specified source successively.
-        /// </summary>
-        /// <param name="source"></param>
-        /// <returns></returns>
-        public static IEnumerable<Hexahedron>
-            GetGridderCells(this HexahedronGridderSource source)
-        {
-            Random random = new Random();
-
-            int NI = source.NX;
-            int NJ = source.NY;
-            int NK = source.NZ;
-
-            int total = NI * NJ * NK;
-
-            //Hexahedron[] cells = new Hexahedron[total];
-            //Dictionary<int, int> gridCellMap = new Dictionary<int, int>();
-            for (int index = 0; index < total; index++)
-            {
-                int i, j, k;
-                source.InvertIJK(index, out i, out j, out k);
-                //int indexOfArray = index;
-                //gridCellMap[index] = indexOfArray;
-
-                Hexahedron cell = new Hexahedron();
-                cell.flt = source.PointFLT(i, j, k);
-                cell.frt = source.PointFRT(i, j, k);
-                cell.flb = source.PointFLB(i, j, k);
-                cell.frb = source.PointFRB(i, j, k);
-                cell.blt = source.PointBLT(i, j, k);
-                cell.brt = source.PointBRT(i, j, k);
-                cell.blb = source.PointBLB(i, j, k);
-                cell.brb = source.PointBRB(i, j, k);
-                //cell.gridIndex = index;
-
-                // set random color for now
-                //cell.color = new SharpGL.SceneGraph.GLColor((float)random.NextDouble(), (float)random.NextDouble(), (float)random.NextDouble(), (float)random.NextDouble());
-                //float r = (float)random.Next(0, int.MaxValue) / (float)int.MaxValue;
-                //float g = (float)random.Next(0, int.MaxValue) / (float)int.MaxValue;
-                //float b = (float)random.Next(0, int.MaxValue) / (float)int.MaxValue;
-                //float a = (float)random.Next(0, int.MaxValue) / (float)int.MaxValue;
-                //cell.color = new SharpGL.SceneGraph.GLColor(r, g, b, a);
-                byte[] bytes = new byte[4];
-                random.NextBytes(bytes);
-                cell.color = new SharpGL.SceneGraph.GLColor(
-                    (0.0f + bytes[0]) / byte.MaxValue,
-                    (0.0f + bytes[1]) / byte.MaxValue,
-                    (0.0f + bytes[2]) / byte.MaxValue,
-                    (0.0f + bytes[3]) / byte.MaxValue);
-
-                yield return cell;
-                //cells[index] = cell;
-            }
-            //HexahedronGridder gridder = new HexahedronGridder();
-            //gridder.Cells = cells;
-            //gridder.IJKCellsMap = gridCellMap;
-            //return gridder;
-
-        }
-
-    }
 
 
 }

@@ -3,11 +3,13 @@ using SharpGL;
 using SharpGL.SceneComponent;
 using SharpGL.SceneComponent.Model;
 using SharpGL.SceneGraph;
+using SharpGL.SceneGraph.Assets;
 using SharpGL.SceneGraph.Core;
 using SharpGL.Shaders;
 using SharpGL.VertexBuffers;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +25,8 @@ namespace YieldingGeometryModel
     /// </summary>
     public partial class Texture2dHexahedronGridderElement : SharpGL.SceneGraph.Core.SceneElement, SharpGL.SceneGraph.Core.IRenderable
     {
+        private Texture colorPaletteTexture = new Texture();
+
         private uint vertexArrayObject = 0;
 
         private uint vertexsBufferObject = 0;
@@ -77,32 +81,39 @@ namespace YieldingGeometryModel
         public const uint ATTRIB_INDEX_POSITION = 0;
         public const uint ATTRIB_INDEX_COLOUR = 1;
         public const uint ATTRIB_INDEX_VISIBLE = 2;
-        private ZippedHexahedronGridderSource source;
+        private Texture2dCatesianGridderSource source;
 
-        public ZippedHexahedronGridderSource Source
+        public Texture2dCatesianGridderSource Source
         {
             get { return source; }
             set { source = value; }
         }
 
         internal uint visualBuffer;
+        private Bitmap colorPaletteImage;
 
         /// <summary>
         /// 用于渲染六面体网格。
         /// Rendering gridder of hexadrons.
         /// </summary>
-        public Texture2dHexahedronGridderElement(ZippedHexahedronGridderSource source, IScientificCamera camera)
+        public Texture2dHexahedronGridderElement(Bitmap colorPaletteImage, Texture2dCatesianGridderSource source, IScientificCamera camera)
         {
             if (source == null) { throw new ArgumentNullException("source"); }
 
+            this.colorPaletteImage = colorPaletteImage;
             this.source = source;
             this.camera = camera;
         }
 
 
-        public void Initialize(OpenGL gl, ZippedMeshGeometry mesh)
+        public void Initialize(OpenGL gl, Texture2dMeshGeometry mesh)
         {
             gl.MakeCurrent();
+
+            gl.Enable(OpenGL.GL_TEXTURE_2D);
+
+            this.colorPaletteTexture.Create(gl, this.colorPaletteImage);
+
             this.shader = this.CreateShaderProgram(gl);
             this.InitVertexes(gl, mesh.Vertexes, mesh.VertexColors, mesh.Visibles);
 

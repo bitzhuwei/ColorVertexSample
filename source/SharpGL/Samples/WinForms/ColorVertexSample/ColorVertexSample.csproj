@@ -65,6 +65,18 @@
     <Compile Include="FormdfmPointSpriteGridderElement.Designer.cs">
       <DependentUpon>FormdfmPointSpriteGridderElement.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormTexture2dHexahedronGridderElement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormTexture2dHexahedronGridderElement.Designer.cs">
+      <DependentUpon>FormTexture2dHexahedronGridderElement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormTexture2dWithGLSL.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormTexture2dWithGLSL.Designer.cs">
+      <DependentUpon>FormTexture2dWithGLSL.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormZippedHexahedronGridderElement.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -140,9 +152,16 @@
     <Compile Include="GridBlockHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TexturedCube.cs" />
     <Compile Include="VertexHelper.cs" />
     <EmbeddedResource Include="FormdfmPointSpriteGridderElement.resx">
       <DependentUpon>FormdfmPointSpriteGridderElement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormTexture2dHexahedronGridderElement.resx">
+      <DependentUpon>FormTexture2dHexahedronGridderElement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormTexture2dWithGLSL.resx">
+      <DependentUpon>FormTexture2dWithGLSL.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormZippedHexahedronGridderElement.resx">
       <DependentUpon>FormZippedHexahedronGridderElement.cs</DependentUpon>
