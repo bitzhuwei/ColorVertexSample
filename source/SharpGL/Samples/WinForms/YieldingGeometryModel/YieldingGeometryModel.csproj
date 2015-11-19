@@ -94,6 +94,14 @@
     <Compile Include="PointSpriteStringElement_InitShader.cs" />
     <Compile Include="PointSpriteStringElement_InitVertexArrayBufferObject.cs" />
     <Compile Include="PointSpriteStringElement_Render.cs" />
+    <Compile Include="Texture2dHexahedronGridderElement.cs" />
+    <Compile Include="Texture2dHexahedronGridderElement_IBoundingBox.cs" />
+    <Compile Include="Texture2dHexahedronGridderElement_IDisposable.cs" />
+    <Compile Include="Texture2dHexahedronGridderElement_InitElementArrayBufferObject.cs" />
+    <Compile Include="Texture2dHexahedronGridderElement_InitShader.cs" />
+    <Compile Include="Texture2dHexahedronGridderElement_InitVertexArrayBufferObject.cs" />
+    <Compile Include="Texture2dHexahedronGridderElement_Render.cs" />
+    <Compile Include="TextureHelper\ColorPaletteHelper.cs" />
     <Compile Include="UnStructuredGridderElement_InitTexture.cs" />
     <Compile Include="UnStructuredGridderElement_InitVertexArrayBufferObject2.cs" />
     <Compile Include="UnStructuredGridderElement_Update.cs" />
@@ -201,6 +209,10 @@
   <ItemGroup>
     <EmbeddedResource Include="ZippedHexahedronGridderElement.frag" />
     <EmbeddedResource Include="ZippedHexahedronGridderElement.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Texture2dHexahedronGridderElement.frag" />
+    <None Include="Texture2dHexahedronGridderElement.vert" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
