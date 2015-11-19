@@ -169,7 +169,6 @@ namespace ColorVertexSample
                 float[] gridValues;
                 //设置色标的范围
                 this.scientificVisual3DControl.SetColorIndicator(minValue, maxValue, step);
-                ColorPaletteHelper.GenBitmap(this.scientificVisual3DControl.uiColorIndicator.Data.ColorPalette);
                 //获得每个网格上的属性值
                 HexahedronGridderHelper.RandomValue(source.DimenSize, minValue, maxValue, out gridIndexes, out gridValues);
                 ColorF[] colors = new ColorF[source.DimenSize];
