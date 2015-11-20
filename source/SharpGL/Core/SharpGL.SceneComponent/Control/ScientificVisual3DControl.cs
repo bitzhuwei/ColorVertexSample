@@ -209,7 +209,7 @@ namespace SharpGL.SceneComponent
         /// <summary>
         /// Draw color indicator on viewport as an UI.
         /// </summary>
-        internal SimpleUIColorIndicator uiColorIndicator { get; set; }
+        public SimpleUIColorIndicator uiColorIndicator { get; set; }
 
         public void AddModelElement(SceneElement element)
         {
