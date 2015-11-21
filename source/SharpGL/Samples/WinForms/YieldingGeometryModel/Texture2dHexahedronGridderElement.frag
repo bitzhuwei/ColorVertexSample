@@ -1,12 +1,14 @@
 ﻿#version 150 core
-in vec4 pass_Color;
+in vec2 pass_uv;
 in float pass_visible;
 out vec4 out_Color;
+
+uniform sampler2D tex;
 
 void main(void) {
 	if (pass_visible == 1)
 	{
-		out_Color = pass_Color;
+		out_Color = texture(tex, pass_uv);
 	}
 	else
 	{

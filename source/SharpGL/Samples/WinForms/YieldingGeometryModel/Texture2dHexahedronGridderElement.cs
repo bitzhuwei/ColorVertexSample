@@ -3,11 +3,13 @@ using SharpGL;
 using SharpGL.SceneComponent;
 using SharpGL.SceneComponent.Model;
 using SharpGL.SceneGraph;
+using SharpGL.SceneGraph.Assets;
 using SharpGL.SceneGraph.Core;
 using SharpGL.Shaders;
 using SharpGL.VertexBuffers;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +25,9 @@ namespace YieldingGeometryModel
     /// </summary>
     public partial class Texture2dHexahedronGridderElement : SharpGL.SceneGraph.Core.SceneElement, SharpGL.SceneGraph.Core.IRenderable
     {
+        private Texture texture = new Texture();
+        private Bitmap textureImage;
+
         private uint vertexArrayObject = 0;
 
         private uint vertexsBufferObject = 0;
@@ -91,18 +96,22 @@ namespace YieldingGeometryModel
         /// 用于渲染六面体网格。
         /// Rendering gridder of hexadrons.
         /// </summary>
-        public Texture2dHexahedronGridderElement(HexahedronGridderSource source, IScientificCamera camera)
+        public Texture2dHexahedronGridderElement(Bitmap textureImage, HexahedronGridderSource source, IScientificCamera camera)
         {
             if (source == null) { throw new ArgumentNullException("source"); }
 
+            this.textureImage = textureImage;
             this.source = source;
             this.camera = camera;
         }
 
 
-        public void Initialize(OpenGL gl, MeshGeometry mesh)
+        public void Initialize(OpenGL gl, Texture2dMeshGeometry mesh)
         {
             gl.MakeCurrent();
+
+            this.texture.Create(gl, textureImage);
+
             this.shader = this.CreateShaderProgram(gl);
             this.InitVertexes(gl, mesh.Vertexes, mesh.VertexColors, mesh.Visibles);
             

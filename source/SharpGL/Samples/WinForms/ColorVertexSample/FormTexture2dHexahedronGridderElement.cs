@@ -171,22 +171,29 @@ namespace ColorVertexSample
                 this.scientificVisual3DControl.SetColorIndicator(minValue, maxValue, step);
                 //获得每个网格上的属性值
                 HexahedronGridderHelper.RandomValue(source.DimenSize, minValue, maxValue, out gridIndexes, out gridValues);
-                ColorF[] colors = new ColorF[source.DimenSize];
+                //ColorF[] colors = new ColorF[source.DimenSize];
+                //for (int i = 0; i < colors.Length; i++)
+                //{
+                    //colors[i] = (ColorF)this.scientificVisual3DControl.MapToColor(gridValues[i]);
+                //}
+                UVF[] colors = new UVF[source.DimenSize];
                 for (int i = 0; i < colors.Length; i++)
                 {
-                    colors[i] = (ColorF)this.scientificVisual3DControl.MapToColor(gridValues[i]);
+                    colors[i] = new UVF() { U = (gridValues[i] - minValue) / (maxValue - minValue), V = 0.5f, };
                 }
 
                 // use HexahedronGridderElement
                 DateTime t0 = DateTime.Now;
-                MeshGeometry mesh = HexahedronGridderHelper.CreateMesh(source);
+                Texture2dMeshGeometry mesh = Texture2dHexahedronGridderHelper.CreateMesh(source);
                 DateTime t1 = DateTime.Now;
                 TimeSpan ts1 = t1 - t0;
-                
-                mesh.VertexColors = HexahedronGridderHelper.FromColors(source, gridIndexes, colors, mesh.Visibles);
+
+                mesh.VertexColors = Texture2dHexahedronGridderHelper.FromColors(source, gridIndexes, colors, mesh.Visibles);
                 //this.DebugMesh(mesh);
 
-                HexahedronGridderElement gridderElement = new HexahedronGridderElement(source, this.scientificVisual3DControl.Scene.CurrentCamera);
+                Bitmap tmp = new Bitmap("TexturedCube.png");
+                Texture2dHexahedronGridderElement gridderElement = new Texture2dHexahedronGridderElement(
+                    tmp, source, this.scientificVisual3DControl.Scene.CurrentCamera);
                 gridderElement.renderWireframe = false;
                 //method1
                 //gridderElement.Initialize(this.scientificVisual3DControl.OpenGL);

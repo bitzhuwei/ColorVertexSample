@@ -23,7 +23,7 @@ namespace YieldingGeometryModel
         private int[] firsts;
         private int[] counts;
 
-        private void InitVertexes(OpenGL gl, UnmanagedArray<Vertex> vertexes, UnmanagedArray<ColorF> colorArray, UnmanagedArray<float> visibles)
+        private void InitVertexes(OpenGL gl, UnmanagedArray<Vertex> vertexes, UnmanagedArray<UVF> colorArray, UnmanagedArray<float> visibles)
         {
             uint[] vao = new uint[1];
             gl.GenVertexArrays(vao.Length, vao);
@@ -55,7 +55,8 @@ namespace YieldingGeometryModel
             gl.GenBuffers(vboColor.Length, vboColor);
             gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, vboColor[0]);
             gl.BufferData(OpenGL.GL_ARRAY_BUFFER, colorArray.ByteLength, colorArray.Header, OpenGL.GL_DYNAMIC_DRAW);
-            gl.VertexAttribPointer(ATTRIB_INDEX_COLOUR, 4, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
+            //gl.VertexAttribPointer(ATTRIB_INDEX_COLOUR, 4, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
+            gl.VertexAttribPointer(ATTRIB_INDEX_COLOUR, 2, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
             gl.EnableVertexAttribArray(ATTRIB_INDEX_COLOUR);
             this.colorsBufferObject = vboColor[0];
 
@@ -70,7 +71,7 @@ namespace YieldingGeometryModel
             gl.BindVertexArray(0);
         }
 
-        public void UpdateColorBuffer(OpenGL gl, UnmanagedArray<ColorF> colors, UnmanagedArray<float> visibles)
+        public void UpdateColorBuffer(OpenGL gl, UnmanagedArray<UVF> colors, UnmanagedArray<float> visibles)
         {
             if (this.visiblesBufferObject == 0 || this.colorsBufferObject == 0)
                 return;

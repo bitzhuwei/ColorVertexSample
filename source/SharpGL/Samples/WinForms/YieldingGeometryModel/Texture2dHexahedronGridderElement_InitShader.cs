@@ -31,7 +31,7 @@ namespace YieldingGeometryModel
             ShaderProgram shaderProgram = new ShaderProgram();
             shaderProgram.Create(gl, vertexShaderSource, fragmentShaderSource, null);
             shaderProgram.BindAttributeLocation(gl, IndexedVAOElement.ATTRIB_INDEX_POSITION, "in_Position");
-            shaderProgram.BindAttributeLocation(gl, IndexedVAOElement.ATTRIB_INDEX_COLOUR, "in_Color");
+            shaderProgram.BindAttributeLocation(gl, IndexedVAOElement.ATTRIB_INDEX_COLOUR, "in_uv");
             shaderProgram.BindAttributeLocation(gl, IndexedVAOElement.ATTRIB_INDEX_VISIBLE, "in_visible");//控制顶点可见性。
             shaderProgram.AssertValid(gl);
             return shaderProgram;

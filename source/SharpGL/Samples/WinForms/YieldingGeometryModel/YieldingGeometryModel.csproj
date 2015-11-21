@@ -211,8 +211,8 @@
     <EmbeddedResource Include="ZippedHexahedronGridderElement.vert" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Texture2dHexahedronGridderElement.frag" />
-    <None Include="Texture2dHexahedronGridderElement.vert" />
+    <EmbeddedResource Include="Texture2dHexahedronGridderElement.frag" />
+    <EmbeddedResource Include="Texture2dHexahedronGridderElement.vert" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

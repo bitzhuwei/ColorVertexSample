@@ -43,6 +43,9 @@ namespace YieldingGeometryModel
                 { throw new NotImplementedException(); }
             }
 
+            gl.Enable(OpenGL.GL_TEXTURE_2D);
+            this.texture.Bind(gl);
+
             modelMatrix = mat4.identity();
             ShaderProgram shader = this.shader;
             //  Bind the shader, set the matrices.
@@ -50,6 +53,9 @@ namespace YieldingGeometryModel
             shader.SetUniformMatrix4(gl, "projectionMatrix", projectionMatrix.to_array());
             shader.SetUniformMatrix4(gl, "viewMatrix", viewMatrix.to_array());
             shader.SetUniformMatrix4(gl, "modelMatrix", modelMatrix.to_array());
+
+            shader.SetUniform1(gl, "tex", this.texture.TextureName);
+            
 
             gl.Enable(OpenGL.GL_POLYGON_SMOOTH);
             gl.Hint(OpenGL.GL_POLYGON_SMOOTH_HINT, OpenGL.GL_NICEST);
@@ -111,6 +117,9 @@ namespace YieldingGeometryModel
             gl.Disable(OpenGL.GL_POLYGON_SMOOTH);
 
             shader.Unbind(gl);
+            gl.BindTexture(OpenGL.GL_TEXTURE_2D, 0);
+
+            gl.Disable(OpenGL.GL_TEXTURE_2D);
         }
     }
 }
