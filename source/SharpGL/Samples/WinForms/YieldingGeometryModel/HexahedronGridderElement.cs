@@ -100,11 +100,12 @@ namespace YieldingGeometryModel
         }
 
 
-        public void Initialize(OpenGL gl, TriangleMesh mesh)
+        public void Initialize(OpenGL gl, MeshGeometry mesh)
         {
             gl.MakeCurrent();
             this.shader = this.CreateShaderProgram(gl);
             this.InitVertexes(gl, mesh.Vertexes, mesh.VertexColors, mesh.Visibles);
+            
 
             this.isInitialized = true;
         }
