@@ -33,6 +33,18 @@ namespace SharpGL.SceneComponent
 
     }
 
+    public struct UVF
+    {
+        public float U;
+        public float V;
+
+        public override string ToString()
+        {
+            return string.Format("U: {0}, V: {1}", U, V);
+             //return base.ToString();
+        }
+    }
+
     /// <summary>
     /// 元素类型为sbyte, byte, char, short, ushort, int, uint, long, ulong, float, double, decimal, bool或其它struct的非托管数组。
     /// <para>不能使用enum类型作为T。</para>

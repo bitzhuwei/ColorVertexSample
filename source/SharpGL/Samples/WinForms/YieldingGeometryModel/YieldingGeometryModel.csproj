@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Builder\DynamicUnstructuredGridderElementHelper.cs" />
+    <Compile Include="Builder\Texture2dHexahedronGridderBuilder.cs" />
     <Compile Include="Builder\ZippedHexahedronGridderBuilder.cs" />
     <Compile Include="Builder\VertexHelper.cs" />
     <Compile Include="Builder\HexahedronGridderBuilder.cs" />
