@@ -26,8 +26,8 @@ namespace YieldingGeometryModel
         /// <returns></returns>
         protected ShaderProgram CreateShaderProgram(OpenGL gl)
         {
-            String vertexShaderSource = ManifestResourceLoader.LoadTextFile(@"HexahedronGridder2.vert");
-            String fragmentShaderSource = ManifestResourceLoader.LoadTextFile(@"HexahedronGridder2.frag");
+            String vertexShaderSource = ManifestResourceLoader.LoadTextFile(@"Texture2dHexahedronGridderElement.vert");
+            String fragmentShaderSource = ManifestResourceLoader.LoadTextFile(@"Texture2dHexahedronGridderElement.frag");
             ShaderProgram shaderProgram = new ShaderProgram();
             shaderProgram.Create(gl, vertexShaderSource, fragmentShaderSource, null);
             shaderProgram.BindAttributeLocation(gl, IndexedVAOElement.ATTRIB_INDEX_POSITION, "in_Position");
