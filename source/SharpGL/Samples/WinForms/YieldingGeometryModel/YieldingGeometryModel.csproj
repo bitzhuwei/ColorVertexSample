@@ -88,6 +88,12 @@
     </Compile>
     <Compile Include="loader\DynamicUnstructureGeometryLoader.cs" />
     <Compile Include="loader\UnstructureGeometryLoader.cs" />
+    <Compile Include="Texture2dHexahedronGridderElement.cs" />
+    <Compile Include="Texture2dHexahedronGridderElement_IBoundingBox.cs" />
+    <Compile Include="Texture2dHexahedronGridderElement_IDisposable.cs" />
+    <Compile Include="Texture2dHexahedronGridderElement_InitShader.cs" />
+    <Compile Include="Texture2dHexahedronGridderElement_InitVertexArrayBufferObject.cs" />
+    <Compile Include="Texture2dHexahedronGridderElement_Render.cs" />
     <Compile Include="PointSpriteStringElement_InitTexture.cs" />
     <Compile Include="PointSpriteStringElement.cs" />
     <Compile Include="PointSpriteStringElement_IBoundingBox.cs" />
@@ -202,6 +208,10 @@
   <ItemGroup>
     <EmbeddedResource Include="ZippedHexahedronGridderElement.frag" />
     <EmbeddedResource Include="ZippedHexahedronGridderElement.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Texture2dHexahedronGridderElement.frag" />
+    <None Include="Texture2dHexahedronGridderElement.vert" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
