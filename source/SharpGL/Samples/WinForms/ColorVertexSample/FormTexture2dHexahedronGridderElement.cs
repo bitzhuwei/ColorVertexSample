@@ -191,9 +191,9 @@ namespace ColorVertexSample
                 mesh.VertexColors = Texture2dHexahedronGridderHelper.FromColors(source, gridIndexes, colors, mesh.Visibles);
                 //this.DebugMesh(mesh);
 
-                Bitmap tmp = new Bitmap("TexturedCube.png");
+                Bitmap textureImage = ColorPaletteHelper.GenBitmap(this.scientificVisual3DControl.uiColorIndicator.Data.ColorPalette);
                 Texture2dHexahedronGridderElement gridderElement = new Texture2dHexahedronGridderElement(
-                    tmp, source, this.scientificVisual3DControl.Scene.CurrentCamera);
+                    textureImage, source, this.scientificVisual3DControl.Scene.CurrentCamera);
                 gridderElement.renderWireframe = false;
                 //method1
                 //gridderElement.Initialize(this.scientificVisual3DControl.OpenGL);

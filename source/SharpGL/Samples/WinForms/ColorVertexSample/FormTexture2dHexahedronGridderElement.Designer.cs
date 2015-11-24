@@ -73,7 +73,7 @@
             this.tableLayoutPanel1.Controls.Add(this.scientificVisual3DControl, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 135F));
@@ -129,7 +129,7 @@
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(4, 4);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1017, 127);
             this.panel1.TabIndex = 1;
@@ -152,7 +152,7 @@
             this.cmbCameraType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCameraType.FormattingEnabled = true;
             this.cmbCameraType.Location = new System.Drawing.Point(539, 41);
-            this.cmbCameraType.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbCameraType.Margin = new System.Windows.Forms.Padding(4);
             this.cmbCameraType.Name = "cmbCameraType";
             this.cmbCameraType.Size = new System.Drawing.Size(109, 23);
             this.cmbCameraType.TabIndex = 20;
@@ -163,7 +163,7 @@
             this.cmbViewType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbViewType.FormattingEnabled = true;
             this.cmbViewType.Location = new System.Drawing.Point(657, 41);
-            this.cmbViewType.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbViewType.Margin = new System.Windows.Forms.Padding(4);
             this.cmbViewType.Name = "cmbViewType";
             this.cmbViewType.Size = new System.Drawing.Size(109, 23);
             this.cmbViewType.TabIndex = 20;
@@ -175,7 +175,7 @@
             this.chkRenderContainerBox.Checked = true;
             this.chkRenderContainerBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkRenderContainerBox.Location = new System.Drawing.Point(776, 44);
-            this.chkRenderContainerBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkRenderContainerBox.Margin = new System.Windows.Forms.Padding(4);
             this.chkRenderContainerBox.Name = "chkRenderContainerBox";
             this.chkRenderContainerBox.Size = new System.Drawing.Size(149, 19);
             this.chkRenderContainerBox.TabIndex = 19;
@@ -200,7 +200,7 @@
             // btnClearModels
             // 
             this.btnClearModels.Location = new System.Drawing.Point(461, 50);
-            this.btnClearModels.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnClearModels.Margin = new System.Windows.Forms.Padding(4);
             this.btnClearModels.Name = "btnClearModels";
             this.btnClearModels.Size = new System.Drawing.Size(69, 29);
             this.btnClearModels.TabIndex = 12;
@@ -211,7 +211,7 @@
             // btnCreate3D
             // 
             this.btnCreate3D.Location = new System.Drawing.Point(384, 50);
-            this.btnCreate3D.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCreate3D.Margin = new System.Windows.Forms.Padding(4);
             this.btnCreate3D.Name = "btnCreate3D";
             this.btnCreate3D.Size = new System.Drawing.Size(69, 29);
             this.btnCreate3D.TabIndex = 12;
@@ -222,7 +222,7 @@
             // tbColorIndicatorStep
             // 
             this.tbColorIndicatorStep.Location = new System.Drawing.Point(556, 8);
-            this.tbColorIndicatorStep.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbColorIndicatorStep.Margin = new System.Windows.Forms.Padding(4);
             this.tbColorIndicatorStep.Name = "tbColorIndicatorStep";
             this.tbColorIndicatorStep.Size = new System.Drawing.Size(79, 25);
             this.tbColorIndicatorStep.TabIndex = 11;
@@ -231,7 +231,7 @@
             // tbRadius
             // 
             this.tbRadius.Location = new System.Drawing.Point(771, 10);
-            this.tbRadius.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbRadius.Margin = new System.Windows.Forms.Padding(4);
             this.tbRadius.Name = "tbRadius";
             this.tbRadius.ReadOnly = true;
             this.tbRadius.Size = new System.Drawing.Size(132, 25);
@@ -261,7 +261,7 @@
             // tbDZ
             // 
             this.tbDZ.Location = new System.Drawing.Point(285, 44);
-            this.tbDZ.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbDZ.Margin = new System.Windows.Forms.Padding(4);
             this.tbDZ.Name = "tbDZ";
             this.tbDZ.Size = new System.Drawing.Size(79, 25);
             this.tbDZ.TabIndex = 5;
@@ -280,7 +280,7 @@
             // tbNZ
             // 
             this.tbNZ.Location = new System.Drawing.Point(285, 10);
-            this.tbNZ.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbNZ.Margin = new System.Windows.Forms.Padding(4);
             this.tbNZ.Name = "tbNZ";
             this.tbNZ.Size = new System.Drawing.Size(79, 25);
             this.tbNZ.TabIndex = 5;
@@ -289,7 +289,7 @@
             // gbDY
             // 
             this.gbDY.Location = new System.Drawing.Point(167, 45);
-            this.gbDY.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.gbDY.Margin = new System.Windows.Forms.Padding(4);
             this.gbDY.Name = "gbDY";
             this.gbDY.Size = new System.Drawing.Size(79, 25);
             this.gbDY.TabIndex = 3;
@@ -318,7 +318,7 @@
             // tbNY
             // 
             this.tbNY.Location = new System.Drawing.Point(167, 11);
-            this.tbNY.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbNY.Margin = new System.Windows.Forms.Padding(4);
             this.tbNY.Name = "tbNY";
             this.tbNY.Size = new System.Drawing.Size(79, 25);
             this.tbNY.TabIndex = 3;
@@ -327,7 +327,7 @@
             // tbDX
             // 
             this.tbDX.Location = new System.Drawing.Point(40, 48);
-            this.tbDX.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbDX.Margin = new System.Windows.Forms.Padding(4);
             this.tbDX.Name = "tbDX";
             this.tbDX.Size = new System.Drawing.Size(79, 25);
             this.tbDX.TabIndex = 1;
@@ -356,7 +356,7 @@
             // tbNX
             // 
             this.tbNX.Location = new System.Drawing.Point(40, 14);
-            this.tbNX.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbNX.Margin = new System.Windows.Forms.Padding(4);
             this.tbNX.Name = "tbNX";
             this.tbNX.Size = new System.Drawing.Size(79, 25);
             this.tbNX.TabIndex = 1;
@@ -397,10 +397,9 @@
             this.ClientSize = new System.Drawing.Size(1025, 585);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(18, 47);
             this.Name = "FormTexture2dHexahedronGridderElement";
-            this.Text = "FormTexture2dHexahedronGridderElement";
             this.Load += new System.EventHandler(this.FormHexahedronGridder_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.scientificVisual3DControl)).EndInit();
