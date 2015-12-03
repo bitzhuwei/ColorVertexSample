@@ -76,6 +76,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YieldingGeometryModel", "Sa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnstructedReader", "UnstructedReader\UnstructedReader.csproj", "{B5FE9791-5AB7-4E9F-9FA5-6F35B732A42D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnmanagedArrayTest", "Samples\WinForms\UnmanagedArrayTest\UnmanagedArrayTest.csproj", "{62B70547-EF09-4308-AAE5-AE28010C4453}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -479,6 +481,18 @@ Global
 		{B5FE9791-5AB7-4E9F-9FA5-6F35B732A42D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{B5FE9791-5AB7-4E9F-9FA5-6F35B732A42D}.Release|x64.ActiveCfg = Release|Any CPU
 		{B5FE9791-5AB7-4E9F-9FA5-6F35B732A42D}.Release|x86.ActiveCfg = Release|Any CPU
+		{62B70547-EF09-4308-AAE5-AE28010C4453}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62B70547-EF09-4308-AAE5-AE28010C4453}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62B70547-EF09-4308-AAE5-AE28010C4453}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{62B70547-EF09-4308-AAE5-AE28010C4453}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{62B70547-EF09-4308-AAE5-AE28010C4453}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{62B70547-EF09-4308-AAE5-AE28010C4453}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{62B70547-EF09-4308-AAE5-AE28010C4453}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62B70547-EF09-4308-AAE5-AE28010C4453}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62B70547-EF09-4308-AAE5-AE28010C4453}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{62B70547-EF09-4308-AAE5-AE28010C4453}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{62B70547-EF09-4308-AAE5-AE28010C4453}.Release|x64.ActiveCfg = Release|Any CPU
+		{62B70547-EF09-4308-AAE5-AE28010C4453}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -515,5 +529,6 @@ Global
 		{04DEF8C9-F4DF-4290-A747-4801FD11571E} = {7B5EC8D9-8BB2-4738-AE7C-1B6E4BE0DFF3}
 		{19DECD3D-C2B6-4A9A-88E1-2113718447D1} = {7B5EC8D9-8BB2-4738-AE7C-1B6E4BE0DFF3}
 		{B5FE9791-5AB7-4E9F-9FA5-6F35B732A42D} = {7B5EC8D9-8BB2-4738-AE7C-1B6E4BE0DFF3}
+		{62B70547-EF09-4308-AAE5-AE28010C4453} = {7B5EC8D9-8BB2-4738-AE7C-1B6E4BE0DFF3}
 	EndGlobalSection
 EndGlobal
