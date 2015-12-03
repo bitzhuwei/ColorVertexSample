@@ -65,6 +65,24 @@
     <Compile Include="FormdfmPointSpriteGridderElement.Designer.cs">
       <DependentUpon>FormdfmPointSpriteGridderElement.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormOnlyOpenGLControl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormOnlyOpenGLControl.Designer.cs">
+      <DependentUpon>FormOnlyOpenGLControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormOnlyScientificControl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormOnlyScientificControl.Designer.cs">
+      <DependentUpon>FormOnlyScientificControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormTryToReleaseBufferInOpenGL.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormTryToReleaseBufferInOpenGL.Designer.cs">
+      <DependentUpon>FormTryToReleaseBufferInOpenGL.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormTexture2dHexahedronGridderElement.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -150,6 +168,15 @@
     <Compile Include="VertexHelper.cs" />
     <EmbeddedResource Include="FormdfmPointSpriteGridderElement.resx">
       <DependentUpon>FormdfmPointSpriteGridderElement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormOnlyOpenGLControl.resx">
+      <DependentUpon>FormOnlyOpenGLControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormOnlyScientificControl.resx">
+      <DependentUpon>FormOnlyScientificControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormTryToReleaseBufferInOpenGL.resx">
+      <DependentUpon>FormTryToReleaseBufferInOpenGL.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormTexture2dHexahedronGridderElement.resx">
       <DependentUpon>FormTexture2dHexahedronGridderElement.cs</DependentUpon>

@@ -19,7 +19,7 @@ namespace UnmanagedArrayTest
             InitializeComponent();
         }
 
-        private void btnInSubRoutine_Click(object sender, EventArgs e)
+        private void btnUnsafeVSSafe_Click(object sender, EventArgs e)
         {
             int count = 1000000;
             // 测试vec3类型
@@ -64,6 +64,38 @@ namespace UnmanagedArrayTest
 
                 Console.WriteLine();
                 MessageBox.Show(string.Format("Ticks: safe: {0} vs unsafe: {1}", interval, interval2), "result");
+
+            }
+        }
+
+        private void btnInSubRoutine_Click(object sender, EventArgs e)
+        {
+            if (btnInSubRoutine.Text == "点此停止")
+            {
+                this.timer1.Enabled = false;
+                btnInSubRoutine.Text = "在子函数中不断为UnmanagedArray赋值";
+            }
+            else
+            {
+                this.timer1.Enabled = true;
+                btnInSubRoutine.Text = "点此停止";
+            }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            TestUsingUnmanagedArray();
+        }
+
+        Random random = new Random();
+        const int arrayLength = 100000;
+        UnmanagedArray<vec3> array = new UnmanagedArray<vec3>(arrayLength);
+        private void TestUsingUnmanagedArray()
+        {
+            unsafe
+            {
+
+                vec3* first = (vec3*)array.FirstElement();
 
             }
         }

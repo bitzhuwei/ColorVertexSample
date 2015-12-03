@@ -38,6 +38,9 @@
             this.btnFormDynamicUnStructuredGridderElement = new System.Windows.Forms.Button();
             this.btnFormZippedHexadronGridderElement = new System.Windows.Forms.Button();
             this.btnFormTexture2dHexahedronGridderElement = new System.Windows.Forms.Button();
+            this.btn = new System.Windows.Forms.Button();
+            this.btnFormOnlyScientificControl = new System.Windows.Forms.Button();
+            this.btnOnlyOpenGLControl = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnWell
@@ -160,11 +163,50 @@
             this.btnFormTexture2dHexahedronGridderElement.UseVisualStyleBackColor = true;
             this.btnFormTexture2dHexahedronGridderElement.Click += new System.EventHandler(this.btnFormTexture2dHexahedronGridderElement_Click);
             // 
+            // btn
+            // 
+            this.btn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn.Location = new System.Drawing.Point(12, 302);
+            this.btn.Name = "btn";
+            this.btn.Size = new System.Drawing.Size(930, 23);
+            this.btn.TabIndex = 1;
+            this.btn.Text = "FormTryToReleaseBufferInOpenGL";
+            this.btn.UseVisualStyleBackColor = true;
+            this.btn.Click += new System.EventHandler(this.btnFormTexture2dHexahedronGridderElement_Click);
+            // 
+            // btnFormOnlyScientificControl
+            // 
+            this.btnFormOnlyScientificControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFormOnlyScientificControl.Location = new System.Drawing.Point(12, 331);
+            this.btnFormOnlyScientificControl.Name = "btnFormOnlyScientificControl";
+            this.btnFormOnlyScientificControl.Size = new System.Drawing.Size(930, 23);
+            this.btnFormOnlyScientificControl.TabIndex = 1;
+            this.btnFormOnlyScientificControl.Text = "FormOnlyScientificControl";
+            this.btnFormOnlyScientificControl.UseVisualStyleBackColor = true;
+            this.btnFormOnlyScientificControl.Click += new System.EventHandler(this.btnFormOnlyScientificControl_Click);
+            // 
+            // btnOnlyOpenGLControl
+            // 
+            this.btnOnlyOpenGLControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOnlyOpenGLControl.Location = new System.Drawing.Point(12, 360);
+            this.btnOnlyOpenGLControl.Name = "btnOnlyOpenGLControl";
+            this.btnOnlyOpenGLControl.Size = new System.Drawing.Size(930, 23);
+            this.btnOnlyOpenGLControl.TabIndex = 1;
+            this.btnOnlyOpenGLControl.Text = "FormOnlyOpenGLControl";
+            this.btnOnlyOpenGLControl.UseVisualStyleBackColor = true;
+            this.btnOnlyOpenGLControl.Click += new System.EventHandler(this.btnOnlyOpenGLControl_Click);
+            // 
             // FormPortal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(954, 432);
+            this.Controls.Add(this.btnOnlyOpenGLControl);
+            this.Controls.Add(this.btnFormOnlyScientificControl);
+            this.Controls.Add(this.btn);
             this.Controls.Add(this.btnFormTexture2dHexahedronGridderElement);
             this.Controls.Add(this.btnFormZippedHexadronGridderElement);
             this.Controls.Add(this.btnFormScientificVisual3DControl);
@@ -193,5 +235,8 @@
         private System.Windows.Forms.Button btnFormDynamicUnStructuredGridderElement;
         private System.Windows.Forms.Button btnFormZippedHexadronGridderElement;
         private System.Windows.Forms.Button btnFormTexture2dHexahedronGridderElement;
+        private System.Windows.Forms.Button btn;
+        private System.Windows.Forms.Button btnFormOnlyScientificControl;
+        private System.Windows.Forms.Button btnOnlyOpenGLControl;
     }
 }
