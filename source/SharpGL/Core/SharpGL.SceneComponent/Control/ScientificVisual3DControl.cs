@@ -235,12 +235,15 @@ namespace SharpGL.SceneComponent
 
         public void ClearScientificModels()
         {
-            //this.modelContainer.ClearChild();
-            //this.modelContainer.Children.Clear();
             var list = new List<SceneElement>(this.modelContainer.Children.AsEnumerable());
             foreach (var item in list)
             {
                 this.modelContainer.RemoveChild(item);
+                IDisposable disp = item as IDisposable;
+                if (disp != null)
+                {
+                    disp.Dispose();
+                }
             }
 
             ManualRender(this);
