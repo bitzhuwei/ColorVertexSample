@@ -154,9 +154,9 @@ namespace ColorVertexSample
                 float[] dzArray = initArray(dimenSize, dz);
                 // use CatesianGridderSource to fill HexahedronGridderElement's content.
                 CatesianGridderSource source = new CatesianGridderSource() { NX = nx, NY = ny, NZ = nz, DX = dxArray, DY = dyArray, DZ = dzArray, };
-                source.IBlocks = GridBlockHelper.CreateBlockCoords(nx);
-                source.JBlocks = GridBlockHelper.CreateBlockCoords(ny);
-                source.KBlocks = GridBlockHelper.CreateBlockCoords(nz);
+                source.IBlocks   = GridBlockHelper.CreateBlockCoords(nx);
+                source.JBlocks   = GridBlockHelper.CreateBlockCoords(ny);
+                source.KBlocks  = GridBlockHelper.CreateBlockCoords(nz);
 
 
                 //DemoPointSpriteGridderSource source = new DemoPointSpriteGridderSource() { NX = nx, NY = ny, NZ = nz, };

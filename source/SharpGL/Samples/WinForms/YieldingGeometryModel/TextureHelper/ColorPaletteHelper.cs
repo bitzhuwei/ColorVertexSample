@@ -18,8 +18,9 @@ namespace YieldingGeometryModel.TextureHelper
         /// <returns></returns>
         public static Bitmap GenBitmap(this ColorPalette colorPalette)
         {
-            const int length = 256;
-            Bitmap bitmap = new Bitmap(length, length);
+            const int length = 2048;
+            const int height = 1;
+            Bitmap bitmap = new Bitmap(length, height);
             Graphics g = Graphics.FromImage(bitmap);
 
             for (int i = 0; i < colorPalette.Colors.Length-1; i++)
