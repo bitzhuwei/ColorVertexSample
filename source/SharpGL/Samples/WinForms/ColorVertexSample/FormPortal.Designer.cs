@@ -41,6 +41,7 @@
             this.btnFormTryToReleaseBufferInOpenGL = new System.Windows.Forms.Button();
             this.btnFormOnlyScientificControl = new System.Windows.Forms.Button();
             this.btnOnlyOpenGLControl = new System.Windows.Forms.Button();
+            this.btnFormTexture2dHexahedronGridderElement_DrawElements = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnWell
@@ -167,7 +168,7 @@
             // 
             this.btnFormTryToReleaseBufferInOpenGL.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnFormTryToReleaseBufferInOpenGL.Location = new System.Drawing.Point(12, 302);
+            this.btnFormTryToReleaseBufferInOpenGL.Location = new System.Drawing.Point(12, 331);
             this.btnFormTryToReleaseBufferInOpenGL.Name = "btnFormTryToReleaseBufferInOpenGL";
             this.btnFormTryToReleaseBufferInOpenGL.Size = new System.Drawing.Size(930, 23);
             this.btnFormTryToReleaseBufferInOpenGL.TabIndex = 1;
@@ -179,7 +180,7 @@
             // 
             this.btnFormOnlyScientificControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnFormOnlyScientificControl.Location = new System.Drawing.Point(12, 331);
+            this.btnFormOnlyScientificControl.Location = new System.Drawing.Point(12, 360);
             this.btnFormOnlyScientificControl.Name = "btnFormOnlyScientificControl";
             this.btnFormOnlyScientificControl.Size = new System.Drawing.Size(930, 23);
             this.btnFormOnlyScientificControl.TabIndex = 1;
@@ -191,7 +192,7 @@
             // 
             this.btnOnlyOpenGLControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOnlyOpenGLControl.Location = new System.Drawing.Point(12, 360);
+            this.btnOnlyOpenGLControl.Location = new System.Drawing.Point(12, 389);
             this.btnOnlyOpenGLControl.Name = "btnOnlyOpenGLControl";
             this.btnOnlyOpenGLControl.Size = new System.Drawing.Size(930, 23);
             this.btnOnlyOpenGLControl.TabIndex = 1;
@@ -199,14 +200,27 @@
             this.btnOnlyOpenGLControl.UseVisualStyleBackColor = true;
             this.btnOnlyOpenGLControl.Click += new System.EventHandler(this.btnOnlyOpenGLControl_Click);
             // 
+            // btnFormTexture2dHexahedronGridderElement_DrawElements
+            // 
+            this.btnFormTexture2dHexahedronGridderElement_DrawElements.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFormTexture2dHexahedronGridderElement_DrawElements.Location = new System.Drawing.Point(12, 302);
+            this.btnFormTexture2dHexahedronGridderElement_DrawElements.Name = "btnFormTexture2dHexahedronGridderElement_DrawElements";
+            this.btnFormTexture2dHexahedronGridderElement_DrawElements.Size = new System.Drawing.Size(930, 23);
+            this.btnFormTexture2dHexahedronGridderElement_DrawElements.TabIndex = 1;
+            this.btnFormTexture2dHexahedronGridderElement_DrawElements.Text = "FormTexture2dHexahedronGridderElement_DrawElements";
+            this.btnFormTexture2dHexahedronGridderElement_DrawElements.UseVisualStyleBackColor = true;
+            this.btnFormTexture2dHexahedronGridderElement_DrawElements.Click += new System.EventHandler(this.btnFormTexture2dHexahedronGridderElement_DrawElements_Click);
+            // 
             // FormPortal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(954, 432);
+            this.ClientSize = new System.Drawing.Size(954, 488);
             this.Controls.Add(this.btnOnlyOpenGLControl);
             this.Controls.Add(this.btnFormOnlyScientificControl);
             this.Controls.Add(this.btnFormTryToReleaseBufferInOpenGL);
+            this.Controls.Add(this.btnFormTexture2dHexahedronGridderElement_DrawElements);
             this.Controls.Add(this.btnFormTexture2dHexahedronGridderElement);
             this.Controls.Add(this.btnFormZippedHexadronGridderElement);
             this.Controls.Add(this.btnFormScientificVisual3DControl);
@@ -238,5 +252,6 @@
         private System.Windows.Forms.Button btnFormTryToReleaseBufferInOpenGL;
         private System.Windows.Forms.Button btnFormOnlyScientificControl;
         private System.Windows.Forms.Button btnOnlyOpenGLControl;
+        private System.Windows.Forms.Button btnFormTexture2dHexahedronGridderElement_DrawElements;
     }
 }

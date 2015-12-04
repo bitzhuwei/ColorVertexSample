@@ -77,6 +77,12 @@
     <Compile Include="FormOnlyScientificControl.Designer.cs">
       <DependentUpon>FormOnlyScientificControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormTexture2dHexahedronGridderElement_DrawElements.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormTexture2dHexahedronGridderElement_DrawElements.Designer.cs">
+      <DependentUpon>FormTexture2dHexahedronGridderElement_DrawElements.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormTryToReleaseBufferInOpenGL.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -174,6 +180,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormOnlyScientificControl.resx">
       <DependentUpon>FormOnlyScientificControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormTexture2dHexahedronGridderElement_DrawElements.resx">
+      <DependentUpon>FormTexture2dHexahedronGridderElement_DrawElements.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormTryToReleaseBufferInOpenGL.resx">
       <DependentUpon>FormTryToReleaseBufferInOpenGL.cs</DependentUpon>

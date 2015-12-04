@@ -86,6 +86,12 @@
     <Compile Include="FontResources\FontResource.cs" />
     <Compile Include="FontResources\KeyValuePairHelper.cs" />
     <Compile Include="PointSpriteStringElement_IDisposable.cs" />
+    <Compile Include="Texture2dHexahedronGridderElement_DrawElements.cs" />
+    <Compile Include="Texture2dHexahedronGridderElement_DrawElements_IBoundingBox.cs" />
+    <Compile Include="Texture2dHexahedronGridderElement_DrawElements_IDisposable.cs" />
+    <Compile Include="Texture2dHexahedronGridderElement_DrawElements_InitShader.cs" />
+    <Compile Include="Texture2dHexahedronGridderElement_DrawElements_InitVertexArrayBufferObject.cs" />
+    <Compile Include="Texture2dHexahedronGridderElement_DrawElements_Render.cs" />
     <Compile Include="UnStructuredGridderElement_IDisposable.cs" />
     <Compile Include="PointSpriteGridderElement_IDisposable.cs" />
     <Compile Include="HexahedronGridderElement_IDisposable.cs">
@@ -217,6 +223,10 @@
   <ItemGroup>
     <EmbeddedResource Include="Texture2dHexahedronGridderElement.frag" />
     <EmbeddedResource Include="Texture2dHexahedronGridderElement.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Texture2dHexahedronGridderElement_DrawElements.frag" />
+    <EmbeddedResource Include="Texture2dHexahedronGridderElement_DrawElements.vert" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
