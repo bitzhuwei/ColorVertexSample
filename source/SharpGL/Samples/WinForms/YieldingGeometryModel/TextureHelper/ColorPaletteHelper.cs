@@ -23,7 +23,7 @@ namespace YieldingGeometryModel.TextureHelper
             Bitmap bitmap = new Bitmap(length, height);
             Graphics g = Graphics.FromImage(bitmap);
 
-            for (int i = 0; i < colorPalette.Colors.Length-1; i++)
+            for (int i = 0; i < colorPalette.Colors.Length - 1; i++)
             {
                 int left = (int)(length * colorPalette.Coords[i]);
                 int right = (int)(length * colorPalette.Coords[i + 1]);

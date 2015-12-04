@@ -85,5 +85,10 @@ namespace ColorVertexSample
         {
             (new FormTryToReleaseBufferInOpenGL()).Show();
         }
+
+        private void btnFormTexture2dHexahedronGridderElement_DrawElements_Click(object sender, EventArgs e)
+        {
+            (new FormTexture2dHexahedronGridderElement_DrawElements()).Show();
+        }
     }
 }
