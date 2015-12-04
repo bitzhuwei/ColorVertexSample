@@ -480,5 +480,11 @@ namespace SharpGL.SceneComponent
 
             return pickedGeometry;
         }
+
+        protected override void OnHandleDestroyed(EventArgs e)
+        {
+            this.OpenGL.RenderContextProvider.Destroy();
+            base.OnHandleDestroyed(e);
+        }
     }
 }
