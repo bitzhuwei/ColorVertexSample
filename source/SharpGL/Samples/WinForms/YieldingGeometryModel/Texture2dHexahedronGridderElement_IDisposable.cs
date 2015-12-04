@@ -71,11 +71,9 @@ namespace YieldingGeometryModel
         {
             OpenGL gl = new OpenGL();// this is not cool.
 
-            //////gl.InvalidateBufferData(this.vertexsBufferObject);
-            ////gl.InvalidateBufferData(this.colorsBufferObject);
-            //gl.InvalidateBufferData(this.visiblesBufferObject);
             var buffers = new uint[] { this.vertexsBufferObject, this.colorsBufferObject, this.visiblesBufferObject };
             gl.DeleteBuffers(buffers.Length, buffers);
+            gl.DeleteTextures(1, new uint[] { this.texture.TextureName });
         }
 
         protected void CleanManagedRes()

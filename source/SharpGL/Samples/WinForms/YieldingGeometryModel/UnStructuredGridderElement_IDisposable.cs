@@ -16,7 +16,7 @@ using YieldingGeometryModel.GLPrimitive;
 
 namespace YieldingGeometryModel
 {
-    public partial class HexahedronGridderElement : IDisposable
+    public partial class UnStructuredGridderElement : IDisposable
     {
 
         #region IDisposable Members
@@ -33,7 +33,7 @@ namespace YieldingGeometryModel
         /// <summary>
         /// Destruct instance of the class.
         /// </summary>
-        ~HexahedronGridderElement()
+        ~UnStructuredGridderElement()
         {
             this.Dispose(false);
         }
@@ -71,9 +71,12 @@ namespace YieldingGeometryModel
         {
             OpenGL gl = new OpenGL();// this is not cool.
 
-            var buffers = new uint[] { this.vertexsBufferObject, this.colorsBufferObject, this.visiblesBufferObject };
-            gl.DeleteBuffers(buffers.Length, buffers);
-            gl.DeleteVertexArrays(1, new uint[] { this.vertexArrayObject });
+            gl.DeleteBuffers(this.fractionsPositionBufferObject.Length, this.fractionsPositionBufferObject);
+            gl.DeleteBuffers(this.fractionsColorBufferObject.Length, this.fractionsColorBufferObject);
+            gl.DeleteBuffers(this.tetrasPositionBufferObject.Length, this.tetrasPositionBufferObject);
+            gl.DeleteBuffers(this.tetrasColorBufferObject.Length, this.tetrasColorBufferObject);
+            gl.DeleteBuffers(this.tetrasIndexBufferObject.Length, this.tetrasIndexBufferObject);
+            gl.DeleteVertexArrays(1, this.vertexArrayObject);
         }
 
         protected void CleanManagedRes()

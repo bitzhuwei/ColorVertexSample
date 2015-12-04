@@ -68,7 +68,7 @@ namespace ColorVertexSample
 
         private void btnFormTexture2dHexahedronGridderElement_Click(object sender, EventArgs e)
         {
-            (new FormTryToReleaseBufferInOpenGL()).Show();
+            (new FormTexture2dHexahedronGridderElement()).Show();
         }
 
         private void btnFormOnlyScientificControl_Click(object sender, EventArgs e)
@@ -79,6 +79,11 @@ namespace ColorVertexSample
         private void btnOnlyOpenGLControl_Click(object sender, EventArgs e)
         {
             (new FormOnlyOpenGLControl()).Show();
+        }
+
+        private void btnFormTryToReleaseBufferInOpenGL_Click(object sender, EventArgs e)
+        {
+            (new FormTryToReleaseBufferInOpenGL()).Show();
         }
     }
 }

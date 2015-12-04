@@ -15,8 +15,12 @@ namespace YieldingGeometryModel
     /// <summary>
     /// 蛇形管道（井）
     /// </summary>
-    public class WellPipe : SharpGL.SceneGraph.Core.SceneElement, SharpGL.SceneGraph.Core.IRenderable
+    public class WellPipe : SharpGL.SceneGraph.Core.SceneElement, SharpGL.SceneGraph.Core.IRenderable, IDisposable
     {
+        uint positionBufferObject;
+        uint colorBufferObject;
+        uint indexBufferObject;
+
         /// <summary>
         /// 蛇形管道（井）
         /// </summary>
@@ -163,6 +167,7 @@ namespace YieldingGeometryModel
                 gl.EnableVertexAttribArray(positionLocation);
 
                 positionArray.Dispose();
+                this.positionBufferObject = ids[0];
             }
             {
                 uint[] ids = new uint[1];
@@ -178,6 +183,7 @@ namespace YieldingGeometryModel
                 gl.EnableVertexAttribArray(colorLocation);
 
                 colorArray.Dispose();
+                this.colorBufferObject = ids[0];
             }
             {
                 uint[] ids = new uint[1];
@@ -186,6 +192,7 @@ namespace YieldingGeometryModel
                 gl.BufferData(OpenGL.GL_ELEMENT_ARRAY_BUFFER, indexArray.ByteLength, indexArray.Header, OpenGL.GL_STATIC_DRAW);
 
                 indexArray.Dispose();
+                this.indexBufferObject = ids[0];
             }
 
             //  Unbind the vertex array, we've finished specifying data for it.
@@ -230,6 +237,68 @@ namespace YieldingGeometryModel
 
             // unbind shader program
             shaderProgram.Unbind(gl);
+        }
+
+        
+        #region IDisposable Members
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        } // end sub
+
+        /// <summary>
+        /// Destruct instance of the class.
+        /// </summary>
+        ~WellPipe()
+        {
+            this.Dispose(false);
+        }
+
+        /// <summary>
+        /// Backing field to track whether Dispose has been called.
+        /// </summary>
+        private bool disposedValue = false;
+
+        /// <summary>
+        /// Dispose managed and unmanaged resources of this instance.
+        /// </summary>
+        /// <param name="disposing">If disposing equals true, managed and unmanaged resources can be disposed. If disposing equals false, only unmanaged resources can be disposed. </param>
+        protected virtual void Dispose(bool disposing)
+        {
+
+            if (this.disposedValue == false)
+            {
+                if (disposing)
+                {
+                    // TODO: Dispose managed resources.
+                    CleanManagedRes();
+                } // end if
+
+                // TODO: Dispose unmanaged resources.
+                CleanUnmanagedRes();
+            } // end if
+
+            this.disposedValue = true;
+        } // end sub
+
+        #endregion
+
+        protected void CleanUnmanagedRes()
+        {
+            OpenGL gl = new OpenGL();// this is not cool.
+
+            uint[] buffers = new uint[] { this.positionBufferObject, this.colorBufferObject, this.indexBufferObject };
+            gl.DeleteBuffers(buffers.Length, buffers);
+            gl.DeleteVertexArrays(this.vao.Length, this.vao);
+        }
+
+        protected void CleanManagedRes()
+        {
         }
     }
 }

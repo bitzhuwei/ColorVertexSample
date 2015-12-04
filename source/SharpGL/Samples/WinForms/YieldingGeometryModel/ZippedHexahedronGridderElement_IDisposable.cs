@@ -76,6 +76,7 @@ namespace YieldingGeometryModel
             //gl.InvalidateBufferData(this.visiblesBufferObject);
             var buffers = new uint[] { this.vertexsBufferObject, this.colorsBufferObject, this.visiblesBufferObject };
             gl.DeleteBuffers(buffers.Length, buffers);
+            gl.DeleteVertexArrays(1, new uint[] { this.vertexArrayObject });
         }
 
         protected void CleanManagedRes()

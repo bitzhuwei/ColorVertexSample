@@ -39,6 +39,7 @@ namespace YieldingGeometryModel
                 gl.BufferData(OpenGL.GL_ARRAY_BUFFER, mesh.PositionArray.ByteLength, mesh.PositionArray.Header, OpenGL.GL_STATIC_DRAW);
                 gl.VertexAttribPointer(attributeIndexPosition, 3, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
                 gl.EnableVertexAttribArray(attributeIndexPosition);
+                this.positionBuffer = ids[0];
             }
 
             //  Now do the same for the colour data.

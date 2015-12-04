@@ -117,6 +117,7 @@ namespace YieldingGeometryModel
         //    //  Unbind the vertex array, we've finished specifying data for it.
         //    gl.BindVertexArray(0);
         //}
+        uint positionBufferObject;
         protected void InitVAO(OpenGL gl, out uint mode, out uint[] vao, out int primitiveCount)
         {
             mode = OpenGL.GL_POINTS;

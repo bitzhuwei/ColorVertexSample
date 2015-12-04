@@ -38,7 +38,7 @@
             this.btnFormDynamicUnStructuredGridderElement = new System.Windows.Forms.Button();
             this.btnFormZippedHexadronGridderElement = new System.Windows.Forms.Button();
             this.btnFormTexture2dHexahedronGridderElement = new System.Windows.Forms.Button();
-            this.btn = new System.Windows.Forms.Button();
+            this.btnFormTryToReleaseBufferInOpenGL = new System.Windows.Forms.Button();
             this.btnFormOnlyScientificControl = new System.Windows.Forms.Button();
             this.btnOnlyOpenGLControl = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -163,17 +163,17 @@
             this.btnFormTexture2dHexahedronGridderElement.UseVisualStyleBackColor = true;
             this.btnFormTexture2dHexahedronGridderElement.Click += new System.EventHandler(this.btnFormTexture2dHexahedronGridderElement_Click);
             // 
-            // btn
+            // btnFormTryToReleaseBufferInOpenGL
             // 
-            this.btn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.btnFormTryToReleaseBufferInOpenGL.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn.Location = new System.Drawing.Point(12, 302);
-            this.btn.Name = "btn";
-            this.btn.Size = new System.Drawing.Size(930, 23);
-            this.btn.TabIndex = 1;
-            this.btn.Text = "FormTryToReleaseBufferInOpenGL";
-            this.btn.UseVisualStyleBackColor = true;
-            this.btn.Click += new System.EventHandler(this.btnFormTexture2dHexahedronGridderElement_Click);
+            this.btnFormTryToReleaseBufferInOpenGL.Location = new System.Drawing.Point(12, 302);
+            this.btnFormTryToReleaseBufferInOpenGL.Name = "btnFormTryToReleaseBufferInOpenGL";
+            this.btnFormTryToReleaseBufferInOpenGL.Size = new System.Drawing.Size(930, 23);
+            this.btnFormTryToReleaseBufferInOpenGL.TabIndex = 1;
+            this.btnFormTryToReleaseBufferInOpenGL.Text = "FormTryToReleaseBufferInOpenGL";
+            this.btnFormTryToReleaseBufferInOpenGL.UseVisualStyleBackColor = true;
+            this.btnFormTryToReleaseBufferInOpenGL.Click += new System.EventHandler(this.btnFormTryToReleaseBufferInOpenGL_Click);
             // 
             // btnFormOnlyScientificControl
             // 
@@ -206,7 +206,7 @@
             this.ClientSize = new System.Drawing.Size(954, 432);
             this.Controls.Add(this.btnOnlyOpenGLControl);
             this.Controls.Add(this.btnFormOnlyScientificControl);
-            this.Controls.Add(this.btn);
+            this.Controls.Add(this.btnFormTryToReleaseBufferInOpenGL);
             this.Controls.Add(this.btnFormTexture2dHexahedronGridderElement);
             this.Controls.Add(this.btnFormZippedHexadronGridderElement);
             this.Controls.Add(this.btnFormScientificVisual3DControl);
@@ -235,7 +235,7 @@
         private System.Windows.Forms.Button btnFormDynamicUnStructuredGridderElement;
         private System.Windows.Forms.Button btnFormZippedHexadronGridderElement;
         private System.Windows.Forms.Button btnFormTexture2dHexahedronGridderElement;
-        private System.Windows.Forms.Button btn;
+        private System.Windows.Forms.Button btnFormTryToReleaseBufferInOpenGL;
         private System.Windows.Forms.Button btnFormOnlyScientificControl;
         private System.Windows.Forms.Button btnOnlyOpenGLControl;
     }

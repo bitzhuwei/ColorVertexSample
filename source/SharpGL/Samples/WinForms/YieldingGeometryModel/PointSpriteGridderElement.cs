@@ -30,6 +30,7 @@ namespace YieldingGeometryModel
         internal uint attributeIndexVisible = 2;
         internal uint attributeIndexRadius = 3;
 
+        internal uint positionBuffer = 0;
         internal uint colorBuffer = 0;
         internal uint visualBuffer = 0;
         internal uint radiusBuffer = 0;
