@@ -22,6 +22,7 @@ namespace YieldingGeometryModel
     /// <summary>
     /// 用于渲染六面体网格。
     /// Rendering gridder of hexadrons.
+    /// TODO：用DrawElements()渲染（待完成）
     /// </summary>
     public partial class Texture2dHexahedronGridderElement_DrawElements : SharpGL.SceneGraph.Core.SceneElement, SharpGL.SceneGraph.Core.IRenderable
     {
