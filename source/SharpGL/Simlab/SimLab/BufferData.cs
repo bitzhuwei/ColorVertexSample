@@ -145,7 +145,14 @@ namespace SimLab
 
 
     
+    public class WireFrameBufferData:BufferData{
 
+        public WireFrameBufferData()
+        {
+            this.GLDataType = OpenGL.GL_INT;
+        }
+
+    }
 
 
 

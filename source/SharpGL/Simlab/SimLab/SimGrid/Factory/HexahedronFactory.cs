@@ -27,15 +27,14 @@ namespace SimLab.GridSource.Factory
                  for (int gridIndex = 0; gridIndex < dimSize; gridIndex++)
                  {
                      src.InvertIJK(gridIndex, out I, out J, out K);
-                     cell->FLT = src.PointFLT(I, J, K);
-                     cell->FRT = src.PointFRT(I, J, K);
-                     cell->BRT = src.PointBRT(I, J, K);
-                     cell->BLT = src.PointBLT(I, J, K);
-                     cell->FLB = src.PointFLB(I, J, K);
-                     cell->FRB = src.PointFRB(I, J, K);
-                     cell->BRB = src.PointBRB(I, J, K);
-                     cell->BLB = src.PointBLB(I, J, K);
-                     cell++;
+                     cell[gridIndex].FLT = src.PointFLT(I, J, K);
+                     cell[gridIndex].FRT = src.PointFRT(I, J, K);
+                     cell[gridIndex].BRT = src.PointBRT(I, J, K);
+                     cell[gridIndex].BLT = src.PointBLT(I, J, K);
+                     cell[gridIndex].FLB = src.PointFLB(I, J, K);
+                     cell[gridIndex].FRB = src.PointFRB(I, J, K);
+                     cell[gridIndex].BRB = src.PointBRB(I, J, K);
+                     cell[gridIndex].BLB = src.PointBLB(I, J, K);
                  }
 
                  //网格个数*每个六面体的面数*描述每个六面体的三角形个数
@@ -112,6 +111,66 @@ namespace SimLab.GridSource.Factory
                  MeshGeometry3D mesh = new MeshGeometry3D(positions,triangles);
                  return mesh;
              }
+        }
+
+        public override WireFrameBufferData CreateWireFrame(GridderSource source)
+        {
+            WireFrameBufferData wireframe = new WireFrameBufferData();
+            int lineCount = source.DimenSize*12;
+            unsafe
+            {
+                int size = lineCount * sizeof(Line);
+                wireframe.AllocMem(size);
+                Line* first = (Line *)wireframe.Data;
+                for (int gridIndex = 0; gridIndex < source.DimenSize; gridIndex++)
+                {
+                    Line* cellLines = first + (gridIndex * 12);
+                    uint offset = (uint)(gridIndex*8);
+
+                    //top
+                    cellLines[0].p0 =offset  + 0;
+                    cellLines[0].p1 = offset + 1;
+
+                    cellLines[1].p0 = offset + 1;
+                    cellLines[1].p1 = offset + 2;
+
+                    cellLines[2].p0 = offset + 2;
+                    cellLines[2].p1 = offset + 3;
+
+
+                    cellLines[3].p0 = offset + 3;
+                    cellLines[3].p1 = offset + 0;
+
+                    //bottomm
+                    cellLines[4].p0 = offset + 4;
+                    cellLines[4].p1 = offset + 5;
+
+                    cellLines[5].p0 = offset + 5;
+                    cellLines[5].p1 = offset + 6;
+
+                    cellLines[6].p0 = offset + 6;
+                    cellLines[6].p1 = offset + 7;
+
+                    cellLines[7].p0 = offset + 7;
+                    cellLines[7].p1 = offset + 4;
+
+                    //pillar
+                    cellLines[8].p0 = offset + 0;
+                    cellLines[9].p1 = offset + 4;
+
+                    cellLines[9].p0 = offset + 2;
+                    cellLines[9].p1 = offset + 5;
+
+                    cellLines[10].p0 = offset + 3;
+                    cellLines[10].p1 = offset + 6;
+
+                    cellLines[11].p0 = offset + 4;
+                    cellLines[11].p1 = offset + 7;
+
+                }
+                return wireframe;
+            }
+
         }
 
 

@@ -20,6 +20,7 @@ namespace SimLab.GridSource.Factory
         public abstract MeshGeometry3D CreateMesh(GridderSource source);
 
         public abstract TextureCoordinatesBufferData CreateTextureCoordinates(GridderSource source, int[] gridIndexes, float[] values, float minValue, float maxValue);
-      
+
+        public abstract WireFrameBufferData CreateWireFrame(GridderSource source);
     }
 }

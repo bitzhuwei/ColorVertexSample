@@ -189,6 +189,8 @@ namespace SimLab.GridSource
 
         public abstract MeshGeometry3D CreateMesh();
 
+        public abstract WireFrameBufferData CreateWireframe();
+
 
         public int[] BindCellActive(int[] a1, int[] a2)
         {

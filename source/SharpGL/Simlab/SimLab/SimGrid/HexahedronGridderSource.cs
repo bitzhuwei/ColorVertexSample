@@ -273,6 +273,14 @@ namespace SimLab.GridSource
              return this.Factory.CreateTextureCoordinates(this,gridIndexes, values,minValue,maxValue);
         }
 
+
+
+        public override WireFrameBufferData CreateWireframe()
+        {
+             return this.Factory.CreateWireFrame(this);
+        }
+        
+
        
        
 
