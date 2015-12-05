@@ -21,9 +21,9 @@ namespace SimLab.GridSource.Factory
              int I, J, K;
              unsafe
              {
-                 int gridMemSize = dimSize * sizeof(Hexahedron);
+                 int gridMemSize = dimSize * sizeof(HexahedronPositions);
                  positions.AllocMem(gridMemSize);
-                 Hexahedron* cell = (Hexahedron*)positions.Data;
+                 HexahedronPositions* cell = (HexahedronPositions*)positions.Data;
                  for (int gridIndex = 0; gridIndex < dimSize; gridIndex++)
                  {
                      src.InvertIJK(gridIndex, out I, out J, out K);
@@ -39,18 +39,18 @@ namespace SimLab.GridSource.Factory
 
                  //网格个数*每个六面体的面数*描述每个六面体的三角形个数
                  int triangleCount = dimSize * 6 * 2;
-                 int triangleSize = triangleCount * sizeof(Triangle);
+                 int triangleSize = triangleCount * sizeof(TriangleIndex);
                  triangles.AllocMem(triangleSize);
 
                  int celloffset = 0; //每个网格数描述的点
-                 Triangle* first = (Triangle*)triangles.Data;
+                 TriangleIndex* first = (TriangleIndex*)triangles.Data;
                  for (int gridIndex = 0; gridIndex < dimSize; gridIndex++)
                  {
                      //网格三角形的偏移量
                      int gto= gridIndex * (6 * 2);
 
                      //任意网格三角形的首指针
-                     Triangle* gridTriangle = first + gto;
+                     TriangleIndex* gridTriangle = first + gto;
                      celloffset = gridIndex * 8;
 
                      //top
@@ -119,12 +119,12 @@ namespace SimLab.GridSource.Factory
             int lineCount = source.DimenSize*12;
             unsafe
             {
-                int size = lineCount * sizeof(Line);
+                int size = lineCount * sizeof(LineIndex);
                 wireframe.AllocMem(size);
-                Line* first = (Line *)wireframe.Data;
+                LineIndex* first = (LineIndex *)wireframe.Data;
                 for (int gridIndex = 0; gridIndex < source.DimenSize; gridIndex++)
                 {
-                    Line* cellLines = first + (gridIndex * 12);
+                    LineIndex* cellLines = first + (gridIndex * 12);
                     uint offset = (uint)(gridIndex*8);
 
                     //top
@@ -200,10 +200,10 @@ namespace SimLab.GridSource.Factory
 
             HexahedronTextureCoordinatesBufferData coordBuffer = new HexahedronTextureCoordinatesBufferData();
             unsafe{
-               int bufferSize = src.DimenSize*sizeof(HexhedronTextureCoordinates);
+               int bufferSize = src.DimenSize*sizeof(HexahedronUVs);
                coordBuffer.AllocMem(bufferSize);
               
-                HexhedronTextureCoordinates *coords = (HexhedronTextureCoordinates *)coordBuffer.Data;
+                HexahedronUVs *coords = (HexahedronUVs *)coordBuffer.Data;
 
                for (int  gridIndex= 0; gridIndex < dimenSize; gridIndex++)
                {

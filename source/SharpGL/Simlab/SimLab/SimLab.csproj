@@ -47,11 +47,11 @@
     <Compile Include="SimGrid\CornerPointGridderSource.cs" />
     <Compile Include="SimGrid\Factory\BufferDataFactory.cs" />
     <Compile Include="SimGrid\Factory\HexahedronFactory.cs" />
-    <Compile Include="SimGrid\Geometry\HexhedronTexture.cs" />
-    <Compile Include="SimGrid\Geometry\Hexahedron.cs" />
+    <Compile Include="SimGrid\Geometry\HexahedronUVs.cs" />
+    <Compile Include="SimGrid\Geometry\HexahedronPositions.cs" />
     <Compile Include="HexahedronGrid.cs" />
-    <Compile Include="SimGrid\Geometry\Line.cs" />
-    <Compile Include="SimGrid\Geometry\Triangle.cs" />
+    <Compile Include="SimGrid\Geometry\LineIndex.cs" />
+    <Compile Include="SimGrid\Geometry\TriangleIndex.cs" />
     <Compile Include="SimGrid\GridderSource.cs" />
     <Compile Include="SimGrid\HexahedronGridderSource.cs" />
     <Compile Include="SimLabGrid.cs" />
