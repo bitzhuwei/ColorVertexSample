@@ -42,6 +42,11 @@ namespace SimLab
         /// </summary>
          private int   glSize;
 
+
+        /// <summary>
+        /// gl.VertexAttribPointer(ATTRIB_INDEX_POSITION, 3, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
+        /// 表示第2个参数
+        /// </summary>
          public int GLSize
          {
              get { return glSize; }
@@ -54,6 +59,10 @@ namespace SimLab
               private set { this.dataPointer = value; }
          }
 
+
+        /// <summary>
+        /// Data指针指向的内存大小
+        /// </summary>
          public int SizeInBytes
          {
              get { return this.sizeInBytes; }
@@ -62,6 +71,8 @@ namespace SimLab
 
         /// <summary>
         /// GL_FLOAT etc
+         /// gl.VertexAttribPointer(ATTRIB_INDEX_POSITION, 3, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
+         /// 表示第3个参数
         /// </summary>
          public uint GLDataType
          {
