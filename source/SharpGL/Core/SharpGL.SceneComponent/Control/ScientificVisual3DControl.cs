@@ -483,6 +483,7 @@ namespace SharpGL.SceneComponent
 
         protected override void OnHandleDestroyed(EventArgs e)
         {
+            this.ClearScientificModels();
             this.OpenGL.RenderContextProvider.Destroy();
             base.OnHandleDestroyed(e);
         }
