@@ -16,10 +16,9 @@ namespace SimLabDesign1_DataSources
         /// <summary>
         /// 根据语法要求必须有此构造函数。
         /// </summary>
-        /// <param name="gl"></param>
         /// <param name="renderableElement"></param>
-        public HexahedronSource(OpenGL gl, IVertexBuffers renderableElement)
-            : base(gl, renderableElement)
+        public HexahedronSource(IVertexBuffers renderableElement)
+            : base(renderableElement)
         {
 
         }

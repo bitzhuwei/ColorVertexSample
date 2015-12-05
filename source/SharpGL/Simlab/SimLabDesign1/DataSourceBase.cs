@@ -12,10 +12,10 @@ namespace SimLabDesign1
     /// </summary>
     public abstract class DataSourceBase : IVertexBuffers
     {
-        /// <summary>
-        /// 含有opengl上下文（gl.RenderContextProvider）的OpenGL对象。
-        /// </summary>
-        OpenGL gl;
+        ///// <summary>
+        ///// 含有opengl上下文（gl.RenderContextProvider）的OpenGL对象。
+        ///// </summary>
+        //OpenGL gl;
 
         /// <summary>
         /// 用于渲染此数据源描述的模型。
@@ -30,28 +30,38 @@ namespace SimLabDesign1
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="gl">含有opengl上下文（gl.RenderContextProvider）的OpenGL对象。</param>
         /// <param name="renderableElement">用于渲染此数据源描述的模型。</param>
-        public DataSourceBase(OpenGL gl, IVertexBuffers renderableElement)
+        public DataSourceBase(IVertexBuffers renderableElement)
         {
-            this.gl = gl;
             this.renderableElement = renderableElement;
         }
 
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <param name="gl">含有opengl上下文（gl.RenderContextProvider）的OpenGL对象。</param>
+        ///// <param name="renderableElement">用于渲染此数据源描述的模型。</param>
+        //public DataSourceBase(OpenGL gl, IVertexBuffers renderableElement)
+        //{
+        //    this.gl = gl;
+        //    this.renderableElement = renderableElement;
+        //}
 
-        void IVertexBuffers.SetupVertexBuffer(string key)
+
+
+        void IVertexBuffers.SetupVertexBuffer<T>(string key, uint target, SharpGL.SceneComponent.UnmanagedArray<T> values, uint usage)
         {
-            renderableElement.SetupVertexBuffer(key);
+            renderableElement.SetupVertexBuffer(key, target, values, usage);
         }
 
-        void IVertexBuffers.SetupVertexBuffer<T>(string key, SharpGL.SceneComponent.UnmanagedArray<T> newValue, int startIndex)
+        void IVertexBuffers.UpdateVertexBuffer<T>(string key, SharpGL.SceneComponent.UnmanagedArray<T> newValues)
         {
-            renderableElement.SetupVertexBuffer(key, newValue, startIndex);
+            renderableElement.UpdateVertexBuffer(key, newValues);
         }
 
-        void IVertexBuffers.UpdateVertexBuffer<T>(string key, SharpGL.SceneComponent.UnmanagedArray<T> newValue, int startIndex)
+        void IVertexBuffers.UpdateVertexBuffer<T>(string key, SharpGL.SceneComponent.UnmanagedArray<T> newValues, int startIndex)
         {
-            renderableElement.UpdateVertexBuffer(key, newValue, startIndex);
+            renderableElement.UpdateVertexBuffer(key, newValues, startIndex);
         }
 
         void IVertexBuffers.DeleteVertexBuffer(string key)
