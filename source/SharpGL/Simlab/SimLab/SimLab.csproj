@@ -42,14 +42,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BufferData.cs" />
-    <Compile Include="GridSource\CatesianGridderSource.cs" />
-    <Compile Include="GridSource\CornerPointGridderSource.cs" />
-    <Compile Include="GridSource\Factory\BufferDataFactory.cs" />
-    <Compile Include="GridSource\Factory\HexahedronFactory.cs" />
-    <Compile Include="GridSource\GridderSource.cs" />
-    <Compile Include="GridSource\HexahedronGridderSource.cs" />
-    <Compile Include="GridSource\Hexahedron.cs" />
+    <Compile Include="MeshGeometry3D.cs" />
+    <Compile Include="SimGrid\CatesianGridderSource.cs" />
+    <Compile Include="SimGrid\CornerPointGridderSource.cs" />
+    <Compile Include="SimGrid\Factory\BufferDataFactory.cs" />
+    <Compile Include="SimGrid\Factory\HexahedronFactory.cs" />
+    <Compile Include="SimGrid\Geometry\HexhedronTexture.cs" />
+    <Compile Include="SimGrid\GridderSource.cs" />
+    <Compile Include="SimGrid\HexahedronGridderSource.cs" />
+    <Compile Include="SimGrid\Geometry\Hexahedron.cs" />
     <Compile Include="HexahedronGrid.cs" />
+    <Compile Include="SimGrid\Geometry\Triangle.cs" />
     <Compile Include="SimLabGrid.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -62,6 +65,9 @@
       <Project>{5ef45533-e2c7-46f2-b4a3-b8f36cd406e0}</Project>
       <Name>SharpGL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Visuals\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

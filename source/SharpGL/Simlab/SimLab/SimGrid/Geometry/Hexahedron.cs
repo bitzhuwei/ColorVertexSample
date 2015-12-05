@@ -18,30 +18,30 @@ namespace SimLab.GridSource
         /// <summary>
         ///  front left top p0
         /// </summary>
-        Vertex FLT;
+        public Vertex FLT;
 
         /// <summary>
         /// front right top p1
         /// </summary>
-        Vertex FRT;
+        public Vertex FRT;
 
         /// <summary>
         /// back right top p2
         /// </summary>
-        Vertex BRT;
+        public Vertex BRT;
 
         /// <summary>
         /// back left top p4
         /// </summary>
-        Vertex BLT;
+        public Vertex BLT;
 
         /// <summary>
         /// 
         /// </summary>
-        Vertex FLB;
-        Vertex FRB;
-        Vertex BRB;
-        Vertex BLB;
+        public  Vertex FLB;
+        public Vertex FRB;
+        public Vertex BRB;
+        public Vertex BLB;
 
     }
 }

@@ -19,13 +19,25 @@ namespace SimLab
         public bool RenderGridWireFrame { get; set; }
         public bool RenderGrid  { get; set; }
 
-      
-       
-        public abstract void SetVisibleBuffer(BufferData visibles);
+        /// <summary>
+        /// 初始化点的vao
+        /// </summary>
+        /// <param name="gridCoords"></param>
+        public void Init(MeshGeometry3D Geomtry)
+        {
+              //this.TraverseToRootElement().ParentScene.OpenGL;
+        }
 
-        public abstract void SetTextureCoods(BufferData visibles);
 
-        public abstract void SetTexutre(Bitmap bitmap);
+        public void SetTextureCoods(BufferData textureCoords)
+        {
+            
+        }
+
+        public void SetTexutre(Bitmap bitmap)
+        {
+
+        }
     }
 
 
