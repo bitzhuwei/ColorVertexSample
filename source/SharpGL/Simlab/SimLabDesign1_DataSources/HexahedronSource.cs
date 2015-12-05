@@ -1,10 +1,13 @@
 ﻿using SharpGL;
+using SharpGL.SceneComponent;
 using SimLabDesign1;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using YieldingGeometryModel;
+using YieldingGeometryModel.Builder;
 
 namespace SimLabDesign1_DataSources
 {
@@ -24,6 +27,5 @@ namespace SimLabDesign1_DataSources
         }
 
         // TODO：下面是具体的Source内容。
-
     }
 }
