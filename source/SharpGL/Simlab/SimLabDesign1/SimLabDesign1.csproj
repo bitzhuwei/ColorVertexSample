@@ -40,9 +40,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
-    <Compile Include="DataSourceBase.cs" />
     <Compile Include="IVertexBuffers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Renderer.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="UnmanagedArrayCopyHelper.cs" />
     <Compile Include="VBOInfo.cs" />
   </ItemGroup>

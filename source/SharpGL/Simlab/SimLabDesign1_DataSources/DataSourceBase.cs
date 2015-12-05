@@ -1,11 +1,12 @@
 ﻿using SharpGL;
+using SimLabDesign1;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimLabDesign1
+namespace SimLabDesign1_DataSources
 {
     /// <summary>
     /// 所有数据源的抽象基类。
@@ -22,20 +23,6 @@ namespace SimLabDesign1
         /// </summary>
         IVertexBuffers renderableElement;
 
-        /// <summary>
-        /// 记录VBO的key和VBO对象的对应关系。
-        /// </summary>
-        Dictionary<string, uint> vboDict = new Dictionary<string, uint>();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="renderableElement">用于渲染此数据源描述的模型。</param>
-        public DataSourceBase(IVertexBuffers renderableElement)
-        {
-            this.renderableElement = renderableElement;
-        }
-
         ///// <summary>
         ///// 
         ///// </summary>
@@ -46,12 +33,18 @@ namespace SimLabDesign1
         //    this.gl = gl;
         //    this.renderableElement = renderableElement;
         //}
-
-
-
-        void IVertexBuffers.SetupVertexBuffer<T>(string key, uint target, SharpGL.SceneComponent.UnmanagedArray<T> values, uint usage)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="renderableElement">用于渲染此数据源描述的模型。</param>
+        public DataSourceBase(IVertexBuffers renderableElement)
         {
-            renderableElement.SetupVertexBuffer(key, target, values, usage);
+            this.renderableElement = renderableElement;
+        }
+
+        void IVertexBuffers.CreateVertexBuffer<T>(string key, uint target, SharpGL.SceneComponent.UnmanagedArray<T> values, uint usage, int size, uint type)
+        {
+            renderableElement.CreateVertexBuffer(key, target, values, usage, size, type);
         }
 
         void IVertexBuffers.UpdateVertexBuffer<T>(string key, SharpGL.SceneComponent.UnmanagedArray<T> newValues)
@@ -64,9 +57,5 @@ namespace SimLabDesign1
             renderableElement.UpdateVertexBuffer(key, newValues, startIndex);
         }
 
-        void IVertexBuffers.DeleteVertexBuffer(string key)
-        {
-            renderableElement.DeleteVertexBuffer(key);
-        }
     }
 }

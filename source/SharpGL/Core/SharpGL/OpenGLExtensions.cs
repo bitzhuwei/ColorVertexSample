@@ -1050,6 +1050,10 @@ namespace SharpGL
         {
             return (bool)GetDelegateFor<glUnmapBuffer>()(target);
         }
+        public IntPtr MapBufferRange(uint target, int offset, int length, uint access)
+        {
+            return (IntPtr)GetDelegateFor<glMapBufferRange>()(target, offset, length, access);
+        }
         public void GetBufferParameter(uint target, uint pname, int[] parameters)
         {
             GetDelegateFor<glGetBufferParameteriv>()(target, pname, parameters);
@@ -1077,6 +1081,7 @@ namespace SharpGL
         private delegate void glGetBufferSubData(uint target, int offset, int size, IntPtr data);
         private delegate IntPtr glMapBuffer(uint target, uint access);
         private delegate bool glUnmapBuffer(uint target);
+        private delegate IntPtr glMapBufferRange(uint target, int offset, int length, uint access);
         private delegate void glGetBufferParameteriv(uint target, uint pname, int[] parameters);
         private delegate void glGetBufferPointerv(uint target, uint pname, IntPtr[] parameters);
 

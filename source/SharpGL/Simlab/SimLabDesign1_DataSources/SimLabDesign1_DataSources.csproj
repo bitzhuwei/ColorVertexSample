@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="DataSourceBase.cs" />
     <Compile Include="HexahedronSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
