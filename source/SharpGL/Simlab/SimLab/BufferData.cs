@@ -14,16 +14,39 @@ namespace SimLab
 
     public abstract class BufferData
     {
+        public const uint ATTRIB_INDEX_POSITION = 0;
+
+
+
          private IntPtr dataPointer;
         
         /// <summary>
         /// 数据指针指向的字节数
         /// </summary>
-         private int size;
+         private int sizeInBytes;
 
-         //GL_FLOAT ect.
-         private uint glDataType;
-         private int   num;
+
+         /// <summary>
+         /// 
+         /// </summary>
+         private uint attribIndex;
+         
+        /// <summary>
+        /// 
+        /// </summary>
+         private uint glType;
+
+
+        /// <summary>
+         /// gl.VertexAttribPointer(
+        /// </summary>
+         private int   glSize;
+
+         public int GLSize
+         {
+             get { return glSize; }
+             protected set { this.glSize = value; }
+         }
 
          public IntPtr Data
          {
@@ -31,10 +54,10 @@ namespace SimLab
               private set { this.dataPointer = value; }
          }
 
-         public int Size
+         public int SizeInBytes
          {
-             get { return this.size; }
-             private set { this.size = value; }
+             get { return this.sizeInBytes; }
+             private set { this.sizeInBytes = value; }
          }
 
         /// <summary>
@@ -42,15 +65,25 @@ namespace SimLab
         /// </summary>
          public uint GLDataType
          {
-             get { return this.glDataType; }
-             protected  set { this.glDataType = value; }
+             get { return this.glType; }
+             protected  set { this.glType = value; }
+         }
+
+        /// <summary>
+         /// gl.VertexAttribPointer(ATTRIB_INDEX_POSITION, 3, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
+         /// 指定第一个参数
+        /// </summary>
+         public uint GLAttribIndex
+         {
+             get { return this.attribIndex; }
+             protected set { this.attribIndex = value; }
          }
 
 
          public  void AllocMem(int size){
               IntPtr psize = (IntPtr)size;
               this.Data  = Marshal.AllocHGlobal(psize);
-              this.Size = size;
+              this.SizeInBytes = size;
          }
 
          public void FreeMem()
@@ -59,6 +92,7 @@ namespace SimLab
              {
                  Marshal.FreeHGlobal(this.Data);
                  this.Data = IntPtr.Zero;
+                 this.SizeInBytes = 0;
              }
          }
     }
@@ -68,6 +102,7 @@ namespace SimLab
 
         public TextureCoordinatesBufferData(){
              this.GLDataType = OpenGL.GL_FLOAT;
+            
         }
 
     }
@@ -84,6 +119,8 @@ namespace SimLab
     {
           public PositionsBufferData(){
               this.GLDataType = OpenGL.GL_FLOAT;
+              this.GLAttribIndex = BufferData.ATTRIB_INDEX_POSITION;
+              this.GLSize = 3;
           }
     }
 
