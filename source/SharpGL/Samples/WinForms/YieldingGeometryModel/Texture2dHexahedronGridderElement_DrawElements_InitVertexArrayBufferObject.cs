@@ -71,22 +71,46 @@ namespace YieldingGeometryModel
             gl.BindVertexArray(0);
         }
 
-        public void UpdateColorBuffer(OpenGL gl, UnmanagedArray<UVF> colors, UnmanagedArray<float> visibles)
+        public void UpdateUVBuffer(OpenGL gl, UnmanagedArray<UVF> uvArray)
         {
-            if (this.visiblesBufferObject == 0 || this.colorsBufferObject == 0)
+            if (this.colorsBufferObject == 0)
+                return;
+
+            gl.MakeCurrent();
+
+            gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, this.colorsBufferObject);
+            IntPtr destColors = gl.MapBuffer(OpenGL.GL_ARRAY_BUFFER, OpenGL.GL_READ_WRITE);
+            MemoryHelper.CopyMemory(destColors, uvArray.Header, (uint)uvArray.ByteLength);
+            gl.UnmapBuffer(OpenGL.GL_ARRAY_BUFFER);
+        }
+
+        public void UpdateVisibleBuffer(OpenGL gl, UnmanagedArray<float> visibleArray)
+        {
+            if (this.visiblesBufferObject == 0)
                 return;
             gl.MakeCurrent();
             gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, this.visiblesBufferObject);
             IntPtr destVisibles = gl.MapBuffer(OpenGL.GL_ARRAY_BUFFER, OpenGL.GL_READ_WRITE);
-            MemoryHelper.CopyMemory(destVisibles, visibles.Header, (uint)visibles.ByteLength);
+            MemoryHelper.CopyMemory(destVisibles, visibleArray.Header, (uint)visibleArray.ByteLength);
             gl.UnmapBuffer(OpenGL.GL_ARRAY_BUFFER);
-
-            gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, this.colorsBufferObject);
-            IntPtr destColors = gl.MapBuffer(OpenGL.GL_ARRAY_BUFFER, OpenGL.GL_READ_WRITE);
-            MemoryHelper.CopyMemory(destColors, colors.Header, (uint)colors.ByteLength);
-            gl.UnmapBuffer(OpenGL.GL_ARRAY_BUFFER);
-
         }
+
+        //public void UpdateColorBuffer(OpenGL gl, UnmanagedArray<UVF> colors, UnmanagedArray<float> visibles)
+        //{
+        //    if (this.visiblesBufferObject == 0 || this.colorsBufferObject == 0)
+        //        return;
+        //    gl.MakeCurrent();
+        //    gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, this.visiblesBufferObject);
+        //    IntPtr destVisibles = gl.MapBuffer(OpenGL.GL_ARRAY_BUFFER, OpenGL.GL_READ_WRITE);
+        //    MemoryHelper.CopyMemory(destVisibles, visibles.Header, (uint)visibles.ByteLength);
+        //    gl.UnmapBuffer(OpenGL.GL_ARRAY_BUFFER);
+
+        //    gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, this.colorsBufferObject);
+        //    IntPtr destColors = gl.MapBuffer(OpenGL.GL_ARRAY_BUFFER, OpenGL.GL_READ_WRITE);
+        //    MemoryHelper.CopyMemory(destColors, colors.Header, (uint)colors.ByteLength);
+        //    gl.UnmapBuffer(OpenGL.GL_ARRAY_BUFFER);
+
+        //}
 
 
 
