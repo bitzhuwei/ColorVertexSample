@@ -68,6 +68,7 @@
             this.tbxPropertyMaxValue = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
+            this.cbxShowWireframe = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sim3D)).BeginInit();
             this.panel1.SuspendLayout();
@@ -444,6 +445,7 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.cbxShowWireframe);
             this.panel2.Controls.Add(this.btnSlicesApply);
             this.panel2.Controls.Add(this.cbxGridProperties);
             this.panel2.Location = new System.Drawing.Point(842, 3);
@@ -502,6 +504,17 @@
             this.label9.TabIndex = 25;
             this.label9.Text = "maxValue:";
             // 
+            // cbxShowWireframe
+            // 
+            this.cbxShowWireframe.AutoSize = true;
+            this.cbxShowWireframe.Location = new System.Drawing.Point(15, 52);
+            this.cbxShowWireframe.Name = "cbxShowWireframe";
+            this.cbxShowWireframe.Size = new System.Drawing.Size(108, 16);
+            this.cbxShowWireframe.TabIndex = 2;
+            this.cbxShowWireframe.Text = "Show Wireframe";
+            this.cbxShowWireframe.UseVisualStyleBackColor = true;
+            this.cbxShowWireframe.CheckedChanged += new System.EventHandler(this.cbxShowWireframe_CheckedChanged);
+            // 
             // FormHexahedronGridderElement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -524,6 +537,7 @@
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -572,6 +586,7 @@
         private System.Windows.Forms.TextBox tbxPropertyMinValue;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.CheckBox cbxShowWireframe;
     }
 }
 

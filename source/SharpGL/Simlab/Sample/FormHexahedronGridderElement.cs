@@ -93,7 +93,14 @@ namespace Sample
             {
                  return cbxGridProperties.SelectedItem as GridProperty;
             }
+        }
 
+        public bool IsShowWireframe
+        {
+            get
+            {
+                return cbxShowWireframe.Checked;
+            }
         }
 
         int elementCounter = 0;
@@ -152,9 +159,10 @@ namespace Sample
                 HexahedronGrid gridder = new HexahedronGrid(this.sim3D.OpenGL, this.sim3D.Scene.CurrentCamera);
                 gridder.Init(geometry);
                 gridder.RenderGrid = true;
-                gridder.RenderGridWireFrame = false;
+                gridder.RenderGridWireFrame = this.IsShowWireframe;
                 gridder.SetTexture(texture);
                 gridder.SetTextureCoods(textureCoodinates);
+              
 
                 DateTime t1 = DateTime.Now;
                 TimeSpan ts1 = t1 - t0;
@@ -285,6 +293,11 @@ namespace Sample
         {
             string message = string.Format("{0}", "Add模型后，可通过'R'键观察随机隐藏hexahedron的情形。");
             MessageBox.Show(message, "Tip", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+        }
+
+        private void cbxShowWireframe_CheckedChanged(object sender, EventArgs e)
+        {
+               
         }
 
     }
