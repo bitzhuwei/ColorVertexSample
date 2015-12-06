@@ -134,6 +134,8 @@ namespace SimLab
               this.GLAttribIndex = BufferData.ATTRIB_INDEX_POSITION;
               this.GLSize = 3;
           }
+
+        
     }
 
     public class HexahedronPositionBufferData : PositionsBufferData
