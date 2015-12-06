@@ -33,6 +33,7 @@ namespace SimLab
         protected uint[] wireframeIndexBuffer;
         protected int indexBufferLength;
         protected int wireframeIndexBufferLength;
+        protected Texture texture;
 
 
         protected OpenGL gl;
@@ -104,8 +105,8 @@ namespace SimLab
             ////TODO:如果用此方式，则必须先将此对象加入scene树，然后再调用Init
             //OpenGL gl = this.TraverseToRootElement().ParentScene.OpenGL;
 
-            Texture texture = new Texture();
-            texture.Create(gl, bitmap);
+            this.texture = new Texture();
+            this.texture.Create(gl, bitmap);
         }
 
 

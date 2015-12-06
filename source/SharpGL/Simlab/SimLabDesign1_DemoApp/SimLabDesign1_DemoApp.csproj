@@ -112,6 +112,18 @@
       <Project>{19decd3d-c2b6-4a9a-88e1-2113718447d1}</Project>
       <Name>YieldingGeometryModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SimLabDesign1\SimLabDesign1.csproj">
+      <Project>{8d08ddcf-619c-4f12-8093-e901ba574343}</Project>
+      <Name>SimLabDesign1</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SimLabDesign1_DataSources\SimLabDesign1_DataSources.csproj">
+      <Project>{2578f5ab-4b47-48d2-ad2e-5ef31136d536}</Project>
+      <Name>SimLabDesign1_DataSources</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SimLabDesign1_Elements\SimLabDesign1_Elements.csproj">
+      <Project>{bda7c0da-9c98-44f4-83f8-b0620e28dd8e}</Project>
+      <Name>SimLabDesign1_Elements</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

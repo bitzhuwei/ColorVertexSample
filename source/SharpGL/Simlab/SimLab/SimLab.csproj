@@ -79,8 +79,10 @@
     <Folder Include="Visuals\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="HexahedronGrid.frag" />
     <EmbeddedResource Include="HexahedronGrid.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="HexahedronGrid.frag" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
