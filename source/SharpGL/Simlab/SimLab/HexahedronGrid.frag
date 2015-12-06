@@ -6,7 +6,7 @@ uniform sampler2D tex;
 uniform float renderingWireframe;
 
 void main(void) {
-	if (renderingWireframe == 1.0)
+	if (renderingWireframe > 0.0)
 	{
 		if (0.0 <= pass_uv && pass_uv <= 1.0)
 		{
