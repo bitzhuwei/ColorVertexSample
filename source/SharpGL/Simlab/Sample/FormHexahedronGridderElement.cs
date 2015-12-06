@@ -374,7 +374,7 @@ namespace Sample
             }
             gridder.RenderGridWireFrame = this.IsShowWireframe;
 
-
+            this.sim3D.Invalidate();
               
         }
 
