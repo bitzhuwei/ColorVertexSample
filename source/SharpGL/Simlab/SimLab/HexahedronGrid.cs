@@ -51,6 +51,9 @@ namespace SimLab
                 { throw new NotImplementedException(); }
             }
 
+            gl.Enable(OpenGL.GL_TEXTURE_2D);
+            this.texture.Bind(gl);
+
             modelMatrix = mat4.identity();
             ShaderProgram shaderProgram = this.shaderProgram;
             //  Bind the shader, set the matrices.
@@ -58,6 +61,9 @@ namespace SimLab
             shaderProgram.SetUniformMatrix4(gl, "projectionMatrix", projectionMatrix.to_array());
             shaderProgram.SetUniformMatrix4(gl, "viewMatrix", viewMatrix.to_array());
             shaderProgram.SetUniformMatrix4(gl, "modelMatrix", modelMatrix.to_array());
+
+            shaderProgram.SetUniform1(gl, "tex", this.texture.TextureName);
+
 
             gl.Enable(OpenGL.GL_POLYGON_SMOOTH);
             gl.Hint(OpenGL.GL_POLYGON_SMOOTH_HINT, OpenGL.GL_NICEST);
@@ -163,8 +169,13 @@ namespace SimLab
 
         protected void AfterRendering(OpenGL gl, RenderMode renderMode)
         {
+            gl.Disable(OpenGL.GL_POLYGON_SMOOTH);
 
             shaderProgram.Unbind(gl);
+
+            gl.BindTexture(OpenGL.GL_TEXTURE_2D, 0);
+
+            gl.Disable(OpenGL.GL_TEXTURE_2D);
         }
 
         #endregion IRenderable
