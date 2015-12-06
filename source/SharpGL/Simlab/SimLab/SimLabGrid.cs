@@ -83,13 +83,27 @@ namespace SimLab
 
         public void SetWireframe(WireFrameBufferData lineIndexes)
         {
-            ////TODO:如果用此方式，则必须先将此对象加入scene树，然后再调用Init
-            //OpenGL gl = this.TraverseToRootElement().ParentScene.OpenGL;
-            wireframeIndexBuffer = new uint[1];
-            wireframeIndexBuffer[0] = CreateVertexBufferObject(OpenGL.GL_ARRAY_BUFFER, lineIndexes, OpenGL.GL_STATIC_DRAW);
+            if (lineIndexes != null)
+            {
+                if (wireframeIndexBuffer != null)
+                {
+                    gl.DeleteBuffers(wireframeIndexBuffer.Length, wireframeIndexBuffer);
+                }
+                ////TODO:如果用此方式，则必须先将此对象加入scene树，然后再调用Init
+                //OpenGL gl = this.TraverseToRootElement().ParentScene.OpenGL;
+                wireframeIndexBuffer = new uint[1];
+                wireframeIndexBuffer[0] = CreateVertexBufferObject(OpenGL.GL_ARRAY_BUFFER, lineIndexes, OpenGL.GL_STATIC_DRAW);
 
-            int elementLength = sizeof(uint);// should be 4.
-            this.wireframeIndexBufferLength = lineIndexes.SizeInBytes / (elementLength);
+                int elementLength = sizeof(uint);// should be 4.
+                this.wireframeIndexBufferLength = lineIndexes.SizeInBytes / (elementLength);
+            }
+            else
+            {
+                if (wireframeIndexBuffer != null)
+                {
+                    gl.DeleteBuffers(wireframeIndexBuffer.Length, wireframeIndexBuffer);
+                }
+            }
         }
 
 
