@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 namespace SimLab.GridSource
 {
 
-         /// <summary>
-     /// map to opengl buffer
-     /// </summary>
+    /// <summary>
+    /// map to opengl buffer
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct Hexahedron
+    public struct HexahedronPositions
     {
         /// <summary>
         ///  front left top p0
@@ -38,7 +38,7 @@ namespace SimLab.GridSource
         /// <summary>
         /// 
         /// </summary>
-        public  Vertex FLB;
+        public Vertex FLB;
         public Vertex FRB;
         public Vertex BRB;
         public Vertex BLB;
