@@ -223,13 +223,13 @@ namespace SimLab.GridSource.Factory
                     cellLines[index + 8].p0 = offset + 0;
                     cellLines[index + 8].p1 = offset + 4;
 
-                    cellLines[index + 9].p0 = offset + 2;
+                    cellLines[index + 9].p0 = offset + 1;
                     cellLines[index + 9].p1 = offset + 5;
 
-                    cellLines[index + 10].p0 = offset + 3;
+                    cellLines[index + 10].p0 = offset + 2;
                     cellLines[index + 10].p1 = offset + 6;
 
-                    cellLines[index + 11].p0 = offset + 4;
+                    cellLines[index + 11].p0 = offset + 3;
                     cellLines[index + 11].p1 = offset + 7;
 
                 }
