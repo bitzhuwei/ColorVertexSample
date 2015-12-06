@@ -27,7 +27,7 @@ namespace Sample
             }
             prop.Name = name;
             prop.MinValue = minValue;
-            prop.MinValue = maxValue;
+            prop.MaxValue = maxValue;
             prop.Values = values;
             prop.GridIndexes = gridIndexes;
             return prop;
