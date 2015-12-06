@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BufferData.cs" />
+    <Compile Include="HexahedronGrid.cs" />
     <Compile Include="MeshGeometry3D.cs" />
     <Compile Include="SimGrid\CatesianGridderSource.cs" />
     <Compile Include="SimGrid\CornerPointGridderSource.cs" />
@@ -49,7 +50,6 @@
     <Compile Include="SimGrid\Factory\HexahedronFactory.cs" />
     <Compile Include="SimGrid\Geometry\HexahedronUVs.cs" />
     <Compile Include="SimGrid\Geometry\HexahedronPositions.cs" />
-    <Compile Include="HexahedronGrid.cs" />
     <Compile Include="SimGrid\Geometry\LineIndex.cs" />
     <Compile Include="SimGrid\Geometry\TriangleIndex.cs" />
     <Compile Include="SimGrid\GridderSource.cs" />
@@ -58,9 +58,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\SharpGL.SceneComponent\SharpGL.SceneComponent.csproj">
+      <Project>{8f81c853-d378-443d-9dfd-475db916cabd}</Project>
+      <Name>SharpGL.SceneComponent</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Core\SharpGL.SceneGraph\SharpGL.SceneGraph.csproj">
       <Project>{47bcaa39-edad-4404-b6bd-4742b0abb523}</Project>
       <Name>SharpGL.SceneGraph</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\SharpGLM\SharpGLM.csproj">
+      <Project>{d15e2fee-512e-4804-8687-bcbdbedbeb7b}</Project>
+      <Name>SharpGLM</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Core\SharpGL\SharpGL.csproj">
       <Project>{5ef45533-e2c7-46f2-b4a3-b8f36cd406e0}</Project>
@@ -69,6 +77,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Visuals\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="HexahedronGrid.frag" />
+    <EmbeddedResource Include="HexahedronGrid.vert" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
