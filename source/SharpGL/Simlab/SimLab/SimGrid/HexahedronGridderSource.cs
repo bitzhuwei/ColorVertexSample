@@ -257,7 +257,10 @@ namespace SimLab.GridSource
         /// <returns></returns>
         public override  MeshGeometry3D CreateMesh()
         {
-             return this.Factory.CreateMesh(this);
+             MeshGeometry3D geometry = this.Factory.CreateMesh(this);
+             this.Max = geometry.Max;
+             this.Min = geometry.Min;
+             return geometry;
         }
 
         /// <summary>

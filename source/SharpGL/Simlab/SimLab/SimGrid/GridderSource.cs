@@ -1,4 +1,5 @@
-﻿using SimLab.GridSource.Factory;
+﻿using SharpGL.SceneGraph;
+using SimLab.GridSource.Factory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -225,12 +226,35 @@ namespace SimLab.GridSource
              return gridVisibles;
         }
 
+
+        /// <summary>
+        /// 快速生成默认的网格Texture,值为空(值大于1）
+        /// </summary>
+        /// <returns></returns>
         public float[] GetDefaultTextureCoords()
         {
             float[] none = new float [this.DimenSize];
             Array.Copy(this.textures, none, this.DimenSize);
             return none;
         }
+
+        public Vertex Min
+        {
+            get;
+            protected set;
+        }
+
+
+        public Vertex Max
+        {
+            get;
+            protected set;
+        }
+
+
+
+
+
 
 
 

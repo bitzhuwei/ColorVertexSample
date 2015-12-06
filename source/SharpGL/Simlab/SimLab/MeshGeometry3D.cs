@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SharpGL.SceneGraph;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,6 +36,24 @@ namespace SimLab
             get { return this.triangleIndices; }
         }
 
+
+        /// <summary>
+        /// 最小边界坐标
+        /// </summary>
+        public Vertex Min
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// 最大边界坐标
+        /// </summary>
+        public Vertex Max
+        {
+            get;
+            set;
+        }
         
     }
 }

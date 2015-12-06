@@ -1,4 +1,5 @@
-﻿using SimLab.SimGrid;
+﻿using SharpGL.SceneGraph;
+using SimLab.SimGrid;
 using SimLab.SimGrid.Geometry;
 using System;
 using System.Collections.Generic;
@@ -12,20 +13,49 @@ namespace SimLab.GridSource.Factory
     public class HexahedronGridFactory:GridBufferDataFactory
     {
 
+        protected Vertex MinVertex(Vertex min, Vertex value)
+        {
+            if (min.X > value.X)
+                min.X = value.X;
+            if (min.Y > value.Y)
+                min.Y = value.Y;
+            if (min.Z > value.Z)
+                min.Z = value.Z;
+            return min;
+        }
+
+        protected Vertex MaxVertex(Vertex max, Vertex value)
+        {
+            if (max.X < value.X)
+                max.X = value.X;
+            if (max.Y < value.Y)
+                max.Y = value.Y;
+            if (max.Z < value.Z)
+                max.Z = value.Z;
+            return max;
+        }
+
+
         public override MeshGeometry3D CreateMesh(GridderSource source)
         {
              HexahedronGridderSource src = (HexahedronGridderSource)source;
+             Vertex minVertex = new Vertex() ;
+             Vertex maxVertex = new Vertex();
+             bool isSet = false;
              PositionsBufferData positions = new HexahedronPositionBufferData();
              TriangleIndicesBufferData triangles = new TriangleIndicesBufferData();
              int dimSize = src.DimenSize;
              int I, J, K;
              unsafe
              {
+                
                  int gridMemSize = dimSize * sizeof(Hexahedron);
                  positions.AllocMem(gridMemSize);
                  Hexahedron* cell = (Hexahedron*)positions.Data;
                  for (int gridIndex = 0; gridIndex < dimSize; gridIndex++)
                  {
+                     
+                     
                      src.InvertIJK(gridIndex, out I, out J, out K);
                      cell[gridIndex].FLT = src.PointFLT(I, J, K);
                      cell[gridIndex].FRT = src.PointFRT(I, J, K);
@@ -35,6 +65,40 @@ namespace SimLab.GridSource.Factory
                      cell[gridIndex].FRB = src.PointFRB(I, J, K);
                      cell[gridIndex].BRB = src.PointBRB(I, J, K);
                      cell[gridIndex].BLB = src.PointBLB(I, J, K);
+
+                     if (!isSet&&src.IsActiveBlock(gridIndex))
+                     {
+                         minVertex = cell[gridIndex].FLT;
+                         maxVertex = minVertex;
+                         isSet = true;
+                     }
+
+                     if (isSet && src.IsActiveBlock(gridIndex))
+                     {
+                         minVertex = MinVertex(minVertex, cell[gridIndex].FLT);
+                         maxVertex = MaxVertex(maxVertex, cell[gridIndex].FLT);
+
+                         minVertex = MinVertex(minVertex, cell[gridIndex].FRT);
+                         maxVertex = MaxVertex(maxVertex, cell[gridIndex].FRT);
+
+                         minVertex = MinVertex(minVertex, cell[gridIndex].BRT);
+                         maxVertex = MaxVertex(maxVertex, cell[gridIndex].BRT);
+
+                         minVertex = MinVertex(minVertex, cell[gridIndex].BLT);
+                         maxVertex = MaxVertex(maxVertex, cell[gridIndex].BLT);
+
+                         minVertex = MinVertex(minVertex, cell[gridIndex].FLB);
+                         maxVertex = MaxVertex(maxVertex, cell[gridIndex].FLB);
+
+                         minVertex = MinVertex(minVertex, cell[gridIndex].FRB);
+                         maxVertex = MaxVertex(maxVertex, cell[gridIndex].FRB);
+
+                         minVertex = MinVertex(minVertex, cell[gridIndex].BRB);
+                         maxVertex = MaxVertex(maxVertex, cell[gridIndex].BRB);
+
+                         minVertex = MinVertex(minVertex, cell[gridIndex].BLB);
+                         maxVertex = MaxVertex(maxVertex, cell[gridIndex].BLB);
+                     }
                  }
 
                  //网格个数*每个六面体的面数*描述每个六面体的三角形个数
@@ -109,6 +173,8 @@ namespace SimLab.GridSource.Factory
                      gridTriangle[11].dot2 = celloffset + 3;
                  }
                  MeshGeometry3D mesh = new MeshGeometry3D(positions,triangles);
+                 mesh.Max = maxVertex;
+                 mesh.Min = minVertex;
                  return mesh;
              }
         }
