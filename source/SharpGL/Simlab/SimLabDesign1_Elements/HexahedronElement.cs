@@ -19,7 +19,7 @@ namespace SimLabDesign1_Elements
     /// <para>3. 用GenerateVAO创建VAO</para>
     /// <para>4. 指定renderer（用MultiDrawArrays还是DrawElements）</para>
     /// </summary>
-    public class HexahedronElement : IVertexBuffers, IRenderable, IDisposable
+    public class HexahedronElement : SceneElement, IVertexBuffers, IRenderable, IDisposable
     {
         /// <summary>
         /// 对应shader中的in变量；对应vboDict中的某个key。
@@ -43,17 +43,6 @@ namespace SimLabDesign1_Elements
         /// </summary>
         Dictionary<string, VBOInfo> vboDict;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="key">如果是顶点属性数组，请从HexahedronElement.key_...中选择。
-        /// <para>如果是索引数组，可自行定义。</para></param>
-        /// <param name="target"></param>
-        /// <param name="values"></param>
-        /// <param name="usage"></param>
-        /// <param name="size"></param>
-        /// <param name="type"></param>
         void IVertexBuffers.CreateVertexBuffer<T>(string key, uint target, UnmanagedArray<T> values, uint usage, int size, uint type)
         {
             if (this.vboDict == null) { this.vboDict = new Dictionary<string, VBOInfo>(); }
@@ -123,10 +112,11 @@ namespace SimLabDesign1_Elements
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="renderer">指定renderer（用MultiDrawArrays还是DrawElements）</param>
-        public HexahedronElement(Renderer renderer)
+        /// <param name="renderer">指定renderer（用MultiDrawArrays或DrawElements）</param>
+        public HexahedronElement(Renderer renderer, IScientificCamera camera)
         {
             this.renderer = renderer;
+            this.camera = camera;
         }
 
         ShaderProgram shaderProgram;
@@ -148,7 +138,40 @@ namespace SimLabDesign1_Elements
                 }
             }
 
+            IScientificCamera camera = this.camera;
+            if (camera != null)
+            {
+                if (camera.CameraType == CameraTypes.Perspecitive)
+                {
+                    IPerspectiveViewCamera perspective = camera;
+                    this.projectionMatrix = perspective.GetProjectionMat4();
+                    this.viewMatrix = perspective.GetViewMat4();
+                }
+                else if (camera.CameraType == CameraTypes.Ortho)
+                {
+                    IOrthoViewCamera ortho = camera;
+                    this.projectionMatrix = ortho.GetProjectionMat4();
+                    this.viewMatrix = ortho.GetViewMat4();
+                }
+                else
+                { throw new NotImplementedException(); }
+            }
+
+            modelMatrix = GlmNet.mat4.identity();
+            //  Bind the shader, set the matrices.
+            shaderProgram.Bind(gl);
+            shaderProgram.SetUniformMatrix4(gl, "projectionMatrix", projectionMatrix.to_array());
+            shaderProgram.SetUniformMatrix4(gl, "viewMatrix", viewMatrix.to_array());
+            shaderProgram.SetUniformMatrix4(gl, "modelMatrix", modelMatrix.to_array());
+
+            gl.Enable(OpenGL.GL_POLYGON_SMOOTH);
+            gl.Hint(OpenGL.GL_POLYGON_SMOOTH_HINT, OpenGL.GL_NICEST);
+
             this.renderer.Render(gl, renderMode);
+
+            gl.Disable(OpenGL.GL_POLYGON_SMOOTH);
+
+            shaderProgram.Unbind(gl);
         }
 
         private ShaderProgram InitShader(OpenGL gl, RenderMode renderMode)
@@ -188,7 +211,6 @@ namespace SimLabDesign1_Elements
                 }
                 else
                 {
-                    //TODO:也许这一步也不需要？
                     gl.BindBuffer(vbo.Value.Target, vbo.Value.BufferID);
                 }
             }
@@ -212,6 +234,10 @@ namespace SimLabDesign1_Elements
         }
 
         private bool disposedValue = false;
+        private IScientificCamera camera;
+        private GlmNet.mat4 projectionMatrix;
+        private GlmNet.mat4 viewMatrix;
+        private GlmNet.mat4 modelMatrix;
 
         protected virtual void Dispose(bool disposing)
         {
@@ -251,5 +277,6 @@ namespace SimLabDesign1_Elements
 
 
         #endregion 释放VBO和VAO
+
     }
 }

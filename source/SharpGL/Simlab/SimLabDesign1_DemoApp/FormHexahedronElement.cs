@@ -1,5 +1,7 @@
 ﻿using SharpGL;
 using SharpGL.SceneComponent;
+using SimLabDesign1;
+using SimLabDesign1_Elements;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -96,9 +98,18 @@ namespace SimLabDesign1_DemoApp
                 MeshGeometry mesh = HexahedronGridderHelper.CreateMesh(source);
                 DateTime t1 = DateTime.Now;
                 TimeSpan ts1 = t1 - t0;
-                
+
                 mesh.VertexColors = HexahedronGridderHelper.FromColors(source, gridIndexes, colors, mesh.Visibles);
                 //this.DebugMesh(mesh);
+
+                NonIndexRenderer renderer = new NonIndexRenderer(8, mesh.Vertexes.Length / 8);
+                renderer.Mode = OpenGL.GL_QUAD_STRIP;
+                HexahedronElement element = new HexahedronElement(renderer,this.scientificVisual3DControl.Scene.CurrentCamera);
+                IVertexBuffers buffers = element as IVertexBuffers;
+                buffers.CreateVertexBuffer(HexahedronElement.key_in_Position, OpenGL.GL_ARRAY_BUFFER, mesh.Vertexes, OpenGL.GL_STATIC_DRAW, 3, OpenGL.GL_FLOAT);
+                buffers.CreateVertexBuffer(HexahedronElement.key_in_Color, OpenGL.GL_ARRAY_BUFFER, mesh.VertexColors, OpenGL.GL_STREAM_DRAW, 4, OpenGL.GL_FLOAT);
+                buffers.CreateVertexBuffer(HexahedronElement.key_in_visible, OpenGL.GL_ARRAY_BUFFER, mesh.Visibles, OpenGL.GL_STREAM_DRAW, 1, OpenGL.GL_FLOAT);
+                this.scientificVisual3DControl.AddModelElement(element);
 
                 HexahedronGridderElement gridderElement = new HexahedronGridderElement(source, this.scientificVisual3DControl.Scene.CurrentCamera);
                 gridderElement.renderWireframe = false;
@@ -108,7 +119,7 @@ namespace SimLabDesign1_DemoApp
                 //method2
                 gridderElement.Initialize(this.scientificVisual3DControl.OpenGL, mesh);
                 DateTime t2 = DateTime.Now;
-               
+
                 //gridderElement.SetBoundingBox(mesh.Min, mesh.Max);
 
                 //// use PointSpriteGridderElement
@@ -120,10 +131,10 @@ namespace SimLabDesign1_DemoApp
                 ////DebugMesh(mesh);
 
                 //
-                
+
 
                 gridderElement.Name = string.Format("element {0}", elementCounter++);
-                this.scientificVisual3DControl.AddModelElement(gridderElement);
+                //this.scientificVisual3DControl.AddModelElement(gridderElement);
                 DateTime t3 = DateTime.Now;
                 // update ModelContainer's BoundingBox.
                 BoundingBox boundingBox = this.scientificVisual3DControl.ModelContainer.BoundingBox;
@@ -288,6 +299,6 @@ namespace SimLabDesign1_DemoApp
             string message = string.Format("{0}", "Add模型后，可通过'R'键观察随机隐藏hexahedron的情形。");
             MessageBox.Show(message, "Tip", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
         }
- 
+
     }
 }
