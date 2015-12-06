@@ -260,9 +260,17 @@ namespace SimLab.GridSource.Factory
                  if (bindVisibles[gridIndex] > 0)
                  {
                      if (!(distance <= 0.0f))
-                         textures[gridIndex] = (value - minValue) / distance;
+                     {
+                         float d = value - minValue;
+                         if (d < 0.00001)
+                            textures[gridIndex] = 0.0f;
+                         else
+                            textures[gridIndex] = ((value - minValue) / distance) * 0.99f;
+                     }
                      else
-                         textures[gridIndex] = 0.0f;
+                     {
+                         textures[gridIndex] = 0.0001f;
+                     }
                  }
              }
 
