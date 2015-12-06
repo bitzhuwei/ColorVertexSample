@@ -99,6 +99,7 @@ namespace Sample
             this.sim3D.SetColorIndicator(minValue, maxValue, step);
             TextureCoordinatesBufferData textureCoordinates =  source.CreateTextureCoordinates(prop.GridIndexes, prop.Values, minValue, maxValue);
             grid.SetTextureCoods(textureCoordinates);
+            this.sim3D.Invalidate();
 
         }
 
