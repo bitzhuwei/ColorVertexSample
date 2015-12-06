@@ -247,7 +247,9 @@ namespace SimLab.GridSource
             return sliceVisibles;
         }
 
-
+        /// <summary>
+        /// 初始化切片可视性
+        /// </summary>
         public override void Init()
         {
               base.Init();

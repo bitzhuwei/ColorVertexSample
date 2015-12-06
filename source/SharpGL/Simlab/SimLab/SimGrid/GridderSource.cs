@@ -1,5 +1,6 @@
 ﻿using SharpGL.SceneGraph;
 using SimLab.GridSource.Factory;
+using SimLab.SimGrid;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,10 @@ namespace SimLab.GridSource
     public abstract class GridderSource
     {
         private  GridBufferDataFactory factory;
+
+        private GridIndexer gridIndexer;
+
+
         /// <summary>
         /// X轴方向上的网格数。
         /// </summary>
@@ -41,7 +46,7 @@ namespace SimLab.GridSource
         }
 
         /// <summary>
-        /// 每个网格一个值，全部为零
+        /// 每个网格一个值，全部为零，表示全部不可视
         /// </summary>
         private int[] zeroVisibles;
 
@@ -76,18 +81,14 @@ namespace SimLab.GridSource
         /// <param name="iv"></param>
         /// <param name="jv"></param>
         /// <param name="kv"></param>
-        public void InvertIJK(int index, out int iv, out int jv, out int kv)
+        public void InvertIJK(int index, out int I, out int J, out int K)
         {
-            int ijsize = this.NX * this.NY;
-            kv = index / ijsize + 1;
-            int ijLeft = index % ijsize;
-            jv = ijLeft / this.NX + 1;
-            iv = ijLeft % this.NX + 1;
+             this.gridIndexer.IJKOfIndex(index, out I, out J, out K);
         }
 
         protected void IJK2Index(int I, int J, int K, out int index)
         {
-            index = (K - 1) * (this.NX * this.NY) + (J - 1) * this.NX + (I - 1);
+            index = this.gridIndexer.IndexOf(I, J, K);
             return;
         }
 
@@ -104,7 +105,7 @@ namespace SimLab.GridSource
             int gridIndex;
             this.IJK2Index(i, j, k, out gridIndex);
             int actnum = this.ActNums[gridIndex];
-            if (actnum <= 0) //小于或等于0的网格块都是活动的网格块
+            if (actnum <= 0) //小于或等于0的网格块都是非活动的网格块
                 return false;
             return true;
         }
@@ -167,6 +168,12 @@ namespace SimLab.GridSource
         /// </summary>
         public virtual void Init()
         {
+
+            if (this.gridIndexer == null)
+            {
+                this.gridIndexer = new GridIndexer(this.NX, this.NY, this.NZ);
+            }
+
             if (this.ActNums == null)
             {
                 this.ActNums = InitIntArray(this.DimenSize);
@@ -177,8 +184,11 @@ namespace SimLab.GridSource
             }
             if (this.textures == null)
             {
+                //初始化不可视
                 this.textures = InitFloatArray(this.DimenSize, 2);
             }
+
+            
         }
 
 

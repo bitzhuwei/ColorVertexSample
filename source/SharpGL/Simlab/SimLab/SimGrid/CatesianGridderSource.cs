@@ -1,4 +1,5 @@
 ﻿using SharpGL.SceneGraph;
+using SimLab.SimGrid;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,32 @@ namespace SimLab.GridSource
         /// Z(K)方向上的网格宽度
         /// </summary>
         public float[] DZ { get; set; }
+
+        private float[] xcoords;
+        private float[] ycoords;
+        private float[] zcoords;
+
+
+        /// <summary>
+        /// 网格起始原点X坐标
+        /// </summary>
+        public float OX
+        {
+            get;
+            set;
+        }
+
+        public float OY
+        {
+            get;
+            set;
+        }
+
+        public float OZ
+        {
+            get;
+            set;
+        }
 
 
 
@@ -135,6 +162,70 @@ namespace SimLab.GridSource
             float z = GetCellZ(i - 1, j - 1, k);
             Vertex p = new Vertex(x, y, z);
             return p;
+        }
+
+
+        protected void InitGridCoordinates()
+        {
+                //xcoords;
+            int coordSize = (this.NX + 1) * (this.NY + 1) * (this.NZ + 1);
+            float[] coordX  = new float[coordSize];
+            float[] coordY =   new float[coordSize];
+            float[] coordZ =   new float[coordSize];
+
+            float[] srcDX = this.DX;
+            float[] srcDY = this.DY;
+            float[] srcDZ = this.DZ;
+            int cnx = this.NX+1;
+            int cny = this.NY+1;
+            int cnz = this.NZ+1;
+
+            int dnx = this.NX;
+            int dny = this.NY;
+            int dnz = this.NZ;
+
+            GridIndexer  coordIndexer = new GridIndexer(cnx, cny, cnz);
+            GridIndexer  dIndexer = new GridIndexer(this.NX, this.NY, this.NZ);
+
+            int  coordIndex;
+            int  prevcIndex;
+            for (int kcz = 1; kcz < cnz; kcz++)
+            {
+                for (int jcy = 1; jcy < cny; jcy++)
+                {
+                    for (int icx = 1; icx < cnx; icx++)
+                    {
+                         coordIndex = coordIndexer.IndexOf(icx, jcy, kcz);
+                         if (icx == 1)
+                         {
+                             coordX[coordIndex] = this.OX;
+                             coordY[coordIndex] = this.OY;
+                             coordZ[coordIndex] = this.OZ;
+                         }
+                         else
+                         {
+                              prevcIndex = coordIndexer.IndexOf(icx - 1, jcy, kcz);
+                              //距离坐标
+
+
+
+
+                         }
+                         
+
+                        //this.IJK2Index(ix, jy, kz, out gridIndex);
+                        //srcDX[gridIndex]
+                    }
+                }
+            }
+            
+
+        }
+
+        public override void Init()
+        {
+               base.Init();
+              //初始化Coordinates
         }
 
     }
