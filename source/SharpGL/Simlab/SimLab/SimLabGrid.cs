@@ -31,10 +31,13 @@ namespace SimLab
         protected uint[] colorBuffer;
         protected uint[] indexBuffer;
         protected uint[] wireframeIndexBuffer;
+        protected int indexBufferLength;
+        protected int wireframeIndexBufferLength;
+
 
         protected OpenGL gl;
         protected IScientificCamera camera;
-       
+
         /// <summary>
         /// 
         /// </summary>
@@ -42,36 +45,49 @@ namespace SimLab
         /// <param name="camera"></param>
         public SimLabGrid(OpenGL gl, IScientificCamera camera)
         {
+            if (gl == null || camera == null) { throw new ArgumentNullException(); }
+
             this.gl = gl;
             this.camera = camera;
         }
 
+        protected uint CreateVertexBufferObject(uint mode, BufferData bufferData, uint usage)
+        {
+            uint[] ids = new uint[1];
+            gl.GenBuffers(1, ids);
+            gl.BindBuffer(mode, ids[0]);
+            gl.BufferData(mode, bufferData.GLSize, bufferData.Data, usage);
+
+            return ids[0];
+        }
         /// <summary>
         /// 初始化顶点位置和索引
         /// </summary>
         /// <param name="gridCoords"></param>
         public void Init(MeshGeometry3D Geomtry)
         {
-            //TODO:如果用此方式，则必须先将此对象加入scene树，然后再调用Init
-            OpenGL gl = this.TraverseToRootElement().ParentScene.OpenGL;
+            ////TODO:如果用此方式，则必须先将此对象加入scene树，然后再调用Init
+            //OpenGL gl = this.TraverseToRootElement().ParentScene.OpenGL;
             positionBuffer = new uint[1];
-            gl.GenBuffers(1, positionBuffer);
-            gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, positionBuffer[0]);
-            gl.BufferData(OpenGL.GL_ARRAY_BUFFER, Geomtry.Positions.GLSize, Geomtry.Positions.Data, OpenGL.GL_STATIC_DRAW);
+            positionBuffer[0] = CreateVertexBufferObject(OpenGL.GL_ARRAY_BUFFER, Geomtry.Positions, OpenGL.GL_STATIC_DRAW);
 
             indexBuffer = new uint[1];
-            gl.GenBuffers(1, indexBuffer);
-            gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, indexBuffer[0]);
-            gl.BufferData(OpenGL.GL_ELEMENT_ARRAY_BUFFER, Geomtry.TriangleIndices.GLSize, Geomtry.TriangleIndices.Data, OpenGL.GL_STATIC_DRAW);
+            indexBuffer[0] = CreateVertexBufferObject(OpenGL.GL_ELEMENT_ARRAY_BUFFER, Geomtry.TriangleIndices, OpenGL.GL_STATIC_DRAW);
 
-            this.geometry = Geomtry;
+            int elementLength = sizeof(uint);// should be 4.
+            this.indexBufferLength = Geomtry.TriangleIndices.SizeInBytes / (elementLength);
         }
 
 
-        public void SetWireframe(BufferData lineIndexes)
+        public void SetWireframe(WireFrameBufferData lineIndexes)
         {
+            ////TODO:如果用此方式，则必须先将此对象加入scene树，然后再调用Init
+            //OpenGL gl = this.TraverseToRootElement().ParentScene.OpenGL;
+            wireframeIndexBuffer = new uint[1];
+            wireframeIndexBuffer[0] = CreateVertexBufferObject(OpenGL.GL_ARRAY_BUFFER, lineIndexes, OpenGL.GL_STATIC_DRAW);
 
-
+            int elementLength = sizeof(uint);// should be 4.
+            this.wireframeIndexBufferLength = lineIndexes.SizeInBytes / (elementLength);
         }
 
 
@@ -80,11 +96,7 @@ namespace SimLab
             ////TODO:如果用此方式，则必须先将此对象加入scene树，然后再调用Init
             //OpenGL gl = this.TraverseToRootElement().ParentScene.OpenGL;
             colorBuffer = new uint[1];
-            gl.GenBuffers(1, colorBuffer);
-            gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, colorBuffer[0]);
-            gl.BufferData(OpenGL.GL_ARRAY_BUFFER, textureCoords.GLSize, textureCoords.Data, OpenGL.GL_STATIC_DRAW);
-
-            this.textureCoords = textureCoords;
+            colorBuffer[0] = CreateVertexBufferObject(OpenGL.GL_ARRAY_BUFFER, textureCoords, OpenGL.GL_STREAM_DRAW);
         }
 
         public void SetTexture(Bitmap bitmap)
@@ -98,26 +110,21 @@ namespace SimLab
 
 
 
-
-
-
         #region IDisposable Members
 
         public void Dispose()
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
-        } 
+        }
         ~SimLabGrid()
         {
             this.Dispose(false);
         }
 
         private bool disposedValue = false;
-        protected MeshGeometry3D geometry;
-        protected BufferData textureCoords;
-      
-      
+
+
         private void Dispose(bool disposing)
         {
 
@@ -132,8 +139,8 @@ namespace SimLab
 
                 // Dispose unmanaged resources.
                 DisposeUnmanagedResources();
-                
-            } 
+
+            }
 
             this.disposedValue = true;
         }
@@ -149,7 +156,7 @@ namespace SimLab
 
         protected virtual void DisposeManagedResources()
         {
-        } 
+        }
 
         #endregion
 

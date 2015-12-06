@@ -76,60 +76,72 @@ namespace SimLab
 
             if (this.RenderGrid)
             {
-                // prepare positions
+                if (positionBuffer != null && colorBuffer != null && indexBuffer != null)
                 {
-                    gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, positionBuffer[0]);
-                    gl.VertexAttribPointer(ATTRIB_INDEX_POSITION, 3, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
-                    gl.EnableVertexAttribArray(ATTRIB_INDEX_POSITION);
-                }
-                // prepare colors
-                {
-                    gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, colorBuffer[0]);
-                    gl.VertexAttribPointer(ATTRIB_INDEX_COLOUR, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
-                    gl.EnableVertexAttribArray(ATTRIB_INDEX_COLOUR);
-                }
-                // prepare index
-                {
-                    gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, indexBuffer[0]);
-                }
+                    // prepare positions
+                    {
+                        gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, positionBuffer[0]);
+                        gl.VertexAttribPointer(ATTRIB_INDEX_POSITION, 3, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
+                        gl.EnableVertexAttribArray(ATTRIB_INDEX_POSITION);
+                    }
+                    // prepare colors
+                    {
+                        gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, colorBuffer[0]);
+                        gl.VertexAttribPointer(ATTRIB_INDEX_COLOUR, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
+                        gl.EnableVertexAttribArray(ATTRIB_INDEX_COLOUR);
+                    }
+                    // prepare index
+                    {
+                        gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, indexBuffer[0]);
+                    }
 
-                gl.DrawElements(OpenGL.GL_TRIANGLES, this.geometry.Positions.SizeInBytes / (3 * 4), OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
+                    gl.DrawElements(OpenGL.GL_TRIANGLES, this.indexBufferLength, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
+                }
             }
-            //gl.MultiDrawArrays(OpenGL.GL_QUAD_STRIP, this.firsts, this.counts, this.firsts.Length);
-
-            //gl.BindVertexArray(0);
 
             if (this.RenderGridWireFrame)
             {
+                if (positionBuffer != null && colorBuffer != null && wireframeIndexBuffer != null)
+                {
+                    gl.Disable(OpenGL.GL_LINE_STIPPLE);
+                    gl.Disable(OpenGL.GL_POLYGON_STIPPLE);
+                    gl.Enable(OpenGL.GL_LINE_SMOOTH);
+                    gl.Enable(OpenGL.GL_POLYGON_SMOOTH);
+                    gl.ShadeModel(SharpGL.Enumerations.ShadeModel.Smooth);
+                    gl.Hint(SharpGL.Enumerations.HintTarget.LineSmooth, SharpGL.Enumerations.HintMode.Nicest);
+                    gl.Hint(SharpGL.Enumerations.HintTarget.PolygonSmooth, SharpGL.Enumerations.HintMode.Nicest);
+                    gl.PolygonMode(SharpGL.Enumerations.FaceMode.FrontAndBack, SharpGL.Enumerations.PolygonMode.Lines);
 
-                gl.Disable(OpenGL.GL_LINE_STIPPLE);
-                gl.Disable(OpenGL.GL_POLYGON_STIPPLE);
+                    // prepare positions
+                    {
+                        gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, positionBuffer[0]);
+                        gl.VertexAttribPointer(ATTRIB_INDEX_POSITION, 3, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
+                        gl.EnableVertexAttribArray(ATTRIB_INDEX_POSITION);
+                    }
+                    // prepare colors
+                    {
+                        //gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, colorBuffer[0]);
+                        //gl.VertexAttribPointer(ATTRIB_INDEX_COLOUR, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
+                        //gl.EnableVertexAttribArray(ATTRIB_INDEX_COLOUR);
+                        gl.DisableVertexAttribArray(ATTRIB_INDEX_COLOUR);
+                        gl.VertexAttrib3(ATTRIB_INDEX_COLOUR, 1.0f, 1.0f, 1.0f);
+                    }
+                    // prepare index
+                    {
+                        gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, wireframeIndexBuffer[0]);
+                    }
 
-                gl.Enable(OpenGL.GL_LINE_SMOOTH);
-                gl.Enable(OpenGL.GL_POLYGON_SMOOTH);
-                gl.ShadeModel(SharpGL.Enumerations.ShadeModel.Smooth);
+                    gl.DrawElements(OpenGL.GL_LINES, this.wireframeIndexBufferLength, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
 
-                gl.Hint(SharpGL.Enumerations.HintTarget.LineSmooth, SharpGL.Enumerations.HintMode.Nicest);
-                gl.Hint(SharpGL.Enumerations.HintTarget.PolygonSmooth, SharpGL.Enumerations.HintMode.Nicest);
-                //gl.BlendFunc(SharpGL.Enumerations.BlendingSourceFactor.SourceAlpha, SharpGL.Enumerations.BlendingDestinationFactor.OneMinusSourceAlpha);
-                //gl.LineWidth(1);
+                    {
+                        gl.EnableVertexAttribArray(ATTRIB_INDEX_COLOUR);
+                    }
 
 
-                gl.PolygonMode(SharpGL.Enumerations.FaceMode.FrontAndBack, SharpGL.Enumerations.PolygonMode.Lines);
+                    gl.PolygonMode(SharpGL.Enumerations.FaceMode.FrontAndBack, SharpGL.Enumerations.PolygonMode.Filled);
+                    gl.Disable(OpenGL.GL_POLYGON_SMOOTH);
 
-                //gl.BindVertexArray(vertexArrayObject);
-
-                gl.DisableVertexAttribArray(ATTRIB_INDEX_COLOUR);
-                gl.VertexAttrib3(ATTRIB_INDEX_COLOUR, 1.0f, 1.0f, 1.0f);
-
-                //gl.MultiDrawArrays(OpenGL.GL_QUAD_STRIP, this.firsts, this.counts, this.firsts.Length);
-
-                gl.EnableVertexAttribArray(ATTRIB_INDEX_COLOUR);
-
-                //gl.BindVertexArray(0);
-
-                gl.PolygonMode(SharpGL.Enumerations.FaceMode.FrontAndBack, SharpGL.Enumerations.PolygonMode.Filled);
-
+                }
             }
 
             AfterRendering(gl, renderMode);
@@ -151,7 +163,6 @@ namespace SimLab
 
         protected void AfterRendering(OpenGL gl, RenderMode renderMode)
         {
-            gl.Disable(OpenGL.GL_POLYGON_SMOOTH);
 
             shaderProgram.Unbind(gl);
         }
