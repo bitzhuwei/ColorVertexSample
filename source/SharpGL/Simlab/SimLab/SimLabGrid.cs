@@ -20,6 +20,10 @@ namespace SimLab
     /// </summary>
     public abstract class SimLabGrid : SceneElement, IDisposable
     {
+
+        /// <summary>
+        /// 控制是否渲染网格的wireframe
+        /// </summary>
         public bool RenderGridWireFrame { get; set; }
         public bool RenderGrid { get; set; }
 
@@ -64,6 +68,13 @@ namespace SimLab
         }
 
 
+        public void SetWireframe(BufferData lineIndexes)
+        {
+
+
+        }
+
+
         public void SetTextureCoods(BufferData textureCoords)
         {
             ////TODO:如果用此方式，则必须先将此对象加入scene树，然后再调用Init
@@ -84,6 +95,8 @@ namespace SimLab
             Texture texture = new Texture();
             texture.Create(gl, bitmap);
         }
+
+
 
 
 
