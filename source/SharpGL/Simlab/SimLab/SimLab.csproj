@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BufferData.cs" />
+    <Compile Include="Disposable.cs" />
     <Compile Include="HexahedronGrid.cs" />
     <Compile Include="MeshGeometry3D.cs" />
     <Compile Include="SimGrid\CatesianGridderSource.cs" />

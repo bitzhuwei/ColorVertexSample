@@ -14,7 +14,7 @@ namespace SimLab
 
 
 
-    public abstract class BufferData
+    public abstract class BufferData : Disposable
     {
         public const uint ATTRIB_INDEX_POSITION = 0;
        
@@ -100,7 +100,7 @@ namespace SimLab
               this.SizeInBytes = size;
          }
 
-         public void FreeMem()
+         protected void FreeMem()
          {
              if (this.Data != IntPtr.Zero)
              {
@@ -108,6 +108,16 @@ namespace SimLab
                  this.Data = IntPtr.Zero;
                  this.SizeInBytes = 0;
              }
+         }
+
+         protected override void DisposeUnmanagedResources()
+         {
+            //recuresive distroy
+             if (this.Data != null)
+             {
+                   this.FreeMem();
+             }
+             base.DisposeUnmanagedResources();
          }
     }
 

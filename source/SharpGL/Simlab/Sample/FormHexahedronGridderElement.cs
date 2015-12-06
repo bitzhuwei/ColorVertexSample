@@ -270,7 +270,7 @@ namespace Sample
         private void btnClearModels_Click(object sender, EventArgs e)
         {
             this.sim3D.ClearScientificModels();
-
+            this.CurrentHexahedronGrid = null;
             GC.Collect();
         }
 
@@ -334,6 +334,11 @@ namespace Sample
             get
             {
                 return   this.sim3D.Tag as HexahedronGridderSource;
+            }
+
+            set
+            {
+                this.sim3D.Tag = null;
             }
 
         }
