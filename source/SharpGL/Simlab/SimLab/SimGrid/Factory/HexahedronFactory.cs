@@ -186,51 +186,51 @@ namespace SimLab.GridSource.Factory
             {
                 int size = lineCount * sizeof(LineIndex);
                 wireframe.AllocMem(size);
-                LineIndex* first = (LineIndex*)wireframe.Data;
+                LineIndex* cellLines = (LineIndex*)wireframe.Data;
                 for (int gridIndex = 0; gridIndex < source.DimenSize; gridIndex++)
                 {
-                    LineIndex* cellLines = first + (gridIndex * 12);
+                    int index = gridIndex * 12;
                     uint offset = (uint)(gridIndex * 8);
 
                     //top
-                    cellLines[0].p0 = offset + 0;
-                    cellLines[0].p1 = offset + 1;
+                    cellLines[index+0].p0 = offset + 0;
+                    cellLines[index+0].p1 = offset + 1;
 
-                    cellLines[1].p0 = offset + 1;
-                    cellLines[1].p1 = offset + 2;
+                    cellLines[index + 1].p0 = offset + 1;
+                    cellLines[index + 1].p1 = offset + 2;
 
-                    cellLines[2].p0 = offset + 2;
-                    cellLines[2].p1 = offset + 3;
+                    cellLines[index + 2].p0 = offset + 2;
+                    cellLines[index + 2].p1 = offset + 3;
 
 
-                    cellLines[3].p0 = offset + 3;
-                    cellLines[3].p1 = offset + 0;
+                    cellLines[index + 3].p0 = offset + 3;
+                    cellLines[index + 3].p1 = offset + 0;
 
-                    //bottomm
-                    cellLines[4].p0 = offset + 4;
-                    cellLines[4].p1 = offset + 5;
+                    //bottom
+                    cellLines[index + 4].p0 = offset + 4;
+                    cellLines[index + 4].p1 = offset + 5;
 
-                    cellLines[5].p0 = offset + 5;
-                    cellLines[5].p1 = offset + 6;
+                    cellLines[index + 5].p0 = offset + 5;
+                    cellLines[index + 5].p1 = offset + 6;
 
-                    cellLines[6].p0 = offset + 6;
-                    cellLines[6].p1 = offset + 7;
+                    cellLines[index + 6].p0 = offset + 6;
+                    cellLines[index + 6].p1 = offset + 7;
 
-                    cellLines[7].p0 = offset + 7;
-                    cellLines[7].p1 = offset + 4;
+                    cellLines[index + 7].p0 = offset + 7;
+                    cellLines[index + 7].p1 = offset + 4;
 
                     //pillar
-                    cellLines[8].p0 = offset + 0;
-                    cellLines[9].p1 = offset + 4;
+                    cellLines[index + 8].p0 = offset + 0;
+                    cellLines[index + 8].p1 = offset + 4;
 
-                    cellLines[9].p0 = offset + 2;
-                    cellLines[9].p1 = offset + 5;
+                    cellLines[index + 9].p0 = offset + 2;
+                    cellLines[index + 9].p1 = offset + 5;
 
-                    cellLines[10].p0 = offset + 3;
-                    cellLines[10].p1 = offset + 6;
+                    cellLines[index + 10].p0 = offset + 3;
+                    cellLines[index + 10].p1 = offset + 6;
 
-                    cellLines[11].p0 = offset + 4;
-                    cellLines[11].p1 = offset + 7;
+                    cellLines[index + 11].p0 = offset + 4;
+                    cellLines[index + 11].p1 = offset + 7;
 
                 }
                 return wireframe;
