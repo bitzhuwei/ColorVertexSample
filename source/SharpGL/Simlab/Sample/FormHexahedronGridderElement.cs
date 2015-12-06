@@ -68,7 +68,7 @@ namespace Sample
         }
 
         protected void InitSlice(ListBox box, IList<int> slices){
-             
+             box.Items.Clear();
              foreach(int coord in slices){
                  box.Items.Add(coord);
              }
@@ -271,6 +271,9 @@ namespace Sample
         {
             this.sim3D.ClearScientificModels();
             this.CurrentHexahedronGrid = null;
+            this.lbxNI.Items.Clear();
+            this.lbxNJ.Items.Clear();
+            this.lbxNZ.Items.Clear();
             GC.Collect();
         }
 
