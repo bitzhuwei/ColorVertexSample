@@ -97,11 +97,18 @@ namespace SimLab
         {
             ////TODO:如果用此方式，则必须先将此对象加入scene树，然后再调用Init
             //OpenGL gl = this.TraverseToRootElement().ParentScene.OpenGL;
-            colorBuffer = new uint[1];
-            colorBuffer[0] = CreateVertexBufferObject(OpenGL.GL_ARRAY_BUFFER, textureCoords, OpenGL.GL_STREAM_DRAW);
+            if (colorBuffer == null)
+            {
+                colorBuffer = new uint[1];
+                colorBuffer[0] = CreateVertexBufferObject(OpenGL.GL_ARRAY_BUFFER, textureCoords, OpenGL.GL_STREAM_DRAW);
+            }
+            else
+            {
+                UpdateTextureCoords(textureCoords);
+            }
         }
 
-        public void UpdateTextureCoords(BufferData textureCoords)
+        protected void UpdateTextureCoords(BufferData textureCoords)
         {
             gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, this.colorBuffer[0]);
             IntPtr destVisibles = gl.MapBuffer(OpenGL.GL_ARRAY_BUFFER, OpenGL.GL_READ_WRITE);
