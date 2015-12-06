@@ -3,18 +3,30 @@ in float pass_uv;
 out vec4 out_Color;
 
 uniform sampler2D tex;
+uniform float renderingWireframe;
 
 void main(void) {
-	if (pass_uv < 0.0)
+	if (renderingWireframe == 1.0)
 	{
-	    out_Color = vec4(1, 1, 1, 1);
+		if (0.0 <= pass_uv && pass_uv <= 1.0)
+		{
+			out_Color = vec4(1, 1, 1, 1);
+		}
+		else
+		{
+			discard;
+		}
 	}
-	else if (pass_uv <= 1.0)
+	else
 	{
-		out_Color = texture(tex, vec2(pass_uv, 0.5));
+	    if (0.0 <= pass_uv && pass_uv <= 1.0)
+		{
+			out_Color = texture(tex, vec2(pass_uv, 0.0));
+		}
+		else
+		{
+			discard;
+		}
 	}
-	else 
-	{
-		discard;
-	}
+
 }
