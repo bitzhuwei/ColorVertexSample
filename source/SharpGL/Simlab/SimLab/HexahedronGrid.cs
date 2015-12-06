@@ -146,6 +146,7 @@ namespace SimLab
                         //gl.EnableVertexAttribArray(ATTRIB_INDEX_COLOUR);
                         gl.DisableVertexAttribArray(ATTRIB_INDEX_COLOUR);
                         gl.VertexAttrib3(ATTRIB_INDEX_COLOUR, 1.0f, 1.0f, 1.0f);
+                        gl.VertexAttrib1(ATTRIB_INDEX_COLOUR, -1.0f);
                     }
                     // prepare index
                     {
@@ -161,7 +162,7 @@ namespace SimLab
 
                     gl.PolygonMode(SharpGL.Enumerations.FaceMode.FrontAndBack, SharpGL.Enumerations.PolygonMode.Filled);
                     gl.Disable(OpenGL.GL_POLYGON_SMOOTH);
-
+               
                 }
             }
 
