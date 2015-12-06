@@ -354,11 +354,28 @@ namespace Sample
         private void cbxShowWireframe_CheckedChanged(object sender, EventArgs e)
         {
 
-           
-            
-            
-            //source.CreateTextureCoordinates(
-               
+            HexahedronGridderSource source = this.CurrentHexahedronGrid;
+            if (source == null)
+                return;
+
+            List<SimLabGrid> gridders = this.sim3D.Scene.SceneContainer.Traverse<SimLabGrid>().ToList<SimLabGrid>();
+            if (gridders.Count <= 0)
+                return;
+            SimLabGrid gridder = gridders[0];
+
+            if (this.IsShowWireframe)
+            {
+                WireFrameBufferData wireFrame = source.CreateWireframe();
+                gridder.SetWireframe(wireFrame);
+            }
+            else
+            {
+                 gridder.SetWireframe(null);
+            }
+            gridder.RenderGridWireFrame = this.IsShowWireframe;
+
+
+              
         }
 
 
