@@ -1,5 +1,6 @@
 ﻿using SharpGL;
 using SharpGL.SceneGraph;
+using SimLab.SimGrid;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -185,6 +186,26 @@ namespace SimLab
         {
              this.GLDataType = OpenGL.GL_INT;
              this.GLSize = 1;
+        }
+
+
+
+        public unsafe void DoDump()
+        {
+            int trianglesCount = this.SizeInBytes / sizeof(TriangleIndex);
+            TriangleIndex* triangles = (TriangleIndex*)this.Data;
+            System.Console.WriteLine("Trinagles Count:{0}", trianglesCount);
+            System.Console.WriteLine("====Triangles Indices==============");
+            for (int i = 0; i < trianglesCount; i++)
+            {
+                System.Console.WriteLine(String.Format("{0}:({1},{2},{3})", i, triangles[i].dot0, triangles[i].dot1, triangles[i].dot2));
+            }
+            System.Console.WriteLine("====Triangles Indices  END==============");
+        }
+
+        public void Dump()
+        {
+            DoDump();
         }
     }
 }
