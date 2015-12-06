@@ -1,6 +1,7 @@
 ﻿using GlmNet;
 using SharpGL;
 using SharpGL.SceneComponent;
+using SharpGL.SceneComponent.Utility;
 using SharpGL.SceneGraph.Assets;
 using SharpGL.SceneGraph.Core;
 using SharpGL.Shaders;
@@ -98,6 +99,14 @@ namespace SimLab
             //OpenGL gl = this.TraverseToRootElement().ParentScene.OpenGL;
             colorBuffer = new uint[1];
             colorBuffer[0] = CreateVertexBufferObject(OpenGL.GL_ARRAY_BUFFER, textureCoords, OpenGL.GL_STREAM_DRAW);
+        }
+
+        public void UpdateTextureCoords(BufferData textureCoords)
+        {
+            gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, this.colorBuffer[0]);
+            IntPtr destVisibles = gl.MapBuffer(OpenGL.GL_ARRAY_BUFFER, OpenGL.GL_READ_WRITE);
+            MemoryHelper.CopyMemory(destVisibles, textureCoords.Data, (uint)textureCoords.SizeInBytes);
+            gl.UnmapBuffer(OpenGL.GL_ARRAY_BUFFER);
         }
 
         public void SetTexture(Bitmap bitmap)
