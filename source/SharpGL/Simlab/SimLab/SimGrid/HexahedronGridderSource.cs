@@ -255,6 +255,14 @@ namespace SimLab.GridSource
         }
 
         /// <summary>
+        /// 重新生成切片信息
+        /// </summary>
+        public void RefreashSlices()
+        {
+             this.InitSliceVisibles();
+        }
+
+        /// <summary>
         ///  创建几何对象
         /// </summary>
         /// <returns></returns>

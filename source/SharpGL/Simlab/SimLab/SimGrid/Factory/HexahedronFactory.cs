@@ -272,7 +272,14 @@ namespace SimLab.GridSource.Factory
                         }
                     }
                     else
-                        textures[gridIndex] = 2.0f;
+                    {
+                        //最小值最大值相等时，显示最小值的颜色
+                        textures[gridIndex] = 0.01f;
+                    }
+                }
+                else
+                {
+                     textures[gridIndex] = 2.0f;
                 }
             }
 

@@ -328,9 +328,75 @@ namespace Sample
             MessageBox.Show(message, "Tip", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
         }
 
+
+        public HexahedronGridderSource CurrentHexahedronGrid
+        {
+            get
+            {
+                return   this.sim3D.Tag as HexahedronGridderSource;
+            }
+
+        }
+
+        private List<int> GetSelectedSlices(ListBox slice)
+        {
+              List<int> list = new List<int>();
+              ListBox.SelectedObjectCollection collection =  slice.SelectedItems;
+              foreach (object item in collection)
+              {
+                  list.Add((int)item);
+              }
+              return list;
+        }
+
+
+
         private void cbxShowWireframe_CheckedChanged(object sender, EventArgs e)
         {
+
+           
+            
+            
+            //source.CreateTextureCoordinates(
                
+        }
+
+
+        /// <summary>
+        /// 应用切片分析
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnSlicesApply_Click(object sender, EventArgs e)
+        {
+
+            GridProperty prop = this.CurrentProperty;
+            if (prop == null)
+                return;
+
+
+            HexahedronGridderSource source = this.CurrentHexahedronGrid;
+            if (source == null)
+                return;
+
+            List<SimLabGrid> gridders = this.sim3D.Scene.SceneContainer.Traverse<SimLabGrid>().ToList<SimLabGrid>();
+            if (gridders.Count <= 0)
+                return;
+
+            SimLabGrid gridder = gridders[0];
+            List<int> islices = this.GetSelectedSlices(this.lbxNI);
+            List<int> jslices = this.GetSelectedSlices(this.lbxNJ);
+            List<int> kslices = this.GetSelectedSlices(this.lbxNZ);
+            source.IBlocks = islices;
+            source.JBlocks = jslices;
+            source.KBlocks = kslices;
+            source.RefreashSlices();
+            float minValue = this.sim3D.uiColorIndicator.Data.MinValue;
+            float maxValue = this.sim3D.uiColorIndicator.Data.MaxValue;
+           TextureCoordinatesBufferData textureCoordinates =   source.CreateTextureCoordinates(prop.GridIndexes, prop.Values, minValue, maxValue);
+           gridder.SetTextureCoods(textureCoordinates);
+
+           this.sim3D.Invalidate();
         }
 
     }
