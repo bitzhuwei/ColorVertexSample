@@ -148,10 +148,25 @@ namespace SimLab
 
         protected virtual void DisposeUnmanagedResources()
         {
-            gl.DeleteBuffers(this.positionBuffer.Length, this.positionBuffer);
-            gl.DeleteBuffers(this.colorBuffer.Length, this.colorBuffer);
-            gl.DeleteBuffers(this.indexBuffer.Length, this.indexBuffer);
-            gl.DeleteBuffers(this.wireframeIndexBuffer.Length, this.wireframeIndexBuffer);
+            if (this.positionBuffer != null)
+            {
+                gl.DeleteBuffers(this.positionBuffer.Length, this.positionBuffer);
+            }
+
+            if (this.colorBuffer != null)
+            {
+                gl.DeleteBuffers(this.colorBuffer.Length, this.colorBuffer);
+            }
+
+            if (this.indexBuffer != null)
+            {
+                gl.DeleteBuffers(this.indexBuffer.Length, this.indexBuffer);
+            }
+
+            if (this.wireframeIndexBuffer != null)
+            {
+                gl.DeleteBuffers(this.wireframeIndexBuffer.Length, this.wireframeIndexBuffer);
+            }
             //gl.DeleteVertexArrays(1, new uint[] { this.vertexArrayObject });
         }
 
