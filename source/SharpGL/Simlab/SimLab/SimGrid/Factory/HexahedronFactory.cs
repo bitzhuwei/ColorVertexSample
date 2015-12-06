@@ -264,11 +264,11 @@ namespace SimLab.GridSource.Factory
                         textures[gridIndex] = (value - minValue) / distance;
                         if (textures[gridIndex] < 0.5f)
                         {
-                            textures[gridIndex] = 0.5f - (0.5f - textures[gridIndex]) * 0.9f;
+                            textures[gridIndex] = 0.5f - (0.5f - textures[gridIndex]) * 0.99f;
                         }
                         else
                         {
-                            textures[gridIndex] = (textures[gridIndex] - 0.5f) * 0.9f + 0.5f;
+                            textures[gridIndex] = (textures[gridIndex] - 0.5f) * 0.99f + 0.5f;
                         }
                     }
                     else
