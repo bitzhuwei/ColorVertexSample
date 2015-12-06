@@ -164,7 +164,7 @@ namespace Sample
                 gridder.RenderGridWireFrame = this.IsShowWireframe;
                 gridder.SetTexture(texture);
                 gridder.SetTextureCoods(textureCoodinates);
-                //textureCoodinates.Dump();
+                textureCoodinates.Dump();
               
 
                 DateTime t1 = DateTime.Now;
