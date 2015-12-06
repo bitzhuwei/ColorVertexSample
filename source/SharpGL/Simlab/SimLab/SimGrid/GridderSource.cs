@@ -144,9 +144,8 @@ namespace SimLab.GridSource
         /// <returns></returns>
         private int[] InitIntArray(int dimenSize, int value = 1)
         {
-            int[] actNums = new int[this.DimenSize];
-            int dimsize = this.DimenSize;
-            for (int i = 0; i < dimsize; i++)
+            int[] actNums = new int[dimenSize];
+            for (int i = 0; i < dimenSize; i++)
             {
                 actNums[i] = value;
             }
