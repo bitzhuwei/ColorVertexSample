@@ -272,7 +272,7 @@ namespace SimLab.GridSource.Factory
                         }
                     }
                     else
-                        textures[gridIndex] = 0.0f;
+                        textures[gridIndex] = 2.0f;
                 }
             }
 
