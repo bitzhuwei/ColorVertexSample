@@ -10,18 +10,24 @@ namespace SimLabDesign1
 {
     public static class UnmanagedArrayCopyHelper
     {
-        [DllImport("kernel32.dll", EntryPoint = "CopyMemory", SetLastError = false)]
-        public static extern void CopyMemory(IntPtr dest, IntPtr src, uint size);
 
         /// <summary>
-        /// 将非托管数组复制到指定的位置。
+        /// 把此非托管数组复制到目标内存地址上。
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="array"></param>
-        /// <param name="dest">目的地址的起始位置。</param>
-        public static void CopyTo<T>(this UnmanagedArray<T> array, IntPtr dest) where T : struct
+        /// <param name="source"></param>
+        /// <param name="destination">例如用glMapBuffer()得到的地址。</param>
+        public static void CopyTo(this UnmanagedArrayBase source, IntPtr destination)
         {
-            CopyMemory(dest, array.Header, (uint)array.ByteLength);
+            CopyMemory(destination, source.Header, (uint)source.ByteLength);
         }
+
+        /// <summary>
+        /// Copies a block of memory from one location to another.
+        /// </summary>
+        /// <param name="Destination">A pointer to the starting address of the copied block's destination.</param>
+        /// <param name="Source">A pointer to the starting address of the block of memory to copy.</param>
+        /// <param name="Length">The size of the block of memory to copy, in bytes.</param>
+        [DllImport("kernel32.dll", EntryPoint = "CopyMemory", SetLastError = false)]
+        public static extern void CopyMemory(IntPtr Destination, IntPtr Source, uint Length);
     }
 }
