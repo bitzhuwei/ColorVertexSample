@@ -92,6 +92,7 @@ namespace SimLab
             {
                 if (positionBuffer != null && colorBuffer != null && indexBuffer != null)
                 {
+                    shaderProgram.SetUniform1(gl, "renderingWireframe", 0.0f);
                     gl.BindVertexArray(this.vertexArrayObject[0]);
                     gl.DrawElements(OpenGL.GL_TRIANGLES, this.indexBufferLength, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
                     gl.BindVertexArray(0);
@@ -124,6 +125,8 @@ namespace SimLab
             {
                 if (positionBuffer != null && colorBuffer != null && wireframeIndexBuffer != null)
                 {
+                    shaderProgram.SetUniform1(gl, "renderingWireframe", 1.0f);
+
                     gl.Disable(OpenGL.GL_LINE_STIPPLE);
                     gl.Disable(OpenGL.GL_POLYGON_STIPPLE);
                     gl.Enable(OpenGL.GL_LINE_SMOOTH);
