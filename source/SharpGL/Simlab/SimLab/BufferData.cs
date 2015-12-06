@@ -130,7 +130,7 @@ namespace SimLab
                 System.Console.WriteLine("==============textures BEGIN======================");
                 for (int i = 0; i < texturesCount; i++)
                 {
-                     System.Console.WriteLine("{0}:{1}", textures[i]);
+                     System.Console.WriteLine("{0}:{1}",i, textures[i]);
                 }
                 System.Console.WriteLine("==============textures END=======================");
             }
