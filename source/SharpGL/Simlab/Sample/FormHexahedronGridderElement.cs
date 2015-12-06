@@ -75,6 +75,33 @@ namespace Sample
 
         }
 
+        private void OnGridPropertyChanged(object sender, EventArgs e)
+        {
+            HexahedronGridderSource source = this.sim3D.Tag as HexahedronGridderSource;
+            if (source == null)
+                return;
+
+            List<SimLabGrid> gridders =  this.sim3D.Scene.SceneContainer.Traverse<SimLabGrid>().ToList<SimLabGrid>();
+            if (gridders.Count <= 0)
+                return;
+
+            SimLabGrid grid = gridders[0];
+
+            GridProperty prop = this.CurrentProperty;
+            if (prop == null)
+                return;
+            float minValue = prop.MinValue;
+            float maxValue = prop.MaxValue;
+            float step = (maxValue - minValue)/10.0f;
+            if(step <=0.0f)
+                step = 1.0f;
+
+            this.sim3D.SetColorIndicator(minValue, maxValue, step);
+            TextureCoordinatesBufferData textureCoordinates =  source.CreateTextureCoordinates(prop.GridIndexes, prop.Values, minValue, maxValue);
+            grid.SetTextureCoods(textureCoordinates);
+
+        }
+
 
         private void InitPropertiesAndSelectDefault(int dimenSize, float minValue, float maxValue)
         {
@@ -85,6 +112,8 @@ namespace Sample
             this.cbxGridProperties.Items.Add(prop1);
             this.cbxGridProperties.Items.Add(prop2);
             this.cbxGridProperties.SelectedIndex = 0;
+            this.cbxGridProperties.SelectedValueChanged -= this.OnGridPropertyChanged;
+            this.cbxGridProperties.SelectedValueChanged += this.OnGridPropertyChanged;
         }
 
         public GridProperty CurrentProperty
@@ -164,7 +193,7 @@ namespace Sample
                 gridder.RenderGridWireFrame = this.IsShowWireframe;
                 gridder.SetTexture(texture);
                 gridder.SetTextureCoods(textureCoodinates);
-                textureCoodinates.Dump();
+                //textureCoodinates.Dump();
               
 
                 DateTime t1 = DateTime.Now;
@@ -183,7 +212,7 @@ namespace Sample
                 DateTime t2 = DateTime.Now;
                
                 //gridderElement.SetBoundingBox(mesh.Min, mesh.Max);
-
+                this.sim3D.Tag = source;
                              
 
                 //gridderElement.Name = string.Format("element {0}", elementCounter++);
