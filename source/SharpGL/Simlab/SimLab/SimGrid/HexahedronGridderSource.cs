@@ -219,12 +219,15 @@ namespace SimLab.GridSource
         protected int[] CreateSliceVisibles()
         {
             int[] sliceVisibles = new int[this.DimenSize];
+            //默认不显示
             for (int gridIndex = 0; gridIndex < sliceVisibles.Length; gridIndex++)
             {
                 sliceVisibles[gridIndex] = 0;
             }
 
             {
+
+                //计算显示的网格
                 int I, J, K, gridIndex;
                 for (int kindex = 0; kindex < _kBlocks.Count; kindex++)
                 {
@@ -236,7 +239,7 @@ namespace SimLab.GridSource
                             J = _jBlocks[jindex];
                             K = _kBlocks[kindex];
                             this.IJK2Index(I, J, K, out gridIndex);
-                            sliceVisibles[gridIndex] = 0;
+                            sliceVisibles[gridIndex] = 1;
                         }
                     }
                 }

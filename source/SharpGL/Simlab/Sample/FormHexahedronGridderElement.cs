@@ -128,6 +128,7 @@ namespace Sample
                 source.JBlocks = GridBlockHelper.CreateBlockCoords(ny);
                 source.KBlocks = GridBlockHelper.CreateBlockCoords(nz);
                 source.Init();
+
                 InitSlice(lbxNI, source.IBlocks);
                 InitSlice(lbxNJ, source.JBlocks);
                 InitSlice(lbxNZ, source.KBlocks);
@@ -154,7 +155,7 @@ namespace Sample
                 MeshGeometry3D geometry = source.CreateMesh();
                 TextureCoordinatesBufferData textureCoodinates  = source.CreateTextureCoordinates(gridIndexes, gridValues, minValue, maxValue);
                 Bitmap texture = ColorPaletteHelper.GenBitmap(this.sim3D.uiColorIndicator.Data.ColorPalette);
-
+                geometry.Positions.Dump();
                 //MeshGeometry mesh = HexahedronGridderHelper.CreateMesh(source);
                 HexahedronGrid gridder = new HexahedronGrid(this.sim3D.OpenGL, this.sim3D.Scene.CurrentCamera);
                 gridder.Init(geometry);

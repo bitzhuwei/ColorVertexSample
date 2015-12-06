@@ -1,4 +1,5 @@
 ﻿using SharpGL;
+using SharpGL.SceneGraph;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -135,7 +136,26 @@ namespace SimLab
               this.GLSize = 3;
           }
 
-        
+
+          private unsafe void  DoDump(){
+              if (this.GLDataType == OpenGL.GL_FLOAT)
+              {
+                  Vertex* positions = (Vertex *)this.Data;
+                  int dimenSize = this.SizeInBytes / (sizeof(float)*this.GLSize);
+                  Console.WriteLine(String.Format("Positions:{0}, Position Components:{1}",dimenSize, this.GLSize));
+                  Console.WriteLine("=============Positions Start==================");
+                  for (int i = 0; i < dimenSize; i++)
+                  {
+                      System.Console.WriteLine(String.Format("{0}: ({1},{2},{3})",i, positions[i].X,positions[i].Y,positions[i].Z));
+                  }
+                  Console.WriteLine("=============Positions End ==================");
+              }
+          }
+            
+          public void Dump()
+          {
+              this.DoDump();
+          }
     }
 
     public class HexahedronPositionBufferData : PositionsBufferData
@@ -143,7 +163,6 @@ namespace SimLab
         public HexahedronPositionBufferData()
         {
         }
-
     }
 
 
@@ -165,6 +184,7 @@ namespace SimLab
         public TriangleIndicesBufferData()
         {
              this.GLDataType = OpenGL.GL_INT;
+             this.GLSize = 1;
         }
     }
 }
