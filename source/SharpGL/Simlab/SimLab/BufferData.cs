@@ -116,7 +116,29 @@ namespace SimLab
 
         public TextureCoordinatesBufferData(){
              this.GLDataType = OpenGL.GL_FLOAT;
-            
+        }
+
+
+        private unsafe void DoDump()
+        {
+
+            if(this.GLDataType == OpenGL.GL_FLOAT){
+
+                int texturesCount = this.SizeInBytes / sizeof(float);
+                float* textures = (float *)this.Data;
+                System.Console.WriteLine("textures:{0}", texturesCount);
+                System.Console.WriteLine("==============textures BEGIN======================");
+                for (int i = 0; i < texturesCount; i++)
+                {
+                     System.Console.WriteLine("{0}:{1}", textures[i]);
+                }
+                System.Console.WriteLine("==============textures END=======================");
+            }
+        }
+
+        public void Dump()
+        {
+            this.DoDump();
         }
 
     }
@@ -190,7 +212,7 @@ namespace SimLab
 
 
 
-        public unsafe void DoDump()
+        private unsafe void DoDump()
         {
             int trianglesCount = this.SizeInBytes / sizeof(TriangleIndex);
             TriangleIndex* triangles = (TriangleIndex*)this.Data;

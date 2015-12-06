@@ -156,6 +156,7 @@ namespace Sample
                 TextureCoordinatesBufferData textureCoodinates  = source.CreateTextureCoordinates(gridIndexes, gridValues, minValue, maxValue);
                 Bitmap texture = ColorPaletteHelper.GenBitmap(this.sim3D.uiColorIndicator.Data.ColorPalette);
                 geometry.Positions.Dump();
+                geometry.TriangleIndices.Dump();
                 //MeshGeometry mesh = HexahedronGridderHelper.CreateMesh(source);
                 HexahedronGrid gridder = new HexahedronGrid(this.sim3D.OpenGL, this.sim3D.Scene.CurrentCamera);
                 gridder.Init(geometry);
@@ -163,6 +164,7 @@ namespace Sample
                 gridder.RenderGridWireFrame = this.IsShowWireframe;
                 gridder.SetTexture(texture);
                 gridder.SetTextureCoods(textureCoodinates);
+                textureCoodinates.Dump();
               
 
                 DateTime t1 = DateTime.Now;
