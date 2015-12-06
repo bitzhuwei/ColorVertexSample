@@ -57,7 +57,7 @@ namespace SimLab
             uint[] ids = new uint[1];
             gl.GenBuffers(1, ids);
             gl.BindBuffer(mode, ids[0]);
-            gl.BufferData(mode, bufferData.GLSize, bufferData.Data, usage);
+            gl.BufferData(mode, bufferData.SizeInBytes, bufferData.Data, usage);
 
             return ids[0];
         }

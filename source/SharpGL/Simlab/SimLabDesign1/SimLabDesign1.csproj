@@ -40,13 +40,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="IndexBuffer.cs" />
     <Compile Include="IVertexBuffers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderer.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="UnmanagedArrayCopyHelper.cs" />
-    <Compile Include="VBOInfo.cs" />
+    <Compile Include="VBOInfoBase.cs" />
+    <Compile Include="VertexAttributeBuffer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\SharpGL.SceneComponent\SharpGL.SceneComponent.csproj">

@@ -16,14 +16,14 @@ namespace SimLab.SimGrid
         /// <summary>
         /// 第0个顶点的索引值
         /// </summary>
-        public int dot0;
+        public uint dot0;
         /// <summary>
         /// 第1个顶点的索引值
         /// </summary>
-        public int dot1;
+        public uint dot1;
         /// <summary>
         /// 第2个顶点的索引值
         /// </summary>
-        public int dot2;
+        public uint dot2;
     }
 }

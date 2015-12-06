@@ -117,59 +117,59 @@ namespace SimLab.GridSource.Factory
                      celloffset = gridIndex * 8;
 
                      //top
-                     gridTriangle[0].dot0 = celloffset + 0;
-                     gridTriangle[0].dot1 = celloffset + 1;
-                     gridTriangle[0].dot2 = celloffset + 2;
+                     gridTriangle[0].dot0 = (uint)(celloffset + 0);
+                     gridTriangle[0].dot1 = (uint)(celloffset + 1);
+                     gridTriangle[0].dot2 = (uint)(celloffset + 2);
 
-                     gridTriangle[1].dot0 = celloffset + 0;
-                     gridTriangle[1].dot1 = celloffset + 2;
-                     gridTriangle[1].dot2 = celloffset + 3;
+                     gridTriangle[1].dot0 = (uint)(celloffset + 0);
+                     gridTriangle[1].dot1 = (uint)(celloffset + 2);
+                     gridTriangle[1].dot2 = (uint)(celloffset + 3);
 
                      //bottom
-                     gridTriangle[2].dot0 = celloffset + 4;
-                     gridTriangle[2].dot1 = celloffset + 5;
-                     gridTriangle[2].dot2 = celloffset + 7;
+                     gridTriangle[2].dot0 = (uint)(celloffset + 4);
+                     gridTriangle[2].dot1 = (uint)(celloffset + 5);
+                     gridTriangle[2].dot2 = (uint)(celloffset + 7);
 
-                     gridTriangle[3].dot0 = celloffset + 7;
-                     gridTriangle[3].dot1 = celloffset + 6;
-                     gridTriangle[3].dot2 = celloffset + 5;
+                     gridTriangle[3].dot0 = (uint)(celloffset + 7);
+                     gridTriangle[3].dot1 = (uint)(celloffset + 6);
+                     gridTriangle[3].dot2 = (uint)(celloffset + 5);
 
                      //left
-                     gridTriangle[4].dot0 = celloffset + 0;
-                     gridTriangle[4].dot1 = celloffset + 3;
-                     gridTriangle[4].dot2 = celloffset + 4;
+                     gridTriangle[4].dot0 = (uint)(celloffset + 0);
+                     gridTriangle[4].dot1 = (uint)(celloffset + 3);
+                     gridTriangle[4].dot2 = (uint)(celloffset + 4);
 
-                     gridTriangle[5].dot0 = celloffset + 4;
-                     gridTriangle[5].dot1 = celloffset + 7;
-                     gridTriangle[5].dot2 = celloffset + 3;
+                     gridTriangle[5].dot0 = (uint)(celloffset + 4);
+                     gridTriangle[5].dot1 = (uint)(celloffset + 7);
+                     gridTriangle[5].dot2 = (uint)(celloffset + 3);
 
                      //right
-                     gridTriangle[6].dot0 = celloffset + 1;
-                     gridTriangle[6].dot1 = celloffset + 2;
-                     gridTriangle[6].dot2 = celloffset + 5;
+                     gridTriangle[6].dot0 = (uint)(celloffset + 1);
+                     gridTriangle[6].dot1 = (uint)(celloffset + 2);
+                     gridTriangle[6].dot2 = (uint)(celloffset + 5);
 
 
-                     gridTriangle[7].dot0 = celloffset + 5;
-                     gridTriangle[7].dot1 = celloffset + 6;
-                     gridTriangle[7].dot2 = celloffset + 2;
+                     gridTriangle[7].dot0 = (uint)(celloffset + 5);
+                     gridTriangle[7].dot1 = (uint)(celloffset + 6);
+                     gridTriangle[7].dot2 = (uint)(celloffset + 2);
 
                      //front
-                     gridTriangle[8].dot0 = celloffset + 0;
-                     gridTriangle[8].dot1 = celloffset + 4;
-                     gridTriangle[8].dot2 = celloffset + 5;
+                     gridTriangle[8].dot0 = (uint)(celloffset + 0);
+                     gridTriangle[8].dot1 = (uint)(celloffset + 4);
+                     gridTriangle[8].dot2 = (uint)(celloffset + 5);
 
-                     gridTriangle[9].dot0 = celloffset + 5;
-                     gridTriangle[9].dot1 = celloffset + 1;
-                     gridTriangle[9].dot2 = celloffset + 0;
+                     gridTriangle[9].dot0 = (uint)(celloffset + 5);
+                     gridTriangle[9].dot1 = (uint)(celloffset + 1);
+                     gridTriangle[9].dot2 = (uint)(celloffset + 0);
 
                      //back
-                     gridTriangle[10].dot0 = celloffset + 3;
-                     gridTriangle[10].dot1 = celloffset + 2;
-                     gridTriangle[10].dot2 = celloffset + 6;
+                     gridTriangle[10].dot0 = (uint)(celloffset + 3);
+                     gridTriangle[10].dot1 = (uint)(celloffset + 2);
+                     gridTriangle[10].dot2 = (uint)(celloffset + 6);
 
-                     gridTriangle[11].dot0 = celloffset + 6;
-                     gridTriangle[11].dot1 = celloffset + 7;
-                     gridTriangle[11].dot2 = celloffset + 3;
+                     gridTriangle[11].dot0 = (uint)(celloffset + 6);
+                     gridTriangle[11].dot1 = (uint)(celloffset + 7);
+                     gridTriangle[11].dot2 = (uint)(celloffset + 3);
                  }
                  MeshGeometry3D mesh = new MeshGeometry3D(positions,triangles);
                  mesh.Max = maxVertex;

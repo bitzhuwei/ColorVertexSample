@@ -41,11 +41,11 @@ namespace SimLabDesign1_Elements
         /// <summary>
         /// 记录VBO的key和VBO对象的对应关系。
         /// </summary>
-        Dictionary<string, VBOInfo> vboDict;
+        Dictionary<string, VBOInfoBase> vboDict;
 
         void IVertexBuffers.CreateVertexBuffer<T>(string key, uint target, UnmanagedArray<T> values, uint usage, int size, uint type)
         {
-            if (this.vboDict == null) { this.vboDict = new Dictionary<string, VBOInfo>(); }
+            if (this.vboDict == null) { this.vboDict = new Dictionary<string, VBOInfoBase>(); }
 
             if (this.vboDict.ContainsKey(key))
             { throw new ArgumentException(string.Format("key[{0}] already exists!")); }
@@ -57,7 +57,7 @@ namespace SimLabDesign1_Elements
             gl.BufferData(target, values.ByteLength, values.Header, usage);
 
             this.vboDict.Add(key,
-                new VBOInfo() { BufferID = buffers[0], Target = target, Usage = usage, Size = size, Type = type });
+                new VBOInfoBase() { BufferID = buffers[0], Target = target, Usage = usage, Size = size, Type = type });
         }
 
         void IVertexBuffers.UpdateVertexBuffer<T>(string key, UnmanagedArray<T> newValues)
@@ -68,7 +68,7 @@ namespace SimLabDesign1_Elements
             if (!this.vboDict.ContainsKey(key))
             { throw new ArgumentException(string.Format("key[{0}] NOT exists!")); }
 
-            VBOInfo vbo = this.vboDict[key];
+            VBOInfoBase vbo = this.vboDict[key];
             OpenGL gl = new OpenGL();
 
             gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, vbo.BufferID);
@@ -90,7 +90,7 @@ namespace SimLabDesign1_Elements
             if (!this.vboDict.ContainsKey(key))
             { throw new ArgumentException(string.Format("key[{0}] NOT exists!")); }
 
-            VBOInfo vbo = this.vboDict[key];
+            VBOInfoBase vbo = this.vboDict[key];
             OpenGL gl = new OpenGL();
 
             gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, vbo.BufferID);
