@@ -54,28 +54,12 @@ namespace SimLab.GridSource.Factory
             // setup radius
             unsafe
             {
-                int gridMemSize = dimSize * sizeof(Vertex);
+                int gridMemSize = dimSize * sizeof(float);
                 radius.AllocMem(gridMemSize);
-                Vertex* cell = (Vertex*)radius.Data;
+                float* cell = (float*)radius.Data;
                 for (int gridIndex = 0; gridIndex < dimSize; gridIndex++)
                 {
-                    cell[gridIndex].Set(
-                        (float)random.NextDouble() * 1000,
-                        (float)random.NextDouble() * 1000,
-                        (float)random.NextDouble() * 1000);
-
-                    if (!isSet && src.IsActiveBlock(gridIndex))
-                    {
-                        minVertex = cell[gridIndex];
-                        maxVertex = minVertex;
-                        isSet = true;
-                    }
-
-                    if (isSet && src.IsActiveBlock(gridIndex))
-                    {
-                        minVertex = MinVertex(minVertex, cell[gridIndex]);
-                        maxVertex = MaxVertex(maxVertex, cell[gridIndex]);
-                    }
+                    cell[gridIndex] = (float)random.NextDouble() * 1000;
                 }
             }
             PointMeshGeometry3D mesh = new PointMeshGeometry3D(positions, radius, dimSize);
@@ -128,14 +112,14 @@ namespace SimLab.GridSource.Factory
             HexahedronTextureCoordinatesBufferData coordBuffer = new HexahedronTextureCoordinatesBufferData();
             unsafe
             {
-                int bufferSize = src.DimenSize * sizeof(HexahedronUVs);
+                int bufferSize = src.DimenSize * sizeof(float);
                 coordBuffer.AllocMem(bufferSize);
 
-                HexahedronUVs* coords = (HexahedronUVs*)coordBuffer.Data;
+                float* coords = (float*)coordBuffer.Data;
 
                 for (int gridIndex = 0; gridIndex < dimenSize; gridIndex++)
                 {
-                    coords[gridIndex].SetCoord(textures[gridIndex]);
+                    coords[gridIndex] = textures[gridIndex];
                 }
             }
             return coordBuffer;

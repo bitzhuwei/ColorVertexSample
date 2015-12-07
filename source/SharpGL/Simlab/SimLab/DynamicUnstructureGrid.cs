@@ -4,6 +4,7 @@ using SharpGL.SceneComponent;
 using SharpGL.SceneComponent.Utility;
 using SharpGL.SceneGraph.Core;
 using SharpGL.Shaders;
+using SimLab.SimGrid.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -127,10 +128,30 @@ namespace SimLab
             {
                 this.matrixIndexBuffer = new uint[1];
                 this.matrixIndexBuffer[0] = CreateVertexBufferObject(OpenGL.GL_ARRAY_BUFFER, geometry.MatrixIndices, OpenGL.GL_STATIC_DRAW);
+
+                this.MatrixVertexOrIndexCount = geometry.MatrixIndices.SizeInBytes / sizeof(uint);
+            }
+            else
+            {
+                unsafe
+                {
+                    int elementSize = (geometry.MatrixPositions.Shape == MatrixPositionBufferData.SHAPE_TRIANGLE) ?
+                        sizeof(TrianglePositions) : sizeof(TetrahedronPositions);
+
+                    this.MatrixVertexOrIndexCount = geometry.Positions.SizeInBytes / elementSize;
+                }
             }
 
             this.fractionPositionBuffer = new uint[1];
             this.fractionPositionBuffer[0] = CreateVertexBufferObject(OpenGL.GL_ARRAY_BUFFER, geometry.FracturePositions, OpenGL.GL_STATIC_DRAW);
+
+            unsafe
+            {
+                int elementSize = (geometry.FracturePositions.Shape == FracturePositionBufferData.SHAPE_LINE) ?
+                    sizeof(LineUV) : sizeof(TrianglePositions);
+
+                this.FractionVertexCount = geometry.FracturePositions.SizeInBytes / elementSize;
+            }
         }
 
         /// <summary>
@@ -254,7 +275,7 @@ namespace SimLab
                         break;
                     default:
                         throw new NotImplementedException();
-                        //break;
+                    //break;
                 }
 
                 gl.BindVertexArray(0);
