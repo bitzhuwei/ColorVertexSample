@@ -78,7 +78,7 @@ namespace Sample
 
         private void OnGridPropertyChanged(object sender, EventArgs e)
         {
-            HexahedronGridderSource source = this.sim3D.Tag as HexahedronGridderSource;
+            GridderSource source = this.sim3D.Tag as GridderSource;
             if (source == null)
                 return;
 
