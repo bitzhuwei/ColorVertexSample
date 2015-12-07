@@ -63,17 +63,22 @@
     <Compile Include="BufferData.cs" />
     <Compile Include="Disposable.cs" />
     <Compile Include="HexahedronGrid.cs" />
-    <Compile Include="MeshGeometry3D.cs" />
+    <Compile Include="MeshBase.cs" />
+    <Compile Include="HexahedronMeshGeometry3D.cs" />
+    <Compile Include="PointGrid.cs" />
+    <Compile Include="PointMeshGeometry3D.cs" />
     <Compile Include="SimGrid\CatesianGridderSource.cs" />
     <Compile Include="SimGrid\CornerPointGridderSource.cs" />
-    <Compile Include="SimGrid\Factory\BufferDataFactory.cs" />
-    <Compile Include="SimGrid\Factory\HexahedronFactory.cs" />
+    <Compile Include="SimGrid\Factory\GridBufferDataFactory.cs" />
+    <Compile Include="SimGrid\Factory\PointGridFactory.cs" />
+    <Compile Include="SimGrid\Factory\HexahedronGridFactory.cs" />
     <Compile Include="SimGrid\Geometry\HexahedronUVs.cs" />
     <Compile Include="SimGrid\Geometry\HexahedronPositions.cs" />
     <Compile Include="SimGrid\Geometry\LineIndex.cs" />
     <Compile Include="SimGrid\Geometry\TriangleIndex.cs" />
     <Compile Include="SimGrid\GridderSource.cs" />
     <Compile Include="SimGrid\GridIndexer.cs" />
+    <Compile Include="SimGrid\PointGridderSource.cs" />
     <Compile Include="SimGrid\HexahedronGridderSource.cs" />
     <Compile Include="SimLabGrid.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -104,6 +109,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="HexahedronGrid.frag" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="PointGrid.frag" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="PointGrid.vert" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

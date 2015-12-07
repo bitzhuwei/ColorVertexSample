@@ -20,7 +20,7 @@ namespace SimLab.GridSource
     /// </summary>
     public abstract class GridderSource
     {
-        private  GridBufferDataFactory factory;
+        private GridBufferDataFactory factory;
 
         private GridIndexer gridIndexer;
 
@@ -143,7 +143,7 @@ namespace SimLab.GridSource
         protected abstract GridBufferDataFactory CreateFactory();
       
 
-        protected  GridBufferDataFactory Factory
+        protected GridBufferDataFactory Factory
         {
             get
             {
@@ -171,7 +171,7 @@ namespace SimLab.GridSource
             return actNums;
         }
 
-        private float[] InitFloatArray(int size, float value=2)
+        private float[] InitFloatArray(int size, float value = 2)
         {
             float[] array = new float[size];
             for (int i = 0; i < size; i++)
@@ -198,7 +198,7 @@ namespace SimLab.GridSource
             }
             if (this.zeroVisibles == null)
             {
-                this.zeroVisibles = InitIntArray(this.DimenSize,0);
+                this.zeroVisibles = InitIntArray(this.DimenSize, 0);
             }
             if (this.textures == null)
             {
@@ -209,15 +209,31 @@ namespace SimLab.GridSource
             
         }
 
+        /// <summary>
+        /// 创建纹理映射坐标
+        /// </summary>
+        /// <param name="gridIndexes"></param>
+        /// <param name="values"></param>
+        /// <param name="minValue"></param>
+        /// <param name="maxValue"></param>
+        /// <returns></returns>
+        public TextureCoordinatesBufferData CreateTextureCoordinates(int[] gridIndexes, float[] values, float minValue, float maxValue)
+        {
+            return this.Factory.CreateTextureCoordinates(this, gridIndexes, values, minValue, maxValue);
+        }
 
+        public MeshBase CreateMesh()
+        {
+            MeshBase geometry = this.Factory.CreateMesh(this);
+            this.Max = geometry.Max;
+            this.Min = geometry.Min;
+            return geometry;
+        }
 
-
-
-        public abstract TextureCoordinatesBufferData CreateTextureCoordinates(int[] gridIndexes, float[] values, float minValue, float maxValue);
-
-        public abstract MeshGeometry3D CreateMesh();
-
-        public abstract WireFrameBufferData CreateWireframe();
+        public WireFrameBufferData CreateWireframe()
+        {
+            return this.Factory.CreateWireFrame(this);
+        }
 
 
         public int[] BindCellActive(int[] a1, int[] a2)
@@ -260,7 +276,7 @@ namespace SimLab.GridSource
         /// <returns></returns>
         public float[] GetDefaultTextureCoords()
         {
-            float[] none = new float [this.DimenSize];
+            float[] none = new float[this.DimenSize];
             Array.Copy(this.textures, none, this.DimenSize);
             return none;
         }

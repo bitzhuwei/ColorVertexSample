@@ -16,7 +16,15 @@ namespace SimLab
         private const string in_Position = "in_Position";
         private const string in_uv = "in_uv";
         uint ATTRIB_INDEX_POSITION = 0;
-        uint ATTRIB_INDEX_COLOUR = 1;
+        uint ATTRIB_INDEX_UV = 1;
+
+        protected uint[] indexBuffer;
+        protected int indexBufferLength;
+
+        protected uint[] wireframeIndexBuffer;
+        protected int wireframeIndexBufferLength;
+
+        uint[] vertexArrayObject;
 
         private GlmNet.mat4 projectionMatrix;
         private GlmNet.mat4 viewMatrix;
@@ -28,6 +36,43 @@ namespace SimLab
         {
 
         }
+
+        public void Init(HexahedronMeshGeometry3D geometry)
+        {
+            base.Init(geometry);
+
+            indexBuffer = new uint[1];
+            indexBuffer[0] = CreateVertexBufferObject(OpenGL.GL_ELEMENT_ARRAY_BUFFER, geometry.TriangleIndices, OpenGL.GL_STATIC_DRAW);
+
+            int elementLength = sizeof(uint);// should be 4.
+            this.indexBufferLength = geometry.TriangleIndices.SizeInBytes / (elementLength);
+        }
+
+        public override void SetWireframe(WireFrameBufferData lineIndexes)
+        {
+            if (lineIndexes != null)
+            {
+                if (wireframeIndexBuffer != null)
+                {
+                    gl.DeleteBuffers(wireframeIndexBuffer.Length, wireframeIndexBuffer);
+                }
+                ////TODO:如果用此方式，则必须先将此对象加入scene树，然后再调用Init
+                //OpenGL gl = this.TraverseToRootElement().ParentScene.OpenGL;
+                wireframeIndexBuffer = new uint[1];
+                wireframeIndexBuffer[0] = CreateVertexBufferObject(OpenGL.GL_ARRAY_BUFFER, lineIndexes, OpenGL.GL_STATIC_DRAW);
+
+                int elementLength = sizeof(uint);// should be 4.
+                this.wireframeIndexBufferLength = lineIndexes.SizeInBytes / (elementLength);
+            }
+            else
+            {
+                if (wireframeIndexBuffer != null)
+                {
+                    gl.DeleteBuffers(wireframeIndexBuffer.Length, wireframeIndexBuffer);
+                }
+            }
+        }
+
         #region IRenderable
 
         protected void BeforeRendering(OpenGL gl, RenderMode renderMode)
@@ -73,24 +118,22 @@ namespace SimLab
 
         void IRenderable.Render(OpenGL gl, RenderMode renderMode)
         {
+            if (positionBuffer == null || colorBuffer == null) { return; }
+
             if (this.shaderProgram == null)
             {
                 this.shaderProgram = InitShader(gl, renderMode);
             }
-            if (indexBuffer != null && this.vertexArrayObject == null)
+            if (this.vertexArrayObject == null)
             {
                 CreateVertexArrayObject(gl, renderMode);
             }
-            //if(wireframeIndexBuffer!=null&&this.wireframeVertexArrayObject==null)
-            //{
-            //    CreateWireframeVertexArrayObject(gl, renderMode);
-            //}
 
             BeforeRendering(gl, renderMode);
 
             if (this.RenderGridWireFrame)
             {
-                if (positionBuffer != null && colorBuffer != null && wireframeIndexBuffer != null)
+                if (wireframeIndexBuffer != null)
                 {
                     shaderProgram.SetUniform1(gl, "renderingWireframe", 1.0f);
 
@@ -103,29 +146,10 @@ namespace SimLab
                     gl.Hint(SharpGL.Enumerations.HintTarget.PolygonSmooth, SharpGL.Enumerations.HintMode.Nicest);
                     gl.PolygonMode(SharpGL.Enumerations.FaceMode.FrontAndBack, SharpGL.Enumerations.PolygonMode.Lines);
 
-                    // prepare positions
-                    {
-                        gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, positionBuffer[0]);
-                        gl.VertexAttribPointer(ATTRIB_INDEX_POSITION, 3, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
-                        gl.EnableVertexAttribArray(ATTRIB_INDEX_POSITION);
-                    }
-                    // prepare colors
-                    {
-                        gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, colorBuffer[0]);
-                        gl.VertexAttribPointer(ATTRIB_INDEX_COLOUR, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
-                        gl.EnableVertexAttribArray(ATTRIB_INDEX_COLOUR);
-                    }
-                    // prepare index
-                    {
-                        gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, wireframeIndexBuffer[0]);
-                    }
-
+                    gl.BindVertexArray(this.vertexArrayObject[0]);
+                    gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, wireframeIndexBuffer[0]);
                     gl.DrawElements(OpenGL.GL_LINES, this.wireframeIndexBufferLength, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
-
-                    {
-                        gl.EnableVertexAttribArray(ATTRIB_INDEX_COLOUR);
-                    }
-
+                    gl.BindVertexArray(0);
 
                     gl.PolygonMode(SharpGL.Enumerations.FaceMode.FrontAndBack, SharpGL.Enumerations.PolygonMode.Filled);
                     gl.Disable(OpenGL.GL_POLYGON_SMOOTH);
@@ -140,67 +164,15 @@ namespace SimLab
                 {
                     shaderProgram.SetUniform1(gl, "renderingWireframe", 0.0f);
                     gl.BindVertexArray(this.vertexArrayObject[0]);
+                    gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, indexBuffer[0]);
                     gl.DrawElements(OpenGL.GL_TRIANGLES, this.indexBufferLength, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
                     gl.BindVertexArray(0);
-                    //// prepare positions
-                    //{
-                    //    int location = shaderProgram.GetAttributeLocation(gl, in_Position);
-                    //    ATTRIB_INDEX_POSITION = (uint)location;
-                    //    gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, positionBuffer[0]);
-                    //    gl.VertexAttribPointer(ATTRIB_INDEX_POSITION, 3, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
-                    //    gl.EnableVertexAttribArray(ATTRIB_INDEX_POSITION);
-                    //}
-                    //// prepare colors
-                    //{
-                    //    int location = shaderProgram.GetAttributeLocation(gl, in_uv);
-                    //    ATTRIB_INDEX_COLOUR = (uint)location;
-                    //    gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, colorBuffer[0]);
-                    //    gl.VertexAttribPointer(ATTRIB_INDEX_COLOUR, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
-                    //    gl.EnableVertexAttribArray(ATTRIB_INDEX_COLOUR);
-                    //}
-                    //// prepare index
-                    //{
-                    //    gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, indexBuffer[0]);
-                    //}
-
-                    //gl.DrawElements(OpenGL.GL_TRIANGLES, this.indexBufferLength, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
                 }
             }
 
             AfterRendering(gl, renderMode);
         }
 
-        //private void CreateWireframeVertexArrayObject(OpenGL gl, RenderMode renderMode)
-        //{
-        //    // prepare positions
-        //    {
-        //        gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, positionBuffer[0]);
-        //        gl.VertexAttribPointer(ATTRIB_INDEX_POSITION, 3, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
-        //        gl.EnableVertexAttribArray(ATTRIB_INDEX_POSITION);
-        //    }
-        //    // prepare colors
-        //    {
-        //        //gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, colorBuffer[0]);
-        //        //gl.VertexAttribPointer(ATTRIB_INDEX_COLOUR, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
-        //        //gl.EnableVertexAttribArray(ATTRIB_INDEX_COLOUR);
-        //        gl.DisableVertexAttribArray(ATTRIB_INDEX_COLOUR);
-        //        gl.VertexAttrib3(ATTRIB_INDEX_COLOUR, 1.0f, 1.0f, 1.0f);
-        //    }
-        //    // prepare index
-        //    {
-        //        gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, wireframeIndexBuffer[0]);
-        //    }
-
-        //    gl.DrawElements(OpenGL.GL_LINES, this.wireframeIndexBufferLength, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
-
-        //    {
-        //        gl.EnableVertexAttribArray(ATTRIB_INDEX_COLOUR);
-        //    }
-
-        //}
-
-        uint[] vertexArrayObject;
-        //uint[] wireframeVertexArrayObject;
 
         private void CreateVertexArrayObject(OpenGL gl, RenderMode renderMode)
         {
@@ -219,17 +191,11 @@ namespace SimLab
             // prepare colors
             {
                 int location = shaderProgram.GetAttributeLocation(gl, in_uv);
-                ATTRIB_INDEX_COLOUR = (uint)location;
+                ATTRIB_INDEX_UV = (uint)location;
                 gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, colorBuffer[0]);
-                gl.VertexAttribPointer(ATTRIB_INDEX_COLOUR, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
-                gl.EnableVertexAttribArray(ATTRIB_INDEX_COLOUR);
+                gl.VertexAttribPointer(ATTRIB_INDEX_UV, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
+                gl.EnableVertexAttribArray(ATTRIB_INDEX_UV);
             }
-            // prepare index
-            {
-                gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, indexBuffer[0]);
-            }
-
-            //gl.DrawElements(OpenGL.GL_TRIANGLES, this.indexBufferLength, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
 
             gl.BindVertexArray(0);
         }
@@ -250,7 +216,7 @@ namespace SimLab
             {
                 int location = shaderProgram.GetAttributeLocation(gl, in_uv);
                 if (location < 0) { throw new ArgumentException(); }
-                this.ATTRIB_INDEX_COLOUR = (uint)location;
+                this.ATTRIB_INDEX_UV = (uint)location;
             }
             shaderProgram.AssertValid(gl);
             return shaderProgram;
@@ -270,5 +236,25 @@ namespace SimLab
         }
 
         #endregion IRenderable
+
+        protected override void DisposeUnmanagedResources()
+        {
+            base.DisposeUnmanagedResources();
+
+            if (this.indexBuffer != null)
+            {
+                gl.DeleteBuffers(this.indexBuffer.Length, this.indexBuffer);
+            }
+
+            if (this.wireframeIndexBuffer != null)
+            {
+                gl.DeleteBuffers(this.wireframeIndexBuffer.Length, this.wireframeIndexBuffer);
+            }
+
+            if (this.vertexArrayObject != null)
+            {
+                gl.DeleteVertexArrays(this.vertexArrayObject.Length, this.vertexArrayObject);
+            }
+        }
     }
 }

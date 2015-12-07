@@ -36,7 +36,7 @@ namespace SimLab.GridSource.Factory
         }
 
 
-        public override MeshGeometry3D CreateMesh(GridderSource source)
+        public override MeshBase CreateMesh(GridderSource source)
         {
             HexahedronGridderSource src = (HexahedronGridderSource)source;
             Vertex minVertex = new Vertex();
@@ -171,7 +171,7 @@ namespace SimLab.GridSource.Factory
                     gridTriangle[11].dot1 = (uint)(celloffset + 7);
                     gridTriangle[11].dot2 = (uint)(celloffset + 3);
                 }
-                MeshGeometry3D mesh = new MeshGeometry3D(positions, triangles);
+                HexahedronMeshGeometry3D mesh = new HexahedronMeshGeometry3D(positions, triangles);
                 mesh.Max = maxVertex;
                 mesh.Min = minVertex;
                 return mesh;

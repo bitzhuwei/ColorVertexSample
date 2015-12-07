@@ -169,7 +169,7 @@ namespace Sample
                 InitSlice(lbxNJ, source.JBlocks);
                 InitSlice(lbxNZ, source.KBlocks);
                 InitPropertiesAndSelectDefault(dimenSize, propMin, propMax);
-
+                
                 DateTime t2 = DateTime.Now;
 
                 ///模拟获得网格属性
@@ -188,10 +188,8 @@ namespace Sample
                 
                
                 // use HexahedronGridderElement
-                DateTime t3 = DateTime.Now;
-                MeshGeometry3D geometry = source.CreateMesh();
-                DateTime t4 = DateTime.Now;
-
+                DateTime t0 = DateTime.Now;
+                HexahedronMeshGeometry3D geometry = source.CreateMesh();
                 TextureCoordinatesBufferData textureCoodinates  = source.CreateTextureCoordinates(gridIndexes, gridValues, minValue, maxValue);
                 DateTime t5 = DateTime.Now;
 
@@ -209,7 +207,7 @@ namespace Sample
                 DateTime t6 = DateTime.Now;
 
                 
-      
+               
                 //gridderElement.SetBoundingBox(mesh.Min, mesh.Max);
                 this.sim3D.Tag = source;
                              
@@ -225,7 +223,7 @@ namespace Sample
                 // update ViewType to UserView.
                 this.sim3D.ViewType = ViewTypes.UserView;
                 this.sim3D.AddModelElement(gridder);
-                
+
 
                 StringBuilder msgBuilder = new StringBuilder();
                 msgBuilder.AppendLine(String.Format("Init Grid DataSource  in {0} secs", (t1 - t0).TotalSeconds));

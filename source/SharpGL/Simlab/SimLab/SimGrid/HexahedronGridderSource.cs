@@ -28,7 +28,8 @@ namespace SimLab.GridSource
         /// </summary>
         private int[] bindVisibles;
 
-        private Dictionary<int, bool> CreateSliceDict(IList<int> slices){
+        private Dictionary<int, bool> CreateSliceDict(IList<int> slices)
+        {
 
             Dictionary<int, bool> result = new Dictionary<int, bool>();
             for (int i = 0; i < slices.Count; i++)
@@ -110,9 +111,9 @@ namespace SimLab.GridSource
         /// <returns></returns>
         public bool IsSliceBlock(int i, int j, int k)
         {
-               int gridIndex;
-               this.IJK2Index(i, j, k, out gridIndex);
-               return sliceVisibles[gridIndex] > 0;
+            int gridIndex;
+            this.IJK2Index(i, j, k, out gridIndex);
+            return sliceVisibles[gridIndex] > 0;
         }
 
         /// <summary>
@@ -206,14 +207,14 @@ namespace SimLab.GridSource
 
         protected override Factory.GridBufferDataFactory CreateFactory()
         {
-              return new HexahedronGridFactory();
+            return new HexahedronGridFactory();
         }
 
 
         protected void InitSliceVisibles()
         {
-             this.Slices = CreateSliceVisibles();
-             this.bindVisibles = BindCellActive(this.Slices, this.ActNums);
+            this.Slices = CreateSliceVisibles();
+            this.bindVisibles = BindCellActive(this.Slices, this.ActNums);
         }
 
         protected int[] CreateSliceVisibles()
@@ -252,8 +253,8 @@ namespace SimLab.GridSource
         /// </summary>
         public override void Init()
         {
-              base.Init();
-              this.InitSliceVisibles();
+            base.Init();
+            this.InitSliceVisibles();
         }
 
         /// <summary>
@@ -261,46 +262,8 @@ namespace SimLab.GridSource
         /// </summary>
         public void RefreashSlices()
         {
-             this.InitSliceVisibles();
+            this.InitSliceVisibles();
         }
 
-        /// <summary>
-        ///  创建几何对象
-        /// </summary>
-        /// <returns></returns>
-        public override  MeshGeometry3D CreateMesh()
-        {
-             MeshGeometry3D geometry = this.Factory.CreateMesh(this);
-             this.Max = geometry.Max;
-             this.Min = geometry.Min;
-             return geometry;
-        }
-
-        /// <summary>
-        /// 创建纹理映射坐标
-        /// </summary>
-        /// <param name="gridIndexes"></param>
-        /// <param name="values"></param>
-        /// <param name="minValue"></param>
-        /// <param name="maxValue"></param>
-        /// <returns></returns>
-        public override TextureCoordinatesBufferData CreateTextureCoordinates(int[] gridIndexes, float[] values, float minValue, float maxValue)
-        {
-             return this.Factory.CreateTextureCoordinates(this,gridIndexes, values,minValue,maxValue);
-        }
-
-
-
-        public override WireFrameBufferData CreateWireframe()
-        {
-             return this.Factory.CreateWireFrame(this);
-        }
-        
-
-       
-       
-
-
-       
     }
 }
