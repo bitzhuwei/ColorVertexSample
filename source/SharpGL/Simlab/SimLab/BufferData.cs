@@ -242,6 +242,10 @@ namespace SimLab
 
     }
 
+
+    /// <summary>
+    /// 三角形索引
+    /// </summary>
     public class MatrixIndicesBufferData : TriangleIndicesBufferData
     {
         public MatrixIndicesBufferData()
@@ -260,7 +264,7 @@ namespace SimLab
           public int Shape
           {
               get;
-              protected set;
+              internal set;
           }
 
 
