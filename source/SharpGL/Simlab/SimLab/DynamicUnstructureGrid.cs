@@ -23,7 +23,7 @@ namespace SimLab
             set { renderFraction = value; }
         }
 
-        private bool renderFractionWireframe = true;
+        private bool renderFractionWireframe = false;
 
         public bool RenderFractionWireframe
         {
@@ -350,7 +350,7 @@ namespace SimLab
                 gl.Disable(OpenGL.GL_POLYGON_OFFSET_FILL);
             }
 
-            if (this.RenderGridWireFrame)
+            if (this.RenderGridWireframe)
             {
                 shaderProgram.SetUniform1(gl, "renderingWireframe", 1.0f);
 

@@ -188,7 +188,7 @@ namespace Sample
                 DynamicUnstructureGrid gridder = new DynamicUnstructureGrid(this.sim3D.OpenGL, this.sim3D.Scene.CurrentCamera);
                 gridder.Init(geometry);
                 gridder.RenderGrid = true;
-                gridder.RenderGridWireFrame = this.IsShowWireframe;
+                gridder.RenderGridWireframe = this.IsShowWireframe;
                 gridder.SetTexture(texture);
                 gridder.SetMatrixTextureCoords(matrixTextureCoordinates);
                 gridder.SetFractionTextureCoords(fractureTextureCoordindates);
@@ -351,7 +351,7 @@ namespace Sample
             //{
             //     gridder.SetWireframe(null);
             //}
-            gridder.RenderGridWireFrame = this.IsShowWireframe;
+            gridder.RenderGridWireframe = this.IsShowWireframe;
 
             this.sim3D.Invalidate();
 
@@ -432,7 +432,7 @@ namespace Sample
             //{
             //     gridder.SetWireframe(null);
             //}
-            gridder.RenderGridWireFrame = this.chkShowMatrixWireframe.Checked;
+            gridder.RenderGridWireframe = this.chkShowMatrixWireframe.Checked;
 
             this.sim3D.Invalidate();
         }

@@ -103,7 +103,7 @@ namespace SimLab
 
             BeforeRendering(gl, renderMode);
 
-            if (this.RenderGridWireFrame)
+            if (this.RenderGridWireframe)
             {
                 //if (wireframeIndexBuffer != null)
                 if (positionBuffer != null && colorBuffer != null && indexBuffer != null)

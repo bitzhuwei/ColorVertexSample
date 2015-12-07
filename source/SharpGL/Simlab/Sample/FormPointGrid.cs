@@ -175,7 +175,7 @@ namespace Sample
                 PointGrid gridder = new PointGrid(this.sim3D.OpenGL, this.sim3D.Scene.CurrentCamera);
                 gridder.Init(geometry);
                 gridder.RenderGrid = true;
-                gridder.RenderGridWireFrame = this.IsShowWireframe;
+                gridder.RenderGridWireframe = this.IsShowWireframe;
                 gridder.SetTexture(texture);
                 gridder.SetTextureCoods(textureCoodinates);
                 //textureCoodinates.Dump();
@@ -335,7 +335,7 @@ namespace Sample
             //{
             //     gridder.SetWireframe(null);
             //}
-            gridder.RenderGridWireFrame = this.IsShowWireframe;
+            gridder.RenderGridWireframe = this.IsShowWireframe;
 
             this.sim3D.Invalidate();
               

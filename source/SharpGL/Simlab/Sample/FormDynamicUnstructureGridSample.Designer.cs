@@ -176,8 +176,6 @@
             // chkShowFractionWireframe
             // 
             this.chkShowFractionWireframe.AutoSize = true;
-            this.chkShowFractionWireframe.Checked = true;
-            this.chkShowFractionWireframe.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkShowFractionWireframe.Location = new System.Drawing.Point(885, 98);
             this.chkShowFractionWireframe.Margin = new System.Windows.Forms.Padding(4);
             this.chkShowFractionWireframe.Name = "chkShowFractionWireframe";

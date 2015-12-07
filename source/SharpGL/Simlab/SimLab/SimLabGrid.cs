@@ -22,11 +22,27 @@ namespace SimLab
     public abstract class SimLabGrid : SceneElement, IDisposable
     {
 
+        private bool renderGridWireframe = false;
+
         /// <summary>
-        /// 控制是否渲染网格的wireframe
+        /// 是否渲染网格的wireframe
         /// </summary>
-        public bool RenderGridWireFrame { get; set; }
-        public bool RenderGrid { get; set; }
+        public bool RenderGridWireframe
+        {
+            get { return renderGridWireframe; }
+            set { renderGridWireframe = value; }
+        }
+
+        private bool renderGrid = true;
+
+        /// <summary>
+        /// 是否渲染网格
+        /// </summary>
+        public bool RenderGrid
+        {
+            get { return renderGrid; }
+            set { renderGrid = value; }
+        }
 
         protected uint[] positionBuffer;
         protected uint[] colorBuffer;
