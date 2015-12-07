@@ -224,8 +224,8 @@ namespace SimLab.SimGrid
             return new DynamicUnstructureGridFactory();
         }
 
-        public  TextureCoordinatesBufferData CreateFractureTextureCoordinates(DynamicUnstructuredGridderSource src, int[] gridIndexes, float[] values, float minValue, float maxValue){
-           return  ((DynamicUnstructureGridFactory)this.Factory).CreateFractureTextureCoordinates(src, gridIndexes, values, minValue, maxValue);
+        public  TextureCoordinatesBufferData CreateFractureTextureCoordinates(int[] gridIndexes, float[] values, float minValue, float maxValue){
+           return  ((DynamicUnstructureGridFactory)this.Factory).CreateFractureTextureCoordinates(this, gridIndexes, values, minValue, maxValue);
        }
     }
 }

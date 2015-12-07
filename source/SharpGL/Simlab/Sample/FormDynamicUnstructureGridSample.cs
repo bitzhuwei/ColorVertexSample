@@ -23,6 +23,7 @@ using SimLab.GridSource;
 using SimLab;
 using System.Globalization;
 using SimLab.SimGrid;
+using SimLab.SimGrid.Loader;
 
 namespace Sample
 {
@@ -129,14 +130,17 @@ namespace Sample
         {
             try
             {
+
                 int nx = 11716;
                 int ny = 1;
                 int nz = 1;
+                int dimenSize = nx * ny * nz;
+               
                 float step = System.Convert.ToSingle(tbColorIndicatorStep.Text);
                 //float radius = System.Convert.ToSingle(this.tbRadius.Text);
                 float propMin = System.Convert.ToSingle(this.tbxPropertyMinValue.Text,CultureInfo.InvariantCulture);
                 float propMax = System.Convert.ToSingle(this.tbxPropertyMaxValue.Text,CultureInfo.InvariantCulture);
-                int dimenSize = nx * ny * nz;
+               
                 float dx = System.Convert.ToSingle(this.tbDX.Text);
                 float dy = System.Convert.ToSingle(this.gbDY.Text);
                 float dz = System.Convert.ToSingle(this.tbDZ.Text);
@@ -144,9 +148,12 @@ namespace Sample
                 float[] dyArray = initArray(dimenSize, dy);
                 float[] dzArray = initArray(dimenSize, dz);
 
-
+               
+                
+                string fileName = @"geometry.txt";
+                DynamicUnstructureGeometryLoader loader = new DynamicUnstructureGeometryLoader();
                 // use CatesianGridderSource to fill HexahedronGridderElement's content.
-                DynamicUnstructuredGridderSource source = new DynamicUnstructuredGridderSource() { NX = 11716, NY = 1, NZ = 1 };//, DX = dxArray, DY = dyArray, DZ = dzArray, };
+                DynamicUnstructuredGridderSource source = loader.LoadSource(fileName, nx, ny, nz);
                 source.Init();
 
                 InitPropertiesAndSelectDefault(dimenSize, propMin, propMax);
@@ -169,18 +176,22 @@ namespace Sample
                
                 // use HexahedronGridderElement
                 DateTime t0 = DateTime.Now;
-                PointMeshGeometry3D geometry = source.CreateMesh() as PointMeshGeometry3D;
-                TextureCoordinatesBufferData textureCoodinates  = source.CreateTextureCoordinates(gridIndexes, gridValues, minValue, maxValue);
+                DynamicUnstructureGeometry geometry = source.CreateMesh() as DynamicUnstructureGeometry;
+                TextureCoordinatesBufferData matrixTextureCoordinates  = source.CreateTextureCoordinates(gridIndexes, gridValues, minValue, maxValue);
+                TextureCoordinatesBufferData fractureTextureCoordindates = source.CreateFractureTextureCoordinates(gridIndexes, gridValues, minValue, maxValue);
                 Bitmap texture = ColorPaletteHelper.GenBitmap(this.sim3D.uiColorIndicator.Data.ColorPalette);
                 //geometry.Positions.Dump();
                 //geometry.TriangleIndices.Dump();
                 //MeshGeometry mesh = HexahedronGridderHelper.CreateMesh(source);
-                PointGrid gridder = new PointGrid(this.sim3D.OpenGL, this.sim3D.Scene.CurrentCamera);
+                DynamicUnstructureGrid gridder = new DynamicUnstructureGrid(this.sim3D.OpenGL, this.sim3D.Scene.CurrentCamera);
                 gridder.Init(geometry);
                 gridder.RenderGrid = true;
                 gridder.RenderGridWireFrame = this.IsShowWireframe;
                 gridder.SetTexture(texture);
-                gridder.SetTextureCoods(textureCoodinates);
+                gridder.SetMatrixTextureCoords(matrixTextureCoordinates);
+                gridder.SetFractionTextureCoords(fractureTextureCoordindates);
+
+                
                 //textureCoodinates.Dump();
               
 
