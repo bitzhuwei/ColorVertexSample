@@ -188,15 +188,13 @@ namespace Sample
                 
                
                 // use HexahedronGridderElement
-                DateTime t0 = DateTime.Now;
-                HexahedronMeshGeometry3D geometry = source.CreateMesh();
+                DateTime t3 = DateTime.Now;
+                HexahedronMeshGeometry3D geometry = (HexahedronMeshGeometry3D)source.CreateMesh();
+                DateTime t4 = DateTime.Now;
                 TextureCoordinatesBufferData textureCoodinates  = source.CreateTextureCoordinates(gridIndexes, gridValues, minValue, maxValue);
                 DateTime t5 = DateTime.Now;
 
                 Bitmap texture = ColorPaletteHelper.GenBitmap(this.sim3D.uiColorIndicator.Data.ColorPalette);
-                //geometry.Positions.Dump();
-                //geometry.TriangleIndices.Dump();
-                //MeshGeometry mesh = HexahedronGridderHelper.CreateMesh(source);
                 HexahedronGrid gridder = new HexahedronGrid(this.sim3D.OpenGL, this.sim3D.Scene.CurrentCamera);
                 gridder.Init(geometry);
                 gridder.RenderGrid = true;
@@ -212,8 +210,7 @@ namespace Sample
                 this.sim3D.Tag = source;
                              
 
-                //gridderElement.Name = string.Format("element {0}", elementCounter++);
-                //this.scientificVisual3DControl.AddModelElement(gridderElement);
+           
 
              
                 // update ModelContainer's BoundingBox.
