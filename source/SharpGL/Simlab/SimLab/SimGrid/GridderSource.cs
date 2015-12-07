@@ -231,11 +231,7 @@ namespace SimLab.GridSource
             return geometry;
         }
 
-        public WireFrameBufferData CreateWireframe()
-        {
-            return this.Factory.CreateWireFrame(this);
-        }
-
+      
 
         public int[] BindCellActive(int[] a1, int[] a2)
         {
@@ -285,14 +281,14 @@ namespace SimLab.GridSource
         public Vertex Min
         {
             get;
-            protected set;
+            internal set;
         }
 
 
         public Vertex Max
         {
             get;
-            protected set;
+            internal set;
         }
 
 

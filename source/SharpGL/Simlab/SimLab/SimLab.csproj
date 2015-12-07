@@ -89,7 +89,9 @@
     <Compile Include="SimGrid\Geometry\TriangleUV.cs" />
     <Compile Include="SimGrid\GridderSource.cs" />
     <Compile Include="SimGrid\GridIndexer.cs" />
+    <Compile Include="SimGrid\helper\VertexHelper.cs" />
     <Compile Include="SimGrid\Loader\DynamicUnstructureGeometryLoader.cs" />
+    <Compile Include="SimGrid\Loader\PointSetLoader.cs" />
     <Compile Include="SimGrid\PointGridderSource.cs" />
     <Compile Include="SimGrid\HexahedronGridderSource.cs" />
     <Compile Include="SimLabGrid.cs" />

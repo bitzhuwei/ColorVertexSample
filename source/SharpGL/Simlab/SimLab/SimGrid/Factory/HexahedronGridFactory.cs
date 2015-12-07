@@ -113,6 +113,7 @@ namespace SimLab.GridSource.Factory
             }
         }
 
+        /*
         public override WireFrameBufferData CreateWireFrame(GridderSource source)
         {
             WireFrameBufferData wireframe = new WireFrameBufferData();
@@ -172,7 +173,7 @@ namespace SimLab.GridSource.Factory
             }
 
         }
-
+        */
 
         public override TextureCoordinatesBufferData CreateTextureCoordinates(GridderSource source, int[] gridIndexes, float[] values, float minValue, float maxValue)
         {

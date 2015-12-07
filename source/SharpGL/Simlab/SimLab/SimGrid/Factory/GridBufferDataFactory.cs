@@ -45,6 +45,5 @@ namespace SimLab.GridSource.Factory
 
         public abstract TextureCoordinatesBufferData CreateTextureCoordinates(GridderSource source, int[] gridIndexes, float[] values, float minValue, float maxValue);
 
-        public abstract WireFrameBufferData CreateWireFrame(GridderSource source);
     }
 }

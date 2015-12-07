@@ -67,12 +67,7 @@ namespace SimLab.GridSource.Factory
             mesh.Min = minVertex;
             return mesh;
         }
-
-        public override WireFrameBufferData CreateWireFrame(GridderSource source)
-        {
-            return null;
-        }
-
+        
 
         public override TextureCoordinatesBufferData CreateTextureCoordinates(GridderSource source, int[] gridIndexes, float[] values, float minValue, float maxValue)
         {

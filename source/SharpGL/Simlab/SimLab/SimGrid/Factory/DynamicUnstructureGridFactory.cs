@@ -296,9 +296,5 @@ namespace SimLab.SimGrid.Factory
             return textureCoordinates;
         }
 
-        public override WireFrameBufferData CreateWireFrame(GridSource.GridderSource source)
-        {
-             return null;
-        }
     }
 }
