@@ -33,10 +33,10 @@ namespace SimLab.SimGrid.Factory
                 Vertex[] positions = src.Nodes;
                 for (int i = 0; i < src.ElementNum; i++)
                 {
-                    tets[i].p1 = positions[matrixIndices[i][0]];
-                    tets[i].p2 = positions[matrixIndices[i][1]];
-                    tets[i].p3 = positions[matrixIndices[i][2]];
-                    tets[i].p4 = positions[matrixIndices[i][3]];
+                    tets[i].p1 = positions[matrixIndices[i][0]-1];
+                    tets[i].p2 = positions[matrixIndices[i][1]-1];
+                    tets[i].p3 = positions[matrixIndices[i][2]-1];
+                    tets[i].p4 = positions[matrixIndices[i][3]-1];
                 }
 
                 int triangleCount = src.ElementNum * 4;
@@ -94,9 +94,9 @@ namespace SimLab.SimGrid.Factory
                 TrianglePositions* triangles = (TrianglePositions*)fractionPositionsBuffer.Data;
                 for (int i = 0; i < triangleCount; i++)
                 {
-                    triangles[i].P1 = positions[triangleIndices[i][0]];
-                    triangles[i].P2 = positions[triangleIndices[i][1]];
-                    triangles[i].P3 = positions[triangleIndices[i][2]];
+                    triangles[i].P1 = positions[triangleIndices[i][0]-1];
+                    triangles[i].P2 = positions[triangleIndices[i][1]-1];
+                    triangles[i].P3 = positions[triangleIndices[i][2]-1];
                 }
             }
 
@@ -199,7 +199,7 @@ namespace SimLab.SimGrid.Factory
 
             TextureCoordinatesBufferData textureCoordinates = new TextureCoordinatesBufferData();
             int texturesCount = src.FractureNum;
-            if (src.ElementFormat == DynamicUnstructuredGridderSource.FRACTURE_FORMAT3_TRIANGLE)
+            if (src.FractureFormat == DynamicUnstructuredGridderSource.FRACTURE_FORMAT3_TRIANGLE)
             {
                 textureCoordinates.AllocMem(texturesCount * sizeof(TriangleUV));
                 TriangleUV* pTextures = (TriangleUV*)textureCoordinates.Data;
@@ -208,7 +208,7 @@ namespace SimLab.SimGrid.Factory
                     pTextures[i].SetTextureCoord(textures[i]);
                 }
             }
-            if (src.ElementFormat == DynamicUnstructuredGridderSource.FRACTURE_FORMAT2_LINE)
+            if (src.FractureFormat == DynamicUnstructuredGridderSource.FRACTURE_FORMAT2_LINE)
             {
                 textureCoordinates.AllocMem(texturesCount * sizeof(LineUV));
                 LineUV* pTextures = (LineUV*)textureCoordinates.Data;
