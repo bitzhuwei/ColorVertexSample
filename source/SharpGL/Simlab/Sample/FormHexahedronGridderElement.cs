@@ -182,7 +182,7 @@ namespace Sample
                
                 // use HexahedronGridderElement
                 DateTime t0 = DateTime.Now;
-                MeshGeometry3D geometry = source.CreateMesh();
+                HexahedronMeshGeometry3D geometry = source.CreateMesh();
                 TextureCoordinatesBufferData textureCoodinates  = source.CreateTextureCoordinates(gridIndexes, gridValues, minValue, maxValue);
                 Bitmap texture = ColorPaletteHelper.GenBitmap(this.sim3D.uiColorIndicator.Data.ColorPalette);
                 //geometry.Positions.Dump();
