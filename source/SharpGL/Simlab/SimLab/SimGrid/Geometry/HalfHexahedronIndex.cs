@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace SimLab.SimGrid
 {
     /// <summary>
-    /// 描述三角形索引。
+    /// 描述用OpenGL.GL_QUAD_STRIP渲染六面体时的三个面+一个PrimitiveRestart索引。
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct HalfHexahedronIndex

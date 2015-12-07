@@ -326,15 +326,15 @@ namespace Sample
                 return;
             SimLabGrid gridder = gridders[0];
 
-            if (this.IsShowWireframe)
-            {
-                WireFrameBufferData wireFrame = source.CreateWireframe();
-                gridder.SetWireframe(wireFrame);
-            }
-            else
-            {
-                 gridder.SetWireframe(null);
-            }
+            //if (this.IsShowWireframe)
+            //{
+            //    WireFrameBufferData wireFrame = source.CreateWireframe();
+            //    gridder.SetWireframe(wireFrame);
+            //}
+            //else
+            //{
+            //     gridder.SetWireframe(null);
+            //}
             gridder.RenderGridWireFrame = this.IsShowWireframe;
 
             this.sim3D.Invalidate();
