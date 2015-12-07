@@ -254,19 +254,20 @@ namespace SimLab.SimGrid.Factory
                         if (!(distance <= 0.0f))
                         {
                             textures[matrixIndex] = (value - minValue) / distance;
-                            if (textures[matrixIndex] < 0.5f)
-                            {
-                                textures[matrixIndex] = 0.5f - (0.5f - textures[matrixIndex]) * 0.99f;
-                            }
-                            else
-                            {
-                                textures[matrixIndex] = (textures[matrixIndex] - 0.5f) * 0.99f + 0.5f;
-                            }
+                            //if (textures[matrixIndex] < 0.5f)
+                            //{
+                            //    textures[matrixIndex] = 0.5f - (0.5f - textures[matrixIndex]) * 0.99f;
+                            //}
+                            //else
+                            //{
+                            //    textures[matrixIndex] = (textures[matrixIndex] - 0.5f) * 0.99f + 0.5f;
+                            //}
                         }
                         else
                         {
                             //最小值最大值相等时，显示最小值的颜色
-                            textures[matrixIndex] = 0.01f;
+                            //textures[matrixIndex] = 0.01f;
+                            textures[gridIndex] = 0;
                         }
                     }
                 }

@@ -87,19 +87,20 @@ namespace SimLab.GridSource.Factory
                     if (!(distance <= 0.0f))
                     {
                         textures[gridIndex] = (value - minValue) / distance;
-                        if (textures[gridIndex] < 0.5f)
-                        {
-                            textures[gridIndex] = 0.5f - (0.5f - textures[gridIndex]) * 0.99f;
-                        }
-                        else
-                        {
-                            textures[gridIndex] = (textures[gridIndex] - 0.5f) * 0.99f + 0.5f;
-                        }
+                        //if (textures[gridIndex] < 0.5f)
+                        //{
+                        //    textures[gridIndex] = 0.5f - (0.5f - textures[gridIndex]) * 0.99f;
+                        //}
+                        //else
+                        //{
+                        //    textures[gridIndex] = (textures[gridIndex] - 0.5f) * 0.99f + 0.5f;
+                        //}
                     }
                     else
                     {
                         //最小值最大值相等时，显示最小值的颜色
-                        textures[gridIndex] = 0.01f;
+                        //textures[gridIndex] = 0.01f;
+                        textures[gridIndex] = 0;
                     }
                 }
             }
