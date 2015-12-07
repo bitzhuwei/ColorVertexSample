@@ -50,7 +50,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="UnmanagedArrayCopyHelper.cs" />
-    <Compile Include="VBOInfoBase.cs" />
+    <Compile Include="BufferBase.cs" />
     <Compile Include="AttributeBuffer.cs">
       <SubType>Code</SubType>
     </Compile>

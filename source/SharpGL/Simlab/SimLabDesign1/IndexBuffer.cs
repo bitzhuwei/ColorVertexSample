@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SimLabDesign1
 {
-    public class IndexBuffer : VBOInfoBase
+    public class IndexBuffer : BufferBase
     {
         public override uint Target
         {

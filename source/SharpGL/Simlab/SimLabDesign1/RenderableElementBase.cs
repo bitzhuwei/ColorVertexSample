@@ -60,7 +60,7 @@ namespace SimLabDesign1
             if (!this.vboDict.ContainsKey(key))
             { throw new ArgumentException(string.Format("key[{0}] NOT exists!")); }
 
-            VBOInfoBase vbo = this.vboDict[key];
+            BufferBase vbo = this.vboDict[key];
             OpenGL gl = new OpenGL();
 
             gl.BindBuffer(vbo.Target, vbo.BufferID);
@@ -82,7 +82,7 @@ namespace SimLabDesign1
             if (!this.vboDict.ContainsKey(key))
             { throw new ArgumentException(string.Format("key[{0}] NOT exists!")); }
 
-            VBOInfoBase vbo = this.vboDict[key];
+            BufferBase vbo = this.vboDict[key];
             OpenGL gl = new OpenGL();
 
             gl.BindBuffer(vbo.Target, vbo.BufferID);

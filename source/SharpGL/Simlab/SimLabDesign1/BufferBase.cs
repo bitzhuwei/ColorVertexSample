@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SimLabDesign1
 {
-    public abstract class VBOInfoBase
+    public abstract class BufferBase
     {
         /// <summary>
         /// buffers[0] in GenBuffers(int n, uint[] buffers)
