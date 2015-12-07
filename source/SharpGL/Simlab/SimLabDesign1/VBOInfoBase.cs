@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SharpGL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,22 +15,30 @@ namespace SimLabDesign1
         /// </summary>
         public uint BufferID { get; set; }
 
-        /// <summary>
-        /// target in BufferData(uint target, int size, IntPtr data, uint usage)
-        /// </summary>
-        public uint Target { get; set; }
+        ///// <summary>
+        ///// target in BufferData(uint target, int size, IntPtr data, uint usage)
+        ///// </summary>
+        //public TargetType Target { get; set; }
 
         /// <summary>
         /// usage in BufferData(uint target, int size, IntPtr data, uint usage)
         /// </summary>
-        public uint Usage { get; set; }
+        public UsageType Usage { get; set; }
 
+        public abstract uint Target { get; }
 
         public override string ToString()
         {
-            return string.Format("BufferID: {0}, Target: {1}, Usage: {2}",
-                BufferID, Target, Usage);
+            return string.Format("BufferID: {0}, Usage: {1}",
+                BufferID, Usage);
             //return base.ToString();
         }
+
+        public virtual void FetchInfoFromShaderProgram(OpenGL gl, SharpGL.Shaders.ShaderProgram shaderProgram)
+        {
+
+        }
+
+        public abstract void LayoutForVAO(OpenGL gl);
     }
 }

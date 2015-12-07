@@ -104,12 +104,12 @@ namespace SimLabDesign1_DemoApp
 
                 NonIndexRenderer renderer = new NonIndexRenderer(8, mesh.Vertexes.Length / 8);
                 renderer.Mode = OpenGL.GL_QUAD_STRIP;
-                HexahedronElement element = new HexahedronElement(renderer,this.scientificVisual3DControl.Scene.CurrentCamera);
+                HexahedronElement element = new HexahedronElement(renderer, this.scientificVisual3DControl.Scene.CurrentCamera);
                 IVertexBuffers buffers = element as IVertexBuffers;
-                buffers.CreateVertexBuffer(HexahedronElement.key_in_Position, OpenGL.GL_ARRAY_BUFFER, mesh.Vertexes, OpenGL.GL_STATIC_DRAW, 3, OpenGL.GL_FLOAT);
-                buffers.CreateVertexBuffer(HexahedronElement.key_in_Color, OpenGL.GL_ARRAY_BUFFER, mesh.VertexColors, OpenGL.GL_STREAM_DRAW, 4, OpenGL.GL_FLOAT);
-                buffers.CreateVertexBuffer(HexahedronElement.key_in_visible, OpenGL.GL_ARRAY_BUFFER, mesh.Visibles, OpenGL.GL_STREAM_DRAW, 1, OpenGL.GL_FLOAT);
-                this.scientificVisual3DControl.AddModelElement(element);
+                buffers.AddAttributeBuffer(HexahedronElement.key_in_Position, mesh.Vertexes, UsageType.StaticDraw, 3, OpenGL.GL_FLOAT);
+                buffers.AddAttributeBuffer(HexahedronElement.key_in_Color, mesh.VertexColors, UsageType.StaticDraw, 4, OpenGL.GL_FLOAT);
+                buffers.AddAttributeBuffer(HexahedronElement.key_in_visible, mesh.Visibles, UsageType.StaticDraw, 1, OpenGL.GL_FLOAT);
+                //this.scientificVisual3DControl.AddModelElement(element);
 
                 HexahedronGridderElement gridderElement = new HexahedronGridderElement(source, this.scientificVisual3DControl.Scene.CurrentCamera);
                 gridderElement.renderWireframe = false;
