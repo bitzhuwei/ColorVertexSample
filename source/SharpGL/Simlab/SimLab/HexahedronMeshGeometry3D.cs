@@ -1,4 +1,5 @@
 ﻿using SharpGL.SceneGraph;
+using SimLab.SimGrid;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,18 +13,18 @@ namespace SimLab
         /// <summary>
         /// 三角形的索引
         /// </summary>
-        private TriangleIndicesBufferData triangleIndices;
+        private HalfHexahedronIndicesBufferData halfHexahedronIndices;
 
-        public HexahedronMeshGeometry3D(PositionsBufferData positions, TriangleIndicesBufferData triangleIndices)
+        public HexahedronMeshGeometry3D(PositionsBufferData positions, HalfHexahedronIndicesBufferData triangleIndices)
             :base(positions)
         {
-            this.triangleIndices = triangleIndices;
+            this.halfHexahedronIndices = triangleIndices;
         }
 
 
-        public TriangleIndicesBufferData TriangleIndices
+        public HalfHexahedronIndicesBufferData HalfHexahedronIndices
         {
-            get { return this.triangleIndices; }
+            get { return this.halfHexahedronIndices; }
         }
 
     }

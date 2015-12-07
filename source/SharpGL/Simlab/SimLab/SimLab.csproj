@@ -81,6 +81,7 @@
     <Compile Include="SimGrid\Geometry\LineIndex.cs" />
     <Compile Include="SimGrid\Geometry\LinePositions.cs" />
     <Compile Include="SimGrid\Geometry\TetrahedronPositions.cs" />
+    <Compile Include="SimGrid\Geometry\HalfHexahedronIndex.cs" />
     <Compile Include="SimGrid\Geometry\TriangleIndex.cs" />
     <Compile Include="SimGrid\Geometry\TrianglePositions.cs" />
     <Compile Include="SimGrid\GridderSource.cs" />

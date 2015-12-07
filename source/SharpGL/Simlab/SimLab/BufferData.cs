@@ -222,7 +222,7 @@ namespace SimLab
         /// <summary>
         /// shape 定义
         /// </summary>
-        public const int SHAPE_TRIANGLE =  DynamicUnstructuredGridderSource.MATRIX_FORMAT3_TRIANGLE;
+        public const int SHAPE_TRIANGLE = DynamicUnstructuredGridderSource.MATRIX_FORMAT3_TRIANGLE;
         public const int SHAPE_TETRAHEDRON = DynamicUnstructuredGridderSource.MATRIX_FORMAT4_TETRAHEDRON;
 
         /// <summary>
@@ -233,7 +233,7 @@ namespace SimLab
             get;
             set;
         }
-        
+
         public MatrixPositionBufferData()
         {
 
@@ -255,17 +255,17 @@ namespace SimLab
 
     public class FracturePositionBufferData : PositionsBufferData
     {
-          public const int SHAPE_LINE=DynamicUnstructuredGridderSource.FRACTURE_FORMAT2_LINE;
-          public const int SHAPE_TRIANGLE = DynamicUnstructuredGridderSource.FRACTURE_FORMAT3_TRIANGLE;
+        public const int SHAPE_LINE = DynamicUnstructuredGridderSource.FRACTURE_FORMAT2_LINE;
+        public const int SHAPE_TRIANGLE = DynamicUnstructuredGridderSource.FRACTURE_FORMAT3_TRIANGLE;
 
-          /// <summary>
-          /// 组成裂缝的形状 ，四面体或者三角形, 见SHAPE_LINE,SHAPE_TRIANGLE
-          /// </summary>
-          public int Shape
-          {
-              get;
-              internal set;
-          }
+        /// <summary>
+        /// 组成裂缝的形状 ，四面体或者三角形, 见SHAPE_LINE,SHAPE_TRIANGLE
+        /// </summary>
+        public int Shape
+        {
+            get;
+            internal set;
+        }
 
 
     }
@@ -283,8 +283,15 @@ namespace SimLab
     }
 
 
-   
 
+    public class HalfHexahedronIndicesBufferData : BufferData
+    {
+        public HalfHexahedronIndicesBufferData()
+        {
+            this.GLDataType = OpenGL.GL_UNSIGNED_INT;
+            this.GLSize = 1;
+        }
+    }
 
     public class TriangleIndicesBufferData : BufferData
     {

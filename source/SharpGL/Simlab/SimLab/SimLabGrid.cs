@@ -71,11 +71,6 @@ namespace SimLab
 
         }
 
-
-        public virtual void SetWireframe(WireFrameBufferData lineIndexes) { }
-
-
-
         public void SetTextureCoods(BufferData textureCoords)
         {
             ////TODO:如果用此方式，则必须先将此对象加入scene树，然后再调用Init

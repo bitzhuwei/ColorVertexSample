@@ -20,7 +20,7 @@ namespace SimLab.GridSource.Factory
             Vertex maxVertex = new Vertex();
             bool isSet = false;
             PositionsBufferData positions = new HexahedronPositionBufferData();
-            TriangleIndicesBufferData triangles = new TriangleIndicesBufferData();
+            HalfHexahedronIndicesBufferData halfHexahedronIndices = new HalfHexahedronIndicesBufferData();
             int dimSize = src.DimenSize;
             int I, J, K;
             unsafe
@@ -78,77 +78,35 @@ namespace SimLab.GridSource.Factory
                 }
 
                 //网格个数*每个六面体的面数*描述每个六面体的三角形个数
-                int triangleCount = dimSize * 6 * 2;
-                int triangleSize = triangleCount * sizeof(TriangleIndex);
-                triangles.AllocMem(triangleSize);
+                int halfHexahedronIndexCount = dimSize * 2;
+                int memorySizeInBytes = halfHexahedronIndexCount * sizeof(HalfHexahedronIndex);
+                halfHexahedronIndices.AllocMem(memorySizeInBytes);
 
-                int celloffset = 0; //每个网格数描述的点
-                TriangleIndex* first = (TriangleIndex*)triangles.Data;
+                HalfHexahedronIndex* array = (HalfHexahedronIndex*)halfHexahedronIndices.Data;
                 for (int gridIndex = 0; gridIndex < dimSize; gridIndex++)
                 {
-                    //网格三角形的偏移量
-                    int gto = gridIndex * (6 * 2);
+                    array[gridIndex * 2].dot0 = (uint)(8 * gridIndex + 6);
+                    array[gridIndex * 2].dot1 = (uint)(8 * gridIndex + 2);
+                    array[gridIndex * 2].dot2 = (uint)(8 * gridIndex + 7);
+                    array[gridIndex * 2].dot3 = (uint)(8 * gridIndex + 3);
+                    array[gridIndex * 2].dot4 = (uint)(8 * gridIndex + 4);
+                    array[gridIndex * 2].dot5 = (uint)(8 * gridIndex + 0);
+                    array[gridIndex * 2].dot6 = (uint)(8 * gridIndex + 5);
+                    array[gridIndex * 2].dot7 = (uint)(8 * gridIndex + 1);
+                    array[gridIndex * 2].restartIndex = uint.MaxValue;
 
-                    //任意网格三角形的首指针
-                    TriangleIndex* gridTriangle = first + gto;
-                    celloffset = gridIndex * 8;
-
-                    //top
-                    gridTriangle[0].dot0 = (uint)(celloffset + 0);
-                    gridTriangle[0].dot1 = (uint)(celloffset + 1);
-                    gridTriangle[0].dot2 = (uint)(celloffset + 2);
-
-                    gridTriangle[1].dot0 = (uint)(celloffset + 0);
-                    gridTriangle[1].dot1 = (uint)(celloffset + 2);
-                    gridTriangle[1].dot2 = (uint)(celloffset + 3);
-
-                    //bottom
-                    gridTriangle[2].dot0 = (uint)(celloffset + 4);
-                    gridTriangle[2].dot1 = (uint)(celloffset + 5);
-                    gridTriangle[2].dot2 = (uint)(celloffset + 7);
-
-                    gridTriangle[3].dot0 = (uint)(celloffset + 7);
-                    gridTriangle[3].dot1 = (uint)(celloffset + 6);
-                    gridTriangle[3].dot2 = (uint)(celloffset + 5);
-
-                    //left
-                    gridTriangle[4].dot0 = (uint)(celloffset + 0);
-                    gridTriangle[4].dot1 = (uint)(celloffset + 3);
-                    gridTriangle[4].dot2 = (uint)(celloffset + 4);
-
-                    gridTriangle[5].dot0 = (uint)(celloffset + 4);
-                    gridTriangle[5].dot1 = (uint)(celloffset + 7);
-                    gridTriangle[5].dot2 = (uint)(celloffset + 3);
-
-                    //right
-                    gridTriangle[6].dot0 = (uint)(celloffset + 1);
-                    gridTriangle[6].dot1 = (uint)(celloffset + 2);
-                    gridTriangle[6].dot2 = (uint)(celloffset + 5);
-
-
-                    gridTriangle[7].dot0 = (uint)(celloffset + 5);
-                    gridTriangle[7].dot1 = (uint)(celloffset + 6);
-                    gridTriangle[7].dot2 = (uint)(celloffset + 2);
-
-                    //front
-                    gridTriangle[8].dot0 = (uint)(celloffset + 0);
-                    gridTriangle[8].dot1 = (uint)(celloffset + 4);
-                    gridTriangle[8].dot2 = (uint)(celloffset + 5);
-
-                    gridTriangle[9].dot0 = (uint)(celloffset + 5);
-                    gridTriangle[9].dot1 = (uint)(celloffset + 1);
-                    gridTriangle[9].dot2 = (uint)(celloffset + 0);
-
-                    //back
-                    gridTriangle[10].dot0 = (uint)(celloffset + 3);
-                    gridTriangle[10].dot1 = (uint)(celloffset + 2);
-                    gridTriangle[10].dot2 = (uint)(celloffset + 6);
-
-                    gridTriangle[11].dot0 = (uint)(celloffset + 6);
-                    gridTriangle[11].dot1 = (uint)(celloffset + 7);
-                    gridTriangle[11].dot2 = (uint)(celloffset + 3);
+                    array[gridIndex * 2 + 1].dot0 = (uint)(8 * gridIndex  + 3);
+                    array[gridIndex * 2 + 1].dot1 = (uint)(8 * gridIndex  + 0);
+                    array[gridIndex * 2 + 1].dot2 = (uint)(8 * gridIndex  + 2);
+                    array[gridIndex * 2 + 1].dot3 = (uint)(8 * gridIndex  + 1);
+                    array[gridIndex * 2 + 1].dot4 = (uint)(8 * gridIndex  + 6);
+                    array[gridIndex * 2 + 1].dot5 = (uint)(8 * gridIndex  + 5);
+                    array[gridIndex * 2 + 1].dot6 = (uint)(8 * gridIndex  + 7);
+                    array[gridIndex * 2 + 1].dot7 = (uint)(8 * gridIndex  + 4);
+                    array[gridIndex * 2 + 1].restartIndex = uint.MaxValue;
                 }
-                HexahedronMeshGeometry3D mesh = new HexahedronMeshGeometry3D(positions, triangles);
+
+                HexahedronMeshGeometry3D mesh = new HexahedronMeshGeometry3D(positions, halfHexahedronIndices);
                 mesh.Max = maxVertex;
                 mesh.Min = minVertex;
                 return mesh;
@@ -170,8 +128,8 @@ namespace SimLab.GridSource.Factory
                     uint offset = (uint)(gridIndex * 8);
 
                     //top
-                    cellLines[index+0].p0 = offset + 0;
-                    cellLines[index+0].p1 = offset + 1;
+                    cellLines[index + 0].p0 = offset + 0;
+                    cellLines[index + 0].p1 = offset + 1;
 
                     cellLines[index + 1].p0 = offset + 1;
                     cellLines[index + 1].p1 = offset + 2;
@@ -256,7 +214,7 @@ namespace SimLab.GridSource.Factory
                 }
                 else
                 {
-                     textures[gridIndex] = 2.0f;
+                    textures[gridIndex] = 2.0f;
                 }
             }
 
