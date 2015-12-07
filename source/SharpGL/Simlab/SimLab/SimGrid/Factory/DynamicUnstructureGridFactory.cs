@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SimLab.SimGrid.Factory
 {
-    public class DynamicUnstructureGridFactory : GridBufferDataFactory
+    public  class DynamicUnstructureGridFactory : GridBufferDataFactory
     {
 
 
@@ -147,7 +147,7 @@ namespace SimLab.SimGrid.Factory
         }
 
 
-        public static TextureCoordinatesBufferData CreateFractureTextureCoordinates(this DynamicUnstructuredGridderSource src, int[] gridIndexes, float[] values, float minValue, float maxValue)
+        public static TextureCoordinatesBufferData CreateFractureTextureCoordinates(DynamicUnstructuredGridderSource src, int[] gridIndexes, float[] values, float minValue, float maxValue)
         {
             return DoCreateFractureTextureCoordinates(src, gridIndexes, values, minValue, maxValue);
         }
