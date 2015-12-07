@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace SimLabDesign1
 {
+    /// <summary>
+    /// vertex buffer object的基类。
+    /// </summary>
     public abstract class BufferBase
     {
         /// <summary>
@@ -34,11 +37,19 @@ namespace SimLabDesign1
             //return base.ToString();
         }
 
+        /// <summary>
+        /// 从<paramref name="shaderProgram"/>中获取各个in变量的指针。
+        /// </summary>
+        /// <param name="gl"></param>
+        /// <param name="shaderProgram"></param>
         public virtual void FetchInfoFromShaderProgram(OpenGL gl, SharpGL.Shaders.ShaderProgram shaderProgram)
         {
 
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="gl"></param>
         public abstract void LayoutForVAO(OpenGL gl);
     }
 }
