@@ -73,7 +73,7 @@ namespace SimLab
 
 
         public virtual void SetWireframe(WireFrameBufferData lineIndexes) { }
-        
+
 
 
         public void SetTextureCoods(BufferData textureCoords)
@@ -155,6 +155,11 @@ namespace SimLab
             if (this.colorBuffer != null)
             {
                 gl.DeleteBuffers(this.colorBuffer.Length, this.colorBuffer);
+            }
+
+            if (this.texture != null)
+            {
+                this.texture.Destroy(gl);
             }
 
             //gl.DeleteVertexArrays(1, new uint[] { this.vertexArrayObject });
