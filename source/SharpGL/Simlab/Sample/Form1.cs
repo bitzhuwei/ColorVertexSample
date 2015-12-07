@@ -26,5 +26,10 @@ namespace Sample
         {
             (new FormPointGrid()).Show();
         }
+
+        private void btnDynamicUnstructoreForm_Click(object sender, EventArgs e)
+        {
+            (new FormDynamicUnstructureGridSample()).Show();
+        }
     }
 }

@@ -65,6 +65,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ColorPaletteHelper.cs" />
+    <Compile Include="FormDynamicUnstructureGridSample.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDynamicUnstructureGridSample.Designer.cs">
+      <DependentUpon>FormDynamicUnstructureGridSample.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -88,6 +94,9 @@
     <Compile Include="GridPropertyGenerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormDynamicUnstructureGridSample.resx">
+      <DependentUpon>FormDynamicUnstructureGridSample.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -148,6 +157,9 @@
       <Project>{8360914c-8c51-4277-b933-4314c74992bd}</Project>
       <Name>SimLab %28Simlab\SimLab%29</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="geometry.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

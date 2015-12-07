@@ -1,6 +1,6 @@
 ﻿namespace Sample
 {
-    partial class FormPointGrid
+    partial class FormDynamicUnstructureGridSample
     {
         /// <summary>
         /// Required designer variable.
@@ -263,7 +263,7 @@
             this.btnCreate3D.TabIndex = 12;
             this.btnCreate3D.Text = "Add";
             this.btnCreate3D.UseVisualStyleBackColor = true;
-            this.btnCreate3D.Click += new System.EventHandler(this.CreateDynamicUnstructureGridVisual3D);
+            this.btnCreate3D.Click += new System.EventHandler(this.CreateCatesianGridVisual3D);
             // 
             // tbColorIndicatorStep
             // 

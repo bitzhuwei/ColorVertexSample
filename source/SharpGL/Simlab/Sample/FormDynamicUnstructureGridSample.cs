@@ -22,12 +22,13 @@ using SharpGL.SceneComponent.Model;
 using SimLab.GridSource;
 using SimLab;
 using System.Globalization;
+using SimLab.SimGrid;
 
 namespace Sample
 {
-    public partial class FormPointGrid : Form
+    public partial class FormDynamicUnstructureGridSample : Form
     {
-        public FormPointGrid()
+        public FormDynamicUnstructureGridSample()
         {
             InitializeComponent();
 
@@ -124,13 +125,13 @@ namespace Sample
             }
         }
 
-        private void CreateDynamicUnstructureGridVisual3D(object sender, EventArgs e)
+        private void CreateCatesianGridVisual3D(object sender, EventArgs e)
         {
             try
             {
-                int nx = System.Convert.ToInt32(tbNX.Text);
-                int ny = System.Convert.ToInt32(tbNY.Text);
-                int nz = System.Convert.ToInt32(tbNZ.Text);
+                int nx = 11716;
+                int ny = 1;
+                int nz = 1;
                 float step = System.Convert.ToSingle(tbColorIndicatorStep.Text);
                 //float radius = System.Convert.ToSingle(this.tbRadius.Text);
                 float propMin = System.Convert.ToSingle(this.tbxPropertyMinValue.Text,CultureInfo.InvariantCulture);
@@ -142,8 +143,10 @@ namespace Sample
                 float[] dxArray = initArray(dimenSize, dx);
                 float[] dyArray = initArray(dimenSize, dy);
                 float[] dzArray = initArray(dimenSize, dz);
+
+
                 // use CatesianGridderSource to fill HexahedronGridderElement's content.
-                PointGridderSource source = new PointGridderSource() { NX = nx, NY = ny, NZ = nz };//, DX = dxArray, DY = dyArray, DZ = dzArray, };
+                DynamicUnstructuredGridderSource source = new DynamicUnstructuredGridderSource() { NX = 11716, NY = 1, NZ = 1 };//, DX = dxArray, DY = dyArray, DZ = dzArray, };
                 source.Init();
 
                 InitPropertiesAndSelectDefault(dimenSize, propMin, propMax);
