@@ -16,7 +16,7 @@ namespace Sample
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormHexahedronGridderElement());
+            Application.Run(new Form1());
         }
     }
 }
