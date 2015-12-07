@@ -163,22 +163,28 @@ namespace SimLab
 
         protected virtual void DisposeUnmanagedResources()
         {
-            if (this.positionBuffer != null)
+            try
             {
-                gl.DeleteBuffers(this.positionBuffer.Length, this.positionBuffer);
-            }
+                if (this.positionBuffer != null)
+                {
+                    gl.DeleteBuffers(this.positionBuffer.Length, this.positionBuffer);
+                }
 
-            if (this.colorBuffer != null)
+                if (this.colorBuffer != null)
+                {
+                    gl.DeleteBuffers(this.colorBuffer.Length, this.colorBuffer);
+                }
+
+                if (this.texture != null)
+                {
+                    this.texture.Destroy(gl);
+                }
+
+                //gl.DeleteVertexArrays(1, new uint[] { this.vertexArrayObject });
+            }
+            catch (Exception)
             {
-                gl.DeleteBuffers(this.colorBuffer.Length, this.colorBuffer);
             }
-
-            if (this.texture != null)
-            {
-                this.texture.Destroy(gl);
-            }
-
-            //gl.DeleteVertexArrays(1, new uint[] { this.vertexArrayObject });
         }
 
         protected virtual void DisposeManagedResources()

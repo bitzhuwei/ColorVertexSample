@@ -197,9 +197,9 @@
       <Project>{5ef45533-e2c7-46f2-b4a3-b8f36cd406e0}</Project>
       <Name>SharpGL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\YieldingGeometryModel\YieldingGeometryModel.csproj">
-      <Project>{19decd3d-c2b6-4a9a-88e1-2113718447d1}</Project>
-      <Name>YieldingGeometryModel</Name>
+    <ProjectReference Include="..\..\..\Simlab\SimLab\SimLab.csproj">
+      <Project>{8360914c-8c51-4277-b933-4314c74992bd}</Project>
+      <Name>SimLab</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

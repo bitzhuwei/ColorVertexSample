@@ -225,15 +225,22 @@ namespace SimLab
         {
             base.DisposeUnmanagedResources();
 
-            if (this.indexBuffer != null)
+            try
             {
-                gl.DeleteBuffers(this.indexBuffer.Length, this.indexBuffer);
+                if (this.indexBuffer != null)
+                {
+                    gl.DeleteBuffers(this.indexBuffer.Length, this.indexBuffer);
+                }
+
+                if (this.vertexArrayObject != null)
+                {
+                    gl.DeleteVertexArrays(this.vertexArrayObject.Length, this.vertexArrayObject);
+                }
+            }
+            catch (Exception)
+            {
             }
 
-            if (this.vertexArrayObject != null)
-            {
-                gl.DeleteVertexArrays(this.vertexArrayObject.Length, this.vertexArrayObject);
-            }
         }
     }
 }
