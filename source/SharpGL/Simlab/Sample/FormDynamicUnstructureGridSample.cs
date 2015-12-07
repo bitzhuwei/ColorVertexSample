@@ -72,7 +72,7 @@ namespace Sample
 
         private void OnGridPropertyChanged(object sender, EventArgs e)
         {
-            HexahedronGridderSource source = this.sim3D.Tag as HexahedronGridderSource;
+            GridderSource source = this.sim3D.Tag as GridderSource;
             if (source == null)
                 return;
 
@@ -94,8 +94,16 @@ namespace Sample
             this.sim3D.SetColorIndicator(minValue, maxValue, step);
             TextureCoordinatesBufferData textureCoordinates = source.CreateTextureCoordinates(prop.GridIndexes, prop.Values, minValue, maxValue);
             grid.SetTextureCoods(textureCoordinates);
-            this.sim3D.Invalidate();
 
+            DynamicUnstructureGrid dynamicUnstructureGrid = gridders[0] as DynamicUnstructureGrid;
+            DynamicUnstructuredGridderSource dynamicUnstructureGridderSource = source as DynamicUnstructuredGridderSource;
+            if(dynamicUnstructureGrid!=null&&dynamicUnstructureGridderSource!=null)
+            {
+                TextureCoordinatesBufferData anotherTextureCoordinates = dynamicUnstructureGridderSource.CreateFractureTextureCoordinates(prop.GridIndexes, prop.Values, minValue, maxValue);
+                dynamicUnstructureGrid.SetFractionTextureCoords(anotherTextureCoordinates);
+            }
+
+            this.sim3D.Invalidate();
         }
 
 
