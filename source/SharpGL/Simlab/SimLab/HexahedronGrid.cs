@@ -270,5 +270,15 @@ namespace SimLab
         }
 
         #endregion IRenderable
+
+        protected override void DisposeUnmanagedResources()
+        {
+            base.DisposeUnmanagedResources();
+
+            if (this.vertexArrayObject != null)
+            {
+                gl.DeleteVertexArrays(this.vertexArrayObject.Length, this.vertexArrayObject);
+            }
+        }
     }
 }
