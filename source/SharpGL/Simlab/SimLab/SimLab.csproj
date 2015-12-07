@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="BufferData.cs" />
     <Compile Include="Disposable.cs" />
+    <Compile Include="DynamicUnstructureGeometry.cs" />
     <Compile Include="HexahedronGrid.cs" />
     <Compile Include="MeshBase.cs" />
     <Compile Include="HexahedronMeshGeometry3D.cs" />

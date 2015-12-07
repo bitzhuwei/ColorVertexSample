@@ -1,6 +1,7 @@
 ﻿using SharpGL.SceneGraph;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -57,11 +58,11 @@ namespace SimLab.SimGrid.Loader
                 int nodeNum, elemNum, elemFormat, fracNum, fracFormat;
 
                 #region read header
-                nodeNum = System.Convert.ToInt32(heads[0]);
-                elemNum = System.Convert.ToInt32(heads[1]);
-                elemFormat = System.Convert.ToInt32(heads[2]);
-                fracNum = System.Convert.ToInt32(heads[3]);
-                fracFormat = System.Convert.ToInt32(heads[4]);
+                nodeNum = System.Convert.ToInt32(heads[0],CultureInfo.InvariantCulture);
+                elemNum = System.Convert.ToInt32(heads[1],CultureInfo.InvariantCulture);
+                elemFormat = System.Convert.ToInt32(heads[2],CultureInfo.InvariantCulture);
+                fracNum = System.Convert.ToInt32(heads[3],CultureInfo.InvariantCulture);
+                fracFormat = System.Convert.ToInt32(heads[4],CultureInfo.InvariantCulture);
                 if (total != (elemNum + fracNum))
                     throw new FormatException("bad format, not match grid dimens");
 
@@ -86,9 +87,9 @@ namespace SimLab.SimGrid.Loader
                     String[] fields = nodeLine.Split(delimeters, StringSplitOptions.RemoveEmptyEntries);
                     if (fields.Length != 4)
                         throw new FormatException(String.Format("node format error,line:{0}", lineCounter));
-                    float x = System.Convert.ToSingle(fields[0]);
-                    float y = System.Convert.ToSingle(fields[1]);
-                    float z = System.Convert.ToSingle(fields[2]);
+                    float x = System.Convert.ToSingle(fields[0],CultureInfo.InvariantCulture);
+                    float y = System.Convert.ToSingle(fields[1],CultureInfo.InvariantCulture);
+                    float z = System.Convert.ToSingle(fields[2],CultureInfo.InvariantCulture);
                     nodes[i] = new Vertex(x, y, z);
                     if (!gotFirstMax)
                     {
