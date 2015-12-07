@@ -19,7 +19,7 @@ namespace SimLabDesign1_DemoApp
 
         private void btnHexahedronElement_Click(object sender, EventArgs e)
         {
-            (new FormHexahedronElement()).Show();
+            //(new FormHexahedronElement()).Show();
         }
     }
 }

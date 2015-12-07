@@ -24,7 +24,7 @@ namespace ColorVertexSample
 
         private void btnFormHexahedronGridder_Click(object sender, EventArgs e)
         {
-            (new FormHexahedronGridderElement()).Show();
+            //(new FormHexahedronGridderElement()).Show();
         }
 
         private void btnFormPointSpriteStringElement_Click(object sender, EventArgs e)
@@ -34,12 +34,12 @@ namespace ColorVertexSample
 
         private void btnFormPointSpriteGridderElement_Click(object sender, EventArgs e)
         {
-            (new FormPointSpriteGridderElement()).Show();
+            //(new FormPointSpriteGridderElement()).Show();
         }
 
         private void btnFormUnStructuredGridderElement_Click(object sender, EventArgs e)
         {
-            (new FormUnStructuredGridderElement()).Show();
+            //(new FormUnStructuredGridderElement()).Show();
         }
 
         private void btnFormScientificVisual3DControl_Click(object sender, EventArgs e)
@@ -52,23 +52,23 @@ namespace ColorVertexSample
             var frmSettings = new FormSelectExpectedRadius();
             if(frmSettings.ShowDialog()== System.Windows.Forms.DialogResult.OK)
             {
-                (new FormdfmPointSpriteGridderElement(frmSettings.MaxRadius)).Show();
+                //(new FormdfmPointSpriteGridderElement(frmSettings.MaxRadius)).Show();
             }
         }
 
         private void btnFormDynamicUnStructuredGridderElement_Click(object sender, EventArgs e)
         {
-            (new FormDynamicUnStructuredGridderElement()).Show();
+            //(new FormDynamicUnStructuredGridderElement()).Show();
         }
 
         private void btnFormZippedHexadronGridderElement_Click(object sender, EventArgs e)
         {
-            (new FormZippedHexahedronGridderElement()).Show();
+            //(new FormZippedHexahedronGridderElement()).Show();
         }
 
         private void btnFormTexture2dHexahedronGridderElement_Click(object sender, EventArgs e)
         {
-            (new FormTexture2dHexahedronGridderElement()).Show();
+            //(new FormTexture2dHexahedronGridderElement()).Show();
         }
 
         private void btnFormOnlyScientificControl_Click(object sender, EventArgs e)
@@ -88,7 +88,7 @@ namespace ColorVertexSample
 
         private void btnFormTexture2dHexahedronGridderElement_DrawElements_Click(object sender, EventArgs e)
         {
-            (new FormTexture2dHexahedronGridderElement_DrawElements()).Show();
+            //(new FormTexture2dHexahedronGridderElement_DrawElements()).Show();
         }
     }
 }

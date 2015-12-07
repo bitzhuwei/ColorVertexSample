@@ -60,51 +60,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Builder\DynamicUnstructuredGridderElementHelper.cs" />
-    <Compile Include="Builder\Texture2dHexahedronGridderBuilder.cs" />
-    <Compile Include="Builder\ZippedHexahedronGridderBuilder.cs" />
-    <Compile Include="Builder\VertexHelper.cs" />
-    <Compile Include="Builder\HexahedronGridderBuilder.cs" />
-    <Compile Include="DataSource\ZippedCatesianGridderSource.cs" />
-    <Compile Include="DataSource\dfmPointSpriteGridderSource.cs" />
-    <Compile Include="DataSource\PointSetGridderSource.cs" />
-    <Compile Include="DataSource\DynamicUnstructuredGridderSource.cs" />
-    <Compile Include="DataSource\UnStructuredGridderSource.cs" />
-    <Compile Include="DataSource\ZippedHexahedronGridderSource.cs" />
-    <Compile Include="DynamicUnStructuredGridderElement.cs" />
-    <Compile Include="DynamicUnStructuredGridderElement_IBoundingBox.cs" />
-    <Compile Include="DynamicUnStructuredGridderElement_IDisposable.cs" />
-    <Compile Include="DynamicUnStructuredGridderElement_InitShader.cs" />
-    <Compile Include="DynamicUnStructuredGridderElement_InitTexture.cs" />
-    <Compile Include="DynamicUnStructuredGridderElement_InitVertexArrayBufferObject.cs" />
-    <Compile Include="DynamicUnStructuredGridderElement_InitVertexArrayBufferObject2.cs" />
-    <Compile Include="DynamicUnStructuredGridderElement_Render.cs" />
-    <Compile Include="DynamicUnStructuredGridderElement_Update.cs" />
     <Compile Include="FontResources\CharacterInfo.cs" />
     <Compile Include="FontResources\CharacterInfoDictHelper.cs" />
     <Compile Include="FontResources\CharacterInfoHelper.cs" />
     <Compile Include="FontResources\FontResource.cs" />
     <Compile Include="FontResources\KeyValuePairHelper.cs" />
     <Compile Include="PointSpriteStringElement_IDisposable.cs" />
-    <Compile Include="Texture2dHexahedronGridderElement_DrawElements.cs" />
-    <Compile Include="Texture2dHexahedronGridderElement_DrawElements_IBoundingBox.cs" />
-    <Compile Include="Texture2dHexahedronGridderElement_DrawElements_IDisposable.cs" />
-    <Compile Include="Texture2dHexahedronGridderElement_DrawElements_InitShader.cs" />
-    <Compile Include="Texture2dHexahedronGridderElement_DrawElements_InitVertexArrayBufferObject.cs" />
-    <Compile Include="Texture2dHexahedronGridderElement_DrawElements_Render.cs" />
-    <Compile Include="UnStructuredGridderElement_IDisposable.cs" />
-    <Compile Include="PointSpriteGridderElement_IDisposable.cs" />
-    <Compile Include="HexahedronGridderElement_IDisposable.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="loader\DynamicUnstructureGeometryLoader.cs" />
-    <Compile Include="loader\UnstructureGeometryLoader.cs" />
-    <Compile Include="Texture2dHexahedronGridderElement.cs" />
-    <Compile Include="Texture2dHexahedronGridderElement_IBoundingBox.cs" />
-    <Compile Include="Texture2dHexahedronGridderElement_IDisposable.cs" />
-    <Compile Include="Texture2dHexahedronGridderElement_InitShader.cs" />
-    <Compile Include="Texture2dHexahedronGridderElement_InitVertexArrayBufferObject.cs" />
-    <Compile Include="Texture2dHexahedronGridderElement_Render.cs" />
     <Compile Include="PointSpriteStringElement_InitTexture.cs" />
     <Compile Include="PointSpriteStringElement.cs" />
     <Compile Include="PointSpriteStringElement_IBoundingBox.cs" />
@@ -112,56 +73,9 @@
     <Compile Include="PointSpriteStringElement_InitVertexArrayBufferObject.cs" />
     <Compile Include="PointSpriteStringElement_Render.cs" />
     <Compile Include="TextureHelper\ColorPaletteHelper.cs" />
-    <Compile Include="UnStructuredGridderElement_InitTexture.cs" />
-    <Compile Include="UnStructuredGridderElement_InitVertexArrayBufferObject2.cs" />
-    <Compile Include="UnStructuredGridderElement_Update.cs" />
-    <Compile Include="UnStructuredGridderElement.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="UnStructuredGridderElement_IBoundingBox.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="UnStructuredGridderElement_InitShader.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="UnStructuredGridderElement_InitVertexArrayBufferObject.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="UnStructuredGridderElement_Render.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Well.cs" />
     <Compile Include="WellPipe.cs" />
-    <Compile Include="ZippedColorHelper.cs" />
-    <Compile Include="ZippedHexahedronGridderElement.cs" />
-    <Compile Include="ZippedHexahedronGridderElement_IBoundingBox.cs" />
-    <Compile Include="ZippedHexahedronGridderElement_IDisposable.cs" />
-    <Compile Include="ZippedHexahedronGridderElement_InitElementArrayBufferObject.cs" />
-    <Compile Include="ZippedHexahedronGridderElement_InitShader.cs" />
-    <Compile Include="ZippedHexahedronGridderElement_InitVertexArrayBufferObject.cs" />
-    <Compile Include="ZippedHexahedronGridderElement_Render.cs" />
-    <EmbeddedResource Include="HexahedronGridder.frag" />
-    <EmbeddedResource Include="HexahedronGridder.vert" />
-    <Compile Include="Builder\HexahedronGridderElementHelper.cs" />
-    <Compile Include="Builder\PointSpriteGridderElementHelper.cs" />
     <Compile Include="CylinderElement.cs" />
-    <Compile Include="DataSource\DemoPointSpriteGridderSource.cs" />
-    <Compile Include="DataSource\CatesianGridderSource.cs" />
-    <Compile Include="DataSource\CornerPointGridderSource.cs" />
-    <Compile Include="DataSource\GridderSource.cs" />
-    <Compile Include="DataSource\PointSpriteGridderSource.cs" />
-    <Compile Include="DataSource\HexahedronGridderSource.cs" />
-    <Compile Include="GLPrimitive\Hexadron.cs" />
-    <Compile Include="PointSpriteGridderElement_Render.cs" />
-    <Compile Include="HexahedronGridderElement_Render.cs" />
-    <Compile Include="PointSpriteGridderElement_InitVertexArrayBufferObject.cs" />
-    <Compile Include="PointSpriteGridderElement_InitShader.cs" />
-    <Compile Include="PointSpriteGridderElement_IBoundingBox.cs" />
-    <Compile Include="HexahedronGridderElement_IBoundingBox.cs" />
-    <Compile Include="HexahedronGridderElement_InitShader.cs" />
-    <Compile Include="HexahedronGridderElement_InitVertexArrayBufferObject.cs" />
-    <Compile Include="HexahedronGridderElement.cs" />
-    <Compile Include="PointSpriteGridderElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -183,14 +97,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="HexahedronGridder2.frag" />
-    <EmbeddedResource Include="HexahedronGridder2.vert" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="PointSpriteGridderElement.frag" />
-    <EmbeddedResource Include="PointSpriteGridderElement.vert" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="CylinderElement.frag" />
     <EmbeddedResource Include="CylinderElement.vert" />
   </ItemGroup>
@@ -207,26 +113,6 @@
   <ItemGroup>
     <EmbeddedResource Include="PointSpriteStringElement.frag" />
     <EmbeddedResource Include="PointSpriteStringElement.vert" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="UnStructuredGridderElement.frag" />
-    <EmbeddedResource Include="UnStructuredGridderElement.vert" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="DynamicUnStructuredGridderElement.frag" />
-    <EmbeddedResource Include="DynamicUnStructuredGridderElement.vert" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="ZippedHexahedronGridderElement.frag" />
-    <EmbeddedResource Include="ZippedHexahedronGridderElement.vert" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Texture2dHexahedronGridderElement.frag" />
-    <EmbeddedResource Include="Texture2dHexahedronGridderElement.vert" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Texture2dHexahedronGridderElement_DrawElements.frag" />
-    <EmbeddedResource Include="Texture2dHexahedronGridderElement_DrawElements.vert" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

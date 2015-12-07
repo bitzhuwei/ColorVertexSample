@@ -19,7 +19,6 @@ using SharpGL.SceneGraph.Assets;
 using SharpGL.SceneGraph.Quadrics;
 using SharpGL.SceneComponent;
 using YieldingGeometryModel;
-using YieldingGeometryModel.Builder;
 using SharpGL.SceneComponent.Model;
 using YieldingGeometryModel.TextureHelper;
 
