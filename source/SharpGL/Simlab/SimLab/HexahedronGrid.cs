@@ -48,6 +48,10 @@ namespace SimLab
             this.indexBufferLength = geometry.TriangleIndices.SizeInBytes / (elementLength);
         }
 
+        // TODO: 渲染六面体的wireframe其实不需要line index。只需用quad_strip方式渲染六面体，就可以省掉line index。
+        /// <summary>
+        /// </summary>
+        /// <param name="lineIndexes"></param>
         public override void SetWireframe(WireFrameBufferData lineIndexes)
         {
             if (lineIndexes != null)
