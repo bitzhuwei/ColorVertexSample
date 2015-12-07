@@ -16,5 +16,15 @@ namespace Sample
         {
             InitializeComponent();
         }
+
+        private void btnFormHexahedronGridderElement_Click(object sender, EventArgs e)
+        {
+            (new FormHexahedronGridderElement()).Show();
+        }
+
+        private void btnFormPointGrid_Click(object sender, EventArgs e)
+        {
+            (new FormPointGrid()).Show();
+        }
     }
 }
