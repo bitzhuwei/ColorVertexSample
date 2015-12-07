@@ -157,11 +157,12 @@ namespace SimLab.GridSource
 
 
         /// <summary>
-        /// 生成默认活动的网格
+        /// 创建数组
         /// </summary>
-        /// <param name="dimenSize"></param>
+        /// <param name="dimenSize">数组大小</param>
+        /// <param name="value">初始值</param>
         /// <returns></returns>
-        private int[] InitIntArray(int dimenSize, int value = 1)
+        protected int[] InitIntArray(int dimenSize, int value = 1)
         {
             int[] actNums = new int[dimenSize];
             for (int i = 0; i < dimenSize; i++)
@@ -171,7 +172,7 @@ namespace SimLab.GridSource
             return actNums;
         }
 
-        private float[] InitFloatArray(int size, float value = 2)
+        protected float[] InitFloatArray(int size, float value = 2)
         {
             float[] array = new float[size];
             for (int i = 0; i < size; i++)

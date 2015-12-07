@@ -71,11 +71,126 @@ namespace SimLab.SimGrid
         /// </summary>
         public int FractureFormat { get; internal set; }
 
+        /// <summary>
+        /// 母体不可见
+        /// </summary>
+        public int[] MatrixInvisibles    { get; internal set; }
+
+        /// <summary>
+        /// 断层不可见
+        /// </summary>
+        public int[] FracturesInvisible { get; internal set;}
+
+
+        /// <summary>
+        /// 不可见母体纹理,值全部为2
+        /// </summary>
+        public float[] InvisibleMatrixTextures { get; internal set; }
+
+
+
+        /// <summary>
+        /// 不可见裂缝纹理,值全部为2
+        /// </summary>
+        public float[] InvisibleFractureTextures { get; internal set; }
+
+
+        public int[] ActiveMatrix { get; internal set; }
+        public int[] ActiveFractures { get; internal set; }
+
+        private int[] InitActiveMatrix()
+        {
+            int matrixSize = this.DimenSize - this.FractureNum;
+            int fractureSize = this.FractureNum;
+            int[] activematrix = new int[matrixSize];
+            Array.Copy(this.ActNums, fractureSize, activematrix, 0, matrixSize);
+            return activematrix;
+        }
+
+        private int[] InitActiveFractures()
+        {
+            int fractureSize = this.FractureNum;
+            int[] activeFractures = new int[fractureSize];
+            Array.Copy(this.ActNums, activeFractures, fractureSize);
+            return activeFractures;
+        }
+
+        private void InitMatrixFracturesInvisibles()
+        {
+              int  matrixSize =   this.DimenSize - this.FractureNum;
+              this.MatrixInvisibles = this.InitIntArray(matrixSize, 0);
+              int fractureSize = this.FractureNum;
+              this.FracturesInvisible = this.InitIntArray(fractureSize, 0);
+              this.InvisibleMatrixTextures = this.InitFloatArray(matrixSize, 2.0f);
+              this.InvisibleFractureTextures = this.InitFloatArray(fractureSize, 2.0f);
+        }
+
+        /// <summary>
+        /// 将结果整理成转化为可见
+        /// </summary>
+        /// <param name="gridIndexes">结果集合</param>
+        /// <returns></returns>
+        public int[] ExpandMatrixVisibles(int[] gridIndexes)
+        {
+            int matrixSize = this.ElementNum;
+            int dimenSize = this.DimenSize;
+            int matrixStartIndex = this.FractureNum;
+            int[] results = new int[matrixSize];
+            Array.Copy(this.MatrixInvisibles,results,results.Length);
+            for (int mixedIndex = 0; mixedIndex < gridIndexes.Length; mixedIndex++)
+            {
+                int gridIndex = gridIndexes[mixedIndex];
+                if (gridIndex >= matrixStartIndex && gridIndex < dimenSize)
+                {
+                    results[gridIndex - matrixStartIndex] = 1;
+                }
+            }
+            return results;
+        }
+
+        public int[] ExpandFractureVisibles(int[] gridIndexes)
+        {
+            int fractureNum = this.FractureNum;
+            int[] results = new int[fractureNum];
+            Array.Copy(FracturesInvisible, results, fractureNum);
+            for (int mixedIndex = 0; mixedIndex < gridIndexes.Length; mixedIndex++)
+            {
+                int gridIndex = gridIndexes[mixedIndex];
+                if (gridIndex >= 0 && gridIndex < fractureNum)
+                {
+                    results[gridIndex] = 1;
+                }
+            }
+            return results;
+        }
+
+
+        public int[] BindResultsAndActiveMatrix(int[] gridIndexes)
+        {
+            int[] results =   this.ExpandMatrixVisibles(gridIndexes);
+            return this.BindCellActive(results, this.ActiveMatrix);
+        }
+
+        public int[] BindResultsAndActiveFractures(int[] gridIndexes)
+        {
+            int[] results = this.ExpandFractureVisibles(gridIndexes);
+            return this.BindCellActive(results, this.ActiveFractures);
+        }
 
 
         public override void Init()
         {
                base.Init();
+               this.InitMatrixFracturesInvisibles();
+
+               if (this.ActiveMatrix == null)
+               {
+                   this.ActiveMatrix = InitActiveMatrix();
+               }
+               if (this.ActiveFractures == null)
+               {
+                   this.ActiveFractures = this.InitActiveFractures();
+               }
         }
 
         public new Vertex Min
