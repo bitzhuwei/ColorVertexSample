@@ -70,6 +70,7 @@
     <Compile Include="SimGrid\CatesianGridderSource.cs" />
     <Compile Include="SimGrid\CornerPointGridderSource.cs" />
     <Compile Include="SimGrid\DynamicUnstructuredGridderSource.cs" />
+    <Compile Include="SimGrid\Factory\DynamicUnstructureGridFactory.cs" />
     <Compile Include="SimGrid\Factory\GridBufferDataFactory.cs" />
     <Compile Include="SimGrid\Factory\PointGridFactory.cs" />
     <Compile Include="SimGrid\Factory\HexahedronGridFactory.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="SimGrid\Geometry\TriangleIndex.cs" />
     <Compile Include="SimGrid\GridderSource.cs" />
     <Compile Include="SimGrid\GridIndexer.cs" />
+    <Compile Include="SimGrid\Loader\DynamicUnstructureGeometryLoader.cs" />
     <Compile Include="SimGrid\PointGridderSource.cs" />
     <Compile Include="SimGrid\HexahedronGridderSource.cs" />
     <Compile Include="SimLabGrid.cs" />

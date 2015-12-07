@@ -1,5 +1,6 @@
 ﻿using SharpGL.SceneGraph;
 using SimLab.GridSource;
+using SimLab.SimGrid.Factory;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -66,10 +67,35 @@ namespace SimLab.SimGrid
                base.Init();
         }
 
+        public new Vertex Min
+        {
+            get
+            {
+               return  base.Min;
+            }
+            set
+            {
+                base.Min = value;
+            }
+        }
+
+
+        public new Vertex Max
+        {
+            get
+            {
+                return base.Max;
+            }
+            set
+            {
+                base.Max = value;
+            }
+        }
+
 
         protected override GridSource.Factory.GridBufferDataFactory CreateFactory()
         {
-              throw new NotImplementedException("not implementation");
+            return new DynamicUnstructureGridFactory();
         }
     }
 }
