@@ -51,7 +51,7 @@
     </Compile>
     <Compile Include="UnmanagedArrayCopyHelper.cs" />
     <Compile Include="BufferBase.cs" />
-    <Compile Include="AttributeBuffer.cs">
+    <Compile Include="PropertyBuffer.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

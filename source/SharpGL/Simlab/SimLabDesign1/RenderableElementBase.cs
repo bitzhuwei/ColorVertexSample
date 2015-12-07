@@ -18,13 +18,13 @@ namespace SimLabDesign1
         /// <summary>
         /// 记录VBO的key和VBO对象的对应关系。
         /// </summary>
-        Dictionary<string, AttributeBuffer> vboDict;
+        Dictionary<string, PropertyBuffer> vboDict;
         //List<AttributeBuffer> attributeBufferList;
         IndexBuffer indexBuffer;
 
-        void IVertexBuffers.AddAttributeBuffer(string varNameInShader, UnmanagedArrayBase values, UsageType usage, int size, uint type)
+        PropertyBuffer IVertexBuffers.AddAttributeBuffer(string varNameInShader, UnmanagedArrayBase values, UsageType usage, int size, uint type)
         {
-            if (this.vboDict == null) { this.vboDict = new Dictionary<string, AttributeBuffer>(); }
+            if (this.vboDict == null) { this.vboDict = new Dictionary<string, PropertyBuffer>(); }
 
             if (this.vboDict.ContainsKey(varNameInShader))
             { throw new ArgumentException(string.Format("key[{0}] already exists!")); }
@@ -35,10 +35,13 @@ namespace SimLabDesign1
             gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, buffers[0]);
             gl.BufferData(OpenGL.GL_ARRAY_BUFFER, values.ByteLength, values.Header, (uint)usage);
 
-            this.vboDict.Add(varNameInShader, new AttributeBuffer() { BufferID = buffers[0], VarNameInShader = varNameInShader, Usage = usage, Size = size, Type = type, });
+            var result = new PropertyBuffer() { BufferID = buffers[0], VarNameInShader = varNameInShader, Usage = usage, Size = size, Type = type, };
+            this.vboDict.Add(varNameInShader, result);
+
+            return result;
         }
 
-        void IVertexBuffers.SetupIndexBuffer(UnmanagedArrayBase indexes, UsageType usage, int vertexCount)
+        IndexBuffer IVertexBuffers.SetupIndexBuffer(UnmanagedArrayBase indexes, UsageType usage, int vertexCount)
         {
             OpenGL gl = new OpenGL();
 
@@ -53,6 +56,8 @@ namespace SimLabDesign1
             gl.BufferData(OpenGL.GL_ELEMENT_ARRAY_BUFFER, indexes.ByteLength, indexes.Header, (uint)usage);
 
             this.indexBuffer = new IndexBuffer() { BufferID = buffers[0], Usage = usage, VertexCount = indexes.Length, };
+
+            return indexBuffer;
         }
 
         void IVertexBuffers.UpdateVertexBuffer(string key, UnmanagedArrayBase newValues)
@@ -95,6 +100,16 @@ namespace SimLabDesign1
             newValues.CopyTo(dest);
 
             gl.UnmapBuffer(vbo.Target);
+        }
+
+        void IVertexBuffers.UpdateIndexBuffer(UnmanagedArrayBase indexes)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IVertexBuffers.UpdateIndexBuffer(UnmanagedArrayBase indexes, int startIndex)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion 初始化和更新VBO
@@ -243,7 +258,7 @@ namespace SimLabDesign1
                     gl.DeleteBuffers(buffers.Length, buffers);
                 }
 
-                if(this.indexBuffer!=null)
+                if (this.indexBuffer != null)
                 {
                     gl.DeleteBuffers(1, new uint[] { this.indexBuffer.BufferID });
                 }
@@ -260,6 +275,8 @@ namespace SimLabDesign1
 
 
         #endregion 释放VBO和VAO
+
+
 
 
     }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SimLabDesign1
 {
-    public class AttributeBuffer : BufferBase
+    public class PropertyBuffer : BufferBase
     {
 
         public override uint Target

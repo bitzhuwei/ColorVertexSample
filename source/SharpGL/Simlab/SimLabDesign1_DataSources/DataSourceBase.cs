@@ -42,30 +42,14 @@ namespace SimLabDesign1_DataSources
             this.renderableElement = renderableElement;
         }
 
-        //void IVertexBuffers.CreateVertexBuffer<T>(string key, TargetType target, SharpGL.SceneComponent.UnmanagedArray<T> values, uint usage, int size, uint type)
-        //{
-        //    renderableElement.CreateVertexBuffer(key, target, values, usage, size, type);
-        //}
-
-        //void IVertexBuffers.UpdateVertexBuffer<T>(string key, SharpGL.SceneComponent.UnmanagedArray<T> newValues)
-        //{
-        //    renderableElement.UpdateVertexBuffer(key, newValues);
-        //}
-
-        //void IVertexBuffers.UpdateVertexBuffer<T>(string key, SharpGL.SceneComponent.UnmanagedArray<T> newValues, int startIndex)
-        //{
-        //    renderableElement.UpdateVertexBuffer(key, newValues, startIndex);
-        //}
-
-
-        void IVertexBuffers.AddAttributeBuffer(string varNameInShader, SharpGL.SceneComponent.UnmanagedArrayBase values, UsageType usage, int size, uint type)
+        PropertyBuffer IVertexBuffers.AddAttributeBuffer(string varNameInShader, SharpGL.SceneComponent.UnmanagedArrayBase values, UsageType usage, int size, uint type)
         {
-            renderableElement.AddAttributeBuffer(varNameInShader, values, usage, size, type);
+            return renderableElement.AddAttributeBuffer(varNameInShader, values, usage, size, type);
         }
 
-        void IVertexBuffers.SetupIndexBuffer(SharpGL.SceneComponent.UnmanagedArrayBase indexes, UsageType usage, int vertexCount)
+        IndexBuffer IVertexBuffers.SetupIndexBuffer(SharpGL.SceneComponent.UnmanagedArrayBase indexes, UsageType usage, int vertexCount)
         {
-            renderableElement.SetupIndexBuffer(indexes, usage, vertexCount);
+            return renderableElement.SetupIndexBuffer(indexes, usage, vertexCount);
         }
 
         void IVertexBuffers.UpdateVertexBuffer(string key, SharpGL.SceneComponent.UnmanagedArrayBase newValues)
@@ -76,6 +60,16 @@ namespace SimLabDesign1_DataSources
         void IVertexBuffers.UpdateVertexBuffer(string key, SharpGL.SceneComponent.UnmanagedArrayBase newValues, int startIndex)
         {
             renderableElement.UpdateVertexBuffer(key, newValues, startIndex);
+        }
+
+        void IVertexBuffers.UpdateIndexBuffer(SharpGL.SceneComponent.UnmanagedArrayBase indexes)
+        {
+            renderableElement.UpdateIndexBuffer(indexes);
+        }
+
+        void IVertexBuffers.UpdateIndexBuffer(SharpGL.SceneComponent.UnmanagedArrayBase indexes, int startIndex)
+        {
+            renderableElement.UpdateIndexBuffer(indexes, startIndex);
         }
     }
 }
