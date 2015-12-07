@@ -11,7 +11,7 @@ namespace SimLab.GridSource
     /// <summary>
     /// 块为六面体组成的模拟网格几何信息,支持切片分析
     /// </summary>
-    public abstract class PointGridderSource : GridderSource
+    public class PointGridderSource : GridderSource
     {
 
         protected override Factory.GridBufferDataFactory CreateFactory()

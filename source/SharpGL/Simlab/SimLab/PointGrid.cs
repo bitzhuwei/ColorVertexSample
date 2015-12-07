@@ -113,6 +113,7 @@ namespace SimLab
             shader.SetUniform1(gl, "canvasWidth", viewport[2] + 0.0f);
             shader.SetUniform1(gl, "canvasHeight", viewport[3] + 0.0f);
 
+            this.texture.Bind(gl);
             shaderProgram.SetUniform1(gl, "tex", this.texture.TextureName);
 
         }
