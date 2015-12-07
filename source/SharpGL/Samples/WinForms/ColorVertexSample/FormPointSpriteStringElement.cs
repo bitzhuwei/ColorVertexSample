@@ -29,7 +29,6 @@ namespace ColorVertexSample
             this.camera.Scale(e.Delta);
         }
 
-        int elementCounter = 0;
         private SatelliteRotation rotator;
         private SharpGL.SceneComponent.ScientificCamera camera;
         private PointSpriteStringElement fontElement;

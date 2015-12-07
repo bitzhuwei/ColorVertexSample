@@ -72,7 +72,6 @@
     <Compile Include="PointSpriteStringElement_InitShader.cs" />
     <Compile Include="PointSpriteStringElement_InitVertexArrayBufferObject.cs" />
     <Compile Include="PointSpriteStringElement_Render.cs" />
-    <Compile Include="TextureHelper\ColorPaletteHelper.cs" />
     <Compile Include="Well.cs" />
     <Compile Include="WellPipe.cs" />
     <Compile Include="CylinderElement.cs" />

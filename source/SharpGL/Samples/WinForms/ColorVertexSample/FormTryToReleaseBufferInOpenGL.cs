@@ -20,7 +20,6 @@ using SharpGL.SceneGraph.Quadrics;
 using SharpGL.SceneComponent;
 using YieldingGeometryModel;
 using SharpGL.SceneComponent.Model;
-using YieldingGeometryModel.TextureHelper;
 
 namespace ColorVertexSample
 {
@@ -57,7 +56,6 @@ namespace ColorVertexSample
             return result;
         }
 
-        int elementCounter = 0;
         private void Create3DObject(object sender, EventArgs e)
         {
             if (btnStart.Text == "Start")
@@ -78,7 +76,6 @@ namespace ColorVertexSample
         private List<string> rangeMin = new List<string>() { "-1000", "1100", "3200" };
         private List<string> rangeMax = new List<string>() { "1000", "3100", "5200" };
         private List<string> stepList = new List<string>() { "110", "110", "100" };
-        private int testCaseIndex = 0;
 
         protected override void OnClosed(EventArgs e)
         {
