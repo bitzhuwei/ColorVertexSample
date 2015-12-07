@@ -333,6 +333,7 @@ namespace SimLab
                         gl.DrawArrays(OpenGL.GL_TRIANGLES, 0, this.MatrixVertexOrIndexCount);
                         break;
                     case MatrixType.Tetrahedron:
+                        gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, this.matrixIndexBuffer[0]);
                         gl.DrawElements(OpenGL.GL_TRIANGLES, this.MatrixVertexOrIndexCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
                         //    gl.Enable(OpenGL.GL_PRIMITIVE_RESTART);
                         //gl.PrimitiveRestartIndex(uint.MaxValue);
