@@ -331,9 +331,9 @@ namespace Sample
         private void cbxShowWireframe_CheckedChanged(object sender, EventArgs e)
         {
 
-            HexahedronGridderSource source = this.CurrentHexahedronGrid;
-            if (source == null)
-                return;
+            //HexahedronGridderSource source = this.CurrentHexahedronGrid;
+            //if (source == null)
+            //    return;
 
             List<SimLabGrid> gridders = this.sim3D.Scene.SceneContainer.Traverse<SimLabGrid>().ToList<SimLabGrid>();
             if (gridders.Count <= 0)
