@@ -197,7 +197,7 @@ namespace SimLab.GridSource
 
         public abstract TextureCoordinatesBufferData CreateTextureCoordinates(int[] gridIndexes, float[] values, float minValue, float maxValue);
 
-        public abstract MeshGeometry3D CreateMesh();
+        public abstract HexahedronMeshGeometry3D CreateMesh();
 
         public abstract WireFrameBufferData CreateWireframe();
 

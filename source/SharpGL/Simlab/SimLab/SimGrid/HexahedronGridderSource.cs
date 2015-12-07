@@ -268,9 +268,9 @@ namespace SimLab.GridSource
         ///  创建几何对象
         /// </summary>
         /// <returns></returns>
-        public override  MeshGeometry3D CreateMesh()
+        public override  HexahedronMeshGeometry3D CreateMesh()
         {
-             MeshGeometry3D geometry = this.Factory.CreateMesh(this);
+            HexahedronMeshGeometry3D geometry = this.Factory.CreateMesh(this) as HexahedronMeshGeometry3D;
              this.Max = geometry.Max;
              this.Min = geometry.Min;
              return geometry;

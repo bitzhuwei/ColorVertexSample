@@ -30,12 +30,8 @@ namespace SimLab
 
         protected uint[] positionBuffer;
         protected uint[] colorBuffer;
-        protected uint[] indexBuffer;
-        protected uint[] wireframeIndexBuffer;
-        protected int indexBufferLength;
-        protected int wireframeIndexBufferLength;
-        protected Texture texture;
 
+        protected Texture texture;
 
         protected OpenGL gl;
         protected IScientificCamera camera;
@@ -66,45 +62,18 @@ namespace SimLab
         /// 初始化顶点位置和索引
         /// </summary>
         /// <param name="gridCoords"></param>
-        public void Init(MeshGeometry3D Geomtry)
+        protected void Init(MeshBase geometry)
         {
             ////TODO:如果用此方式，则必须先将此对象加入scene树，然后再调用Init
             //OpenGL gl = this.TraverseToRootElement().ParentScene.OpenGL;
             positionBuffer = new uint[1];
-            positionBuffer[0] = CreateVertexBufferObject(OpenGL.GL_ARRAY_BUFFER, Geomtry.Positions, OpenGL.GL_STATIC_DRAW);
+            positionBuffer[0] = CreateVertexBufferObject(OpenGL.GL_ARRAY_BUFFER, geometry.Positions, OpenGL.GL_STATIC_DRAW);
 
-            indexBuffer = new uint[1];
-            indexBuffer[0] = CreateVertexBufferObject(OpenGL.GL_ELEMENT_ARRAY_BUFFER, Geomtry.TriangleIndices, OpenGL.GL_STATIC_DRAW);
-
-            int elementLength = sizeof(uint);// should be 4.
-            this.indexBufferLength = Geomtry.TriangleIndices.SizeInBytes / (elementLength);
         }
 
 
-        public void SetWireframe(WireFrameBufferData lineIndexes)
-        {
-            if (lineIndexes != null)
-            {
-                if (wireframeIndexBuffer != null)
-                {
-                    gl.DeleteBuffers(wireframeIndexBuffer.Length, wireframeIndexBuffer);
-                }
-                ////TODO:如果用此方式，则必须先将此对象加入scene树，然后再调用Init
-                //OpenGL gl = this.TraverseToRootElement().ParentScene.OpenGL;
-                wireframeIndexBuffer = new uint[1];
-                wireframeIndexBuffer[0] = CreateVertexBufferObject(OpenGL.GL_ARRAY_BUFFER, lineIndexes, OpenGL.GL_STATIC_DRAW);
-
-                int elementLength = sizeof(uint);// should be 4.
-                this.wireframeIndexBufferLength = lineIndexes.SizeInBytes / (elementLength);
-            }
-            else
-            {
-                if (wireframeIndexBuffer != null)
-                {
-                    gl.DeleteBuffers(wireframeIndexBuffer.Length, wireframeIndexBuffer);
-                }
-            }
-        }
+        public virtual void SetWireframe(WireFrameBufferData lineIndexes) { }
+        
 
 
         public void SetTextureCoods(BufferData textureCoords)
@@ -188,15 +157,6 @@ namespace SimLab
                 gl.DeleteBuffers(this.colorBuffer.Length, this.colorBuffer);
             }
 
-            if (this.indexBuffer != null)
-            {
-                gl.DeleteBuffers(this.indexBuffer.Length, this.indexBuffer);
-            }
-
-            if (this.wireframeIndexBuffer != null)
-            {
-                gl.DeleteBuffers(this.wireframeIndexBuffer.Length, this.wireframeIndexBuffer);
-            }
             //gl.DeleteVertexArrays(1, new uint[] { this.vertexArrayObject });
         }
 
