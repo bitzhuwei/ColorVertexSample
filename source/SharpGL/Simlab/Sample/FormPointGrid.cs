@@ -169,16 +169,13 @@ namespace Sample
                 PointMeshGeometry3D geometry = source.CreateMesh() as PointMeshGeometry3D;
                 TextureCoordinatesBufferData textureCoodinates  = source.CreateTextureCoordinates(gridIndexes, gridValues, minValue, maxValue);
                 Bitmap texture = ColorPaletteHelper.GenBitmap(this.sim3D.uiColorIndicator.Data.ColorPalette);
-                //geometry.Positions.Dump();
-                //geometry.TriangleIndices.Dump();
-                //MeshGeometry mesh = HexahedronGridderHelper.CreateMesh(source);
                 PointGrid gridder = new PointGrid(this.sim3D.OpenGL, this.sim3D.Scene.CurrentCamera);
                 gridder.Init(geometry);
                 gridder.RenderGrid = true;
                 gridder.RenderGridWireframe = this.IsShowWireframe;
                 gridder.SetTexture(texture);
                 gridder.SetTextureCoods(textureCoodinates);
-                //textureCoodinates.Dump();
+                
               
 
                 DateTime t1 = DateTime.Now;
