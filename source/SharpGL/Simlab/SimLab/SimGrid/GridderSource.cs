@@ -14,7 +14,7 @@ namespace SimLab.GridSource
     /// </summary>
     public abstract class GridderSource
     {
-        private  GridBufferDataFactory factory;
+        private GridBufferDataFactory factory;
 
         private GridIndexer gridIndexer;
 
@@ -56,7 +56,7 @@ namespace SimLab.GridSource
         /// </summary>
         private float[] textures;
 
-       
+
 
         /// <summary>
         /// 此网格至少包含1个元素，返回true；否则返回false。
@@ -83,7 +83,7 @@ namespace SimLab.GridSource
         /// <param name="kv"></param>
         public void InvertIJK(int index, out int I, out int J, out int K)
         {
-             this.gridIndexer.IJKOfIndex(index, out I, out J, out K);
+            this.gridIndexer.IJKOfIndex(index, out I, out J, out K);
         }
 
         protected void IJK2Index(int I, int J, int K, out int index)
@@ -101,7 +101,7 @@ namespace SimLab.GridSource
         /// <returns></returns>
         public bool IsActiveBlock(int i, int j, int k)
         {
-         
+
             int gridIndex;
             this.IJK2Index(i, j, k, out gridIndex);
             int actnum = this.ActNums[gridIndex];
@@ -118,14 +118,14 @@ namespace SimLab.GridSource
         /// <returns></returns>
         public bool IsActiveBlock(int gridIndex)
         {
-             return this.ActNums[gridIndex] > 0;
+            return this.ActNums[gridIndex] > 0;
         }
 
 
         protected abstract GridBufferDataFactory CreateFactory();
-      
 
-        protected  GridBufferDataFactory Factory
+
+        protected GridBufferDataFactory Factory
         {
             get
             {
@@ -153,7 +153,7 @@ namespace SimLab.GridSource
             return actNums;
         }
 
-        private float[] InitFloatArray(int size, float value=2)
+        private float[] InitFloatArray(int size, float value = 2)
         {
             float[] array = new float[size];
             for (int i = 0; i < size; i++)
@@ -180,7 +180,7 @@ namespace SimLab.GridSource
             }
             if (this.zeroVisibles == null)
             {
-                this.zeroVisibles = InitIntArray(this.DimenSize,0);
+                this.zeroVisibles = InitIntArray(this.DimenSize, 0);
             }
             if (this.textures == null)
             {
@@ -188,18 +188,34 @@ namespace SimLab.GridSource
                 this.textures = InitFloatArray(this.DimenSize, 2);
             }
 
-            
+
         }
 
+        /// <summary>
+        /// 创建纹理映射坐标
+        /// </summary>
+        /// <param name="gridIndexes"></param>
+        /// <param name="values"></param>
+        /// <param name="minValue"></param>
+        /// <param name="maxValue"></param>
+        /// <returns></returns>
+        public TextureCoordinatesBufferData CreateTextureCoordinates(int[] gridIndexes, float[] values, float minValue, float maxValue)
+        {
+            return this.Factory.CreateTextureCoordinates(this, gridIndexes, values, minValue, maxValue);
+        }
 
+        public MeshBase CreateMesh()
+        {
+            MeshBase geometry = this.Factory.CreateMesh(this);
+            this.Max = geometry.Max;
+            this.Min = geometry.Min;
+            return geometry;
+        }
 
-
-
-        public abstract TextureCoordinatesBufferData CreateTextureCoordinates(int[] gridIndexes, float[] values, float minValue, float maxValue);
-
-        public abstract HexahedronMeshGeometry3D CreateMesh();
-
-        public abstract WireFrameBufferData CreateWireframe();
+        public WireFrameBufferData CreateWireframe()
+        {
+            return this.Factory.CreateWireFrame(this);
+        }
 
 
         public int[] BindCellActive(int[] a1, int[] a2)
@@ -226,13 +242,13 @@ namespace SimLab.GridSource
         /// <returns></returns>
         public int[] ExpandVisibles(int[] gridIndexes)
         {
-             int[] gridVisibles = new int[this.DimenSize];
-             Array.Copy(this.zeroVisibles, gridVisibles, this.DimenSize);
-             for (int i = 0; i < gridIndexes.Length; i++)
-             {
-                  gridVisibles[gridIndexes[i]] = 1;
-             }
-             return gridVisibles;
+            int[] gridVisibles = new int[this.DimenSize];
+            Array.Copy(this.zeroVisibles, gridVisibles, this.DimenSize);
+            for (int i = 0; i < gridIndexes.Length; i++)
+            {
+                gridVisibles[gridIndexes[i]] = 1;
+            }
+            return gridVisibles;
         }
 
 
@@ -242,7 +258,7 @@ namespace SimLab.GridSource
         /// <returns></returns>
         public float[] GetDefaultTextureCoords()
         {
-            float[] none = new float [this.DimenSize];
+            float[] none = new float[this.DimenSize];
             Array.Copy(this.textures, none, this.DimenSize);
             return none;
         }

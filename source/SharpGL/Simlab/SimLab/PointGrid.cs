@@ -18,7 +18,7 @@ namespace SimLab
         private const string in_radius = "in_radius";
 
         uint ATTRIB_INDEX_POSITION = 0;
-        uint ATTRIB_INDEX_COLOUR = 1;
+        uint ATTRIB_INDEX_UV = 1;
         uint ATTRIB_INDEX_RADIUS = 2;
 
         private uint[] radiusBuffer;
@@ -40,7 +40,32 @@ namespace SimLab
         {
             base.Init(geometry);
 
+            this.radiusBuffer = new uint[1];
+            this.radiusBuffer[0] = CreateVertexBufferObject(OpenGL.GL_ARRAY_BUFFER, geometry.Radius, OpenGL.GL_STREAM_DRAW);
             this.count = geometry.Count;
+        }
+
+        public void SetRadius(BufferData radius)
+        {
+            if (this.radiusBuffer != null)
+            {
+                if (this.radiusBuffer != null)
+                {
+                    gl.DeleteBuffers(this.radiusBuffer.Length, this.radiusBuffer);
+                }
+                ////TODO:如果用此方式，则必须先将此对象加入scene树，然后再调用Init
+                //OpenGL gl = this.TraverseToRootElement().ParentScene.OpenGL;
+                this.radiusBuffer = new uint[1];
+                this.radiusBuffer[0] = CreateVertexBufferObject(OpenGL.GL_ARRAY_BUFFER, radius, OpenGL.GL_STATIC_DRAW);
+
+            }
+            else
+            {
+                if (this.radiusBuffer != null)
+                {
+                    gl.DeleteBuffers(this.radiusBuffer.Length, this.radiusBuffer);
+                }
+            }
         }
 
         #region IRenderable
@@ -138,18 +163,18 @@ namespace SimLab
             // prepare colors
             {
                 int location = shaderProgram.GetAttributeLocation(gl, in_uv);
-                ATTRIB_INDEX_COLOUR = (uint)location;
+                ATTRIB_INDEX_UV = (uint)location;
                 gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, colorBuffer[0]);
-                gl.VertexAttribPointer(ATTRIB_INDEX_COLOUR, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
-                gl.EnableVertexAttribArray(ATTRIB_INDEX_COLOUR);
+                gl.VertexAttribPointer(ATTRIB_INDEX_UV, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
+                gl.EnableVertexAttribArray(ATTRIB_INDEX_UV);
             }
             // prepare radius
             {
                 int location = shaderProgram.GetAttributeLocation(gl, in_radius);
                 ATTRIB_INDEX_RADIUS = (uint)location;
                 gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, colorBuffer[0]);
-                gl.VertexAttribPointer(ATTRIB_INDEX_COLOUR, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
-                gl.EnableVertexAttribArray(ATTRIB_INDEX_COLOUR);
+                gl.VertexAttribPointer(ATTRIB_INDEX_RADIUS, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
+                gl.EnableVertexAttribArray(ATTRIB_INDEX_RADIUS);
             }
 
             gl.BindVertexArray(0);

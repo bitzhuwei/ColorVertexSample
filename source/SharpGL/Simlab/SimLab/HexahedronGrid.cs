@@ -16,7 +16,7 @@ namespace SimLab
         private const string in_Position = "in_Position";
         private const string in_uv = "in_uv";
         uint ATTRIB_INDEX_POSITION = 0;
-        uint ATTRIB_INDEX_COLOUR = 1;
+        uint ATTRIB_INDEX_UV = 1;
 
         protected uint[] indexBuffer;
         protected int indexBufferLength;
@@ -191,10 +191,10 @@ namespace SimLab
             // prepare colors
             {
                 int location = shaderProgram.GetAttributeLocation(gl, in_uv);
-                ATTRIB_INDEX_COLOUR = (uint)location;
+                ATTRIB_INDEX_UV = (uint)location;
                 gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, colorBuffer[0]);
-                gl.VertexAttribPointer(ATTRIB_INDEX_COLOUR, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
-                gl.EnableVertexAttribArray(ATTRIB_INDEX_COLOUR);
+                gl.VertexAttribPointer(ATTRIB_INDEX_UV, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
+                gl.EnableVertexAttribArray(ATTRIB_INDEX_UV);
             }
 
             gl.BindVertexArray(0);
@@ -216,7 +216,7 @@ namespace SimLab
             {
                 int location = shaderProgram.GetAttributeLocation(gl, in_uv);
                 if (location < 0) { throw new ArgumentException(); }
-                this.ATTRIB_INDEX_COLOUR = (uint)location;
+                this.ATTRIB_INDEX_UV = (uint)location;
             }
             shaderProgram.AssertValid(gl);
             return shaderProgram;

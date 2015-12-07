@@ -8,6 +8,13 @@ namespace SimLab
 {
     public class PointMeshGeometry3D : MeshBase
     {
+        private BufferData radius;
+
+        public BufferData Radius
+        {
+            get { return radius; }
+        }
+
         /// <summary>
         /// 顶点数目
         /// </summary>
@@ -18,9 +25,10 @@ namespace SimLab
         /// </summary>
         /// <param name="positions"></param>
         /// <param name="count">有多少个顶点</param>
-        public PointMeshGeometry3D(PositionsBufferData positions, int count)
+        public PointMeshGeometry3D(PositionsBufferData positions, BufferData radius, int count)
             : base(positions)
         {
+            this.radius = radius;
             this.count = count;
         }
 
