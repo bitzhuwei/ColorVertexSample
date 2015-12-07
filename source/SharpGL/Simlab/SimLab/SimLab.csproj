@@ -63,6 +63,7 @@
     <Compile Include="BufferData.cs" />
     <Compile Include="Disposable.cs" />
     <Compile Include="DynamicUnstructureGeometry.cs" />
+    <Compile Include="DynamicUnstructureGrid.cs" />
     <Compile Include="HexahedronGrid.cs" />
     <Compile Include="MeshBase.cs" />
     <Compile Include="HexahedronMeshGeometry3D.cs" />
@@ -122,6 +123,10 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="PointGrid.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DynamicUnstructureGrid.frag" />
+    <EmbeddedResource Include="DynamicUnstructureGrid.vert" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
