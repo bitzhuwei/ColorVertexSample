@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace YieldingGeometryModel
+namespace Simlab.Well
 {
     /// <summary>
     /// 蛇形管道（井）+文字显示

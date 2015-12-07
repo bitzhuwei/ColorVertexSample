@@ -1,6 +1,7 @@
 ﻿using SharpGL;
 using SharpGL.SceneComponent;
 using SharpGL.SceneComponent.Model;
+using Simlab.Well;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,7 +11,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using YieldingGeometryModel;
 
 namespace ColorVertexSample
 {

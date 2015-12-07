@@ -18,7 +18,6 @@ using System.Windows.Forms;
 using SharpGL.SceneGraph.Assets;
 using SharpGL.SceneGraph.Quadrics;
 using SharpGL.SceneComponent;
-using YieldingGeometryModel;
 using SharpGL.SceneComponent.Model;
 
 namespace ColorVertexSample

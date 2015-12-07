@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace YieldingGeometryModel
+namespace Simlab.Well
 {
     public partial class PointSpriteStringElement
     {

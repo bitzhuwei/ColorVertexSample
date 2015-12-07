@@ -60,6 +60,7 @@
             // 
             this.btnFormHexahedronGridder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFormHexahedronGridder.Enabled = false;
             this.btnFormHexahedronGridder.Location = new System.Drawing.Point(12, 41);
             this.btnFormHexahedronGridder.Name = "btnFormHexahedronGridder";
             this.btnFormHexahedronGridder.Size = new System.Drawing.Size(930, 23);
@@ -84,6 +85,7 @@
             // 
             this.btnFormPointSpriteGridderElement.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFormPointSpriteGridderElement.Enabled = false;
             this.btnFormPointSpriteGridderElement.Location = new System.Drawing.Point(12, 70);
             this.btnFormPointSpriteGridderElement.Name = "btnFormPointSpriteGridderElement";
             this.btnFormPointSpriteGridderElement.Size = new System.Drawing.Size(930, 23);
@@ -96,6 +98,7 @@
             // 
             this.btnFormUnStructuredGridderElement.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFormUnStructuredGridderElement.Enabled = false;
             this.btnFormUnStructuredGridderElement.Location = new System.Drawing.Point(12, 128);
             this.btnFormUnStructuredGridderElement.Name = "btnFormUnStructuredGridderElement";
             this.btnFormUnStructuredGridderElement.Size = new System.Drawing.Size(930, 23);
@@ -120,6 +123,7 @@
             // 
             this.btnFormdfmPointSpriteGridderElement.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFormdfmPointSpriteGridderElement.Enabled = false;
             this.btnFormdfmPointSpriteGridderElement.Location = new System.Drawing.Point(12, 186);
             this.btnFormdfmPointSpriteGridderElement.Name = "btnFormdfmPointSpriteGridderElement";
             this.btnFormdfmPointSpriteGridderElement.Size = new System.Drawing.Size(930, 23);
@@ -132,6 +136,7 @@
             // 
             this.btnFormDynamicUnStructuredGridderElement.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFormDynamicUnStructuredGridderElement.Enabled = false;
             this.btnFormDynamicUnStructuredGridderElement.Location = new System.Drawing.Point(12, 215);
             this.btnFormDynamicUnStructuredGridderElement.Name = "btnFormDynamicUnStructuredGridderElement";
             this.btnFormDynamicUnStructuredGridderElement.Size = new System.Drawing.Size(930, 23);
@@ -144,6 +149,7 @@
             // 
             this.btnFormZippedHexadronGridderElement.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFormZippedHexadronGridderElement.Enabled = false;
             this.btnFormZippedHexadronGridderElement.Location = new System.Drawing.Point(12, 244);
             this.btnFormZippedHexadronGridderElement.Name = "btnFormZippedHexadronGridderElement";
             this.btnFormZippedHexadronGridderElement.Size = new System.Drawing.Size(930, 23);
@@ -156,6 +162,7 @@
             // 
             this.btnFormTexture2dHexahedronGridderElement.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFormTexture2dHexahedronGridderElement.Enabled = false;
             this.btnFormTexture2dHexahedronGridderElement.Location = new System.Drawing.Point(12, 273);
             this.btnFormTexture2dHexahedronGridderElement.Name = "btnFormTexture2dHexahedronGridderElement";
             this.btnFormTexture2dHexahedronGridderElement.Size = new System.Drawing.Size(930, 23);
@@ -204,6 +211,7 @@
             // 
             this.btnFormTexture2dHexahedronGridderElement_DrawElements.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnFormTexture2dHexahedronGridderElement_DrawElements.Enabled = false;
             this.btnFormTexture2dHexahedronGridderElement_DrawElements.Location = new System.Drawing.Point(12, 302);
             this.btnFormTexture2dHexahedronGridderElement_DrawElements.Name = "btnFormTexture2dHexahedronGridderElement_DrawElements";
             this.btnFormTexture2dHexahedronGridderElement_DrawElements.Size = new System.Drawing.Size(930, 23);

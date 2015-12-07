@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace YieldingGeometryModel
+namespace Simlab.Well
 {
     /// <summary>
     /// 用于渲染字符串。
