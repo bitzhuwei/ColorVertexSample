@@ -68,11 +68,12 @@ namespace Sample
         }
 
         protected void InitSlice(ListBox box, IList<int> slices){
+             box.BeginUpdate();
              box.Items.Clear();
              foreach(int coord in slices){
                  box.Items.Add(coord);
              }
-
+             box.EndUpdate();
         }
 
         private void OnGridPropertyChanged(object sender, EventArgs e)
@@ -109,12 +110,14 @@ namespace Sample
 
             GridProperty prop1 = GridPropertyGenerator.CreateGridIndexProperty(dimenSize, "Grid Position");
             GridProperty prop2 = GridPropertyGenerator.CreateRandomProperty(dimenSize, "Random", minValue, maxValue);
+            this.cbxGridProperties.BeginUpdate();
             this.cbxGridProperties.Items.Clear();
             this.cbxGridProperties.Items.Add(prop1);
             this.cbxGridProperties.Items.Add(prop2);
             this.cbxGridProperties.SelectedIndex = 0;
             this.cbxGridProperties.SelectedValueChanged -= this.OnGridPropertyChanged;
             this.cbxGridProperties.SelectedValueChanged += this.OnGridPropertyChanged;
+            this.cbxGridProperties.EndUpdate();
         }
 
         public GridProperty CurrentProperty
@@ -153,17 +156,21 @@ namespace Sample
                 float[] dyArray = initArray(dimenSize, dy);
                 float[] dzArray = initArray(dimenSize, dz);
                 // use CatesianGridderSource to fill HexahedronGridderElement's content.
+
+                DateTime t0 = DateTime.Now;
                 CatesianGridderSource source = new CatesianGridderSource() { NX = nx, NY = ny, NZ = nz, DX = dxArray, DY = dyArray, DZ = dzArray, };
                 source.IBlocks = GridBlockHelper.CreateBlockCoords(nx);
                 source.JBlocks = GridBlockHelper.CreateBlockCoords(ny);
                 source.KBlocks = GridBlockHelper.CreateBlockCoords(nz);
                 source.Init();
+                DateTime t1 = DateTime.Now;
 
                 InitSlice(lbxNI, source.IBlocks);
                 InitSlice(lbxNJ, source.JBlocks);
                 InitSlice(lbxNZ, source.KBlocks);
                 InitPropertiesAndSelectDefault(dimenSize, propMin, propMax);
-                
+
+                DateTime t2 = DateTime.Now;
 
                 ///模拟获得网格属性
                 ///获得当前选中的属性
@@ -181,9 +188,13 @@ namespace Sample
                 
                
                 // use HexahedronGridderElement
-                DateTime t0 = DateTime.Now;
+                DateTime t3 = DateTime.Now;
                 MeshGeometry3D geometry = source.CreateMesh();
+                DateTime t4 = DateTime.Now;
+
                 TextureCoordinatesBufferData textureCoodinates  = source.CreateTextureCoordinates(gridIndexes, gridValues, minValue, maxValue);
+                DateTime t5 = DateTime.Now;
+
                 Bitmap texture = ColorPaletteHelper.GenBitmap(this.sim3D.uiColorIndicator.Data.ColorPalette);
                 //geometry.Positions.Dump();
                 //geometry.TriangleIndices.Dump();
@@ -195,23 +206,10 @@ namespace Sample
                 gridder.SetTexture(texture);
                 gridder.SetTextureCoods(textureCoodinates);
                 //textureCoodinates.Dump();
-              
+                DateTime t6 = DateTime.Now;
 
-                DateTime t1 = DateTime.Now;
-                TimeSpan ts1 = t1 - t0;
                 
-                //mesh.VertexColors = HexahedronGridderHelper.FromColors(source, gridIndexes, colors, mesh.Visibles);
-                //this.DebugMesh(mesh);
-               
-                //HexahedronGridderElement gridderElement = new HexahedronGridderElement(source, this.scientificVisual3DControl.Scene.CurrentCamera);
-                //gridderElement.renderWireframe = false;
-                //method1
-                //gridderElement.Initialize(this.scientificVisual3DControl.OpenGL);
-
-                //method2
-                //gridderElement.Initialize(this.scientificVisual3DControl.OpenGL, mesh);
-                DateTime t2 = DateTime.Now;
-               
+      
                 //gridderElement.SetBoundingBox(mesh.Min, mesh.Max);
                 this.sim3D.Tag = source;
                              
@@ -219,7 +217,7 @@ namespace Sample
                 //gridderElement.Name = string.Format("element {0}", elementCounter++);
                 //this.scientificVisual3DControl.AddModelElement(gridderElement);
 
-                DateTime t3 = DateTime.Now;
+             
                 // update ModelContainer's BoundingBox.
                 BoundingBox boundingBox = this.sim3D.ModelContainer.BoundingBox;
                 boundingBox.SetBounds(geometry.Min, geometry.Max);
@@ -227,12 +225,16 @@ namespace Sample
                 // update ViewType to UserView.
                 this.sim3D.ViewType = ViewTypes.UserView;
                 this.sim3D.AddModelElement(gridder);
-                //mesh.Dispose();
+                
 
                 StringBuilder msgBuilder = new StringBuilder();
-                msgBuilder.AppendLine(String.Format("create mesh in {0} secs", (t1 - t0).TotalSeconds));
-                msgBuilder.AppendLine(String.Format("init SceneElement in {0} secs", (t2 - t1).TotalSeconds));
-                msgBuilder.AppendLine(String.Format("total load in {0} secs", (t2 - t0).TotalSeconds));
+                msgBuilder.AppendLine(String.Format("Init Grid DataSource  in {0} secs", (t1 - t0).TotalSeconds));
+                msgBuilder.AppendLine(String.Format("init ControlValues in {0} secs", (t2 - t1).TotalSeconds));
+                msgBuilder.AppendLine(String.Format("prepare other params  in {0} secs",(t3-t2).TotalSeconds));
+                msgBuilder.AppendLine(String.Format("CreateMesh in {0} secs", (t4 - t3).TotalSeconds));
+                msgBuilder.AppendLine(String.Format("CreateTextures in {0} secs", (t5 - t4).TotalSeconds));
+                msgBuilder.AppendLine(String.Format("Init SimLabGrid  in {0} secs", (t6 - t5).TotalSeconds));
+                msgBuilder.AppendLine(String.Format("Total, Create 3D Grid  in {0} secs", (t6 - t0).TotalSeconds));
                 String msg = msgBuilder.ToString();
                 MessageBox.Show(msg, "Summary", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -274,6 +276,9 @@ namespace Sample
             this.lbxNI.Items.Clear();
             this.lbxNJ.Items.Clear();
             this.lbxNZ.Items.Clear();
+            this.cbxGridProperties.SelectedIndex = -1;
+            this.cbxGridProperties.Items.Clear();
+           
             GC.Collect();
         }
 

@@ -10,7 +10,13 @@ using System.Threading.Tasks;
 namespace SimLab.GridSource
 {
     /// <summary>
-    /// 网格数据源
+    /// 网格数据源, 赋值后调用初始化Init才能使用:
+    /// GridderSource src = new CatesianGridderSource()
+    /// src.NX = 1;
+    /// ....
+    /// src.Init();
+    /// 
+    /// 
     /// </summary>
     public abstract class GridderSource
     {
@@ -84,6 +90,18 @@ namespace SimLab.GridSource
         public void InvertIJK(int index, out int I, out int J, out int K)
         {
              this.gridIndexer.IJKOfIndex(index, out I, out J, out K);
+        }
+
+        /// <summary>
+        /// 求出网格索引位置
+        /// </summary>
+        /// <param name="I">网格坐标 I方向，1起始</param>
+        /// <param name="J">网格坐标 J方向，1起始</param>
+        /// <param name="K">网格坐标 K方向，1起始</param>
+        /// <returns></returns>
+        protected int GridIndexOf(int I, int J, int K)
+        {
+            return gridIndexer.IndexOf(I, J, K);
         }
 
         protected void IJK2Index(int I, int J, int K, out int index)
