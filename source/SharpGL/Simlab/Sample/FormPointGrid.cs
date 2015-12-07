@@ -181,25 +181,12 @@ namespace Sample
                 DateTime t1 = DateTime.Now;
                 TimeSpan ts1 = t1 - t0;
                 
-                //mesh.VertexColors = HexahedronGridderHelper.FromColors(source, gridIndexes, colors, mesh.Visibles);
-                //this.DebugMesh(mesh);
                
-                //HexahedronGridderElement gridderElement = new HexahedronGridderElement(source, this.scientificVisual3DControl.Scene.CurrentCamera);
-                //gridderElement.renderWireframe = false;
-                //method1
-                //gridderElement.Initialize(this.scientificVisual3DControl.OpenGL);
-
-                //method2
-                //gridderElement.Initialize(this.scientificVisual3DControl.OpenGL, mesh);
                 DateTime t2 = DateTime.Now;
                
                 //gridderElement.SetBoundingBox(mesh.Min, mesh.Max);
                 this.sim3D.Tag = source;
                              
-
-                //gridderElement.Name = string.Format("element {0}", elementCounter++);
-                //this.scientificVisual3DControl.AddModelElement(gridderElement);
-
                 DateTime t3 = DateTime.Now;
                 // update ModelContainer's BoundingBox.
                 BoundingBox boundingBox = this.sim3D.ModelContainer.BoundingBox;
