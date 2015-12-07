@@ -1,16 +1,16 @@
 #version 150 core
 
-in vec4 pass_Color;
-in float pass_visible;
+in float pass_uv;
 in vec2 pass_position;
 in float pass_pointSize;
 out vec4 out_Color;
 
 uniform float canvasWidth;
 uniform float canvasHeight;
+uniform sampler2D tex;
 
 void main(void) {
-	if (pass_visible == 1)
+	if (0.0 <= pass_uv && pass_uv <= 1.0)
 	{
 		//get screen coord from frag coord
 		float screenX = (gl_FragCoord.x / canvasWidth - 0.5) * 2;
@@ -24,7 +24,7 @@ void main(void) {
 		{ discard; }
 		else
 		{
-			out_Color = pass_Color;
+			out_Color = texture(tex, vec2(pass_uv, 0.5));
 		}
 	}
 	else

@@ -22,6 +22,8 @@ namespace SimLab
         uint ATTRIB_INDEX_RADIUS = 2;
 
         private uint[] radiusBuffer;
+        uint[] vertexArrayObject;
+        private int count;
 
         private GlmNet.mat4 projectionMatrix;
         private GlmNet.mat4 viewMatrix;
@@ -34,63 +36,90 @@ namespace SimLab
 
         }
 
+        public void Init(PointMeshGeometry3D geometry)
+        {
+            base.Init(geometry);
+
+            this.count = geometry.Count;
+        }
+
         #region IRenderable
 
         protected void BeforeRendering(OpenGL gl, RenderMode renderMode)
         {
+            IScientificCamera camera = this.camera;
+            if (camera != null)
+            {
+                if (camera.CameraType == CameraTypes.Perspecitive)
+                {
+                    IPerspectiveViewCamera perspective = camera;
+                    this.projectionMatrix = perspective.GetProjectionMat4();
+                    this.viewMatrix = perspective.GetViewMat4();
+                }
+                else if (camera.CameraType == CameraTypes.Ortho)
+                {
+                    IOrthoViewCamera ortho = camera;
+                    this.projectionMatrix = ortho.GetProjectionMat4();
+                    this.viewMatrix = ortho.GetViewMat4();
+                }
+                else
+                { throw new NotImplementedException(); }
+            }
+
+            modelMatrix = mat4.identity();
+
+            gl.Enable(OpenGL.GL_VERTEX_PROGRAM_POINT_SIZE);
+            gl.Enable(OpenGL.GL_POINT_SPRITE_ARB);
+            gl.TexEnv(OpenGL.GL_POINT_SPRITE_ARB, OpenGL.GL_COORD_REPLACE_ARB, OpenGL.GL_TRUE);
+            gl.Enable(OpenGL.GL_POINT_SMOOTH);
+            gl.Hint(OpenGL.GL_POINT_SMOOTH_HINT, OpenGL.GL_NICEST);
+            gl.Enable(OpenGL.GL_BLEND);
+            gl.BlendEquation(OpenGL.GL_FUNC_ADD_EXT);
+            gl.BlendFuncSeparate(OpenGL.GL_SRC_ALPHA, OpenGL.GL_ONE_MINUS_SRC_ALPHA, OpenGL.GL_ONE, OpenGL.GL_ONE);
+
+            ShaderProgram shader = this.shaderProgram;
+            int[] viewport = new int[4];
+            gl.GetInteger(OpenGL.GL_VIEWPORT, viewport);
+
+            shader.Bind(gl);
+            shader.SetUniformMatrix4(gl, "projectionMatrix", projectionMatrix.to_array());
+            shader.SetUniformMatrix4(gl, "viewMatrix", viewMatrix.to_array());
+            shader.SetUniformMatrix4(gl, "modelMatrix", modelMatrix.to_array());
+            shader.SetUniform1(gl, "canvasWidth", viewport[2] + 0.0f);
+            shader.SetUniform1(gl, "canvasHeight", viewport[3] + 0.0f);
+
+            shaderProgram.SetUniform1(gl, "tex", this.texture.TextureName);
+
         }
 
         #region IRenderable 成员
 
         void IRenderable.Render(OpenGL gl, RenderMode renderMode)
         {
-            if (this.shaderProgram == null)
+            if (positionBuffer != null && colorBuffer != null && radiusBuffer != null)
             {
-                this.shaderProgram = InitShader(gl, renderMode);
-            }
-            if (this.vertexArrayObject == null)
-            {
-                CreateVertexArrayObject(gl, renderMode);
-            }
+                if (this.shaderProgram == null)
+                {
+                    this.shaderProgram = InitShader(gl, renderMode);
+                }
+                if (this.vertexArrayObject == null)
+                {
+                    CreateVertexArrayObject(gl, renderMode);
+                }
 
-            BeforeRendering(gl, renderMode);
+                BeforeRendering(gl, renderMode);
 
-            if (this.RenderGrid)
-            {
-                if (positionBuffer != null && colorBuffer != null && radiusBuffer != null)
+                if (this.RenderGrid)
                 {
                     gl.BindVertexArray(this.vertexArrayObject[0]);
-                    //gl.DrawArrays(OpenGL.GL_POINTS, 0, );
+                    gl.DrawArrays(OpenGL.GL_POINTS, 0, count);
                     gl.BindVertexArray(0);
-                    //// prepare positions
-                    //{
-                    //    int location = shaderProgram.GetAttributeLocation(gl, in_Position);
-                    //    ATTRIB_INDEX_POSITION = (uint)location;
-                    //    gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, positionBuffer[0]);
-                    //    gl.VertexAttribPointer(ATTRIB_INDEX_POSITION, 3, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
-                    //    gl.EnableVertexAttribArray(ATTRIB_INDEX_POSITION);
-                    //}
-                    //// prepare colors
-                    //{
-                    //    int location = shaderProgram.GetAttributeLocation(gl, in_uv);
-                    //    ATTRIB_INDEX_COLOUR = (uint)location;
-                    //    gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, colorBuffer[0]);
-                    //    gl.VertexAttribPointer(ATTRIB_INDEX_COLOUR, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
-                    //    gl.EnableVertexAttribArray(ATTRIB_INDEX_COLOUR);
-                    //}
-                    //// prepare index
-                    //{
-                    //    gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, indexBuffer[0]);
-                    //}
-
-                    //gl.DrawElements(OpenGL.GL_TRIANGLES, this.indexBufferLength, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
                 }
-            }
 
-            AfterRendering(gl, renderMode);
+                AfterRendering(gl, renderMode);
+            }
         }
 
-        uint[] vertexArrayObject;
 
         private void CreateVertexArrayObject(OpenGL gl, RenderMode renderMode)
         {
@@ -159,13 +188,12 @@ namespace SimLab
 
         protected void AfterRendering(OpenGL gl, RenderMode renderMode)
         {
-            gl.Disable(OpenGL.GL_POLYGON_SMOOTH);
-
             shaderProgram.Unbind(gl);
-
+            gl.Disable(OpenGL.GL_BLEND);
+            gl.Disable(OpenGL.GL_VERTEX_PROGRAM_POINT_SIZE);
+            gl.Disable(OpenGL.GL_POINT_SPRITE_ARB);
+            gl.Disable(OpenGL.GL_POINT_SMOOTH);
             gl.BindTexture(OpenGL.GL_TEXTURE_2D, 0);
-
-            gl.Disable(OpenGL.GL_TEXTURE_2D);
         }
 
         #endregion IRenderable
