@@ -1,6 +1,5 @@
 ﻿using SharpGL;
 using SharpGL.SceneGraph;
-using SimLab.SimGrid;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +7,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimLab
+namespace SimLab.MeshGeometrys
 {
 
 
@@ -214,63 +213,6 @@ namespace SimLab
     }
 
 
-    /// <summary>
-    /// 无结构化网格的母体
-    /// </summary>
-    public class MatrixPositionBufferData : PositionsBufferData
-    {
-        /// <summary>
-        /// shape 定义
-        /// </summary>
-        public const int SHAPE_TRIANGLE = DynamicUnstructuredGridderSource.MATRIX_FORMAT3_TRIANGLE;
-        public const int SHAPE_TETRAHEDRON = DynamicUnstructuredGridderSource.MATRIX_FORMAT4_TETRAHEDRON;
-
-        /// <summary>
-        /// 组成基质的形状 ，四面体或者三角形 SHAPE_TRIANGLE, SHAPE_TETRAHEDRON
-        /// </summary>
-        public int Shape
-        {
-            get;
-            set;
-        }
-
-        public MatrixPositionBufferData()
-        {
-
-        }
-
-
-    }
-
-
-    /// <summary>
-    /// 三角形索引
-    /// </summary>
-    public class MatrixIndicesBufferData : TriangleIndicesBufferData
-    {
-        public MatrixIndicesBufferData()
-        {
-        }
-    }
-
-    public class FracturePositionBufferData : PositionsBufferData
-    {
-        public const int SHAPE_LINE = DynamicUnstructuredGridderSource.FRACTURE_FORMAT2_LINE;
-        public const int SHAPE_TRIANGLE = DynamicUnstructuredGridderSource.FRACTURE_FORMAT3_TRIANGLE;
-
-        /// <summary>
-        /// 组成裂缝的形状 ，四面体或者三角形, 见SHAPE_LINE,SHAPE_TRIANGLE
-        /// </summary>
-        public int Shape
-        {
-            get;
-            internal set;
-        }
-
-
-    }
-
-
 
     public class WireFrameBufferData : BufferData
     {
@@ -284,14 +226,6 @@ namespace SimLab
 
 
 
-    public class HalfHexahedronIndicesBufferData : BufferData
-    {
-        public HalfHexahedronIndicesBufferData()
-        {
-            this.GLDataType = OpenGL.GL_UNSIGNED_INT;
-            this.GLSize = 1;
-        }
-    }
 
     public class TriangleIndicesBufferData : BufferData
     {

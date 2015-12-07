@@ -7,13 +7,21 @@ using System.Threading.Tasks;
 
 namespace SimLabDesign1
 {
-    class IndexBuffer : VBOInfoBase
+    public class IndexBuffer : VBOInfoBase
     {
+        public override uint Target
+        {
+            get
+            {
+                return OpenGL.GL_ELEMENT_ARRAY_BUFFER;
+            }
+        }
+
         public int VertexCount { get; set; }
 
-        public IndexBuffer()
+        public override void LayoutForVAO(OpenGL gl)
         {
-            this.Target = OpenGL.GL_ELEMENT_ARRAY_BUFFER;
+            gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, this.BufferID);
         }
 
         public override string ToString()

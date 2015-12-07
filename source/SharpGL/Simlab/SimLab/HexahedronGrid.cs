@@ -21,9 +21,6 @@ namespace SimLab
         protected uint[] indexBuffer;
         protected int indexBufferLength;
 
-        protected uint[] wireframeIndexBuffer;
-        protected int wireframeIndexBufferLength;
-
         uint[] vertexArrayObject;
 
         private GlmNet.mat4 projectionMatrix;
@@ -42,35 +39,10 @@ namespace SimLab
             base.Init(geometry);
 
             indexBuffer = new uint[1];
-            indexBuffer[0] = CreateVertexBufferObject(OpenGL.GL_ELEMENT_ARRAY_BUFFER, geometry.TriangleIndices, OpenGL.GL_STATIC_DRAW);
+            indexBuffer[0] = CreateVertexBufferObject(OpenGL.GL_ELEMENT_ARRAY_BUFFER, geometry.HalfHexahedronIndices, OpenGL.GL_STATIC_DRAW);
 
             int elementLength = sizeof(uint);// should be 4.
-            this.indexBufferLength = geometry.TriangleIndices.SizeInBytes / (elementLength);
-        }
-
-        public override void SetWireframe(WireFrameBufferData lineIndexes)
-        {
-            if (lineIndexes != null)
-            {
-                if (wireframeIndexBuffer != null)
-                {
-                    gl.DeleteBuffers(wireframeIndexBuffer.Length, wireframeIndexBuffer);
-                }
-                ////TODO:如果用此方式，则必须先将此对象加入scene树，然后再调用Init
-                //OpenGL gl = this.TraverseToRootElement().ParentScene.OpenGL;
-                wireframeIndexBuffer = new uint[1];
-                wireframeIndexBuffer[0] = CreateVertexBufferObject(OpenGL.GL_ARRAY_BUFFER, lineIndexes, OpenGL.GL_STATIC_DRAW);
-
-                int elementLength = sizeof(uint);// should be 4.
-                this.wireframeIndexBufferLength = lineIndexes.SizeInBytes / (elementLength);
-            }
-            else
-            {
-                if (wireframeIndexBuffer != null)
-                {
-                    gl.DeleteBuffers(wireframeIndexBuffer.Length, wireframeIndexBuffer);
-                }
-            }
+            this.indexBufferLength = geometry.HalfHexahedronIndices.SizeInBytes / (elementLength);
         }
 
         #region IRenderable
@@ -133,9 +105,10 @@ namespace SimLab
 
             if (this.RenderGridWireFrame)
             {
-                if (wireframeIndexBuffer != null)
+                //if (wireframeIndexBuffer != null)
+                if (positionBuffer != null && colorBuffer != null && indexBuffer != null)
                 {
-                    shaderProgram.SetUniform1(gl, "renderingWireframe", 1.0f);
+                    shaderProgram.SetUniform1(gl, "renderingWireframe", 1.0f);// shader一律上白色。
 
                     gl.Disable(OpenGL.GL_LINE_STIPPLE);
                     gl.Disable(OpenGL.GL_POLYGON_STIPPLE);
@@ -146,10 +119,15 @@ namespace SimLab
                     gl.Hint(SharpGL.Enumerations.HintTarget.PolygonSmooth, SharpGL.Enumerations.HintMode.Nicest);
                     gl.PolygonMode(SharpGL.Enumerations.FaceMode.FrontAndBack, SharpGL.Enumerations.PolygonMode.Lines);
 
+                    gl.Enable(OpenGL.GL_PRIMITIVE_RESTART);
+                    gl.PrimitiveRestartIndex(uint.MaxValue);
+
                     gl.BindVertexArray(this.vertexArrayObject[0]);
-                    gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, wireframeIndexBuffer[0]);
-                    gl.DrawElements(OpenGL.GL_LINES, this.wireframeIndexBufferLength, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
+                    gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, indexBuffer[0]);
+                    gl.DrawElements(OpenGL.GL_QUAD_STRIP, this.indexBufferLength, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
                     gl.BindVertexArray(0);
+
+                    gl.Disable(OpenGL.GL_PRIMITIVE_RESTART);
 
                     gl.PolygonMode(SharpGL.Enumerations.FaceMode.FrontAndBack, SharpGL.Enumerations.PolygonMode.Filled);
                     gl.Disable(OpenGL.GL_POLYGON_SMOOTH);
@@ -162,11 +140,17 @@ namespace SimLab
             {
                 if (positionBuffer != null && colorBuffer != null && indexBuffer != null)
                 {
-                    shaderProgram.SetUniform1(gl, "renderingWireframe", 0.0f);
+                    shaderProgram.SetUniform1(gl, "renderingWireframe", 0.0f);// shader根据uv buffer来上色。
+
+                    gl.Enable(OpenGL.GL_PRIMITIVE_RESTART);
+                    gl.PrimitiveRestartIndex(uint.MaxValue);
+
                     gl.BindVertexArray(this.vertexArrayObject[0]);
                     gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, indexBuffer[0]);
-                    gl.DrawElements(OpenGL.GL_TRIANGLES, this.indexBufferLength, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
+                    gl.DrawElements(OpenGL.GL_QUAD_STRIP, this.indexBufferLength, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
                     gl.BindVertexArray(0);
+
+                    gl.Disable(OpenGL.GL_PRIMITIVE_RESTART);
                 }
             }
 
@@ -244,11 +228,6 @@ namespace SimLab
             if (this.indexBuffer != null)
             {
                 gl.DeleteBuffers(this.indexBuffer.Length, this.indexBuffer);
-            }
-
-            if (this.wireframeIndexBuffer != null)
-            {
-                gl.DeleteBuffers(this.wireframeIndexBuffer.Length, this.wireframeIndexBuffer);
             }
 
             if (this.vertexArrayObject != null)

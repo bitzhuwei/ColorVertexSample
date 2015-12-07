@@ -80,12 +80,10 @@
     <Compile Include="SimGrid\Geometry\HexahedronPositions.cs" />
     <Compile Include="SimGrid\Geometry\LineIndex.cs" />
     <Compile Include="SimGrid\Geometry\LinePositions.cs" />
-    <Compile Include="SimGrid\Geometry\LineUV.cs" />
     <Compile Include="SimGrid\Geometry\TetrahedronPositions.cs" />
-    <Compile Include="SimGrid\Geometry\TetrahedronUV.cs" />
+    <Compile Include="SimGrid\Geometry\HalfHexahedronIndex.cs" />
     <Compile Include="SimGrid\Geometry\TriangleIndex.cs" />
     <Compile Include="SimGrid\Geometry\TrianglePositions.cs" />
-    <Compile Include="SimGrid\Geometry\TriangleUV.cs" />
     <Compile Include="SimGrid\GridderSource.cs" />
     <Compile Include="SimGrid\GridIndexer.cs" />
     <Compile Include="SimGrid\Loader\DynamicUnstructureGeometryLoader.cs" />

@@ -71,11 +71,6 @@ namespace SimLab
 
         }
 
-
-        public virtual void SetWireframe(WireFrameBufferData lineIndexes) { }
-        
-
-
         public void SetTextureCoods(BufferData textureCoords)
         {
             ////TODO:如果用此方式，则必须先将此对象加入scene树，然后再调用Init
@@ -155,6 +150,11 @@ namespace SimLab
             if (this.colorBuffer != null)
             {
                 gl.DeleteBuffers(this.colorBuffer.Length, this.colorBuffer);
+            }
+
+            if (this.texture != null)
+            {
+                this.texture.Destroy(gl);
             }
 
             //gl.DeleteVertexArrays(1, new uint[] { this.vertexArrayObject });
