@@ -182,7 +182,7 @@ namespace SimLab.GridSource.Factory
             int[] bindVisibles = src.BindCellActive(src.BindVisibles, resultsVisibles);
 
             int dimenSize = src.DimenSize;
-            float[] textures = src.GetDefaultTextureCoords();
+            float[] textures = src.GetInvisibleTextureCoords();
             float distance = Math.Abs(maxValue - minValue);
             for (int i = 0; i < gridIndexes.Length; i++)
             {

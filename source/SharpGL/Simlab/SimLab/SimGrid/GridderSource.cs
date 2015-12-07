@@ -60,7 +60,7 @@ namespace SimLab.GridSource
         /// <summary>
         /// 透明texure坐标,大小为DimenSize
         /// </summary>
-        private float[] textures;
+        private float[] invisibleTextures;
 
        
 
@@ -201,10 +201,10 @@ namespace SimLab.GridSource
             {
                 this.zeroVisibles = InitIntArray(this.DimenSize, 0);
             }
-            if (this.textures == null)
+            if (this.invisibleTextures == null)
             {
                 //初始化不可视
-                this.textures = InitFloatArray(this.DimenSize, 2);
+                this.invisibleTextures = InitFloatArray(this.DimenSize, 2);
             }
 
             
@@ -271,10 +271,10 @@ namespace SimLab.GridSource
         /// 快速生成默认的网格Texture,值为空(值大于1）
         /// </summary>
         /// <returns></returns>
-        public float[] GetDefaultTextureCoords()
+        public float[] GetInvisibleTextureCoords()
         {
             float[] none = new float[this.DimenSize];
-            Array.Copy(this.textures, none, this.DimenSize);
+            Array.Copy(this.invisibleTextures, none, this.DimenSize);
             return none;
         }
 

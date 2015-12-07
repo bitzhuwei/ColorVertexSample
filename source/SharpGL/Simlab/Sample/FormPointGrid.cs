@@ -22,6 +22,7 @@ using SharpGL.SceneComponent.Model;
 using SimLab.GridSource;
 using SimLab;
 using System.Globalization;
+using SimLab.SimGrid.Loader;
 
 namespace Sample
 {
@@ -124,13 +125,13 @@ namespace Sample
             }
         }
 
-        private void CreateDynamicUnstructureGridVisual3D(object sender, EventArgs e)
+        private void CreateGridVisual3D(object sender, EventArgs e)
         {
             try
             {
-                int nx = System.Convert.ToInt32(tbNX.Text);
-                int ny = System.Convert.ToInt32(tbNY.Text);
-                int nz = System.Convert.ToInt32(tbNZ.Text);
+                int nx = 236365;
+                int ny = 1;
+                int nz = 1;
                 float step = System.Convert.ToSingle(tbColorIndicatorStep.Text);
                 //float radius = System.Convert.ToSingle(this.tbRadius.Text);
                 float propMin = System.Convert.ToSingle(this.tbxPropertyMinValue.Text,CultureInfo.InvariantCulture);
@@ -139,16 +140,15 @@ namespace Sample
                 float dx = System.Convert.ToSingle(this.tbDX.Text);
                 float dy = System.Convert.ToSingle(this.gbDY.Text);
                 float dz = System.Convert.ToSingle(this.tbDZ.Text);
-                float[] dxArray = initArray(dimenSize, dx);
-                float[] dyArray = initArray(dimenSize, dy);
-                float[] dzArray = initArray(dimenSize, dz);
+               
                 // use CatesianGridderSource to fill HexahedronGridderElement's content.
-                PointGridderSource source = new PointGridderSource() { NX = nx, NY = ny, NZ = nz };//, DX = dxArray, DY = dyArray, DZ = dzArray, };
+                string fileName = @"TET5_cvxyz.txt";
+                PointSetLoader loader = new PointSetLoader();
+                PointGridderSource source = loader.LoadFromFile(fileName, nx, ny, nz);
                 source.Init();
 
                 InitPropertiesAndSelectDefault(dimenSize, propMin, propMax);
                 
-
                 ///模拟获得网格属性
                 ///获得当前选中的属性
 

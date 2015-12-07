@@ -171,6 +171,9 @@
     <Content Include="geometry.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="TET5_cvxyz.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="TET5_geometry.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

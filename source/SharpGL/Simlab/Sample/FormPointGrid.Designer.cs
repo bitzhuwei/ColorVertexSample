@@ -263,7 +263,7 @@
             this.btnCreate3D.TabIndex = 12;
             this.btnCreate3D.Text = "Add";
             this.btnCreate3D.UseVisualStyleBackColor = true;
-            this.btnCreate3D.Click += new System.EventHandler(this.CreateDynamicUnstructureGridVisual3D);
+            this.btnCreate3D.Click += new System.EventHandler(this.CreateGridVisual3D);
             // 
             // tbColorIndicatorStep
             // 
