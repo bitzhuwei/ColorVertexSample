@@ -16,7 +16,7 @@ namespace SimLab
 
     public abstract class BufferData : Disposable
     {
-        public const uint ATTRIB_INDEX_POSITION = 0;
+        //public const uint ATTRIB_INDEX_POSITION = 0;
 
 
 
@@ -179,7 +179,7 @@ namespace SimLab
         public PositionsBufferData()
         {
             this.GLDataType = OpenGL.GL_FLOAT;
-            this.GLAttribIndex = BufferData.ATTRIB_INDEX_POSITION;
+            //this.GLAttribIndex = BufferData.ATTRIB_INDEX_POSITION;
             this.GLSize = 3;
         }
 

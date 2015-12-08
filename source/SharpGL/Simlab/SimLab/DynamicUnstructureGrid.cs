@@ -236,6 +236,10 @@ namespace SimLab
             {
                 CreateVertexArrayObject(gl, renderMode);
             }
+            if (this.fractionVertexArrayObject == null)
+            {
+                CreateFractionVertexArrayObject(gl, renderMode);
+            }
 
             BeforeRendering(gl, renderMode);
 
@@ -250,7 +254,7 @@ namespace SimLab
         {
             if (this.fractionPositionBuffer == null || this.fractionUVBuffer == null) { return; }
 
-            if (this.RenderFraction)
+            if (this.RenderFraction && this.fractionVertexArrayObject != null)
             {
                 shaderProgram.SetUniform1(gl, "renderingWireframe", 0.0f);
 
@@ -283,7 +287,7 @@ namespace SimLab
                 gl.Disable(OpenGL.GL_POLYGON_OFFSET_FILL);
             }
 
-            if (this.renderFractionWireframe)
+            if (this.renderFractionWireframe && this.fractionVertexArrayObject != null)
             {
                 shaderProgram.SetUniform1(gl, "renderingWireframe", 1.0f);
 
@@ -318,7 +322,7 @@ namespace SimLab
         {
             if (this.positionBuffer == null || this.colorBuffer == null) { return; }
 
-            if (this.RenderGrid)
+            if (this.RenderGrid && this.matrixVertexArrayObject != null)
             {
                 shaderProgram.SetUniform1(gl, "renderingWireframe", 0.0f);
 
@@ -351,7 +355,7 @@ namespace SimLab
                 gl.Disable(OpenGL.GL_POLYGON_OFFSET_FILL);
             }
 
-            if (this.RenderGridWireframe)
+            if (this.RenderGridWireframe && this.matrixVertexArrayObject != null)
             {
                 shaderProgram.SetUniform1(gl, "renderingWireframe", 1.0f);
 
@@ -377,29 +381,9 @@ namespace SimLab
             }
         }
 
-
-        private void CreateVertexArrayObject(OpenGL gl, RenderMode renderMode)
+        private void CreateFractionVertexArrayObject(OpenGL gl, RenderMode renderMode)
         {
-            this.matrixVertexArrayObject = new uint[1];
-            gl.GenVertexArrays(1, this.matrixVertexArrayObject);
-            gl.BindVertexArray(this.matrixVertexArrayObject[0]);
-            // prepare positions
-            {
-                int location = shaderProgram.GetAttributeLocation(gl, in_Position);
-                ATTRIB_INDEX_POSITION = (uint)location;
-                gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, positionBuffer[0]);
-                gl.VertexAttribPointer(ATTRIB_INDEX_POSITION, 3, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
-                gl.EnableVertexAttribArray(ATTRIB_INDEX_POSITION);
-            }
-            // prepare colors
-            {
-                int location = shaderProgram.GetAttributeLocation(gl, in_uv);
-                ATTRIB_INDEX_UV = (uint)location;
-                gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, colorBuffer[0]);
-                gl.VertexAttribPointer(ATTRIB_INDEX_UV, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
-                gl.EnableVertexAttribArray(ATTRIB_INDEX_UV);
-            }
-            gl.BindVertexArray(0);
+            if (this.fractionPositionBuffer == null || this.fractionUVBuffer == null) { return; }
 
             this.fractionVertexArrayObject = new uint[1];
             gl.GenVertexArrays(1, this.fractionVertexArrayObject);
@@ -422,6 +406,34 @@ namespace SimLab
             }
 
             gl.BindVertexArray(0);
+        }
+
+        private void CreateVertexArrayObject(OpenGL gl, RenderMode renderMode)
+        {
+            if (this.positionBuffer == null || this.colorBuffer == null) { return; }
+
+            this.matrixVertexArrayObject = new uint[1];
+            gl.GenVertexArrays(1, this.matrixVertexArrayObject);
+            gl.BindVertexArray(this.matrixVertexArrayObject[0]);
+            // prepare positions
+            {
+                int location = shaderProgram.GetAttributeLocation(gl, in_Position);
+                ATTRIB_INDEX_POSITION = (uint)location;
+                gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, positionBuffer[0]);
+                gl.VertexAttribPointer(ATTRIB_INDEX_POSITION, 3, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
+                gl.EnableVertexAttribArray(ATTRIB_INDEX_POSITION);
+            }
+            // prepare colors
+            {
+                int location = shaderProgram.GetAttributeLocation(gl, in_uv);
+                ATTRIB_INDEX_UV = (uint)location;
+                gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, colorBuffer[0]);
+                gl.VertexAttribPointer(ATTRIB_INDEX_UV, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
+                gl.EnableVertexAttribArray(ATTRIB_INDEX_UV);
+            }
+            gl.BindVertexArray(0);
+
+
         }
 
         private ShaderProgram InitShader(OpenGL gl, RenderMode renderMode)
