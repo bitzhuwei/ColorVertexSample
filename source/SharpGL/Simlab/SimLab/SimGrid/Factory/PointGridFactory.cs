@@ -13,6 +13,9 @@ namespace SimLab.GridSource.Factory
     public class PointGridFactory : GridBufferDataFactory
     {
 
+
+
+
         public override MeshBase CreateMesh(GridderSource source)
         {
             PointGridderSource src = (PointGridderSource)source;
@@ -20,7 +23,7 @@ namespace SimLab.GridSource.Factory
             Vertex maxVertex = new Vertex();
             bool isSet = false;
             PositionsBufferData positions = new PositionsBufferData();
-            RadiusBufferData   radiusBuffer = new RadiusBufferData();
+            RadiusBufferData radiusBuffer = null;
             int dimSize = src.DimenSize;
             Random random = new Random();
             // setup positions
@@ -48,22 +51,50 @@ namespace SimLab.GridSource.Factory
                     }
                 }
             }
-            // setup radius
-            unsafe
-            {
-                int gridMemSize = dimSize * sizeof(float);
-                radiusBuffer.AllocMem(gridMemSize);
-                float* radiues = (float*)radiusBuffer.Data;
-                for (int gridIndex = 0; gridIndex < dimSize; gridIndex++)
-                {
-                    radiues[gridIndex] = src.Radius[gridIndex];
-                }
-            }
+            radiusBuffer = this.CreateRadiusBufferData(src, src.Radius);
             PointMeshGeometry3D mesh = new PointMeshGeometry3D(positions, radiusBuffer, dimSize);
             mesh.Max = maxVertex;
             mesh.Min = minVertex;
             return mesh;
         }
+
+
+        public RadiusBufferData CreateRadiusBufferData(PointGridderSource src, float[] radius)
+        {
+            RadiusBufferData radiusBuffer = new RadiusBufferData();
+            unsafe
+            {
+                int dimenSize = src.DimenSize;
+                int gridMemSize = src.DimenSize * sizeof(float);
+                radiusBuffer.AllocMem(gridMemSize);
+                float* radiues = (float*)radiusBuffer.Data;
+                for (int gridIndex = 0; gridIndex < dimenSize; gridIndex++)
+                {
+                    radiues[gridIndex] = radius[gridIndex];
+                }
+            }
+            return radiusBuffer;
+        }
+
+
+        public RadiusBufferData CreateRadiusBufferData(PointGridderSource src, float radius)
+        {
+
+            RadiusBufferData radiusBuffer = new RadiusBufferData();
+            unsafe
+            {
+                int dimenSize = src.DimenSize;
+                int gridMemSize = src.DimenSize * sizeof(float);
+                radiusBuffer.AllocMem(gridMemSize);
+                float* radiues = (float*)radiusBuffer.Data;
+                for (int gridIndex = 0; gridIndex < dimenSize; gridIndex++)
+                {
+                    radiues[gridIndex] = radius;
+                }
+            }
+            return radiusBuffer;
+        }
+        
         
 
         public override TextureCoordinatesBufferData CreateTextureCoordinates(GridderSource source, int[] gridIndexes, float[] values, float minValue, float maxValue)

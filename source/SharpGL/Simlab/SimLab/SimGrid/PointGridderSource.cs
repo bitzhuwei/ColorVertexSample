@@ -13,6 +13,10 @@ namespace SimLab.GridSource
     /// </summary>
     public class PointGridderSource : GridderSource
     {
+       
+
+        
+
 
         private Vertex[] positions;
 
@@ -41,7 +45,13 @@ namespace SimLab.GridSource
         public Vertex[] Positions
         {
             get { return this.positions; }
-            internal set { this.positions = value; }
+            set { this.positions = value; }
+        }
+
+        public float OriginalRadius
+        {
+            get;
+            set;
         }
 
 
@@ -52,6 +62,12 @@ namespace SimLab.GridSource
         {
             get { return this.radius; }
             set { this.radius = value; }
+        }
+
+        public Vertex GetPosition(int i, int j, int k)
+        {
+            int gridIndex= this.GridIndexOf(i, j, k);
+            return this.Positions[gridIndex];
         }
 
         protected int[] ExpandVisibles(int[] gridIndexes)
@@ -86,6 +102,24 @@ namespace SimLab.GridSource
         {
             int[] resultHas =  this.ExpandVisibles(gridIndexes);
             return this.BindCellActive(resultHas, this.ActNums);
+        }
+
+        public new PointGridFactory Factory
+        {
+            get
+            {
+               return (PointGridFactory)base.Factory;
+            }
+        }
+
+        public RadiusBufferData CreateRadiusBuffer(float[] radius)
+        {
+           return  this.Factory.CreateRadiusBufferData(this, radius);
+        }
+
+        public RadiusBufferData CreateRadiusBuffer(float radius)
+        {
+            return this.Factory.CreateRadiusBufferData(this, radius);
         }
 
 

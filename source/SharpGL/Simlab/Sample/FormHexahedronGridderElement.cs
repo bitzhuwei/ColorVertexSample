@@ -104,6 +104,12 @@ namespace Sample
 
         }
 
+        public Bitmap GetTexture()
+        {
+            Bitmap texture = ColorPaletteHelper.GenBitmap(this.sim3D.uiColorIndicator.Data.ColorPalette);
+            return texture;
+        }
+
 
         private void InitPropertiesAndSelectDefault(int dimenSize, float minValue, float maxValue)
         {
