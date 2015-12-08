@@ -113,67 +113,6 @@ namespace SimLab.GridSource.Factory
             }
         }
 
-        /*
-        public override WireFrameBufferData CreateWireFrame(GridderSource source)
-        {
-            WireFrameBufferData wireframe = new WireFrameBufferData();
-            int lineCount = source.DimenSize * 12;
-            unsafe
-            {
-                int size = lineCount * sizeof(LineIndex);
-                wireframe.AllocMem(size);
-                LineIndex* cellLines = (LineIndex*)wireframe.Data;
-                for (int gridIndex = 0; gridIndex < source.DimenSize; gridIndex++)
-                {
-                    int index = gridIndex * 12;
-                    uint offset = (uint)(gridIndex * 8);
-
-                    //top
-                    cellLines[index + 0].p0 = offset + 0;
-                    cellLines[index + 0].p1 = offset + 1;
-
-                    cellLines[index + 1].p0 = offset + 1;
-                    cellLines[index + 1].p1 = offset + 2;
-
-                    cellLines[index + 2].p0 = offset + 2;
-                    cellLines[index + 2].p1 = offset + 3;
-
-
-                    cellLines[index + 3].p0 = offset + 3;
-                    cellLines[index + 3].p1 = offset + 0;
-
-                    //bottom
-                    cellLines[index + 4].p0 = offset + 4;
-                    cellLines[index + 4].p1 = offset + 5;
-
-                    cellLines[index + 5].p0 = offset + 5;
-                    cellLines[index + 5].p1 = offset + 6;
-
-                    cellLines[index + 6].p0 = offset + 6;
-                    cellLines[index + 6].p1 = offset + 7;
-
-                    cellLines[index + 7].p0 = offset + 7;
-                    cellLines[index + 7].p1 = offset + 4;
-
-                    //pillar
-                    cellLines[index + 8].p0 = offset + 0;
-                    cellLines[index + 8].p1 = offset + 4;
-
-                    cellLines[index + 9].p0 = offset + 1;
-                    cellLines[index + 9].p1 = offset + 5;
-
-                    cellLines[index + 10].p0 = offset + 2;
-                    cellLines[index + 10].p1 = offset + 6;
-
-                    cellLines[index + 11].p0 = offset + 3;
-                    cellLines[index + 11].p1 = offset + 7;
-
-                }
-                return wireframe;
-            }
-
-        }
-        */
 
         public override TextureCoordinatesBufferData CreateTextureCoordinates(GridderSource source, int[] gridIndexes, float[] values, float minValue, float maxValue)
         {
@@ -198,20 +137,20 @@ namespace SimLab.GridSource.Factory
                     if (!(distance <= 0.0f))
                     {
                         textures[gridIndex] = (value - minValue) / distance;
-                        if (textures[gridIndex] < 0.5f)
-                        {
-                            textures[gridIndex] = 0.5f - (0.5f - textures[gridIndex]) * 0.99f;
-                        }
-                        else
-                        {
-                            textures[gridIndex] = (textures[gridIndex] - 0.5f) * 0.99f + 0.5f;
-                        }
+                        //if (textures[gridIndex] < 0.5f)
+                        //{
+                        //    textures[gridIndex] = 0.5f - (0.5f - textures[gridIndex]) * 0.99f;
+                        //}
+                        //else
+                        //{
+                        //    textures[gridIndex] = (textures[gridIndex] - 0.5f) * 0.99f + 0.5f;
+                        //}
                     }
                     else
                     {
                         //最小值最大值相等时，显示最小值的颜色
-                        textures[gridIndex] = 0.01f;
-                        //textures[gridIndex] = 0.0f;
+                        //textures[gridIndex] = 0.01f;
+                        textures[gridIndex] = 0.0f;
                     }
                 }
             }
