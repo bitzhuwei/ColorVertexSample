@@ -103,7 +103,7 @@ namespace SimLab
 
             BeforeRendering(gl, renderMode);
 
-            if (this.RenderGridWireframe)
+            if (this.RenderGridWireframe && this.vertexArrayObject != null)
             {
                 //if (wireframeIndexBuffer != null)
                 if (positionBuffer != null && colorBuffer != null && indexBuffer != null)
@@ -136,7 +136,7 @@ namespace SimLab
             }
 
 
-            if (this.RenderGrid)
+            if (this.RenderGrid && this.vertexArrayObject != null)
             {
                 if (positionBuffer != null && colorBuffer != null && indexBuffer != null)
                 {
@@ -160,6 +160,8 @@ namespace SimLab
 
         private void CreateVertexArrayObject(OpenGL gl, RenderMode renderMode)
         {
+            if (this.positionBuffer == null || this.colorBuffer == null) { return; }
+
             this.vertexArrayObject = new uint[1];
             gl.GenVertexArrays(1, this.vertexArrayObject);
             gl.BindVertexArray(this.vertexArrayObject[0]);

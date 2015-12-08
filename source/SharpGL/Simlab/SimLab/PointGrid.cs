@@ -135,7 +135,7 @@ namespace SimLab
 
                 BeforeRendering(gl, renderMode);
 
-                if (this.RenderGrid)
+                if (this.RenderGrid && this.vertexArrayObject != null)
                 {
                     gl.BindVertexArray(this.vertexArrayObject[0]);
                     gl.DrawArrays(OpenGL.GL_POINTS, 0, count);
@@ -149,6 +149,8 @@ namespace SimLab
 
         private void CreateVertexArrayObject(OpenGL gl, RenderMode renderMode)
         {
+            if (this.positionBuffer == null || this.colorBuffer == null || this.radiusBuffer == null) { return; }
+
             this.vertexArrayObject = new uint[1];
             gl.GenVertexArrays(1, this.vertexArrayObject);
             gl.BindVertexArray(this.vertexArrayObject[0]);
@@ -173,7 +175,7 @@ namespace SimLab
             {
                 int location = shaderProgram.GetAttributeLocation(gl, in_radius);
                 ATTRIB_INDEX_RADIUS = (uint)location;
-                gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, colorBuffer[0]);
+                gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, radiusBuffer[0]);
                 gl.VertexAttribPointer(ATTRIB_INDEX_RADIUS, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
                 gl.EnableVertexAttribArray(ATTRIB_INDEX_RADIUS);
             }

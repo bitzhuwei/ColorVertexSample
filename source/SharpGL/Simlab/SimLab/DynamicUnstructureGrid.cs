@@ -431,9 +431,8 @@ namespace SimLab
                 gl.VertexAttribPointer(ATTRIB_INDEX_UV, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
                 gl.EnableVertexAttribArray(ATTRIB_INDEX_UV);
             }
+
             gl.BindVertexArray(0);
-
-
         }
 
         private ShaderProgram InitShader(OpenGL gl, RenderMode renderMode)
