@@ -33,17 +33,16 @@ namespace Sample
 
             InitilizeViewTypeControl();
 
-           //Application.Idle += Application_Idle;
+            //Application.Idle += Application_Idle;
         }
 
         void Application_Idle(object sender, EventArgs e)
         {
             IPickedGeometry picked = this.sim3D.PickedPrimitive;
             this.lblPickedPrimitive.Text = string.Format("Picked:{0}", picked);
-            this.lblPickingInfo.Text = string.Format("Picked:{0}", picked);
         }
 
-      
+
         private void InitilizeViewTypeControl()
         {
             foreach (string item in Enum.GetNames(typeof(ViewTypes)))
@@ -67,13 +66,15 @@ namespace Sample
             return result;
         }
 
-        protected void InitSlice(ListBox box, IList<int> slices){
-             box.BeginUpdate();
-             box.Items.Clear();
-             foreach(int coord in slices){
-                 box.Items.Add(coord);
-             }
-             box.EndUpdate();
+        protected void InitSlice(ListBox box, IList<int> slices)
+        {
+            box.BeginUpdate();
+            box.Items.Clear();
+            foreach (int coord in slices)
+            {
+                box.Items.Add(coord);
+            }
+            box.EndUpdate();
         }
 
         private void OnGridPropertyChanged(object sender, EventArgs e)
@@ -82,7 +83,7 @@ namespace Sample
             if (source == null)
                 return;
 
-            List<SimLabGrid> gridders =  this.sim3D.Scene.SceneContainer.Traverse<SimLabGrid>().ToList<SimLabGrid>();
+            List<SimLabGrid> gridders = this.sim3D.Scene.SceneContainer.Traverse<SimLabGrid>().ToList<SimLabGrid>();
             if (gridders.Count <= 0)
                 return;
 
@@ -93,12 +94,12 @@ namespace Sample
                 return;
             float minValue = prop.MinValue;
             float maxValue = prop.MaxValue;
-            float step = (maxValue - minValue)/10.0f;
-            if(step <=0.0f)
+            float step = (maxValue - minValue) / 10.0f;
+            if (step <= 0.0f)
                 step = 1.0f;
 
             this.sim3D.SetColorIndicator(minValue, maxValue, step);
-            TextureCoordinatesBufferData textureCoordinates =  source.CreateTextureCoordinates(prop.GridIndexes, prop.Values, minValue, maxValue);
+            TextureCoordinatesBufferData textureCoordinates = source.CreateTextureCoordinates(prop.GridIndexes, prop.Values, minValue, maxValue);
             grid.SetTextureCoods(textureCoordinates);
             this.sim3D.Invalidate();
 
@@ -130,7 +131,7 @@ namespace Sample
         {
             get
             {
-                 return cbxGridProperties.SelectedItem as GridProperty;
+                return cbxGridProperties.SelectedItem as GridProperty;
             }
         }
 
@@ -152,8 +153,8 @@ namespace Sample
                 int nz = System.Convert.ToInt32(tbNZ.Text);
                 float step = System.Convert.ToSingle(tbColorIndicatorStep.Text);
                 //float radius = System.Convert.ToSingle(this.tbRadius.Text);
-                float propMin = System.Convert.ToSingle(this.tbxPropertyMinValue.Text,CultureInfo.InvariantCulture);
-                float propMax = System.Convert.ToSingle(this.tbxPropertyMaxValue.Text,CultureInfo.InvariantCulture);
+                float propMin = System.Convert.ToSingle(this.tbxPropertyMinValue.Text, CultureInfo.InvariantCulture);
+                float propMax = System.Convert.ToSingle(this.tbxPropertyMaxValue.Text, CultureInfo.InvariantCulture);
                 int dimenSize = nx * ny * nz;
                 float dx = System.Convert.ToSingle(this.tbDX.Text);
                 float dy = System.Convert.ToSingle(this.gbDY.Text);
@@ -175,7 +176,7 @@ namespace Sample
                 InitSlice(lbxNJ, source.JBlocks);
                 InitSlice(lbxNZ, source.KBlocks);
                 InitPropertiesAndSelectDefault(dimenSize, propMin, propMax);
-                
+
                 DateTime t2 = DateTime.Now;
 
                 ///模拟获得网格属性
@@ -191,13 +192,13 @@ namespace Sample
 
                 //设置色标的范围
                 this.sim3D.SetColorIndicator(minValue, maxValue, step);
-                
-               
+
+
                 // use HexahedronGridderElement
                 DateTime t3 = DateTime.Now;
                 HexahedronMeshGeometry3D geometry = (HexahedronMeshGeometry3D)source.CreateMesh();
                 DateTime t4 = DateTime.Now;
-                TextureCoordinatesBufferData textureCoodinates  = source.CreateTextureCoordinates(gridIndexes, gridValues, minValue, maxValue);
+                TextureCoordinatesBufferData textureCoodinates = source.CreateTextureCoordinates(gridIndexes, gridValues, minValue, maxValue);
                 DateTime t5 = DateTime.Now;
 
                 Bitmap texture = ColorPaletteHelper.GenBitmap(this.sim3D.uiColorIndicator.Data.ColorPalette);
@@ -210,19 +211,19 @@ namespace Sample
                 //textureCoodinates.Dump();
                 DateTime t6 = DateTime.Now;
 
-                
-               
+
+
                 //gridderElement.SetBoundingBox(mesh.Min, mesh.Max);
                 this.sim3D.Tag = source;
-                             
 
-           
 
-             
+
+
+
                 // update ModelContainer's BoundingBox.
                 BoundingBox boundingBox = this.sim3D.ModelContainer.BoundingBox;
                 boundingBox.SetBounds(geometry.Min, geometry.Max);
-            
+
                 // update ViewType to UserView.
                 this.sim3D.ViewType = ViewTypes.UserView;
                 this.sim3D.AddModelElement(gridder);
@@ -231,7 +232,7 @@ namespace Sample
                 StringBuilder msgBuilder = new StringBuilder();
                 msgBuilder.AppendLine(String.Format("Init Grid DataSource  in {0} secs", (t1 - t0).TotalSeconds));
                 msgBuilder.AppendLine(String.Format("init ControlValues in {0} secs", (t2 - t1).TotalSeconds));
-                msgBuilder.AppendLine(String.Format("prepare other params  in {0} secs",(t3-t2).TotalSeconds));
+                msgBuilder.AppendLine(String.Format("prepare other params  in {0} secs", (t3 - t2).TotalSeconds));
                 msgBuilder.AppendLine(String.Format("CreateMesh in {0} secs", (t4 - t3).TotalSeconds));
                 msgBuilder.AppendLine(String.Format("CreateTextures in {0} secs", (t5 - t4).TotalSeconds));
                 msgBuilder.AppendLine(String.Format("Init SimLabGrid  in {0} secs", (t6 - t5).TotalSeconds));
@@ -279,7 +280,7 @@ namespace Sample
             this.lbxNZ.Items.Clear();
             this.cbxGridProperties.SelectedIndex = -1;
             this.cbxGridProperties.Items.Clear();
-           
+
             GC.Collect();
         }
 
@@ -317,7 +318,7 @@ namespace Sample
         {
             if (e.KeyChar == 'r')
             {
-                
+
                 this.sim3D.Invalidate();
             }
 
@@ -326,8 +327,8 @@ namespace Sample
             {
                 OpenGL gl = this.sim3D.OpenGL;
 
-              
-             
+
+
             }
         }
 
@@ -342,7 +343,7 @@ namespace Sample
         {
             get
             {
-                return   this.sim3D.Tag as HexahedronGridderSource;
+                return this.sim3D.Tag as HexahedronGridderSource;
             }
 
             set
@@ -354,13 +355,13 @@ namespace Sample
 
         private List<int> GetSelectedSlices(ListBox slice)
         {
-              List<int> list = new List<int>();
-              ListBox.SelectedObjectCollection collection =  slice.SelectedItems;
-              foreach (object item in collection)
-              {
-                  list.Add((int)item);
-              }
-              return list;
+            List<int> list = new List<int>();
+            ListBox.SelectedObjectCollection collection = slice.SelectedItems;
+            foreach (object item in collection)
+            {
+                list.Add((int)item);
+            }
+            return list;
         }
 
 
@@ -389,7 +390,7 @@ namespace Sample
             gridder.RenderGridWireframe = this.IsShowWireframe;
 
             this.sim3D.Invalidate();
-              
+
         }
 
 
@@ -424,10 +425,34 @@ namespace Sample
             source.RefreashSlices();
             float minValue = this.sim3D.uiColorIndicator.Data.MinValue;
             float maxValue = this.sim3D.uiColorIndicator.Data.MaxValue;
-           TextureCoordinatesBufferData textureCoordinates =   source.CreateTextureCoordinates(prop.GridIndexes, prop.Values, minValue, maxValue);
-           gridder.SetTextureCoods(textureCoordinates);
+            TextureCoordinatesBufferData textureCoordinates = source.CreateTextureCoordinates(prop.GridIndexes, prop.Values, minValue, maxValue);
+            gridder.SetTextureCoods(textureCoordinates);
 
-           this.sim3D.Invalidate();
+            this.sim3D.Invalidate();
+        }
+
+        private void barBrightness_Scroll(object sender, EventArgs e)
+        {
+            this.lblBrightnessValue.Text = (this.barBrightness.Value * 1.0f / 100).ToString();
+
+            List<SimLabGrid> gridders = this.sim3D.Scene.SceneContainer.Traverse<SimLabGrid>().ToList<SimLabGrid>();
+            if (gridders.Count <= 0)
+                return;
+
+            SimLabGrid gridder = gridders[0] as SimLabGrid;
+            gridder.Brightness = this.barBrightness.Value * 1.0f / 100;
+
+            this.sim3D.Invalidate();
+        }
+
+        private void lblBrightnessValue_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label10_Click(object sender, EventArgs e)
+        {
+
         }
 
     }

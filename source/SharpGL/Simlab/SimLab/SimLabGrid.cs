@@ -22,6 +22,17 @@ namespace SimLab
     public abstract class SimLabGrid : SceneElement, IDisposable
     {
 
+        private float brightness = 1.0f;
+
+        /// <summary>
+        /// 用于调整模型最终的亮度。默认为1，即不调整。
+        /// </summary>
+        public float Brightness
+        {
+            get { return brightness; }
+            set { brightness = value; }
+        }
+
         private bool renderGridWireframe = false;
 
         /// <summary>

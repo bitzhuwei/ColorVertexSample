@@ -8,6 +8,7 @@ out vec4 out_Color;
 uniform float canvasWidth;
 uniform float canvasHeight;
 uniform sampler2D tex;
+uniform float brightness;
 
 void main(void) {
 	if (0.0 <= pass_uv && pass_uv <= 1.0)
@@ -24,7 +25,7 @@ void main(void) {
 		{ discard; }
 		else
 		{
-			out_Color = texture(tex, vec2(pass_uv, 0.5));
+			out_Color = texture(tex, vec2(pass_uv, 0.5)) * brightness;
 		}
 	}
 	else

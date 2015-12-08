@@ -221,6 +221,7 @@ namespace SimLab
 
             this.texture.Bind(gl);
             shaderProgram.SetUniform1(gl, "tex", this.texture.TextureName);
+            shaderProgram.SetUniform1(gl, "brightness", this.Brightness);
 
         }
 

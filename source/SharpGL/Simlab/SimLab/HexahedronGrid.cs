@@ -28,6 +28,7 @@ namespace SimLab
         private mat4 modelMatrix;
         private ShaderProgram shaderProgram;
 
+
         public HexahedronGrid(OpenGL gl, IScientificCamera camera)
             : base(gl, camera)
         {
@@ -80,6 +81,7 @@ namespace SimLab
             shaderProgram.SetUniformMatrix4(gl, "modelMatrix", modelMatrix.to_array());
 
             shaderProgram.SetUniform1(gl, "tex", this.texture.TextureName);
+            shaderProgram.SetUniform1(gl, "brightness", this.Brightness);
 
 
             gl.Enable(OpenGL.GL_POLYGON_SMOOTH);

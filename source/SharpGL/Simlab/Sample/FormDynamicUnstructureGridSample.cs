@@ -487,6 +487,30 @@ namespace Sample
             this.sim3D.Invalidate();
         }
 
+        private void barBrightness_Scroll(object sender, EventArgs e)
+        {
+            this.lblBrightnessValue.Text = (this.barBrightness.Value * 1.0f / 100).ToString();
+
+            List<SimLabGrid> gridders = this.sim3D.Scene.SceneContainer.Traverse<SimLabGrid>().ToList<SimLabGrid>();
+            if (gridders.Count <= 0)
+                return;
+
+            SimLabGrid gridder = gridders[0] as SimLabGrid;
+            gridder.Brightness = this.barBrightness.Value * 1.0f / 100;
+
+            this.sim3D.Invalidate();
+        }
+
+        private void lblBrightnessValue_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label10_Click(object sender, EventArgs e)
+        {
+
+        }
+
 
     }
 }

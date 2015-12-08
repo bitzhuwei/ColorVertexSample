@@ -4,6 +4,7 @@ out vec4 out_Color;
 
 uniform sampler2D tex;
 uniform float renderingWireframe;
+uniform float brightness;
 
 void main(void) {
 	if (renderingWireframe > 0.0)
@@ -21,7 +22,7 @@ void main(void) {
 	{
 	    if (0.0 <= pass_uv && pass_uv <= 1.0)
 		{
-			out_Color = texture(tex, vec2(pass_uv, 0.0)) * 2;
+			out_Color = texture(tex, vec2(pass_uv, 0.0)) * brightness;
 		}
 		else
 		{
