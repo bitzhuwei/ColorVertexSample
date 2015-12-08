@@ -47,7 +47,7 @@ namespace SimLab
 
         public void SetRadius(BufferData radius)
         {
-            if (this.radiusBuffer != null)
+            if (radius != null)
             {
                 if (this.radiusBuffer != null)
                 {
@@ -58,6 +58,11 @@ namespace SimLab
                 this.radiusBuffer = new uint[1];
                 this.radiusBuffer[0] = CreateVertexBufferObject(OpenGL.GL_ARRAY_BUFFER, radius, OpenGL.GL_STATIC_DRAW);
 
+                if (this.vertexArrayObject != null)
+                {
+                    gl.DeleteVertexArrays(this.vertexArrayObject.Length, this.vertexArrayObject);
+                    this.vertexArrayObject = null;
+                }
             }
             else
             {
