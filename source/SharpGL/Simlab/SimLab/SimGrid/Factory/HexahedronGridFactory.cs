@@ -95,14 +95,14 @@ namespace SimLab.GridSource.Factory
                     array[gridIndex * 2].dot7 = (uint)(8 * gridIndex + 1);
                     array[gridIndex * 2].restartIndex = uint.MaxValue;
 
-                    array[gridIndex * 2 + 1].dot0 = (uint)(8 * gridIndex  + 3);
-                    array[gridIndex * 2 + 1].dot1 = (uint)(8 * gridIndex  + 0);
-                    array[gridIndex * 2 + 1].dot2 = (uint)(8 * gridIndex  + 2);
-                    array[gridIndex * 2 + 1].dot3 = (uint)(8 * gridIndex  + 1);
-                    array[gridIndex * 2 + 1].dot4 = (uint)(8 * gridIndex  + 6);
-                    array[gridIndex * 2 + 1].dot5 = (uint)(8 * gridIndex  + 5);
-                    array[gridIndex * 2 + 1].dot6 = (uint)(8 * gridIndex  + 7);
-                    array[gridIndex * 2 + 1].dot7 = (uint)(8 * gridIndex  + 4);
+                    array[gridIndex * 2 + 1].dot0 = (uint)(8 * gridIndex + 3);
+                    array[gridIndex * 2 + 1].dot1 = (uint)(8 * gridIndex + 0);
+                    array[gridIndex * 2 + 1].dot2 = (uint)(8 * gridIndex + 2);
+                    array[gridIndex * 2 + 1].dot3 = (uint)(8 * gridIndex + 1);
+                    array[gridIndex * 2 + 1].dot4 = (uint)(8 * gridIndex + 6);
+                    array[gridIndex * 2 + 1].dot5 = (uint)(8 * gridIndex + 5);
+                    array[gridIndex * 2 + 1].dot6 = (uint)(8 * gridIndex + 7);
+                    array[gridIndex * 2 + 1].dot7 = (uint)(8 * gridIndex + 4);
                     array[gridIndex * 2 + 1].restartIndex = uint.MaxValue;
                 }
 
@@ -213,10 +213,6 @@ namespace SimLab.GridSource.Factory
                         //textures[gridIndex] = 0.01f;
                         textures[gridIndex] = 0;
                     }
-                }
-                else
-                {
-                    textures[gridIndex] = 2.0f;
                 }
             }
 
