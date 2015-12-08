@@ -25,7 +25,7 @@ void main(void) {
 		{ discard; }
 		else
 		{
-			out_Color = texture(tex, vec2(pass_uv, 0.5)) * brightness;
+			out_Color = texture(tex, vec2(pass_uv, 0.0)) * brightness;
 		}
 	}
 	else
