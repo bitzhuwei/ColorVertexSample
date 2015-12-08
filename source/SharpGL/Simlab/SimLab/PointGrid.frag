@@ -11,7 +11,7 @@ uniform sampler2D tex;
 uniform float brightness;
 
 void main(void) {
-	if (0.0 <= pass_uv && pass_uv <= 1.0)
+	if (-0.1 <= pass_uv && pass_uv <= 1.1)
 	{
 		//get screen coord from frag coord
 		float screenX = (gl_FragCoord.x / canvasWidth - 0.5) * 2;

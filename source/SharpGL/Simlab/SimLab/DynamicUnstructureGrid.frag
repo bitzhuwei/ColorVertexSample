@@ -9,7 +9,7 @@ uniform float brightness;
 void main(void) {
 	if (renderingWireframe > 0.0)
 	{
-		if (0.0 <= pass_uv && pass_uv <= 1.0)
+		if (-0.1 <= pass_uv && pass_uv <= 1.1)
 		{
 			out_Color = vec4(1, 1, 1, 1);
 		}
@@ -20,7 +20,7 @@ void main(void) {
 	}
 	else
 	{
-	    if (0.0 <= pass_uv && pass_uv <= 1.0)
+	    if (-0.1 <= pass_uv && pass_uv <= 1.1)
 		{
 			out_Color = texture(tex, vec2(pass_uv, 0.0)) * brightness;
 		}
