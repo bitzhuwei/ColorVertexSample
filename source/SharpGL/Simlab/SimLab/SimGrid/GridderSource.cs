@@ -172,7 +172,7 @@ namespace SimLab.GridSource
             return actNums;
         }
 
-        protected float[] InitFloatArray(int size, float value = 2)
+        public float[] InitFloatArray(int size, float value = 2)
         {
             float[] array = new float[size];
             for (int i = 0; i < size; i++)
