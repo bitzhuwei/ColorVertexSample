@@ -290,11 +290,17 @@ namespace Simlab.Well
 
         protected void CleanUnmanagedRes()
         {
-            OpenGL gl = new OpenGL();// this is not cool.
+            try
+            {
+                OpenGL gl = new OpenGL();// this is not cool.
 
-            uint[] buffers = new uint[] { this.positionBufferObject, this.colorBufferObject, this.indexBufferObject };
-            gl.DeleteBuffers(buffers.Length, buffers);
-            gl.DeleteVertexArrays(this.vao.Length, this.vao);
+                uint[] buffers = new uint[] { this.positionBufferObject, this.colorBufferObject, this.indexBufferObject };
+                gl.DeleteBuffers(buffers.Length, buffers);
+                gl.DeleteVertexArrays(this.vao.Length, this.vao);
+            }
+            catch (Exception)
+            {
+            }
         }
 
         protected void CleanManagedRes()
