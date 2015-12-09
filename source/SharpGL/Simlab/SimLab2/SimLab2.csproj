@@ -41,6 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="VertexBuffers\PositionBuffer.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="VertexBuffers\VertexBuffer.cs" />
     <Compile Include="VertexBuffers\FracturePositionBuffer.cs" />
     <Compile Include="VertexBuffers\FractureTexCoordBuffer.cs" />
@@ -52,7 +55,6 @@
     <Compile Include="VertexBuffers\MatrixPositionBuffer.cs" />
     <Compile Include="VertexBuffers\MatrixTexCoordBuffer.cs" />
     <Compile Include="VertexBuffers\PointPositionBuffer.cs" />
-    <Compile Include="VertexBuffers\PositionBuffer.cs" />
     <Compile Include="VertexBuffers\PropertyBuffer.cs" />
     <Compile Include="VertexBuffers\RadiusBuffer.cs" />
     <Compile Include="VertexBuffers\TexCoordBuffer.cs" />

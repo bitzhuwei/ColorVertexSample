@@ -26,28 +26,28 @@ namespace SimLab2.VertexBuffers
         }
 
 
-        private unsafe void DoDump()
-        {
+        //private unsafe void DoDump()
+        //{
 
-            if (this.GLDataType == OpenGL.GL_FLOAT)
-            {
+        //    if (this.GLDataType == OpenGL.GL_FLOAT)
+        //    {
 
-                int texturesCount = this.SizeInBytes / sizeof(float);
-                float* textures = (float*)this.Data;
-                System.Console.WriteLine("textures:{0}", texturesCount);
-                System.Console.WriteLine("==============textures BEGIN======================");
-                for (int i = 0; i < texturesCount; i++)
-                {
-                    System.Console.WriteLine("{0}:{1}", i, textures[i]);
-                }
-                System.Console.WriteLine("==============textures END=======================");
-            }
-        }
+        //        int texturesCount = this.SizeInBytes / sizeof(float);
+        //        float* textures = (float*)this.Data;
+        //        System.Console.WriteLine("textures:{0}", texturesCount);
+        //        System.Console.WriteLine("==============textures BEGIN======================");
+        //        for (int i = 0; i < texturesCount; i++)
+        //        {
+        //            System.Console.WriteLine("{0}:{1}", i, textures[i]);
+        //        }
+        //        System.Console.WriteLine("==============textures END=======================");
+        //    }
+        //}
 
-        public void Dump()
-        {
-            this.DoDump();
-        }
+        //public void Dump()
+        //{
+        //    this.DoDump();
+        //}
 
     }
 }

@@ -8,63 +8,63 @@
     </TypeIdentifier>
   </Class>
   <Class Name="SimLab2.VertexBuffers.FracturePositionBuffer">
-    <Position X="18.25" Y="8.5" Width="1.75" />
+    <Position X="18.25" Y="9" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>VertexBuffers\FracturePositionBuffer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SimLab2.VertexBuffers.TriangleFracturePositionBuffer">
-    <Position X="16.5" Y="10.5" Width="2.5" />
+    <Position X="16.5" Y="11" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AIAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>VertexBuffers\FracturePositionBuffer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SimLab2.VertexBuffers.LineFracturePositionBuffer">
-    <Position X="19.75" Y="10.5" Width="2.25" />
+    <Position X="19.75" Y="11" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AIAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>VertexBuffers\FracturePositionBuffer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SimLab2.VertexBuffers.LineFractureTexCoordBufer">
-    <Position X="10" Y="9.5" Width="2.25" />
+    <Position X="10" Y="9" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>VertexBuffers\FractureTexCoordBuffer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SimLab2.VertexBuffers.TriangleFractureTexCoordBuffer">
-    <Position X="0.5" Y="9.5" Width="2.5" />
+    <Position X="0.5" Y="9" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>VertexBuffers\FractureTexCoordBuffer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SimLab2.VertexBuffers.HalfHexahedronIndexBuffer">
-    <Position X="39.75" Y="6.5" Width="2.5" />
+    <Position X="39.75" Y="6.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>VertexBuffers\HalfHexahedronIndexBuffer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SimLab2.VertexBuffers.HexahedronPositionBuffer">
-    <Position X="32" Y="8.5" Width="2.25" />
+    <Position X="32" Y="9" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>VertexBuffers\HexahedronPositionBuffer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SimLab2.VertexBuffers.HexahedronTexCoordBuffer">
-    <Position X="7" Y="9.5" Width="2.25" />
+    <Position X="7" Y="9" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>VertexBuffers\HexahedronTexCoordBuffer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SimLab2.VertexBuffers.IndexBuffer">
-    <Position X="39" Y="3.75" Width="1.5" />
+    <Position X="38.75" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
       <FileName>VertexBuffers\IndexBuffer.cs</FileName>
@@ -78,52 +78,45 @@
     </TypeIdentifier>
   </Class>
   <Class Name="SimLab2.VertexBuffers.MatrixPositionBuffer">
-    <Position X="24.75" Y="8.5" Width="1.75" />
+    <Position X="24.75" Y="9" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>VertexBuffers\MatrixPositionBuffer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SimLab2.VertexBuffers.TriangleMatrixPositionBuffer">
-    <Position X="22.75" Y="10.5" Width="2.5" />
+    <Position X="22.75" Y="11" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AIAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>VertexBuffers\MatrixPositionBuffer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SimLab2.VertexBuffers.TetrahedronMatrixPositionBuffer">
-    <Position X="26" Y="10.5" Width="2.75" />
+    <Position X="26" Y="11" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AIAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>VertexBuffers\MatrixPositionBuffer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SimLab2.VertexBuffers.TetrahedronMatrixTexCoordBuffer">
-    <Position X="13" Y="9.5" Width="2.75" />
+    <Position X="13" Y="9" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>VertexBuffers\MatrixTexCoordBuffer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SimLab2.VertexBuffers.TriangleMatrixTexCoordBuffer">
-    <Position X="3.75" Y="9.5" Width="2.5" />
+    <Position X="3.75" Y="9" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>VertexBuffers\MatrixTexCoordBuffer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SimLab2.VertexBuffers.PointPositionBuffer">
-    <Position X="29.5" Y="8.5" Width="1.75" />
+    <Position X="29.5" Y="9" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>VertexBuffers\PointPositionBuffer.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="SimLab2.VertexBuffers.PositionBuffer" Collapsed="true">
-    <Position X="24.5" Y="7" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AACAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>VertexBuffers\PositionBuffer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="SimLab2.VertexBuffers.PropertyBuffer">
@@ -143,8 +136,15 @@
   <Class Name="SimLab2.VertexBuffers.TexCoordBuffer">
     <Position X="7.25" Y="7" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AACAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>VertexBuffers\TexCoordBuffer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SimLab2.VertexBuffers.PositionBuffer">
+    <Position X="24.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VertexBuffers\PositionBuffer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Microsoft YaHei UI" Size="9" />
