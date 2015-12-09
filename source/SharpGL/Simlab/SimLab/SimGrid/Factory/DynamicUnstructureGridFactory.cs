@@ -18,8 +18,8 @@ namespace SimLab.SimGrid.Factory
         {
             MatrixPositionBufferData matrixPositions = null;
             MatrixIndicesBufferData matrixIndicesBuffer = null;
-            FracturePositionBufferData fractionPositionsBuffer = null;
 
+            FracturePositionBufferData fractionPositionsBuffer = null;
             //生成母体
             if (src.ElementFormat == DynamicUnstructuredGridderSource.MATRIX_FORMAT4_TETRAHEDRON)
             {
@@ -134,7 +134,7 @@ namespace SimLab.SimGrid.Factory
         }
 
         /// <summary>
-        /// 
+        /// 创建
         /// </summary>
         /// <param name="source"></param>
         /// <param name="gridIndexes"></param>

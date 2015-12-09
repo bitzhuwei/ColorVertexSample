@@ -33,12 +33,16 @@ namespace SimLab.GridSource
         public override void Init()
         {
             base.Init();
-            this.InitRadius();
+            if (this.radius == null || this.radius.Length != this.DimenSize)
+            {
+                this.radius = this.InitRadius();
+            }
         }
 
-        protected void InitRadius()
+        protected float[] InitRadius()
         {
-            this.Radius = this.InitFloatArray(this.DimenSize, 1.0f);
+            float[] radius = this.InitFloatArray(this.DimenSize, 1.0f);
+            return radius;
         }
 
 
