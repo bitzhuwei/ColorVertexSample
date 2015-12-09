@@ -32,7 +32,6 @@ namespace SharpGL.SceneComponent
             {
                 int left = (int)(width * colorPalette.Coords[i]);
                 int right = (int)(width * colorPalette.Coords[i + 1]);
-                if (right == width) { right = width - 1; }
                 Rectangle rect = new Rectangle(left, 0, right - left + 1, height);
                 LinearGradientBrush brush = new LinearGradientBrush(
                     rect,
