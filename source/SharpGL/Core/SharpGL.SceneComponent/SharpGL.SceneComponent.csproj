@@ -80,7 +80,9 @@
     <Compile Include="ColorCodedPicking\PickedGeometryBase.cs" />
     <Compile Include="ColorCodedPicking\PickedGeometryColored.cs" />
     <Compile Include="ColorCodedPicking\GeometryTypes.cs" />
-    <Compile Include="Control\ColorIndicatorTextureExtension.cs" />
+    <Compile Include="Control\ColorIndicatorTextureExtension.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Control\ViewTypes.cs" />
     <Compile Include="Camera\CameraHelper.cs" />
     <Compile Include="Model\IBoundingBoxHelper.cs" />
