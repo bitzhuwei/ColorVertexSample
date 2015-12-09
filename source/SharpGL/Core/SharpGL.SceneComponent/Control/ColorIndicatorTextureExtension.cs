@@ -14,17 +14,67 @@ namespace SharpGL.SceneComponent
     public static class ColorIndicatorTextureExtension
     {
 
-        public static Bitmap CreateTextureImage(this SimpleUIColorIndicator colorIndicator, int width = 100000)
+        public static Bitmap CreateTextureImage(this SimpleUIColorIndicator colorIndicator, int width = 10000)
 
         {
-            return colorIndicator.Data.ColorPalette.CreateTextureImage(width, 50);
+            return colorIndicator.Data.ColorPalette.CreateTextureImage(width, 1);
         }
-        class vec3
-        {
-            public float r;
-            public float g;
-            public float b;
-        }
+        ///// <summary>
+        ///// 根据色板获取位图。
+        ///// </summary>
+        ///// <param name="colorPalette"></param>
+        ///// <returns></returns>
+        //private static Bitmap CreateTextureImage(this ColorPalette colorPalette, int width = 1000, int height = 20)
+        //{
+        //    Bitmap bmp = new Bitmap(width, height);
+        //    //Graphics g = Graphics.FromImage(bitmap);
+        //    // Lock the bitmap's bits.  
+        //    Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+        //    System.Drawing.Imaging.BitmapData bmpData =
+        //        bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite,
+        //        bmp.PixelFormat);
+
+        //    // Get the address of the first line.
+        //    IntPtr ptr = bmpData.Scan0;
+
+        //    // Declare an array to hold the bytes of the bitmap.
+        //    int bytes = Math.Abs(bmpData.Stride) * bmp.Height;
+        //    UnmanagedArray<byte> rgbValues = new UnmanagedArray<byte>(bytes);
+        //    int index = 0;
+        //    for (int i = 0; i < colorPalette.Colors.Length - 1; i++)
+        //    {
+        //        int left = (int)(width * colorPalette.Coords[i]);
+        //        int right = (int)(width * colorPalette.Coords[i + 1]);
+        //        GLColor leftColor = colorPalette.Colors[i];
+        //        GLColor rightColor = colorPalette.Colors[i + 1];
+        //        for (int x = left; x < right; x++)
+        //        {
+        //            Color color = (leftColor * ((right - x) * 1.0f / (right - left)) + rightColor * ((x - left) * 1.0f / (right - left)));
+        //            for (int y = 0; y < height; y++)
+        //            {
+        //                bmp.SetPixel(x, y, color);
+        //                rgbValues[index++] = color.R;
+        //                rgbValues[index++] = color.G;
+        //                rgbValues[index++] = color.B;
+        //            }
+        //        }
+        //    }
+
+        //    // Copy the RGB values back to the bitmap
+        //    System.Runtime.InteropServices.Marshal.Copy(rgbValues, 0, ptr, bytes);
+
+        //    // Unlock the bits.
+        //    bmp.UnlockBits(bmpData);
+
+        //    // Draw the modified image.
+        //    e.Graphics.DrawImage(bmp, 0, 150);
+
+
+        //    //g.Dispose();
+        //    return bmp;
+        //}
+
+
         /// <summary>
         /// 根据色板获取位图。
         /// </summary>
