@@ -15,10 +15,53 @@ namespace SharpGL.SceneComponent
     {
 
         public static Bitmap CreateTextureImage(this SimpleUIColorIndicator colorIndicator, int width = 10000)
-
         {
             return colorIndicator.Data.ColorPalette.CreateTextureImage(width, 1);
         }
+
+        // 这是用LockBits方式计算的，速度较快。
+        /// <summary>
+        /// 根据色板获取位图。
+        /// </summary>
+        /// <param name="colorPalette"></param>
+        /// <returns></returns>
+        private static Bitmap CreateTextureImage(this ColorPalette colorPalette, int width = 1000, int height = 1)
+        {
+            System.Drawing.Imaging.PixelFormat format = System.Drawing.Imaging.PixelFormat.Format32bppRgb;
+            System.Drawing.Imaging.ImageLockMode lockMode = System.Drawing.Imaging.ImageLockMode.WriteOnly;
+            System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(width, height, format);
+            Rectangle bitmapRect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
+            System.Drawing.Imaging.BitmapData bmpData = bitmap.LockBits(bitmapRect, lockMode, format);
+
+            int length = Math.Abs(bmpData.Stride) * bitmap.Height;
+            byte[] bitmapBytes = new byte[length];
+
+            for (int i = 0; i < colorPalette.Colors.Length - 1; i++)
+            {
+                int left = (int)(width * colorPalette.Coords[i]);
+                int right = (int)(width * colorPalette.Coords[i + 1]);
+                GLColor leftColor = colorPalette.Colors[i];
+                GLColor rightColor = colorPalette.Colors[i + 1];
+                for (int col = left; col < right; col++)
+                {
+                    Color color = (leftColor * ((right - col) * 1.0f / (right - left)) + rightColor * ((col - left) * 1.0f / (right - left)));
+                    for (int row = 0; row < height; row++)
+                    {
+                        bitmapBytes[row * bmpData.Stride + col * 4 + 0] = color.B;
+                        bitmapBytes[row * bmpData.Stride + col * 4 + 1] = color.G;
+                        bitmapBytes[row * bmpData.Stride + col * 4 + 2] = color.R;
+                    }
+                }
+            }
+
+            System.Runtime.InteropServices.Marshal.Copy(bitmapBytes, 0, bmpData.Scan0, length);
+
+            bitmap.UnlockBits(bmpData);
+
+            return bitmap;
+        }
+
+        // 这是用SetPixel方式计算的，速度较慢。
         ///// <summary>
         ///// 根据色板获取位图。
         ///// </summary>
@@ -26,21 +69,9 @@ namespace SharpGL.SceneComponent
         ///// <returns></returns>
         //private static Bitmap CreateTextureImage(this ColorPalette colorPalette, int width = 1000, int height = 20)
         //{
-        //    Bitmap bmp = new Bitmap(width, height);
+        //    Bitmap bitmap = new Bitmap(width, height);
         //    //Graphics g = Graphics.FromImage(bitmap);
-        //    // Lock the bitmap's bits.  
-        //    Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
-        //    System.Drawing.Imaging.BitmapData bmpData =
-        //        bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite,
-        //        bmp.PixelFormat);
 
-        //    // Get the address of the first line.
-        //    IntPtr ptr = bmpData.Scan0;
-
-        //    // Declare an array to hold the bytes of the bitmap.
-        //    int bytes = Math.Abs(bmpData.Stride) * bmp.Height;
-        //    UnmanagedArray<byte> rgbValues = new UnmanagedArray<byte>(bytes);
-        //    int index = 0;
         //    for (int i = 0; i < colorPalette.Colors.Length - 1; i++)
         //    {
         //        int left = (int)(width * colorPalette.Coords[i]);
@@ -52,121 +83,13 @@ namespace SharpGL.SceneComponent
         //            Color color = (leftColor * ((right - x) * 1.0f / (right - left)) + rightColor * ((x - left) * 1.0f / (right - left)));
         //            for (int y = 0; y < height; y++)
         //            {
-        //                bmp.SetPixel(x, y, color);
-        //                rgbValues[index++] = color.R;
-        //                rgbValues[index++] = color.G;
-        //                rgbValues[index++] = color.B;
+        //                bitmap.SetPixel(x, y, color);
         //            }
         //        }
         //    }
-
-        //    // Copy the RGB values back to the bitmap
-        //    System.Runtime.InteropServices.Marshal.Copy(rgbValues, 0, ptr, bytes);
-
-        //    // Unlock the bits.
-        //    bmp.UnlockBits(bmpData);
-
-        //    // Draw the modified image.
-        //    e.Graphics.DrawImage(bmp, 0, 150);
-
-
         //    //g.Dispose();
-        //    return bmp;
-        //}
-
-
-        /// <summary>
-        /// 根据色板获取位图。
-        /// </summary>
-        /// <param name="colorPalette"></param>
-        /// <returns></returns>
-        private static Bitmap CreateTextureImage(this ColorPalette colorPalette, int width = 1000, int height = 20)
-        {
-            Bitmap bitmap = new Bitmap(width, height);
-            //Graphics g = Graphics.FromImage(bitmap);
-
-            for (int i = 0; i < colorPalette.Colors.Length - 1; i++)
-            {
-                int left = (int)(width * colorPalette.Coords[i]);
-                int right = (int)(width * colorPalette.Coords[i + 1]);
-                GLColor leftColor = colorPalette.Colors[i];
-                GLColor rightColor = colorPalette.Colors[i + 1];
-                for (int x = left; x < right; x++)
-                {
-                    Color color = (leftColor * ((right - x) * 1.0f / (right - left)) + rightColor * ((x - left) * 1.0f / (right - left)));
-                    for (int y = 0; y < height; y++)
-                    {
-                        bitmap.SetPixel(x, y, color);
-                    }
-                }
-            }
-            //g.Dispose();
-            return bitmap;
-        }
-
-        ///// <summary>
-        ///// 根据色板获取位图。
-        ///// </summary>
-        ///// <param name="colorPalette"></param>
-        ///// <returns></returns>
-        //private static Bitmap CreateTextureImage(this ColorPalette colorPalette, int width = 1000, int height = 20)
-        //{
-        //    Bitmap bitmap = new Bitmap(width, height);
-        //    Graphics g = Graphics.FromImage(bitmap);
-
-        //    for (int i = 0; i < colorPalette.Colors.Length - 1; i++)
-        //    {
-        //        int left = (int)(width * colorPalette.Coords[i]);
-        //        int right = (int)(width * colorPalette.Coords[i + 1]);
-        //        //注意，最后一个色块的最后一个像素没有画到bitmap上。
-        //        if (right == width) { right = width - 1; }
-        //        Rectangle rect = new Rectangle(left, 0, right - left + 1, height);
-        //        LinearGradientBrush brush = new LinearGradientBrush(
-        //            rect,
-        //            colorPalette.Colors[i], colorPalette.Colors[i + 1], LinearGradientMode.Horizontal);
-        //        g.FillRectangle(brush, rect);
-        //    }
-        //    g.Dispose();
         //    return bitmap;
         //}
-
-        ///// <summary>
-        ///// 根据色板获取位图。
-        ///// </summary>
-        ///// <param name="colorPalette"></param>
-        ///// <returns></returns>
-        //private static Bitmap CreateTextureImage(this ColorPalette colorPalette, int width = 1000, int height = 20)
-        //{
-
-        //    Bitmap bitmap = new Bitmap(width, height);
-        //    Graphics g = Graphics.FromImage(bitmap);
-
-        //    float[] intensities = colorPalette.Coords;
-
-
-
-        //    for (int i = 0; i < colorPalette.Colors.Length - 1; i++)
-        //    {
-        //        float left =   width * colorPalette.Coords[i];
-        //        float right = width * colorPalette.Coords[i + 1];
-        //        float widthF = right - left;
-        //        RectangleF textureRect = new RectangleF(new PointF(left, 0), new SizeF(widthF, height));
-
-        //        float  rWidth = colorPalette.Coords[i+1] - colorPalette.Coords[i];
-        //        RectangleF rect = new RectangleF(new PointF(left, 0), new SizeF(widthF, height));
-        //        Color color0 = colorPalette.Colors[i];
-        //        Color color1 = colorPalette.Colors[i + 1];
-
-        //        LinearGradientBrush brush = new LinearGradientBrush(
-        //            rect,
-        //            color0, color1,LinearGradientMode.Horizontal);
-
-        //        g.FillRectangle(brush, textureRect);
-        //    }
-        //    g.Dispose();
-        //    return bitmap;
-        //}
-
 
     }
 }
