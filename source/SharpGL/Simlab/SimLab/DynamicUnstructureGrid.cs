@@ -2,6 +2,7 @@
 using SharpGL;
 using SharpGL.SceneComponent;
 using SharpGL.SceneComponent.Utility;
+using SharpGL.SceneGraph;
 using SharpGL.SceneGraph.Core;
 using SharpGL.Shaders;
 using SimLab.SimGrid.Geometry;
@@ -135,8 +136,9 @@ namespace SimLab
             {
                 unsafe
                 {
-                    int elementSize = (geometry.MatrixPositions.Shape == MatrixPositionBufferData.SHAPE_TRIANGLE) ?
-                        sizeof(TrianglePositions) : sizeof(TetrahedronPositions);
+                    //int elementSize = (geometry.MatrixPositions.Shape == MatrixPositionBufferData.SHAPE_TRIANGLE) ?
+                    //    sizeof(TrianglePositions) : sizeof(TetrahedronPositions);
+                    int elementSize = sizeof(Vertex);
 
                     this.MatrixVertexOrIndexCount = geometry.Positions.SizeInBytes / elementSize;
                 }
@@ -147,8 +149,9 @@ namespace SimLab
 
             unsafe
             {
-                int elementSize = (geometry.FracturePositions.Shape == FracturePositionBufferData.SHAPE_LINE) ?
-                    sizeof(LineUV) : sizeof(TrianglePositions);
+                //int elementSize = (geometry.FracturePositions.Shape == FracturePositionBufferData.SHAPE_LINE) ?
+                //    sizeof(LinePositions) : sizeof(TrianglePositions);
+                int elementSize = sizeof(Vertex);
 
                 this.FractionVertexCount = geometry.FracturePositions.SizeInBytes / elementSize;
             }

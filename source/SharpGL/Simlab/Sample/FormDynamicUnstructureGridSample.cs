@@ -29,6 +29,7 @@ namespace Sample
 {
     public partial class FormDynamicUnstructureGridSample : Form
     {
+        private DynamicUnstructureGrid element;
         public FormDynamicUnstructureGridSample()
         {
             InitializeComponent();
@@ -97,7 +98,7 @@ namespace Sample
 
             DynamicUnstructureGrid dynamicUnstructureGrid = gridders[0] as DynamicUnstructureGrid;
             DynamicUnstructuredGridderSource dynamicUnstructureGridderSource = source as DynamicUnstructuredGridderSource;
-            if(dynamicUnstructureGrid!=null&&dynamicUnstructureGridderSource!=null)
+            if (dynamicUnstructureGrid != null && dynamicUnstructureGridderSource != null)
             {
                 TextureCoordinatesBufferData anotherTextureCoordinates = dynamicUnstructureGridderSource.CreateFractureTextureCoordinates(prop.GridIndexes, prop.Values, minValue, maxValue);
                 dynamicUnstructureGrid.SetFractionTextureCoords(anotherTextureCoordinates);
@@ -201,6 +202,7 @@ namespace Sample
                 gridder.SetMatrixTextureCoords(matrixTextureCoordinates);
                 gridder.SetFractionTextureCoords(fractureTextureCoordindates);
 
+                this.element = gridder;
 
                 //textureCoodinates.Dump();
 
@@ -288,6 +290,26 @@ namespace Sample
 
         private void scientificVisual3DControl_KeyPress(object sender, KeyPressEventArgs e)
         {
+            if (e.KeyChar == 'j')
+            {
+                if (this.element != null)
+                {
+                    this.element.FractionVertexCount++;
+                    this.sim3D.Invalidate();
+
+                    this.lblPickedPrimitive.Text = string.Format("fraction vertex count: {0}", this.element.FractionVertexCount);
+                }
+            }
+            if (e.KeyChar == 'k')
+            {
+                if (element != null)
+                {
+                    this.element.FractionVertexCount--;
+                    this.sim3D.Invalidate();
+                    this.lblPickedPrimitive.Text = string.Format("fraction vertex count: {0}", this.element.FractionVertexCount);
+
+                }
+            }
             if (e.KeyChar == 'r')
             {
 
