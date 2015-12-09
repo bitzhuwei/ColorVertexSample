@@ -32,6 +32,7 @@ namespace SharpGL.SceneComponent
             {
                 int left = (int)(width * colorPalette.Coords[i]);
                 int right = (int)(width * colorPalette.Coords[i + 1]);
+                //注意，最后一个色块的最后一个像素没有画到bitmap上。
                 Rectangle rect = new Rectangle(left, 0, right - left + 1, height);
                 LinearGradientBrush brush = new LinearGradientBrush(
                     rect,
