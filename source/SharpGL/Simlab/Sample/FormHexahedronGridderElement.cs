@@ -22,6 +22,7 @@ using SharpGL.SceneComponent.Model;
 using SimLab.GridSource;
 using SimLab;
 using System.Globalization;
+using System.Drawing.Imaging;
 
 namespace Sample
 {
@@ -105,11 +106,7 @@ namespace Sample
 
         }
 
-        public Bitmap GetTexture()
-        {
-            Bitmap texture = ColorPaletteHelper.GenBitmap(this.sim3D.uiColorIndicator.Data.ColorPalette);
-            return texture;
-        }
+     
 
 
         private void InitPropertiesAndSelectDefault(int dimenSize, float minValue, float maxValue)
@@ -143,7 +140,6 @@ namespace Sample
             }
         }
 
-        int elementCounter = 0;
         private void CreateCatesianGridVisual3D(object sender, EventArgs e)
         {
             try
@@ -188,8 +184,6 @@ namespace Sample
                 step = (maxValue * 1.0f - minValue * 1.0f) / 10;
                 int[] gridIndexes = this.CurrentProperty.GridIndexes;
                 float[] gridValues = this.CurrentProperty.Values;
-
-
                 //设置色标的范围
                 this.sim3D.SetColorIndicator(minValue, maxValue, step);
 
@@ -201,7 +195,7 @@ namespace Sample
                 TextureCoordinatesBufferData textureCoodinates = source.CreateTextureCoordinates(gridIndexes, gridValues, minValue, maxValue);
                 DateTime t5 = DateTime.Now;
 
-                Bitmap texture = ColorPaletteHelper.GenBitmap(this.sim3D.uiColorIndicator.Data.ColorPalette);
+                Bitmap texture = this.sim3D.uiColorIndicator.CreateTextureImage();
                 HexahedronGrid gridder = new HexahedronGrid(this.sim3D.OpenGL, this.sim3D.Scene.CurrentCamera);
                 gridder.Init(geometry);
                 gridder.RenderGrid = true;
@@ -453,6 +447,18 @@ namespace Sample
         private void label10_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnTextureSave_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            DialogResult result = dlg.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                  string pathFileName =  dlg.FileName;
+                  Bitmap textureImage = this.sim3D.uiColorIndicator.CreateTextureImage();
+                  textureImage.Save(pathFileName,ImageFormat.Bmp);
+            }
         }
 
     }
