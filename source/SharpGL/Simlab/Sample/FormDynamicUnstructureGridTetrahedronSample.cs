@@ -19,11 +19,12 @@ using SharpGL.SceneGraph.Assets;
 using SharpGL.SceneGraph.Quadrics;
 using SharpGL.SceneComponent;
 using SharpGL.SceneComponent.Model;
-using SimLab2.GridSource;
-using SimLab2;
+using SimLab.GridSource;
+using SimLab;
 using System.Globalization;
-using SimLab2.SimGrid;
-using SimLab2.SimGrid.Loader;
+using SimLab.SimGrid;
+using SimLab.SimGrid.Loader;
+using SimLab.VertexBuffers;
 
 namespace Sample
 {
@@ -92,14 +93,14 @@ namespace Sample
                 step = 1.0f;
 
             this.sim3D.SetColorIndicator(minValue, maxValue, step);
-            TextureCoordinatesBufferData textureCoordinates = source.CreateTextureCoordinates(prop.GridIndexes, prop.Values, minValue, maxValue);
+            TexCoordBuffer textureCoordinates = source.CreateTextureCoordinates(prop.GridIndexes, prop.Values, minValue, maxValue);
             grid.SetTextureCoods(textureCoordinates);
 
             DynamicUnstructureGrid dynamicUnstructureGrid = gridders[0] as DynamicUnstructureGrid;
             DynamicUnstructuredGridderSource dynamicUnstructureGridderSource = source as DynamicUnstructuredGridderSource;
             if (dynamicUnstructureGrid != null && dynamicUnstructureGridderSource != null)
             {
-                TextureCoordinatesBufferData anotherTextureCoordinates = dynamicUnstructureGridderSource.CreateFractureTextureCoordinates(prop.GridIndexes, prop.Values, minValue, maxValue);
+                TexCoordBuffer anotherTextureCoordinates = dynamicUnstructureGridderSource.CreateFractureTextureCoordinates(prop.GridIndexes, prop.Values, minValue, maxValue);
                 dynamicUnstructureGrid.SetFractionTextureCoords(anotherTextureCoordinates);
             }
 
@@ -186,8 +187,8 @@ namespace Sample
                 // use HexahedronGridderElement
                 DateTime t0 = DateTime.Now;
                 DynamicUnstructureGeometry geometry = source.CreateMesh() as DynamicUnstructureGeometry;
-                TextureCoordinatesBufferData matrixTextureCoordinates = source.CreateTextureCoordinates(gridIndexes, gridValues, minValue, maxValue);
-                TextureCoordinatesBufferData fractureTextureCoordindates = source.CreateFractureTextureCoordinates(gridIndexes, gridValues, minValue, maxValue);
+                TexCoordBuffer matrixTextureCoordinates = source.CreateTextureCoordinates(gridIndexes, gridValues, minValue, maxValue);
+                TexCoordBuffer fractureTextureCoordindates = source.CreateFractureTextureCoordinates(gridIndexes, gridValues, minValue, maxValue);
                 Bitmap texture = ColorPaletteHelper.GenBitmap(this.sim3D.uiColorIndicator.Data.ColorPalette);
                 //geometry.Positions.Dump();
                 //geometry.TriangleIndices.Dump();
@@ -396,7 +397,7 @@ namespace Sample
             source.RefreashSlices();
             float minValue = this.sim3D.uiColorIndicator.Data.MinValue;
             float maxValue = this.sim3D.uiColorIndicator.Data.MaxValue;
-            TextureCoordinatesBufferData textureCoordinates = source.CreateTextureCoordinates(prop.GridIndexes, prop.Values, minValue, maxValue);
+            TexCoordBuffer textureCoordinates = source.CreateTextureCoordinates(prop.GridIndexes, prop.Values, minValue, maxValue);
             gridder.SetTextureCoods(textureCoordinates);
 
             this.sim3D.Invalidate();

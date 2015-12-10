@@ -19,10 +19,11 @@ using SharpGL.SceneGraph.Assets;
 using SharpGL.SceneGraph.Quadrics;
 using SharpGL.SceneComponent;
 using SharpGL.SceneComponent.Model;
-using SimLab2.GridSource;
-using SimLab2;
+using SimLab.GridSource;
+using SimLab;
 using System.Globalization;
-using SimLab2.SimGrid.Loader;
+using SimLab.SimGrid.Loader;
+using SimLab.VertexBuffers;
 
 namespace Sample
 {
@@ -89,7 +90,7 @@ namespace Sample
                 step = 1.0f;
 
             this.sim3D.SetColorIndicator(minValue, maxValue, step);
-            TextureCoordinatesBufferData textureCoordinates =  source.CreateTextureCoordinates(prop.GridIndexes, prop.Values, minValue, maxValue);
+            TexCoordBuffer textureCoordinates =  source.CreateTextureCoordinates(prop.GridIndexes, prop.Values, minValue, maxValue);
             grid.SetTextureCoods(textureCoordinates);
             this.sim3D.Invalidate();
 
@@ -167,7 +168,7 @@ namespace Sample
                 // use HexahedronGridderElement
                 DateTime t0 = DateTime.Now;
                 PointMeshGeometry3D geometry = source.CreateMesh() as PointMeshGeometry3D;
-                TextureCoordinatesBufferData textureCoodinates  = source.CreateTextureCoordinates(gridIndexes, gridValues, minValue, maxValue);
+                TexCoordBuffer textureCoodinates  = source.CreateTextureCoordinates(gridIndexes, gridValues, minValue, maxValue);
                 Bitmap texture = ColorPaletteHelper.GenBitmap(this.sim3D.uiColorIndicator.Data.ColorPalette);
                 PointGrid gridder = new PointGrid(this.sim3D.OpenGL, this.sim3D.Scene.CurrentCamera);
                 gridder.Init(geometry);
@@ -357,7 +358,7 @@ namespace Sample
             source.RefreashSlices();
             float minValue = this.sim3D.uiColorIndicator.Data.MinValue;
             float maxValue = this.sim3D.uiColorIndicator.Data.MaxValue;
-           TextureCoordinatesBufferData textureCoordinates =   source.CreateTextureCoordinates(prop.GridIndexes, prop.Values, minValue, maxValue);
+           TexCoordBuffer textureCoordinates =   source.CreateTextureCoordinates(prop.GridIndexes, prop.Values, minValue, maxValue);
            gridder.SetTextureCoods(textureCoordinates);
 
            this.sim3D.Invalidate();

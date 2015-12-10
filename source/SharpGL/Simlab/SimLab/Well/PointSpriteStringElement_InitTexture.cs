@@ -1,7 +1,7 @@
 ﻿using SharpGL;
 using SharpGL.SceneComponent;
 using SharpGL.SceneGraph.Assets;
-using SimLab2.Font;
+using SimLab.Font;
 using System;
 using System.Collections.Generic;
 using System.Drawing;

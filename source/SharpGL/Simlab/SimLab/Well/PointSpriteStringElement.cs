@@ -5,7 +5,7 @@ using SharpGL.SceneGraph;
 using SharpGL.SceneGraph.Assets;
 using SharpGL.SceneGraph.Core;
 using SharpGL.Shaders;
-using SimLab2.Font;
+using SimLab.Font;
 using System;
 using System.Collections.Generic;
 using System.Linq;

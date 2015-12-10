@@ -162,10 +162,6 @@
       <Project>{5ef45533-e2c7-46f2-b4a3-b8f36cd406e0}</Project>
       <Name>SharpGL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SimLab2\SimLab2.csproj">
-      <Project>{0bf458e9-68a5-48c0-9076-9816a2acb318}</Project>
-      <Name>SimLab2</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="geometry.txt">

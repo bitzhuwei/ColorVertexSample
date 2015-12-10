@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimLab2
+namespace SimLab
 {
     public class Disposable:IDisposable
     {

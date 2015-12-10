@@ -19,10 +19,11 @@ using SharpGL.SceneGraph.Assets;
 using SharpGL.SceneGraph.Quadrics;
 using SharpGL.SceneComponent;
 using SharpGL.SceneComponent.Model;
-using SimLab2.GridSource;
-using SimLab2;
+using SimLab.GridSource;
+using SimLab;
 using System.Globalization;
 using System.Drawing.Imaging;
+using SimLab.VertexBuffers;
 
 namespace Sample
 {
@@ -100,7 +101,7 @@ namespace Sample
                 step = 1.0f;
 
             this.sim3D.SetColorIndicator(minValue, maxValue, step);
-            TextureCoordinatesBufferData textureCoordinates = source.CreateTextureCoordinates(prop.GridIndexes, prop.Values, minValue, maxValue);
+            TexCoordBuffer textureCoordinates = source.CreateTextureCoordinates(prop.GridIndexes, prop.Values, minValue, maxValue);
             grid.SetTextureCoods(textureCoordinates);
             this.sim3D.Invalidate();
 
@@ -192,7 +193,7 @@ namespace Sample
                 DateTime t3 = DateTime.Now;
                 HexahedronMeshGeometry3D geometry = (HexahedronMeshGeometry3D)source.CreateMesh();
                 DateTime t4 = DateTime.Now;
-                TextureCoordinatesBufferData textureCoodinates = source.CreateTextureCoordinates(gridIndexes, gridValues, minValue, maxValue);
+                TexCoordBuffer textureCoodinates = source.CreateTextureCoordinates(gridIndexes, gridValues, minValue, maxValue);
                 DateTime t5 = DateTime.Now;
 
                 Bitmap texture = this.sim3D.uiColorIndicator.CreateTextureImage();
@@ -419,7 +420,7 @@ namespace Sample
             source.RefreashSlices();
             float minValue = this.sim3D.uiColorIndicator.Data.MinValue;
             float maxValue = this.sim3D.uiColorIndicator.Data.MaxValue;
-            TextureCoordinatesBufferData textureCoordinates = source.CreateTextureCoordinates(prop.GridIndexes, prop.Values, minValue, maxValue);
+            TexCoordBuffer textureCoordinates = source.CreateTextureCoordinates(prop.GridIndexes, prop.Values, minValue, maxValue);
             gridder.SetTextureCoods(textureCoordinates);
 
             this.sim3D.Invalidate();

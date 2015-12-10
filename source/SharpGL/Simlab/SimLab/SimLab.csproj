@@ -61,47 +61,63 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BufferData.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Disposable.cs" />
-    <Compile Include="DynamicUnstructureGeometry.cs" />
-    <Compile Include="DynamicUnstructureGrid.cs" />
+    <Compile Include="Factory\DynamicUnstructureGridFactory.cs" />
+    <Compile Include="Factory\GridBufferDataFactory.cs" />
+    <Compile Include="Factory\HexahedronGridFactory.cs" />
+    <Compile Include="Factory\PointGridFactory.cs" />
     <Compile Include="Font\CharacterInfo.cs" />
     <Compile Include="Font\CharacterInfoDictHelper.cs" />
     <Compile Include="Font\CharacterInfoHelper.cs" />
     <Compile Include="Font\FontResource.cs" />
     <Compile Include="Font\KeyValuePairHelper.cs" />
-    <Compile Include="HexahedronGrid.cs" />
-    <Compile Include="MeshBase.cs" />
-    <Compile Include="HexahedronMeshGeometry3D.cs" />
-    <Compile Include="PointGrid.cs" />
-    <Compile Include="PointMeshGeometry3D.cs" />
-    <Compile Include="SimGrid\CatesianGridderSource.cs" />
-    <Compile Include="SimGrid\CornerPointGridderSource.cs" />
-    <Compile Include="SimGrid\DynamicUnstructuredGridderSource.cs" />
-    <Compile Include="SimGrid\Factory\DynamicUnstructureGridFactory.cs" />
-    <Compile Include="SimGrid\Factory\GridBufferDataFactory.cs" />
-    <Compile Include="SimGrid\Factory\PointGridFactory.cs" />
-    <Compile Include="SimGrid\Factory\HexahedronGridFactory.cs" />
-    <Compile Include="SimGrid\Geometry\HexahedronUVs.cs" />
-    <Compile Include="SimGrid\Geometry\HexahedronPositions.cs" />
-    <Compile Include="SimGrid\Geometry\LineIndex.cs" />
-    <Compile Include="SimGrid\Geometry\LinePositions.cs" />
-    <Compile Include="SimGrid\Geometry\LineUV.cs" />
-    <Compile Include="SimGrid\Geometry\TetrahedronPositions.cs" />
-    <Compile Include="SimGrid\Geometry\HalfHexahedronIndex.cs" />
-    <Compile Include="SimGrid\Geometry\TetrahedronUV.cs" />
-    <Compile Include="SimGrid\Geometry\TriangleIndex.cs" />
-    <Compile Include="SimGrid\Geometry\TrianglePositions.cs" />
-    <Compile Include="SimGrid\Geometry\TriangleUV.cs" />
-    <Compile Include="SimGrid\GridderSource.cs" />
-    <Compile Include="SimGrid\GridIndexer.cs" />
-    <Compile Include="SimGrid\helper\VertexHelper.cs" />
-    <Compile Include="SimGrid\Loader\DynamicUnstructureGeometryLoader.cs" />
-    <Compile Include="SimGrid\Loader\PointSetLoader.cs" />
-    <Compile Include="SimGrid\PointGridderSource.cs" />
-    <Compile Include="SimGrid\HexahedronGridderSource.cs" />
-    <Compile Include="SimLabGrid.cs" />
+    <Compile Include="Geometry\HalfHexahedronIndex.cs" />
+    <Compile Include="Geometry\HexahedronPosition.cs" />
+    <Compile Include="Geometry\HexahedronTexCoord.cs" />
+    <Compile Include="Geometry\LineIndex.cs" />
+    <Compile Include="Geometry\LinePosition.cs" />
+    <Compile Include="Geometry\LineTexCoord.cs" />
+    <Compile Include="Geometry\TetrahedronIndex.cs" />
+    <Compile Include="Geometry\TetrahedronPosition.cs" />
+    <Compile Include="Geometry\TetrahedronTexCoord.cs" />
+    <Compile Include="Geometry\TriangleIndex.cs" />
+    <Compile Include="Geometry\TrianglePosition.cs" />
+    <Compile Include="Geometry\TriangleTexCoord.cs" />
+    <Compile Include="GridSources\CatesianGridderSource.cs" />
+    <Compile Include="GridSources\CornerPointGridderSource.cs" />
+    <Compile Include="GridSources\DynamicUnstructuredGridderSource.cs" />
+    <Compile Include="GridSources\GridderSource.cs" />
+    <Compile Include="GridSources\GridIndexer.cs" />
+    <Compile Include="GridSources\HexahedronGridderSource.cs" />
+    <Compile Include="GridSources\PointGridderSource.cs" />
+    <Compile Include="Grids\DynamicUnstructureGeometry.cs" />
+    <Compile Include="Grids\DynamicUnstructureGrid.cs" />
+    <Compile Include="Grids\HexahedronGrid.cs" />
+    <Compile Include="Grids\HexahedronMeshGeometry3D.cs" />
+    <Compile Include="Grids\MeshBase.cs" />
+    <Compile Include="Grids\PointGrid.cs" />
+    <Compile Include="Grids\PointMeshGeometry3D.cs" />
+    <Compile Include="Grids\SimLabGrid.cs" />
+    <Compile Include="helper\VertexHelper.cs" />
+    <Compile Include="Loader\DynamicUnstructureGeometryLoader.cs" />
+    <Compile Include="Loader\PointSetLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VertexBuffers\FracturePositionBuffer.cs" />
+    <Compile Include="VertexBuffers\FractureTexCoordBuffer.cs" />
+    <Compile Include="VertexBuffers\HalfHexahedronIndexBuffer.cs" />
+    <Compile Include="VertexBuffers\HexahedronPositionBuffer.cs" />
+    <Compile Include="VertexBuffers\HexahedronTexCoordBuffer.cs" />
+    <Compile Include="VertexBuffers\IndexBuffer.cs" />
+    <Compile Include="VertexBuffers\MatrixPositionBuffer.cs" />
+    <Compile Include="VertexBuffers\MatrixTexCoordBuffer.cs" />
+    <Compile Include="VertexBuffers\PointPositionBuffer.cs" />
+    <Compile Include="VertexBuffers\PointRadiusBuffer.cs" />
+    <Compile Include="VertexBuffers\PositionBuffer.cs" />
+    <Compile Include="VertexBuffers\PropertyBuffer.cs" />
+    <Compile Include="VertexBuffers\TetrahedronMatrixIndexBuffer.cs" />
+    <Compile Include="VertexBuffers\TexCoordBuffer.cs" />
+    <Compile Include="VertexBuffers\VertexBuffer.cs" />
     <Compile Include="Well\CylinderElement.cs" />
     <Compile Include="Well\PointSpriteStringElement.cs" />
     <Compile Include="Well\PointSpriteStringElement_IBoundingBox.cs" />
@@ -131,50 +147,37 @@
       <Name>SharpGL</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Visuals\" />
+    <Content Include="Font\LucidaTypewriterRegular.ttf.png" />
+    <Content Include="Font\LucidaTypewriterRegular.ttf.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="HexahedronGrid.vert" />
+    <EmbeddedResource Include="Grids\DynamicUnstructureGrid.frag" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="HexahedronGrid.frag" />
+    <EmbeddedResource Include="Grids\DynamicUnstructureGrid.vert" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="PointGrid.frag" />
+    <EmbeddedResource Include="Grids\HexahedronGrid.frag" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="PointGrid.vert" />
+    <EmbeddedResource Include="Grids\HexahedronGrid.vert" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DynamicUnstructureGrid.frag" />
-    <EmbeddedResource Include="DynamicUnstructureGrid.vert" />
+    <EmbeddedResource Include="Grids\PointGrid.frag" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Font\LucidaTypewriterRegular.ttf.png" />
+    <EmbeddedResource Include="Grids\PointGrid.vert" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Font\LucidaTypewriterRegular.ttf.xml">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Well\CylinderElement.frag" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Well\CylinderElement.vert" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Well\PointSpriteStringElement.frag" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Well\PointSpriteStringElement.vert" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Well\WellPipe.frag" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Well\WellPipe.vert" />
+    <None Include="VertexBuffers\VertexBuffers.cd" />
+    <None Include="Well\CylinderElement.frag" />
+    <None Include="Well\CylinderElement.vert" />
+    <None Include="Well\PointSpriteStringElement.frag" />
+    <None Include="Well\PointSpriteStringElement.vert" />
+    <None Include="Well\WellPipe.frag" />
+    <None Include="Well\WellPipe.vert" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

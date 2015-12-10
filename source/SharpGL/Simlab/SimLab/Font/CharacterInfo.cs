@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SimLab2.Font
+namespace SimLab.Font
 {
     /// <summary>
     /// 绘制一个字符所需要的所有信息
