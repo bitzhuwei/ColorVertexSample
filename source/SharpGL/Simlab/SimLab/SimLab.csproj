@@ -171,7 +171,7 @@
     <EmbeddedResource Include="Grids\PointGrid.vert" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="VertexBuffers\VertexBuffers.cd" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="Well\CylinderElement.frag" />
     <None Include="Well\CylinderElement.vert" />
     <None Include="Well\PointSpriteStringElement.frag" />

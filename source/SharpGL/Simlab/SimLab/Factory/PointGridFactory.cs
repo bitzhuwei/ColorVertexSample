@@ -30,8 +30,7 @@ namespace SimLab.GridSource.Factory
             // setup positions
             unsafe
             {
-                int gridMemSize = dimSize * sizeof(Vertex);
-                positions.AllocMem(gridMemSize);
+                positions.AllocMem(dimSize);
                 Vertex* cells = (Vertex*)positions.Data;
                 for (int gridIndex = 0; gridIndex < dimSize; gridIndex++)
                 {

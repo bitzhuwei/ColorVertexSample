@@ -50,24 +50,6 @@ namespace SimLab.SimGrid.Factory
                 TetrahedronIndex* header = (TetrahedronIndex*)matrixIndicesBuffer.Data;
                 for (int i = 0; i < src.ElementNum; i++)
                 {
-                    //TetrahedronIndex* tetraTriangles = triangles + (i * 4);
-                    //uint offset = (uint)(i * 4);
-                    //tetraTriangles[0].dot0 = offset + 0;
-                    //tetraTriangles[0].dot1 = offset + 1;
-                    //tetraTriangles[0].dot2 = offset + 2;
-
-                    //tetraTriangles[1].dot0 = offset + 0;
-                    //tetraTriangles[1].dot1 = offset + 1;
-                    //tetraTriangles[1].dot2 = offset + 3;
-
-
-                    //tetraTriangles[2].dot0 = offset + 0;
-                    //tetraTriangles[2].dot1 = offset + 2;
-                    //tetraTriangles[2].dot2 = offset + 3;
-
-                    //tetraTriangles[3].dot0 = offset + 1;
-                    //tetraTriangles[3].dot1 = offset + 2;
-                    //tetraTriangles[3].dot2 = offset + 3;
                     header[i].dot0 = (uint)(i * 4 + 0);
                     header[i].dot1 = (uint)(i * 4 + 1);
                     header[i].dot2 = (uint)(i * 4 + 2);
@@ -309,13 +291,13 @@ namespace SimLab.SimGrid.Factory
             //TextureCoordinatesBuffer textureCoordinates = new TextureCoordinatesBufferData();
             TexCoordBuffer textureCoordinates = null;
 
-            int texturesCount = src.ElementNum;
+          
             if (src.ElementFormat == DynamicUnstructuredGridderSource.MATRIX_FORMAT3_TRIANGLE)
             {
                 textureCoordinates = new TriangleMatrixTexCoordBuffer();
 
                 //textureCoordinates.AllocMem(texturesCount * sizeof(TriangleUV));
-                textureCoordinates.AllocMem(texturesCount);
+                textureCoordinates.AllocMem(textures.Length);
 
                 TriangleTexCoord* pTextures = (TriangleTexCoord*)textureCoordinates.Data;
                 for (int i = 0; i < textures.Length; i++)
@@ -328,7 +310,7 @@ namespace SimLab.SimGrid.Factory
                 textureCoordinates = new TetrahedronMatrixTexCoordBuffer();
 
                 //textureCoordinates.AllocMem(texturesCount * sizeof(TetrahedronUV));
-                textureCoordinates.AllocMem(texturesCount);
+                textureCoordinates.AllocMem(textures.Length);
 
                 TetrahedronTexCoord* pTextures = (TetrahedronTexCoord*)textureCoordinates.Data;
                 for (int i = 0; i < textures.Length; i++)
