@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimLab
+namespace SimLab2
 {
     public class PointMeshGeometry3D : MeshBase
     {

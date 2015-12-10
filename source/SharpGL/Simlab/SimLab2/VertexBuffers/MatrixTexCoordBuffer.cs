@@ -1,6 +1,6 @@
 ﻿using SharpGL;
 using SharpGL.SceneComponent;
-using SimLab.SimGrid.Geometry;
+using SimLab2.SimGrid.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;

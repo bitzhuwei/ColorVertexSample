@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimLab.SimGrid
+namespace SimLab2.SimGrid
 {
     /// <summary>
     /// 描述用OpenGL.GL_QUAD_STRIP渲染六面体时的三个面+一个PrimitiveRestart索引。

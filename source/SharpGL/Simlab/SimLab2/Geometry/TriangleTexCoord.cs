@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimLab.SimGrid.Geometry
+namespace SimLab2.SimGrid.Geometry
 {
 
     /// <summary>

@@ -19,17 +19,18 @@ using SharpGL.SceneGraph.Assets;
 using SharpGL.SceneGraph.Quadrics;
 using SharpGL.SceneComponent;
 using SharpGL.SceneComponent.Model;
-using SimLab.GridSource;
-using SimLab;
+using SimLab2.GridSource;
+using SimLab2;
 using System.Globalization;
-using SimLab.SimGrid;
-using SimLab.SimGrid.Loader;
+using SimLab2.SimGrid;
+using SimLab2.SimGrid.Loader;
 using SimLab2.VertexBuffers;
 
 namespace Sample2
 {
     public partial class FormDynamicUnstructureGridTetrahedronSample : Form
     {
+        private DynamicUnstructureGrid element;
         public FormDynamicUnstructureGridTetrahedronSample()
         {
             InitializeComponent();
@@ -201,6 +202,7 @@ namespace Sample2
                 gridder.SetMatrixTextureCoords(matrixTextureCoordinates);
                 gridder.SetFractionTextureCoords(fractureTextureCoordindates);
 
+                this.element = gridder;
 
                 //textureCoodinates.Dump();
 
@@ -288,6 +290,19 @@ namespace Sample2
 
         private void scientificVisual3DControl_KeyPress(object sender, KeyPressEventArgs e)
         {
+            if(e.KeyChar=='0')
+            {
+                this.element.MatrixVertexOrIndexCount = 0;
+            }
+            if(e.KeyChar=='j')
+            {
+                this.element.MatrixVertexOrIndexCount++;
+            }
+            if(e.KeyChar=='k')
+            {
+                this.element.MatrixVertexOrIndexCount--;
+            }
+
             if (e.KeyChar == 'r')
             {
 
@@ -302,6 +317,10 @@ namespace Sample2
 
 
             }
+
+            this.lblPickedPrimitive.Text = string.Format("{0} indexes drawing.", this.element.MatrixVertexOrIndexCount);
+
+            this.sim3D.Invalidate();
         }
 
         private void FormHexahedronGridder_Load(object sender, EventArgs e)

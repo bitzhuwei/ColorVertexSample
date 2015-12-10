@@ -16,7 +16,7 @@ namespace SimLab2.VertexBuffers
     public class TetrahedronMatrixIndexBuffer : IndexBuffer
     {
         public TetrahedronMatrixIndexBuffer()
-            : base(OpenGL.GL_TRIANGLES)
+            : base(OpenGL.GL_TRIANGLE_STRIP)
         {
 
         }

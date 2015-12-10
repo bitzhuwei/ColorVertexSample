@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimLab.SimGrid
+namespace SimLab2.SimGrid
 {
     /// <summary>
     /// 描述三角形索引。

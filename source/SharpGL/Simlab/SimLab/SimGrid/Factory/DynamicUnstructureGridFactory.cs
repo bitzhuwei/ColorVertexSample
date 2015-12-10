@@ -1,13 +1,13 @@
 ﻿using SharpGL.SceneGraph;
-using SimLab.GridSource.Factory;
-using SimLab.SimGrid.Geometry;
+using SimLab2.GridSource.Factory;
+using SimLab2.SimGrid.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimLab.SimGrid.Factory
+namespace SimLab2.SimGrid.Factory
 {
     public  class DynamicUnstructureGridFactory : GridBufferDataFactory
     {

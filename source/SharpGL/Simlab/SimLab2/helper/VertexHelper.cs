@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimLab.SimGrid.helper
+namespace SimLab2.SimGrid.helper
 {
     public class VertexHelper
     {

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimLab.SimGrid.Loader
+namespace SimLab2.SimGrid.Loader
 {
     public class DynamicUnstructureGeometryLoader
     {

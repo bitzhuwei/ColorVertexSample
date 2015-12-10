@@ -19,11 +19,6 @@ namespace SimLab2.SimGrid.Geometry
         public uint dot3;
         public uint dot4;
         public uint dot5;
-        public uint dot6;
-        public uint dot7;
-        public uint dot8;
-        public uint dot9;
-        public uint dot10;
-        public uint dot11;
+        public uint restartIndex;
     }
 }
