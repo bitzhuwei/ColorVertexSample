@@ -232,5 +232,21 @@ namespace SimLab
         }
 
         #endregion IRenderable
+
+        protected override void DisposeUnmanagedResources()
+        {
+            if (this.radiusBuffer != null)
+            {
+                gl.DeleteBuffers(this.radiusBuffer.Length, this.radiusBuffer);
+            }
+
+            base.DisposeUnmanagedResources();
+
+            if (this.vertexArrayObject != null)
+            {
+                gl.DeleteVertexArrays(this.vertexArrayObject.Length, this.vertexArrayObject);
+            }
+
+        }
     }
 }
