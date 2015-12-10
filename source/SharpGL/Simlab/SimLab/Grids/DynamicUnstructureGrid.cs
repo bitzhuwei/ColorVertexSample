@@ -328,7 +328,7 @@ namespace SimLab
                 gl.Enable(OpenGL.GL_POLYGON_OFFSET_FILL);
                 gl.PolygonOffset(1.0f, 1.0f);
 
-                        gl.BindVertexArray(matrixVertexArrayObject[0]);
+                gl.BindVertexArray(matrixVertexArrayObject[0]);
 
                 switch (this.MatrixType)
                 {
@@ -347,7 +347,7 @@ namespace SimLab
                     default:
                         break;
                 }
-                        gl.BindVertexArray(0);
+                gl.BindVertexArray(0);
 
 
                 gl.Disable(OpenGL.GL_POLYGON_OFFSET_FILL);
@@ -475,6 +475,38 @@ namespace SimLab
         }
 
         #endregion IRenderable
+
+        protected override void DisposeUnmanagedResources()
+        {
+            base.DisposeUnmanagedResources();
+
+            try
+            {
+                if (this.matrixIndexBuffer != null)
+                {
+                    gl.DeleteBuffers(this.matrixIndexBuffer.Length, this.matrixIndexBuffer);
+                }
+                if (this.fractionPositionBuffer != null)
+                {
+                    gl.DeleteBuffers(this.fractionPositionBuffer.Length, this.fractionPositionBuffer);
+                }
+                if (this.fractionUVBuffer != null)
+                {
+                    gl.DeleteBuffers(this.fractionUVBuffer.Length, this.fractionUVBuffer);
+                }
+                if (this.matrixVertexArrayObject != null)
+                {
+                    gl.DeleteVertexArrays(this.matrixVertexArrayObject.Length, this.matrixVertexArrayObject);
+                }
+                if (this.fractionVertexArrayObject != null)
+                {
+                    gl.DeleteVertexArrays(this.fractionVertexArrayObject.Length, this.fractionVertexArrayObject);
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
     }
 
 }

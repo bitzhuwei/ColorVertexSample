@@ -235,17 +235,24 @@ namespace SimLab
 
         protected override void DisposeUnmanagedResources()
         {
-            if (this.radiusBuffer != null)
+            try
             {
-                gl.DeleteBuffers(this.radiusBuffer.Length, this.radiusBuffer);
+                base.DisposeUnmanagedResources();
+
+                if (this.radiusBuffer != null)
+                {
+                    gl.DeleteBuffers(this.radiusBuffer.Length, this.radiusBuffer);
+                }
+
+                if (this.vertexArrayObject != null)
+                {
+                    gl.DeleteVertexArrays(this.vertexArrayObject.Length, this.vertexArrayObject);
+                }
             }
-
-            base.DisposeUnmanagedResources();
-
-            if (this.vertexArrayObject != null)
+            catch (Exception)
             {
-                gl.DeleteVertexArrays(this.vertexArrayObject.Length, this.vertexArrayObject);
             }
+           
 
         }
     }

@@ -203,6 +203,7 @@ namespace Sample
                 gridder.RenderGridWireframe = this.IsShowWireframe;
                 gridder.SetTexture(texture);
                 gridder.SetTextureCoods(textureCoodinates);
+                texture.Dispose();
                 //textureCoodinates.Dump();
                 DateTime t6 = DateTime.Now;
 
