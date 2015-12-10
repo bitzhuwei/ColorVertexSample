@@ -149,8 +149,8 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="Font\LucidaTypewriterRegular.ttf.png" />
-    <Content Include="Font\LucidaTypewriterRegular.ttf.xml" />
+    <EmbeddedResource Include="Font\LucidaTypewriterRegular.ttf.png" />
+    <EmbeddedResource Include="Font\LucidaTypewriterRegular.ttf.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Grids\DynamicUnstructureGrid.frag" />
@@ -172,12 +172,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="VertexBuffers\VertexBuffers.cd" />
-    <None Include="Well\CylinderElement.frag" />
-    <None Include="Well\CylinderElement.vert" />
-    <None Include="Well\PointSpriteStringElement.frag" />
-    <None Include="Well\PointSpriteStringElement.vert" />
-    <None Include="Well\WellPipe.frag" />
-    <None Include="Well\WellPipe.vert" />
+    <EmbeddedResource Include="Well\CylinderElement.frag" />
+    <EmbeddedResource Include="Well\CylinderElement.vert" />
+    <EmbeddedResource Include="Well\PointSpriteStringElement.frag" />
+    <EmbeddedResource Include="Well\PointSpriteStringElement.vert" />
+    <EmbeddedResource Include="Well\WellPipe.frag" />
+    <EmbeddedResource Include="Well\WellPipe.vert" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
