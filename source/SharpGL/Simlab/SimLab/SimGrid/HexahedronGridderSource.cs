@@ -124,7 +124,7 @@ namespace SimLab.GridSource
         /// <returns></returns>
         public bool IsSliceBlock(int i, int j)
         {
-            return jSlices.ContainsKey(i) && iSlices.ContainsKey(j);
+            return iSlices.ContainsKey(i) && jSlices.ContainsKey(j);
         }
 
 
