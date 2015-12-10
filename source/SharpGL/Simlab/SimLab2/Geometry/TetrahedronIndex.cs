@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace SimLab2.SimGrid.Geometry
 {
     /// <summary>
-    /// 用OpenGL.GL_TRIANGLES来渲染四面体。
+    /// 用OpenGL.GL_TRIANGLE_STRIP来渲染四面体。
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct TetrahedronIndex
@@ -19,6 +19,9 @@ namespace SimLab2.SimGrid.Geometry
         public uint dot3;
         public uint dot4;
         public uint dot5;
+        /// <summary>
+        /// 请给此变量赋值'uint.MaxValue'
+        /// </summary>
         public uint restartIndex;
     }
 }
