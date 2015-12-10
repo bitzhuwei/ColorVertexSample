@@ -11,15 +11,15 @@ namespace SimLab.VertexBuffers
     /// <summary>
     /// 描述点集的顶点的位置。
     /// </summary>
-    public class PointPositionBuffer : PositionBuffer
+    public sealed class PointPositionBuffer : PositionBuffer
     {
         /// <summary>
         /// 申请指定长度的非托管数组。
         /// </summary>
         /// <param name="elementCount">数组元素的数目。</param>
-        public override void AllocMem(int elementCount)
+        protected override  UnmanagedArrayBase CreateElements(int elementCount)
         {
-            this.array = new UnmanagedArray<Vertex>(elementCount);
+             return new UnmanagedArray<Vertex>(elementCount);
         }
     }
 }

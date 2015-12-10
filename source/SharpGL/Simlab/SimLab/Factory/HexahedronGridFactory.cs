@@ -26,8 +26,7 @@ namespace SimLab.GridSource.Factory
             int I, J, K;
             unsafe
             {
-                //int gridMemSize = dimSize * sizeof(HexahedronPosition);
-                //positions.AllocMem(gridMemSize);
+              
                 positions.AllocMem(dimSize);
 
                 HexahedronPosition* cell = (HexahedronPosition*)positions.Data;
@@ -160,11 +159,9 @@ namespace SimLab.GridSource.Factory
             HexahedronTexCoordBuffer coordBuffer = new HexahedronTexCoordBuffer();
             unsafe
             {
-                int bufferSize = src.DimenSize * sizeof(HexahedronTexCoord);
-                coordBuffer.AllocMem(bufferSize);
-
+                int gridCellCount = src.DimenSize;
+                coordBuffer.AllocMem(gridCellCount);
                 HexahedronTexCoord* coords = (HexahedronTexCoord*)coordBuffer.Data;
-
                 for (int gridIndex = 0; gridIndex < dimenSize; gridIndex++)
                 {
                     coords[gridIndex].SetCoord(textures[gridIndex]);

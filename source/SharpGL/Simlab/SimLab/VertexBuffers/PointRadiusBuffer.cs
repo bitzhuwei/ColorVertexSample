@@ -23,9 +23,9 @@ namespace SimLab.VertexBuffers
         /// 申请指定长度的非托管数组。
         /// </summary>
         /// <param name="elementCount">数组元素的数目。</param>
-        public override void AllocMem(int elementCount)
+        protected override UnmanagedArrayBase CreateElements(int elementCount)
         {
-            this.array = new UnmanagedArray<float>(elementCount);
+            return new UnmanagedArray<float>(elementCount);
         }
     }
 }

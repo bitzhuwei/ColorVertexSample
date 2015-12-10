@@ -27,9 +27,9 @@ namespace SimLab.VertexBuffers
         /// 申请指定长度的非托管数组。
         /// </summary>
         /// <param name="elementCount">数组元素的数目。</param>
-        public override void AllocMem(int elementCount)
+        protected override UnmanagedArrayBase CreateElements(int elementCount)
         {
-            this.array = new UnmanagedArray<TetrahedronTexCoord>(elementCount);
+            return new UnmanagedArray<TetrahedronTexCoord>(elementCount);
         }
 
     }
@@ -43,9 +43,9 @@ namespace SimLab.VertexBuffers
         /// 申请指定长度的非托管数组。
         /// </summary>
         /// <param name="elementCount">数组元素的数目。</param>
-        public override void AllocMem(int elementCount)
+        protected override UnmanagedArrayBase CreateElements(int elementCount)
         {
-            this.array = new UnmanagedArray<TriangleTexCoord>(elementCount);
+             return  new UnmanagedArray<TriangleTexCoord>(elementCount);
         }
 
     }

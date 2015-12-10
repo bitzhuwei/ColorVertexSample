@@ -145,38 +145,13 @@ namespace SharpGL.SceneComponent
         {
             this.Length = elementCount;
             this.elementSize = elementSize;
-
-            int memSize = elementCount * elementSize;
-            this.Header = Marshal.AllocHGlobal(memSize);
-
-            //allocatedArrays.Add(this);
-            //allocatedArrays.Add(new WeakReference(this));
-            allocatedArrays.Add(this.Header, new WeakReference(this));
+            long memSize = elementCount * elementSize;
+            IntPtr size = (IntPtr)memSize;
+            this.Header = Marshal.AllocHGlobal(size);
         }
 
-        //private static readonly List<IDisposable> allocatedArrays = new List<IDisposable>();
-        //private static readonly List<WeakReference> allocatedArrays = new List<WeakReference>();
-        private static readonly Dictionary<IntPtr, WeakReference> allocatedArrays = new Dictionary<IntPtr, WeakReference>();
+       
 
-        /// <summary>
-        /// 立即释放所有<see cref="UnmanagedArray"/>。
-        /// </summary>
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public static void FreeAll()
-        {
-            var list = new List<WeakReference>(allocatedArrays.Values.AsEnumerable());
-            foreach (var item in list)
-            {
-                //item.Dispose();
-                IDisposable target = item.Target as IDisposable;
-                if (target != null)
-                {
-                    target.Dispose();
-                }
-            }
-
-            allocatedArrays.Clear();
-        }
 
         ~UnmanagedArrayBase()
         {
@@ -188,7 +163,7 @@ namespace SharpGL.SceneComponent
         /// <summary>
         /// Internal variable which checks if Dispose has already been called
         /// </summary>
-        protected Boolean disposed;
+        protected Boolean disposed = false;
 
         /// <summary>
         /// Releases unmanaged and - optionally - managed resources
@@ -207,16 +182,13 @@ namespace SharpGL.SceneComponent
             }
             //Unmanaged cleanup code here
             IntPtr ptr = this.Header;
-
             if (ptr != IntPtr.Zero)
             {
                 this.Length = 0;
                 this.Header = IntPtr.Zero;
                 Marshal.FreeHGlobal(ptr);
-
-                allocatedArrays.Remove(ptr);
+                //allocatedArrays.Remove(ptr);
             }
-
             disposed = true;
         }
 

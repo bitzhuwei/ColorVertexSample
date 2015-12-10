@@ -61,7 +61,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Disposable.cs" />
     <Compile Include="Factory\DynamicUnstructureGridFactory.cs" />
     <Compile Include="Factory\GridBufferDataFactory.cs" />
@@ -171,6 +170,7 @@
     <EmbeddedResource Include="Grids\PointGrid.vert" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram2.cd" />
     <None Include="VertexBuffers\VertexBuffers.cd" />
     <EmbeddedResource Include="Well\CylinderElement.frag" />
     <EmbeddedResource Include="Well\CylinderElement.vert" />

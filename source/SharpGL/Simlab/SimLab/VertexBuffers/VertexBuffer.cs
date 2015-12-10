@@ -13,7 +13,7 @@ namespace SimLab.VertexBuffers
     /// </summary>
     public abstract class VertexBuffer : Disposable
     {
-        protected UnmanagedArrayBase array;
+        protected UnmanagedArrayBase array = null;
 
         /// <summary>
         /// 此VBO中的数据在内存中的起始地址
@@ -30,29 +30,33 @@ namespace SimLab.VertexBuffers
         public int SizeInBytes
         {
             get { return (this.array == null) ? 0 : this.array.ByteLength; }
+
         }
 
+        protected abstract UnmanagedArrayBase CreateElements(int elementCount);
 
+       
         /// <summary>
         /// 申请指定长度的非托管数组。
         /// </summary>
         /// <param name="elementCount">数组元素的数目。</param>
-        public abstract void AllocMem(int elementCount);
+        public void AllocMem(int elementCount)
+        {
+            this.array = CreateElements(elementCount);
+        }
 
         protected void FreeMem()
         {
-            this.array.Dispose();
-
-            this.array = null;
+            if (this.array != null)
+            {
+                this.array.Dispose(); 
+                this.array = null;
+            }
         }
 
         protected override void DisposeUnmanagedResources()
         {
-            //recuresive distroy
-            if (this.Data != IntPtr.Zero)
-            {
-                this.FreeMem();
-            }
+            this.FreeMem();
             base.DisposeUnmanagedResources();
         }
     }

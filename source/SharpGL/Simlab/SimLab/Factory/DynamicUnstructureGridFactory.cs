@@ -63,9 +63,7 @@ namespace SimLab.SimGrid.Factory
             {
                 matrixPositions = new TriangleMatrixPositionBuffer();
                 //matrixPositions.Shape = MatrixPositionBufferData.SHAPE_TRIANGLE;
-
-                int memSize = src.ElementNum * sizeof(TrianglePosition);
-                matrixPositions.AllocMem(memSize);
+                matrixPositions.AllocMem(src.ElementNum);
                 int[][] matrixIndices = src.Elements;
                 Vertex[] positions = src.Nodes;
                 TrianglePosition* triangles = (TrianglePosition*)matrixPositions.Data;
@@ -205,16 +203,14 @@ namespace SimLab.SimGrid.Factory
             //TextureCoordinatesBuffer textureCoordinates = new TextureCoordinatesBufferData();
             TexCoordBuffer textureCoordinates = null;
 
-            int texturesCount = src.FractureNum;
+            int texturesCount = textures.Length;
             if (src.FractureFormat == DynamicUnstructuredGridderSource.FRACTURE_FORMAT3_TRIANGLE)
             {
                 textureCoordinates = new TriangleFractureTexCoordBuffer();
-
-                //textureCoordinates.AllocMem(texturesCount * sizeof(TriangleUV));
                 textureCoordinates.AllocMem(texturesCount);
 
                 TriangleTexCoord* pTextures = (TriangleTexCoord*)textureCoordinates.Data;
-                for (int i = 0; i < textures.Length; i++)
+                for (int i = 0; i <texturesCount; i++)
                 {
                     pTextures[i].SetTextureCoord(textures[i]);
                 }
@@ -222,10 +218,7 @@ namespace SimLab.SimGrid.Factory
             if (src.FractureFormat == DynamicUnstructuredGridderSource.FRACTURE_FORMAT2_LINE)
             {
                 textureCoordinates = new LineFractureTexCoordBufer();
-
-                //textureCoordinates.AllocMem(texturesCount * sizeof(LineUV));
                 textureCoordinates.AllocMem(texturesCount);
-
                 LineTexCoord* pTextures = (LineTexCoord*)textureCoordinates.Data;
                 for (int i = 0; i < textures.Length; i++)
                 {

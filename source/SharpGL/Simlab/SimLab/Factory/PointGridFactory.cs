@@ -65,8 +65,7 @@ namespace SimLab.GridSource.Factory
             unsafe
             {
                 int dimenSize = src.DimenSize;
-                int gridMemSize = src.DimenSize * sizeof(float);
-                radiusBuffer.AllocMem(gridMemSize);
+                radiusBuffer.AllocMem(dimenSize);
                 float* radiues = (float*)radiusBuffer.Data;
                 for (int gridIndex = 0; gridIndex < dimenSize; gridIndex++)
                 {
@@ -84,8 +83,7 @@ namespace SimLab.GridSource.Factory
             unsafe
             {
                 int dimenSize = src.DimenSize;
-                int gridMemSize = src.DimenSize * sizeof(float);
-                radiusBuffer.AllocMem(gridMemSize);
+                radiusBuffer.AllocMem(dimenSize);
                 float* radiues = (float*)radiusBuffer.Data;
                 for (int gridIndex = 0; gridIndex < dimenSize; gridIndex++)
                 {
@@ -139,9 +137,7 @@ namespace SimLab.GridSource.Factory
             HexahedronTexCoordBuffer coordBuffer = new HexahedronTexCoordBuffer();
             unsafe
             {
-                int bufferSize = src.DimenSize * sizeof(float);
-                coordBuffer.AllocMem(bufferSize);
-
+                coordBuffer.AllocMem(src.DimenSize);
                 float* coords = (float*)coordBuffer.Data;
                 for (int gridIndex = 0; gridIndex < dimenSize; gridIndex++)
                 {
