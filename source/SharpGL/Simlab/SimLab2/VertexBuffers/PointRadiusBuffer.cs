@@ -12,9 +12,9 @@ namespace SimLab2.VertexBuffers
     /// 描述一个顶点的半径。
     /// <para>一个顶点的半径信息由'1'个'float'描述。</para>
     /// </summary>
-    public class RadiusBuffer : PropertyBuffer
+    public class PointRadiusBuffer : PropertyBuffer
     {
-        public RadiusBuffer()
+        public PointRadiusBuffer()
             : base(1, OpenGL.GL_FLOAT)//一个顶点的半径信息由'1'个'float'描述。
         {
         }

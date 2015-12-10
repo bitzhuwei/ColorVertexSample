@@ -51,12 +51,12 @@
     <Compile Include="VertexBuffers\HexahedronPositionBuffer.cs" />
     <Compile Include="VertexBuffers\HexahedronTexCoordBuffer.cs" />
     <Compile Include="VertexBuffers\IndexBuffer.cs" />
-    <Compile Include="VertexBuffers\MatrixIndexBuffer.cs" />
+    <Compile Include="VertexBuffers\TetrahedronMatrixIndexBuffer.cs" />
     <Compile Include="VertexBuffers\MatrixPositionBuffer.cs" />
     <Compile Include="VertexBuffers\MatrixTexCoordBuffer.cs" />
     <Compile Include="VertexBuffers\PointPositionBuffer.cs" />
     <Compile Include="VertexBuffers\PropertyBuffer.cs" />
-    <Compile Include="VertexBuffers\RadiusBuffer.cs" />
+    <Compile Include="VertexBuffers\PointRadiusBuffer.cs" />
     <Compile Include="VertexBuffers\TexCoordBuffer.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Disposable.cs" />
@@ -122,7 +122,7 @@
     <EmbeddedResource Include="Grids\HexahedronGrid.vert" />
     <EmbeddedResource Include="Grids\PointGrid.frag" />
     <EmbeddedResource Include="Grids\PointGrid.vert" />
-    <None Include="VertexBuffers\ClassDiagram1.cd" />
+    <None Include="VertexBuffers\VertexBuffers.cd" />
     <None Include="Well\CylinderElement.frag" />
     <None Include="Well\CylinderElement.vert" />
     <None Include="Well\PointSpriteStringElement.frag" />

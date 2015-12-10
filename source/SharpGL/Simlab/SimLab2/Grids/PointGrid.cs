@@ -46,7 +46,7 @@ namespace SimLab
             this.count = geometry.Count;
         }
 
-        public void SetRadius(RadiusBuffer radius)
+        public void SetRadius(PointRadiusBuffer radius)
         {
             if (radius != null)
             {

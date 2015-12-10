@@ -9,10 +9,19 @@ using System.Threading.Tasks;
 
 namespace SimLab2.VertexBuffers
 {
+
     /// <summary>
-    /// 描述由四面体组成的裂缝(fracture)的顶点的颜色。
+    /// 描述由四面体组成的基质(Matrix)的顶点的颜色。
     /// </summary>
-    public class TetrahedronMatrixTexCoordBuffer : TexCoordBuffer
+    public abstract class MatrixTexCoordBuffer : TexCoordBuffer
+    {
+
+    }
+
+    /// <summary>
+    /// 描述由四面体组成的基质(Matrix)的顶点的颜色。
+    /// </summary>
+    public class TetrahedronMatrixTexCoordBuffer : MatrixTexCoordBuffer
     {
 
         public override void AllocMem(int elementCount)
@@ -23,9 +32,9 @@ namespace SimLab2.VertexBuffers
     }
 
     /// <summary>
-    /// 描述由三角形组成的裂缝(fracture)的顶点的颜色。
+    /// 描述由三角形组成的基质(Matrix)的顶点的颜色。
     /// </summary>
-    public class TriangleMatrixTexCoordBuffer : TexCoordBuffer
+    public class TriangleMatrixTexCoordBuffer : MatrixTexCoordBuffer
     {
 
         public override void AllocMem(int elementCount)

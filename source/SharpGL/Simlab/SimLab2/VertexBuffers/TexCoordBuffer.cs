@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace SimLab2.VertexBuffers
 {
-    //TODO: use 3 for positions, 1 for texture coordinates. use eum to do this.
     /// <summary>
     /// 用贴图坐标来描述一个顶点的颜色。
     /// <para>本项目中的Color Palette可用一维贴图描述，所以这里只保存横向坐标（UV中的U）</para>

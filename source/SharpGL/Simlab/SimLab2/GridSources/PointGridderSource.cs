@@ -113,12 +113,12 @@ namespace SimLab.GridSource
             }
         }
 
-        public RadiusBuffer CreateRadiusBuffer(float[] radius)
+        public PointRadiusBuffer CreateRadiusBuffer(float[] radius)
         {
            return  this.Factory.CreateRadiusBufferData(this, radius);
         }
 
-        public RadiusBuffer CreateRadiusBuffer(float radius)
+        public PointRadiusBuffer CreateRadiusBuffer(float radius)
         {
             return this.Factory.CreateRadiusBufferData(this, radius);
         }

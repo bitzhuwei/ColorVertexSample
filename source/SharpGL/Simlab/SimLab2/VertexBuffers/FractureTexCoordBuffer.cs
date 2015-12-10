@@ -9,10 +9,19 @@ using System.Threading.Tasks;
 
 namespace SimLab2.VertexBuffers
 {
+
     /// <summary>
     /// 描述由线段组成的裂缝(fracture)的顶点的颜色。
     /// </summary>
-    public class LineFractureTexCoordBufer : TexCoordBuffer
+    public abstract class FractureTexCoordBuffer : TexCoordBuffer
+    {
+
+    }
+
+    /// <summary>
+    /// 描述由线段组成的裂缝(fracture)的顶点的颜色。
+    /// </summary>
+    public class LineFractureTexCoordBufer : FractureTexCoordBuffer
     {
         public override void AllocMem(int elementCount)
         {
@@ -24,7 +33,7 @@ namespace SimLab2.VertexBuffers
     /// <summary>
     /// 描述由三角形组成的裂缝(fracture)的顶点的颜色。
     /// </summary>
-    public class TriangleFractureTexCoordBuffer : TexCoordBuffer
+    public class TriangleFractureTexCoordBuffer : FractureTexCoordBuffer
     {
         public override void AllocMem(int elementCount)
         {

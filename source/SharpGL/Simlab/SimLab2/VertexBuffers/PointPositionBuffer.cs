@@ -11,7 +11,7 @@ namespace SimLab2.VertexBuffers
     /// <summary>
     /// 描述点集的顶点的位置。
     /// </summary>
-    class PointPositionBuffer : PositionBuffer
+    public class PointPositionBuffer : PositionBuffer
     {
         public override void AllocMem(int elementCount)
         {

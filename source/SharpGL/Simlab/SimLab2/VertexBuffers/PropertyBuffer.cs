@@ -26,8 +26,8 @@ namespace SimLab2.VertexBuffers
         /// </param>
         public PropertyBuffer(int glSize, uint glDataType)
         {
-            this.glSize = GLSize;
-            this.glDataType = GLDataType;
+            this.GLSize = GLSize;
+            this.GLDataType = GLDataType;
         }
 
         /// <summary>
@@ -35,31 +35,12 @@ namespace SimLab2.VertexBuffers
         /// <para>gl.VertexAttribPointer(attributeLocation, 3, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);</para>
         /// <para>表示第3个参数</para>
         /// </summary>
-        private uint glDataType;
-
-        /// <summary>
-        /// GL_FLOAT etc
-        /// <para>gl.VertexAttribPointer(attributeLocation, 3, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);</para>
-        /// <para>表示第3个参数</para>
-        /// </summary>
-        public uint GLDataType
-        {
-            get { return this.glDataType; }
-        }
+        public uint GLDataType { get; private set; }
 
         /// <summary>
         /// gl.VertexAttribPointer(attributeLocation, 3, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
         /// <para>表示第2个参数</para>
         /// </summary>
-        private int glSize;
-
-        /// <summary>
-        /// gl.VertexAttribPointer(attributeLocation, 3, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
-        /// <para>表示第2个参数</para>
-        /// </summary>
-        public int GLSize
-        {
-            get { return glSize; }
-        }
+        public int GLSize { get; private set; }
     }
 }

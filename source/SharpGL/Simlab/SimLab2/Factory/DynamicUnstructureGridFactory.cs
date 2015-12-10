@@ -18,7 +18,7 @@ namespace SimLab.SimGrid.Factory
         private unsafe DynamicUnstructureGeometry DoCreateMesh(DynamicUnstructuredGridderSource src)
         {
             MatrixPositionBuffer matrixPositions = null;
-            MatrixIndexBuffer matrixIndicesBuffer = null;
+            TetrahedronMatrixIndexBuffer matrixIndicesBuffer = null;
             FracturePositionBuffer fractionPositionsBuffer = null;
 
             //生成母体
@@ -43,7 +43,7 @@ namespace SimLab.SimGrid.Factory
                     tets[i].p4 = positions[matrixIndices[i][3]-1];
                 }
 
-                matrixIndicesBuffer = new MatrixIndexBuffer();
+                matrixIndicesBuffer = new TetrahedronMatrixIndexBuffer();
                 //int triangleCount = src.ElementNum * 4;
                 //matrixIndicesBuffer.AllocMem(triangleCount * sizeof(TriangleIndex));
                 matrixIndicesBuffer.AllocMem(src.ElementNum * 4);

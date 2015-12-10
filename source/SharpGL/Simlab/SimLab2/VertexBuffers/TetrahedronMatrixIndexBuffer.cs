@@ -13,9 +13,9 @@ namespace SimLab2.VertexBuffers
     /// <summary>
     /// 基质(Matrix)为四面体时用此索引。
     /// </summary>
-    public class MatrixIndexBuffer : IndexBuffer
+    public class TetrahedronMatrixIndexBuffer : IndexBuffer
     {
-        public MatrixIndexBuffer()
+        public TetrahedronMatrixIndexBuffer()
             : base(OpenGL.GL_TRIANGLES)
         {
 

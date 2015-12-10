@@ -23,8 +23,8 @@ namespace SimLab.GridSource.Factory
             Vertex minVertex = new Vertex();
             Vertex maxVertex = new Vertex();
             bool isSet = false;
-            PositionBuffer positions = new PointPositionBuffer();
-            RadiusBuffer radiusBuffer = null;
+            PointPositionBuffer positions = new PointPositionBuffer();
+            PointRadiusBuffer radiusBuffer = null;
             int dimSize = src.DimenSize;
             Random random = new Random();
             // setup positions
@@ -60,9 +60,9 @@ namespace SimLab.GridSource.Factory
         }
 
 
-        public RadiusBuffer CreateRadiusBufferData(PointGridderSource src, float[] radius)
+        public PointRadiusBuffer CreateRadiusBufferData(PointGridderSource src, float[] radius)
         {
-            RadiusBuffer radiusBuffer = new RadiusBuffer();
+            PointRadiusBuffer radiusBuffer = new PointRadiusBuffer();
             unsafe
             {
                 int dimenSize = src.DimenSize;
@@ -78,10 +78,10 @@ namespace SimLab.GridSource.Factory
         }
 
 
-        public RadiusBuffer CreateRadiusBufferData(PointGridderSource src, float radius)
+        public PointRadiusBuffer CreateRadiusBufferData(PointGridderSource src, float radius)
         {
 
-            RadiusBuffer radiusBuffer = new RadiusBuffer();
+            PointRadiusBuffer radiusBuffer = new PointRadiusBuffer();
             unsafe
             {
                 int dimenSize = src.DimenSize;
