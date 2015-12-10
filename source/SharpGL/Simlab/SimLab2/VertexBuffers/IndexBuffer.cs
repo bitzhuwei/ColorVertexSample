@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SharpGL.SceneComponent;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,6 +32,20 @@ namespace SimLab2.VertexBuffers
         /// <summary>
         /// 索引数组中有多少个元素。
         /// </summary>
-        public int ElementCount { get; protected set; }
+        public int ElementCount
+        {
+            get
+            {
+                UnmanagedArrayBase array = this.array;
+                if (array != null)
+                {
+                    return array.ByteLength / sizeof(uint);
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        }
     }
 }

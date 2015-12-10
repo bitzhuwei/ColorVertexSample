@@ -24,8 +24,6 @@ namespace SimLab2.VertexBuffers
         public override void AllocMem(int elementCount)
         {
             this.array = new UnmanagedArray<TetrahedronIndex>(elementCount);
-
-            this.ElementCount = elementCount * 12;
         }
     }
 }
