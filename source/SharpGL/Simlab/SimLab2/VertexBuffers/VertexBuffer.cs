@@ -1,5 +1,5 @@
 ﻿using SharpGL.SceneComponent;
-using SimLab;
+using SimLab2;
 using System;
 using System.Collections.Generic;
 using System.Linq;

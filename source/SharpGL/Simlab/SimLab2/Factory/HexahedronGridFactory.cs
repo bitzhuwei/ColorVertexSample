@@ -1,6 +1,6 @@
 ﻿using SharpGL.SceneGraph;
-using SimLab.SimGrid;
-using SimLab.SimGrid.Geometry;
+using SimLab2.SimGrid;
+using SimLab2.SimGrid.Geometry;
 using SimLab2.VertexBuffers;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimLab.GridSource.Factory
+namespace SimLab2.GridSource.Factory
 {
     public class HexahedronGridFactory : GridBufferDataFactory
     {

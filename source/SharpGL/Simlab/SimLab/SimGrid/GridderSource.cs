@@ -1,13 +1,13 @@
 ﻿using SharpGL.SceneGraph;
-using SimLab.GridSource.Factory;
-using SimLab.SimGrid;
+using SimLab2.GridSource.Factory;
+using SimLab2.SimGrid;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimLab.GridSource
+namespace SimLab2.GridSource
 {
     /// <summary>
     /// 网格数据源, 赋值后调用初始化Init才能使用:

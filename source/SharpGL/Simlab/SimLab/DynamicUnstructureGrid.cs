@@ -5,14 +5,14 @@ using SharpGL.SceneComponent.Utility;
 using SharpGL.SceneGraph;
 using SharpGL.SceneGraph.Core;
 using SharpGL.Shaders;
-using SimLab.SimGrid.Geometry;
+using SimLab2.SimGrid.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimLab
+namespace SimLab2
 {
     public class DynamicUnstructureGrid : SimLabGrid, IRenderable
     {

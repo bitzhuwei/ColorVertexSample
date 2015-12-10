@@ -5,8 +5,8 @@ using SharpGL.SceneComponent.Utility;
 using SharpGL.SceneGraph;
 using SharpGL.SceneGraph.Core;
 using SharpGL.Shaders;
-using SimLab.SimGrid;
-using SimLab.SimGrid.Geometry;
+using SimLab2.SimGrid;
+using SimLab2.SimGrid.Geometry;
 using SimLab2.VertexBuffers;
 using System;
 using System.Collections.Generic;
@@ -14,7 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimLab
+namespace SimLab2
 {
     public class DynamicUnstructureGrid : SimLabGrid, IRenderable
     {
@@ -108,6 +108,7 @@ namespace SimLab
         private GlmNet.mat4 viewMatrix;
         private mat4 modelMatrix;
         private ShaderProgram shaderProgram;
+        private uint matrixRenderMode;
 
         public DynamicUnstructureGrid(OpenGL gl, IScientificCamera camera)
             : base(gl, camera)
@@ -123,24 +124,21 @@ namespace SimLab
             this.FractionType = geometry.FracturePositions.Shape;
             this.MatrixType = geometry.MatrixPositions.Shape;
 
-            this.positionBuffer = new uint[1];
-            this.positionBuffer[0] = CreateVertexBufferObject(OpenGL.GL_ARRAY_BUFFER, geometry.MatrixPositions, OpenGL.GL_STATIC_DRAW);
             if (geometry.MatrixIndices != null)
             {
                 this.matrixIndexBuffer = new uint[1];
                 this.matrixIndexBuffer[0] = CreateVertexBufferObject(OpenGL.GL_ARRAY_BUFFER, geometry.MatrixIndices, OpenGL.GL_STATIC_DRAW);
 
                 this.MatrixVertexOrIndexCount = geometry.MatrixIndices.SizeInBytes / sizeof(uint);
+                this.matrixRenderMode = geometry.MatrixIndices.Mode;
             }
             else
             {
                 unsafe
                 {
-                    //int elementSize = (geometry.MatrixPositions.Shape == MatrixPositionBufferData.SHAPE_TRIANGLE) ?
-                    //    sizeof(TrianglePositions) : sizeof(TetrahedronPositions);
                     int elementSize = sizeof(Vertex);
-
                     this.MatrixVertexOrIndexCount = geometry.Positions.SizeInBytes / elementSize;
+                    this.matrixRenderMode = OpenGL.GL_TRIANGLES;
                 }
             }
 
@@ -149,10 +147,7 @@ namespace SimLab
 
             unsafe
             {
-                //int elementSize = (geometry.FracturePositions.Shape == FracturePositionBufferData.SHAPE_LINE) ?
-                //    sizeof(LinePositions) : sizeof(TrianglePositions);
                 int elementSize = sizeof(Vertex);
-
                 this.FractionVertexCount = geometry.FracturePositions.SizeInBytes / elementSize;
             }
         }
@@ -333,28 +328,27 @@ namespace SimLab
                 gl.Enable(OpenGL.GL_POLYGON_OFFSET_FILL);
                 gl.PolygonOffset(1.0f, 1.0f);
 
-                gl.BindVertexArray(matrixVertexArrayObject[0]);
+                        gl.BindVertexArray(matrixVertexArrayObject[0]);
 
                 switch (this.MatrixType)
                 {
                     case MatrixFormat.Triangle:
-                        gl.DrawArrays(OpenGL.GL_TRIANGLES, 0, this.MatrixVertexOrIndexCount);
+                        gl.DrawArrays(this.matrixRenderMode, 0, this.MatrixVertexOrIndexCount);
                         break;
                     case MatrixFormat.Tetrahedron:
+                        gl.Enable(OpenGL.GL_PRIMITIVE_RESTART);
+                        gl.PrimitiveRestartIndex(uint.MaxValue);
+
                         gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, this.matrixIndexBuffer[0]);
-                        gl.DrawElements(OpenGL.GL_TRIANGLES, this.MatrixVertexOrIndexCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
-                        //    gl.Enable(OpenGL.GL_PRIMITIVE_RESTART);
-                        //gl.PrimitiveRestartIndex(uint.MaxValue);
-                        //gl.DrawElements(OpenGL.GL_TRIANGLE_STRIP, this.tetrasIndexBufferObjectCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
-                        ////gl.DrawElements(OpenGL.GL_TRIANGLE_STRIP, this.CurrentTetrasIndexCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
-                        ////gl.DrawArrays(OpenGL.GL_TRIANGLE_STRIP, 0, this.tetrasIndexBufferObjectCount);
-                        //gl.Disable(OpenGL.GL_PRIMITIVE_RESTART);
+                        gl.DrawElements(this.matrixRenderMode, this.MatrixVertexOrIndexCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
+                        gl.Disable(OpenGL.GL_PRIMITIVE_RESTART);
+
                         break;
                     default:
                         break;
                 }
+                        gl.BindVertexArray(0);
 
-                gl.BindVertexArray(0);
 
                 gl.Disable(OpenGL.GL_POLYGON_OFFSET_FILL);
             }
@@ -370,10 +364,17 @@ namespace SimLab
                     switch (this.MatrixType)
                     {
                         case MatrixFormat.Triangle:
-                            gl.DrawArrays(OpenGL.GL_TRIANGLES, 0, this.MatrixVertexOrIndexCount);
+                            gl.DrawArrays(this.matrixRenderMode, 0, this.MatrixVertexOrIndexCount);
                             break;
                         case MatrixFormat.Tetrahedron:
-                            gl.DrawElements(OpenGL.GL_TRIANGLES, this.MatrixVertexOrIndexCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
+                            gl.Enable(OpenGL.GL_PRIMITIVE_RESTART);
+                            gl.PrimitiveRestartIndex(uint.MaxValue);
+
+                            gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, this.matrixIndexBuffer[0]);
+                            gl.DrawElements(this.matrixRenderMode, this.MatrixVertexOrIndexCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
+
+                            gl.Disable(OpenGL.GL_PRIMITIVE_RESTART);
+
                             break;
                         default:
                             break;

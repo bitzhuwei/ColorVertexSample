@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimLab.GridSource.Factory
+namespace SimLab2.GridSource.Factory
 {
 
     /// <summary>

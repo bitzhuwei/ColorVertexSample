@@ -1,12 +1,12 @@
 ﻿using SharpGL.SceneGraph;
-using SimLab.SimGrid;
+using SimLab2.SimGrid;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimLab
+namespace SimLab2
 {
     public class HexahedronMeshGeometry3D : MeshBase
     {

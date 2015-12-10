@@ -49,7 +49,7 @@ namespace SharpGL.SceneComponent
 
         void ScientificVisual3DControl_Resized(object sender, EventArgs e)
         {
-            this.UpdateCamera();
+            //this.UpdateCamera();
         }
 
         void ScientificVisual3DControl_MouseWheel(object sender, MouseEventArgs e)
@@ -428,6 +428,8 @@ namespace SharpGL.SceneComponent
             {
                 //throw new NotImplementedException();
             }
+
+            //camera.Scale(-camera.scaleFactor);
             //// force CameraRotation to udpate.
             //this.CameraRotation.Camera = this.Scene.CurrentCamera;
             ManualRender(this);

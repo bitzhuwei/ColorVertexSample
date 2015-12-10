@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace SimLab.Font
+namespace SimLab2.Font
 {
     public static class KeyValuePairHelper
     {

@@ -1,5 +1,5 @@
 ﻿using SharpGL.SceneComponent;
-using SimLab.GridSource;
+using SimLab2.GridSource;
 using System;
 using System.Collections.Generic;
 using System.Linq;

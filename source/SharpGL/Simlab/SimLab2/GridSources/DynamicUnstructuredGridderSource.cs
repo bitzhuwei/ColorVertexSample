@@ -1,6 +1,6 @@
 ﻿using SharpGL.SceneGraph;
-using SimLab.GridSource;
-using SimLab.SimGrid.Factory;
+using SimLab2.GridSource;
+using SimLab2.SimGrid.Factory;
 using SimLab2.VertexBuffers;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimLab.SimGrid
+namespace SimLab2.SimGrid
 {
     /// <summary>
     /// 无结构的四面体网格，包含二维无结构和三维四面体网格的格式,

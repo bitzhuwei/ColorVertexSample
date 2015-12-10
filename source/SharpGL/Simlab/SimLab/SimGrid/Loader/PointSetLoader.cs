@@ -1,6 +1,6 @@
 ﻿using SharpGL.SceneGraph;
-using SimLab.GridSource;
-using SimLab.SimGrid.helper;
+using SimLab2.GridSource;
+using SimLab2.SimGrid.helper;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimLab.SimGrid.Loader
+namespace SimLab2.SimGrid.Loader
 {
     public class PointSetLoader
     {

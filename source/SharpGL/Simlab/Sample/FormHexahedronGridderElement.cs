@@ -19,8 +19,8 @@ using SharpGL.SceneGraph.Assets;
 using SharpGL.SceneGraph.Quadrics;
 using SharpGL.SceneComponent;
 using SharpGL.SceneComponent.Model;
-using SimLab.GridSource;
-using SimLab;
+using SimLab2.GridSource;
+using SimLab2;
 using System.Globalization;
 using System.Drawing.Imaging;
 

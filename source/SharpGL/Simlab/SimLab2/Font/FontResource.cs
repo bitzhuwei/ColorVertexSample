@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Xml.Linq;
 
-namespace SimLab.Font
+namespace SimLab2.Font
 {
     /// <summary>
     /// 含有字形贴图及其配置信息的单例类型。

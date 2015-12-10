@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimLab.SimGrid
+namespace SimLab2.SimGrid
 {
 
     /// <summary>

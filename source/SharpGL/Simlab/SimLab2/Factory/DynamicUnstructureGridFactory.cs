@@ -1,6 +1,6 @@
 ﻿using SharpGL.SceneGraph;
-using SimLab.GridSource.Factory;
-using SimLab.SimGrid.Geometry;
+using SimLab2.GridSource.Factory;
+using SimLab2.SimGrid.Geometry;
 using SimLab2.VertexBuffers;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimLab.SimGrid.Factory
+namespace SimLab2.SimGrid.Factory
 {
     public  class DynamicUnstructureGridFactory : GridBufferDataFactory
     {
@@ -46,28 +46,35 @@ namespace SimLab.SimGrid.Factory
                 matrixIndicesBuffer = new TetrahedronMatrixIndexBuffer();
                 //int triangleCount = src.ElementNum * 4;
                 //matrixIndicesBuffer.AllocMem(triangleCount * sizeof(TriangleIndex));
-                matrixIndicesBuffer.AllocMem(src.ElementNum * 4);
-                TriangleIndex* triangles = (TriangleIndex*)matrixIndicesBuffer.Data;
+                matrixIndicesBuffer.AllocMem(src.ElementNum);
+                TetrahedronIndex* header = (TetrahedronIndex*)matrixIndicesBuffer.Data;
                 for (int i = 0; i < src.ElementNum; i++)
                 {
-                    TriangleIndex* tetraTriangles = triangles + (i * 4);
-                    uint offset = (uint)(i * 4);
-                    tetraTriangles[0].dot0 = offset + 0;
-                    tetraTriangles[0].dot1 = offset + 1;
-                    tetraTriangles[0].dot2 = offset + 2;
+                    //TetrahedronIndex* tetraTriangles = triangles + (i * 4);
+                    //uint offset = (uint)(i * 4);
+                    //tetraTriangles[0].dot0 = offset + 0;
+                    //tetraTriangles[0].dot1 = offset + 1;
+                    //tetraTriangles[0].dot2 = offset + 2;
 
-                    tetraTriangles[1].dot0 = offset + 0;
-                    tetraTriangles[1].dot1 = offset + 1;
-                    tetraTriangles[1].dot2 = offset + 3;
+                    //tetraTriangles[1].dot0 = offset + 0;
+                    //tetraTriangles[1].dot1 = offset + 1;
+                    //tetraTriangles[1].dot2 = offset + 3;
 
 
-                    tetraTriangles[2].dot0 = offset + 0;
-                    tetraTriangles[2].dot1 = offset + 2;
-                    tetraTriangles[2].dot2 = offset + 3;
+                    //tetraTriangles[2].dot0 = offset + 0;
+                    //tetraTriangles[2].dot1 = offset + 2;
+                    //tetraTriangles[2].dot2 = offset + 3;
 
-                    tetraTriangles[3].dot0 = offset + 1;
-                    tetraTriangles[3].dot1 = offset + 2;
-                    tetraTriangles[3].dot2 = offset + 3;
+                    //tetraTriangles[3].dot0 = offset + 1;
+                    //tetraTriangles[3].dot1 = offset + 2;
+                    //tetraTriangles[3].dot2 = offset + 3;
+                    header[i].dot0 = (uint)(i * 4 + 0);
+                    header[i].dot1 = (uint)(i * 4 + 1);
+                    header[i].dot2 = (uint)(i * 4 + 2);
+                    header[i].dot3 = (uint)(i * 4 + 3);
+                    header[i].dot4 = (uint)(i * 4 + 0);
+                    header[i].dot5 = (uint)(i * 4 + 1);
+                    header[i].restartIndex = uint.MaxValue;
                 }
             }
             if (src.ElementFormat == DynamicUnstructuredGridderSource.MATRIX_FORMAT3_TRIANGLE)
