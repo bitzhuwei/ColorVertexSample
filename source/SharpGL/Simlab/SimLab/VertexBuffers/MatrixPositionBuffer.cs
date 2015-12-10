@@ -31,6 +31,10 @@ namespace SimLab.VertexBuffers
             get { return MatrixFormat.Triangle; }
         }
 
+        /// <summary>
+        /// 申请指定长度的非托管数组。
+        /// </summary>
+        /// <param name="elementCount">数组元素的数目。</param>
         public override void AllocMem(int elementCount)
         {
             this.array = new UnmanagedArray<TrianglePosition>(elementCount);
@@ -47,6 +51,10 @@ namespace SimLab.VertexBuffers
             get { return MatrixFormat.Tetrahedron; }
         }
 
+        /// <summary>
+        /// 申请指定长度的非托管数组。
+        /// </summary>
+        /// <param name="elementCount">数组元素的数目。</param>
         public override void AllocMem(int elementCount)
         {
             this.array = new UnmanagedArray<TetrahedronPosition>(elementCount);
