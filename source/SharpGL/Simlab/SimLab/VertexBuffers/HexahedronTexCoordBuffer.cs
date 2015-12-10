@@ -13,6 +13,10 @@ namespace SimLab.VertexBuffers
     /// </summary>
     public class HexahedronTexCoordBuffer : TexCoordBuffer
     {
+        /// <summary>
+        /// 申请指定长度的非托管数组。
+        /// </summary>
+        /// <param name="elementCount">数组元素的数目。</param>
         public override void AllocMem(int elementCount)
         {
             this.array = new UnmanagedArray<HexahedronTexCoord>(elementCount);

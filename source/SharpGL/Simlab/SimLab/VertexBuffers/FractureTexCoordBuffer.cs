@@ -23,6 +23,10 @@ namespace SimLab.VertexBuffers
     /// </summary>
     public class LineFractureTexCoordBufer : FractureTexCoordBuffer
     {
+        /// <summary>
+        /// 申请指定长度的非托管数组。
+        /// </summary>
+        /// <param name="elementCount">数组元素的数目。</param>
         public override void AllocMem(int elementCount)
         {
             this.array = new UnmanagedArray<LineTexCoord>(elementCount);
@@ -35,6 +39,10 @@ namespace SimLab.VertexBuffers
     /// </summary>
     public class TriangleFractureTexCoordBuffer : FractureTexCoordBuffer
     {
+        /// <summary>
+        /// 申请指定长度的非托管数组。
+        /// </summary>
+        /// <param name="elementCount">数组元素的数目。</param>
         public override void AllocMem(int elementCount)
         {
             this.array = new UnmanagedArray<TriangleTexCoord>(elementCount);
