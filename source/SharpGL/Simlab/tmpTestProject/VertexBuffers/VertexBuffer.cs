@@ -1,4 +1,5 @@
-﻿using SharpGL.SceneComponent;
+﻿using SharpGL;
+using SharpGL.SceneComponent;
 using SimLab;
 using System;
 using System.Collections.Generic;
@@ -64,6 +65,8 @@ namespace SimLab.VertexBuffers
             this.FreeMem();
             base.DisposeUnmanagedResources();
         }
+
+        public abstract uint CreateVBO(UsageType usage);
     }
 
 }

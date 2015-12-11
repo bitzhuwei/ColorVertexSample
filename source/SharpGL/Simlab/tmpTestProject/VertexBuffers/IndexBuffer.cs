@@ -1,4 +1,5 @@
-﻿using SharpGL.SceneComponent;
+﻿using SharpGL;
+using SharpGL.SceneComponent;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,6 +46,18 @@ namespace SimLab.VertexBuffers
                     return 0;
                 }
             }
+        }
+
+        public override uint CreateVBO(UsageType usage)
+        {
+            OpenGL gl = new OpenGL();
+
+            uint[] buffers = new uint[1];
+            gl.GenBuffers(1, buffers);
+            gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, buffers[0]);
+            gl.BufferData(OpenGL.GL_ELEMENT_ARRAY_BUFFER, this.SizeInBytes, this.Data, (uint)usage);
+
+            return buffers[0];
         }
     }
 }

@@ -8,28 +8,12 @@ using System.Threading.Tasks;
 
 namespace SimLab
 {
-    public abstract class MeshBase
+    internal abstract class MeshBase
     {
-         /// <summary>
-        /// 点的位置
-        /// </summary>
-        private PositionBuffer positions;
-
-        public MeshBase(PositionBuffer positions)
-        {
-             this.positions = positions;
-        }
-
-
-        public PositionBuffer Positions
-        {
-            get { return this.positions; }
-        }
-
         /// <summary>
         /// 最小边界坐标
         /// </summary>
-        public Vertex Min
+        internal Vertex Min
         {
             get;
             set;
@@ -38,7 +22,7 @@ namespace SimLab
         /// <summary>
         /// 最大边界坐标
         /// </summary>
-        public Vertex Max
+        internal Vertex Max
         {
             get;
             set;

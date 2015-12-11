@@ -24,7 +24,7 @@ namespace SimLab.VertexBuffers
     /// <summary>
     /// 描述由三角形组成的Matrix的顶点的位置。
     /// </summary>
-    public class TriangleMatrixPositionBuffer : MatrixPositionBuffer
+    public sealed class TriangleMatrixPositionBuffer : MatrixPositionBuffer
     {
         public override MatrixFormat Shape
         {
@@ -44,7 +44,7 @@ namespace SimLab.VertexBuffers
     /// <summary>
     /// 描述由四面体组成的Matrix的顶点的位置。
     /// </summary>
-    public class TetrahedronMatrixPositionBuffer : MatrixPositionBuffer
+    public sealed class TetrahedronMatrixPositionBuffer : MatrixPositionBuffer
     {
         public override MatrixFormat Shape
         {

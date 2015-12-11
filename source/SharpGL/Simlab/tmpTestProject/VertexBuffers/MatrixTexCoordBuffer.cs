@@ -21,7 +21,7 @@ namespace SimLab.VertexBuffers
     /// <summary>
     /// 描述由四面体组成的基质(Matrix)的顶点的颜色。
     /// </summary>
-    public class TetrahedronMatrixTexCoordBuffer : MatrixTexCoordBuffer
+    public sealed class TetrahedronMatrixTexCoordBuffer : MatrixTexCoordBuffer
     {
         /// <summary>
         /// 申请指定长度的非托管数组。
@@ -37,7 +37,7 @@ namespace SimLab.VertexBuffers
     /// <summary>
     /// 描述由三角形组成的基质(Matrix)的顶点的颜色。
     /// </summary>
-    public class TriangleMatrixTexCoordBuffer : MatrixTexCoordBuffer
+    public sealed class TriangleMatrixTexCoordBuffer : MatrixTexCoordBuffer
     {
         /// <summary>
         /// 申请指定长度的非托管数组。

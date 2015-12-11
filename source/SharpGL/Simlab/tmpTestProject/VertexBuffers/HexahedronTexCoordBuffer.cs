@@ -11,7 +11,7 @@ namespace SimLab.VertexBuffers
     /// <summary>
     /// 描述六面体的8个顶点的颜色。
     /// </summary>
-    public class HexahedronTexCoordBuffer : TexCoordBuffer
+    public sealed class HexahedronTexCoordBuffer : TexCoordBuffer
     {
         /// <summary>
         /// 申请指定长度的非托管数组。

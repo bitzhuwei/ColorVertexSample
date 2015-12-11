@@ -12,7 +12,7 @@ namespace SimLab.VertexBuffers
     /// <summary>
     /// 用3个QUAD渲染半个六面体。
     /// </summary>
-    public class HalfHexahedronIndexBuffer : IndexBuffer
+    public sealed class HalfHexahedronIndexBuffer : IndexBuffer
     {
         public HalfHexahedronIndexBuffer()
             : base(OpenGL.GL_QUAD_STRIP)

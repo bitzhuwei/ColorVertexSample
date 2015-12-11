@@ -65,10 +65,11 @@
     <Compile Include="GridderSources\GridIndexer.cs" />
     <Compile Include="GridderSources\HexahedronGridderSource.cs" />
     <Compile Include="GridderSources\PointGridderSource.cs" />
+    <Compile Include="GridSources\HexahedronGridderSource.cs" />
     <Compile Include="Grids\DynamicUnstructureGeometry.cs" />
     <Compile Include="Grids\DynamicUnstructureGrid.cs" />
+    <Compile Include="GridSources\GridSource.cs" />
     <Compile Include="Grids\HexahedronGrid.cs" />
-    <Compile Include="Grids\HexahedronMeshGeometry3D.cs" />
     <Compile Include="Grids\MeshBase.cs" />
     <Compile Include="Grids\PointGrid.cs" />
     <Compile Include="Grids\PointMeshGeometry3D.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="VertexBuffers\PropertyBuffer.cs" />
     <Compile Include="VertexBuffers\TetrahedronMatrixIndexBuffer.cs" />
     <Compile Include="VertexBuffers\TexCoordBuffer.cs" />
+    <Compile Include="VertexBuffers\UsageType.cs" />
     <Compile Include="VertexBuffers\VertexBuffer.cs" />
   </ItemGroup>
   <ItemGroup>

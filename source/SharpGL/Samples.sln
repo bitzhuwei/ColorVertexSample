@@ -80,8 +80,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimLab", "Simlab\SimLab\Sim
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample", "Simlab\Sample\Sample.csproj", "{8D466B23-5AD6-4F4A-9512-7D7FD8CFF422}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tmpTestProject", "Simlab\tmpTestProject\tmpTestProject.csproj", "{AE867514-1BCF-455B-99FB-C0020D576CEB}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -498,18 +496,6 @@ Global
 		{8D466B23-5AD6-4F4A-9512-7D7FD8CFF422}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{8D466B23-5AD6-4F4A-9512-7D7FD8CFF422}.Release|x64.ActiveCfg = Release|Any CPU
 		{8D466B23-5AD6-4F4A-9512-7D7FD8CFF422}.Release|x86.ActiveCfg = Release|Any CPU
-		{AE867514-1BCF-455B-99FB-C0020D576CEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AE867514-1BCF-455B-99FB-C0020D576CEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AE867514-1BCF-455B-99FB-C0020D576CEB}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{AE867514-1BCF-455B-99FB-C0020D576CEB}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{AE867514-1BCF-455B-99FB-C0020D576CEB}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{AE867514-1BCF-455B-99FB-C0020D576CEB}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{AE867514-1BCF-455B-99FB-C0020D576CEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AE867514-1BCF-455B-99FB-C0020D576CEB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AE867514-1BCF-455B-99FB-C0020D576CEB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{AE867514-1BCF-455B-99FB-C0020D576CEB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{AE867514-1BCF-455B-99FB-C0020D576CEB}.Release|x64.ActiveCfg = Release|Any CPU
-		{AE867514-1BCF-455B-99FB-C0020D576CEB}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -547,6 +533,5 @@ Global
 		{62B70547-EF09-4308-AAE5-AE28010C4453} = {7B5EC8D9-8BB2-4738-AE7C-1B6E4BE0DFF3}
 		{8360914C-8C51-4277-B933-4314C74992BD} = {9B0919F4-74EE-4926-A255-893BE1720E06}
 		{8D466B23-5AD6-4F4A-9512-7D7FD8CFF422} = {9B0919F4-74EE-4926-A255-893BE1720E06}
-		{AE867514-1BCF-455B-99FB-C0020D576CEB} = {9B0919F4-74EE-4926-A255-893BE1720E06}
 	EndGlobalSection
 EndGlobal

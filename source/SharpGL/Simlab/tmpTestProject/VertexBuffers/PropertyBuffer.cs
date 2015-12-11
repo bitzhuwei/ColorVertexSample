@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SharpGL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -42,5 +43,17 @@ namespace SimLab.VertexBuffers
         /// <para>表示第2个参数</para>
         /// </summary>
         public int GLSize { get; private set; }
+
+        public override uint CreateVBO(UsageType usage)
+        {
+            OpenGL gl = new OpenGL();
+
+            uint[] buffers = new uint[1];
+            gl.GenBuffers(1, buffers);
+            gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, buffers[0]);
+            gl.BufferData(OpenGL.GL_ARRAY_BUFFER, this.SizeInBytes, this.Data, (uint)usage);
+
+            return buffers[0];
+        }
     }
 }

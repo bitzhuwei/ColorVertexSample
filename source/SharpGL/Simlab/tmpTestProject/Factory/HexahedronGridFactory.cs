@@ -107,7 +107,7 @@ namespace SimLab.GridderSources.Factory
                     array[gridIndex * 2 + 1].restartIndex = uint.MaxValue;
                 }
 
-                HexahedronMeshGeometry3D mesh = new HexahedronMeshGeometry3D(positions, halfHexahedronIndices);
+                HexahedronMesh mesh = new HexahedronMesh(positions, halfHexahedronIndices);
                 mesh.Max = maxVertex;
                 mesh.Min = minVertex;
                 return mesh;

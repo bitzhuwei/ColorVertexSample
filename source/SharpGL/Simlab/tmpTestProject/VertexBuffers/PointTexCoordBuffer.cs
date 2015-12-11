@@ -11,7 +11,7 @@ namespace SimLab.VertexBuffers
     /// <summary>
     /// 描述点集的各个点的颜色。
     /// </summary>
-    public class PointTexCoordBuffer : TexCoordBuffer
+    public sealed class PointTexCoordBuffer : TexCoordBuffer
     {
         /// <summary>
         /// 申请指定长度的非托管数组。

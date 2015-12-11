@@ -21,7 +21,7 @@ namespace SimLab.VertexBuffers
     /// <summary>
     /// 描述由三角形组成的裂缝(fracture)的顶点的位置。
     /// </summary>
-    public class TriangleFracturePositionBuffer : FracturePositionBuffer
+    public sealed class TriangleFracturePositionBuffer : FracturePositionBuffer
     {
         /// <summary>
         /// 申请指定长度的非托管数组。
@@ -41,7 +41,7 @@ namespace SimLab.VertexBuffers
     /// <summary>
     /// 描述由线段组成的裂缝(fracture)的顶点的位置。
     /// </summary>
-    public class LineFracturePositionBuffer : FracturePositionBuffer
+    public sealed class LineFracturePositionBuffer : FracturePositionBuffer
     {
         /// <summary>
         /// 申请指定长度的非托管数组。

@@ -11,7 +11,7 @@ namespace SimLab.VertexBuffers
     /// <summary>
     /// 描述六面体的顶点的位置。
     /// </summary>
-    public class HexahedronPositionBuffer : PositionBuffer
+    public sealed class HexahedronPositionBuffer : PositionBuffer
     {
         /// <summary>
         /// 申请指定长度的非托管数组。

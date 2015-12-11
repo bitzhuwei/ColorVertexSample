@@ -35,7 +35,7 @@ namespace SimLab
 
         }
 
-        public void Init(HexahedronMeshGeometry3D geometry)
+        public void Init(HexahedronMesh geometry)
         {
             base.Init(geometry);
 

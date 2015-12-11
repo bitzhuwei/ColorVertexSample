@@ -21,7 +21,7 @@ namespace SimLab.VertexBuffers
     /// <summary>
     /// 描述由线段组成的裂缝(fracture)的顶点的颜色。
     /// </summary>
-    public class LineFractureTexCoordBufer : FractureTexCoordBuffer
+    public sealed class LineFractureTexCoordBufer : FractureTexCoordBuffer
     {
         /// <summary>
         /// 申请指定长度的非托管数组。
@@ -37,7 +37,7 @@ namespace SimLab.VertexBuffers
     /// <summary>
     /// 描述由三角形组成的裂缝(fracture)的顶点的颜色。
     /// </summary>
-    public class TriangleFractureTexCoordBuffer : FractureTexCoordBuffer
+    public sealed class TriangleFractureTexCoordBuffer : FractureTexCoordBuffer
     {
         /// <summary>
         /// 申请指定长度的非托管数组。
