@@ -46,8 +46,8 @@ namespace SimLab.GridSource.Factory
 
                     if (src.IsActiveBlock(gridIndex))
                     {
-                        minVertex = MinVertex(minVertex, p);
-                        maxVertex = MaxVertex(maxVertex, p);
+                        minVertex = SimLab.SimGrid.helper.VertexHelper.MinVertex(minVertex, p);
+                        maxVertex = SimLab.SimGrid.helper.VertexHelper.MaxVertex(maxVertex, p);
                     }
                 }
             }

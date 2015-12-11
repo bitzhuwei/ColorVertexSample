@@ -51,29 +51,29 @@ namespace SimLab.GridSource.Factory
 
                     if (isSet && src.IsActiveBlock(gridIndex))
                     {
-                        minVertex = MinVertex(minVertex, cell[gridIndex].FLT);
-                        maxVertex = MaxVertex(maxVertex, cell[gridIndex].FLT);
+                        minVertex = SimLab.SimGrid.helper.VertexHelper.MinVertex(minVertex, cell[gridIndex].FLT);
+                        maxVertex = SimLab.SimGrid.helper.VertexHelper.MaxVertex(maxVertex, cell[gridIndex].FLT);
 
-                        minVertex = MinVertex(minVertex, cell[gridIndex].FRT);
-                        maxVertex = MaxVertex(maxVertex, cell[gridIndex].FRT);
+                        minVertex = SimLab.SimGrid.helper.VertexHelper.MinVertex(minVertex, cell[gridIndex].FRT);
+                        maxVertex = SimLab.SimGrid.helper.VertexHelper.MaxVertex(maxVertex, cell[gridIndex].FRT);
 
-                        minVertex = MinVertex(minVertex, cell[gridIndex].BRT);
-                        maxVertex = MaxVertex(maxVertex, cell[gridIndex].BRT);
+                        minVertex = SimLab.SimGrid.helper.VertexHelper.MinVertex(minVertex, cell[gridIndex].BRT);
+                        maxVertex = SimLab.SimGrid.helper.VertexHelper.MaxVertex(maxVertex, cell[gridIndex].BRT);
 
-                        minVertex = MinVertex(minVertex, cell[gridIndex].BLT);
-                        maxVertex = MaxVertex(maxVertex, cell[gridIndex].BLT);
+                        minVertex = SimLab.SimGrid.helper.VertexHelper.MinVertex(minVertex, cell[gridIndex].BLT);
+                        maxVertex = SimLab.SimGrid.helper.VertexHelper.MaxVertex(maxVertex, cell[gridIndex].BLT);
 
-                        minVertex = MinVertex(minVertex, cell[gridIndex].FLB);
-                        maxVertex = MaxVertex(maxVertex, cell[gridIndex].FLB);
+                        minVertex = SimLab.SimGrid.helper.VertexHelper.MinVertex(minVertex, cell[gridIndex].FLB);
+                        maxVertex = SimLab.SimGrid.helper.VertexHelper.MaxVertex(maxVertex, cell[gridIndex].FLB);
 
-                        minVertex = MinVertex(minVertex, cell[gridIndex].FRB);
-                        maxVertex = MaxVertex(maxVertex, cell[gridIndex].FRB);
+                        minVertex = SimLab.SimGrid.helper.VertexHelper.MinVertex(minVertex, cell[gridIndex].FRB);
+                        maxVertex = SimLab.SimGrid.helper.VertexHelper.MaxVertex(maxVertex, cell[gridIndex].FRB);
 
-                        minVertex = MinVertex(minVertex, cell[gridIndex].BRB);
-                        maxVertex = MaxVertex(maxVertex, cell[gridIndex].BRB);
+                        minVertex = SimLab.SimGrid.helper.VertexHelper.MinVertex(minVertex, cell[gridIndex].BRB);
+                        maxVertex = SimLab.SimGrid.helper.VertexHelper.MaxVertex(maxVertex, cell[gridIndex].BRB);
 
-                        minVertex = MinVertex(minVertex, cell[gridIndex].BLB);
-                        maxVertex = MaxVertex(maxVertex, cell[gridIndex].BLB);
+                        minVertex = SimLab.SimGrid.helper.VertexHelper.MinVertex(minVertex, cell[gridIndex].BLB);
+                        maxVertex = SimLab.SimGrid.helper.VertexHelper.MaxVertex(maxVertex, cell[gridIndex].BLB);
                     }
                 }
 
