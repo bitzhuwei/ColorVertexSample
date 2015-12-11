@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="SimLab.VertexBuffers.VertexBuffer">
+    <Position X="5.5" Y="0.5" Width="4.25" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAgAAAAAAAAAAkAgAAAAAAAABAAAAAAAAAQAAA=</HashCode>
+      <FileName>VertexBuffers\VertexBuffer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SimLab.VertexBuffers.PointPositionBuffer">
+    <Position X="5.5" Y="8.5" Width="4.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VertexBuffers\PointPositionBuffer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SimLab.VertexBuffers.PointRadiusBuffer">
+    <Position X="0.5" Y="6.5" Width="4.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VertexBuffers\PointRadiusBuffer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SimLab.VertexBuffers.PositionBuffer">
+    <Position X="7" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VertexBuffers\PositionBuffer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SimLab.VertexBuffers.PropertyBuffer">
+    <Position X="6" Y="4" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VertexBuffers\PropertyBuffer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SimLab.VertexBuffers.TexCoordBuffer">
+    <Position X="11.75" Y="6.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VertexBuffers\TexCoordBuffer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SimLab.VertexBuffers.PointTexCoordBuffer">
+    <Position X="10.5" Y="8.5" Width="4.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VertexBuffers\PointTexCoordBuffer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Microsoft YaHei UI" Size="9" />
+</ClassDiagram>
