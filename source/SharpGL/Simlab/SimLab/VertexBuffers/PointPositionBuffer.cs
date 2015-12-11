@@ -17,9 +17,9 @@ namespace SimLab.VertexBuffers
         /// 申请指定长度的非托管数组。
         /// </summary>
         /// <param name="elementCount">数组元素的数目。</param>
-        protected override  UnmanagedArrayBase CreateElements(int elementCount)
+        protected override UnmanagedArrayBase CreateElements(int elementCount)
         {
-             return new UnmanagedArray<Vertex>(elementCount);
+            return new UnmanagedArray<Vertex>(elementCount);
         }
     }
 }

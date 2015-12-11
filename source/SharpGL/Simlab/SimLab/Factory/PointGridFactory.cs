@@ -134,7 +134,7 @@ namespace SimLab.GridSource.Factory
                 }
             }
 
-            HexahedronTexCoordBuffer coordBuffer = new HexahedronTexCoordBuffer();
+            PointTexCoordBuffer coordBuffer = new PointTexCoordBuffer();
             unsafe
             {
                 coordBuffer.AllocMem(src.DimenSize);

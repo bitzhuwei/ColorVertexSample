@@ -37,7 +37,7 @@ namespace SimLab.VertexBuffers
         /// <param name="elementCount">数组元素的数目。</param>
         protected override UnmanagedArrayBase CreateElements(int elementCount)
         {
-             return new UnmanagedArray<TrianglePosition>(elementCount);
+            return new UnmanagedArray<TrianglePosition>(elementCount);
         }
     }
 
@@ -57,7 +57,7 @@ namespace SimLab.VertexBuffers
         /// <param name="elementCount">数组元素的数目。</param>
         protected override UnmanagedArrayBase CreateElements(int elementCount)
         {
-             return new UnmanagedArray<TetrahedronPosition>(elementCount);
+            return new UnmanagedArray<TetrahedronPosition>(elementCount);
         }
     }
 

@@ -49,7 +49,7 @@ namespace SimLab.VertexBuffers
         /// <param name="elementCount">数组元素的数目。</param>
         protected override UnmanagedArrayBase CreateElements(int elementCount)
         {
-             return  new UnmanagedArray<LinePosition>(elementCount);
+            return new UnmanagedArray<LinePosition>(elementCount);
         }
 
         public override FractureFormat Shape

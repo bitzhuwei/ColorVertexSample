@@ -33,9 +33,14 @@ namespace SimLab.VertexBuffers
 
         }
 
+        /// <summary>
+        /// 根据buffer内存放的具体的结构类型创建非托管数组。
+        /// </summary>
+        /// <param name="elementCount">数组元素的数目。</param>
+        /// <returns></returns>
         protected abstract UnmanagedArrayBase CreateElements(int elementCount);
 
-       
+
         /// <summary>
         /// 申请指定长度的非托管数组。
         /// </summary>
@@ -49,7 +54,7 @@ namespace SimLab.VertexBuffers
         {
             if (this.array != null)
             {
-                this.array.Dispose(); 
+                this.array.Dispose();
                 this.array = null;
             }
         }

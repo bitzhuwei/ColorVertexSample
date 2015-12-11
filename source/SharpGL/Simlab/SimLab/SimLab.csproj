@@ -112,6 +112,7 @@
     <Compile Include="VertexBuffers\MatrixTexCoordBuffer.cs" />
     <Compile Include="VertexBuffers\PointPositionBuffer.cs" />
     <Compile Include="VertexBuffers\PointRadiusBuffer.cs" />
+    <Compile Include="VertexBuffers\PointTexCoordBuffer.cs" />
     <Compile Include="VertexBuffers\PositionBuffer.cs" />
     <Compile Include="VertexBuffers\PropertyBuffer.cs" />
     <Compile Include="VertexBuffers\TetrahedronMatrixIndexBuffer.cs" />
@@ -146,7 +147,12 @@
       <Name>SharpGL</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="VertexBuffers\VertexBuffers_DynamicUnstructureGrid.cd" />
+    <None Include="VertexBuffers\VertexBuffers_PointGrid.cd" />
+    <None Include="VertexBuffers\VertexBuffers_HexahedronGrid.cd" />
+    <None Include="VertexBuffers\VertexBuffers.cd" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Font\LucidaTypewriterRegular.ttf.png" />
     <EmbeddedResource Include="Font\LucidaTypewriterRegular.ttf.xml" />
@@ -170,8 +176,6 @@
     <EmbeddedResource Include="Grids\PointGrid.vert" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram2.cd" />
-    <None Include="VertexBuffers\VertexBuffers.cd" />
     <EmbeddedResource Include="Well\CylinderElement.frag" />
     <EmbeddedResource Include="Well\CylinderElement.vert" />
     <EmbeddedResource Include="Well\PointSpriteStringElement.frag" />
