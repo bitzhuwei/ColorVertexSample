@@ -1,5 +1,5 @@
 ﻿using SharpGL.SceneGraph;
-using SimLab.GridSource.Factory;
+using SimLab.GridderSources.Factory;
 using SimLab.SimGrid.Geometry;
 using SimLab.VertexBuffers;
 using System;
@@ -131,7 +131,7 @@ namespace SimLab.SimGrid.Factory
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        public override MeshBase CreateMesh(GridSource.GridderSource source)
+        public override MeshBase CreateMesh(GridderSources.GridderSource source)
         {
             return this.DoCreateMesh((DynamicUnstructuredGridderSource)source);
         }
@@ -145,7 +145,7 @@ namespace SimLab.SimGrid.Factory
         /// <param name="minValue"></param>
         /// <param name="maxValue"></param>
         /// <returns></returns>
-        public override TexCoordBuffer CreateTextureCoordinates(GridSource.GridderSource source, int[] gridIndexes, float[] values, float minValue, float maxValue)
+        public override TexCoordBuffer CreateTextureCoordinates(GridderSources.GridderSource source, int[] gridIndexes, float[] values, float minValue, float maxValue)
         {
             return this.DoCreateMatrixTextureCoordinates((DynamicUnstructuredGridderSource)source, gridIndexes, values, minValue, maxValue);
         }

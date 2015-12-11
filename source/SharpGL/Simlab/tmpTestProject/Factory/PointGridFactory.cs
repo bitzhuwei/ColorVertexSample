@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimLab.GridSource.Factory
+namespace SimLab.GridderSources.Factory
 {
     public class PointGridFactory : GridBufferDataFactory
     {

@@ -1,5 +1,5 @@
 ﻿using SharpGL.SceneGraph;
-using SimLab.GridSource.Factory;
+using SimLab.GridderSources.Factory;
 using SimLab.VertexBuffers;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimLab.GridSource
+namespace SimLab.GridderSources
 {
     /// <summary>
     /// 块为六面体组成的模拟网格几何信息,支持切片分析

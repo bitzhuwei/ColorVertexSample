@@ -1,5 +1,5 @@
 ﻿using SharpGL.SceneGraph;
-using SimLab.GridSource.Factory;
+using SimLab.GridderSources.Factory;
 using SimLab.SimGrid;
 using SimLab.VertexBuffers;
 using System;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimLab.GridSource
+namespace SimLab.GridderSources
 {
     /// <summary>
     /// 网格数据源, 赋值后调用初始化Init才能使用:

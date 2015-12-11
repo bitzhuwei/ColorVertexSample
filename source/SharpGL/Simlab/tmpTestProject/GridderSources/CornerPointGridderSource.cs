@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimLab.GridSource
+namespace SimLab.GridderSources
 {
 
     public class CornerPointGridderSource : HexahedronGridderSource
