@@ -26,12 +26,13 @@ namespace SimLab.SimGrid
         /// </summary>
         public const int MATRIX_FORMAT3_TRIANGLE = 3;
         public const int MATRIX_FORMAT4_TETRAHEDRON = 4;
-
+        public const int MATRIX_FORMAT6_TRIANGULAR_PRISM = 6;
         /// <summary>
         /// 组成裂缝的形状
         /// </summary>
         public const int FRACTURE_FORMAT2_LINE = 2;
         public const int FRACTURE_FORMAT3_TRIANGLE = 3;
+        public const int FRACTURE_FORMAT4_QUAD = 4;
 
         /// <summary>
         /// 文件头定义: 点的个数

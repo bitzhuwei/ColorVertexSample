@@ -1,5 +1,6 @@
 ﻿using SharpGL;
 using SharpGL.SceneComponent;
+using SimLab.Geometry;
 using SimLab.SimGrid.Geometry;
 using System;
 using System.Collections.Generic;
@@ -48,5 +49,20 @@ namespace SimLab.VertexBuffers
             return new UnmanagedArray<TriangleTexCoord>(elementCount);
         }
 
+    }
+
+    /// <summary>
+    /// 描述由三角形组成的基质(Matrix)的顶点的颜色。
+    /// </summary>
+    public sealed class TriangularPrismMatrixTexCoordBuffer : MatrixTexCoordBuffer
+    {
+        /// <summary>
+        /// 申请指定长度的非托管数组。
+        /// </summary>
+        /// <param name="elementCount">数组元素的数目。</param>
+        protected override UnmanagedArrayBase CreateElements(int elementCount)
+        {
+            return new UnmanagedArray<TriangularPrismTexCoord>(elementCount);
+        }
     }
 }

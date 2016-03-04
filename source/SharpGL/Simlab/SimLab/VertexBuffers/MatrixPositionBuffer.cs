@@ -1,4 +1,5 @@
 ﻿using SharpGL.SceneComponent;
+using SimLab.Geometry;
 using SimLab.SimGrid;
 using SimLab.SimGrid.Geometry;
 using System;
@@ -61,6 +62,25 @@ namespace SimLab.VertexBuffers
         }
     }
 
+    public sealed class TriangularPrismMatrixPositionBuffer:MatrixPositionBuffer{
+
+        public override MatrixFormat Shape
+        {
+            get { return MatrixFormat.TriangularPrism; }
+        }
+
+        /// <summary>
+        /// 申请指定长度的非托管数组。
+        /// </summary>
+        /// <param name="elementCount">数组元素的数目。</param>
+        protected override UnmanagedArrayBase CreateElements(int elementCount)
+        {
+            return new UnmanagedArray<TriangularPrismPosition>(elementCount);
+        }
+
+    }
+
+   
     /// <summary>
     /// Matrix的格式。
     /// </summary>
@@ -68,5 +88,6 @@ namespace SimLab.VertexBuffers
     {
         Triangle = DynamicUnstructuredGridderSource.MATRIX_FORMAT3_TRIANGLE,
         Tetrahedron = DynamicUnstructuredGridderSource.MATRIX_FORMAT4_TETRAHEDRON,
+        TriangularPrism = DynamicUnstructuredGridderSource.MATRIX_FORMAT6_TRIANGULAR_PRISM
     }
 }

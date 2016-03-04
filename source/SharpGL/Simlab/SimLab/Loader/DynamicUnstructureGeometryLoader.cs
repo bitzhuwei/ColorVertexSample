@@ -15,9 +15,11 @@ namespace SimLab.SimGrid.Loader
 
         public const int ElEMENT_FORMAT3_TRIANGLE = 3;
         public const int ELEMENT_FORMAT4_TETRAHEDRON = 4;
+        public const int ELEMENT_FORMAT6_TRIANGULAR_PRISM = 6;
 
         public const int FRACTURE_FORMAT2_LINE = 2;
         public const int FRACTURE_FORMAT3_TRIANGLE = 3;
+        public const int FRACTURE_FORMAT4_QUAD = 4;
 
         public const int MARKER_FRACTURE = 1;
         public const int MARKER_FAULT = 2;
@@ -66,9 +68,9 @@ namespace SimLab.SimGrid.Loader
                 if (total != (elemNum + fracNum))
                     throw new FormatException("bad format, not match grid dimens");
 
-                if (elemFormat != ElEMENT_FORMAT3_TRIANGLE && elemFormat != ELEMENT_FORMAT4_TETRAHEDRON)
+                if (elemFormat != ElEMENT_FORMAT3_TRIANGLE && elemFormat != ELEMENT_FORMAT4_TETRAHEDRON&&elemFormat!=ELEMENT_FORMAT6_TRIANGULAR_PRISM)
                     throw new FormatException("bad format, unknown element format");
-                if (fracFormat != FRACTURE_FORMAT2_LINE && fracFormat != FRACTURE_FORMAT3_TRIANGLE)
+                if (fracFormat != FRACTURE_FORMAT2_LINE && fracFormat != FRACTURE_FORMAT3_TRIANGLE && fracFormat!=FRACTURE_FORMAT4_QUAD)
                     throw new FormatException("bad format, unknown frac format");
 
                 #endregion

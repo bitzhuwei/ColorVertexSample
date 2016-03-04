@@ -77,12 +77,16 @@
     <Compile Include="Geometry\LineIndex.cs" />
     <Compile Include="Geometry\LinePosition.cs" />
     <Compile Include="Geometry\LineTexCoord.cs" />
+    <Compile Include="Geometry\QuadPosition.cs" />
+    <Compile Include="Geometry\QuadTexCoord.cs" />
     <Compile Include="Geometry\TetrahedronIndex.cs" />
     <Compile Include="Geometry\TetrahedronPosition.cs" />
     <Compile Include="Geometry\TetrahedronTexCoord.cs" />
     <Compile Include="Geometry\TriangleIndex.cs" />
     <Compile Include="Geometry\TrianglePosition.cs" />
     <Compile Include="Geometry\TriangleTexCoord.cs" />
+    <Compile Include="Geometry\TrianglularPrismPosition.cs" />
+    <Compile Include="Geometry\TriangularPrismTexCoord.cs" />
     <Compile Include="GridSources\CatesianGridderSource.cs" />
     <Compile Include="GridSources\CornerPointGridderSource.cs" />
     <Compile Include="GridSources\DynamicUnstructuredGridderSource.cs" />

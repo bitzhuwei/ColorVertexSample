@@ -1,4 +1,5 @@
 ﻿using SharpGL.SceneGraph;
+using SimLab.Geometry;
 using SimLab.GridSource.Factory;
 using SimLab.SimGrid.Geometry;
 using SimLab.VertexBuffers;
@@ -74,6 +75,33 @@ namespace SimLab.SimGrid.Factory
                     triangles[i].P3 = positions[matrixIndices[i][2]-1];
                 }
             }
+            if (src.ElementFormat == DynamicUnstructuredGridderSource.MATRIX_FORMAT6_TRIANGULAR_PRISM)
+            {
+                matrixPositions = new TriangleMatrixPositionBuffer();
+                //matrixPositions.Shape = MatrixPositionBufferData.SHAPE_TRIANGLE;
+                matrixPositions.AllocMem(src.ElementNum);
+                int[][] matrixIndices = src.Elements;
+                Vertex[] positions = src.Nodes;
+                TriangularPrismPosition* prism = (TriangularPrismPosition*)matrixPositions.Data;
+                for (int i = 0; i < src.ElementNum; i++)
+                {
+                    try
+                    {
+                        prism[i].P1 = positions[matrixIndices[i][0]];
+                        prism[i].P2 = positions[matrixIndices[i][1]];
+                        prism[i].P3 = positions[matrixIndices[i][2]];
+                        prism[i].P4 = positions[matrixIndices[i][3]];
+                        prism[i].P5 = positions[matrixIndices[i][4]];
+                        prism[i].P6 = positions[matrixIndices[i][5]];
+                    }
+                    catch (IndexOutOfRangeException e)
+                    {
+                        throw new IndexOutOfRangeException(String.Format("Maxtrix positions row:{0},out of range", i + 1));
+                    }
+                }
+
+
+            }
 
             //生成裂缝
             if (src.FractureFormat == DynamicUnstructuredGridderSource.FRACTURE_FORMAT3_TRIANGLE)
@@ -116,6 +144,23 @@ namespace SimLab.SimGrid.Factory
                 {
                     lines[i].P1 = positions[lineIndices[i][0]-1];
                     lines[i].P2 = positions[lineIndices[i][1]-1];
+                }
+            }
+
+            if (src.FractureFormat == DynamicUnstructuredGridderSource.FRACTURE_FORMAT4_QUAD)
+            {
+                fractionPositionsBuffer = new LineFracturePositionBuffer();
+                int fractureCount = src.FractureNum;
+                fractionPositionsBuffer.AllocMem(fractureCount);
+                QuadPosition* quad = (QuadPosition*)fractionPositionsBuffer.Data;
+                Vertex[] positions = src.Nodes;
+                int[][] quadIndices = src.Fractures;
+                for (int i = 0; i < fractureCount; i++)
+                {
+                    quad[i].P1 = positions[quadIndices[i][0]];
+                    quad[i].P2 = positions[quadIndices[i][1]];
+                    quad[i].P3 = positions[quadIndices[i][2]];
+                    quad[i].P4 = positions[quadIndices[i][3]];
                 }
             }
 
@@ -225,6 +270,16 @@ namespace SimLab.SimGrid.Factory
                     pTextures[i].SetTextureCoord(textures[i]);
                 }
             }
+            if (src.FractureFormat == DynamicUnstructuredGridderSource.FRACTURE_FORMAT4_QUAD)
+            {
+                textureCoordinates = new QuadFractureTexCoordBuffer();
+                textureCoordinates.AllocMem(texturesCount);
+                QuadTexCoord* pTextures = (QuadTexCoord*)textureCoordinates.Data;
+                for (int i = 0; i < textures.Length; i++)
+                {
+                    pTextures[i].SetTextureCoord(textures[i]);
+                }
+            }
             return textureCoordinates;
         }
 
@@ -310,6 +365,17 @@ namespace SimLab.SimGrid.Factory
                 {
                     pTextures[i].SetTextureCoord(textures[i]);
                 }
+            }
+            if (src.ElementFormat == DynamicUnstructuredGridderSource.MATRIX_FORMAT6_TRIANGULAR_PRISM)
+            {
+                textureCoordinates = new TriangularPrismMatrixTexCoordBuffer();
+                textureCoordinates.AllocMem(textures.Length);
+                TriangularPrismTexCoord* pTextures = (TriangularPrismTexCoord*)textureCoordinates.Data;
+                for (int i = 0; i < textures.Length; i++)
+                {
+                    pTextures[i].SetTextureCoord(textures[i]);
+                }
+
             }
             return textureCoordinates;
         }

@@ -1,5 +1,6 @@
 ﻿using SharpGL;
 using SharpGL.SceneComponent;
+using SimLab.Geometry;
 using SimLab.SimGrid;
 using SimLab.SimGrid.Geometry;
 using System;
@@ -58,6 +59,23 @@ namespace SimLab.VertexBuffers
         }
     }
 
+    public sealed class QuadFracturePositionBuffer : FracturePositionBuffer
+    {
+        /// <summary>
+        /// 申请指定长度的非托管数组。
+        /// </summary>
+        /// <param name="elementCount">数组元素的数目。</param>
+        protected override UnmanagedArrayBase CreateElements(int elementCount)
+        {
+            return new UnmanagedArray<QuadPosition>(elementCount);
+        }
+
+        public override FractureFormat Shape
+        {
+            get { return FractureFormat.Quad; }
+        }
+    }
+
     /// <summary>
     /// 裂缝的类型
     /// </summary>
@@ -65,5 +83,6 @@ namespace SimLab.VertexBuffers
     {
         Line = DynamicUnstructuredGridderSource.FRACTURE_FORMAT2_LINE,
         Triange = DynamicUnstructuredGridderSource.FRACTURE_FORMAT3_TRIANGLE,
+        Quad=DynamicUnstructuredGridderSource.FRACTURE_FORMAT4_QUAD
     }
 }
