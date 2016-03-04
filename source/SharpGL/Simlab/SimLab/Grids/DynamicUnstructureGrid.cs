@@ -276,6 +276,9 @@ namespace SimLab
                     case FractureFormat.Triange:
                         gl.DrawArrays(OpenGL.GL_TRIANGLES, 0, this.FractionVertexCount);
                         break;
+                    case FractureFormat.Quad:
+                        gl.DrawArrays(OpenGL.GL_QUADS, 0, this.FractionVertexCount);
+                        break;
                     default:
                         throw new NotImplementedException();
                     //break;
@@ -301,6 +304,9 @@ namespace SimLab
                             break;
                         case FractureFormat.Triange:
                             gl.DrawArrays(OpenGL.GL_TRIANGLES, 0, this.FractionVertexCount);
+                            break;
+                        case FractureFormat.Quad:
+                            gl.DrawArrays(OpenGL.GL_QUADS, 0, this.FractionVertexCount);
                             break;
                         default:
                             break;
@@ -344,6 +350,12 @@ namespace SimLab
                         gl.Disable(OpenGL.GL_PRIMITIVE_RESTART);
 
                         break;
+                    case MatrixFormat.TriangularPrism:
+                        // 先渲染三棱柱的上下三角形
+                        gl.DrawArrays(this.matrixRenderMode, 0, this.MatrixVertexOrIndexCount);
+                        // 再渲染三棱柱的三个侧面
+                        //gl.DrawElements(this.matrixRenderMode, this.MatrixVertexOrIndexCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
+                        break;
                     default:
                         break;
                 }
@@ -375,6 +387,12 @@ namespace SimLab
 
                             gl.Disable(OpenGL.GL_PRIMITIVE_RESTART);
 
+                            break;
+                        case MatrixFormat.TriangularPrism:
+                            // 先渲染三棱柱的上下三角形
+                            gl.DrawArrays(this.matrixRenderMode, 0, this.MatrixVertexOrIndexCount);
+                            // 再渲染三棱柱的三个侧面
+                            //gl.DrawElements(this.matrixRenderMode, this.MatrixVertexOrIndexCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
                             break;
                         default:
                             break;

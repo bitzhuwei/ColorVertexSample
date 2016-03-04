@@ -143,7 +143,7 @@ namespace Sample
             try
             {
 
-                int nx = 11716;
+                int nx = 6090;
                 int ny = 1;
                 int nz = 1;
                 int dimenSize = nx * ny * nz;
@@ -162,7 +162,7 @@ namespace Sample
 
 
 
-                string fileName = @"geometry.txt";
+                string fileName = @"prismgeometry.txt";
                 DynamicUnstructureGeometryLoader loader = new DynamicUnstructureGeometryLoader();
                 // use CatesianGridderSource to fill HexahedronGridderElement's content.
                 DynamicUnstructuredGridderSource source = loader.LoadSource(fileName, nx, ny, nz);
@@ -296,6 +296,7 @@ namespace Sample
                 if (this.element != null)
                 {
                     this.element.FractionVertexCount++;
+                    this.element.MatrixVertexOrIndexCount++;
                     this.sim3D.Invalidate();
 
                     this.lblPickedPrimitive.Text = string.Format("fraction vertex count: {0}", this.element.FractionVertexCount);
@@ -306,6 +307,7 @@ namespace Sample
                 if (element != null)
                 {
                     this.element.FractionVertexCount--;
+                    this.element.MatrixVertexOrIndexCount--;
                     this.sim3D.Invalidate();
                     this.lblPickedPrimitive.Text = string.Format("fraction vertex count: {0}", this.element.FractionVertexCount);
 
