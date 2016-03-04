@@ -147,13 +147,6 @@
       <FileName>VertexBuffers\PropertyBuffer.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="SimLab.VertexBuffers.TetrahedronMatrixIndexBuffer">
-    <Position X="5.5" Y="6.5" Width="4.25" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>VertexBuffers\TetrahedronMatrixIndexBuffer.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="SimLab.VertexBuffers.TexCoordBuffer">
     <Position X="56.75" Y="6.5" Width="1.75" />
     <TypeIdentifier>

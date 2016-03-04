@@ -142,8 +142,11 @@ namespace Sample
         {
             try
             {
+                string fileName = @"prismgeometry.txt";
+                //string fileName = @"prismsimple.txt";
 
                 int nx = 6090;
+                //int nx = 3;
                 int ny = 1;
                 int nz = 1;
                 int dimenSize = nx * ny * nz;
@@ -162,7 +165,6 @@ namespace Sample
 
 
 
-                string fileName = @"prismgeometry.txt";
                 DynamicUnstructureGeometryLoader loader = new DynamicUnstructureGeometryLoader();
                 // use CatesianGridderSource to fill HexahedronGridderElement's content.
                 DynamicUnstructuredGridderSource source = loader.LoadSource(fileName, nx, ny, nz);

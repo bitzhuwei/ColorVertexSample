@@ -10,7 +10,7 @@ namespace SimLab
     public class DynamicUnstructureGeometry:MeshBase
     {
 
-        private TetrahedronMatrixIndexBuffer matrixIndices;
+        private IndexBuffer matrixIndices;
         private FracturePositionBuffer fracturePositions;
 
         /// <summary>
@@ -27,11 +27,16 @@ namespace SimLab
         /// <summary>
         /// 基质基质的索引
         /// </summary>
-        public TetrahedronMatrixIndexBuffer MatrixIndices
+        public IndexBuffer MatrixIndices
         {
             get { return this.matrixIndices; }
             set { this.matrixIndices = value; }
         }
+        //public TetrahedronMatrixIndexBuffer MatrixIndices
+        //{
+        //    get { return this.matrixIndices; }
+        //    set { this.matrixIndices = value; }
+        //}
 
 
         /// <summary>

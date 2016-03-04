@@ -29,4 +29,16 @@ namespace SimLab.VertexBuffers
             return new UnmanagedArray<TetrahedronIndex>(elementCount);
         }
     }
+
+    public sealed class TetrahedronMatrixTriangularPrismIndexBuffer : IndexBuffer
+    {
+        public TetrahedronMatrixTriangularPrismIndexBuffer()
+            :base(OpenGL.GL_QUAD_STRIP)
+        { }
+
+        protected override UnmanagedArrayBase CreateElements(int elementCount)
+        {
+            return new UnmanagedArray<TetrahedronTriangularPrismIndex>(elementCount);
+        }
+    }
 }

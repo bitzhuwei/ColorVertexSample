@@ -127,7 +127,7 @@ namespace SimLab
             if (geometry.MatrixIndices != null)
             {
                 this.matrixIndexBuffer = new uint[1];
-                this.matrixIndexBuffer[0] = CreateVertexBufferObject(OpenGL.GL_ARRAY_BUFFER, geometry.MatrixIndices, OpenGL.GL_STATIC_DRAW);
+                this.matrixIndexBuffer[0] = CreateVertexBufferObject(OpenGL.GL_ELEMENT_ARRAY_BUFFER, geometry.MatrixIndices, OpenGL.GL_STATIC_DRAW);
 
                 this.MatrixVertexOrIndexCount = geometry.MatrixIndices.SizeInBytes / sizeof(uint);
                 this.matrixRenderMode = geometry.MatrixIndices.Mode;
@@ -352,9 +352,13 @@ namespace SimLab
                         break;
                     case MatrixFormat.TriangularPrism:
                         // 先渲染三棱柱的上下三角形
-                        gl.DrawArrays(this.matrixRenderMode, 0, this.MatrixVertexOrIndexCount);
+                        gl.DrawArrays(OpenGL.GL_TRIANGLES, 0, this.MatrixVertexOrIndexCount);
                         // 再渲染三棱柱的三个侧面
-                        //gl.DrawElements(this.matrixRenderMode, this.MatrixVertexOrIndexCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
+                        gl.Enable(OpenGL.GL_PRIMITIVE_RESTART);
+                        gl.PrimitiveRestartIndex(uint.MaxValue);
+                        gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, this.matrixIndexBuffer[0]);
+                        gl.DrawElements(this.matrixRenderMode, this.MatrixVertexOrIndexCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
+                        gl.Disable(OpenGL.GL_PRIMITIVE_RESTART);
                         break;
                     default:
                         break;
@@ -368,39 +372,36 @@ namespace SimLab
             if (this.RenderGridWireframe && this.matrixVertexArrayObject != null)
             {
                 shaderProgram.SetUniform1(gl, "renderingWireframe", 1.0f);
-
+                gl.PolygonMode(SharpGL.Enumerations.FaceMode.FrontAndBack, SharpGL.Enumerations.PolygonMode.Lines);
                 gl.BindVertexArray(matrixVertexArrayObject[0]);
+                switch (this.MatrixType)
                 {
-                    gl.PolygonMode(SharpGL.Enumerations.FaceMode.FrontAndBack, SharpGL.Enumerations.PolygonMode.Lines);
-
-                    switch (this.MatrixType)
-                    {
-                        case MatrixFormat.Triangle:
-                            gl.DrawArrays(this.matrixRenderMode, 0, this.MatrixVertexOrIndexCount);
-                            break;
-                        case MatrixFormat.Tetrahedron:
-                            gl.Enable(OpenGL.GL_PRIMITIVE_RESTART);
-                            gl.PrimitiveRestartIndex(uint.MaxValue);
-
-                            gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, this.matrixIndexBuffer[0]);
-                            gl.DrawElements(this.matrixRenderMode, this.MatrixVertexOrIndexCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
-
-                            gl.Disable(OpenGL.GL_PRIMITIVE_RESTART);
-
-                            break;
-                        case MatrixFormat.TriangularPrism:
-                            // 先渲染三棱柱的上下三角形
-                            gl.DrawArrays(this.matrixRenderMode, 0, this.MatrixVertexOrIndexCount);
-                            // 再渲染三棱柱的三个侧面
-                            //gl.DrawElements(this.matrixRenderMode, this.MatrixVertexOrIndexCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
-                            break;
-                        default:
-                            break;
-                    }
-
-                    gl.PolygonMode(SharpGL.Enumerations.FaceMode.FrontAndBack, SharpGL.Enumerations.PolygonMode.Filled);
+                    case MatrixFormat.Triangle:
+                        gl.DrawArrays(this.matrixRenderMode, 0, this.MatrixVertexOrIndexCount);
+                        break;
+                    case MatrixFormat.Tetrahedron:
+                        gl.Enable(OpenGL.GL_PRIMITIVE_RESTART);
+                        gl.PrimitiveRestartIndex(uint.MaxValue);
+                        gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, this.matrixIndexBuffer[0]);
+                        gl.DrawElements(this.matrixRenderMode, this.MatrixVertexOrIndexCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
+                        gl.Disable(OpenGL.GL_PRIMITIVE_RESTART);
+                        break;
+                    case MatrixFormat.TriangularPrism:
+                        // 先渲染三棱柱的上下三角形
+                        gl.DrawArrays(OpenGL.GL_TRIANGLES, 0, this.MatrixVertexOrIndexCount / 9 * 6);
+                        // 再渲染三棱柱的三个侧面
+                        gl.Enable(OpenGL.GL_PRIMITIVE_RESTART);
+                        gl.PrimitiveRestartIndex(uint.MaxValue);
+                        gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, this.matrixIndexBuffer[0]);
+                        gl.DrawElements(this.matrixRenderMode, this.MatrixVertexOrIndexCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
+                        gl.Disable(OpenGL.GL_PRIMITIVE_RESTART);
+                        break;
+                    default:
+                        break;
                 }
+                gl.PolygonMode(SharpGL.Enumerations.FaceMode.FrontAndBack, SharpGL.Enumerations.PolygonMode.Filled);
                 gl.BindVertexArray(0);
+
             }
         }
 

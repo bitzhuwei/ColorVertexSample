@@ -19,7 +19,7 @@ namespace SimLab.SimGrid.Factory
         private unsafe DynamicUnstructureGeometry DoCreateMesh(DynamicUnstructuredGridderSource src)
         {
             MatrixPositionBuffer matrixPositions = null;
-            TetrahedronMatrixIndexBuffer matrixIndicesBuffer = null;
+            IndexBuffer matrixIndicesBuffer = null;
             FracturePositionBuffer fractionPositionsBuffer = null;
 
             //生成母体
@@ -100,7 +100,23 @@ namespace SimLab.SimGrid.Factory
                     }
                 }
 
-
+                matrixIndicesBuffer = new TetrahedronMatrixTriangularPrismIndexBuffer();
+                //int triangleCount = src.ElementNum * 4;
+                //matrixIndicesBuffer.AllocMem(triangleCount * sizeof(TriangleIndex));
+                matrixIndicesBuffer.AllocMem(src.ElementNum);
+                TetrahedronTriangularPrismIndex* indexes = (TetrahedronTriangularPrismIndex*)matrixIndicesBuffer.Data;
+                for (int i = 0; i < src.ElementNum; i++)
+                {
+                    indexes[i].dot0 = (uint)(i * 6 + 0);
+                    indexes[i].dot1 = (uint)(i * 6 + 3);
+                    indexes[i].dot2 = (uint)(i * 6 + 1);
+                    indexes[i].dot3 = (uint)(i * 6 + 4);
+                    indexes[i].dot4 = (uint)(i * 6 + 2);
+                    indexes[i].dot5 = (uint)(i * 6 + 5);
+                    indexes[i].dot6 = (uint)(i * 6 + 0);
+                    indexes[i].dot7 = (uint)(i * 6 + 3);
+                    indexes[i].restartIndex = uint.MaxValue;
+                }
             }
 
             //生成裂缝
