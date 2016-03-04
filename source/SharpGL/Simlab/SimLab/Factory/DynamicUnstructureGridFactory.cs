@@ -77,7 +77,7 @@ namespace SimLab.SimGrid.Factory
             }
             if (src.ElementFormat == DynamicUnstructuredGridderSource.MATRIX_FORMAT6_TRIANGULAR_PRISM)
             {
-                matrixPositions = new TriangleMatrixPositionBuffer();
+                matrixPositions = new TriangularPrismMatrixPositionBuffer();
                 //matrixPositions.Shape = MatrixPositionBufferData.SHAPE_TRIANGLE;
                 matrixPositions.AllocMem(src.ElementNum);
                 int[][] matrixIndices = src.Elements;
@@ -149,7 +149,7 @@ namespace SimLab.SimGrid.Factory
 
             if (src.FractureFormat == DynamicUnstructuredGridderSource.FRACTURE_FORMAT4_QUAD)
             {
-                fractionPositionsBuffer = new LineFracturePositionBuffer();
+                fractionPositionsBuffer = new QuadFracturePositionBuffer();
                 int fractureCount = src.FractureNum;
                 fractionPositionsBuffer.AllocMem(fractureCount);
                 QuadPosition* quad = (QuadPosition*)fractionPositionsBuffer.Data;
