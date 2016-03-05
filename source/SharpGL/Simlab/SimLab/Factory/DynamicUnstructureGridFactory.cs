@@ -175,8 +175,8 @@ namespace SimLab.SimGrid.Factory
                 {
                     quad[i].P1 = positions[quadIndices[i][0]];
                     quad[i].P2 = positions[quadIndices[i][1]];
-                    quad[i].P3 = positions[quadIndices[i][3]];
-                    quad[i].P4 = positions[quadIndices[i][2]];
+                    quad[i].P3 = positions[quadIndices[i][2]];
+                    quad[i].P4 = positions[quadIndices[i][3]];
                 }
             }
 
