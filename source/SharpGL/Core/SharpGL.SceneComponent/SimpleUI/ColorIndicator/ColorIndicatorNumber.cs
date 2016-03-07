@@ -3,6 +3,7 @@ using SharpGL.SceneGraph.Core;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -16,6 +17,43 @@ namespace SharpGL.SceneComponent
         //private System.Drawing.Font font = new System.Drawing.Font("Courier New", fontSize);
         const float fontSize = 12f;
 
+
+        /// <summary>
+        /// 计算格式化精度。
+        /// </summary>
+        /// <param name="step"></param>
+        /// <returns></returns>
+        private string MinorFormatString(float step)
+        {
+
+            if (step == 0.0f)
+                return "F0";
+
+            double p = Math.Log10(step);
+            int sign = Math.Sign(p);
+            double absP = Math.Abs(p);
+            int precision;
+            if (absP >= 1.0)
+            {
+                precision = (int)Math.Round(Math.Floor(Math.Abs(absP)));
+            }
+            else
+            {
+                precision=(int)Math.Round(Math.Ceiling(Math.Abs(absP)));
+            }
+
+            if (sign < 0)
+            {
+                //小数
+                return String.Format("F{0}", precision);
+            }
+            else
+            {
+                return String.Format("F{0}", 0);
+            }
+        }
+
+
         public void Render(OpenGL gl, RenderMode renderMode)
         {
             SimpleUIRectArgs lastArgs = this.CurrentArgs;
@@ -25,6 +63,8 @@ namespace SharpGL.SceneComponent
 
             int blockCount = data.GetBlockCount();
             if (blockCount <= 0) { return; }
+
+            String formatStr = MinorFormatString(data.Step);
 
             GLColor[] colors = data.ColorPalette.Colors;
             int blockWidth = 0;
@@ -44,20 +84,20 @@ namespace SharpGL.SceneComponent
                 {
                     if (!data.UseLogarithmic)
                     {
-                        value = data.MaxValue.ToString();
+                        value = data.MaxValue.ToString(formatStr,CultureInfo.InvariantCulture);
                     }
                     else
                     {
-                        value = Math.Pow(data.LogBase, data.MaxValue).ToString();
+                        value = Math.Pow(data.LogBase, data.MaxValue).ToString(formatStr,CultureInfo.InvariantCulture);
                     }
                 }
                 else
                 {
                     float tickValue = data.MinValue + data.Step * i;
                     if (!data.UseLogarithmic)
-                        value = tickValue.ToString();
+                        value = tickValue.ToString(formatStr,CultureInfo.InvariantCulture);
                     else
-                        value = Math.Pow(data.LogBase, tickValue).ToString();
+                        value = Math.Pow(data.LogBase, tickValue).ToString(formatStr,CultureInfo.InvariantCulture);
                 }
                 double valueLength = 100.0 * value.Length / fontSize;
                 double x = 0;
