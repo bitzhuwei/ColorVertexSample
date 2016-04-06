@@ -114,9 +114,11 @@ namespace Sample
 
             GridProperty prop1 = GridPropertyGenerator.CreateGridIndexProperty(dimenSize, "Grid Position");
             GridProperty prop2 = GridPropertyGenerator.CreateRandomProperty(dimenSize, "Random", minValue, maxValue);
+            GridProperty prop3 = GridPropertyGenerator.CreateMaxValueProperty(dimenSize, "MaxValue", minValue, maxValue);
             this.cbxGridProperties.Items.Clear();
             this.cbxGridProperties.Items.Add(prop1);
             this.cbxGridProperties.Items.Add(prop2);
+            this.cbxGridProperties.Items.Add(prop3);
             this.cbxGridProperties.SelectedIndex = 0;
             this.cbxGridProperties.SelectedValueChanged -= this.OnGridPropertyChanged;
             this.cbxGridProperties.SelectedValueChanged += this.OnGridPropertyChanged;
