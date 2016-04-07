@@ -25,6 +25,8 @@ using System.Globalization;
 using SimLab.SimGrid;
 using SimLab.SimGrid.Loader;
 using SimLab.VertexBuffers;
+using System.IO;
+using System.Drawing.Imaging;
 
 namespace Sample
 {
@@ -114,9 +116,11 @@ namespace Sample
 
             GridProperty prop1 = GridPropertyGenerator.CreateGridIndexProperty(dimenSize, "Grid Position");
             GridProperty prop2 = GridPropertyGenerator.CreateRandomProperty(dimenSize, "Random", minValue, maxValue);
+            GridProperty prop3 = GridPropertyGenerator.CreateMaxValueProperty(dimenSize, "MaxValue", minValue, maxValue);
             this.cbxGridProperties.Items.Clear();
             this.cbxGridProperties.Items.Add(prop1);
             this.cbxGridProperties.Items.Add(prop2);
+            this.cbxGridProperties.Items.Add(prop3);
             this.cbxGridProperties.SelectedIndex = 0;
             this.cbxGridProperties.SelectedValueChanged -= this.OnGridPropertyChanged;
             this.cbxGridProperties.SelectedValueChanged += this.OnGridPropertyChanged;
@@ -298,10 +302,37 @@ namespace Sample
             if (e.KeyChar == 'c')
             {
                 OpenGL gl = this.sim3D.OpenGL;
-
-
-
             }
+
+            if (e.KeyChar == 's')
+            {
+                this.SaveTextureBitmap();
+            }
+        }
+
+
+        private void SaveTextureBitmap()
+        {
+            Stream myStream;
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+
+            saveFileDialog1.Filter = "png files (*.png)|*.png";
+            saveFileDialog1.FilterIndex = 2;
+            saveFileDialog1.RestoreDirectory = true;
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                if ((myStream = saveFileDialog1.OpenFile()) != null)
+                {
+                    // Code to write the stream goes here.
+                    Bitmap texture = ColorPaletteHelper.GenBitmap(this.sim3D.uiColorIndicator.Data.ColorPalette);
+                    texture.Save(myStream, ImageFormat.Png);
+                    myStream.Close();
+                }
+            }
+
+
+
         }
 
         private void FormHexahedronGridder_Load(object sender, EventArgs e)

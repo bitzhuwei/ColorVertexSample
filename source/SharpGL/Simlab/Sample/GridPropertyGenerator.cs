@@ -33,6 +33,25 @@ namespace Sample
             return prop;
         }
 
+        public static GridProperty CreateMaxValueProperty(int dimsize, string name, float minValue, float maxValue)
+        {
+            GridProperty prop = new GridProperty();
+            int[] gridIndexes = new int[dimsize];
+            float[] values = new float[dimsize];
+            
+            for (int i = 0; i < dimsize; i++)
+            {
+                gridIndexes[i] = i;
+                values[i] = maxValue;
+            }
+            prop.Name = name;
+            prop.MinValue = minValue;
+            prop.MaxValue = maxValue;
+            prop.Values = values;
+            prop.GridIndexes = gridIndexes;
+            return prop;
+        }
+
         public static GridProperty CreateGridIndexProperty(int dimsize, string name)
         {
             GridProperty prop = new GridProperty();

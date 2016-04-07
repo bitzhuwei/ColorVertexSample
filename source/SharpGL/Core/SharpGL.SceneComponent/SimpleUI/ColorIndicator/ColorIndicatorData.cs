@@ -165,7 +165,7 @@ namespace SharpGL.SceneComponent
         {
             if (this.step == 0) { return -1; }
 
-            int blockCount = (int)Math.Ceiling((this.MaxValue - this.MinValue) / this.Step);
+            int blockCount = (int)Math.Round((this.MaxValue - this.MinValue) / this.Step);
             if (blockCount == 0) { blockCount = 1; }
 
             return blockCount;

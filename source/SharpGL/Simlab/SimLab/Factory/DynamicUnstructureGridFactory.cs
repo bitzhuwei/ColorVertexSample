@@ -87,12 +87,12 @@ namespace SimLab.SimGrid.Factory
                 {
                     try
                     {
-                        prism[i].P1 = positions[matrixIndices[i][0]];
-                        prism[i].P2 = positions[matrixIndices[i][1]];
-                        prism[i].P3 = positions[matrixIndices[i][2]];
-                        prism[i].P4 = positions[matrixIndices[i][3]];
-                        prism[i].P5 = positions[matrixIndices[i][4]];
-                        prism[i].P6 = positions[matrixIndices[i][5]];
+                        prism[i].P1 = positions[matrixIndices[i][0]-1];
+                        prism[i].P2 = positions[matrixIndices[i][1]-1];
+                        prism[i].P3 = positions[matrixIndices[i][2]-1];
+                        prism[i].P4 = positions[matrixIndices[i][3]-1];
+                        prism[i].P5 = positions[matrixIndices[i][4]-1];
+                        prism[i].P6 = positions[matrixIndices[i][5]-1];
                     }
                     catch (IndexOutOfRangeException e)
                     {
@@ -173,10 +173,10 @@ namespace SimLab.SimGrid.Factory
                 int[][] quadIndices = src.Fractures;
                 for (int i = 0; i < fractureCount; i++)
                 {
-                    quad[i].P1 = positions[quadIndices[i][0]];
-                    quad[i].P2 = positions[quadIndices[i][1]];
-                    quad[i].P3 = positions[quadIndices[i][2]];
-                    quad[i].P4 = positions[quadIndices[i][3]];
+                    quad[i].P1 = positions[quadIndices[i][0]-1];
+                    quad[i].P2 = positions[quadIndices[i][1]-1];
+                    quad[i].P3 = positions[quadIndices[i][3]-1];
+                    quad[i].P4 = positions[quadIndices[i][2]-1];
                 }
             }
 
@@ -242,20 +242,20 @@ namespace SimLab.SimGrid.Factory
                         if (!(distance <= 0.0f))
                         {
                             textures[matrixIndex] = (value - minValue) / distance;
-                            //if (textures[matrixIndex] < 0.5f)
-                            //{
-                            //    textures[matrixIndex] = 0.5f - (0.5f - textures[matrixIndex]) * 0.99f;
-                            //}
-                            //else
-                            //{
-                            //    textures[matrixIndex] = (textures[matrixIndex] - 0.5f) * 0.99f + 0.5f;
-                            //}
+                            if (textures[matrixIndex] < 0.5f)
+                            {
+                                textures[matrixIndex] = 0.5f - (0.5f - textures[matrixIndex]) * 0.99f;
+                            }
+                            else
+                            {
+                                textures[matrixIndex] = (textures[matrixIndex] - 0.5f) * 0.99f + 0.5f;
+                            }
                         }
                         else
                         {
                             //最小值最大值相等时，显示最小值的颜色
-                            //textures[matrixIndex] = 0.01f;
                             textures[matrixIndex] = 0.01f;
+                            //textures[matrixIndex] = 0.01f;
                         }
                     }
                 }
@@ -333,20 +333,20 @@ namespace SimLab.SimGrid.Factory
                         if (!(distance <= 0.0f))
                         {
                             textures[matrixIndex] = (value - minValue) / distance;
-                            //if (textures[matrixIndex] < 0.5f)
-                            //{
-                            //    textures[matrixIndex] = 0.5f - (0.5f - textures[matrixIndex]) * 0.99f;
-                            //}
-                            //else
-                            //{
-                            //    textures[matrixIndex] = (textures[matrixIndex] - 0.5f) * 0.99f + 0.5f;
-                            //}
+                            if (textures[matrixIndex] < 0.5f)
+                            {
+                                textures[matrixIndex] = 0.5f - (0.5f - textures[matrixIndex]) * 0.99f;
+                            }
+                            else
+                            {
+                                textures[matrixIndex] = (textures[matrixIndex] - 0.5f) * 0.99f + 0.5f;
+                            }
                         }
                         else
                         {
                             //最小值最大值相等时，显示最小值的颜色
-                            //textures[matrixIndex] = 0.01f;
-                            textures[gridIndex] = 0;
+                            textures[matrixIndex] = 0.01f;
+                            //textures[gridIndex] = 0;
                         }
                     }
                 }
