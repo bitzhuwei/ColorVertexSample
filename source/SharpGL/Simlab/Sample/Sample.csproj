@@ -171,6 +171,12 @@
     <Content Include="geometry.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="prismsimple.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="prism_geometry.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="TET5_cvxyz.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

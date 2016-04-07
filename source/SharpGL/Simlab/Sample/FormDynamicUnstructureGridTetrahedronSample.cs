@@ -143,7 +143,7 @@ namespace Sample
             try
             {
 
-                int nx = 236365;
+                int nx = 6090;
                 int ny = 1;
                 int nz = 1;
                 int dimenSize = nx * ny * nz;
@@ -160,7 +160,7 @@ namespace Sample
 
 
 
-                string fileName = @"TET5_geometry.txt";
+                string fileName = @"prism_geometry.txt";
                 DynamicUnstructureGeometryLoader loader = new DynamicUnstructureGeometryLoader();
                 // use CatesianGridderSource to fill HexahedronGridderElement's content.
                 DynamicUnstructuredGridderSource source = loader.LoadSource(fileName, nx, ny, nz);
