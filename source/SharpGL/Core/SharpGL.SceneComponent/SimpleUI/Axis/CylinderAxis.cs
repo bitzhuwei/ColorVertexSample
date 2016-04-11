@@ -47,7 +47,7 @@ namespace SharpGL.SceneComponent
             red.Diffuse = Color.Red;
 
             Cylinder x1 = new Cylinder() { Name = "X1" };
-            x1.BaseRadius = 0.1 * factor;
+            x1.BaseRadius = 0 * factor;
             x1.TopRadius = 0.1 * factor;
             x1.Height = 1.5 * factor;
             x1.Transformation.RotateY = 90f;
@@ -69,7 +69,7 @@ namespace SharpGL.SceneComponent
             green.Diffuse = Color.Green;
 
             Cylinder y1 = new Cylinder() { Name = "Y1" };
-            y1.BaseRadius = 0.1 * factor;
+            y1.BaseRadius = 0 * factor;
             y1.TopRadius = 0.1 * factor;
             y1.Height = 1.5 * factor;
             y1.Transformation.RotateX = -90f;
@@ -91,7 +91,7 @@ namespace SharpGL.SceneComponent
             blue.Diffuse = Color.Blue;
 
             Cylinder z1 = new Cylinder() { Name = "Z1" };
-            z1.BaseRadius = 0.1 * factor;
+            z1.BaseRadius = 0 * factor;
             z1.TopRadius = 0.1 * factor;
             z1.Height = 1.5 * factor;
             z1.Material = blue;
