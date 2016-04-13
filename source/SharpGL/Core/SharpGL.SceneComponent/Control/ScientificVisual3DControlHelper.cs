@@ -75,6 +75,7 @@ namespace SharpGL.SceneComponent
             SimpleUIAxis uiAxis = new SimpleUIAxis(
                 AnchorStyles.Left | AnchorStyles.Bottom,
                 new Padding(10, 0, 0, 20), new Size(40, 40)) { Name = "UI: Axis", };
+            uiAxis.RectDirection = ERectDirection.XZ;
             parent.AddChild(uiAxis);
             scientificVisual3DControl.uiAxis = uiAxis;
 

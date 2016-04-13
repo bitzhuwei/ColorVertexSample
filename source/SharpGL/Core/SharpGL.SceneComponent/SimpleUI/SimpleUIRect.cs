@@ -134,6 +134,7 @@ namespace SharpGL.SceneComponent
 
         #endregion
 
+
         /// <summary>
         /// render UI model at axis's center(0, 0, 0) in <paramref name="UIWidth"/> and <paramref name="UIHeight"/>.
         /// <para>The <see cref="SimpleUIRect.RenderMode()"/> only draws a rectangle to show the UI's scope.</para>
@@ -148,10 +149,30 @@ namespace SharpGL.SceneComponent
             {
                 gl.Begin(Enumerations.BeginMode.LineLoop);
                 gl.Color(RectColor);
-                gl.Vertex(-args.UIWidth / 2, -args.UIHeight / 2, 0);
-                gl.Vertex(args.UIWidth / 2, -args.UIHeight / 2, 0);
-                gl.Vertex(args.UIWidth / 2, args.UIHeight / 2, 0);
-                gl.Vertex(-args.UIWidth / 2, args.UIHeight / 2, 0);
+                switch (this.RectDirection)
+                {
+                    case ERectDirection.XZ:
+                        gl.Vertex(-args.UIWidth / 2, 0, -args.UIHeight / 2);
+                        gl.Vertex(args.UIWidth / 2, 0, -args.UIHeight / 2);
+                        gl.Vertex(args.UIWidth / 2, 0, args.UIHeight / 2);
+                        gl.Vertex(-args.UIWidth / 2, 0, args.UIHeight / 2);
+                        break;
+                    case ERectDirection.XY:
+                        gl.Vertex(-args.UIWidth / 2, -args.UIHeight / 2, 0);
+                        gl.Vertex(args.UIWidth / 2, -args.UIHeight / 2, 0);
+                        gl.Vertex(args.UIWidth / 2, args.UIHeight / 2, 0);
+                        gl.Vertex(-args.UIWidth / 2, args.UIHeight / 2, 0);
+                        break;
+                    case ERectDirection.YZ:
+                        gl.Vertex(0, -args.UIWidth / 2, -args.UIHeight / 2);
+                        gl.Vertex(0, args.UIWidth / 2, -args.UIHeight / 2);
+                        gl.Vertex(0, args.UIWidth / 2, args.UIHeight / 2);
+                        gl.Vertex(0, -args.UIWidth / 2, args.UIHeight / 2);
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
+
                 gl.End();
             }
         }
@@ -186,7 +207,7 @@ namespace SharpGL.SceneComponent
         /// <para>something like AnchorStyles.Left | AnchorStyles.Bottom.</para>
         /// </summary>
         public System.Windows.Forms.AnchorStyles Anchor { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the space between viewport and SimpleRect.
         /// </summary>
@@ -272,5 +293,13 @@ namespace SharpGL.SceneComponent
 
         #endregion
 
+        public ERectDirection RectDirection { get; set; }
+    }
+
+    public enum ERectDirection
+    {
+        XZ,
+        XY,
+        YZ,
     }
 }
