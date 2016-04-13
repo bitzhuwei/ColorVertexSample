@@ -14,11 +14,14 @@ namespace SharpGL.SceneComponent
     /// </summary>
     public class SimpleUIAxis : SimpleUIRect, IMouseRotation
     {
+        public CoordinateSystem CoordSystem { get; set; }
+
         internal IMouseTransform mouseTransform = new ArcBallTransform();
         /// <summary>
         /// keeps axis' scale.
         /// </summary>
         private SceneGraph.Transformations.LinearTransformation axisTransform;
+        private CylinderAxis axis;
 
         /// <summary>
         /// Draw axis with arc ball rotation effect on viewport as an UI. 
@@ -31,16 +34,16 @@ namespace SharpGL.SceneComponent
         /// <param name="zFar"></param>
         /// <param name="rectColor"></param>
         /// <param name="rightHandAxis"></param>
-        public SimpleUIAxis(AnchorStyles anchor, Padding margin, System.Drawing.Size size, int zNear = -1000, int zFar = 1000, GLColor rectColor = null, bool rightHandAxis = true)
+        public SimpleUIAxis(AnchorStyles anchor, Padding margin, System.Drawing.Size size, int zNear = -1000, int zFar = 1000, GLColor rectColor = null, CoordinateSystem coordSystem = CoordinateSystem.RightHand)
             : base(anchor, margin, size, zNear, zFar)
         {
-            this.RightHandAxis = rightHandAxis;
-            CylinderAxis axis = new CylinderAxis();
+            axis = new CylinderAxis();
             LinearTransformationEffect axisTransform = new SharpGL.SceneGraph.Effects.LinearTransformationEffect();
             this.axisTransform = axisTransform.LinearTransformation;
             axis.AddEffect(axisTransform);
             base.AddChild(axis);
             this.RectColor = new GLColor(1, 1, 0, 1);// red(x axis) + green(y axis)
+            this.CoordSystem = coordSystem;
         }
 
         protected override void RenderModel(SimpleUIRectArgs args, OpenGL gl, SceneGraph.Core.RenderMode renderMode)
@@ -53,7 +56,7 @@ namespace SharpGL.SceneComponent
             this.axisTransform.ScaleX = args.UIWidth / 2 / 3;
             this.axisTransform.ScaleY = args.UIHeight / 2 / 3;
             int max = Math.Max(args.UIWidth, args.UIHeight);
-            this.axisTransform.ScaleZ = (this.RightHandAxis ? 1 : -1) * max / 2 / 3;
+            this.axisTransform.ScaleZ = (this.CoordSystem == CoordinateSystem.RightHand ? 1 : -1) * max / 2 / 3;
             //this.axisTransform.TranslateZ = base.zFar;// make sure UI shows in front of enything else.
             //var target2Position = base.Camera.Position - base.Camera.Target;
             //target2Position.Normalize();
@@ -162,9 +165,9 @@ namespace SharpGL.SceneComponent
 
         #endregion
 
-        /// <summary>
-        /// If true, draw right-hand axis. Otherwise, draw left-hand axis.
-        /// </summary>
-        public bool RightHandAxis { get; set; }
+        ///// <summary>
+        ///// If true, draw right-hand axis. Otherwise, draw left-hand axis.
+        ///// </summary>
+        //public bool RightHandAxis { get; set; }
     }
 }

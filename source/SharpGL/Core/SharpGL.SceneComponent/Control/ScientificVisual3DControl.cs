@@ -33,6 +33,12 @@ namespace SharpGL.SceneComponent
         public ModelContainer ModelContainer
         { get { return this.modelContainer; } }
 
+        public CoordinateSystem CoordinateSystem
+        {
+            get { return this.uiAxis.CoordSystem; }
+            set { this.uiAxis.CoordSystem = value; }
+        }
+
         private ViewTypes viewType;
 
         public ScientificVisual3DControl()
