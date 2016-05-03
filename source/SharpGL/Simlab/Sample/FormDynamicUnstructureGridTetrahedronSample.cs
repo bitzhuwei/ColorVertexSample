@@ -146,10 +146,15 @@ namespace Sample
         {
             try
             {
+                string fileName = @"dfm_FRACTURE.SFRAC";
+                DynamicUnstructureGeometryLoader loader = new DynamicUnstructureGeometryLoader();
+                // use CatesianGridderSource to fill HexahedronGridderElement's content.
+                DynamicUnstructuredGridderSource source = loader.LoadSource(fileName);
+                source.Init();
 
-                int nx = 6090;
-                int ny = 1;
-                int nz = 1;
+                int nx = source.NX;
+                int ny = source.NY;
+                int nz = source.NZ;
                 int dimenSize = nx * ny * nz;
 
                 float step = System.Convert.ToSingle(tbColorIndicatorStep.Text);
@@ -164,12 +169,7 @@ namespace Sample
 
 
 
-                string fileName = @"prism_geometry.txt";
-                DynamicUnstructureGeometryLoader loader = new DynamicUnstructureGeometryLoader();
-                // use CatesianGridderSource to fill HexahedronGridderElement's content.
-                DynamicUnstructuredGridderSource source = loader.LoadSource(fileName, nx, ny, nz);
-                source.Init();
-
+               
                 InitPropertiesAndSelectDefault(dimenSize, propMin, propMax);
 
 
@@ -179,6 +179,9 @@ namespace Sample
 
                 float minValue = this.CurrentProperty.MinValue;
                 float maxValue = this.CurrentProperty.MaxValue;
+                if(maxValue == minValue){
+                  maxValue = minValue + 10.0f;
+                }
                 step = (maxValue * 1.0f - minValue * 1.0f) / 10;
                 int[] gridIndexes = this.CurrentProperty.GridIndexes;
                 float[] gridValues = this.CurrentProperty.Values;
