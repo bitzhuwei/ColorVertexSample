@@ -10,8 +10,7 @@ namespace SimLab.Geometry
 {
 
     /// <summary>
-    /// 四边形描述信息,p1,p2，p3,p4，理解为在一个平面上。四个边组成为
-    /// (p1,p2) (p3,p4) (p1,p3) (p2,p4) 四边组成一个平面
+    /// 四边形描述信息,p1,p2，p3,p4; p1,p2,p3,p4 按照顺序连接就是一个四边形
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct QuadPosition
