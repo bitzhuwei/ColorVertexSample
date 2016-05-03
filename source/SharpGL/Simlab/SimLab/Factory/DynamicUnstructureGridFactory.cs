@@ -60,6 +60,7 @@ namespace SimLab.SimGrid.Factory
                     header[i].restartIndex = uint.MaxValue;
                 }
             }
+
             if (src.ElementFormat == DynamicUnstructuredGridderSource.MATRIX_FORMAT3_TRIANGLE)
             {
                 matrixPositions = new TriangleMatrixPositionBuffer();
@@ -75,6 +76,7 @@ namespace SimLab.SimGrid.Factory
                     triangles[i].P3 = positions[matrixIndices[i][2]-1];
                 }
             }
+
             if (src.ElementFormat == DynamicUnstructuredGridderSource.MATRIX_FORMAT6_TRIANGULAR_PRISM)
             {
                 matrixPositions = new TriangularPrismMatrixPositionBuffer();
@@ -175,8 +177,8 @@ namespace SimLab.SimGrid.Factory
                 {
                     quad[i].P1 = positions[quadIndices[i][0]-1];
                     quad[i].P2 = positions[quadIndices[i][1]-1];
-                    quad[i].P3 = positions[quadIndices[i][3]-1];
-                    quad[i].P4 = positions[quadIndices[i][2]-1];
+                    quad[i].P3 = positions[quadIndices[i][2]-1];
+                    quad[i].P4 = positions[quadIndices[i][3]-1];
                 }
             }
 

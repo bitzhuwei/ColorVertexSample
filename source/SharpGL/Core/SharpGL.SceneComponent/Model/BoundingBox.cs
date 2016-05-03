@@ -25,6 +25,9 @@ namespace SharpGL.SceneComponent
         private Vertex minPosition;
 
 
+        public bool IsInitialized{get;set;}
+
+
         /// <summary>
         /// Cuboid's color of its lines.
         /// </summary>
@@ -179,8 +182,14 @@ namespace SharpGL.SceneComponent
 
         public void SetBounds(Vertex min, Vertex max)
         {
-            this.minPosition = min;
-            this.maxPosition = max;
+            if(!this.IsInitialized){
+              this.minPosition = min;
+              this.maxPosition = max;
+              this.IsInitialized = true;
+            }else{
+              Extend(min);
+              Extend(max);
+            }
         }
 
         public void Set(float minX = 0, float minY = 0, float minZ = 0, float maxX = 0, float maxY = 0, float maxZ = 0)

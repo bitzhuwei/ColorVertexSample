@@ -19,8 +19,10 @@ namespace SimLab.GridSource
         private IList<int> _kBlocks;
         private Dictionary<int, bool> iSlices;
         private Dictionary<int, bool> jSlices;
+        private Dictionary<int, bool> kSlices;
 
         private int[] sliceVisibles;
+       
 
 
         /// <summary>
@@ -98,6 +100,7 @@ namespace SimLab.GridSource
             set
             {
                 this._kBlocks = value;
+                this.kSlices = CreateSliceDict(value);
             }
         }
 
@@ -111,10 +114,13 @@ namespace SimLab.GridSource
         /// <returns></returns>
         public bool IsSliceBlock(int i, int j, int k)
         {
-            int gridIndex;
-            this.IJK2Index(i, j, k, out gridIndex);
-            return sliceVisibles[gridIndex] > 0;
+            //int gridIndex;
+            //this.IJK2Index(i, j, k, out gridIndex);
+            //return sliceVisibles[gridIndex] > 0;
+            return (iSlices.ContainsKey(i) || jSlices.ContainsKey(j))&&kSlices.ContainsKey(k);
         }
+
+
 
         /// <summary>
         /// 判断IJ是否 处于IJ的平面
@@ -124,7 +130,7 @@ namespace SimLab.GridSource
         /// <returns></returns>
         public bool IsSliceBlock(int i, int j)
         {
-            return iSlices.ContainsKey(i) && jSlices.ContainsKey(j);
+            return iSlices.ContainsKey(i) || jSlices.ContainsKey(j);
         }
 
 
@@ -217,33 +223,23 @@ namespace SimLab.GridSource
             this.bindVisibles = BindCellActive(this.Slices, this.ActNums);
         }
 
+
+        /// <summary>
+        /// 生成网格是否显示的标志
+        /// </summary>
+        /// <returns></returns>
         protected int[] CreateSliceVisibles()
         {
             int[] sliceVisibles = new int[this.DimenSize];
             //默认不显示
             for (int gridIndex = 0; gridIndex < sliceVisibles.Length; gridIndex++)
             {
-                sliceVisibles[gridIndex] = 0;
-            }
-
-            {
-
-                //计算显示的网格
-                int I, J, K, gridIndex;
-                for (int kindex = 0; kindex < _kBlocks.Count; kindex++)
-                {
-                    for (int jindex = 0; jindex < _jBlocks.Count; jindex++)
-                    {
-                        for (int iindex = 0; iindex < _iBlocks.Count; iindex++)
-                        {
-                            I = _iBlocks[iindex];
-                            J = _jBlocks[jindex];
-                            K = _kBlocks[kindex];
-                            this.IJK2Index(I, J, K, out gridIndex);
-                            sliceVisibles[gridIndex] = 1;
-                        }
-                    }
-                }
+                int i,j,k;
+                this.InvertIJK(gridIndex,out i, out j, out k);
+                if(this.IsSliceBlock(i,j,k))
+                  sliceVisibles[gridIndex] = 1;
+                else
+                  sliceVisibles[gridIndex] = 0;
             }
             return sliceVisibles;
         }

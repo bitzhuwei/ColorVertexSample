@@ -31,6 +31,8 @@ namespace SimLab.GridSource
         public float[] DZ { get; set; }
 
 
+        public float[] TOPS {get; set;}
+
         /// <summary>
         /// 数组大小为 (nx+1)*(ny+1)*(nz+1);
         /// </summary>
@@ -174,6 +176,8 @@ namespace SimLab.GridSource
             float[] srcDX = this.DX;
             float[] srcDY = this.DY;
             float[] srcDZ = this.DZ;
+            float[] tops = this.TOPS;
+
             int cnx = this.NX+1;
             int cny = this.NY+1;
             int cnz = this.NZ+1;
@@ -230,7 +234,12 @@ namespace SimLab.GridSource
 
                          if (kcz == 1)
                          {
-                             coordZ[coordIndex] = this.OZ;
+                             int celli = icx > this.NX ? this.NX:icx;
+                             int cellj = jcy > this.NY ? this.NY:jcy;
+                             int cellk = kcz > this.NZ ? this.NZ:kcz;
+                             int cellIndex = dIndexer.IndexOf(celli,cellj,cellk);
+                             float topz = tops[cellIndex];
+                             coordZ[coordIndex] = this.OZ+topz;
                          }
                          else
                          {
@@ -254,7 +263,11 @@ namespace SimLab.GridSource
         public override void Init()
         {
                base.Init();
-              //初始化Coordinates
+               //初始化TOPSZ;
+               if(this.TOPS == null){
+                 this.TOPS = InitFloatArray(this.DimenSize,0);
+               }
+               //初始化Coordinates
                InitGridCoordinates();
         }
 
