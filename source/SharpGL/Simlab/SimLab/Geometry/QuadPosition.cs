@@ -11,6 +11,11 @@ namespace SimLab.Geometry
 
     /// <summary>
     /// 四边形描述信息,p1,p2，p3,p4; p1,p2,p3,p4 按照顺序连接就是一个四边形
+    /// p1-----p2
+    /// |       |
+    /// |       |
+    /// |       |
+    /// p4-----p3
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct QuadPosition
