@@ -31,6 +31,9 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.sim3D = new SharpGL.SceneComponent.ScientificVisual3DControl();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.barBrightness = new System.Windows.Forms.TrackBar();
+            this.lblBrightnessValue = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
             this.chkShowMatrixWireframe = new System.Windows.Forms.CheckBox();
             this.chkShowFractionWireframe = new System.Windows.Forms.CheckBox();
             this.chkShowFraction = new System.Windows.Forms.CheckBox();
@@ -71,19 +74,20 @@
             this.cbxGridProperties = new System.Windows.Forms.ComboBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblPickedPrimitive = new System.Windows.Forms.ToolStripStatusLabel();
-            this.barBrightness = new System.Windows.Forms.TrackBar();
-            this.lblBrightnessValue = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
+            this.barOpacity = new System.Windows.Forms.TrackBar();
+            this.lblOpacityValue = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sim3D)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.barBrightness)).BeginInit();
             this.slicesTab.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.panel2.SuspendLayout();
             this.statusStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.barBrightness)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.barOpacity)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -94,7 +98,7 @@
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.87556F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.12444F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 266F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 267F));
             this.tableLayoutPanel1.Controls.Add(this.sim3D, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.slicesTab, 2, 1);
@@ -103,7 +107,7 @@
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 195F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 263F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1380, 681);
             this.tableLayoutPanel1.TabIndex = 0;
@@ -112,10 +116,11 @@
             // 
             this.sim3D.CameraType = SharpGL.SceneComponent.CameraTypes.Ortho;
             this.tableLayoutPanel1.SetColumnSpan(this.sim3D, 2);
+            this.sim3D.CoordinateSystem = SharpGL.SceneComponent.CoordinateSystem.RightHand;
             this.sim3D.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sim3D.DrawFPS = false;
             this.sim3D.EnablePicking = false;
-            this.sim3D.Location = new System.Drawing.Point(5, 199);
+            this.sim3D.Location = new System.Drawing.Point(5, 267);
             this.sim3D.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.sim3D.Name = "sim3D";
             this.sim3D.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
@@ -123,7 +128,7 @@
             this.sim3D.RenderBoundingBox = true;
             this.sim3D.RenderContextType = SharpGL.RenderContextType.FBO;
             this.sim3D.RenderTrigger = SharpGL.RenderTrigger.Manual;
-            this.sim3D.Size = new System.Drawing.Size(1103, 478);
+            this.sim3D.Size = new System.Drawing.Size(1102, 410);
             this.sim3D.TabIndex = 0;
             this.sim3D.ViewType = SharpGL.SceneComponent.ViewTypes.UserView;
             this.sim3D.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.scientificVisual3DControl_KeyPress);
@@ -131,6 +136,9 @@
             // panel1
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.panel1, 2);
+            this.panel1.Controls.Add(this.barOpacity);
+            this.panel1.Controls.Add(this.lblOpacityValue);
+            this.panel1.Controls.Add(this.label11);
             this.panel1.Controls.Add(this.barBrightness);
             this.panel1.Controls.Add(this.lblBrightnessValue);
             this.panel1.Controls.Add(this.label10);
@@ -165,8 +173,41 @@
             this.panel1.Location = new System.Drawing.Point(4, 4);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1105, 187);
+            this.panel1.Size = new System.Drawing.Size(1104, 255);
             this.panel1.TabIndex = 1;
+            // 
+            // barBrightness
+            // 
+            this.barBrightness.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.barBrightness.Location = new System.Drawing.Point(110, 124);
+            this.barBrightness.Maximum = 1000;
+            this.barBrightness.Name = "barBrightness";
+            this.barBrightness.Size = new System.Drawing.Size(949, 56);
+            this.barBrightness.TabIndex = 35;
+            this.barBrightness.Value = 100;
+            this.barBrightness.Scroll += new System.EventHandler(this.barBrightness_Scroll);
+            // 
+            // lblBrightnessValue
+            // 
+            this.lblBrightnessValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblBrightnessValue.AutoSize = true;
+            this.lblBrightnessValue.Location = new System.Drawing.Point(1066, 139);
+            this.lblBrightnessValue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblBrightnessValue.Name = "lblBrightnessValue";
+            this.lblBrightnessValue.Size = new System.Drawing.Size(31, 15);
+            this.lblBrightnessValue.TabIndex = 33;
+            this.lblBrightnessValue.Text = "1.0";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(8, 139);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(95, 15);
+            this.label10.TabIndex = 34;
+            this.label10.Text = "brightness:";
             // 
             // chkShowMatrixWireframe
             // 
@@ -455,11 +496,11 @@
             this.slicesTab.Controls.Add(this.tabPage2);
             this.slicesTab.Controls.Add(this.tabPage3);
             this.slicesTab.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.slicesTab.Location = new System.Drawing.Point(1117, 199);
+            this.slicesTab.Location = new System.Drawing.Point(1116, 267);
             this.slicesTab.Margin = new System.Windows.Forms.Padding(4);
             this.slicesTab.Name = "slicesTab";
             this.slicesTab.SelectedIndex = 0;
-            this.slicesTab.Size = new System.Drawing.Size(259, 478);
+            this.slicesTab.Size = new System.Drawing.Size(260, 410);
             this.slicesTab.TabIndex = 2;
             // 
             // tabPage1
@@ -469,7 +510,7 @@
             this.tabPage1.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage1.Size = new System.Drawing.Size(251, 449);
+            this.tabPage1.Size = new System.Drawing.Size(252, 381);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "NI(NX)";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -483,7 +524,7 @@
             this.lbxNI.Margin = new System.Windows.Forms.Padding(4);
             this.lbxNI.Name = "lbxNI";
             this.lbxNI.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.lbxNI.Size = new System.Drawing.Size(243, 441);
+            this.lbxNI.Size = new System.Drawing.Size(244, 373);
             this.lbxNI.TabIndex = 1;
             // 
             // tabPage2
@@ -493,7 +534,7 @@
             this.tabPage2.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage2.Size = new System.Drawing.Size(250, 509);
+            this.tabPage2.Size = new System.Drawing.Size(251, 449);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "NJ(NY)";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -507,7 +548,7 @@
             this.lbxNJ.Margin = new System.Windows.Forms.Padding(4);
             this.lbxNJ.Name = "lbxNJ";
             this.lbxNJ.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.lbxNJ.Size = new System.Drawing.Size(242, 501);
+            this.lbxNJ.Size = new System.Drawing.Size(243, 441);
             this.lbxNJ.TabIndex = 0;
             // 
             // tabPage3
@@ -516,7 +557,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 25);
             this.tabPage3.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(250, 509);
+            this.tabPage3.Size = new System.Drawing.Size(251, 449);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "NK(NZ)";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -530,7 +571,7 @@
             this.lbxNZ.Margin = new System.Windows.Forms.Padding(4);
             this.lbxNZ.Name = "lbxNZ";
             this.lbxNZ.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.lbxNZ.Size = new System.Drawing.Size(250, 509);
+            this.lbxNZ.Size = new System.Drawing.Size(251, 449);
             this.lbxNZ.TabIndex = 1;
             // 
             // panel2
@@ -538,7 +579,7 @@
             this.panel2.Controls.Add(this.cbxShowWireframe);
             this.panel2.Controls.Add(this.btnSlicesApply);
             this.panel2.Controls.Add(this.cbxGridProperties);
-            this.panel2.Location = new System.Drawing.Point(1117, 4);
+            this.panel2.Location = new System.Drawing.Point(1116, 4);
             this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(253, 125);
@@ -594,38 +635,39 @@
             this.lblPickedPrimitive.Size = new System.Drawing.Size(61, 20);
             this.lblPickedPrimitive.Text = "Picked:";
             // 
-            // barBrightness
+            // barOpacity
             // 
-            this.barBrightness.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.barOpacity.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.barBrightness.Location = new System.Drawing.Point(110, 124);
-            this.barBrightness.Maximum = 1000;
-            this.barBrightness.Name = "barBrightness";
-            this.barBrightness.Size = new System.Drawing.Size(950, 56);
-            this.barBrightness.TabIndex = 35;
-            this.barBrightness.Value = 100;
-            this.barBrightness.Scroll += new System.EventHandler(this.barBrightness_Scroll);
+            this.barOpacity.Location = new System.Drawing.Point(110, 185);
+            this.barOpacity.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.barOpacity.Maximum = 1000;
+            this.barOpacity.Name = "barOpacity";
+            this.barOpacity.Size = new System.Drawing.Size(949, 56);
+            this.barOpacity.TabIndex = 38;
+            this.barOpacity.Value = 1000;
+            this.barOpacity.Scroll += new System.EventHandler(this.barOpacity_Scroll);
             // 
-            // lblBrightnessValue
+            // lblOpacityValue
             // 
-            this.lblBrightnessValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblBrightnessValue.AutoSize = true;
-            this.lblBrightnessValue.Location = new System.Drawing.Point(1067, 139);
-            this.lblBrightnessValue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblBrightnessValue.Name = "lblBrightnessValue";
-            this.lblBrightnessValue.Size = new System.Drawing.Size(31, 15);
-            this.lblBrightnessValue.TabIndex = 33;
-            this.lblBrightnessValue.Text = "1.0";
+            this.lblOpacityValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblOpacityValue.AutoSize = true;
+            this.lblOpacityValue.Location = new System.Drawing.Point(1066, 199);
+            this.lblOpacityValue.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblOpacityValue.Name = "lblOpacityValue";
+            this.lblOpacityValue.Size = new System.Drawing.Size(31, 15);
+            this.lblOpacityValue.TabIndex = 36;
+            this.lblOpacityValue.Text = "1.0";
             // 
-            // label10
+            // label11
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(8, 139);
-            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(95, 15);
-            this.label10.TabIndex = 34;
-            this.label10.Text = "brightness:";
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(8, 199);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(71, 15);
+            this.label11.TabIndex = 37;
+            this.label11.Text = "opacity:";
             // 
             // FormDynamicUnstructureGridTetrahedronSample
             // 
@@ -643,6 +685,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.sim3D)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.barBrightness)).EndInit();
             this.slicesTab.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
@@ -651,7 +694,7 @@
             this.panel2.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.barBrightness)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.barOpacity)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -706,6 +749,9 @@
         private System.Windows.Forms.TrackBar barBrightness;
         private System.Windows.Forms.Label lblBrightnessValue;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TrackBar barOpacity;
+        private System.Windows.Forms.Label lblOpacityValue;
+        private System.Windows.Forms.Label label11;
     }
 }
 

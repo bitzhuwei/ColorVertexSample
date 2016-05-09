@@ -124,10 +124,15 @@ namespace SimLab
                     gl.Enable(OpenGL.GL_PRIMITIVE_RESTART);
                     gl.PrimitiveRestartIndex(uint.MaxValue);
 
+                    gl.Enable(OpenGL.GL_BLEND);
+                    gl.BlendFunc(SharpGL.Enumerations.BlendingSourceFactor.SourceAlpha, SharpGL.Enumerations.BlendingDestinationFactor.OneMinusSourceAlpha);
+
                     gl.BindVertexArray(this.vertexArrayObject[0]);
                     gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, indexBuffer[0]);
                     gl.DrawElements(OpenGL.GL_QUAD_STRIP, this.indexBufferLength, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
                     gl.BindVertexArray(0);
+
+                    gl.Disable(OpenGL.GL_BLEND);
 
                     gl.Disable(OpenGL.GL_PRIMITIVE_RESTART);
 
@@ -149,10 +154,12 @@ namespace SimLab
 
                     gl.Enable(OpenGL.GL_BLEND);
                     gl.BlendFunc(SharpGL.Enumerations.BlendingSourceFactor.SourceAlpha, SharpGL.Enumerations.BlendingDestinationFactor.OneMinusSourceAlpha);
+                 
                     gl.BindVertexArray(this.vertexArrayObject[0]);
                     gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, indexBuffer[0]);
                     gl.DrawElements(OpenGL.GL_QUAD_STRIP, this.indexBufferLength, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
                     gl.BindVertexArray(0);
+
                     gl.Disable(OpenGL.GL_BLEND);
 
                     gl.Disable(OpenGL.GL_PRIMITIVE_RESTART);

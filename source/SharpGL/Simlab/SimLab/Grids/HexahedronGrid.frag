@@ -4,8 +4,8 @@ out vec4 out_Color;
 
 uniform sampler2D tex;
 uniform float renderingWireframe;
-uniform float brightness;
 uniform float brightness = 1.0f;
+uniform float opacity = 1.0f;
 
 void main(void) {
 	if (renderingWireframe > 0.0)
