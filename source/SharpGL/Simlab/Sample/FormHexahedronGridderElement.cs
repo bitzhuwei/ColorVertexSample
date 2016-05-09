@@ -441,16 +441,6 @@ namespace Sample
             this.sim3D.Invalidate();
         }
 
-        private void lblBrightnessValue_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label10_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnTextureSave_Click(object sender, EventArgs e)
         {
             SaveFileDialog dlg = new SaveFileDialog();
@@ -461,6 +451,21 @@ namespace Sample
                   Bitmap textureImage = this.sim3D.uiColorIndicator.CreateTextureImage();
                   textureImage.Save(pathFileName,ImageFormat.Bmp);
             }
+        }
+
+        private void barOpacity_Scroll(object sender, EventArgs e)
+        {
+            float opacity = (float)this.barOpacity.Value / 1000.0f;
+            this.lblOpacityValue.Text = opacity.ToShortString();
+
+            List<SimLabGrid> gridders = this.sim3D.Scene.SceneContainer.Traverse<SimLabGrid>().ToList<SimLabGrid>();
+            if (gridders.Count <= 0)
+                return;
+
+            SimLabGrid gridder = gridders[0] as SimLabGrid;
+            gridder.Opacity = opacity;
+
+            this.sim3D.Invalidate();
         }
 
     }
