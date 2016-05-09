@@ -144,13 +144,15 @@ namespace Sample
         {
             try
             {
-                string fileName = @"prismgeometry.txt";
-                //string fileName = @"prismsimple.txt";
+                string fileName = @"geometry.txt";
+                DynamicUnstructureGeometryLoader loader = new DynamicUnstructureGeometryLoader();
+                // use CatesianGridderSource to fill HexahedronGridderElement's content.
+                DynamicUnstructuredGridderSource source = loader.LoadSource(fileName);
+                source.Init();
 
-                int nx = 6090;
-                //int nx = 3;
-                int ny = 1;
-                int nz = 1;
+                int nx = source.NX;
+                int ny = source.NY;
+                int nz = source.NZ;
                 int dimenSize = nx * ny * nz;
 
                 float step = System.Convert.ToSingle(tbColorIndicatorStep.Text);
@@ -166,11 +168,6 @@ namespace Sample
                 float[] dzArray = initArray(dimenSize, dz);
 
 
-
-                DynamicUnstructureGeometryLoader loader = new DynamicUnstructureGeometryLoader();
-                // use CatesianGridderSource to fill HexahedronGridderElement's content.
-                DynamicUnstructuredGridderSource source = loader.LoadSource(fileName, nx, ny, nz);
-                source.Init();
 
                 InitPropertiesAndSelectDefault(dimenSize, propMin, propMax);
 
