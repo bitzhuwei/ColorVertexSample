@@ -204,6 +204,73 @@ namespace SimLab.GridSource
             return p;
         }
 
+
+        private bool MinMax(float[] values, out float minValue, out float maxValue){
+            
+            bool result = false;
+            if(values.Length <=0){
+               minValue =0;
+               maxValue = 0;
+               return result;
+            }
+            minValue = values[0];
+            maxValue = minValue;
+            for(int i=0; i<values.Length; i++){
+               if(values[i]<minValue)
+                 minValue = values[i];
+               if(values[i]>maxValue)
+                 maxValue = values[i];
+               
+            }
+            result = true;
+            return result;
+            
+        }
+
+        public override void Init()
+        {
+            if(this.ActNums == null){
+              this.ActNums = InitIntArray(this.DimenSize,1);              
+            }
+            if (this.ZCORN != null)
+            {
+                //检查双重介值
+                if (this.DimenSize * 8 == this.ZCORN.Length * 2)
+                {
+                    //
+                    float topMin, deepMax;
+                    this.MinMax(this.ZCORN, out topMin, out deepMax);
+                    float deepInterv = Math.Abs(deepMax - topMin) * 1.0f;
+
+                    float[] newZcorn = new float[this.DimenSize * 8];
+                    System.Array.Copy(this.ZCORN, newZcorn, this.ZCORN.Length);
+                    int offset = this.ZCORN.Length;
+                    for (int i = offset; i < newZcorn.Length; i++)
+                    {
+                        newZcorn[i] = newZcorn[i - offset] + deepInterv;
+                    }
+                    this.ZCORN = newZcorn;
+
+                    if(this.ActNums.Length < this.DimenSize){
+                      int[] nactNums = new int[this.DimenSize];
+                      int oldSize = this.ActNums.Length;
+                      System.Array.Copy(this.ActNums,nactNums,oldSize);
+                      
+                      for(int j=oldSize; j<nactNums.Length;j++){
+                         nactNums[j] = 1;
+                      }
+                      this.ActNums = nactNums;
+                    }
+                }
+            }
+            base.Init();
+           
+            
+              
+
+
+        }
+
     }
     
 }

@@ -36,6 +36,7 @@ namespace SharpGL.SceneComponent
         public BoundingBox()
         {
             BoxColor = new GLColor(1, 1, 1, 1);// white color
+            this.IsInitialized = false;
         }
 
 
@@ -190,6 +191,10 @@ namespace SharpGL.SceneComponent
               Extend(min);
               Extend(max);
             }
+        }
+
+        public void Reset(){
+           this.IsInitialized = false;
         }
 
         public void Set(float minX = 0, float minY = 0, float minZ = 0, float maxX = 0, float maxY = 0, float maxZ = 0)

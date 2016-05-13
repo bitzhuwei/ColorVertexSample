@@ -33,24 +33,16 @@ namespace SharpGL.SceneComponent
             int sign = Math.Sign(p);
             double absP = Math.Abs(p);
             int precision;
-            if (absP >= 1.0)
+            if (sign>=0)
             {
-                precision = (int)Math.Round(Math.Floor(Math.Abs(absP)));
+                precision = 0;
             }
             else
             {
                 precision=(int)Math.Round(Math.Ceiling(Math.Abs(absP)));
             }
-
-            if (sign < 0)
-            {
-                //小数
-                return String.Format("F{0}", precision);
-            }
-            else
-            {
-                return String.Format("F{0}", 0);
-            }
+            return String.Format("F{0}", precision);
+            
         }
 
 
