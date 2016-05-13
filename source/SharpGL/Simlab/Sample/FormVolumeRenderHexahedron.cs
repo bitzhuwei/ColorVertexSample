@@ -22,23 +22,28 @@ using SharpGL.SceneComponent.Model;
 using SimLab.GridSource;
 using SimLab;
 using System.Globalization;
-using SimLab.SimGrid;
-using SimLab.SimGrid.Loader;
-using SimLab.VertexBuffers;
-using System.IO;
 using System.Drawing.Imaging;
+using SimLab.VertexBuffers;
 
 namespace Sample
 {
-    public partial class FormDynamicUnstructureGridTetrahedronSample : Form
+    public partial class FormVolumeRenderHexahedron : Form
     {
-        public FormDynamicUnstructureGridTetrahedronSample()
+        public FormVolumeRenderHexahedron()
         {
             InitializeComponent();
 
             InitilizeViewTypeControl();
 
+            //Application.Idle += Application_Idle;
         }
+
+        void Application_Idle(object sender, EventArgs e)
+        {
+            IPickedGeometry picked = this.sim3D.PickedPrimitive;
+            this.lblPickedPrimitive.Text = string.Format("Picked:{0}", picked);
+        }
+
 
         private void InitilizeViewTypeControl()
         {
@@ -65,12 +70,13 @@ namespace Sample
 
         protected void InitSlice(ListBox box, IList<int> slices)
         {
+            box.BeginUpdate();
             box.Items.Clear();
             foreach (int coord in slices)
             {
                 box.Items.Add(coord);
             }
-
+            box.EndUpdate();
         }
 
         private void OnGridPropertyChanged(object sender, EventArgs e)
@@ -97,18 +103,11 @@ namespace Sample
             this.sim3D.SetColorIndicator(minValue, maxValue, step);
             TexCoordBuffer textureCoordinates = source.CreateTextureCoordinates(prop.GridIndexes, prop.Values, minValue, maxValue);
             grid.SetTextureCoods(textureCoordinates);
-
-            DynamicUnstructureGrid dynamicUnstructureGrid = gridders[0] as DynamicUnstructureGrid;
-            DynamicUnstructuredGridderSource dynamicUnstructureGridderSource = source as DynamicUnstructuredGridderSource;
-            if (dynamicUnstructureGrid != null && dynamicUnstructureGridderSource != null)
-            {
-                TexCoordBuffer anotherTextureCoordinates = dynamicUnstructureGridderSource.CreateFractureTextureCoordinates(prop.GridIndexes, prop.Values, minValue, maxValue);
-                dynamicUnstructureGrid.SetFractionTextureCoords(anotherTextureCoordinates);
-            }
-
             this.sim3D.Invalidate();
 
         }
+
+     
 
 
         private void InitPropertiesAndSelectDefault(int dimenSize, float minValue, float maxValue)
@@ -116,14 +115,14 @@ namespace Sample
 
             GridProperty prop1 = GridPropertyGenerator.CreateGridIndexProperty(dimenSize, "Grid Position");
             GridProperty prop2 = GridPropertyGenerator.CreateRandomProperty(dimenSize, "Random", minValue, maxValue);
-            GridProperty prop3 = GridPropertyGenerator.CreateMaxValueProperty(dimenSize, "MaxValue", minValue, maxValue);
+            this.cbxGridProperties.BeginUpdate();
             this.cbxGridProperties.Items.Clear();
             this.cbxGridProperties.Items.Add(prop1);
             this.cbxGridProperties.Items.Add(prop2);
-            this.cbxGridProperties.Items.Add(prop3);
             this.cbxGridProperties.SelectedIndex = 0;
             this.cbxGridProperties.SelectedValueChanged -= this.OnGridPropertyChanged;
             this.cbxGridProperties.SelectedValueChanged += this.OnGridPropertyChanged;
+            this.cbxGridProperties.EndUpdate();
         }
 
         public GridProperty CurrentProperty
@@ -146,32 +145,36 @@ namespace Sample
         {
             try
             {
-                string fileName = @"dfm_FRACTURE.SFRAC";
-                DynamicUnstructureGeometryLoader loader = new DynamicUnstructureGeometryLoader();
-                // use CatesianGridderSource to fill HexahedronGridderElement's content.
-                DynamicUnstructuredGridderSource source = loader.LoadSource(fileName);
-                source.Init();
-
-                int nx = source.NX;
-                int ny = source.NY;
-                int nz = source.NZ;
-                int dimenSize = nx * ny * nz;
-
+                int nx = System.Convert.ToInt32(tbNX.Text);
+                int ny = System.Convert.ToInt32(tbNY.Text);
+                int nz = System.Convert.ToInt32(tbNZ.Text);
                 float step = System.Convert.ToSingle(tbColorIndicatorStep.Text);
                 //float radius = System.Convert.ToSingle(this.tbRadius.Text);
                 float propMin = System.Convert.ToSingle(this.tbxPropertyMinValue.Text, CultureInfo.InvariantCulture);
                 float propMax = System.Convert.ToSingle(this.tbxPropertyMaxValue.Text, CultureInfo.InvariantCulture);
-
+                int dimenSize = nx * ny * nz;
                 float dx = System.Convert.ToSingle(this.tbDX.Text);
                 float dy = System.Convert.ToSingle(this.gbDY.Text);
                 float dz = System.Convert.ToSingle(this.tbDZ.Text);
+                float[] dxArray = initArray(dimenSize, dx);
+                float[] dyArray = initArray(dimenSize, dy);
+                float[] dzArray = initArray(dimenSize, dz);
+                // use CatesianGridderSource to fill HexahedronGridderElement's content.
 
+                DateTime t0 = DateTime.Now;
+                CatesianGridderSource source = new CatesianGridderSource() { NX = nx, NY = ny, NZ = nz, DX = dxArray, DY = dyArray, DZ = dzArray, };
+                source.IBlocks = GridBlockHelper.CreateBlockCoords(nx);
+                source.JBlocks = GridBlockHelper.CreateBlockCoords(ny);
+                source.KBlocks = GridBlockHelper.CreateBlockCoords(nz);
+                source.Init();
+                DateTime t1 = DateTime.Now;
 
-
-
-               
+                InitSlice(lbxNI, source.IBlocks);
+                InitSlice(lbxNJ, source.JBlocks);
+                InitSlice(lbxNZ, source.KBlocks);
                 InitPropertiesAndSelectDefault(dimenSize, propMin, propMax);
 
+                DateTime t2 = DateTime.Now;
 
                 ///模拟获得网格属性
                 ///获得当前选中的属性
@@ -179,62 +182,40 @@ namespace Sample
 
                 float minValue = this.CurrentProperty.MinValue;
                 float maxValue = this.CurrentProperty.MaxValue;
-                if(maxValue == minValue){
-                  maxValue = minValue + 10.0f;
-                }
                 step = (maxValue * 1.0f - minValue * 1.0f) / 10;
                 int[] gridIndexes = this.CurrentProperty.GridIndexes;
                 float[] gridValues = this.CurrentProperty.Values;
-
-
                 //设置色标的范围
                 this.sim3D.SetColorIndicator(minValue, maxValue, step);
 
 
                 // use HexahedronGridderElement
-                DateTime t0 = DateTime.Now;
-                DynamicUnstructureGeometry geometry = source.CreateMesh() as DynamicUnstructureGeometry;
-                TexCoordBuffer matrixTextureCoordinates = source.CreateTextureCoordinates(gridIndexes, gridValues, minValue, maxValue);
-                TexCoordBuffer fractureTextureCoordindates = source.CreateFractureTextureCoordinates(gridIndexes, gridValues, minValue, maxValue);
-                Bitmap texture = ColorPaletteHelper.GenBitmap(this.sim3D.uiColorIndicator.Data.ColorPalette);
-                //geometry.Positions.Dump();
-                //geometry.TriangleIndices.Dump();
-                //MeshGeometry mesh = HexahedronGridderHelper.CreateMesh(source);
-                DynamicUnstructureGrid gridder = new DynamicUnstructureGrid(this.sim3D.OpenGL, this.sim3D.Scene.CurrentCamera);
+                DateTime t3 = DateTime.Now;
+                HexahedronMeshGeometry3D geometry = (HexahedronMeshGeometry3D)source.CreateMesh();
+                DateTime t4 = DateTime.Now;
+                TexCoordBuffer textureCoodinates = source.CreateTextureCoordinates(gridIndexes, gridValues, minValue, maxValue);
+                DateTime t5 = DateTime.Now;
+
+                Bitmap texture = this.sim3D.uiColorIndicator.CreateTextureImage();
+                HexahedronGrid gridder = new HexahedronGrid(this.sim3D.OpenGL, this.sim3D.Scene.CurrentCamera);
                 gridder.Init(geometry);
                 gridder.RenderGrid = true;
                 gridder.RenderGridWireframe = this.IsShowWireframe;
                 gridder.SetTexture(texture);
-                gridder.SetMatrixTextureCoords(matrixTextureCoordinates);
-                gridder.SetFractionTextureCoords(fractureTextureCoordindates);
-
-
+                gridder.SetTextureCoods(textureCoodinates);
+                texture.Dispose();
                 //textureCoodinates.Dump();
+                DateTime t6 = DateTime.Now;
 
 
-                DateTime t1 = DateTime.Now;
-                TimeSpan ts1 = t1 - t0;
-
-                //mesh.VertexColors = HexahedronGridderHelper.FromColors(source, gridIndexes, colors, mesh.Visibles);
-                //this.DebugMesh(mesh);
-
-                //HexahedronGridderElement gridderElement = new HexahedronGridderElement(source, this.scientificVisual3DControl.Scene.CurrentCamera);
-                //gridderElement.renderWireframe = false;
-                //method1
-                //gridderElement.Initialize(this.scientificVisual3DControl.OpenGL);
-
-                //method2
-                //gridderElement.Initialize(this.scientificVisual3DControl.OpenGL, mesh);
-                DateTime t2 = DateTime.Now;
 
                 //gridderElement.SetBoundingBox(mesh.Min, mesh.Max);
                 this.sim3D.Tag = source;
 
 
-                //gridderElement.Name = string.Format("element {0}", elementCounter++);
-                //this.scientificVisual3DControl.AddModelElement(gridderElement);
 
-                DateTime t3 = DateTime.Now;
+
+
                 // update ModelContainer's BoundingBox.
                 BoundingBox boundingBox = this.sim3D.ModelContainer.BoundingBox;
                 boundingBox.SetBounds(geometry.Min, geometry.Max);
@@ -242,12 +223,16 @@ namespace Sample
                 // update ViewType to UserView.
                 this.sim3D.ViewType = ViewTypes.UserView;
                 this.sim3D.AddModelElement(gridder);
-                //mesh.Dispose();
+
 
                 StringBuilder msgBuilder = new StringBuilder();
-                msgBuilder.AppendLine(String.Format("create mesh in {0} secs", (t1 - t0).TotalSeconds));
-                msgBuilder.AppendLine(String.Format("init SceneElement in {0} secs", (t2 - t1).TotalSeconds));
-                msgBuilder.AppendLine(String.Format("total load in {0} secs", (t2 - t0).TotalSeconds));
+                msgBuilder.AppendLine(String.Format("Init Grid DataSource  in {0} secs", (t1 - t0).TotalSeconds));
+                msgBuilder.AppendLine(String.Format("init ControlValues in {0} secs", (t2 - t1).TotalSeconds));
+                msgBuilder.AppendLine(String.Format("prepare other params  in {0} secs", (t3 - t2).TotalSeconds));
+                msgBuilder.AppendLine(String.Format("CreateMesh in {0} secs", (t4 - t3).TotalSeconds));
+                msgBuilder.AppendLine(String.Format("CreateTextures in {0} secs", (t5 - t4).TotalSeconds));
+                msgBuilder.AppendLine(String.Format("Init SimLabGrid  in {0} secs", (t6 - t5).TotalSeconds));
+                msgBuilder.AppendLine(String.Format("Total, Create 3D Grid  in {0} secs", (t6 - t0).TotalSeconds));
                 String msg = msgBuilder.ToString();
                 MessageBox.Show(msg, "Summary", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -256,6 +241,24 @@ namespace Sample
             {
                 MessageBox.Show(error.ToString());
             }
+        }
+
+        private List<string> rangeMin = new List<string>() { "-1000", "1100", "3200" };
+        private List<string> rangeMax = new List<string>() { "1000", "3100", "5200" };
+        private List<string> stepList = new List<string>() { "110", "110", "100" };
+        private int testCaseIndex = 0;
+
+        /// <summary>
+        /// quick way to set min and max value.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void lblDebugInfo_Click(object sender, EventArgs e)
+        {
+            //this.tbRangeMax.Text = rangeMax[testCaseIndex];
+            //this.tbRangeMin.Text = rangeMin[testCaseIndex];
+            this.tbColorIndicatorStep.Text = stepList[testCaseIndex];
+            testCaseIndex = testCaseIndex >= rangeMin.Count - 1 ? 0 : testCaseIndex + 1;
         }
 
         protected override void OnClosed(EventArgs e)
@@ -271,7 +274,21 @@ namespace Sample
             this.lbxNI.Items.Clear();
             this.lbxNJ.Items.Clear();
             this.lbxNZ.Items.Clear();
+            this.cbxGridProperties.SelectedIndex = -1;
+            this.cbxGridProperties.Items.Clear();
+
             GC.Collect();
+        }
+
+        private void lblDebugInfo_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == System.Windows.Forms.MouseButtons.Right)
+            {
+                bool depthTest = this.sim3D.OpenGL.IsEnabled(OpenGL.GL_DEPTH_TEST);
+                StringBuilder builder = new StringBuilder();
+                builder.Append(string.Format("depth test: {0}", depthTest ? "enabled" : "disabled"));
+                MessageBox.Show(builder.ToString());
+            }
         }
 
         private void chkRenderContainerBox_CheckedChanged(object sender, EventArgs e)
@@ -305,37 +322,10 @@ namespace Sample
             if (e.KeyChar == 'c')
             {
                 OpenGL gl = this.sim3D.OpenGL;
+
+
+
             }
-
-            if (e.KeyChar == 's')
-            {
-                this.SaveTextureBitmap();
-            }
-        }
-
-
-        private void SaveTextureBitmap()
-        {
-            Stream myStream;
-            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-
-            saveFileDialog1.Filter = "png files (*.png)|*.png";
-            saveFileDialog1.FilterIndex = 2;
-            saveFileDialog1.RestoreDirectory = true;
-
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                if ((myStream = saveFileDialog1.OpenFile()) != null)
-                {
-                    // Code to write the stream goes here.
-                    Bitmap texture = ColorPaletteHelper.GenBitmap(this.sim3D.uiColorIndicator.Data.ColorPalette);
-                    texture.Save(myStream, ImageFormat.Png);
-                    myStream.Close();
-                }
-            }
-
-
-
         }
 
         private void FormHexahedronGridder_Load(object sender, EventArgs e)
@@ -375,9 +365,9 @@ namespace Sample
         private void cbxShowWireframe_CheckedChanged(object sender, EventArgs e)
         {
 
-            //HexahedronGridderSource source = this.CurrentHexahedronGrid;
-            //if (source == null)
-            //    return;
+            HexahedronGridderSource source = this.CurrentHexahedronGrid;
+            if (source == null)
+                return;
 
             List<SimLabGrid> gridders = this.sim3D.Scene.SceneContainer.Traverse<SimLabGrid>().ToList<SimLabGrid>();
             if (gridders.Count <= 0)
@@ -437,90 +427,6 @@ namespace Sample
             this.sim3D.Invalidate();
         }
 
-        private void chkShowMatrix_CheckedChanged(object sender, EventArgs e)
-        {
-            List<SimLabGrid> gridders = this.sim3D.Scene.SceneContainer.Traverse<SimLabGrid>().ToList<SimLabGrid>();
-            if (gridders.Count <= 0)
-                return;
-            SimLabGrid gridder = gridders[0];
-
-            //if (this.IsShowWireframe)
-            //{
-            //    WireFrameBufferData wireFrame = source.CreateWireframe();
-            //    gridder.SetWireframe(wireFrame);
-            //}
-            //else
-            //{
-            //     gridder.SetWireframe(null);
-            //}
-            gridder.RenderGrid = this.chkShowMatrix.Checked;
-
-            this.sim3D.Invalidate();
-        }
-
-        private void chkShowMatrixWireframe_CheckedChanged(object sender, EventArgs e)
-        {
-            List<SimLabGrid> gridders = this.sim3D.Scene.SceneContainer.Traverse<SimLabGrid>().ToList<SimLabGrid>();
-            if (gridders.Count <= 0)
-                return;
-            SimLabGrid gridder = gridders[0];
-
-            //if (this.IsShowWireframe)
-            //{
-            //    WireFrameBufferData wireFrame = source.CreateWireframe();
-            //    gridder.SetWireframe(wireFrame);
-            //}
-            //else
-            //{
-            //     gridder.SetWireframe(null);
-            //}
-            gridder.RenderGridWireframe = this.chkShowMatrixWireframe.Checked;
-
-            this.sim3D.Invalidate();
-        }
-
-        private void chkShowFraction_CheckedChanged(object sender, EventArgs e)
-        {
-            List<DynamicUnstructureGrid> gridders = this.sim3D.Scene.SceneContainer.Traverse<DynamicUnstructureGrid>().ToList<DynamicUnstructureGrid>();
-            if (gridders.Count <= 0)
-                return;
-            DynamicUnstructureGrid gridder = gridders[0];
-
-            //if (this.IsShowWireframe)
-            //{
-            //    WireFrameBufferData wireFrame = source.CreateWireframe();
-            //    gridder.SetWireframe(wireFrame);
-            //}
-            //else
-            //{
-            //     gridder.SetWireframe(null);
-            //}
-            gridder.RenderFraction = this.chkShowFraction.Checked;
-
-            this.sim3D.Invalidate();
-        }
-
-        private void chkShowFractionWireframe_CheckedChanged(object sender, EventArgs e)
-        {
-            List<DynamicUnstructureGrid> gridders = this.sim3D.Scene.SceneContainer.Traverse<DynamicUnstructureGrid>().ToList<DynamicUnstructureGrid>();
-            if (gridders.Count <= 0)
-                return;
-            DynamicUnstructureGrid gridder = gridders[0];
-
-            //if (this.IsShowWireframe)
-            //{
-            //    WireFrameBufferData wireFrame = source.CreateWireframe();
-            //    gridder.SetWireframe(wireFrame);
-            //}
-            //else
-            //{
-            //     gridder.SetWireframe(null);
-            //}
-            gridder.RenderFractionWireframe = this.chkShowFractionWireframe.Checked;
-
-            this.sim3D.Invalidate();
-        }
-
         private void barBrightness_Scroll(object sender, EventArgs e)
         {
             this.lblBrightnessValue.Text = (this.barBrightness.Value * 1.0f / 100).ToString();
@@ -535,6 +441,27 @@ namespace Sample
             this.sim3D.Invalidate();
         }
 
+        private void lblBrightnessValue_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnTextureSave_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            DialogResult result = dlg.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                  string pathFileName =  dlg.FileName;
+                  Bitmap textureImage = this.sim3D.uiColorIndicator.CreateTextureImage();
+                  textureImage.Save(pathFileName,ImageFormat.Bmp);
+            }
+        }
 
     }
 }

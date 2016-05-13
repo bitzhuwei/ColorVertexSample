@@ -144,13 +144,15 @@ namespace Sample
         {
             try
             {
-                string fileName = @"prismgeometry.txt";
-                //string fileName = @"prismsimple.txt";
+                string fileName = @"geometry.txt";
+                DynamicUnstructureGeometryLoader loader = new DynamicUnstructureGeometryLoader();
+                // use CatesianGridderSource to fill HexahedronGridderElement's content.
+                DynamicUnstructuredGridderSource source = loader.LoadSource(fileName);
+                source.Init();
 
-                int nx = 6090;
-                //int nx = 3;
-                int ny = 1;
-                int nz = 1;
+                int nx = source.NX;
+                int ny = source.NY;
+                int nz = source.NZ;
                 int dimenSize = nx * ny * nz;
 
                 float step = System.Convert.ToSingle(tbColorIndicatorStep.Text);
@@ -166,11 +168,6 @@ namespace Sample
                 float[] dzArray = initArray(dimenSize, dz);
 
 
-
-                DynamicUnstructureGeometryLoader loader = new DynamicUnstructureGeometryLoader();
-                // use CatesianGridderSource to fill HexahedronGridderElement's content.
-                DynamicUnstructuredGridderSource source = loader.LoadSource(fileName, nx, ny, nz);
-                source.Init();
 
                 InitPropertiesAndSelectDefault(dimenSize, propMin, propMax);
 
@@ -530,14 +527,19 @@ namespace Sample
             this.sim3D.Invalidate();
         }
 
-        private void lblBrightnessValue_Click(object sender, EventArgs e)
+        private void barOpacity_Scroll(object sender, EventArgs e)
         {
+            float opacity = (float)this.barOpacity.Value / 1000.0f;
+            this.lblOpacityValue.Text = opacity.ToShortString();
 
-        }
+            List<SimLabGrid> gridders = this.sim3D.Scene.SceneContainer.Traverse<SimLabGrid>().ToList<SimLabGrid>();
+            if (gridders.Count <= 0)
+                return;
 
-        private void label10_Click(object sender, EventArgs e)
-        {
+            SimLabGrid gridder = gridders[0] as SimLabGrid;
+            gridder.Opacity = opacity;
 
+            this.sim3D.Invalidate();
         }
 
 

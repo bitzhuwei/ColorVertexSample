@@ -108,16 +108,17 @@ namespace SimLab
             gl.BlendEquation(OpenGL.GL_FUNC_ADD_EXT);
             gl.BlendFuncSeparate(OpenGL.GL_SRC_ALPHA, OpenGL.GL_ONE_MINUS_SRC_ALPHA, OpenGL.GL_ONE, OpenGL.GL_ONE);
 
-            ShaderProgram shader = this.shaderProgram;
+            ShaderProgram shaderProgram = this.shaderProgram;
             int[] viewport = new int[4];
             gl.GetInteger(OpenGL.GL_VIEWPORT, viewport);
 
-            shader.Bind(gl);
-            shader.SetUniformMatrix4(gl, "projectionMatrix", projectionMatrix.to_array());
-            shader.SetUniformMatrix4(gl, "viewMatrix", viewMatrix.to_array());
-            shader.SetUniformMatrix4(gl, "modelMatrix", modelMatrix.to_array());
-            shader.SetUniform1(gl, "canvasWidth", viewport[2] + 0.0f);
-            shader.SetUniform1(gl, "canvasHeight", viewport[3] + 0.0f);
+            shaderProgram.Bind(gl);
+            shaderProgram.SetUniformMatrix4(gl, "projectionMatrix", projectionMatrix.to_array());
+            shaderProgram.SetUniformMatrix4(gl, "viewMatrix", viewMatrix.to_array());
+            shaderProgram.SetUniformMatrix4(gl, "modelMatrix", modelMatrix.to_array());
+            shaderProgram.SetUniform1(gl, "canvasWidth", viewport[2] + 0.0f);
+            shaderProgram.SetUniform1(gl, "canvasHeight", viewport[3] + 0.0f);
+            shaderProgram.SetUniform1(gl, "opacity", this.Opacity);
 
             this.texture.Bind(gl);
             shaderProgram.SetUniform1(gl, "tex", this.texture.TextureName);
@@ -144,9 +145,14 @@ namespace SimLab
 
                 if (this.RenderGrid && this.vertexArrayObject != null)
                 {
+                    gl.Enable(OpenGL.GL_BLEND);
+                    gl.BlendFunc(SharpGL.Enumerations.BlendingSourceFactor.SourceAlpha, SharpGL.Enumerations.BlendingDestinationFactor.OneMinusSourceAlpha);
+                  
                     gl.BindVertexArray(this.vertexArrayObject[0]);
                     gl.DrawArrays(OpenGL.GL_POINTS, 0, count);
                     gl.BindVertexArray(0);
+
+                    gl.Disable(OpenGL.GL_BLEND);
                 }
 
                 AfterRendering(gl, renderMode);

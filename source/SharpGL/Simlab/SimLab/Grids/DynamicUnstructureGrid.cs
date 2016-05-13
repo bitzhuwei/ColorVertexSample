@@ -330,10 +330,14 @@ namespace SimLab
             if (this.RenderGrid && this.matrixVertexArrayObject != null)
             {
                 shaderProgram.SetUniform1(gl, "renderingWireframe", 0.0f);
+                shaderProgram.SetUniform1(gl, "opacity", this.Opacity);
 
                 gl.Enable(OpenGL.GL_POLYGON_OFFSET_FILL);
                 gl.PolygonOffset(1.0f, 1.0f);
 
+                gl.Enable(OpenGL.GL_BLEND);
+                gl.BlendFunc(SharpGL.Enumerations.BlendingSourceFactor.SourceAlpha, SharpGL.Enumerations.BlendingDestinationFactor.OneMinusSourceAlpha);
+                   
                 gl.BindVertexArray(matrixVertexArrayObject[0]);
 
                 switch (this.MatrixType)
@@ -364,7 +368,7 @@ namespace SimLab
                         break;
                 }
                 gl.BindVertexArray(0);
-
+                gl.Disable(OpenGL.GL_BLEND);
 
                 gl.Disable(OpenGL.GL_POLYGON_OFFSET_FILL);
             }
@@ -372,7 +376,12 @@ namespace SimLab
             if (this.RenderGridWireframe && this.matrixVertexArrayObject != null)
             {
                 shaderProgram.SetUniform1(gl, "renderingWireframe", 1.0f);
+                shaderProgram.SetUniform1(gl, "opacity", this.Opacity);
                 gl.PolygonMode(SharpGL.Enumerations.FaceMode.FrontAndBack, SharpGL.Enumerations.PolygonMode.Lines);
+
+                gl.Enable(OpenGL.GL_BLEND);
+                gl.BlendFunc(SharpGL.Enumerations.BlendingSourceFactor.SourceAlpha, SharpGL.Enumerations.BlendingDestinationFactor.OneMinusSourceAlpha);
+               
                 gl.BindVertexArray(matrixVertexArrayObject[0]);
                 switch (this.MatrixType)
                 {
@@ -401,6 +410,8 @@ namespace SimLab
                 }
                 gl.PolygonMode(SharpGL.Enumerations.FaceMode.FrontAndBack, SharpGL.Enumerations.PolygonMode.Filled);
                 gl.BindVertexArray(0);
+
+                gl.Disable(OpenGL.GL_BLEND);
 
             }
         }

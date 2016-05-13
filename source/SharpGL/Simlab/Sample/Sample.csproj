@@ -65,12 +65,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ColorPaletteHelper.cs" />
-    <Compile Include="FormDynamicUnstructureGridTetrahedronSample.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormDynamicUnstructureGridTetrahedronSample.Designer.cs">
-      <DependentUpon>FormDynamicUnstructureGridTetrahedronSample.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormDynamicUnstructureGridSample.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,9 +94,6 @@
     <Compile Include="GridPropertyGenerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="FormDynamicUnstructureGridTetrahedronSample.resx">
-      <DependentUpon>FormDynamicUnstructureGridTetrahedronSample.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FormDynamicUnstructureGridSample.resx">
       <DependentUpon>FormDynamicUnstructureGridSample.cs</DependentUpon>
     </EmbeddedResource>

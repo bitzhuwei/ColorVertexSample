@@ -33,7 +33,13 @@ namespace SimLab
             get { return brightness; }
             set { brightness = value; }
         }
+        private float opacity = 1.0f;
 
+        public float Opacity
+        {
+            get { return opacity; }
+            set { opacity = value; }
+        }
         private bool renderGridWireframe = false;
 
         /// <summary>
