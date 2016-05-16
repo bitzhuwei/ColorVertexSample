@@ -52,6 +52,12 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>scenecomp64.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -194,6 +200,7 @@
     <EmbeddedResource Include="ColorCodedPicking\PickingShader.frag" />
     <None Include="Camera\Camera.cd" />
     <None Include="ColorCodedPicking\ColorCodedPicking.cd" />
+    <None Include="scenecomp64.pfx" />
     <None Include="TransformInterface\TransformInterface.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

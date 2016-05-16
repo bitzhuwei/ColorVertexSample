@@ -144,6 +144,15 @@ namespace SimLab
 
 
 
+        /// <summary>
+        /// used store any object associate with the simlab grid source
+        /// </summary>
+        public object Tag {
+          get;set;
+        }
+
+
+
         #region IDisposable Members
 
         public void Dispose()

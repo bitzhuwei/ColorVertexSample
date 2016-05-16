@@ -25,6 +25,72 @@ namespace SimLab.SimGrid.Loader
             }
         }
 
+        public PointGridderSource LoadFromFile(string pathFileName){
+
+            StreamReader reader = new StreamReader(new FileStream(pathFileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+            try
+            {
+                return DoLoadPointSet(reader);
+            }
+            finally
+            {
+                reader.Close();
+            }
+
+        }
+
+        protected static PointGridderSource DoLoadPointSet(StreamReader reader){
+
+           
+            PointGridderSource ps = new PointGridderSource();
+            Vertex minValue = new Vertex();
+            Vertex maxValue = new Vertex();
+            char[] delimeters = new char[] { ' ', '\t' };
+            string line;
+            List<Vertex> positions = new List<Vertex>();
+           
+            int positionCount = 0;
+            bool isSet = false;
+            while ((line = reader.ReadLine()) != null)
+            {
+                line = line.Trim();
+                if (String.IsNullOrEmpty(line))
+                    continue;
+                string[] fields = line.Split(delimeters, StringSplitOptions.RemoveEmptyEntries);
+                if (fields.Length >= 3)
+                {
+                    float x = System.Convert.ToSingle(fields[0]);
+                    float y = System.Convert.ToSingle(fields[1]);
+                    float z = Math.Abs(System.Convert.ToSingle(fields[2])); //全部Z按深度来处理，
+
+                    Vertex pt = new Vertex(x, y, z);
+                    if (!isSet)
+                    {
+                        minValue = pt;
+                        maxValue = pt;
+                        isSet = true;
+                    }
+                    minValue = VertexHelper.MinVertex(minValue, pt);
+                    maxValue = VertexHelper.MaxVertex(maxValue, pt);
+
+                    positions.Add(pt);
+                    positionCount++;
+                }
+            }
+           
+            ps.Max = maxValue;
+            ps.Min = minValue;
+            ps.Positions = positions.ToArray<Vertex>(); 
+            ps.NX = ps.Positions.Length;
+            ps.NY = 1;
+            ps.NZ = 1;
+            if(positions.Count <=0)
+              return null;
+            return ps;
+
+
+        }
+
         protected static PointGridderSource DoLoadPointSet(StreamReader reader, int nx, int ny, int nz)
         {
 

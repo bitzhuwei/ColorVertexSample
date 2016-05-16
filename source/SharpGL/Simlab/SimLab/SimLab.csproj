@@ -50,6 +50,12 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>simlab64.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -102,6 +108,7 @@
     <Compile Include="Grids\PointGrid.cs" />
     <Compile Include="Grids\PointMeshGeometry3D.cs" />
     <Compile Include="Grids\SimLabGrid.cs" />
+    <Compile Include="helper\ColorIndicatorAxisAutomator.cs" />
     <Compile Include="helper\VertexHelper.cs" />
     <Compile Include="Loader\DynamicUnstructureGeometryLoader.cs" />
     <Compile Include="Loader\PointSetLoader.cs" />
@@ -152,6 +159,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="simlab64.pfx" />
     <None Include="VertexBuffers\VertexBuffers_DynamicUnstructureGrid.cd" />
     <None Include="VertexBuffers\VertexBuffers_PointGrid.cd" />
     <None Include="VertexBuffers\VertexBuffers_HexahedronGrid.cd" />
