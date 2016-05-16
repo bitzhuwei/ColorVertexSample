@@ -37,19 +37,11 @@ namespace GridViewer
             root.Tag = modelContainer;
         }
 
-        private SceneElement SelectedScementElement
-        {
-
-            get { return this.selectedElement; }
-            set
-            {
-                this.selectedElement = value;
-            }
-        }
+      
 
         private void OnTreeViewAfterSelected(object sender, TreeViewEventArgs e)
         {
-            this.SelectedScementElement = e.Node.Tag as SceneElement;
+         
             OnSelectedSceneElementChanged(e.Node);
 
             if (e.Node.Tag is GridBlockProperty)
