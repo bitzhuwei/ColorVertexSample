@@ -701,5 +701,18 @@ namespace GridViewer
             }
         }
 
+        private void OnSceneBackgroundClicked(object sender, EventArgs e)
+        {
+            ColorDialog colorDlg = new ColorDialog();
+            colorDlg.AllowFullOpen = true;
+            colorDlg.Color = this.scene.Scene.ClearColor;
+            if (colorDlg.ShowDialog() == DialogResult.OK)
+            {
+                this.scene.Scene.ClearColor = colorDlg.Color;
+                this.scene.Invalidate();
+            }
+           
+        }
+
     }
 }
