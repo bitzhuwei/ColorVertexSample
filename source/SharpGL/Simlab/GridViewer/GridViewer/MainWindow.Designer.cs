@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,7 +43,7 @@
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.scene = new SharpGL.SceneComponent.ScientificVisual3DControl();
-            this.appContexMenuStrip = new System.Windows.Forms.ContextMenuStrip();
+            this.appContexMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mnuRemoveGridNode = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -187,7 +188,7 @@
             // 
             // scene
             // 
-            this.scene.CameraType = SharpGL.SceneComponent.CameraTypes.Perspecitive;
+            this.scene.CameraType = SharpGL.SceneComponent.CameraTypes.Ortho;
             this.scene.CoordinateSystem = SharpGL.SceneComponent.CoordinateSystem.RightHand;
             this.scene.Dock = System.Windows.Forms.DockStyle.Fill;
             this.scene.DrawFPS = false;
