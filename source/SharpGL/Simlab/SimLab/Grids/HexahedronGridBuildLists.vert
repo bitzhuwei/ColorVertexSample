@@ -1,4 +1,4 @@
-#version 330
+#version 420 core
 
 in vec3  in_Position;
 // only 'u' is stored and passed as 'v' is always the same value.
@@ -10,7 +10,7 @@ uniform mat4 modelMatrix;
 
 void main(void)
 {
-	pass_uv = in_uv;
-
     gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(in_Position, 1.0f);
+
+	pass_uv = in_uv;
 }
