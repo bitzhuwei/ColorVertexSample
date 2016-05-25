@@ -1228,7 +1228,7 @@ namespace SharpGL
 		[DllImport(LIBRARY_OPENGL, SetLastError = true)] private static extern void glTexParameteri (uint target, uint pname, int param);
 		[DllImport(LIBRARY_OPENGL, SetLastError = true)] private static extern void glTexParameteriv (uint target, uint pname,  int []params_notkeyword);
 		[DllImport(LIBRARY_OPENGL, SetLastError = true)] private static extern void glTexSubImage1D (uint target, int level, int xoffset, int width, uint format, uint type,  int[] pixels);
-		[DllImport(LIBRARY_OPENGL, SetLastError = true)] private static extern void glTexSubImage2D (uint target, int level, int xoffset, int yoffset, int width, int height, uint format, uint type,  int[] pixels);
+		[DllImport(LIBRARY_OPENGL, SetLastError = true)] private static extern void glTexSubImage2D (uint target, int level, int xoffset, int yoffset, int width, int height, uint format, uint type, IntPtr pixels);
 		[DllImport(LIBRARY_OPENGL, SetLastError = true)] private static extern void glTranslated (double x, double y, double z);
 		[DllImport(LIBRARY_OPENGL, SetLastError = true)] private static extern void glTranslatef (float x, float y, float z);
 		[DllImport(LIBRARY_OPENGL, SetLastError = true)] private static extern void glVertex2d (double x, double y);
@@ -5921,7 +5921,7 @@ namespace SharpGL
         /// <param name="format">Specifies the format of the pixel data.</param>
         /// <param name="type">Specifies the data type of the pixel	data.</param>
         /// <param name="pixels">Specifies a pointer to the image data in memory.</param>
-        public void TexSubImage2D(uint target, int level, int xoffset, int yoffset, int width, int height, uint format, uint type, int[] pixels)
+        public void TexSubImage2D(uint target, int level, int xoffset, int yoffset, int width, int height, uint format, uint type, IntPtr pixels)
         {
             PreGLCall();
             glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels);

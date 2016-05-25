@@ -29,7 +29,7 @@ namespace SharpGL
         /// </summary>
         /// <typeparam name="T">The extension delegate type.</typeparam>
         /// <returns>The delegate that points to the extension function.</returns>
-        private T GetDelegateFor<T>() where T : class
+        public T GetDelegateFor<T>() where T : class
         {
             //  Get the type of the extension function.
             Type delegateType = typeof(T);
@@ -1085,6 +1085,7 @@ namespace SharpGL
         private delegate void glGetBufferParameteriv(uint target, uint pname, int[] parameters);
         private delegate void glGetBufferPointerv(uint target, uint pname, IntPtr[] parameters);
 
+        public const uint GL_ATOMIC_COUNTER_BUFFER = 0x92C0;
         //  Constants
         public const uint GL_BUFFER_SIZE = 0x8764;
         public const uint GL_BUFFER_USAGE = 0x8765;
@@ -5844,5 +5845,28 @@ namespace SharpGL
         public const uint GL_MAX_VERTEX_ATTRIB_BINDINGS = 0x82DA;
 
         #endregion
+
+
+        #region texture
+
+        /// <summary>
+        /// bind a level of a texture to an image unit.
+        /// </summary>
+        /// <param name="unit">Specifies the index of the image unit to which to bind the texture.</param>
+        /// <param name="texture">Specifies the name of the texture to bind to the image unit.</param>
+        /// <param name="level">Specifies the level of the texture that is to be bound.</param>
+        /// <param name="layered">Specifies whether a layered texture binding is to be established.</param>
+        /// <param name="layer">If <paramref name="layered"/>​ is false, specifies the layer of texture​ to be bound to the image unit. Ignored otherwise.</param>
+        /// <param name="access">Specifies a token indicating the type of access that will be performed on the image.</param>
+        /// <param name="format">Specifies the format that the elements of the image will be treated as for the purposes of formatted stores.</param>
+        public delegate void glBindImageTexture(uint unit, uint texture, int level, bool layered, int layer, uint access, uint format);
+
+        public delegate void glTexStorage1D(uint target, int levels, uint internalformat, int width);
+
+        public delegate void glTexStorage2D(uint target, int levels, uint internalformat, int width, int height);
+
+        public delegate void glTexStorage3D(uint target, int levels, uint internalformat, int width, int height, int depth);
+
+        #endregion texture
     }
 }
