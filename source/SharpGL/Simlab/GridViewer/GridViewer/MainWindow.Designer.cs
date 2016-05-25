@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,8 +43,10 @@
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.scene = new SharpGL.SceneComponent.ScientificVisual3DControl();
-            this.appContexMenuStrip = new System.Windows.Forms.ContextMenuStrip();
+            this.appContexMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mnuRemoveGridNode = new System.Windows.Forms.ToolStripMenuItem();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sceneBackgroundToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -61,7 +64,8 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadToolStripMenuItem,
-            this.loadGridPropertyToolStripMenuItem});
+            this.loadGridPropertyToolStripMenuItem,
+            this.optionsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1061, 25);
@@ -187,7 +191,7 @@
             // 
             // scene
             // 
-            this.scene.CameraType = SharpGL.SceneComponent.CameraTypes.Perspecitive;
+            this.scene.CameraType = SharpGL.SceneComponent.CameraTypes.Ortho;
             this.scene.CoordinateSystem = SharpGL.SceneComponent.CoordinateSystem.RightHand;
             this.scene.Dock = System.Windows.Forms.DockStyle.Fill;
             this.scene.DrawFPS = false;
@@ -216,6 +220,21 @@
             this.mnuRemoveGridNode.Size = new System.Drawing.Size(152, 22);
             this.mnuRemoveGridNode.Text = "Remove Grid";
             this.mnuRemoveGridNode.Click += new System.EventHandler(this.OnRemoveGridNodeClick);
+            // 
+            // optionsToolStripMenuItem
+            // 
+            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.sceneBackgroundToolStripMenuItem});
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(66, 21);
+            this.optionsToolStripMenuItem.Text = "Options";
+            // 
+            // sceneBackgroundToolStripMenuItem
+            // 
+            this.sceneBackgroundToolStripMenuItem.Name = "sceneBackgroundToolStripMenuItem";
+            this.sceneBackgroundToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.sceneBackgroundToolStripMenuItem.Text = "Scene Background";
+            this.sceneBackgroundToolStripMenuItem.Click += new System.EventHandler(this.OnSceneBackgroundClicked);
             // 
             // MainWindow
             // 
@@ -262,6 +281,8 @@
         private System.Windows.Forms.ToolStripMenuItem loadGridPropertyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadECLPropertyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadPropertyFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sceneBackgroundToolStripMenuItem;
     }
 }
 
