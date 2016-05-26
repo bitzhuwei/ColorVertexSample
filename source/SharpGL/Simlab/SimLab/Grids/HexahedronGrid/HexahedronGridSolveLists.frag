@@ -22,10 +22,14 @@ uvec4 fragment_list[MAX_FRAGMENTS];
 
 void main(void)
 {
+    vec4 final_color = vec4(0.0);
+
     uint current_index;
     uint fragment_count = 0;
 
     current_index = imageLoad(head_pointer_image, ivec2(gl_FragCoord).xy).x;
+
+	if (current_index == 0) { final_color.b = 1.0f; }
 
     while (current_index != 0 && fragment_count < MAX_FRAGMENTS)
     {
@@ -60,14 +64,15 @@ void main(void)
 
     }
 
-    vec4 final_color = vec4(0.0);
-
     for (i = 0; i < fragment_count; i++)
     {
         vec4 modulator = unpackUnorm4x8(fragment_list[i].y);
 
         final_color = mix(final_color, modulator, modulator.a + fragment_list[i].w / 255);
     }
+	if (fragment_count == 0) { final_color.g = 1.0f; }
+	if (final_color.a <= 0.5) { final_color.a = 0.5; }
+	{ final_color.r = 1.0f; }
 
     color = final_color;
     // color = vec4(float(fragment_count) / float(MAX_FRAGMENTS));
