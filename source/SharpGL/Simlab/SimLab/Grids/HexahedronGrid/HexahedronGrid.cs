@@ -23,7 +23,8 @@ namespace SimLab
         protected uint[] indexBuffer;
         protected int indexBufferLength;
 
-        uint[] vertexArrayObject;
+        uint[] buildListsVAO;
+        uint[] resolveListsVAO;
 
         private GlmNet.mat4 projectionMatrix;
         private GlmNet.mat4 viewMatrix;

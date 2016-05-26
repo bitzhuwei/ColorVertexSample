@@ -72,8 +72,9 @@ void main(void)
     }
 	if (fragment_count == 0) { final_color.g = 1.0f; }
 	if (final_color.a <= 0.5) { final_color.a = 0.5; }
-	{ final_color.r = 1.0f; }
+	//{ final_color.r = 1.0f; }
 
-    color = final_color;
+    //color = final_color;
+	discard;
     // color = vec4(float(fragment_count) / float(MAX_FRAGMENTS));
 }

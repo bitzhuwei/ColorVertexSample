@@ -22,16 +22,22 @@ namespace SimLab
 
             if (this.resolveListsShaderProgram == null)
             {
-                this.InitMisc(gl);
                 this.buildListsShaderProgram = InitBuildListsShaderProgram(gl, renderMode);
                 this.resolveListsShaderProgram = InitResolveListsShaderProgram(gl, renderMode);
+                this.InitMisc(gl);
             }
-            if (this.vertexArrayObject == null)
+            if (this.buildListsVAO == null)
             {
-                CreateVertexArrayObject(gl, renderMode);
+                this.buildListsShaderProgram.Bind(gl);
+                CreateBuildListsVertexArrayObject(gl, renderMode);
+                this.resolveListsShaderProgram.Bind(gl);
+                CreateResolveListsVertexArrayObject(gl, renderMode);
             }
 
             BeforeRendering(gl, renderMode);
+
+            gl.Enable(OpenGL.GL_BLEND);
+            gl.BlendFunc(SharpGL.Enumerations.BlendingSourceFactor.SourceAlpha, SharpGL.Enumerations.BlendingDestinationFactor.OneMinusSourceAlpha);
 
             gl.Disable(OpenGL.GL_DEPTH_TEST);
             //gl.Disable(OpenGL.GL_CULL_FACE);
@@ -65,8 +71,13 @@ namespace SimLab
 
             ResolveLists(gl);
 
+
+            gl.GetDelegateFor<OpenGL.glBindImageTexture>()(1, 0, 0, false, 0, OpenGL.GL_WRITE_ONLY, OpenGL.GL_RGBA32UI);
+            gl.GetDelegateFor<OpenGL.glBindImageTexture>()(0, 0, 0, false, 0, OpenGL.GL_READ_WRITE, OpenGL.GL_R32UI);
+
             //gl.Enable(OpenGL.GL_CULL_FACE);
             gl.Enable(OpenGL.GL_DEPTH_TEST);
+            gl.Disable(OpenGL.GL_BLEND);
 
             AfterRendering(gl, renderMode);
         }

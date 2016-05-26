@@ -22,7 +22,7 @@ namespace SimLab
                 shaderProgram.Bind(gl);
             }
 
-            if (this.RenderGridWireframe && this.vertexArrayObject != null)
+            if (this.RenderGridWireframe && this.buildListsVAO != null)
             {
                 //if (wireframeIndexBuffer != null)
                 if (positionBuffer != null && colorBuffer != null && indexBuffer != null)
@@ -41,7 +41,7 @@ namespace SimLab
                     gl.Enable(OpenGL.GL_PRIMITIVE_RESTART);
                     gl.PrimitiveRestartIndex(uint.MaxValue);
 
-                    gl.BindVertexArray(this.vertexArrayObject[0]);
+                    gl.BindVertexArray(this.buildListsVAO[0]);
                     gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, indexBuffer[0]);
                     gl.DrawElements(OpenGL.GL_QUAD_STRIP, this.indexBufferLength, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
                     gl.BindVertexArray(0);
@@ -54,7 +54,7 @@ namespace SimLab
                 }
             }
 
-            if (this.RenderGrid && this.vertexArrayObject != null)
+            if (this.RenderGrid && this.buildListsVAO != null)
             {
                 if (positionBuffer != null && colorBuffer != null && indexBuffer != null)
                 {
@@ -63,7 +63,7 @@ namespace SimLab
                     gl.Enable(OpenGL.GL_PRIMITIVE_RESTART);
                     gl.PrimitiveRestartIndex(uint.MaxValue);
 
-                    gl.BindVertexArray(this.vertexArrayObject[0]);
+                    gl.BindVertexArray(this.buildListsVAO[0]);
                     gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, indexBuffer[0]);
                     gl.DrawElements(OpenGL.GL_QUAD_STRIP, this.indexBufferLength, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
                     gl.BindVertexArray(0);

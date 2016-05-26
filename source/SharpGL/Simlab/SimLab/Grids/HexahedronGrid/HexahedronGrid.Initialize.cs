@@ -107,38 +107,66 @@ namespace SimLab
         }
 
 
-        private void CreateVertexArrayObject(OpenGL gl, RenderMode renderMode)
+        private void CreateResolveListsVertexArrayObject(OpenGL gl, RenderMode renderMode)
         {
             if (this.positionBuffer == null || this.colorBuffer == null) { return; }
 
-            this.vertexArrayObject = new uint[1];
-            gl.GenVertexArrays(1, this.vertexArrayObject);
-            gl.BindVertexArray(this.vertexArrayObject[0]);
+            this.resolveListsVAO = new uint[1];
+            gl.GenVertexArrays(1, this.resolveListsVAO);
+            gl.BindVertexArray(this.resolveListsVAO[0]);
 
             // prepare positions
             {
                 int location = resolveListsShaderProgram.GetAttributeLocation(gl, in_Position);
+                this.resolveListsPosition = (uint)location;
+                gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, positionBuffer[0]);
+                gl.VertexAttribPointer(this.resolveListsPosition, 3, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
+                gl.EnableVertexAttribArray(this.resolveListsPosition);
+            }
+            //// prepare colors
+            //{
+            //    int location = resolveListsShaderProgram.GetAttributeLocation(gl, in_uv);
+            //    buildListsUV = (uint)location;
+            //    gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, colorBuffer[0]);
+            //    gl.VertexAttribPointer(buildListsUV, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
+            //    gl.EnableVertexAttribArray(buildListsUV);
+            //}
+
+            gl.BindVertexArray(0);
+        }
+
+        private void CreateBuildListsVertexArrayObject(OpenGL gl, RenderMode renderMode)
+        {
+            if (this.positionBuffer == null || this.colorBuffer == null) { return; }
+
+            this.buildListsVAO = new uint[1];
+            gl.GenVertexArrays(1, this.buildListsVAO);
+            gl.BindVertexArray(this.buildListsVAO[0]);
+
+            // prepare positions
+            {
+                int location = this.buildListsShaderProgram.GetAttributeLocation(gl, in_Position);
                 buildListsPosition = (uint)location;
                 gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, positionBuffer[0]);
                 gl.VertexAttribPointer(buildListsPosition, 3, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
                 gl.EnableVertexAttribArray(buildListsPosition);
             }
             // prepare colors
-            {
-                int location = resolveListsShaderProgram.GetAttributeLocation(gl, in_uv);
-                buildListsUV = (uint)location;
-                gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, colorBuffer[0]);
-                gl.VertexAttribPointer(buildListsUV, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
-                gl.EnableVertexAttribArray(buildListsUV);
-            }
+            //{
+            //    int location = this.buildListsShaderProgram.GetAttributeLocation(gl, in_uv);
+            //    buildListsUV = (uint)location;
+            //    gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, colorBuffer[0]);
+            //    gl.VertexAttribPointer(buildListsUV, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
+            //    gl.EnableVertexAttribArray(buildListsUV);
+            //}
 
             gl.BindVertexArray(0);
         }
 
         private ShaderProgram InitResolveListsShaderProgram(OpenGL gl, RenderMode renderMode)
         {
-            String vertexShaderSource = ManifestResourceLoader.LoadTextFile(@"Grids.HexahedronGridSolveLists.vert");
-            String fragmentShaderSource = ManifestResourceLoader.LoadTextFile(@"Grids.HexahedronGridSolveLists.frag");
+            String vertexShaderSource = ManifestResourceLoader.LoadTextFile(@"Grids.HexahedronGrid.HexahedronGridSolveLists.vert");
+            String fragmentShaderSource = ManifestResourceLoader.LoadTextFile(@"Grids.HexahedronGrid.HexahedronGridSolveLists.frag");
             ShaderProgram shaderProgram = new ShaderProgram();
             shaderProgram.Create(gl, vertexShaderSource, fragmentShaderSource, null);
             //shaderProgram.BindAttributeLocation(gl, ATTRIB_INDEX_POSITION, in_position);

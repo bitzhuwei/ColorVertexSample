@@ -9,6 +9,8 @@ layout (binding = 0, offset = 0) uniform atomic_uint list_counter;
 
 layout (location = 0) out vec4 color;
 
+in vec4 pass_Color;
+
 
 uniform float renderingWireframe;
 uniform float brightness = 1.0f;
@@ -16,7 +18,7 @@ uniform float opacity = 1.0f;
 
 void main(void)
 {
-	vec4 surface_color = vec4(1, 1, 1, 1);
+	vec4 surface_color = pass_Color;
 	{
 		uint index;
 		uint old_head;
@@ -34,6 +36,6 @@ void main(void)
 		imageStore(list_buffer, int(index), item);
 	}
 
-	//color = surface_color;
-	discard;
+	color = surface_color;
+	//discard;
 }

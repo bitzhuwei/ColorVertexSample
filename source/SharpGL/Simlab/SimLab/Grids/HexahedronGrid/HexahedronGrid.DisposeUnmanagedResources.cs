@@ -25,9 +25,9 @@ namespace SimLab
                     gl.DeleteBuffers(this.indexBuffer.Length, this.indexBuffer);
                 }
 
-                if (this.vertexArrayObject != null)
+                if (this.buildListsVAO != null)
                 {
-                    gl.DeleteVertexArrays(this.vertexArrayObject.Length, this.vertexArrayObject);
+                    gl.DeleteVertexArrays(this.buildListsVAO.Length, this.buildListsVAO);
                 }
                 {
                     this.buildListsShaderProgram.Delete(gl);
