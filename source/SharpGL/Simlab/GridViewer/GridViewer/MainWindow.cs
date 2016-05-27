@@ -23,7 +23,7 @@ namespace GridViewer
 {
     public partial class MainWindow : Form
     {
-        private SceneElement selectedElement;
+        
         public MainWindow()
         {
             InitializeComponent();
