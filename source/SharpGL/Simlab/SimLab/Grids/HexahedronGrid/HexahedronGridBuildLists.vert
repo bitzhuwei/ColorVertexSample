@@ -13,8 +13,11 @@ void main(void)
 {
     gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(in_Position, 1.0f);
 
-	vec3 color = in_Position - vec3((2336535 + 2339212) / 2,
-		(3680033 + 3682446) / 2, (-194.0594 + 1923.169) / 2);
+	//vec3 color = in_Position - vec3((2336535 + 2339212) / 2,
+	//	(3680033 + 3682446) / 2, (-194.0594 + 1923.169) / 2);
+	vec3 color = in_Position - vec3((0 + 300) / 2,
+		(0 + 300) / 2, (12000 + 12300) / 2);
+
     if (color.r < 0) { color.r = -color.r; }
     if (color.g < 0) { color.g = -color.g; }
     if (color.b < 0) { color.b = -color.b; }
