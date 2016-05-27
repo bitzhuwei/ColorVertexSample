@@ -35,8 +35,8 @@ namespace SimLab
 
             BeforeRendering(gl, renderMode);
 
-            gl.Enable(OpenGL.GL_BLEND);
-            gl.BlendFunc(SharpGL.Enumerations.BlendingSourceFactor.SourceAlpha, SharpGL.Enumerations.BlendingDestinationFactor.OneMinusSourceAlpha);
+            //gl.Enable(OpenGL.GL_BLEND);
+            //gl.BlendFunc(SharpGL.Enumerations.BlendingSourceFactor.SourceAlpha, SharpGL.Enumerations.BlendingDestinationFactor.OneMinusSourceAlpha);
 
             gl.Disable(OpenGL.GL_DEPTH_TEST);
             //gl.Disable(OpenGL.GL_CULL_FACE);
@@ -76,7 +76,7 @@ namespace SimLab
 
             //gl.Enable(OpenGL.GL_CULL_FACE);
             gl.Enable(OpenGL.GL_DEPTH_TEST);
-            gl.Disable(OpenGL.GL_BLEND);
+            //gl.Disable(OpenGL.GL_BLEND);
 
             AfterRendering(gl, renderMode);
         }
