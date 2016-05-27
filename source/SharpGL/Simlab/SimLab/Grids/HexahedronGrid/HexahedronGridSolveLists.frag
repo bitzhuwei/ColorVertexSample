@@ -40,10 +40,10 @@ void main(void)
 		for (uint i = 0; i < fragment_count - 1; i++)
 		{
 			uint p = i;
-			float depth1 = uintBitsToFloat(fragment_list[p].z);
+			uint depth1 = (fragment_list[p].z);
 			for (uint j = i + 1; j < fragment_count; j++)
 			{
-				float depth2 = uintBitsToFloat(fragment_list[j].z);
+				uint depth2 = (fragment_list[j].z);
 				if (depth1 < depth2)
 				{
 					p = j; depth1 = depth2;

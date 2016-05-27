@@ -50,7 +50,7 @@ namespace SimLab
             gl.GetInteger(SharpGL.Enumerations.GetTarget.Viewport, viewport);
             this.width = viewport[2];
             this.height = viewport[3];
-            this.backup = 3;
+            this.backup = 1;
         }
 
     }
