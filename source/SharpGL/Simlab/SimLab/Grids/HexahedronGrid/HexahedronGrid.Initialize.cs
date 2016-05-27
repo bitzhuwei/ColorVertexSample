@@ -124,11 +124,10 @@ namespace SimLab
             }
             //// prepare colors
             //{
-            //    int location = resolveListsShaderProgram.GetAttributeLocation(gl, in_uv);
-            //    buildListsUV = (uint)location;
+            //    uint location = (uint)resolveListsShaderProgram.GetAttributeLocation(gl, in_uv);
             //    gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, colorBuffer[0]);
-            //    gl.VertexAttribPointer(buildListsUV, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
-            //    gl.EnableVertexAttribArray(buildListsUV);
+            //    gl.VertexAttribPointer(location, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
+            //    gl.EnableVertexAttribArray(location);
             //}
 
             gl.BindVertexArray(0);
@@ -150,13 +149,12 @@ namespace SimLab
                 gl.EnableVertexAttribArray(location);
             }
             // prepare colors
-            //{
-            //    int location = this.buildListsShaderProgram.GetAttributeLocation(gl, in_uv);
-            //    buildListsUV = (uint)location;
-            //    gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, colorBuffer[0]);
-            //    gl.VertexAttribPointer(buildListsUV, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
-            //    gl.EnableVertexAttribArray(buildListsUV);
-            //}
+            {
+                uint location = (uint)buildListsShaderProgram.GetAttributeLocation(gl, in_uv);
+                gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, colorBuffer[0]);
+                gl.VertexAttribPointer(location, 1, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
+                gl.EnableVertexAttribArray(location);
+            }
 
             gl.BindVertexArray(0);
         }

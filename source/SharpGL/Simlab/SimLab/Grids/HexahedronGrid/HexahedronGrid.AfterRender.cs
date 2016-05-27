@@ -24,7 +24,7 @@ namespace SimLab
 
             gl.BindTexture(OpenGL.GL_TEXTURE_2D, 0);
 
-            //gl.Disable(OpenGL.GL_TEXTURE_2D);
+            gl.Disable(OpenGL.GL_TEXTURE_2D);
         }
 
         #endregion IRenderable

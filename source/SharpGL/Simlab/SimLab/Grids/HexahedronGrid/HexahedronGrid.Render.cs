@@ -33,6 +33,8 @@ namespace SimLab
                 this.InitMisc(gl);
             }
 
+            ResetMisc(gl);
+
             BeforeRendering(gl, renderMode);
 
             //gl.Enable(OpenGL.GL_BLEND);
@@ -40,7 +42,6 @@ namespace SimLab
 
             gl.Disable(OpenGL.GL_DEPTH_TEST);
             //gl.Disable(OpenGL.GL_CULL_FACE);
-            ResetMisc(gl);
 
             modelMatrix = mat4.identity();
             {
@@ -51,12 +52,12 @@ namespace SimLab
                 shaderProgram.SetUniformMatrix4(gl, "viewMatrix", viewMatrix.to_array());
                 shaderProgram.SetUniformMatrix4(gl, "modelMatrix", modelMatrix.to_array());
                 //shaderProgram.SetUniform1(gl, "tex", this.texture.TextureName);
-                //shaderProgram.SetUniform1(gl, "tex", 1);
-                //gl.ActiveTexture(OpenGL.GL_TEXTURE1);
-                //gl.Enable(OpenGL.GL_TEXTURE_2D);
-                //this.texture.Bind(gl);
-                //shaderProgram.SetUniform1(gl, "brightness", this.Brightness);
-                //shaderProgram.SetUniform1(gl, "opacity", this.Opacity);
+                gl.ActiveTexture(OpenGL.GL_TEXTURE1);
+                gl.Enable(OpenGL.GL_TEXTURE_2D);
+                this.texture.Bind(gl);
+                shaderProgram.SetUniform1(gl, "tex", 1);
+                shaderProgram.SetUniform1(gl, "brightness", this.Brightness);
+                shaderProgram.SetUniform1(gl, "opacity", this.Opacity);
             }
             {
                 ShaderProgram shaderProgram = this.resolveListsShaderProgram;
@@ -65,6 +66,7 @@ namespace SimLab
                 shaderProgram.SetUniformMatrix4(gl, "viewMatrix", viewMatrix.to_array());
                 shaderProgram.SetUniformMatrix4(gl, "modelMatrix", modelMatrix.to_array());
             }
+
 
             BuildLists(gl);
 
