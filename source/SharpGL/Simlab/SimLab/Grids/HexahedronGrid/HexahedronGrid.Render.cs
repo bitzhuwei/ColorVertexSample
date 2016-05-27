@@ -58,6 +58,7 @@ namespace SimLab
                 shaderProgram.SetUniform1(gl, "tex", 1);
                 shaderProgram.SetUniform1(gl, "brightness", this.Brightness);
                 shaderProgram.SetUniform1(gl, "opacity", this.Opacity);
+                shaderProgram.SetUniform1(gl, "list_buffer_length", this.width * this.height * this.backup);
             }
             {
                 ShaderProgram shaderProgram = this.resolveListsShaderProgram;

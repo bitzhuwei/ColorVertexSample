@@ -69,7 +69,8 @@ namespace SimLab
             gl.GenBuffers(1, linked_list_buffer);
             gl.BindBuffer(OpenGL.GL_TEXTURE_BUFFER, linked_list_buffer[0]);
             gl.BufferData(OpenGL.GL_TEXTURE_BUFFER,
-                MAX_FRAMEBUFFER_WIDTH * MAX_FRAMEBUFFER_HEIGHT * 3 * Marshal.SizeOf(typeof(vec4)),
+                //MAX_FRAMEBUFFER_WIDTH * MAX_FRAMEBUFFER_HEIGHT * 3 * Marshal.SizeOf(typeof(vec4)),
+                this.width * this.height * this.backup * Marshal.SizeOf(typeof(vec4)),
                 IntPtr.Zero, OpenGL.GL_DYNAMIC_COPY);
             gl.BindBuffer(OpenGL.GL_TEXTURE_BUFFER, 0);
 

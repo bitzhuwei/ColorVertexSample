@@ -39,11 +39,18 @@ namespace SimLab
         private uint[] atomic_counter_buffer = new uint[1];
         private uint[] linked_list_buffer = new uint[1];
         private uint[] linked_list_texture = new uint[1];
+        private int width;
+        private int height;
+        private int backup;
 
         public HexahedronGrid(OpenGL gl, IScientificCamera camera)
             : base(gl, camera)
         {
-
+            var viewport = new int[4];
+            gl.GetInteger(SharpGL.Enumerations.GetTarget.Viewport, viewport);
+            this.width = viewport[2];
+            this.height = viewport[3];
+            this.backup = 3;
         }
 
     }

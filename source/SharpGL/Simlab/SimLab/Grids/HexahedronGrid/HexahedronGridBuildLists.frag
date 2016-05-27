@@ -16,6 +16,8 @@ uniform float renderingWireframe;
 uniform float brightness = 1.0f;
 uniform float opacity = 1.0f;
 
+uniform int list_buffer_length;
+
 void main(void)
 {
 	vec4 surface_color;
@@ -55,14 +57,17 @@ void main(void)
 
 		index = atomicCounterIncrement(list_counter);
 
-		old_head = imageAtomicExchange(head_pointer_image, ivec2(gl_FragCoord.xy), uint(index));
+		if (index < list_buffer_length)
+		{
+			old_head = imageAtomicExchange(head_pointer_image, ivec2(gl_FragCoord.xy), uint(index));
 
-		item.x = old_head;
-		item.y = packUnorm4x8(surface_color);
-		item.z = floatBitsToUint(gl_FragCoord.z);
-		item.w = 255 / 4;
+			item.x = old_head;
+			item.y = packUnorm4x8(surface_color);
+			item.z = floatBitsToUint(gl_FragCoord.z);
+			item.w = 255 / 4;
 
-		imageStore(list_buffer, int(index), item);
+			imageStore(list_buffer, int(index), item);
+		}
 
 		discard;
 	}
