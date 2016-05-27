@@ -11,10 +11,8 @@ using System.Threading.Tasks;
 
 namespace SimLab
 {
-    public partial class HexahedronGrid 
+    public partial class HexahedronGrid
     {
-
-        #region IRenderable 成员
 
         void IRenderable.Render(OpenGL gl, RenderMode renderMode)
         {
@@ -24,7 +22,6 @@ namespace SimLab
             {
                 this.buildListsShaderProgram = InitBuildListsShaderProgram(gl, renderMode);
                 this.resolveListsShaderProgram = InitResolveListsShaderProgram(gl, renderMode);
-                this.InitMisc(gl);
             }
             if (this.buildListsVAO == null)
             {
@@ -32,6 +29,8 @@ namespace SimLab
                 CreateBuildListsVertexArrayObject(gl, renderMode);
                 this.resolveListsShaderProgram.Bind(gl);
                 CreateResolveListsVertexArrayObject(gl, renderMode);
+
+                this.InitMisc(gl);
             }
 
             BeforeRendering(gl, renderMode);
@@ -81,8 +80,6 @@ namespace SimLab
 
             AfterRendering(gl, renderMode);
         }
-
-        #endregion
 
     }
 }

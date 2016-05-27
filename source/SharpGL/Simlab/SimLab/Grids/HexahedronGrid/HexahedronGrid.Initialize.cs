@@ -30,7 +30,7 @@ namespace SimLab
         private void InitMisc(OpenGL gl)
         {
             // Create head pointer texture
-            gl.Enable(OpenGL.GL_TEXTURE_2D);
+            //gl.Enable(OpenGL.GL_TEXTURE_2D);
             gl.ActiveTexture(OpenGL.GL_TEXTURE0);
             gl.GenTextures(1, head_pointer_texture);
             gl.BindTexture(OpenGL.GL_TEXTURE_2D, head_pointer_texture[0]);
@@ -75,7 +75,7 @@ namespace SimLab
 
             // Bind it to a texture (for use as a TBO)
             gl.GenTextures(1, linked_list_texture);
-            gl.BindTexture(OpenGL.GL_TEXTURE_BUFFER, linked_list_buffer[0]);
+            gl.BindTexture(OpenGL.GL_TEXTURE_BUFFER, linked_list_texture[0]);
             gl.TexBuffer(OpenGL.GL_TEXTURE_BUFFER, OpenGL.GL_RGBA32UI, linked_list_buffer[0]);
             gl.BindTexture(OpenGL.GL_TEXTURE_BUFFER, 0);
 
@@ -92,11 +92,11 @@ namespace SimLab
             shaderProgram.Create(gl, vertexShaderSource, fragmentShaderSource, null);
             //shaderProgram.BindAttributeLocation(gl, ATTRIB_INDEX_POSITION, in_position);
             //shaderProgram.BindAttributeLocation(gl, ATTRIB_INDEX_COLOUR, in_uv);
-            {
-                int location = shaderProgram.GetAttributeLocation(gl, in_Position);
-                if (location < 0) { throw new ArgumentException(); }
-                this.buildListsPosition = (uint)location;
-            }
+            //{
+            //    int location = shaderProgram.GetAttributeLocation(gl, in_Position);
+            //    if (location < 0) { throw new ArgumentException(); }
+            //    this.buildListsPosition = (uint)location;
+            //}
             //{
             //    int location = shaderProgram.GetAttributeLocation(gl, in_uv);
             //    if (location < 0) { throw new ArgumentException(); }
@@ -117,11 +117,10 @@ namespace SimLab
 
             // prepare positions
             {
-                int location = resolveListsShaderProgram.GetAttributeLocation(gl, in_Position);
-                this.resolveListsPosition = (uint)location;
+                uint location = (uint)resolveListsShaderProgram.GetAttributeLocation(gl, in_Position);
                 gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, positionBuffer[0]);
-                gl.VertexAttribPointer(this.resolveListsPosition, 3, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
-                gl.EnableVertexAttribArray(this.resolveListsPosition);
+                gl.VertexAttribPointer(location, 3, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
+                gl.EnableVertexAttribArray(location);
             }
             //// prepare colors
             //{
@@ -145,11 +144,10 @@ namespace SimLab
 
             // prepare positions
             {
-                int location = this.buildListsShaderProgram.GetAttributeLocation(gl, in_Position);
-                buildListsPosition = (uint)location;
+                uint location = (uint)buildListsShaderProgram.GetAttributeLocation(gl, in_Position);
                 gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, positionBuffer[0]);
-                gl.VertexAttribPointer(buildListsPosition, 3, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
-                gl.EnableVertexAttribArray(buildListsPosition);
+                gl.VertexAttribPointer(location, 3, OpenGL.GL_FLOAT, false, 0, IntPtr.Zero);
+                gl.EnableVertexAttribArray(location);
             }
             // prepare colors
             //{
@@ -171,11 +169,11 @@ namespace SimLab
             shaderProgram.Create(gl, vertexShaderSource, fragmentShaderSource, null);
             //shaderProgram.BindAttributeLocation(gl, ATTRIB_INDEX_POSITION, in_position);
             //shaderProgram.BindAttributeLocation(gl, ATTRIB_INDEX_COLOUR, in_uv);
-            {
-                int location = shaderProgram.GetAttributeLocation(gl, in_Position);
-                if (location < 0) { throw new ArgumentException(); }
-                this.resolveListsPosition = (uint)location;
-            }
+            //{
+            //    int location = shaderProgram.GetAttributeLocation(gl, in_Position);
+            //    if (location < 0) { throw new ArgumentException(); }
+            //    this.resolveListsPosition = (uint)location;
+            //}
             //{
             //    int location = shaderProgram.GetAttributeLocation(gl, in_uv);
             //    if (location < 0) { throw new ArgumentException(); }

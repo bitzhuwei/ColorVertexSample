@@ -12,14 +12,14 @@ layout (location = 0) out vec4 color;
 in vec4 pass_Color;
 
 
-uniform float renderingWireframe;
+//uniform float renderingWireframe;
 uniform float brightness = 1.0f;
 uniform float opacity = 1.0f;
 
 void main(void)
 {
 	vec4 surface_color = pass_Color;
-	{
+
 		uint index;
 		uint old_head;
 		uvec4 item;
@@ -34,7 +34,6 @@ void main(void)
 		item.w = 255 / 4;
 
 		imageStore(list_buffer, int(index), item);
-	}
 
 	color = surface_color;
 	//discard;

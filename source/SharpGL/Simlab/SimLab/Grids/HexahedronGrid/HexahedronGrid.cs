@@ -15,9 +15,9 @@ namespace SimLab
     {
         private const string in_Position = "in_Position";
         private const string in_uv = "in_uv";
-        uint buildListsPosition;
-        uint buildListsUV;
-        uint resolveListsPosition;
+        //uint buildListsPosition;
+        //uint buildListsUV;
+        //uint resolveListsPosition;
         //uint resolveListsUV;
 
         protected uint[] indexBuffer;

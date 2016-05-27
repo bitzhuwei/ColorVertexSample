@@ -17,7 +17,7 @@ namespace SimLab
 
         private void ResetMisc(OpenGL gl)
         {
-            gl.Enable(OpenGL.GL_TEXTURE_2D);
+            //gl.Enable(OpenGL.GL_TEXTURE_2D);
             // Reset atomic counter
             gl.BindBufferBase(OpenGL.GL_ATOMIC_COUNTER_BUFFER, 0, atomic_counter_buffer[0]);
             IntPtr data = gl.MapBuffer(OpenGL.GL_ATOMIC_COUNTER_BUFFER, OpenGL.GL_WRITE_ONLY);
