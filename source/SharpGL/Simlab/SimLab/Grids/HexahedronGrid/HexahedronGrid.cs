@@ -42,6 +42,21 @@ namespace SimLab
         private int width;
         private int height;
         private int backup;
+        private bool resolveShaderWorks = true;
+
+        public bool ResolveShaderWorks
+        {
+            get { return resolveShaderWorks; }
+            set { resolveShaderWorks = value; }
+        }
+
+        private bool showFirstPass = false;
+
+        public bool ShowFirstPass
+        {
+            get { return showFirstPass; }
+            set { showFirstPass = value; }
+        }
 
         public HexahedronGrid(OpenGL gl, IScientificCamera camera)
             : base(gl, camera)
@@ -50,7 +65,7 @@ namespace SimLab
             gl.GetInteger(SharpGL.Enumerations.GetTarget.Viewport, viewport);
             this.width = viewport[2];
             this.height = viewport[3];
-            this.backup = 1;
+            this.backup = 3;
         }
 
     }

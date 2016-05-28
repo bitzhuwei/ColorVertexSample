@@ -17,6 +17,7 @@ uniform float brightness = 1.0f;
 uniform float opacity = 1.0f;
 
 uniform int list_buffer_length;
+uniform float showFirstPass = 0.0f;
 
 void main(void)
 {
@@ -69,7 +70,12 @@ void main(void)
 			imageStore(list_buffer, int(index), item);
 		}
 
-		discard;
+		if (showFirstPass > 0.0f)
+		{
+			color = surface_color;
+		else
+		{
+			discard;
+		}
 	}
-	//color = surface_color;
 }
