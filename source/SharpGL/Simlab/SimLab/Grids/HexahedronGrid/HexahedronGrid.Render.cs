@@ -40,7 +40,7 @@ namespace SimLab
             //gl.Enable(OpenGL.GL_BLEND);
             //gl.BlendFunc(SharpGL.Enumerations.BlendingSourceFactor.SourceAlpha, SharpGL.Enumerations.BlendingDestinationFactor.OneMinusSourceAlpha);
 
-            gl.Disable(OpenGL.GL_DEPTH_TEST);
+            //gl.Disable(OpenGL.GL_DEPTH_TEST);
             //gl.Disable(OpenGL.GL_CULL_FACE);
 
             modelMatrix = mat4.identity();
@@ -66,6 +66,7 @@ namespace SimLab
                 shaderProgram.SetUniformMatrix4(gl, "projectionMatrix", projectionMatrix.to_array());
                 shaderProgram.SetUniformMatrix4(gl, "viewMatrix", viewMatrix.to_array());
                 shaderProgram.SetUniformMatrix4(gl, "modelMatrix", modelMatrix.to_array());
+                shaderProgram.SetUniform1(gl, "resolveShaderWorks", this.resolveShaderWorks ? 1.0f : 0.0f);
             }
 
 
@@ -78,7 +79,7 @@ namespace SimLab
             gl.GetDelegateFor<OpenGL.glBindImageTexture>()(0, 0, 0, false, 0, OpenGL.GL_READ_WRITE, OpenGL.GL_R32UI);
 
             //gl.Enable(OpenGL.GL_CULL_FACE);
-            gl.Enable(OpenGL.GL_DEPTH_TEST);
+            //gl.Enable(OpenGL.GL_DEPTH_TEST);
             //gl.Disable(OpenGL.GL_BLEND);
 
             AfterRendering(gl, renderMode);

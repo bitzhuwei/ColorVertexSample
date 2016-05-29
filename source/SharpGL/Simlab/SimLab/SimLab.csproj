@@ -54,7 +54,8 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>simlab64.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -102,7 +103,15 @@
     <Compile Include="GridSources\PointGridderSource.cs" />
     <Compile Include="Grids\DynamicUnstructureGeometry.cs" />
     <Compile Include="Grids\DynamicUnstructureGrid.cs" />
-    <Compile Include="Grids\HexahedronGrid.cs" />
+    <Compile Include="Grids\HexahedronGrid\HexahedronGrid.ResetMisc.cs" />
+    <Compile Include="Grids\HexahedronGrid\HexahedronGrid.BuildLists.cs" />
+    <Compile Include="Grids\HexahedronGrid\HexahedronGrid.ResolveLists.cs" />
+    <Compile Include="Grids\HexahedronGrid\HexahedronGrid.Render.cs" />
+    <Compile Include="Grids\HexahedronGrid\HexahedronGrid.DisposeUnmanagedResources.cs" />
+    <Compile Include="Grids\HexahedronGrid\HexahedronGrid.AfterRender.cs" />
+    <Compile Include="Grids\HexahedronGrid\HexahedronGrid.BeforeRender.cs" />
+    <Compile Include="Grids\HexahedronGrid\HexahedronGrid.cs" />
+    <Compile Include="Grids\HexahedronGrid\HexahedronGrid.Initialize.cs" />
     <Compile Include="Grids\HexahedronMeshGeometry3D.cs" />
     <Compile Include="Grids\MeshBase.cs" />
     <Compile Include="Grids\PointGrid.cs" />
@@ -159,7 +168,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="simlab64.pfx" />
+    <EmbeddedResource Include="Grids\HexahedronGrid\HexahedronGridBuildLists.frag" />
+    <EmbeddedResource Include="Grids\HexahedronGrid\HexahedronGridBuildLists.vert" />
+    <EmbeddedResource Include="Grids\HexahedronGrid\HexahedronGridSolveLists.frag" />
+    <EmbeddedResource Include="Grids\HexahedronGrid\HexahedronGridSolveLists.vert" />
     <None Include="VertexBuffers\VertexBuffers_DynamicUnstructureGrid.cd" />
     <None Include="VertexBuffers\VertexBuffers_PointGrid.cd" />
     <None Include="VertexBuffers\VertexBuffers_HexahedronGrid.cd" />
@@ -176,10 +188,10 @@
     <EmbeddedResource Include="Grids\DynamicUnstructureGrid.vert" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Grids\HexahedronGrid.frag" />
+    <EmbeddedResource Include="Grids\HexahedronGrid\HexahedronGrid.frag" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Grids\HexahedronGrid.vert" />
+    <EmbeddedResource Include="Grids\HexahedronGrid\HexahedronGrid.vert" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Grids\PointGrid.frag" />

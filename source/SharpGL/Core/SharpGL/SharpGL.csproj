@@ -51,7 +51,8 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>sharpgl64.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -105,9 +106,6 @@
     <Compile Include="VertexBuffers\VertexBufferArray.cs" />
     <Compile Include="VertexBuffers\VertexBuffer.cs" />
     <Compile Include="Win32.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="sharpgl64.pfx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
