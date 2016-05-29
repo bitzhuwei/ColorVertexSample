@@ -118,6 +118,10 @@ namespace SharpGL
 		public const uint GL_ONE_MINUS_SRC_ALPHA            = 0x0303;
 		public const uint GL_DST_ALPHA                      = 0x0304;
 		public const uint GL_ONE_MINUS_DST_ALPHA            = 0x0305;
+        public const uint GL_CONSTANT_COLOR = 0x8001;
+        public const uint GL_ONE_MINUS_CONSTANT_COLOR = 0x8002;
+        public const uint GL_CONSTANT_ALPHA = 0x8003;
+        public const uint GL_ONE_MINUS_CONSTANT_ALPHA = 0x8004;
 
 	    //  BlendingFactorSrc
 		public const uint GL_DST_COLOR                      = 0x0306;
