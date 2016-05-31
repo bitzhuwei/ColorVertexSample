@@ -128,10 +128,15 @@ namespace SimLab.GridSource.Factory
             {
                 int gridIndex = gridIndexes[i];
                 float value = values[i];
-                if (value < minValue)
-                    value = minValue;
-                if (value > maxValue)
-                    value = maxValue;
+                if (value < minValue){
+                   value = minValue;
+                   bindVisibles[gridIndex] = 0;
+                }
+                if (value > maxValue){
+                   value = maxValue;
+                   bindVisibles[gridIndex] = 0;
+                }
+                
 
                 if (bindVisibles[gridIndex] > 0)
                 {

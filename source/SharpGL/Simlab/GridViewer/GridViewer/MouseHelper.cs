@@ -13,14 +13,14 @@ namespace GridViewer
 
         public static void WaitIdle(){
 
-           Application.OpenForms[0].Cursor = Cursors.WaitCursor;
+           Application.UseWaitCursor = true;
            Application.Idle -= OnIdle;
            Application.Idle += OnIdle;
         }
 
         private static void OnIdle(object sender, EventArgs e)
         {
-           Application.OpenForms[0].Cursor = null;
+           Application.UseWaitCursor = false;
            Application.Idle -= OnIdle;
         }
     }

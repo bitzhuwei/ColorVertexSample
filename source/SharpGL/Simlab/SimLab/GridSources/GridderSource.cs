@@ -292,6 +292,10 @@ namespace SimLab.GridSource
             internal set;
         }
 
+        public object Tag{
+          get;set;
+        }
+
 
 
     }

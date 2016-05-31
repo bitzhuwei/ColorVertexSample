@@ -17,6 +17,7 @@ namespace Simlab.Well
     {
         private WellPipe wellPipeElement;
         private PointSpriteStringElement textElement;
+        private string wellName;
 
         /// <summary>
         /// 蛇形管道（井）+文字显示
@@ -31,8 +32,13 @@ namespace Simlab.Well
             GLColor textColor = null, int fontSize = 32, int maxRowWidth = 256)
         {
             this.wellPipeElement = new WellPipe(pipe, pipeRadius, pipeColor, camera);
-
+            this.wellName = name;
             this.textElement = new PointSpriteStringElement(camera, name, position, textColor, fontSize, maxRowWidth);
+        }
+
+
+        public String WellName{
+           get{ return this.wellName;}
         }
 
         public void Initialize(OpenGL gl)

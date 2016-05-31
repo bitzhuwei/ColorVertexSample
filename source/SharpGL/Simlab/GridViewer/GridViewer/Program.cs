@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,7 +17,11 @@ namespace GridViewer
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainWindow());
+            MainWindow mainWindow = new MainWindow();
+            Rectangle rect = WindowSizeHelper.WindowSize(0.8f,0.9f);
+            mainWindow.Size = rect.Size;
+            mainWindow.StartPosition = FormStartPosition.CenterScreen;
+            Application.Run(mainWindow);
         }
     }
 }
