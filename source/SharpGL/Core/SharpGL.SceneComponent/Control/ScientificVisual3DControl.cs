@@ -221,7 +221,30 @@ namespace SharpGL.SceneComponent
         {
             this.modelContainer.AddChild(element);
 
+            this.SetupZAxisScale(this.modelContainer, zAxisScale);
+
             ManualRender(this);
+        }
+
+        private float zAxisScale = 1.0f;
+
+        public float ZAxisScale
+        {
+            get { return zAxisScale; }
+            set
+            {
+                zAxisScale = value;
+                this.SetupZAxisScale(this.modelContainer, value);
+            }
+        }
+
+        private void SetupZAxisScale(SceneElement element, float zAxisScale)
+        {
+            element.ZAxisScale = zAxisScale;
+            foreach (var item in element.Children)
+            {
+                SetupZAxisScale(item, zAxisScale);
+            }
         }
 
         //public void AddScientificModel(IScientificModel model)

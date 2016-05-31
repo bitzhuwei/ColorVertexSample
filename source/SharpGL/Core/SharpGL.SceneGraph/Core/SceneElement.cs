@@ -30,6 +30,15 @@ namespace SharpGL.SceneGraph.Core
     [XmlInclude(typeof(Effects.OpenGLAttributesEffect))]
     public partial class SceneElement
     {
+
+        private float zAxisScale = 1.0f;
+
+        public float ZAxisScale
+        {
+            get { return zAxisScale; }
+            set { zAxisScale = value; }
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SceneElement"/> class.
         /// </summary>

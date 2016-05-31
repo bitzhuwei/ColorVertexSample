@@ -162,7 +162,7 @@ namespace SharpGL.SceneComponent
                 { throw new NotImplementedException(); }
             }
 
-            modelMatrix = mat4.identity();
+            modelMatrix = glm.scale(mat4.identity(), new vec3(1, 1, this.ZAxisScale));
 
             //gl.PointSize(3);
 

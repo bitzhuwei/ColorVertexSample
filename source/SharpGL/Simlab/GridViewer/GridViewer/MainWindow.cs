@@ -79,8 +79,8 @@ namespace GridViewer
             Command cmdLoadProperty = new Command(new ToolStripItem[] { this.toolLoadProperty, this.mniLoadProperty }, this.CanExecuteLoadGridPropery);
             Command cmdLoadCloudResults = new Command(new ToolStripItem[] { this.toolLoadCloudResutls, this.mniLoadCloudResults }, this.CanExecuteLoadGridPropery);
             Command cmdLoadEclWells = new Command(new ToolStripItem[] { this.toolLoadECLWells, this.mniLoadEclWells }, this.CanExecuteLoadEclWells);
-            Command cmdSceneColorBarRange = new Command(new ToolStripItem[]{this.toolSceneColorBarRange,this.mniSceneColorBarRange},this.CanExecuteChangeColorBarRange);
-            Command cmdGridderIJKSlices = new Command(new ToolStripItem[]{this.toolIJKSlices,this.mniIJKSlices},this.CanExecuteIJKSlices);
+            Command cmdSceneColorBarRange = new Command(new ToolStripItem[] { this.toolSceneColorBarRange, this.mniSceneColorBarRange }, this.CanExecuteChangeColorBarRange);
+            Command cmdGridderIJKSlices = new Command(new ToolStripItem[] { this.toolIJKSlices, this.mniIJKSlices }, this.CanExecuteIJKSlices);
 
 
             cmds.Add(cmdLoadEclGrid);
@@ -121,16 +121,17 @@ namespace GridViewer
 
         }
 
-        private bool CanExecuteChangeColorBarRange(object param){
-          
-           if(param == null)
-              return false;
-           if(!(param is TreeNode))
-             return false;
-           TreeNode node = (TreeNode)param;
-           if(node.Tag is GridBlockProperty)
-              return true;
-           return false;
+        private bool CanExecuteChangeColorBarRange(object param)
+        {
+
+            if (param == null)
+                return false;
+            if (!(param is TreeNode))
+                return false;
+            TreeNode node = (TreeNode)param;
+            if (node.Tag is GridBlockProperty)
+                return true;
+            return false;
         }
 
         private bool CanExecuteLoadGridPropery(object param)
@@ -148,28 +149,33 @@ namespace GridViewer
             return false;
         }
 
-        private bool CanExecuteIJKSlices(object param){
+        private bool CanExecuteIJKSlices(object param)
+        {
 
-           if(param == null)
-              return false;
-           if(!(param is TreeNode))
-              return false;
+            if (param == null)
+                return false;
+            if (!(param is TreeNode))
+                return false;
 
-           TreeNode node = (TreeNode)param;
-           if(node.Tag is SimLabGrid){
-              SimLabGrid gridder = (SimLabGrid)node.Tag;
-              if(gridder.Tag is HexahedronGridderSource){
-                 
-                 HexahedronGridderSource gridderSource = (HexahedronGridderSource)gridder.Tag;
-                 if(gridderSource.Tag is TreeNode){
-                   TreeNode propNode = gridderSource.Tag as TreeNode;
-                   if(propNode.Tag is GridBlockProperty){
-                     return true;
-                   }
-                 } 
-             }
-           }
-           return false;
+            TreeNode node = (TreeNode)param;
+            if (node.Tag is SimLabGrid)
+            {
+                SimLabGrid gridder = (SimLabGrid)node.Tag;
+                if (gridder.Tag is HexahedronGridderSource)
+                {
+
+                    HexahedronGridderSource gridderSource = (HexahedronGridderSource)gridder.Tag;
+                    if (gridderSource.Tag is TreeNode)
+                    {
+                        TreeNode propNode = gridderSource.Tag as TreeNode;
+                        if (propNode.Tag is GridBlockProperty)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
         }
 
         private void InitObjectsTree(TreeView tree, ModelContainer modelContainer)
@@ -200,7 +206,8 @@ namespace GridViewer
             return parent;
         }
 
-        private void ApplyGridBlockPropertyToGridder(TreeNode gridPropNode){
+        private void ApplyGridBlockPropertyToGridder(TreeNode gridPropNode)
+        {
 
             GridBlockProperty gbp = gridPropNode.Tag as GridBlockProperty;
             TreeNode gridderNode = this.GetParentNodeTag<SimLabGrid>(gridPropNode);
@@ -365,19 +372,22 @@ namespace GridViewer
         {
 
             double axisMin, axisMax, step;
-            if(gbp.Tag == null){
-              ColorIndicatorAxisAutomator.Automate(gbp.MinValue, gbp.MaxValue, out axisMin, out axisMax, out step);
-              this.scene.uiColorIndicator.Data.MinValue = (float)axisMin;
-              this.scene.uiColorIndicator.Data.MaxValue = (float)axisMax;
-              this.scene.uiColorIndicator.Data.Step = (float)step;
-              this.scene.uiColorIndicator.Data.UseLogarithmic = false;
-            }else{
-              ColorMapParams rangeParams = gbp.Tag as ColorMapParams;
-              this.scene.uiColorIndicator.Data.MinValue = (float)rangeParams.MinValue;
-              this.scene.uiColorIndicator.Data.MaxValue = (float)rangeParams.MaxValue;
-              this.scene.uiColorIndicator.Data.Step = (float)rangeParams.Step;
-              this.scene.uiColorIndicator.Data.UseLogarithmic = rangeParams.UseLogarithmic;
-              this.scene.uiColorIndicator.Data.LogBase = (float)rangeParams.LogBase;
+            if (gbp.Tag == null)
+            {
+                ColorIndicatorAxisAutomator.Automate(gbp.MinValue, gbp.MaxValue, out axisMin, out axisMax, out step);
+                this.scene.uiColorIndicator.Data.MinValue = (float)axisMin;
+                this.scene.uiColorIndicator.Data.MaxValue = (float)axisMax;
+                this.scene.uiColorIndicator.Data.Step = (float)step;
+                this.scene.uiColorIndicator.Data.UseLogarithmic = false;
+            }
+            else
+            {
+                ColorMapParams rangeParams = gbp.Tag as ColorMapParams;
+                this.scene.uiColorIndicator.Data.MinValue = (float)rangeParams.MinValue;
+                this.scene.uiColorIndicator.Data.MaxValue = (float)rangeParams.MaxValue;
+                this.scene.uiColorIndicator.Data.Step = (float)rangeParams.Step;
+                this.scene.uiColorIndicator.Data.UseLogarithmic = rangeParams.UseLogarithmic;
+                this.scene.uiColorIndicator.Data.LogBase = (float)rangeParams.LogBase;
             }
 
         }
@@ -398,7 +408,7 @@ namespace GridViewer
                 HexahedronGrid gridder = new HexahedronGrid(this.scene.OpenGL, this.scene.Scene.CurrentCamera);
                 gridder.Init(geometry);
                 gridder.SetTexture(textureBitmap);
-               
+
 
                 TexCoordBuffer textureCoords = src.CreateTextureCoordinates(gbp.Positions, gbp.Values, (float)axisMin, (float)axisMax);
                 gridder.SetTextureCoods(textureCoords);
@@ -462,7 +472,7 @@ namespace GridViewer
         private void LoadEclGridClick(object sender, EventArgs e)
         {
 
-           
+
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
             openFileDialog1.Filter = "Ecl Data files (*.DATA)|*.DATA|All files (*.*)|*.*";
             openFileDialog1.FilterIndex = 2;
@@ -505,7 +515,7 @@ namespace GridViewer
             if (gridderSource != null)
             {
 
-               
+
                 string caseFileName = System.IO.Path.GetFileName(fileName);
                 TreeNode gridderNode = this.objectsTreeView.Nodes.Add(caseFileName);
                 gridderNode.ToolTipText = fileName;
@@ -538,17 +548,20 @@ namespace GridViewer
                 }
 
 
-                
+
                 List<Well> well3dList;
-                try{
-                  well3dList =this.CreateWell3D(inputData,this.scene,gridderSource);
-                }catch(Exception err){
-                  MessageBox.Show(String.Format("Create Well3d,{0}",err.Message),"Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
-                  return;
+                try
+                {
+                    well3dList = this.CreateWell3D(inputData, this.scene, gridderSource);
                 }
-                if(well3dList!=null&&well3dList.Count >0)
-                  this.AddWellNodes(gridderNode,this.scene,well3dList);
-                
+                catch (Exception err)
+                {
+                    MessageBox.Show(String.Format("Create Well3d,{0}", err.Message), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                if (well3dList != null && well3dList.Count > 0)
+                    this.AddWellNodes(gridderNode, this.scene, well3dList);
+
 
             }
         }
@@ -649,18 +662,21 @@ namespace GridViewer
             GridderSource gridderSource;
             SimLabGrid gridder = null;
             TreeNode gridderNode = this.objectsTreeView.SelectedNode;
-            gridder  = this.objectsTreeView.SelectedNode.Tag as SimLabGrid;
+            gridder = this.objectsTreeView.SelectedNode.Tag as SimLabGrid;
             gridderSource = gridder.Tag as GridderSource;
-            
+
             List<Well> well3dList;
-            try{
-               well3dList =this.CreateWell3D(inputData,this.scene,gridderSource);
-            }catch(Exception err){
-               MessageBox.Show(String.Format("Failed to create Well3d,{0}",err.Message),"Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
-               return;
+            try
+            {
+                well3dList = this.CreateWell3D(inputData, this.scene, gridderSource);
             }
-            if(well3dList!=null&&well3dList.Count >0)
-               this.AddWellNodes(gridderNode,this.scene,well3dList);
+            catch (Exception err)
+            {
+                MessageBox.Show(String.Format("Failed to create Well3d,{0}", err.Message), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (well3dList != null && well3dList.Count > 0)
+                this.AddWellNodes(gridderNode, this.scene, well3dList);
 
         }
 
@@ -1086,112 +1102,122 @@ namespace GridViewer
 
         }
 
-        private void SetView(ScientificVisual3DControl sceneDisplay,ViewTypes viewType){
+        private void SetView(ScientificVisual3DControl sceneDisplay, ViewTypes viewType)
+        {
             sceneDisplay.ViewType = viewType;
             sceneDisplay.Invalidate();
         }
 
         private void UserViewClick(object sender, EventArgs e)
         {
-          this.SetView(this.scene,ViewTypes.UserView);
+            this.SetView(this.scene, ViewTypes.UserView);
         }
 
         private void TopViewClick(object sender, EventArgs e)
         {
-          this.SetView(this.scene,ViewTypes.Top);
+            this.SetView(this.scene, ViewTypes.Top);
         }
 
         private void BottomViewClick(object sender, EventArgs e)
         {
-          this.SetView(this.scene,ViewTypes.Bottom);
+            this.SetView(this.scene, ViewTypes.Bottom);
         }
 
         private void LeftViewClick(object sender, EventArgs e)
         {
-          this.SetView(this.scene,ViewTypes.Left);
+            this.SetView(this.scene, ViewTypes.Left);
         }
 
         private void RightViewClick(object sender, EventArgs e)
         {
-          this.SetView(this.scene,ViewTypes.Right);
+            this.SetView(this.scene, ViewTypes.Right);
         }
 
         private void BackViewClick(object sender, EventArgs e)
         {
-          this.SetView(this.scene,ViewTypes.Back);
+            this.SetView(this.scene, ViewTypes.Back);
         }
 
         private void FrontViewClick(object sender, EventArgs e)
         {
-          this.SetView(this.scene,ViewTypes.Front);
+            this.SetView(this.scene, ViewTypes.Front);
         }
 
         private void SceneColorBarRangeClick(object sender, EventArgs e)
         {
 
-             TreeNode gridPropNode =  this.objectsTreeView.SelectedNode;
-             GridBlockProperty gbp =  gridPropNode.Tag as GridBlockProperty;
+            TreeNode gridPropNode = this.objectsTreeView.SelectedNode;
+            GridBlockProperty gbp = gridPropNode.Tag as GridBlockProperty;
 
-             ColorBarRangeEditDialog rangEditDialog = new ColorBarRangeEditDialog();
-             rangEditDialog.StartPosition = FormStartPosition.CenterScreen;
-             
-             if(gbp.Tag == null){
-                rangEditDialog.UseAutoRange = true;               
-             }else{
+            ColorBarRangeEditDialog rangEditDialog = new ColorBarRangeEditDialog();
+            rangEditDialog.StartPosition = FormStartPosition.CenterScreen;
+
+            if (gbp.Tag == null)
+            {
+                rangEditDialog.UseAutoRange = true;
+            }
+            else
+            {
                 ColorMapParams rangeParams = (ColorMapParams)gbp.Tag;
                 rangEditDialog.UseAutoRange = rangeParams.IsAutomatic;
                 rangEditDialog.UseLogarithmic = rangeParams.UseLogarithmic;
                 rangEditDialog.Minimum = rangeParams.MinValue;
                 rangEditDialog.Maximum = rangeParams.MaxValue;
                 rangEditDialog.Step = rangeParams.Step;
-             }
-             rangEditDialog.GridBlockPropery = gbp;
-             DialogResult result = rangEditDialog.ShowDialog();
-             if(result == DialogResult.OK){
-                
-                
+            }
+            rangEditDialog.GridBlockPropery = gbp;
+            DialogResult result = rangEditDialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
 
-                ColorMapParams rangeParams =  rangEditDialog.GetColorMapParams();
-                if(!rangeParams.IsAutomatic)
-                  gbp.Tag = rangeParams;
+
+
+                ColorMapParams rangeParams = rangEditDialog.GetColorMapParams();
+                if (!rangeParams.IsAutomatic)
+                    gbp.Tag = rangeParams;
                 else
-                  gbp.Tag = null;
+                    gbp.Tag = null;
 
-                if(!rangeParams.IsAutomatic){
+                if (!rangeParams.IsAutomatic)
+                {
 
-                  if(gbp is TimedStepGridBlockProperty){
-                    
-                    if(DialogResult.OK ==MessageBox.Show("do you want to apply to all time steps?, if just only the current gridder,select cancel","Question",MessageBoxButtons.OKCancel,MessageBoxIcon.Question)){
-                       
-                      TreeNode timeStepsNode = this.GetParentNodeTag<GridBlockPropertyTimeStepCollection>(gridPropNode);
-                      GridBlockPropertyTimeStepCollection timeStepProperties =  timeStepsNode.Tag as GridBlockPropertyTimeStepCollection;
-                      foreach (TimedStepGridBlockProperty iter in timeStepProperties)
-                      {
-                         iter.Tag = rangeParams;
-                      }
+                    if (gbp is TimedStepGridBlockProperty)
+                    {
+
+                        if (DialogResult.OK == MessageBox.Show("do you want to apply to all time steps?, if just only the current gridder,select cancel", "Question", MessageBoxButtons.OKCancel, MessageBoxIcon.Question))
+                        {
+
+                            TreeNode timeStepsNode = this.GetParentNodeTag<GridBlockPropertyTimeStepCollection>(gridPropNode);
+                            GridBlockPropertyTimeStepCollection timeStepProperties = timeStepsNode.Tag as GridBlockPropertyTimeStepCollection;
+                            foreach (TimedStepGridBlockProperty iter in timeStepProperties)
+                            {
+                                iter.Tag = rangeParams;
+                            }
+                        }
                     }
-                  }
                 }
                 this.ApplyGridBlockPropertyToGridder(gridPropNode);
-             }
+            }
         }
 
 
-        private void OnSceneIJKSlicesApply(object sender, EventArgs e){
-           
-            IJKSlicesEditorDialog dlg = sender as IJKSlicesEditorDialog;
-            if(dlg !=null){
-               TreeNode gridderNode  = dlg.Tag as TreeNode;
-               HexahedronGrid gridder = gridderNode.Tag as HexahedronGrid;
-               HexahedronGridderSource gridderSource = gridder.Tag as HexahedronGridderSource;
-               gridderSource.IBlocks = dlg.ISlices;
-               gridderSource.JBlocks = dlg.JSlices;
-               gridderSource.KBlocks = dlg.KSlices;
-               gridderSource.Init();
+        private void OnSceneIJKSlicesApply(object sender, EventArgs e)
+        {
 
-               TreeNode propNode = gridderSource.Tag as TreeNode;
-            
-               this.ApplyGridBlockPropertyToGridder(propNode);
+            IJKSlicesEditorDialog dlg = sender as IJKSlicesEditorDialog;
+            if (dlg != null)
+            {
+                TreeNode gridderNode = dlg.Tag as TreeNode;
+                HexahedronGrid gridder = gridderNode.Tag as HexahedronGrid;
+                HexahedronGridderSource gridderSource = gridder.Tag as HexahedronGridderSource;
+                gridderSource.IBlocks = dlg.ISlices;
+                gridderSource.JBlocks = dlg.JSlices;
+                gridderSource.KBlocks = dlg.KSlices;
+                gridderSource.Init();
+
+                TreeNode propNode = gridderSource.Tag as TreeNode;
+
+                this.ApplyGridBlockPropertyToGridder(propNode);
             }
 
 
@@ -1203,9 +1229,9 @@ namespace GridViewer
             TreeNode gridderNode = this.objectsTreeView.SelectedNode;
             HexahedronGrid gridder = gridderNode.Tag as HexahedronGrid;
             HexahedronGridderSource gridderSource = gridder.Tag as HexahedronGridderSource;
-            
+
             IJKSlicesEditorDialog dlg = new IJKSlicesEditorDialog();
-            dlg.Apply+=OnSceneIJKSlicesApply;
+            dlg.Apply += OnSceneIJKSlicesApply;
             dlg.Tag = gridderNode;
             dlg.StartPosition = FormStartPosition.CenterScreen;
 
@@ -1216,12 +1242,22 @@ namespace GridViewer
             dlg.JSlices = gridderSource.JBlocks;
             dlg.KSlices = gridderSource.KBlocks;
             dlg.Show();
-            
+
 
 
         }
 
-       
+        private void zAxisScaleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var dialog = new ZAxisScaleEditorDialog(this.scene.ZAxisScale);
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                this.scene.ZAxisScale = dialog.ZAxisScale;
+                this.scene.Invalidate();
+            }
+        }
+
+
 
 
 

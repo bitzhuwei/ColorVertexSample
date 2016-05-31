@@ -34,6 +34,9 @@ namespace Simlab.Well
             this.wellPipeElement = new WellPipe(pipe, pipeRadius, pipeColor, camera);
             this.wellName = name;
             this.textElement = new PointSpriteStringElement(camera, name, position, textColor, fontSize, maxRowWidth);
+
+            this.AddChild(this.wellPipeElement);
+            this.AddChild(this.textElement);
         }
 
 

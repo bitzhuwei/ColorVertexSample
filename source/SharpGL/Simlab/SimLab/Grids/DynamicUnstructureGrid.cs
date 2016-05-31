@@ -206,7 +206,7 @@ namespace SimLab
                 { throw new NotImplementedException(); }
             }
 
-            modelMatrix = mat4.identity();
+            modelMatrix = glm.scale(mat4.identity(), new vec3(1, 1, this.ZAxisScale));
             ShaderProgram shaderProgram = this.shaderProgram;
             //  Bind the shader, set the matrices.
             shaderProgram.Bind(gl);

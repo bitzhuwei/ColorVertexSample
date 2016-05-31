@@ -73,7 +73,7 @@ namespace SimLab
             gl.Enable(OpenGL.GL_TEXTURE_2D);
             this.texture.Bind(gl);
 
-            modelMatrix = mat4.identity();
+            modelMatrix = glm.scale(mat4.identity(), new vec3(1, 1, this.ZAxisScale));
             ShaderProgram shaderProgram = this.shaderProgram;
             //  Bind the shader, set the matrices.
             shaderProgram.Bind(gl);

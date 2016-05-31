@@ -214,7 +214,7 @@ namespace Simlab.Well
 
             mat4 viewMatrix = camera.GetViewMat4();
 
-            mat4 modelMatrix = mat4.identity();
+            mat4 modelMatrix = glm.scale(mat4.identity(), new vec3(1, 1, this.ZAxisScale));
 
             shaderProgram.Bind(gl);
 

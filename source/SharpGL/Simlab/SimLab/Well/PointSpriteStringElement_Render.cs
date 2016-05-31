@@ -38,7 +38,7 @@ namespace Simlab.Well
                 { throw new NotImplementedException(); }
             }
 
-            modelMatrix = mat4.identity();
+            modelMatrix = glm.scale(mat4.identity(), new vec3(1, 1, this.ZAxisScale));
 
             gl.Enable(OpenGL.GL_VERTEX_PROGRAM_POINT_SIZE);
             gl.Enable(OpenGL.GL_POINT_SPRITE_ARB);
