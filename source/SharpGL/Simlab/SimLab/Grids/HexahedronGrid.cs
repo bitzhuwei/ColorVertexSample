@@ -91,20 +91,20 @@ namespace SimLab
 
         #region IRenderable 成员
 
-        private BlendingSourceFactor sourceFactor = BlendingSourceFactor.One;
+        //private BlendingSourceFactor sourceFactor = BlendingSourceFactor.One;
 
-        public BlendingSourceFactor SourceFactor
-        {
-            get { return sourceFactor; }
-            set { sourceFactor = value; }
-        }
-        private BlendingDestinationFactor destFactor = BlendingDestinationFactor.DestinationAlpha;
+        //public BlendingSourceFactor SourceFactor
+        //{
+        //    get { return sourceFactor; }
+        //    set { sourceFactor = value; }
+        //}
+        //private BlendingDestinationFactor destFactor = BlendingDestinationFactor.DestinationAlpha;
 
-        public BlendingDestinationFactor DestFactor
-        {
-            get { return destFactor; }
-            set { destFactor = value; }
-        }
+        //public BlendingDestinationFactor DestFactor
+        //{
+        //    get { return destFactor; }
+        //    set { destFactor = value; }
+        //}
         void IRenderable.Render(OpenGL gl, RenderMode renderMode)
         {
             if (positionBuffer == null || colorBuffer == null) { return; }
@@ -120,10 +120,10 @@ namespace SimLab
 
             BeforeRendering(gl, renderMode);
 
-            gl.Disable(OpenGL.GL_DEPTH_TEST);
-            //gl.DepthMask(0);
-            gl.Enable(OpenGL.GL_BLEND);
-            gl.BlendFunc(this.sourceFactor, this.destFactor);
+            //gl.Disable(OpenGL.GL_DEPTH_TEST);
+            ////gl.DepthMask(0);
+            //gl.Enable(OpenGL.GL_BLEND);
+            //gl.BlendFunc(this.sourceFactor, this.destFactor);
 
             if (this.RenderGridWireframe && this.vertexArrayObject != null)
             {
@@ -186,9 +186,9 @@ namespace SimLab
                 }
             }
 
-            gl.Disable(OpenGL.GL_BLEND);
-            //gl.DepthMask(1);
-            gl.Enable(OpenGL.GL_DEPTH_TEST);
+            //gl.Disable(OpenGL.GL_BLEND);
+            ////gl.DepthMask(1);
+            //gl.Enable(OpenGL.GL_DEPTH_TEST);
 
             AfterRendering(gl, renderMode);
         }
