@@ -40,7 +40,7 @@
     <DocumentationFile>bin\Release\SharpGL.Serialization.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>Serialization64.pfx</AssemblyOriginatorKeyFile>

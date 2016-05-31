@@ -51,15 +51,12 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>simlab64.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SharpGL.WinForms">
-      <HintPath>..\..\..\..\..\..\simba\packages\simlab\SharpGL.WinForms.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -156,6 +153,10 @@
     <ProjectReference Include="..\..\Core\SharpGL.SceneGraph\SharpGL.SceneGraph.csproj">
       <Project>{47bcaa39-edad-4404-b6bd-4742b0abb523}</Project>
       <Name>SharpGL.SceneGraph</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\SharpGL.WinForms\SharpGL.WinForms.csproj">
+      <Project>{b2984a6d-ad1c-4be9-94ab-ba002b338751}</Project>
+      <Name>SharpGL.WinForms</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Core\SharpGLM\SharpGLM.csproj">
       <Project>{d15e2fee-512e-4804-8687-bcbdbedbeb7b}</Project>

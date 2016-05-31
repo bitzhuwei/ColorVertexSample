@@ -42,7 +42,7 @@
     <DocumentationFile>bin\Release\SharpGL.SceneGraph.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>SceneGraph.pfx</AssemblyOriginatorKeyFile>
