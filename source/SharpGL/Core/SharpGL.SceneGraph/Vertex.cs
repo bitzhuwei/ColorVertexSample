@@ -165,7 +165,7 @@ namespace SharpGL.SceneGraph
         }
 
         public static implicit operator vec4(Vertex v){
-           return new vec4(v.x,v.y,v.z,0.0f);
+           return new vec4(v.x,v.y,v.z,1.0f);
         }
 
         public static implicit operator Vertex(vec4 v){

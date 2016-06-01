@@ -226,7 +226,11 @@ namespace SimLab.GridSource
             float dy = 0.0f-center.Y;
             float dz = 0.0f-center.Z;
 
-            this.TranslateMatrix =  glm.translate(identityMat,new vec3(dx,dy,dz));
+            this.TranslateMatrix=  glm.translate(identityMat,new vec3(dx,dy,dz));
+           
+
+            Vertex newcenter = this.TranslateMatrix*center;
+            System.Console.WriteLine(center);
             Vertex destMin = this.TranslateMatrix*this.SourceActiveBounds.Min;
             Vertex destMax = this.TranslateMatrix*this.SourceActiveBounds.Max;
 
