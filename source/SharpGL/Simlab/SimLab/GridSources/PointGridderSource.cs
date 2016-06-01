@@ -130,7 +130,14 @@ namespace SimLab.GridSource
 
         protected override SharpGL.SceneComponent.Rectangle3D InitSourceActiveBounds()
         {
-            throw new NotImplementedException();
+            if(positions == null||this.positions.Length <=0)
+              throw new ArgumentException("Points has No Value");
+            Vertex v = positions[0];
+            SharpGL.SceneComponent.Rectangle3D rect3d = new SharpGL.SceneComponent.Rectangle3D(v,v);
+            for(int i=0; i<this.positions.Length; i++){
+               rect3d.Union(this.positions[i]);
+            }
+            return rect3d;
         }
 
     }

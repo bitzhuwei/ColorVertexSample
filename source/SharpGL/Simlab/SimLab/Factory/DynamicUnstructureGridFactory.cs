@@ -38,10 +38,10 @@ namespace SimLab.SimGrid.Factory
                 Vertex[] positions = src.Nodes;
                 for (int i = 0; i < src.ElementNum; i++)
                 {
-                    tets[i].p1 = positions[matrixIndices[i][0]-1];
-                    tets[i].p2 = positions[matrixIndices[i][1]-1];
-                    tets[i].p3 = positions[matrixIndices[i][2]-1];
-                    tets[i].p4 = positions[matrixIndices[i][3]-1];
+                    tets[i].p1 = src.TranslateMatrix*positions[matrixIndices[i][0]-1];
+                    tets[i].p2 = src.TranslateMatrix*positions[matrixIndices[i][1]-1];
+                    tets[i].p3 = src.TranslateMatrix*positions[matrixIndices[i][2]-1];
+                    tets[i].p4 = src.TranslateMatrix*positions[matrixIndices[i][3]-1];
                 }
 
                 matrixIndicesBuffer = new TetrahedronMatrixIndexBuffer();
@@ -71,9 +71,9 @@ namespace SimLab.SimGrid.Factory
                 TrianglePosition* triangles = (TrianglePosition*)matrixPositions.Data;
                 for (int i = 0; i < src.ElementNum; i++)
                 {
-                    triangles[i].P1 = positions[matrixIndices[i][0]-1];
-                    triangles[i].P2 = positions[matrixIndices[i][1]-1];
-                    triangles[i].P3 = positions[matrixIndices[i][2]-1];
+                    triangles[i].P1 = src.TranslateMatrix*positions[matrixIndices[i][0]-1];
+                    triangles[i].P2 = src.TranslateMatrix*positions[matrixIndices[i][1]-1];
+                    triangles[i].P3 = src.TranslateMatrix*positions[matrixIndices[i][2]-1];
                 }
             }
 
@@ -89,12 +89,12 @@ namespace SimLab.SimGrid.Factory
                 {
                     try
                     {
-                        prism[i].P1 = positions[matrixIndices[i][0]-1];
-                        prism[i].P2 = positions[matrixIndices[i][1]-1];
-                        prism[i].P3 = positions[matrixIndices[i][2]-1];
-                        prism[i].P4 = positions[matrixIndices[i][3]-1];
-                        prism[i].P5 = positions[matrixIndices[i][4]-1];
-                        prism[i].P6 = positions[matrixIndices[i][5]-1];
+                        prism[i].P1 = src.TranslateMatrix*positions[matrixIndices[i][0]-1];
+                        prism[i].P2 = src.TranslateMatrix*positions[matrixIndices[i][1]-1];
+                        prism[i].P3 = src.TranslateMatrix*positions[matrixIndices[i][2]-1];
+                        prism[i].P4 = src.TranslateMatrix*positions[matrixIndices[i][3]-1];
+                        prism[i].P5 = src.TranslateMatrix*positions[matrixIndices[i][4]-1];
+                        prism[i].P6 = src.TranslateMatrix*positions[matrixIndices[i][5]-1];
                     }
                     catch (IndexOutOfRangeException e)
                     {
@@ -138,9 +138,9 @@ namespace SimLab.SimGrid.Factory
                 TrianglePosition* triangles = (TrianglePosition*)fractionPositionsBuffer.Data;
                 for (int i = 0; i < triangleCount; i++)
                 {
-                    triangles[i].P1 = positions[triangleIndices[i][0]-1];
-                    triangles[i].P2 = positions[triangleIndices[i][1]-1];
-                    triangles[i].P3 = positions[triangleIndices[i][2]-1];
+                    triangles[i].P1 = src.TranslateMatrix*positions[triangleIndices[i][0]-1];
+                    triangles[i].P2 = src.TranslateMatrix*positions[triangleIndices[i][1]-1];
+                    triangles[i].P3 = src.TranslateMatrix*positions[triangleIndices[i][2]-1];
                 }
             }
 
@@ -160,8 +160,8 @@ namespace SimLab.SimGrid.Factory
                 int[][] lineIndices = src.Fractures;
                 for (int i = 0; i < lineCount; i++)
                 {
-                    lines[i].P1 = positions[lineIndices[i][0]-1];
-                    lines[i].P2 = positions[lineIndices[i][1]-1];
+                    lines[i].P1 = src.TranslateMatrix*positions[lineIndices[i][0]-1];
+                    lines[i].P2 = src.TranslateMatrix*positions[lineIndices[i][1]-1];
                 }
             }
 
@@ -175,18 +175,18 @@ namespace SimLab.SimGrid.Factory
                 int[][] quadIndices = src.Fractures;
                 for (int i = 0; i < fractureCount; i++)
                 {
-                    quad[i].P1 = positions[quadIndices[i][0]-1];
-                    quad[i].P2 = positions[quadIndices[i][1]-1];
-                    quad[i].P3 = positions[quadIndices[i][3]-1];
-                    quad[i].P4 = positions[quadIndices[i][2]-1];
+                    quad[i].P1 = src.TranslateMatrix*positions[quadIndices[i][0]-1];
+                    quad[i].P2 = src.TranslateMatrix*positions[quadIndices[i][1]-1];
+                    quad[i].P3 = src.TranslateMatrix*positions[quadIndices[i][3]-1];
+                    quad[i].P4 = src.TranslateMatrix*positions[quadIndices[i][2]-1];
                 }
             }
 
             DynamicUnstructureGeometry geometry = new DynamicUnstructureGeometry(matrixPositions);
             geometry.MatrixIndices = matrixIndicesBuffer;
             geometry.FracturePositions = fractionPositionsBuffer;
-            geometry.Min = src.Min;
-            geometry.Max = src.Max;
+            geometry.Min = src.TransformedActiveBounds.Min;
+            geometry.Max = src.TransformedActiveBounds.Max;
             return geometry;
         }
         /// <summary>

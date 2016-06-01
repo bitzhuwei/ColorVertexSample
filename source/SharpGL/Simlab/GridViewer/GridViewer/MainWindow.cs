@@ -593,7 +593,7 @@ namespace GridViewer
         /// <param name="min"></param>
         /// <param name="max"></param>
         /// <returns></returns>
-        private Well3DHelper CreateWell3DHelper(GridderSource gridderSource, ScientificCamera Camera, Vertex min, Vertex max)
+        private Well3DHelper CreateWell3DHelper(GridderSource gridderSource, ScientificCamera Camera)
         {
 
             if (gridderSource == null)
@@ -601,11 +601,11 @@ namespace GridViewer
 
             if (gridderSource is HexahedronGridderSource)
             {
-                return new HexahedronGridderWell3DHelper((HexahedronGridderSource)gridderSource, min, max, Camera);
+                return new HexahedronGridderWell3DHelper((HexahedronGridderSource)gridderSource, Camera);
             }
             if (gridderSource is PointGridderSource)
             {
-                return new PointSetGridderWell3DHelper((PointGridderSource)gridderSource, min, max, Camera);
+                return new PointSetGridderWell3DHelper((PointGridderSource)gridderSource,Camera);
             }
             if (gridderSource is DynamicUnstructuredGridderSource)
                 throw new ArgumentException("Simba grid can not support create well 3d display.");
@@ -622,13 +622,9 @@ namespace GridViewer
             {
                 throw new ArgumentException("not found WELLSPECS info for the well");
             }
-
-            Vertex min = gridderSource.Min;
-            Vertex max = gridderSource.Max;
             ScientificCamera camera = sceneDisplay.Scene.CurrentCamera;
-
             Well3DHelper well3DHelper;
-            well3DHelper = CreateWell3DHelper(gridderSource, camera, min, max);
+            well3DHelper = CreateWell3DHelper(gridderSource, camera);
             return well3DHelper.Convert(wellSpecsList, wellCompatList);
 
         }

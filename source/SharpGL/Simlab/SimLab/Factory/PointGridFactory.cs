@@ -34,27 +34,17 @@ namespace SimLab.GridSource.Factory
                 Vertex* cells = (Vertex*)positions.Data;
                 for (int gridIndex = 0; gridIndex < dimSize; gridIndex++)
                 {
-                    Vertex p = src.Positions[gridIndex];
+                    Vertex p = src.TranslateMatrix*src.Positions[gridIndex];
                     cells[gridIndex] = p;
-                    if (!isSet)
-                    {
-                        minVertex = p;
-                        maxVertex = p;
-                        isSet = true;
-                    }
+                   
 
-
-                    if (src.IsActiveBlock(gridIndex))
-                    {
-                        minVertex = SimLab.SimGrid.helper.VertexHelper.MinVertex(minVertex, p);
-                        maxVertex = SimLab.SimGrid.helper.VertexHelper.MaxVertex(maxVertex, p);
-                    }
+                 
                 }
             }
             radiusBuffer = this.CreateRadiusBufferData(src, src.Radius);
             PointMeshGeometry3D mesh = new PointMeshGeometry3D(positions, radiusBuffer, dimSize);
-            mesh.Max = maxVertex;
-            mesh.Min = minVertex;
+            mesh.Max = src.TransformedActiveBounds.Max;
+            mesh.Min = src.TransformedActiveBounds.Min;
             return mesh;
         }
 

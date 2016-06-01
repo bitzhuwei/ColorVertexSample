@@ -228,7 +228,14 @@ namespace SimLab.SimGrid
 
         protected override SharpGL.SceneComponent.Rectangle3D InitSourceActiveBounds()
         {
-            throw new NotImplementedException();
+            if(this.NodeNum <=0)
+              throw new ArgumentException("No nodes found");
+            Vertex[] nodes = this.Nodes;
+            SharpGL.SceneComponent.Rectangle3D rect = new SharpGL.SceneComponent.Rectangle3D(nodes[0],nodes[0]);
+            for(int i=0; i<nodes.Length; i++){
+               rect.Union(nodes[i]);
+            }
+            return rect;
         }
 
 
