@@ -100,9 +100,30 @@ namespace SimLab
         {
             ////TODO:如果用此方式，则必须先将此对象加入scene树，然后再调用Init
             //OpenGL gl = this.TraverseToRootElement().ParentScene.OpenGL;
-            positionBuffer = new uint[1];
-            positionBuffer[0] = CreateVertexBufferObject(OpenGL.GL_ARRAY_BUFFER, geometry.Positions, OpenGL.GL_STATIC_DRAW);
+            SetPositions(geometry.Positions);
+        }
 
+        public void SetPositions(PositionBuffer positions)
+        {
+            ////TODO:如果用此方式，则必须先将此对象加入scene树，然后再调用Init
+            //OpenGL gl = this.TraverseToRootElement().ParentScene.OpenGL;
+            if (positionBuffer == null)
+            {
+                positionBuffer = new uint[1];
+                positionBuffer[0] = CreateVertexBufferObject(OpenGL.GL_ARRAY_BUFFER, positions, OpenGL.GL_STREAM_DRAW);
+            }
+            else
+            {
+                UpdateTextureCoords(positions);
+            }
+        }
+
+        protected void UpdatePositions(PositionBuffer positions)
+        {
+            gl.BindBuffer(OpenGL.GL_ARRAY_BUFFER, this.positionBuffer[0]);
+            IntPtr destVisibles = gl.MapBuffer(OpenGL.GL_ARRAY_BUFFER, OpenGL.GL_READ_WRITE);
+            MemoryHelper.CopyMemory(destVisibles, positions.Data, (uint)positions.SizeInBytes);
+            gl.UnmapBuffer(OpenGL.GL_ARRAY_BUFFER);
         }
 
         public void SetTextureCoods(VertexBuffer textureCoords)
@@ -147,8 +168,10 @@ namespace SimLab
         /// <summary>
         /// used store any object associate with the simlab grid source
         /// </summary>
-        public object Tag {
-          get;set;
+        public object Tag
+        {
+            get;
+            set;
         }
 
 
