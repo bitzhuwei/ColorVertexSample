@@ -191,6 +191,10 @@
     <Compile Include="Shaders\VertexShader.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SharpGLM\SharpGLM.csproj">
+      <Project>{d15e2fee-512e-4804-8687-bcbdbedbeb7b}</Project>
+      <Name>SharpGLM</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharpGL\SharpGL.csproj">
       <Project>{5EF45533-E2C7-46F2-B4A3-B8F36CD406E0}</Project>
       <Name>SharpGL</Name>

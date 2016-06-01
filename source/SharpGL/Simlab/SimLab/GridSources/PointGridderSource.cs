@@ -88,7 +88,6 @@ namespace SimLab.GridSource
                     {
                         visibles[i] = 1;
                     }
-
                 }
                 return visibles;
             }
@@ -123,6 +122,16 @@ namespace SimLab.GridSource
             return this.Factory.CreateRadiusBufferData(this, radius);
         }
 
+
+        protected override void InitGridCoordinates()
+        {
+            //do nothing;
+        }
+
+        protected override SharpGL.SceneComponent.Rectangle3D InitSourceActiveBounds()
+        {
+            throw new NotImplementedException();
+        }
 
     }
 }

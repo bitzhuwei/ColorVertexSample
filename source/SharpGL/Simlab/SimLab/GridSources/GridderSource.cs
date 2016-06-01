@@ -1,4 +1,6 @@
-﻿using SharpGL.SceneGraph;
+﻿using GlmNet;
+using SharpGL.SceneComponent;
+using SharpGL.SceneGraph;
 using SimLab.GridSource.Factory;
 using SimLab.SimGrid;
 using SimLab.VertexBuffers;
@@ -184,6 +186,11 @@ namespace SimLab.GridSource
         }
 
         /// <summary>
+        /// 计算初始Bounds,
+        /// </summary>
+        protected abstract Rectangle3D InitSourceActiveBounds();
+
+        /// <summary>
         /// 初始化
         /// </summary>
         public virtual void Init()
@@ -196,7 +203,7 @@ namespace SimLab.GridSource
 
             if (this.ActNums == null)
             {
-                this.ActNums = InitIntArray(this.DimenSize);
+                this.ActNums = InitIntArray(this.DimenSize,1);
             }
             if (this.zeroVisibles == null)
             {
@@ -204,11 +211,28 @@ namespace SimLab.GridSource
             }
             if (this.invisibleTextures == null)
             {
-                //初始化不可视
-                this.invisibleTextures = InitFloatArray(this.DimenSize, 2);
+               //初始化不可视
+               this.invisibleTextures = InitFloatArray(this.DimenSize, 2);
             }
 
-            
+            this.InitGridCoordinates();
+
+            this.SourceActiveBounds = this.InitSourceActiveBounds();
+            //初始化
+            mat4  identityMat = mat4.identity();
+            Vertex center =this.SourceActiveBounds.Center;
+            //矩形三角形移动到中心点
+            float dx = 0.0f-center.X;
+            float dy = 0.0f-center.Y;
+            float dz = 0.0f-center.Z;
+
+            this.TranslateMatrix =  glm.translate(identityMat,new vec3(dx,dy,dz));
+            Vertex destMin = this.TranslateMatrix*this.SourceActiveBounds.Min;
+            Vertex destMax = this.TranslateMatrix*this.SourceActiveBounds.Max;
+
+            //变换后的三维矩形六面体
+            this.TransformedActiveBounds = new Rectangle3D(destMin,destMax);
+
         }
 
         /// <summary>
@@ -267,6 +291,10 @@ namespace SimLab.GridSource
              return gridVisibles;
         }
 
+        /// <summary>
+        /// 初始化描述网格的坐标
+        /// </summary>
+        protected abstract void InitGridCoordinates();
 
         /// <summary>
         /// 快速生成默认的网格Texture,值为空(值大于1）
@@ -279,17 +307,50 @@ namespace SimLab.GridSource
             return none;
         }
 
+        /// <summary>
+        /// 模型范围的边界最小值
+        /// </summary>
         public Vertex Min
         {
             get;
             internal set;
         }
 
-
+        /// <summary>
+        /// 模型范围的边界最大值
+        /// </summary>
         public Vertex Max
         {
             get;
             internal set;
+        }
+
+
+        /// <summary>
+        /// 原始数据的三维矩形边界
+        /// </summary>
+        public Rectangle3D SourceActiveBounds{
+           get;
+           internal set;
+        }
+
+        /// <summary>
+        /// SourceActiveBounds到DestActiveBounds的
+        /// </summary>
+        public mat4 TranslateMatrix{
+
+            get;
+            internal set;
+
+        }
+
+
+        /// <summary>
+        /// 中心点在坐标原点
+        /// </summary>
+        public Rectangle3D TransformedActiveBounds{
+           get;
+           internal set;
         }
 
         public object Tag{

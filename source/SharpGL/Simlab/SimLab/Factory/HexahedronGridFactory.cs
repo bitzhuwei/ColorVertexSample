@@ -17,9 +17,7 @@ namespace SimLab.GridSource.Factory
         public override MeshBase CreateMesh(GridderSource source)
         {
             HexahedronGridderSource src = (HexahedronGridderSource)source;
-            Vertex minVertex = new Vertex();
-            Vertex maxVertex = new Vertex();
-            bool isSet = false;
+
             PositionBuffer positions = new HexahedronPositionBuffer();
             HalfHexahedronIndexBuffer halfHexahedronIndices = new HalfHexahedronIndexBuffer();
             int dimSize = src.DimenSize;
@@ -33,48 +31,14 @@ namespace SimLab.GridSource.Factory
                 for (int gridIndex = 0; gridIndex < dimSize; gridIndex++)
                 {
                     src.InvertIJK(gridIndex, out I, out J, out K);
-                    cell[gridIndex].FLT = src.PointFLT(I, J, K);
-                    cell[gridIndex].FRT = src.PointFRT(I, J, K);
-                    cell[gridIndex].BRT = src.PointBRT(I, J, K);
-                    cell[gridIndex].BLT = src.PointBLT(I, J, K);
-                    cell[gridIndex].FLB = src.PointFLB(I, J, K);
-                    cell[gridIndex].FRB = src.PointFRB(I, J, K);
-                    cell[gridIndex].BRB = src.PointBRB(I, J, K);
-                    cell[gridIndex].BLB = src.PointBLB(I, J, K);
-
-                    if (!isSet && src.IsActiveBlock(gridIndex))
-                    {
-                        minVertex = cell[gridIndex].FLT;
-                        maxVertex = minVertex;
-                        isSet = true;
-                    }
-
-                    if (isSet && src.IsActiveBlock(gridIndex))
-                    {
-                        minVertex = SimLab.SimGrid.helper.VertexHelper.MinVertex(minVertex, cell[gridIndex].FLT);
-                        maxVertex = SimLab.SimGrid.helper.VertexHelper.MaxVertex(maxVertex, cell[gridIndex].FLT);
-
-                        minVertex = SimLab.SimGrid.helper.VertexHelper.MinVertex(minVertex, cell[gridIndex].FRT);
-                        maxVertex = SimLab.SimGrid.helper.VertexHelper.MaxVertex(maxVertex, cell[gridIndex].FRT);
-
-                        minVertex = SimLab.SimGrid.helper.VertexHelper.MinVertex(minVertex, cell[gridIndex].BRT);
-                        maxVertex = SimLab.SimGrid.helper.VertexHelper.MaxVertex(maxVertex, cell[gridIndex].BRT);
-
-                        minVertex = SimLab.SimGrid.helper.VertexHelper.MinVertex(minVertex, cell[gridIndex].BLT);
-                        maxVertex = SimLab.SimGrid.helper.VertexHelper.MaxVertex(maxVertex, cell[gridIndex].BLT);
-
-                        minVertex = SimLab.SimGrid.helper.VertexHelper.MinVertex(minVertex, cell[gridIndex].FLB);
-                        maxVertex = SimLab.SimGrid.helper.VertexHelper.MaxVertex(maxVertex, cell[gridIndex].FLB);
-
-                        minVertex = SimLab.SimGrid.helper.VertexHelper.MinVertex(minVertex, cell[gridIndex].FRB);
-                        maxVertex = SimLab.SimGrid.helper.VertexHelper.MaxVertex(maxVertex, cell[gridIndex].FRB);
-
-                        minVertex = SimLab.SimGrid.helper.VertexHelper.MinVertex(minVertex, cell[gridIndex].BRB);
-                        maxVertex = SimLab.SimGrid.helper.VertexHelper.MaxVertex(maxVertex, cell[gridIndex].BRB);
-
-                        minVertex = SimLab.SimGrid.helper.VertexHelper.MinVertex(minVertex, cell[gridIndex].BLB);
-                        maxVertex = SimLab.SimGrid.helper.VertexHelper.MaxVertex(maxVertex, cell[gridIndex].BLB);
-                    }
+                    cell[gridIndex].FLT = src.TranslateMatrix * src.PointFLT(I, J, K);
+                    cell[gridIndex].FRT = src.TranslateMatrix * src.PointFRT(I, J, K);
+                    cell[gridIndex].BRT = src.TranslateMatrix * src.PointBRT(I, J, K);
+                    cell[gridIndex].BLT = src.TranslateMatrix * src.PointBLT(I, J, K);
+                    cell[gridIndex].FLB = src.TranslateMatrix * src.PointFLB(I, J, K);
+                    cell[gridIndex].FRB = src.TranslateMatrix * src.PointFRB(I, J, K);
+                    cell[gridIndex].BRB = src.TranslateMatrix * src.PointBRB(I, J, K);
+                    cell[gridIndex].BLB = src.TranslateMatrix * src.PointBLB(I, J, K);
                 }
 
                 //网格个数*每个六面体的面数*描述每个六面体的三角形个数
@@ -108,8 +72,8 @@ namespace SimLab.GridSource.Factory
                 }
 
                 HexahedronMeshGeometry3D mesh = new HexahedronMeshGeometry3D(positions, halfHexahedronIndices);
-                mesh.Max = maxVertex;
-                mesh.Min = minVertex;
+                mesh.Max = source.TransformedActiveBounds.Min;
+                mesh.Min = source.TransformedActiveBounds.Max;
                 return mesh;
             }
         }

@@ -244,6 +244,8 @@ namespace SimLab.GridSource
             return sliceVisibles;
         }
 
+       
+
         /// <summary>
         /// 初始化切片可视性
         /// </summary>
@@ -259,6 +261,34 @@ namespace SimLab.GridSource
         public void RefreashSlices()
         {
             this.InitSliceVisibles();
+        }
+
+
+        protected override SharpGL.SceneComponent.Rectangle3D InitSourceActiveBounds()
+        {
+            bool initFlag = false;
+            SharpGL.SceneComponent.Rectangle3D rect = new SharpGL.SceneComponent.Rectangle3D();
+            int i,j,k;
+            for(int gridIndex=0; gridIndex<this.DimenSize;gridIndex++){
+               
+               if(this.IsActiveBlock(gridIndex)){
+                 
+                 this.InvertIJK(gridIndex,out i,out j,out k);
+                 if(!initFlag){
+                    initFlag = true;
+                    rect = new SharpGL.SceneComponent.Rectangle3D(PointFLB(i,j,k),PointBRT(i,j,k));
+                 }
+                 rect.Union(PointFLT(i,j,k));
+                 rect.Union(PointFRT(i,j,k));
+                 rect.Union(PointBLT(i,j,k));
+                 rect.Union(PointBRT(i,j,k));
+                 rect.Union(PointFLB(i,j,k));
+                 rect.Union(PointFRB(i,j,k));
+                 rect.Union(PointBLB(i,j,k));
+                 rect.Union(PointBRB(i,j,k));
+               }
+            }
+            return rect;
         }
 
     }

@@ -165,8 +165,12 @@ namespace SimLab.GridSource
         /// <summary>
         /// 初始化网格坐标
         /// </summary>
-        protected void InitGridCoordinates()
+        protected override void InitGridCoordinates()
         {
+            if (this.TOPS == null)
+            {
+               this.TOPS = InitFloatArray(this.DimenSize, 0);
+            }
                 //xcoords;
             int coordSize = (this.NX + 1) * (this.NY + 1) * (this.NZ + 1);
             float[] coordX  = new float[coordSize];
@@ -257,18 +261,11 @@ namespace SimLab.GridSource
             this.ycoords = coordY;
             this.zcoords = coordZ;
             this.coordIndexer = coordIndexer;
-
         }
 
         public override void Init()
         {
-               base.Init();
-               //初始化TOPSZ;
-               if(this.TOPS == null){
-                 this.TOPS = InitFloatArray(this.DimenSize,0);
-               }
-               //初始化Coordinates
-               InitGridCoordinates();
+             base.Init();        
         }
 
     }

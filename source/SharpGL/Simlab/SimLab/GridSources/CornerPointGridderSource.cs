@@ -227,11 +227,14 @@ namespace SimLab.GridSource
             
         }
 
+        protected override void InitGridCoordinates()
+        {
+            
+        }
+
         public override void Init()
         {
-            if(this.ActNums == null){
-              this.ActNums = InitIntArray(this.DimenSize,1);              
-            }
+          
             if (this.ZCORN != null)
             {
                 //检查双重介值
@@ -264,11 +267,6 @@ namespace SimLab.GridSource
                 }
             }
             base.Init();
-           
-            
-              
-
-
         }
 
     }

@@ -114,6 +114,7 @@
     <Compile Include="Camera\CameraTypes.cs" />
     <Compile Include="MySharpGL\ColorCodedPickingSceneControlHelper.cs" />
     <Compile Include="ColorCodedPicking\SharedStageInfo.cs" />
+    <Compile Include="Rectangle3D.cs" />
     <Compile Include="SimpleUI\Axis\CoordinateSystem.cs" />
     <Compile Include="SimpleUI\ColorIndicator\ColorIndicatorBar.cs">
       <SubType>Code</SubType>

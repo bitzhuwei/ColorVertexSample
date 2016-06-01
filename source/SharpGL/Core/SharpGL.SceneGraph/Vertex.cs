@@ -5,6 +5,7 @@ using System.Text;
 using System.ComponentModel;
 using SharpGL.SceneGraph.NETDesignSurface.Converters;
 using System.Xml.Serialization;
+using GlmNet;
 
 namespace SharpGL.SceneGraph
 {
@@ -153,6 +154,22 @@ namespace SharpGL.SceneGraph
         public static Vertex operator /(Vertex lhs, float rhs)
         {
             return new Vertex(lhs.X / rhs, lhs.Y / rhs, lhs.Z / rhs);
+        }
+
+        public static implicit  operator vec3(Vertex v){
+            return new vec3(v.x,v.y,v.z);
+        }
+
+        public static implicit operator  Vertex(vec3 v3){
+           return new Vertex(v3.x,v3.y,v3.z);
+        }
+
+        public static implicit operator vec4(Vertex v){
+           return new vec4(v.x,v.y,v.z,0.0f);
+        }
+
+        public static implicit operator Vertex(vec4 v){
+           return new Vertex(v.x,v.y,v.z);
         }
 
         /// <summarY>

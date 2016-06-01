@@ -409,11 +409,10 @@ namespace GridViewer
                 gridder.Init(geometry);
                 gridder.SetTexture(textureBitmap);
 
-
                 TexCoordBuffer textureCoords = src.CreateTextureCoordinates(gbp.Positions, gbp.Values, (float)axisMin, (float)axisMax);
                 gridder.SetTextureCoods(textureCoords);
-                min = geometry.Min;
-                max = geometry.Max;
+                min = src.TransformedActiveBounds.Min;
+                max = src.TransformedActiveBounds.Max;
                 return gridder;
             }
 
@@ -538,7 +537,7 @@ namespace GridViewer
                 {
                     this.objectsTreeView.ExpandAll();
                     modelContainer.AddChild(gridder);
-                    modelContainer.BoundingBox.SetBounds(boundMin, boundMax);
+                    modelContainer.BoundingBox.SetBounds(gridderSource.TransformedActiveBounds.Min,gridderSource.TransformedActiveBounds.Max);
                     this.scene.ViewType = ViewTypes.UserView;
                     gridderNode.Tag = gridder;
                     gridder.Tag = gridderSource;

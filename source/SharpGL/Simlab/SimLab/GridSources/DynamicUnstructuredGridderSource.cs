@@ -208,6 +208,12 @@ namespace SimLab.SimGrid
         }
 
 
+        protected override void InitGridCoordinates()
+        {
+            //do nothing
+        }
+
+
         public new Vertex Max
         {
             get
@@ -218,6 +224,11 @@ namespace SimLab.SimGrid
             {
                 base.Max = value;
             }
+        }
+
+        protected override SharpGL.SceneComponent.Rectangle3D InitSourceActiveBounds()
+        {
+            throw new NotImplementedException();
         }
 
 
