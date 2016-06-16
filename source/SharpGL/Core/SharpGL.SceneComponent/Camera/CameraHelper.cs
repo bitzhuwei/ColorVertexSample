@@ -241,31 +241,39 @@ namespace SharpGL.SceneComponent
                     break;
                 case ViewTypes.Top:
                     target2Position = new Vertex(0, 0,
-                        coordinateSystem == CoordinateSystem.LeftHand ? 1 : -1
+                        coordinateSystem == CoordinateSystem.LeftHand ? -1 : 1
                         );
                     upVector = new Vertex(0, -1, 0);
                     break;
                 case ViewTypes.Bottom:
                     target2Position = new Vertex(0, 0,
-                        coordinateSystem == CoordinateSystem.LeftHand ? -1 : 1
+                        coordinateSystem == CoordinateSystem.LeftHand ? 1 : -1
                         );
-                    upVector = new Vertex(0, -1, 0);
+                    upVector = new Vertex(0, 1, 0);
                     break;
                 case ViewTypes.Left:
-                    target2Position = new Vertex(-1, 0, 0);
-                    upVector = new Vertex(0, 0, -1);
+                    target2Position = new Vertex(
+                        coordinateSystem == CoordinateSystem.LeftHand ? 1 : -1,
+                        0, 0);
+                    upVector = new Vertex(0, 0, 1);
                     break;
                 case ViewTypes.Right:
-                    target2Position = new Vertex(1, 0, 0);
-                    upVector = new Vertex(0, 0, -1);
+                    target2Position = new Vertex(
+                        coordinateSystem == CoordinateSystem.LeftHand ? -1 : 1,
+                        0, 0);
+                    upVector = new Vertex(0, 0, 1);
                     break;
                 case ViewTypes.Front:
-                    target2Position = new Vertex(0, 1, 0);
-                    upVector = new Vertex(0, 0, -1);
+                    target2Position = new Vertex(0,
+                        coordinateSystem == CoordinateSystem.LeftHand ? 1 : -1,
+                        0);
+                    upVector = new Vertex(0, 0, 1);
                     break;
                 case ViewTypes.Back:
-                    target2Position = new Vertex(0, -1, 0);
-                    upVector = new Vertex(0, 0, -1);
+                    target2Position = new Vertex(0,
+                        coordinateSystem == CoordinateSystem.LeftHand ? -1 : 1,
+                        0);
+                    upVector = new Vertex(0, 0, 1);
                     break;
                 default:
                     throw new NotImplementedException(string.Format("new value({0}) of EViewType is not implemented!", viewType));
