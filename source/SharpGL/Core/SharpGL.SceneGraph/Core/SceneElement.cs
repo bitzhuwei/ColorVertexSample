@@ -31,7 +31,7 @@ namespace SharpGL.SceneGraph.Core
     public partial class SceneElement
     {
 
-        private float zAxisScale = 1.0f;
+        private float zAxisScale = -1.0f;
 
         public float ZAxisScale
         {
