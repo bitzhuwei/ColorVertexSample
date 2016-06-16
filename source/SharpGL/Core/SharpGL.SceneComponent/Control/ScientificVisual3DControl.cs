@@ -374,12 +374,12 @@ namespace SharpGL.SceneComponent
                 //if (camera.CameraType == CameraTypes.Perspecitive)
                 {
                     IPerspectiveViewCamera perspecitive = camera;
-                    perspecitive.ApplyViewType(this.modelContainer.BoundingBox, this.OpenGL, value);
+                    perspecitive.ApplyViewType(this.modelContainer.BoundingBox, this.OpenGL, value, this.CoordinateSystem);
                 }
                 //else if (camera.CameraType == CameraTypes.Ortho)
                 {
                     IOrthoViewCamera orthoCamera = camera;
-                    orthoCamera.ApplyViewType(this.modelContainer.BoundingBox, this.OpenGL, value);
+                    orthoCamera.ApplyViewType(this.modelContainer.BoundingBox, this.OpenGL, value, this.CoordinateSystem);
                 }
                 //else
                 {
