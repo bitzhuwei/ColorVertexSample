@@ -235,7 +235,7 @@ namespace SharpGL.SceneComponent
                     //UserView 定义为从顶视图开始，绕X 轴旋转30 度，在绕Z 轴45 度，并且能看到整个模型的虚拟模型空间。
                     if (coordinateSystem == CoordinateSystem.LeftHand)
                     {
-                        target2Position = new Vertex(1, 1, 1);
+                        target2Position = new Vertex(-1, -1, 1);
                         target2Position.Normalize();
                         upVector = new Vertex(1, 1, 2);
                         upVector.Normalize();
