@@ -233,11 +233,20 @@ namespace SharpGL.SceneComponent
             {
                 case ViewTypes.UserView:
                     //UserView 定义为从顶视图开始，绕X 轴旋转30 度，在绕Z 轴45 度，并且能看到整个模型的虚拟模型空间。
-                    target2Position = new Vertex((float)Math.Sqrt(3), (float)Math.Sqrt(3),
-                        coordinateSystem == CoordinateSystem.LeftHand ? 1 : -1
-                        );
-                    target2Position.Normalize();
-                    upVector = new Vertex(0, 0, -1);
+                    if (coordinateSystem == CoordinateSystem.LeftHand)
+                    {
+                        target2Position = new Vertex(1, 1, 1);
+                        target2Position.Normalize();
+                        upVector = new Vertex(1, 1, 2);
+                        upVector.Normalize();
+                    }
+                    else
+                    {
+                        target2Position = new Vertex(1, 1, 1);
+                        target2Position.Normalize();
+                        upVector = new Vertex(1, 1, -2);
+                        upVector.Normalize();
+                    }
                     break;
                 case ViewTypes.Top:
                     target2Position = new Vertex(0, 0,
@@ -263,7 +272,7 @@ namespace SharpGL.SceneComponent
                     target2Position = new Vertex(
                         coordinateSystem == CoordinateSystem.LeftHand ? -1 : 1,
                         0, 0);
-                    upVector = new Vertex(0, 0, 
+                    upVector = new Vertex(0, 0,
                         coordinateSystem == CoordinateSystem.LeftHand ? 1 : -1
                         );
                     break;
@@ -271,7 +280,7 @@ namespace SharpGL.SceneComponent
                     target2Position = new Vertex(0,
                         coordinateSystem == CoordinateSystem.LeftHand ? 1 : -1,
                         0);
-                    upVector = new Vertex(0, 0, 
+                    upVector = new Vertex(0, 0,
                         coordinateSystem == CoordinateSystem.LeftHand ? 1 : -1
                         );
                     break;
@@ -279,7 +288,7 @@ namespace SharpGL.SceneComponent
                     target2Position = new Vertex(0,
                         coordinateSystem == CoordinateSystem.LeftHand ? -1 : 1,
                         0);
-                    upVector = new Vertex(0, 0, 
+                    upVector = new Vertex(0, 0,
                         coordinateSystem == CoordinateSystem.LeftHand ? 1 : -1
                         );
                     break;
