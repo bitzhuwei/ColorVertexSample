@@ -242,7 +242,7 @@ namespace SharpGL.SceneComponent
                     }
                     else
                     {
-                        target2Position = new Vertex(1, 1, 1);
+                        target2Position = new Vertex(-1, -1, -1);
                         target2Position.Normalize();
                         upVector = new Vertex(1, 1, -2);
                         upVector.Normalize();
@@ -250,15 +250,19 @@ namespace SharpGL.SceneComponent
                     break;
                 case ViewTypes.Top:
                     target2Position = new Vertex(0, 0,
-                        coordinateSystem == CoordinateSystem.LeftHand ? -1 : -1
+                        coordinateSystem == CoordinateSystem.LeftHand ? -1 : 1
                         );
-                    upVector = new Vertex(0, -1, 0);
+                    upVector = new Vertex(0,
+                        coordinateSystem == CoordinateSystem.LeftHand ? -1 : 1,
+                        0);
                     break;
                 case ViewTypes.Bottom:
                     target2Position = new Vertex(0, 0,
-                        coordinateSystem == CoordinateSystem.LeftHand ? 1 : 1
+                        coordinateSystem == CoordinateSystem.LeftHand ? 1 : -1
                         );
-                    upVector = new Vertex(0, 1, 0);
+                    upVector = new Vertex(0,
+                        coordinateSystem == CoordinateSystem.LeftHand ? 1 : -1,
+                        0);
                     break;
                 case ViewTypes.Left:
                     target2Position = new Vertex(
@@ -278,7 +282,7 @@ namespace SharpGL.SceneComponent
                     break;
                 case ViewTypes.Front:
                     target2Position = new Vertex(0,
-                        coordinateSystem == CoordinateSystem.LeftHand ? 1 : -1,
+                        coordinateSystem == CoordinateSystem.LeftHand ? 1 : 1,
                         0);
                     upVector = new Vertex(0, 0,
                         coordinateSystem == CoordinateSystem.LeftHand ? 1 : -1
@@ -286,7 +290,7 @@ namespace SharpGL.SceneComponent
                     break;
                 case ViewTypes.Back:
                     target2Position = new Vertex(0,
-                        coordinateSystem == CoordinateSystem.LeftHand ? -1 : 1,
+                        coordinateSystem == CoordinateSystem.LeftHand ? -1 : -1,
                         0);
                     upVector = new Vertex(0, 0,
                         coordinateSystem == CoordinateSystem.LeftHand ? 1 : -1
