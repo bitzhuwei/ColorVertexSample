@@ -68,6 +68,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dialogs\ZAxisDistortionEditorDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\ZAxisDistortionEditorDialog.Designer.cs">
+      <DependentUpon>ZAxisDistortionEditorDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Disposable.cs" />
     <Compile Include="Factory\DynamicUnstructureGridFactory.cs" />
     <Compile Include="Factory\GridBufferDataFactory.cs" />
@@ -175,6 +181,9 @@
     <None Include="VertexBuffers\VertexBuffers.cd" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Dialogs\ZAxisDistortionEditorDialog.resx">
+      <DependentUpon>ZAxisDistortionEditorDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Font\LucidaTypewriterRegular.ttf.png" />
     <EmbeddedResource Include="Font\LucidaTypewriterRegular.ttf.xml" />
   </ItemGroup>

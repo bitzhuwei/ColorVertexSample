@@ -8,15 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace GridViewer.Dialogs
+namespace SimLab.Dialogs
 {
-    public partial class ZAxisScaleEditorDialog : Form
+    public partial class ZAxisDistortionEditorDialog : Form
     {
-        public ZAxisScaleEditorDialog(float value)
+        public ZAxisDistortionEditorDialog()
         {
             InitializeComponent();
-
-            this.txtZAxisScale.Text = string.Format("{0}", value);
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -26,16 +24,19 @@ namespace GridViewer.Dialogs
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            float value = 0;
-            if (!float.TryParse(this.txtZAxisScale.Text, out value))
-            {
-                MessageBox.Show("Invalid number!");
-                return;
-            }
-            this.ZAxisScale = value;
             this.DialogResult = System.Windows.Forms.DialogResult.OK;
         }
 
-        public float ZAxisScale { get; set; }
+        public float Distortion
+        {
+            get
+            {
+                return (float)nudDistortion.Value;
+            }
+            set
+            {
+                this.nudDistortion.Value = (decimal)value;
+            }
+        }
     }
 }

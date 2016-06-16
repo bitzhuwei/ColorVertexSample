@@ -26,6 +26,7 @@ using Simlab.Well;
 using SharpGL.SceneGraph.Primitives;
 using GridViewer.Dialogs;
 using SimLab.Utils;
+using SimLab.Dialogs;
 
 namespace GridViewer
 {
@@ -54,7 +55,7 @@ namespace GridViewer
             this.InitObjectsTree(this.objectsTreeView, this.scene.ModelContainer);
             this.BuildCommands();
 
-
+            this.scene.CoordinateSystem = CoordinateSystem.LeftHand;
 
             this.UpdateCommandUI(this.objectsTreeView.SelectedNode);
         }
@@ -577,7 +578,7 @@ namespace GridViewer
                 wellNode.Tag = well;
                 wellsRootNode.Nodes.Add(wellNode);
                 well.Initialize(this.scene.Scene.OpenGL);
-                wellFolder.Children.Add(well);
+                wellFolder.AddChild(well);
             }
             this.ModelContainer.AddChild(wellFolder);
             gridderNode.Nodes.Add(wellsRootNode);
@@ -1244,12 +1245,18 @@ namespace GridViewer
 
         private void zAxisScaleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var dialog = new ZAxisScaleEditorDialog(this.scene.ZAxisScale);
-            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            ZAxisDistortionEditorDialog dlg = new ZAxisDistortionEditorDialog();
+            dlg.Distortion = this.scene.ZAxisScale;
+            if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                this.scene.ZAxisScale = dialog.ZAxisScale;
+                this.scene.ZAxisScale = dlg.Distortion;
                 this.scene.Invalidate();
             }
+        }
+
+        private void SceneClearClick(object sender, EventArgs e)
+        {
+            this.scene.ReleaseContainerElements();
         }
 
 

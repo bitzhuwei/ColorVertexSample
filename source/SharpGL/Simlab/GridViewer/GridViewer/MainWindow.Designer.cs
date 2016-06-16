@@ -51,6 +51,8 @@
             this.mniSceneColorBarRange = new System.Windows.Forms.ToolStripMenuItem();
             this.sceneColorBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mniIJKSlices = new System.Windows.Forms.ToolStripMenuItem();
+            this.zAxisScaleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniSceneClear = new System.Windows.Forms.ToolStripMenuItem();
             this.dViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mniUserView = new System.Windows.Forms.ToolStripMenuItem();
             this.topViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,7 +67,6 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.objectsTreeView = new System.Windows.Forms.TreeView();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
-            this.scene = new SharpGL.SceneComponent.ScientificVisual3DControl();
             this.appContexMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mnuRemoveGridNode = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -93,7 +94,7 @@
             this.toolRightView = new System.Windows.Forms.ToolStripButton();
             this.toolBackView = new System.Windows.Forms.ToolStripButton();
             this.toolFrontView = new System.Windows.Forms.ToolStripButton();
-            this.zAxisScaleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.scene = new SharpGL.SceneComponent.ScientificVisual3DControl();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -103,9 +104,9 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.scene)).BeginInit();
             this.appContexMenuStrip.SuspendLayout();
             this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.scene)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -119,8 +120,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1415, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1061, 25);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -132,30 +132,30 @@
             this.toolStripSeparator3,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(46, 24);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(39, 21);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(124, 26);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.openToolStripMenuItem.Text = "Open";
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(124, 26);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.saveToolStripMenuItem.Text = "Save";
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(121, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(105, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(124, 26);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
             // loadToolStripMenuItem
@@ -171,65 +171,65 @@
             this.toolStripSeparator5,
             this.mniLoadEclWells});
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(54, 24);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(47, 21);
             this.loadToolStripMenuItem.Text = "Data";
             // 
             // mniLoadECLGrid
             // 
             this.mniLoadECLGrid.Name = "mniLoadECLGrid";
-            this.mniLoadECLGrid.Size = new System.Drawing.Size(223, 26);
+            this.mniLoadECLGrid.Size = new System.Drawing.Size(188, 22);
             this.mniLoadECLGrid.Text = "Load ECL Grid";
             this.mniLoadECLGrid.Click += new System.EventHandler(this.LoadEclGridClick);
             // 
             // mniLoadSimbaGrid
             // 
             this.mniLoadSimbaGrid.Name = "mniLoadSimbaGrid";
-            this.mniLoadSimbaGrid.Size = new System.Drawing.Size(223, 26);
+            this.mniLoadSimbaGrid.Size = new System.Drawing.Size(188, 22);
             this.mniLoadSimbaGrid.Text = "Load Simba Grid";
             this.mniLoadSimbaGrid.Click += new System.EventHandler(this.LoadSimbaGridClick);
             // 
             // mniLoadSimbaPoints
             // 
             this.mniLoadSimbaPoints.Name = "mniLoadSimbaPoints";
-            this.mniLoadSimbaPoints.Size = new System.Drawing.Size(223, 26);
+            this.mniLoadSimbaPoints.Size = new System.Drawing.Size(188, 22);
             this.mniLoadSimbaPoints.Text = "Load Simba Points";
             this.mniLoadSimbaPoints.Click += new System.EventHandler(this.LoadSimbaPointsCick);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(220, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(185, 6);
             // 
             // mniLoadEclProperty
             // 
             this.mniLoadEclProperty.Name = "mniLoadEclProperty";
-            this.mniLoadEclProperty.Size = new System.Drawing.Size(223, 26);
+            this.mniLoadEclProperty.Size = new System.Drawing.Size(188, 22);
             this.mniLoadEclProperty.Text = "Load ECL Property";
             this.mniLoadEclProperty.Click += new System.EventHandler(this.LoadECLPropertyClick);
             // 
             // mniLoadProperty
             // 
             this.mniLoadProperty.Name = "mniLoadProperty";
-            this.mniLoadProperty.Size = new System.Drawing.Size(223, 26);
+            this.mniLoadProperty.Size = new System.Drawing.Size(188, 22);
             this.mniLoadProperty.Text = "Load Property";
             this.mniLoadProperty.Click += new System.EventHandler(this.LoadPropertyFileClick);
             // 
             // mniLoadCloudResults
             // 
             this.mniLoadCloudResults.Name = "mniLoadCloudResults";
-            this.mniLoadCloudResults.Size = new System.Drawing.Size(223, 26);
+            this.mniLoadCloudResults.Size = new System.Drawing.Size(188, 22);
             this.mniLoadCloudResults.Text = "Load Cloud Results";
             this.mniLoadCloudResults.Click += new System.EventHandler(this.LoadCloudResultsClick);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(220, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(185, 6);
             // 
             // mniLoadEclWells
             // 
             this.mniLoadEclWells.Name = "mniLoadEclWells";
-            this.mniLoadEclWells.Size = new System.Drawing.Size(223, 26);
+            this.mniLoadEclWells.Size = new System.Drawing.Size(188, 22);
             this.mniLoadEclWells.Text = "Load ECL Wells";
             this.mniLoadEclWells.Click += new System.EventHandler(this.LoadEclWellsClick);
             // 
@@ -240,37 +240,52 @@
             this.mniSceneColorBarRange,
             this.sceneColorBarToolStripMenuItem,
             this.mniIJKSlices,
-            this.zAxisScaleToolStripMenuItem});
+            this.zAxisScaleToolStripMenuItem,
+            this.mniSceneClear});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(65, 24);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(54, 21);
             this.optionsToolStripMenuItem.Text = "Scene";
             // 
             // mniSceneBackground
             // 
             this.mniSceneBackground.Name = "mniSceneBackground";
-            this.mniSceneBackground.Size = new System.Drawing.Size(201, 26);
+            this.mniSceneBackground.Size = new System.Drawing.Size(173, 22);
             this.mniSceneBackground.Text = "Background";
             this.mniSceneBackground.Click += new System.EventHandler(this.SceneBackgroundClicked);
             // 
             // mniSceneColorBarRange
             // 
             this.mniSceneColorBarRange.Name = "mniSceneColorBarRange";
-            this.mniSceneColorBarRange.Size = new System.Drawing.Size(201, 26);
+            this.mniSceneColorBarRange.Size = new System.Drawing.Size(173, 22);
             this.mniSceneColorBarRange.Text = "Color Bar Range";
             this.mniSceneColorBarRange.Click += new System.EventHandler(this.SceneColorBarRangeClick);
             // 
             // sceneColorBarToolStripMenuItem
             // 
             this.sceneColorBarToolStripMenuItem.Name = "sceneColorBarToolStripMenuItem";
-            this.sceneColorBarToolStripMenuItem.Size = new System.Drawing.Size(201, 26);
+            this.sceneColorBarToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.sceneColorBarToolStripMenuItem.Text = "Color Bar";
             // 
             // mniIJKSlices
             // 
             this.mniIJKSlices.Name = "mniIJKSlices";
-            this.mniIJKSlices.Size = new System.Drawing.Size(201, 26);
+            this.mniIJKSlices.Size = new System.Drawing.Size(173, 22);
             this.mniIJKSlices.Text = "IJK Slices";
             this.mniIJKSlices.Click += new System.EventHandler(this.SceneIJKSlicesClick);
+            // 
+            // zAxisScaleToolStripMenuItem
+            // 
+            this.zAxisScaleToolStripMenuItem.Name = "zAxisScaleToolStripMenuItem";
+            this.zAxisScaleToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.zAxisScaleToolStripMenuItem.Text = "ZAxisScale";
+            this.zAxisScaleToolStripMenuItem.Click += new System.EventHandler(this.zAxisScaleToolStripMenuItem_Click);
+            // 
+            // mniSceneClear
+            // 
+            this.mniSceneClear.Name = "mniSceneClear";
+            this.mniSceneClear.Size = new System.Drawing.Size(173, 22);
+            this.mniSceneClear.Text = "Clear";
+            this.mniSceneClear.Click += new System.EventHandler(this.SceneClearClick);
             // 
             // dViewToolStripMenuItem
             // 
@@ -283,79 +298,77 @@
             this.backViewToolStripMenuItem,
             this.frontViewToolStripMenuItem});
             this.dViewToolStripMenuItem.Name = "dViewToolStripMenuItem";
-            this.dViewToolStripMenuItem.Size = new System.Drawing.Size(80, 24);
+            this.dViewToolStripMenuItem.Size = new System.Drawing.Size(67, 21);
             this.dViewToolStripMenuItem.Text = "3D View";
             // 
             // mniUserView
             // 
             this.mniUserView.Name = "mniUserView";
-            this.mniUserView.Size = new System.Drawing.Size(176, 26);
+            this.mniUserView.Size = new System.Drawing.Size(148, 22);
             this.mniUserView.Text = "User view";
             this.mniUserView.Click += new System.EventHandler(this.UserViewClick);
             // 
             // topViewToolStripMenuItem
             // 
             this.topViewToolStripMenuItem.Name = "topViewToolStripMenuItem";
-            this.topViewToolStripMenuItem.Size = new System.Drawing.Size(176, 26);
+            this.topViewToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.topViewToolStripMenuItem.Text = "Top view";
             this.topViewToolStripMenuItem.Click += new System.EventHandler(this.TopViewClick);
             // 
             // bottomViewToolStripMenuItem
             // 
             this.bottomViewToolStripMenuItem.Name = "bottomViewToolStripMenuItem";
-            this.bottomViewToolStripMenuItem.Size = new System.Drawing.Size(176, 26);
+            this.bottomViewToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.bottomViewToolStripMenuItem.Text = "Bottom view";
             this.bottomViewToolStripMenuItem.Click += new System.EventHandler(this.BottomViewClick);
             // 
             // leftViewToolStripMenuItem
             // 
             this.leftViewToolStripMenuItem.Name = "leftViewToolStripMenuItem";
-            this.leftViewToolStripMenuItem.Size = new System.Drawing.Size(176, 26);
+            this.leftViewToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.leftViewToolStripMenuItem.Text = "Left view";
             this.leftViewToolStripMenuItem.Click += new System.EventHandler(this.LeftViewClick);
             // 
             // rightViewToolStripMenuItem
             // 
             this.rightViewToolStripMenuItem.Name = "rightViewToolStripMenuItem";
-            this.rightViewToolStripMenuItem.Size = new System.Drawing.Size(176, 26);
+            this.rightViewToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.rightViewToolStripMenuItem.Text = "Right view";
             this.rightViewToolStripMenuItem.Click += new System.EventHandler(this.RightViewClick);
             // 
             // backViewToolStripMenuItem
             // 
             this.backViewToolStripMenuItem.Name = "backViewToolStripMenuItem";
-            this.backViewToolStripMenuItem.Size = new System.Drawing.Size(176, 26);
+            this.backViewToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.backViewToolStripMenuItem.Text = "Back view";
             this.backViewToolStripMenuItem.Click += new System.EventHandler(this.BackViewClick);
             // 
             // frontViewToolStripMenuItem
             // 
             this.frontViewToolStripMenuItem.Name = "frontViewToolStripMenuItem";
-            this.frontViewToolStripMenuItem.Size = new System.Drawing.Size(176, 26);
+            this.frontViewToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.frontViewToolStripMenuItem.Text = "Front view";
             this.frontViewToolStripMenuItem.Click += new System.EventHandler(this.FrontViewClick);
             // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(56, 24);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(47, 21);
             this.helpToolStripMenuItem.Text = "Help";
             // 
             // statusStrip1
             // 
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip1.Location = new System.Drawing.Point(0, 730);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 580);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1415, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1061, 22);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 55);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 52);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -365,16 +378,15 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.scene);
-            this.splitContainer1.Size = new System.Drawing.Size(1415, 675);
-            this.splitContainer1.SplitterDistance = 354;
-            this.splitContainer1.SplitterWidth = 11;
+            this.splitContainer1.Size = new System.Drawing.Size(1061, 528);
+            this.splitContainer1.SplitterDistance = 265;
+            this.splitContainer1.SplitterWidth = 8;
             this.splitContainer1.TabIndex = 2;
             // 
             // splitContainer2
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer2.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.splitContainer2.Name = "splitContainer2";
             this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -385,18 +397,16 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.propertyGrid1);
-            this.splitContainer2.Size = new System.Drawing.Size(354, 675);
-            this.splitContainer2.SplitterDistance = 277;
-            this.splitContainer2.SplitterWidth = 5;
+            this.splitContainer2.Size = new System.Drawing.Size(265, 528);
+            this.splitContainer2.SplitterDistance = 215;
             this.splitContainer2.TabIndex = 0;
             // 
             // objectsTreeView
             // 
             this.objectsTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.objectsTreeView.Location = new System.Drawing.Point(0, 0);
-            this.objectsTreeView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.objectsTreeView.Name = "objectsTreeView";
-            this.objectsTreeView.Size = new System.Drawing.Size(354, 277);
+            this.objectsTreeView.Size = new System.Drawing.Size(265, 215);
             this.objectsTreeView.TabIndex = 0;
             this.objectsTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.OnTreeViewAfterSelected);
             this.objectsTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
@@ -405,31 +415,10 @@
             // 
             this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
-            this.propertyGrid1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.propertyGrid1.Name = "propertyGrid1";
-            this.propertyGrid1.Size = new System.Drawing.Size(354, 393);
+            this.propertyGrid1.Size = new System.Drawing.Size(265, 309);
             this.propertyGrid1.TabIndex = 0;
             this.propertyGrid1.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGrid1_PropertyValueChanged);
-            // 
-            // scene
-            // 
-            this.scene.CameraType = SharpGL.SceneComponent.CameraTypes.Ortho;
-            this.scene.CoordinateSystem = SharpGL.SceneComponent.CoordinateSystem.RightHand;
-            this.scene.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.scene.DrawFPS = false;
-            this.scene.EnablePicking = false;
-            this.scene.Location = new System.Drawing.Point(0, 0);
-            this.scene.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.scene.Name = "scene";
-            this.scene.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
-            this.scene.PickedPrimitive = null;
-            this.scene.RenderBoundingBox = false;
-            this.scene.RenderContextType = SharpGL.RenderContextType.FBO;
-            this.scene.RenderTrigger = SharpGL.RenderTrigger.Manual;
-            this.scene.Size = new System.Drawing.Size(1050, 675);
-            this.scene.TabIndex = 0;
-            this.scene.ViewType = SharpGL.SceneComponent.ViewTypes.UserView;
-            this.scene.ZAxisScale = 1F;
             // 
             // appContexMenuStrip
             // 
@@ -437,12 +426,12 @@
             this.appContexMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuRemoveGridNode});
             this.appContexMenuStrip.Name = "appContexMenuStrip";
-            this.appContexMenuStrip.Size = new System.Drawing.Size(180, 30);
+            this.appContexMenuStrip.Size = new System.Drawing.Size(153, 26);
             // 
             // mnuRemoveGridNode
             // 
             this.mnuRemoveGridNode.Name = "mnuRemoveGridNode";
-            this.mnuRemoveGridNode.Size = new System.Drawing.Size(179, 26);
+            this.mnuRemoveGridNode.Size = new System.Drawing.Size(152, 22);
             this.mnuRemoveGridNode.Text = "Remove Grid";
             this.mnuRemoveGridNode.Click += new System.EventHandler(this.OnRemoveGridNodeClick);
             // 
@@ -474,9 +463,9 @@
             this.toolRightView,
             this.toolBackView,
             this.toolFrontView});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 28);
+            this.toolStrip1.Location = new System.Drawing.Point(0, 25);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1415, 27);
+            this.toolStrip1.Size = new System.Drawing.Size(1061, 27);
             this.toolStrip1.TabIndex = 7;
             this.toolStrip1.Text = "toolStripMain";
             // 
@@ -698,24 +687,36 @@
             this.toolFrontView.Text = "Front view";
             this.toolFrontView.Click += new System.EventHandler(this.FrontViewClick);
             // 
-            // zAxisScaleToolStripMenuItem
+            // scene
             // 
-            this.zAxisScaleToolStripMenuItem.Name = "zAxisScaleToolStripMenuItem";
-            this.zAxisScaleToolStripMenuItem.Size = new System.Drawing.Size(201, 26);
-            this.zAxisScaleToolStripMenuItem.Text = "ZAxisScale";
-            this.zAxisScaleToolStripMenuItem.Click += new System.EventHandler(this.zAxisScaleToolStripMenuItem_Click);
+            this.scene.CameraType = SharpGL.SceneComponent.CameraTypes.Ortho;
+            this.scene.CoordinateSystem = SharpGL.SceneComponent.CoordinateSystem.RightHand;
+            this.scene.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scene.DrawFPS = false;
+            this.scene.EnablePicking = false;
+            this.scene.Location = new System.Drawing.Point(0, 0);
+            this.scene.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.scene.Name = "scene";
+            this.scene.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
+            this.scene.PickedPrimitive = null;
+            this.scene.RenderBoundingBox = false;
+            this.scene.RenderContextType = SharpGL.RenderContextType.FBO;
+            this.scene.RenderTrigger = SharpGL.RenderTrigger.Manual;
+            this.scene.Size = new System.Drawing.Size(788, 528);
+            this.scene.TabIndex = 0;
+            this.scene.ViewType = SharpGL.SceneComponent.ViewTypes.UserView;
+            this.scene.ZAxisScale = 1F;
             // 
             // MainWindow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1415, 752);
+            this.ClientSize = new System.Drawing.Size(1061, 602);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "MainWindow";
             this.Text = "GridViewer";
             this.menuStrip1.ResumeLayout(false);
@@ -728,10 +729,10 @@
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.scene)).EndInit();
             this.appContexMenuStrip.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.scene)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -803,6 +804,7 @@
         private System.Windows.Forms.ToolStripButton toolColorBar;
         private System.Windows.Forms.ToolStripButton toolIJKSlices;
         private System.Windows.Forms.ToolStripMenuItem zAxisScaleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mniSceneClear;
     }
 }
 
