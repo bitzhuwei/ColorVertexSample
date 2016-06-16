@@ -55,7 +55,7 @@ namespace GridViewer
             this.InitObjectsTree(this.objectsTreeView, this.scene.ModelContainer);
             this.BuildCommands();
 
-           // this.scene.CoordinateSystem = CoordinateSystem.LeftHand;
+           this.scene.CoordinateSystem = CoordinateSystem.LeftHand;
 
             this.UpdateCommandUI(this.objectsTreeView.SelectedNode);
         }
