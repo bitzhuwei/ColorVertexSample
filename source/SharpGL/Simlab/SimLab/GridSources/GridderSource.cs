@@ -230,7 +230,7 @@ namespace SimLab.GridSource
            
 
             Vertex newcenter = this.TranslateMatrix*center;
-            System.Console.WriteLine(center);
+            //System.Console.WriteLine(center);
             Vertex destMin = this.TranslateMatrix*this.SourceActiveBounds.Min;
             Vertex destMax = this.TranslateMatrix*this.SourceActiveBounds.Max;
 

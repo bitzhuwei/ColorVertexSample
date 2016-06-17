@@ -51,7 +51,7 @@
             this.mniSceneColorBarRange = new System.Windows.Forms.ToolStripMenuItem();
             this.sceneColorBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mniIJKSlices = new System.Windows.Forms.ToolStripMenuItem();
-            this.zAxisScaleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniZAxisDistortion = new System.Windows.Forms.ToolStripMenuItem();
             this.mniSceneClear = new System.Windows.Forms.ToolStripMenuItem();
             this.dViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mniUserView = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,6 +67,7 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.objectsTreeView = new System.Windows.Forms.TreeView();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
+            this.scene = new SharpGL.SceneComponent.ScientificVisual3DControl();
             this.appContexMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mnuRemoveGridNode = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -94,7 +95,7 @@
             this.toolRightView = new System.Windows.Forms.ToolStripButton();
             this.toolBackView = new System.Windows.Forms.ToolStripButton();
             this.toolFrontView = new System.Windows.Forms.ToolStripButton();
-            this.scene = new SharpGL.SceneComponent.ScientificVisual3DControl();
+            this.toolZDistortion = new System.Windows.Forms.ToolStripButton();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -104,9 +105,9 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.scene)).BeginInit();
             this.appContexMenuStrip.SuspendLayout();
             this.toolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.scene)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -240,7 +241,7 @@
             this.mniSceneColorBarRange,
             this.sceneColorBarToolStripMenuItem,
             this.mniIJKSlices,
-            this.zAxisScaleToolStripMenuItem,
+            this.mniZAxisDistortion,
             this.mniSceneClear});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(54, 21);
@@ -273,12 +274,12 @@
             this.mniIJKSlices.Text = "IJK Slices";
             this.mniIJKSlices.Click += new System.EventHandler(this.SceneIJKSlicesClick);
             // 
-            // zAxisScaleToolStripMenuItem
+            // mniZAxisDistortion
             // 
-            this.zAxisScaleToolStripMenuItem.Name = "zAxisScaleToolStripMenuItem";
-            this.zAxisScaleToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
-            this.zAxisScaleToolStripMenuItem.Text = "ZAxisScale";
-            this.zAxisScaleToolStripMenuItem.Click += new System.EventHandler(this.zAxisScaleToolStripMenuItem_Click);
+            this.mniZAxisDistortion.Name = "mniZAxisDistortion";
+            this.mniZAxisDistortion.Size = new System.Drawing.Size(173, 22);
+            this.mniZAxisDistortion.Text = "Z-Distortion";
+            this.mniZAxisDistortion.Click += new System.EventHandler(this.SceneZDistortionClick);
             // 
             // mniSceneClear
             // 
@@ -398,7 +399,7 @@
             // 
             this.splitContainer2.Panel2.Controls.Add(this.propertyGrid1);
             this.splitContainer2.Size = new System.Drawing.Size(265, 528);
-            this.splitContainer2.SplitterDistance = 215;
+            this.splitContainer2.SplitterDistance = 214;
             this.splitContainer2.TabIndex = 0;
             // 
             // objectsTreeView
@@ -406,7 +407,7 @@
             this.objectsTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.objectsTreeView.Location = new System.Drawing.Point(0, 0);
             this.objectsTreeView.Name = "objectsTreeView";
-            this.objectsTreeView.Size = new System.Drawing.Size(265, 215);
+            this.objectsTreeView.Size = new System.Drawing.Size(265, 214);
             this.objectsTreeView.TabIndex = 0;
             this.objectsTreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.OnTreeViewAfterSelected);
             this.objectsTreeView.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
@@ -416,9 +417,29 @@
             this.propertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propertyGrid1.Location = new System.Drawing.Point(0, 0);
             this.propertyGrid1.Name = "propertyGrid1";
-            this.propertyGrid1.Size = new System.Drawing.Size(265, 309);
+            this.propertyGrid1.Size = new System.Drawing.Size(265, 310);
             this.propertyGrid1.TabIndex = 0;
             this.propertyGrid1.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propertyGrid1_PropertyValueChanged);
+            // 
+            // scene
+            // 
+            this.scene.CameraType = SharpGL.SceneComponent.CameraTypes.Ortho;
+            this.scene.CoordinateSystem = SharpGL.SceneComponent.CoordinateSystem.RightHand;
+            this.scene.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scene.DrawFPS = false;
+            this.scene.EnablePicking = false;
+            this.scene.Location = new System.Drawing.Point(0, 0);
+            this.scene.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.scene.Name = "scene";
+            this.scene.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
+            this.scene.PickedPrimitive = null;
+            this.scene.RenderBoundingBox = false;
+            this.scene.RenderContextType = SharpGL.RenderContextType.FBO;
+            this.scene.RenderTrigger = SharpGL.RenderTrigger.Manual;
+            this.scene.Size = new System.Drawing.Size(788, 528);
+            this.scene.TabIndex = 0;
+            this.scene.ViewType = SharpGL.SceneComponent.ViewTypes.UserView;
+            this.scene.ZAxisScale = 1F;
             // 
             // appContexMenuStrip
             // 
@@ -455,6 +476,7 @@
             this.toolSceneColorBarRange,
             this.toolColorBar,
             this.toolIJKSlices,
+            this.toolZDistortion,
             this.toolStripSeparator7,
             this.toolUserView,
             this.toolTopView,
@@ -687,25 +709,15 @@
             this.toolFrontView.Text = "Front view";
             this.toolFrontView.Click += new System.EventHandler(this.FrontViewClick);
             // 
-            // scene
+            // toolZDistortion
             // 
-            this.scene.CameraType = SharpGL.SceneComponent.CameraTypes.Ortho;
-            this.scene.CoordinateSystem = SharpGL.SceneComponent.CoordinateSystem.RightHand;
-            this.scene.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.scene.DrawFPS = false;
-            this.scene.EnablePicking = false;
-            this.scene.Location = new System.Drawing.Point(0, 0);
-            this.scene.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.scene.Name = "scene";
-            this.scene.OpenGLVersion = SharpGL.Version.OpenGLVersion.OpenGL2_1;
-            this.scene.PickedPrimitive = null;
-            this.scene.RenderBoundingBox = false;
-            this.scene.RenderContextType = SharpGL.RenderContextType.FBO;
-            this.scene.RenderTrigger = SharpGL.RenderTrigger.Manual;
-            this.scene.Size = new System.Drawing.Size(788, 528);
-            this.scene.TabIndex = 0;
-            this.scene.ViewType = SharpGL.SceneComponent.ViewTypes.UserView;
-            this.scene.ZAxisScale = 1F;
+            this.toolZDistortion.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolZDistortion.Image = ((System.Drawing.Image)(resources.GetObject("toolZDistortion.Image")));
+            this.toolZDistortion.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolZDistortion.Name = "toolZDistortion";
+            this.toolZDistortion.Size = new System.Drawing.Size(24, 24);
+            this.toolZDistortion.Text = "toolStripButton3";
+            this.toolZDistortion.Click += new System.EventHandler(this.SceneZDistortionClick);
             // 
             // MainWindow
             // 
@@ -729,10 +741,10 @@
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.scene)).EndInit();
             this.appContexMenuStrip.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.scene)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -803,8 +815,9 @@
         private System.Windows.Forms.ToolStripMenuItem mniIJKSlices;
         private System.Windows.Forms.ToolStripButton toolColorBar;
         private System.Windows.Forms.ToolStripButton toolIJKSlices;
-        private System.Windows.Forms.ToolStripMenuItem zAxisScaleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mniZAxisDistortion;
         private System.Windows.Forms.ToolStripMenuItem mniSceneClear;
+        private System.Windows.Forms.ToolStripButton toolZDistortion;
     }
 }
 

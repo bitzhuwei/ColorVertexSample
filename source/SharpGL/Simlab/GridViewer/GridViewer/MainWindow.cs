@@ -82,7 +82,7 @@ namespace GridViewer
             Command cmdLoadEclWells = new Command(new ToolStripItem[] { this.toolLoadECLWells, this.mniLoadEclWells }, this.CanExecuteLoadEclWells);
             Command cmdSceneColorBarRange = new Command(new ToolStripItem[] { this.toolSceneColorBarRange, this.mniSceneColorBarRange }, this.CanExecuteChangeColorBarRange);
             Command cmdGridderIJKSlices = new Command(new ToolStripItem[] { this.toolIJKSlices, this.mniIJKSlices }, this.CanExecuteIJKSlices);
-
+            Command cmdZDistortion = new Command(new ToolStripItem[]{ this.toolZDistortion,this.mniZAxisDistortion}, this.CanExecuteZDistortion);
 
             cmds.Add(cmdLoadEclGrid);
             cmds.Add(cmdLoadSimbaGrid);
@@ -93,12 +93,12 @@ namespace GridViewer
             cmds.Add(cmdLoadEclWells);
             cmds.Add(cmdSceneColorBarRange);
             cmds.Add(cmdGridderIJKSlices);
+            cmds.Add(cmdZDistortion);
             this.Commands = cmds;
         }
 
         private bool CanExecuteLoadGrid(object param)
         {
-
             return true;
         }
 
@@ -148,6 +148,23 @@ namespace GridViewer
                 return true;
             }
             return false;
+        }
+
+
+        private bool CanExecuteZDistortion(object param){
+           
+           if(param == null)
+             return false;
+           if(!(param is TreeNode)){
+             return false;
+           }
+           TreeNode node =(TreeNode)param;
+           if(node.Tag is SimLabGrid){
+
+              return true;
+           }
+           return false;
+
         }
 
         private bool CanExecuteIJKSlices(object param)
@@ -1243,13 +1260,18 @@ namespace GridViewer
 
         }
 
-        private void zAxisScaleToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SceneZDistortionClick(object sender, EventArgs e)
         {
+
+            TreeNode node = this.objectsTreeView.SelectedNode;
+            SimLabGrid labGrid = node.Tag as SimLabGrid;
             ZAxisDistortionEditorDialog dlg = new ZAxisDistortionEditorDialog();
-            dlg.Distortion = this.scene.ZAxisScale;
+            dlg.StartPosition = FormStartPosition.CenterParent;
+            dlg.Distortion = labGrid.ZAxisScale;
             if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                this.scene.ZAxisScale = dlg.Distortion;
+            { 
+               
+                labGrid.ZAxisScale = dlg.Distortion;
                 this.scene.Invalidate();
             }
         }

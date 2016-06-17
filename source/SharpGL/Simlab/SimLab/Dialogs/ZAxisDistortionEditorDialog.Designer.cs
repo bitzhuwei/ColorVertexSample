@@ -49,7 +49,7 @@
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new System.Drawing.Point(277, 101);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(56, 18);
             this.btnCancel.TabIndex = 2;
@@ -60,7 +60,7 @@
             // btnOK
             // 
             this.btnOK.Location = new System.Drawing.Point(207, 101);
-            this.btnOK.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnOK.Margin = new System.Windows.Forms.Padding(2);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(56, 18);
             this.btnOK.TabIndex = 2;
@@ -71,11 +71,16 @@
             // nudDistortion
             // 
             this.nudDistortion.Location = new System.Drawing.Point(97, 8);
+            this.nudDistortion.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
             this.nudDistortion.Name = "nudDistortion";
             this.nudDistortion.Size = new System.Drawing.Size(157, 21);
             this.nudDistortion.TabIndex = 3;
             // 
-            // ZAxisScaleEditorDialog
+            // ZAxisDistortionEditorDialog
             // 
             this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -86,8 +91,8 @@
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.Name = "ZAxisScaleEditorDialog";
+            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Name = "ZAxisDistortionEditorDialog";
             this.Text = "ZAxisScaleEditorDialog";
             ((System.ComponentModel.ISupportInitialize)(this.nudDistortion)).EndInit();
             this.ResumeLayout(false);
