@@ -23,7 +23,6 @@ namespace SimLab.GridSource
     /// </summary>
     public abstract class GridderSource
     {
-        private GridBufferDataFactory factory;
 
         private GridIndexer gridIndexer;
 
@@ -46,13 +45,7 @@ namespace SimLab.GridSource
         /// <summary>
         /// 获取网格包含的元素总数。
         /// </summary>
-        public int DimenSize
-        {
-            get
-            {
-                return this.NX * this.NY * this.NZ;
-            }
-        }
+        public int DimenSize { get { return this.NX * this.NY * this.NZ; } }
 
         /// <summary>
         /// 每个网格一个值，全部为零，表示全部不可视
@@ -65,7 +58,7 @@ namespace SimLab.GridSource
         /// </summary>
         private float[] invisibleTextures;
 
-       
+
 
         /// <summary>
         /// 此网格至少包含1个元素，返回true；否则返回false。
@@ -74,9 +67,7 @@ namespace SimLab.GridSource
         {
             get
             {
-                if (this.NX <= 0 || this.NY <= 0 || this.NZ <= 0)
-                    return true;
-                return false;
+                return (this.NX <= 0 || this.NY <= 0 || this.NZ <= 0);
             }
         }
 
@@ -92,7 +83,7 @@ namespace SimLab.GridSource
         /// <param name="kv"></param>
         public void InvertIJK(int index, out int I, out int J, out int K)
         {
-             this.gridIndexer.IJKOfIndex(index, out I, out J, out K);
+            this.gridIndexer.IJKOfIndex(index, out I, out J, out K);
         }
 
         /// <summary>
@@ -113,23 +104,22 @@ namespace SimLab.GridSource
             return;
         }
 
-        /// <summary>
-        /// 判断网格是否是活动网格
-        /// </summary>
-        /// <param name="i">下标从1开始</param>
-        /// <param name="j">下标从1开始</param>
-        /// <param name="k">下标从1开始</param>
-        /// <returns></returns>
-        public bool IsActiveBlock(int i, int j, int k)
-        {
-         
-            int gridIndex;
-            this.IJK2Index(i, j, k, out gridIndex);
-            int actnum = this.ActNums[gridIndex];
-            if (actnum <= 0) //小于或等于0的网格块都是非活动的网格块
-                return false;
-            return true;
-        }
+        ///// <summary>
+        ///// 判断网格是否是活动网格
+        ///// </summary>
+        ///// <param name="i">下标从1开始</param>
+        ///// <param name="j">下标从1开始</param>
+        ///// <param name="k">下标从1开始</param>
+        ///// <returns></returns>
+        //public bool IsActiveBlock(int i, int j, int k)
+        //{
+        //    int gridIndex;
+        //    this.IJK2Index(i, j, k, out gridIndex);
+        //    int actnum = this.ActNums[gridIndex];
+
+        //    //小于或等于0的网格块都是非活动的网格块
+        //    return (this.ActNums[gridIndex] > 0);
+        //}
 
 
         /// <summary>
@@ -139,12 +129,13 @@ namespace SimLab.GridSource
         /// <returns></returns>
         public bool IsActiveBlock(int gridIndex)
         {
-             return this.ActNums[gridIndex] > 0;
+            return this.ActNums[gridIndex] > 0;
         }
 
 
         protected abstract GridBufferDataFactory CreateFactory();
-      
+
+        private GridBufferDataFactory factory;
 
         protected GridBufferDataFactory Factory
         {
@@ -203,7 +194,7 @@ namespace SimLab.GridSource
 
             if (this.ActNums == null)
             {
-                this.ActNums = NewIntArray(this.DimenSize,1);
+                this.ActNums = NewIntArray(this.DimenSize, 1);
             }
             if (this.zeroVisibles == null)
             {
@@ -211,31 +202,31 @@ namespace SimLab.GridSource
             }
             if (this.invisibleTextures == null)
             {
-               //初始化不可视
-               this.invisibleTextures = NewFloatArray(this.DimenSize, 2);
+                //初始化不可视
+                this.invisibleTextures = NewFloatArray(this.DimenSize, 2);
             }
 
             this.InitGridCoordinates();
 
             this.SourceActiveBounds = this.InitSourceActiveBounds();
             //初始化
-            mat4  identityMat = mat4.identity();
-            Vertex center =this.SourceActiveBounds.Center;
+            mat4 identityMat = mat4.identity();
+            Vertex center = this.SourceActiveBounds.Center;
             //矩形三角形移动到中心点
-            float dx = 0.0f-center.X;
-            float dy = 0.0f-center.Y;
-            float dz = 0.0f-center.Z;
+            float dx = 0.0f - center.X;
+            float dy = 0.0f - center.Y;
+            float dz = 0.0f - center.Z;
 
-            this.TranslateMatrix=  glm.translate(identityMat,new vec3(dx,dy,dz));
-           
+            this.TranslateMatrix = glm.translate(identityMat, new vec3(dx, dy, dz));
 
-            Vertex newcenter = this.TranslateMatrix*center;
+
+            Vertex newcenter = this.TranslateMatrix * center;
             //System.Console.WriteLine(center);
-            Vertex destMin = this.TranslateMatrix*this.SourceActiveBounds.Min;
-            Vertex destMax = this.TranslateMatrix*this.SourceActiveBounds.Max;
+            Vertex destMin = this.TranslateMatrix * this.SourceActiveBounds.Min;
+            Vertex destMax = this.TranslateMatrix * this.SourceActiveBounds.Max;
 
             //变换后的三维矩形六面体
-            this.TransformedActiveBounds = new Rectangle3D(destMin,destMax);
+            this.TransformedActiveBounds = new Rectangle3D(destMin, destMax);
 
         }
 
@@ -260,7 +251,7 @@ namespace SimLab.GridSource
             return geometry;
         }
 
-      
+
 
         public int[] BindCellActive(int[] a1, int[] a2)
         {
@@ -286,13 +277,13 @@ namespace SimLab.GridSource
         /// <returns></returns>
         public int[] ExpandVisibles(int[] gridIndexes)
         {
-             int[] gridVisibles = new int[this.DimenSize];
-             Array.Copy(this.zeroVisibles, gridVisibles, this.DimenSize);
-             for (int i = 0; i < gridIndexes.Length; i++)
-             {
-                  gridVisibles[gridIndexes[i]] = 1;
-             }
-             return gridVisibles;
+            int[] gridVisibles = new int[this.DimenSize];
+            Array.Copy(this.zeroVisibles, gridVisibles, this.DimenSize);
+            for (int i = 0; i < gridIndexes.Length; i++)
+            {
+                gridVisibles[gridIndexes[i]] = 1;
+            }
+            return gridVisibles;
         }
 
         /// <summary>
@@ -333,15 +324,17 @@ namespace SimLab.GridSource
         /// <summary>
         /// 原始数据的三维矩形边界
         /// </summary>
-        public Rectangle3D SourceActiveBounds{
-           get;
-           internal set;
+        public Rectangle3D SourceActiveBounds
+        {
+            get;
+            internal set;
         }
 
         /// <summary>
         /// SourceActiveBounds到DestActiveBounds的
         /// </summary>
-        public mat4 TranslateMatrix{
+        public mat4 TranslateMatrix
+        {
 
             get;
             internal set;
@@ -352,13 +345,16 @@ namespace SimLab.GridSource
         /// <summary>
         /// 中心点在坐标原点
         /// </summary>
-        public Rectangle3D TransformedActiveBounds{
-           get;
-           internal set;
+        public Rectangle3D TransformedActiveBounds
+        {
+            get;
+            internal set;
         }
 
-        public object Tag{
-          get;set;
+        public object Tag
+        {
+            get;
+            set;
         }
 
 
