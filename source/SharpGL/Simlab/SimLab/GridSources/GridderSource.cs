@@ -57,13 +57,8 @@ namespace SimLab.GridSource
         /// <summary>
         /// 此网格至少包含1个元素，返回true；否则返回false。
         /// </summary>
-        public bool IsDimensEmpty
-        {
-            get
-            {
-                return (this.NX <= 0 || this.NY <= 0 || this.NZ <= 0);
-            }
-        }
+        public bool IsDimensEmpty 
+        { get { return (this.NX <= 0 || this.NY <= 0 || this.NZ <= 0); } }
 
         public int[] ActNums { get; set; }
 
@@ -266,53 +261,29 @@ namespace SimLab.GridSource
         /// <summary>
         /// 模型范围的边界最小值
         /// </summary>
-        public Vertex Min
-        {
-            get;
-            internal set;
-        }
+        public Vertex Min { get; internal set; }
 
         /// <summary>
         /// 模型范围的边界最大值
         /// </summary>
-        public Vertex Max
-        {
-            get;
-            internal set;
-        }
+        public Vertex Max { get; internal set; }
 
         /// <summary>
         /// 原始数据的三维矩形边界
         /// </summary>
-        public Rectangle3D SourceActiveBounds
-        {
-            get;
-            internal set;
-        }
+        public Rectangle3D SourceActiveBounds { get; internal set; }
 
         /// <summary>
         /// SourceActiveBounds到DestActiveBounds的
         /// </summary>
-        public mat4 TranslateMatrix
-        {
-            get;
-            internal set;
-        }
+        public mat4 TranslateMatrix { get; internal set; }
 
         /// <summary>
         /// 中心点在坐标原点
         /// </summary>
-        public Rectangle3D TransformedActiveBounds
-        {
-            get;
-            internal set;
-        }
+        public Rectangle3D TransformedActiveBounds { get; internal set; }
 
-        public object Tag
-        {
-            get;
-            set;
-        }
+        public object Tag { get; set; }
 
     }
 
