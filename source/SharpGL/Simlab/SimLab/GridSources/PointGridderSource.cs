@@ -59,7 +59,7 @@ namespace SimLab.GridSource
             return this.Positions[gridIndex];
         }
 
-        protected int[] ExpandVisibles(int[] gridIndexes)
+        protected int[] ExpandVisiblesForPointGrid(int[] gridIndexes)
         {
             if (gridIndexes.Length == this.DimenSize)
             {
@@ -88,7 +88,7 @@ namespace SimLab.GridSource
         /// <returns></returns>
         public int[] BindResultsVisibles(int[] gridIndexes)
         {
-            int[] resultHas = this.ExpandVisibles(gridIndexes);
+            int[] resultHas = this.ExpandVisiblesForPointGrid(gridIndexes);
             return this.BindCellActive(resultHas, this.activeBlocks);
         }
 
