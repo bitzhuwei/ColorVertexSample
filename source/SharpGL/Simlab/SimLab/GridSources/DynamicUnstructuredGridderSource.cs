@@ -76,12 +76,12 @@ namespace SimLab.SimGrid
         /// <summary>
         /// 母体不可见
         /// </summary>
-        public int[] MatrixInvisibles    { get; internal set; }
+        public int[] MatrixInvisibles { get; internal set; }
 
         /// <summary>
         /// 断层不可见
         /// </summary>
-        public int[] FracturesInvisible { get; internal set;}
+        public int[] FracturesInvisible { get; internal set; }
 
 
         /// <summary>
@@ -119,12 +119,12 @@ namespace SimLab.SimGrid
 
         private void InitMatrixFracturesInvisibles()
         {
-              int  matrixSize =   this.DimenSize - this.FractureNum;
-              this.MatrixInvisibles = ArrayHelper.NewIntArray(matrixSize, 0);
-              int fractureSize = this.FractureNum;
-              this.FracturesInvisible = ArrayHelper.NewIntArray(fractureSize, 0);
-              this.InvisibleMatrixTextures = ArrayHelper.NewFloatArray(matrixSize, 2.0f);
-              this.InvisibleFractureTextures = ArrayHelper.NewFloatArray(fractureSize, 2.0f);
+            int matrixSize = this.DimenSize - this.FractureNum;
+            this.MatrixInvisibles = ArrayHelper.NewIntArray(matrixSize, 0);
+            int fractureSize = this.FractureNum;
+            this.FracturesInvisible = ArrayHelper.NewIntArray(fractureSize, 0);
+            this.InvisibleMatrixTextures = ArrayHelper.NewFloatArray(matrixSize, 2.0f);
+            this.InvisibleFractureTextures = ArrayHelper.NewFloatArray(fractureSize, 2.0f);
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace SimLab.SimGrid
             int dimenSize = this.DimenSize;
             int matrixStartIndex = this.FractureNum;
             int[] results = new int[matrixSize];
-            Array.Copy(this.MatrixInvisibles,results,results.Length);
+            Array.Copy(this.MatrixInvisibles, results, results.Length);
             for (int mixedIndex = 0; mixedIndex < gridIndexes.Length; mixedIndex++)
             {
                 int gridIndex = gridIndexes[mixedIndex];
@@ -169,7 +169,7 @@ namespace SimLab.SimGrid
 
         public int[] BindResultsAndActiveMatrix(int[] gridIndexes)
         {
-            int[] results =   this.ExpandMatrixVisibles(gridIndexes);
+            int[] results = this.ExpandMatrixVisibles(gridIndexes);
             return this.BindCellActive(results, this.ActiveMatrix);
         }
 
@@ -182,24 +182,24 @@ namespace SimLab.SimGrid
 
         public override void Init()
         {
-               base.Init();
-               this.InitMatrixFracturesInvisibles();
+            base.Init();
+            this.InitMatrixFracturesInvisibles();
 
-               if (this.ActiveMatrix == null)
-               {
-                   this.ActiveMatrix = InitActiveMatrix();
-               }
-               if (this.ActiveFractures == null)
-               {
-                   this.ActiveFractures = this.InitActiveFractures();
-               }
+            if (this.ActiveMatrix == null)
+            {
+                this.ActiveMatrix = InitActiveMatrix();
+            }
+            if (this.ActiveFractures == null)
+            {
+                this.ActiveFractures = this.InitActiveFractures();
+            }
         }
 
         public new Vertex Min
         {
             get
             {
-               return  base.Min;
+                return base.Min;
             }
             set
             {
@@ -221,12 +221,14 @@ namespace SimLab.SimGrid
 
         protected override SharpGL.SceneComponent.Rectangle3D InitSourceActiveBounds()
         {
-            if(this.NodeNum <=0)
-              throw new ArgumentException("No nodes found");
+            if (this.NodeNum <= 0)
+            { throw new ArgumentException("No nodes found"); }
+
             Vertex[] nodes = this.Nodes;
-            SharpGL.SceneComponent.Rectangle3D rect = new SharpGL.SceneComponent.Rectangle3D(nodes[0],nodes[0]);
-            for(int i=0; i<nodes.Length; i++){
-               rect.Union(nodes[i]);
+            SharpGL.SceneComponent.Rectangle3D rect = new SharpGL.SceneComponent.Rectangle3D(nodes[0], nodes[0]);
+            for (int i = 0; i < nodes.Length; i++)
+            {
+                rect.Union(nodes[i]);
             }
             return rect;
         }
@@ -239,7 +241,7 @@ namespace SimLab.SimGrid
 
         public TexCoordBuffer CreateFractureTextureCoordinates(int[] gridIndexes, float[] values, float minValue, float maxValue)
         {
-           return  ((DynamicUnstructureGridFactory)this.Factory).CreateFractureTextureCoordinates(this, gridIndexes, values, minValue, maxValue);
-       }
+            return ((DynamicUnstructureGridFactory)this.Factory).CreateFractureTextureCoordinates(this, gridIndexes, values, minValue, maxValue);
+        }
     }
 }
