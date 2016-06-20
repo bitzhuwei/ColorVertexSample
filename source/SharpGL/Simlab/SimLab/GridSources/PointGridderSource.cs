@@ -15,12 +15,6 @@ namespace SimLab.GridSource
     public class PointGridderSource : GridderSource
     {
        
-
-        
-
-
-        private Vertex[] positions;
-
         private float[] radius;
 
         protected override Factory.GridBufferDataFactory CreateFactory()
@@ -34,20 +28,11 @@ namespace SimLab.GridSource
         public override void Init()
         {
             base.Init();
-            this.InitRadius();
-        }
 
-        protected void InitRadius()
-        {
             this.Radius = ArrayHelper.NewFloatArray(this.DimenSize, 1.0f);
         }
 
-
-        public Vertex[] Positions
-        {
-            get { return this.positions; }
-            set { this.positions = value; }
-        }
+        public Vertex[] Positions { get; set; }
 
         public float OriginalRadius
         {
@@ -130,12 +115,14 @@ namespace SimLab.GridSource
 
         protected override SharpGL.SceneComponent.Rectangle3D InitSourceActiveBounds()
         {
-            if(positions == null||this.positions.Length <=0)
-              throw new ArgumentException("Points has No Value");
-            Vertex v = positions[0];
+            if (this.Positions == null || this.Positions.Length <= 0)
+            { throw new ArgumentException("Points has No Value"); }
+
+            Vertex v = this.Positions[0];
             SharpGL.SceneComponent.Rectangle3D rect3d = new SharpGL.SceneComponent.Rectangle3D(v,v);
-            for(int i=0; i<this.positions.Length; i++){
-               rect3d.Union(this.positions[i]);
+            for (int i = 0; i < this.Positions.Length; i++)
+            {
+                rect3d.Union(this.Positions[i]);
             }
             return rect3d;
         }
