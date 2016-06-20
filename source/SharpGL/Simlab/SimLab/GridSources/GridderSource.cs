@@ -197,15 +197,13 @@ namespace SimLab.GridSource
         public int[] BindCellActive(int[] a1, int[] a2)
         {
             if (a1.Length != a2.Length)
-                throw new ArgumentException("array size not equal");
+            { throw new ArgumentException("array size not equal"); }
+
             int length = a1.Length;
             int[] results = new int[length];
             for (int i = 0; i < length; i++)
             {
-                if (a1[i] > 0 && a2[i] > 0)
-                    results[i] = 1;
-                else
-                    results[i] = 0;
+                results[i] = (a1[i] > 0 && a2[i] > 0) ? 1 : 0;
             }
             return results;
         }
