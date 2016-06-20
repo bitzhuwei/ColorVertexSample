@@ -237,9 +237,10 @@ namespace SimLab.GridSource
         /// <returns></returns>
         public float[] GetInvisibleTextureCoords()
         {
-            float[] none = new float[this.DimenSize];
-            Array.Copy(this.invisibleTextures, none, this.DimenSize);
-            return none;
+            //float[] none = new float[this.DimenSize];
+            //Array.Copy(this.invisibleTextures, none, this.DimenSize);
+            //return none;
+            return this.invisibleTextures.ToArray();
         }
 
         /// <summary>
