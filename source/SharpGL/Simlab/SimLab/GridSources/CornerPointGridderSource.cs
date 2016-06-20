@@ -254,15 +254,15 @@ namespace SimLab.GridSource
                     }
                     this.ZCORN = newZcorn;
 
-                    if(this.ActNums.Length < this.DimenSize){
+                    if(this.activeBlocks.Length < this.DimenSize){
                       int[] nactNums = new int[this.DimenSize];
-                      int oldSize = this.ActNums.Length;
-                      System.Array.Copy(this.ActNums,nactNums,oldSize);
+                      int oldSize = this.activeBlocks.Length;
+                      System.Array.Copy(this.activeBlocks,nactNums,oldSize);
                       
                       for(int j=oldSize; j<nactNums.Length;j++){
                          nactNums[j] = 1;
                       }
-                      this.ActNums = nactNums;
+                      this.activeBlocks = nactNums;
                     }
                 }
             }

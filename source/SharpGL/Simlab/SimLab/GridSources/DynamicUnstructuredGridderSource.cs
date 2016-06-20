@@ -105,7 +105,7 @@ namespace SimLab.SimGrid
             int matrixSize = this.DimenSize - this.FractureNum;
             int fractureSize = this.FractureNum;
             int[] activematrix = new int[matrixSize];
-            Array.Copy(this.ActNums, fractureSize, activematrix, 0, matrixSize);
+            Array.Copy(this.activeBlocks, fractureSize, activematrix, 0, matrixSize);
             return activematrix;
         }
 
@@ -113,7 +113,7 @@ namespace SimLab.SimGrid
         {
             int fractureSize = this.FractureNum;
             int[] activeFractures = new int[fractureSize];
-            Array.Copy(this.ActNums, activeFractures, fractureSize);
+            Array.Copy(this.activeBlocks, activeFractures, fractureSize);
             return activeFractures;
         }
 

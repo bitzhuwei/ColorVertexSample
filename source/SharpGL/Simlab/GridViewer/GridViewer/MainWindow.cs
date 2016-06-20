@@ -352,7 +352,7 @@ namespace GridViewer
             cgs.DY = dy;
             cgs.DZ = dz;
             cgs.TOPS = inputData.RootDataFile.GetTOPS();
-            cgs.ActNums = inputData.RootDataFile.GetACTNUM();
+            cgs.activeBlocks = inputData.RootDataFile.GetACTNUM();
             cgs.IBlocks = CreateAllSlices(dimens.NI);
             cgs.JBlocks = CreateAllSlices(dimens.NJ);
             cgs.KBlocks = CreateAllSlices(dimens.NK);
@@ -376,7 +376,7 @@ namespace GridViewer
             cpg.NZ = dimens.NK;
             cpg.COORDS = coord;
             cpg.ZCORN = zcorn;
-            cpg.ActNums = inputData.RootDataFile.GetACTNUM();
+            cpg.activeBlocks = inputData.RootDataFile.GetACTNUM();
             cpg.IBlocks = CreateAllSlices(dimens.NI);
             cpg.JBlocks = CreateAllSlices(dimens.NJ);
             cpg.KBlocks = CreateAllSlices(dimens.NK);
@@ -1053,7 +1053,7 @@ namespace GridViewer
 
             String pathFileName = openFileDialog1.FileName;
             GridDimens dimens = new GridDimens(gridderSource.NX, gridderSource.NY, gridderSource.NZ);
-            int[] actNums = gridderSource.ActNums;
+            int[] actNums = gridderSource.activeBlocks;
             int activeCount = dimens.Size;
             if (actNums != null)
             {

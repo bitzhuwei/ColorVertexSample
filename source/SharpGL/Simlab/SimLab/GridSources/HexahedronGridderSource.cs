@@ -220,7 +220,7 @@ namespace SimLab.GridSource
         protected void InitSliceVisibles()
         {
             this.Slices = CreateSliceVisibles();
-            this.bindVisibles = BindCellActive(this.Slices, this.ActNums);
+            this.bindVisibles = BindCellActive(this.Slices, this.activeBlocks);
         }
 
 

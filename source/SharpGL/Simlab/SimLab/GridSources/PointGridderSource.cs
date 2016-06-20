@@ -86,7 +86,7 @@ namespace SimLab.GridSource
         public int[] BindResultsVisibles(int[] gridIndexes)
         {
             int[] resultHas =  this.ExpandVisibles(gridIndexes);
-            return this.BindCellActive(resultHas, this.ActNums);
+            return this.BindCellActive(resultHas, this.activeBlocks);
         }
 
         public new PointGridFactory Factory

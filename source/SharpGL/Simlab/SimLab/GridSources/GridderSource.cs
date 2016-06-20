@@ -50,7 +50,7 @@ namespace SimLab.GridSource
         private int[] zeroVisibles;
 
         /// <summary>
-        /// 透明texure坐标,大小为DimenSize
+        /// 透明texture坐标,大小为DimenSize
         /// </summary>
         private float[] invisibleTextures;
 
@@ -60,7 +60,7 @@ namespace SimLab.GridSource
         public bool IsDimensEmpty 
         { get { return (this.NX <= 0 || this.NY <= 0 || this.NZ <= 0); } }
 
-        public int[] ActNums { get; set; }
+        public int[] activeBlocks { get; set; }
 
         /// <summary>
         /// 将一维数组索引转化为三维（I,J,K）表示的网格索引号
@@ -116,13 +116,12 @@ namespace SimLab.GridSource
         /// <returns></returns>
         public bool IsActiveBlock(int gridIndex)
         {
-            return this.ActNums[gridIndex] > 0;
+            return this.activeBlocks[gridIndex] > 0;
         }
 
         protected abstract GridBufferDataFactory CreateFactory();
 
         private GridBufferDataFactory factory;
-
         protected GridBufferDataFactory Factory
         {
             get
@@ -145,15 +144,14 @@ namespace SimLab.GridSource
         /// </summary>
         public virtual void Init()
         {
-
             if (this.gridIndexer == null)
             {
                 this.gridIndexer = new GridIndexer(this.NX, this.NY, this.NZ);
             }
 
-            if (this.ActNums == null)
+            if (this.activeBlocks == null)
             {
-                this.ActNums = ArrayHelper.NewIntArray(this.DimenSize, 1);
+                this.activeBlocks = ArrayHelper.NewIntArray(this.DimenSize, 1);
             }
             if (this.zeroVisibles == null)
             {
@@ -177,7 +175,6 @@ namespace SimLab.GridSource
             float dz = 0.0f - center.Z;
 
             this.TranslateMatrix = glm.translate(identityMat, new vec3(dx, dy, dz));
-
 
             Vertex newcenter = this.TranslateMatrix * center;
             //System.Console.WriteLine(center);
