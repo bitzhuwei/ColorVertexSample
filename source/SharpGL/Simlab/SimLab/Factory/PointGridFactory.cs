@@ -14,9 +14,6 @@ namespace SimLab.GridSource.Factory
     public class PointGridFactory : GridBufferDataFactory
     {
 
-
-
-
         public override MeshBase CreateMesh(GridderSource source)
         {
             PointGridderSource src = (PointGridderSource)source;
@@ -34,11 +31,8 @@ namespace SimLab.GridSource.Factory
                 Vertex* cells = (Vertex*)positions.Data;
                 for (int gridIndex = 0; gridIndex < dimSize; gridIndex++)
                 {
-                    Vertex p = src.TranslateMatrix*src.Positions[gridIndex];
+                    Vertex p = src.TranslateMatrix * src.Positions[gridIndex];
                     cells[gridIndex] = p;
-                   
-
-                 
                 }
             }
             radiusBuffer = this.CreateRadiusBufferData(src, src.Radius);
@@ -47,7 +41,6 @@ namespace SimLab.GridSource.Factory
             mesh.Min = src.TransformedActiveBounds.Min;
             return mesh;
         }
-
 
         public PointRadiusBuffer CreateRadiusBufferData(PointGridderSource src, float[] radius)
         {
@@ -65,7 +58,6 @@ namespace SimLab.GridSource.Factory
             return radiusBuffer;
         }
 
-
         public PointRadiusBuffer CreateRadiusBufferData(PointGridderSource src, float radius)
         {
 
@@ -82,8 +74,6 @@ namespace SimLab.GridSource.Factory
             }
             return radiusBuffer;
         }
-
-
 
         public override TexCoordBuffer CreateTextureCoordinates(GridderSource source, int[] gridIndexes, float[] values, float minValue, float maxValue)
         {
