@@ -39,7 +39,7 @@ namespace SimLab.GridSource
 
         protected void InitRadius()
         {
-            this.Radius = this.InitFloatArray(this.DimenSize, 1.0f);
+            this.Radius = this.NewFloatArray(this.DimenSize, 1.0f);
         }
 
 
@@ -75,12 +75,12 @@ namespace SimLab.GridSource
         {
             if (gridIndexes.Length == this.DimenSize)
             {
-                return this.InitIntArray(this.DimenSize, 1);
+                return this.NewIntArray(this.DimenSize, 1);
             }
             else
             {
                 int dimenSize = this.DimenSize;
-                int[] visibles = InitIntArray(this.DimenSize, 0);
+                int[] visibles = NewIntArray(this.DimenSize, 0);
                 for (int i = 0; i < gridIndexes.Length; i++)
                 {
                     int gridIndex = gridIndexes[i];

@@ -169,7 +169,7 @@ namespace SimLab.GridSource
         {
             if (this.TOPS == null)
             {
-               this.TOPS = InitFloatArray(this.DimenSize, 0);
+               this.TOPS = NewFloatArray(this.DimenSize, 0);
             }
                 //xcoords;
             int coordSize = (this.NX + 1) * (this.NY + 1) * (this.NZ + 1);

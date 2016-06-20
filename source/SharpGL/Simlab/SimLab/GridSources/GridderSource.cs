@@ -165,17 +165,17 @@ namespace SimLab.GridSource
         /// <param name="dimenSize">数组大小</param>
         /// <param name="value">初始值</param>
         /// <returns></returns>
-        protected int[] InitIntArray(int dimenSize, int value = 1)
+        protected int[] NewIntArray(int dimenSize, int value = 1)
         {
-            int[] actNums = new int[dimenSize];
+            int[] array = new int[dimenSize];
             for (int i = 0; i < dimenSize; i++)
             {
-                actNums[i] = value;
+                array[i] = value;
             }
-            return actNums;
+            return array;
         }
 
-        public float[] InitFloatArray(int size, float value = 2)
+        public float[] NewFloatArray(int size, float value = 2)
         {
             float[] array = new float[size];
             for (int i = 0; i < size; i++)
@@ -203,16 +203,16 @@ namespace SimLab.GridSource
 
             if (this.ActNums == null)
             {
-                this.ActNums = InitIntArray(this.DimenSize,1);
+                this.ActNums = NewIntArray(this.DimenSize,1);
             }
             if (this.zeroVisibles == null)
             {
-                this.zeroVisibles = InitIntArray(this.DimenSize, 0);
+                this.zeroVisibles = NewIntArray(this.DimenSize, 0);
             }
             if (this.invisibleTextures == null)
             {
                //初始化不可视
-               this.invisibleTextures = InitFloatArray(this.DimenSize, 2);
+               this.invisibleTextures = NewFloatArray(this.DimenSize, 2);
             }
 
             this.InitGridCoordinates();

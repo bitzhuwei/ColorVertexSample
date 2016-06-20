@@ -120,11 +120,11 @@ namespace SimLab.SimGrid
         private void InitMatrixFracturesInvisibles()
         {
               int  matrixSize =   this.DimenSize - this.FractureNum;
-              this.MatrixInvisibles = this.InitIntArray(matrixSize, 0);
+              this.MatrixInvisibles = this.NewIntArray(matrixSize, 0);
               int fractureSize = this.FractureNum;
-              this.FracturesInvisible = this.InitIntArray(fractureSize, 0);
-              this.InvisibleMatrixTextures = this.InitFloatArray(matrixSize, 2.0f);
-              this.InvisibleFractureTextures = this.InitFloatArray(fractureSize, 2.0f);
+              this.FracturesInvisible = this.NewIntArray(fractureSize, 0);
+              this.InvisibleMatrixTextures = this.NewFloatArray(matrixSize, 2.0f);
+              this.InvisibleFractureTextures = this.NewFloatArray(fractureSize, 2.0f);
         }
 
         /// <summary>
