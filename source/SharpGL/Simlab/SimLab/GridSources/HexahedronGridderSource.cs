@@ -22,8 +22,6 @@ namespace SimLab.GridSource
         private Dictionary<int, bool> kSlices;
 
         private int[] sliceVisibles;
-       
-
 
         /// <summary>
         /// 切片同ActNum的AND后的结果，表示某个网格是否画不画
@@ -32,7 +30,6 @@ namespace SimLab.GridSource
 
         private Dictionary<int, bool> CreateSliceDict(IList<int> slices)
         {
-
             Dictionary<int, bool> result = new Dictionary<int, bool>();
             for (int i = 0; i < slices.Count; i++)
             {
@@ -40,7 +37,6 @@ namespace SimLab.GridSource
             }
             return result;
         }
-
 
         public int[] Slices
         {
@@ -53,7 +49,6 @@ namespace SimLab.GridSource
                 this.sliceVisibles = value;
             }
         }
-
 
         /// <summary>
         /// ACTNUM 同 切面的可视合并结果
@@ -117,10 +112,8 @@ namespace SimLab.GridSource
             //int gridIndex;
             //this.IJK2Index(i, j, k, out gridIndex);
             //return sliceVisibles[gridIndex] > 0;
-            return (iSlices.ContainsKey(i) || jSlices.ContainsKey(j))&&kSlices.ContainsKey(k);
+            return (iSlices.ContainsKey(i) || jSlices.ContainsKey(j)) && kSlices.ContainsKey(k);
         }
-
-
 
         /// <summary>
         /// 判断IJ是否 处于IJ的平面
@@ -133,7 +126,6 @@ namespace SimLab.GridSource
             return iSlices.ContainsKey(i) || jSlices.ContainsKey(j);
         }
 
-
         /// <summary>
         /// 获取FRONT平面，LEFT TOP 上的点
         /// </summary>
@@ -142,7 +134,6 @@ namespace SimLab.GridSource
         /// <param name="k"></param>
         /// <returns></returns>
         public abstract Vertex PointFLT(int i, int j, int k);
-
 
         /// <summary>
         /// 获取FRONT平面，RIGHT TOP 上的点
@@ -162,7 +153,6 @@ namespace SimLab.GridSource
         /// <returns></returns>
         public abstract Vertex PointFLB(int i, int j, int k);
 
-
         /// <summary>
         ///  获取FRONT平面，RIGHT BUTTOM 上的点
         /// </summary>
@@ -171,7 +161,6 @@ namespace SimLab.GridSource
         /// <param name="k"></param>
         /// <returns></returns>
         public abstract Vertex PointFRB(int i, int j, int k);
-
 
         /// <summary>
         /// 获取BACK平面，LEFT TOP 上的点
@@ -200,7 +189,6 @@ namespace SimLab.GridSource
         /// <returns></returns>
         public abstract Vertex PointBLB(int i, int j, int k);
 
-
         /// <summary>
         ///  获取BACK平面，RIGHT BOTTOM 上的点
         /// </summary>
@@ -210,19 +198,16 @@ namespace SimLab.GridSource
         /// <returns></returns>
         public abstract Vertex PointBRB(int i, int j, int k);
 
-
         protected override Factory.GridBufferDataFactory CreateFactory()
         {
             return new HexahedronGridFactory();
         }
-
 
         protected void InitSliceVisibles()
         {
             this.Slices = CreateSliceVisibles();
             this.bindVisibles = BindCellActive(this.Slices, this.activeBlocks);
         }
-
 
         /// <summary>
         /// 生成网格是否显示的标志
@@ -234,17 +219,15 @@ namespace SimLab.GridSource
             //默认不显示
             for (int gridIndex = 0; gridIndex < sliceVisibles.Length; gridIndex++)
             {
-                int i,j,k;
-                this.InvertIJK(gridIndex,out i, out j, out k);
-                if(this.IsSliceBlock(i,j,k))
-                  sliceVisibles[gridIndex] = 1;
+                int i, j, k;
+                this.InvertIJK(gridIndex, out i, out j, out k);
+                if (this.IsSliceBlock(i, j, k))
+                    sliceVisibles[gridIndex] = 1;
                 else
-                  sliceVisibles[gridIndex] = 0;
+                    sliceVisibles[gridIndex] = 0;
             }
             return sliceVisibles;
         }
-
-       
 
         /// <summary>
         /// 初始化切片可视性
@@ -263,33 +246,34 @@ namespace SimLab.GridSource
             this.InitSliceVisibles();
         }
 
-
         protected override SharpGL.SceneComponent.Rectangle3D InitSourceActiveBounds()
         {
             bool initFlag = false;
             SharpGL.SceneComponent.Rectangle3D rect = new SharpGL.SceneComponent.Rectangle3D();
-            int i,j,k;
-            for(int gridIndex=0; gridIndex<this.DimenSize;gridIndex++){
-               
-               if(this.IsActiveBlock(gridIndex)){
-                 
-                 this.InvertIJK(gridIndex,out i,out j,out k);
-                 if(!initFlag){
-                    initFlag = true;
-                    rect = new SharpGL.SceneComponent.Rectangle3D(PointFLB(i,j,k),PointBRT(i,j,k));
-                 }
-                 rect.Union(PointFLT(i,j,k));
-                 rect.Union(PointFRT(i,j,k));
-                 rect.Union(PointBLT(i,j,k));
-                 rect.Union(PointBRT(i,j,k));
-                 rect.Union(PointFLB(i,j,k));
-                 rect.Union(PointFRB(i,j,k));
-                 rect.Union(PointBLB(i,j,k));
-                 rect.Union(PointBRB(i,j,k));
-               }
+            int i, j, k;
+            for (int gridIndex = 0; gridIndex < this.DimenSize; gridIndex++)
+            {
+
+                if (this.IsActiveBlock(gridIndex))
+                {
+
+                    this.InvertIJK(gridIndex, out i, out j, out k);
+                    if (!initFlag)
+                    {
+                        initFlag = true;
+                        rect = new SharpGL.SceneComponent.Rectangle3D(PointFLB(i, j, k), PointBRT(i, j, k));
+                    }
+                    rect.Union(PointFLT(i, j, k));
+                    rect.Union(PointFRT(i, j, k));
+                    rect.Union(PointBLT(i, j, k));
+                    rect.Union(PointBRT(i, j, k));
+                    rect.Union(PointFLB(i, j, k));
+                    rect.Union(PointFRB(i, j, k));
+                    rect.Union(PointBLB(i, j, k));
+                    rect.Union(PointBRB(i, j, k));
+                }
             }
             return rect;
         }
-
     }
 }
