@@ -217,13 +217,14 @@ namespace SimLab.GridSource
         /// <returns></returns>
         public int[] ExpandVisibles(int[] gridIndexes)
         {
-            int[] gridVisibles = new int[this.DimenSize];
-            Array.Copy(this.zeroVisibles, gridVisibles, this.DimenSize);
+            int[] array = this.zeroVisibles.ToArray();
+            //new int[this.DimenSize];
+            //Array.Copy(this.zeroVisibles, array, this.DimenSize);
             for (int i = 0; i < gridIndexes.Length; i++)
             {
-                gridVisibles[gridIndexes[i]] = 1;
+                array[gridIndexes[i]] = 1;
             }
-            return gridVisibles;
+            return array;
         }
 
         /// <summary>
