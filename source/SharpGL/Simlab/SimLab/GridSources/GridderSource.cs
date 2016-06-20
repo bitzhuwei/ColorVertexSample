@@ -18,14 +18,11 @@ namespace SimLab.GridSource
     /// src.NX = 1;
     /// ....
     /// src.Init();
-    /// 
-    /// 
     /// </summary>
     public abstract class GridderSource
     {
 
         private GridIndexer gridIndexer;
-
 
         /// <summary>
         /// X轴方向上的网格数。
@@ -52,13 +49,10 @@ namespace SimLab.GridSource
         /// </summary>
         private int[] zeroVisibles;
 
-
         /// <summary>
         /// 透明texure坐标,大小为DimenSize
         /// </summary>
         private float[] invisibleTextures;
-
-
 
         /// <summary>
         /// 此网格至少包含1个元素，返回true；否则返回false。
@@ -72,7 +66,6 @@ namespace SimLab.GridSource
         }
 
         public int[] ActNums { get; set; }
-
 
         /// <summary>
         /// 将一维数组索引转化为三维（I,J,K）表示的网格索引号
@@ -121,7 +114,6 @@ namespace SimLab.GridSource
         //    return (this.ActNums[gridIndex] > 0);
         //}
 
-
         /// <summary>
         /// 网格索引
         /// </summary>
@@ -131,7 +123,6 @@ namespace SimLab.GridSource
         {
             return this.ActNums[gridIndex] > 0;
         }
-
 
         protected abstract GridBufferDataFactory CreateFactory();
 
@@ -148,7 +139,6 @@ namespace SimLab.GridSource
                 return factory;
             }
         }
-
 
         /// <summary>
         /// 计算初始Bounds,
@@ -225,8 +215,6 @@ namespace SimLab.GridSource
             return geometry;
         }
 
-
-
         public int[] BindCellActive(int[] a1, int[] a2)
         {
             if (a1.Length != a2.Length)
@@ -242,7 +230,6 @@ namespace SimLab.GridSource
             }
             return results;
         }
-
 
         /// <summary>
         /// 将网格索引转化为可视结果
@@ -294,7 +281,6 @@ namespace SimLab.GridSource
             internal set;
         }
 
-
         /// <summary>
         /// 原始数据的三维矩形边界
         /// </summary>
@@ -309,12 +295,9 @@ namespace SimLab.GridSource
         /// </summary>
         public mat4 TranslateMatrix
         {
-
             get;
             internal set;
-
         }
-
 
         /// <summary>
         /// 中心点在坐标原点
@@ -330,8 +313,6 @@ namespace SimLab.GridSource
             get;
             set;
         }
-
-
 
     }
 
