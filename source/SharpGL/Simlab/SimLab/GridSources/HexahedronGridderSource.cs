@@ -14,9 +14,6 @@ namespace SimLab.GridSource
     public abstract class HexahedronGridderSource : GridderSource
     {
 
-        private List<int> _iBlocks;
-        private List<int> _jBlocks;
-        private List<int> _kBlocks;
         private Dictionary<int, bool> iSlices;
         private Dictionary<int, bool> jSlices;
         private Dictionary<int, bool> kSlices;
@@ -66,6 +63,7 @@ namespace SimLab.GridSource
 
         }
 
+        private List<int> _iBlocks;
         public List<int> IBlocks
         {
             get { return this._iBlocks; }
@@ -76,6 +74,7 @@ namespace SimLab.GridSource
             }
         }
 
+        private List<int> _jBlocks;
         public List<int> JBlocks
         {
             get { return this._jBlocks; }
@@ -86,6 +85,7 @@ namespace SimLab.GridSource
             }
         }
 
+        private List<int> _kBlocks;
         public List<int> KBlocks
         {
             get
