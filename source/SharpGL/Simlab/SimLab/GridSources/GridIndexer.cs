@@ -21,15 +21,13 @@ namespace SimLab.SimGrid
         /// </summary>
         private  int nij;
 
-        private int  dimenSize;
-
         public GridIndexer(int nx, int ny, int nz)
         {
             this.ni = nx;
             this.nj = ny;
             this.nk = nz;
             this.nij = ni * nj;
-            this.dimenSize = ni * nj * nk;
+            this.DimenSize = ni * nj * nk;
         }
 
         /// <summary>
@@ -46,10 +44,7 @@ namespace SimLab.SimGrid
              return result;
         }
 
-        public int DimenSize
-        {
-            get { return this.dimenSize; }
-        }
+        public int DimenSize { get; private set; }
 
 
         /// <summary>
