@@ -207,13 +207,6 @@ namespace SimLab.SimGrid
             }
         }
 
-
-        protected override void InitGridCoordinates()
-        {
-            //do nothing
-        }
-
-
         public new Vertex Max
         {
             get

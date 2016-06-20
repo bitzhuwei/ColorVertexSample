@@ -229,7 +229,7 @@ namespace SimLab.GridSource
         /// <summary>
         /// 初始化描述网格的坐标
         /// </summary>
-        protected abstract void InitGridCoordinates();
+        protected virtual void InitGridCoordinates() { }
 
         /// <summary>
         /// 快速生成默认的网格Texture,值为空(值大于1）

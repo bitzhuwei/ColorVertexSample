@@ -102,12 +102,6 @@ namespace SimLab.GridSource
             return (this.Factory as PointGridFactory).CreateRadiusBufferData(this, radius);
         }
 
-
-        protected override void InitGridCoordinates()
-        {
-            //do nothing;
-        }
-
         protected override SharpGL.SceneComponent.Rectangle3D InitSourceActiveBounds()
         {
             if (this.Positions == null || this.Positions.Length <= 0)

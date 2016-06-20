@@ -226,11 +226,6 @@ namespace SimLab.GridSource
             
         }
 
-        protected override void InitGridCoordinates()
-        {
-            
-        }
-
         public override void Init()
         {
           
