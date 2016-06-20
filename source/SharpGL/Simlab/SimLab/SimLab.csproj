@@ -54,7 +54,8 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>simlab64.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -174,7 +175,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="simlab64.pfx" />
     <None Include="VertexBuffers\VertexBuffers_DynamicUnstructureGrid.cd" />
     <None Include="VertexBuffers\VertexBuffers_PointGrid.cd" />
     <None Include="VertexBuffers\VertexBuffers_HexahedronGrid.cd" />
