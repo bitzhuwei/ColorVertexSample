@@ -239,9 +239,9 @@ namespace SimLab.SimGrid
         }
 
 
-        protected override GridSource.Factory.GridBufferDataFactory CreateFactory()
+        protected override GridSource.Factory.GridBufferDataFactory Factory
         {
-            return new DynamicUnstructureGridFactory();
+            get { return new DynamicUnstructureGridFactory(); }
         }
 
         public TexCoordBuffer CreateFractureTextureCoordinates(int[] gridIndexes, float[] values, float minValue, float maxValue)

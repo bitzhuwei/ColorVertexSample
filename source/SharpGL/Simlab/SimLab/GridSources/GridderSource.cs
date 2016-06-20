@@ -119,20 +119,7 @@ namespace SimLab.GridSource
             return this.activeBlocks[gridIndex] > 0;
         }
 
-        protected abstract GridBufferDataFactory CreateFactory();
-
-        private GridBufferDataFactory factory;
-        protected GridBufferDataFactory Factory
-        {
-            get
-            {
-                if (this.factory == null)
-                {
-                    this.factory = CreateFactory();
-                }
-                return factory;
-            }
-        }
+        protected abstract GridBufferDataFactory Factory { get; }
 
         /// <summary>
         /// 计算初始Bounds,

@@ -14,12 +14,15 @@ namespace SimLab.GridSource
     /// </summary>
     public class PointGridderSource : GridderSource
     {
-       
+
         private float[] radius;
 
-        protected override Factory.GridBufferDataFactory CreateFactory()
+        protected override GridBufferDataFactory Factory
         {
-            return new PointGridFactory();
+            get
+            {
+                return new PointGridFactory();
+            }
         }
 
         /// <summary>
@@ -52,7 +55,7 @@ namespace SimLab.GridSource
 
         public Vertex GetPosition(int i, int j, int k)
         {
-            int gridIndex= this.GridIndexOf(i, j, k);
+            int gridIndex = this.GridIndexOf(i, j, k);
             return this.Positions[gridIndex];
         }
 
@@ -85,26 +88,18 @@ namespace SimLab.GridSource
         /// <returns></returns>
         public int[] BindResultsVisibles(int[] gridIndexes)
         {
-            int[] resultHas =  this.ExpandVisibles(gridIndexes);
+            int[] resultHas = this.ExpandVisibles(gridIndexes);
             return this.BindCellActive(resultHas, this.activeBlocks);
-        }
-
-        public new PointGridFactory Factory
-        {
-            get
-            {
-               return (PointGridFactory)base.Factory;
-            }
         }
 
         public PointRadiusBuffer CreateRadiusBuffer(float[] radius)
         {
-           return  this.Factory.CreateRadiusBufferData(this, radius);
+            return (this.Factory as PointGridFactory).CreateRadiusBufferData(this, radius);
         }
 
         public PointRadiusBuffer CreateRadiusBuffer(float radius)
         {
-            return this.Factory.CreateRadiusBufferData(this, radius);
+            return (this.Factory as PointGridFactory).CreateRadiusBufferData(this, radius);
         }
 
 
@@ -119,7 +114,7 @@ namespace SimLab.GridSource
             { throw new ArgumentException("Points has No Value"); }
 
             Vertex v = this.Positions[0];
-            SharpGL.SceneComponent.Rectangle3D rect3d = new SharpGL.SceneComponent.Rectangle3D(v,v);
+            SharpGL.SceneComponent.Rectangle3D rect3d = new SharpGL.SceneComponent.Rectangle3D(v, v);
             for (int i = 0; i < this.Positions.Length; i++)
             {
                 rect3d.Union(this.Positions[i]);

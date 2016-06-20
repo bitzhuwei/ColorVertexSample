@@ -14,7 +14,6 @@ namespace SimLab.GridSource
 
         public float[] ZCORN { get; set; }
 
-
         /// <summary>
         /// 返回Front Left Top 的左上角的点(x)的起始偏移量
         /// </summary>

@@ -25,6 +25,11 @@ namespace SimLab.GridSource
         /// </summary>
         private int[] bindVisibles;
 
+        protected override GridBufferDataFactory Factory
+        {
+            get { return new HexahedronGridFactory(); }
+        }
+
         private Dictionary<int, bool> CreateSliceDict(IList<int> slices)
         {
             Dictionary<int, bool> result = new Dictionary<int, bool>();
@@ -197,11 +202,6 @@ namespace SimLab.GridSource
         /// <param name="k"></param>
         /// <returns></returns>
         public abstract Vertex PointBRB(int i, int j, int k);
-
-        protected override Factory.GridBufferDataFactory CreateFactory()
-        {
-            return new HexahedronGridFactory();
-        }
 
         protected void InitSliceVisibles()
         {

@@ -50,26 +50,11 @@ namespace SimLab.GridSource
         /// <summary>
         /// 网格起始原点X坐标
         /// </summary>
-        public float OX
-        {
-            get;
-            set;
-        }
+        public float OX { get; set; }
 
-        public float OY
-        {
-            get;
-            set;
-        }
+        public float OY { get; set; }
 
-        public float OZ
-        {
-            get;
-            set;
-        }
-
-
-
+        public float OZ { get; set; }
    
         /// <summary>
         /// 前左上角坐标
