@@ -23,7 +23,7 @@ namespace SimLab.GridSource
         /// <summary>
         /// 切片同ActNum的AND后的结果，表示某个网格是否画不画
         /// </summary>
-        private int[] bindVisibles;
+        //private int[] bindVisibles;
 
         protected override GridBufferDataFactory Factory
         {
@@ -53,20 +53,9 @@ namespace SimLab.GridSource
         }
 
         /// <summary>
-        /// ACTNUM 同 切面的可视合并结果
+        /// 切片同ActNum的AND后的结果，表示某个网格是否画不画
         /// </summary>
-        public int[] BindVisibles
-        {
-            get
-            {
-                return this.bindVisibles;
-            }
-            protected set
-            {
-                this.bindVisibles = value;
-            }
-
-        }
+        public int[] BindVisibles { get; protected set; }
 
         private List<int> _iBlocks;
         public List<int> IBlocks
@@ -206,7 +195,7 @@ namespace SimLab.GridSource
         protected void InitSliceVisibles()
         {
             this.Slices = CreateSliceVisibles();
-            this.bindVisibles = BindCellActive(this.Slices, this.activeBlocks);
+            this.BindVisibles = BindCellActive(this.Slices, this.activeBlocks);
         }
 
         /// <summary>
