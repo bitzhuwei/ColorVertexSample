@@ -33,9 +33,7 @@ namespace SimLab
 
         public PointGrid(OpenGL gl, IScientificCamera camera)
             : base(gl, camera)
-        {
-
-        }
+        { }
 
         public void Init(PointMeshGeometry3D geometry)
         {
@@ -147,7 +145,7 @@ namespace SimLab
                 {
                     gl.Enable(OpenGL.GL_BLEND);
                     gl.BlendFunc(SharpGL.Enumerations.BlendingSourceFactor.SourceAlpha, SharpGL.Enumerations.BlendingDestinationFactor.OneMinusSourceAlpha);
-                  
+
                     gl.BindVertexArray(this.vertexArrayObject[0]);
                     gl.DrawArrays(OpenGL.GL_POINTS, 0, count);
                     gl.BindVertexArray(0);
@@ -258,8 +256,6 @@ namespace SimLab
             catch (Exception)
             {
             }
-           
-
         }
     }
 }
