@@ -89,13 +89,10 @@ namespace SimLab.SimGrid
         /// </summary>
         public float[] InvisibleMatrixTextures { get; internal set; }
 
-
-
         /// <summary>
         /// 不可见裂缝纹理,值全部为2
         /// </summary>
         public float[] InvisibleFractureTextures { get; internal set; }
-
 
         public int[] ActiveMatrix { get; internal set; }
         public int[] ActiveFractures { get; internal set; }
@@ -166,7 +163,6 @@ namespace SimLab.SimGrid
             return results;
         }
 
-
         public int[] BindResultsAndActiveMatrix(int[] gridIndexes)
         {
             int[] results = this.ExpandMatrixVisibles(gridIndexes);
@@ -178,7 +174,6 @@ namespace SimLab.SimGrid
             int[] results = this.ExpandFractureVisibles(gridIndexes);
             return this.BindCellActive(results, this.ActiveFractures);
         }
-
 
         public override void Init()
         {
@@ -195,30 +190,6 @@ namespace SimLab.SimGrid
             }
         }
 
-        public new Vertex Min
-        {
-            get
-            {
-                return base.Min;
-            }
-            set
-            {
-                base.Min = value;
-            }
-        }
-
-        public new Vertex Max
-        {
-            get
-            {
-                return base.Max;
-            }
-            set
-            {
-                base.Max = value;
-            }
-        }
-
         protected override SharpGL.SceneComponent.Rectangle3D InitSourceActiveBounds()
         {
             if (this.NodeNum <= 0)
@@ -232,7 +203,6 @@ namespace SimLab.SimGrid
             }
             return rect;
         }
-
 
         protected override GridSource.Factory.GridBufferDataFactory Factory
         {
