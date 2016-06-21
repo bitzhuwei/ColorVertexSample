@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SimLab
 {
-    public class DynamicUnstructureGeometry:MeshBase
+    public class DynamicUnstructureGeometry : MeshBase
     {
 
         private IndexBuffer matrixIndices;
@@ -19,10 +19,7 @@ namespace SimLab
         /// <param name="matrixPositions"></param>
         public DynamicUnstructureGeometry(PositionBuffer matrixPositions)
             : base(matrixPositions)
-        {
-
-        }
-
+        { }
 
         /// <summary>
         /// 基质基质的索引
@@ -32,24 +29,10 @@ namespace SimLab
             get { return this.matrixIndices; }
             set { this.matrixIndices = value; }
         }
-        //public TetrahedronMatrixIndexBuffer MatrixIndices
-        //{
-        //    get { return this.matrixIndices; }
-        //    set { this.matrixIndices = value; }
-        //}
-
 
         /// <summary>
         /// 基质的位置信息描述
         /// </summary>
-        private new MatrixPositionBuffer Positions
-        {
-            get
-            {
-                return (MatrixPositionBuffer)base.Positions;
-            } 
-        }
-
         public MatrixPositionBuffer MatrixPositions
         {
             get
@@ -57,7 +40,6 @@ namespace SimLab
                 return (MatrixPositionBuffer)base.Positions;
             }
         }
-
 
         public FracturePositionBuffer FracturePositions
         {
@@ -69,7 +51,6 @@ namespace SimLab
             {
                 this.fracturePositions = value;
             }
-
         }
 
     }

@@ -34,13 +34,7 @@ namespace SimLab
             set { renderFractionWireframe = value; }
         }
 
-        private FractureFormat fractionType;
-
-        public FractureFormat FractionType
-        {
-            get { return fractionType; }
-            set { fractionType = value; }
-        }
+        public FractureFormat FractionType { get; set; }
 
         private int fractionLineWidth = 1;
 
@@ -53,36 +47,19 @@ namespace SimLab
             set { fractionLineWidth = value; }
         }
 
-        private int fractionVertexCount;
-
         /// <summary>
         /// fraction有多少个顶点
         /// </summary>
-        public int FractionVertexCount
-        {
-            get { return fractionVertexCount; }
-            set { fractionVertexCount = value; }
-        }
+        public int FractionVertexCount { get; set; }
 
-        private MatrixFormat matrixType;
+        public MatrixFormat MatrixType { get; set; }
 
-        public MatrixFormat MatrixType
-        {
-            get { return matrixType; }
-            set { matrixType = value; }
-        }
-
-        private int matrixVertexOrIndexCount;
 
         /// <summary>
         /// 当基质为三角形时，此值表示基质有多少个顶点。
         /// <para>当基质为四面体时，此值表示基质的索引数组(uint[])的元素数目。</para>
         /// </summary>
-        public int MatrixVertexOrIndexCount
-        {
-            get { return matrixVertexOrIndexCount; }
-            set { matrixVertexOrIndexCount = value; }
-        }
+        public int MatrixVertexOrIndexCount { get; set; }
 
         private const string in_Position = "in_Position";
         private const string in_uv = "in_uv";
@@ -112,9 +89,7 @@ namespace SimLab
 
         public DynamicUnstructureGrid(OpenGL gl, IScientificCamera camera)
             : base(gl, camera)
-        {
-
-        }
+        { }
 
         //TODO: param type not defined yet
         public void Init(DynamicUnstructureGeometry geometry)
@@ -220,7 +195,6 @@ namespace SimLab
             this.texture.Bind(gl);
             shaderProgram.SetUniform1(gl, "tex", this.texture.TextureName);
             shaderProgram.SetUniform1(gl, "brightness", this.Brightness);
-
         }
 
         #region IRenderable 成员
@@ -337,7 +311,7 @@ namespace SimLab
 
                 gl.Enable(OpenGL.GL_BLEND);
                 gl.BlendFunc(SharpGL.Enumerations.BlendingSourceFactor.SourceAlpha, SharpGL.Enumerations.BlendingDestinationFactor.OneMinusSourceAlpha);
-                   
+
                 gl.BindVertexArray(matrixVertexArrayObject[0]);
 
                 switch (this.MatrixType)
@@ -352,7 +326,6 @@ namespace SimLab
                         gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, this.matrixIndexBuffer[0]);
                         gl.DrawElements(this.matrixRenderMode, this.MatrixVertexOrIndexCount, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
                         gl.Disable(OpenGL.GL_PRIMITIVE_RESTART);
-
                         break;
                     case MatrixFormat.TriangularPrism:
                         // 先渲染三棱柱的上下三角形
@@ -381,7 +354,7 @@ namespace SimLab
 
                 gl.Enable(OpenGL.GL_BLEND);
                 gl.BlendFunc(SharpGL.Enumerations.BlendingSourceFactor.SourceAlpha, SharpGL.Enumerations.BlendingDestinationFactor.OneMinusSourceAlpha);
-               
+
                 gl.BindVertexArray(matrixVertexArrayObject[0]);
                 switch (this.MatrixType)
                 {
@@ -412,7 +385,6 @@ namespace SimLab
                 gl.BindVertexArray(0);
 
                 gl.Disable(OpenGL.GL_BLEND);
-
             }
         }
 
