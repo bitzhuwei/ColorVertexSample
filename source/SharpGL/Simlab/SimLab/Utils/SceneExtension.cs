@@ -33,7 +33,6 @@ namespace SimLab.Utils
             children.AddRange(element.Children);
             foreach (SceneElement child in children)
             {
-   
                 ReleaseElement(child);
                 element.RemoveChild(child);
             }

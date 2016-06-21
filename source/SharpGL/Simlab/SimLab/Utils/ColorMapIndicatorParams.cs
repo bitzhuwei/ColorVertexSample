@@ -13,45 +13,20 @@ namespace SimLab.Utils
     public class ColorMapParams
     {
 
-        public bool IsAutomatic
-        {
-            get;
-            set;
-        }
+        public bool IsAutomatic { get; set; }
 
-        public double MinValue
-        {
-            get;
-            set;
-        }
+        public double MinValue { get; set; }
 
-        public double MaxValue
-        {
-            get;
-            set;
-        }
+        public double MaxValue { get; set; }
 
-        public bool UseLogarithmic
-        {
-            get;
-            set;
-        }
+        public bool UseLogarithmic { get; set; }
 
-        public double LogBase
-        {
-            get;
-            set;
-        }
+        public double LogBase { get; set; }
 
         /// <summary>
         /// 步长
         /// </summary>
-        public double Step
-        {
-            get;
-            set;
-        }
-
+        public double Step { get; set; }
 
     }
 }
