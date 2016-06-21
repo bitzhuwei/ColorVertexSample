@@ -15,8 +15,6 @@ using System.Threading.Tasks;
 
 namespace SimLab
 {
-
-
     /// <summary>
     /// 3D Visual Object
     /// </summary>
