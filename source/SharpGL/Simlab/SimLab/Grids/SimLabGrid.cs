@@ -163,18 +163,10 @@ namespace SimLab
 
         }
 
-
-
         /// <summary>
         /// used store any object associate with the simlab grid source
         /// </summary>
-        public object Tag
-        {
-            get;
-            set;
-        }
-
-
+        public object Tag { get; set; }
 
         #region IDisposable Members
 
@@ -189,7 +181,6 @@ namespace SimLab
         }
 
         private bool disposedValue = false;
-
 
         private void Dispose(bool disposing)
         {
