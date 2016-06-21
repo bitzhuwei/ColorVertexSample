@@ -24,10 +24,8 @@ namespace SimLab.SimGrid.Loader
         public const int MARKER_FRACTURE = 1;
         public const int MARKER_FAULT = 2;
 
-
-        public DynamicUnstructuredGridderSource LoadSource(string pathFileName){
-
-
+        public DynamicUnstructuredGridderSource LoadSource(string pathFileName)
+        {
             DynamicUnstructuredGridderSource src = new DynamicUnstructuredGridderSource();
             StreamReader reader = Open(pathFileName);
             try
@@ -56,9 +54,9 @@ namespace SimLab.SimGrid.Loader
                 elemFormat = System.Convert.ToInt32(heads[2], CultureInfo.InvariantCulture);
                 fracNum = System.Convert.ToInt32(heads[3], CultureInfo.InvariantCulture);
                 fracFormat = System.Convert.ToInt32(heads[4], CultureInfo.InvariantCulture);
-                
 
-                if (elemFormat != ElEMENT_FORMAT3_TRIANGLE && elemFormat != ELEMENT_FORMAT4_TETRAHEDRON && elemFormat != ELEMENT_FORMAT6_TRIANGULAR_PRISM&& elemFormat!=0)
+
+                if (elemFormat != ElEMENT_FORMAT3_TRIANGLE && elemFormat != ELEMENT_FORMAT4_TETRAHEDRON && elemFormat != ELEMENT_FORMAT6_TRIANGULAR_PRISM && elemFormat != 0)
                     throw new FormatException("bad format, unknown element format");
                 if (fracFormat != FRACTURE_FORMAT2_LINE && fracFormat != FRACTURE_FORMAT3_TRIANGLE && fracFormat != FRACTURE_FORMAT4_QUAD)
                     throw new FormatException("bad format, unknown frac format");
@@ -119,7 +117,7 @@ namespace SimLab.SimGrid.Loader
                     if (elemLine == null)
                         throw new FormatException("unexpected end of element");
                     String[] fields = elemLine.Split(delimeters, StringSplitOptions.RemoveEmptyEntries);
-                    if (fields.Length <elemFormat)
+                    if (fields.Length < elemFormat)
                         throw new FormatException(String.Format("element format error, line:{0}", lineCounter));
 
                     int[] elemnt = new int[elemFormat];
@@ -134,13 +132,12 @@ namespace SimLab.SimGrid.Loader
                 int[][] fractures = new int[fracNum][];
                 for (int i = 0; i < fracNum; i++)
                 {
-
                     String fracLine = ReadLine(reader, ref lineCounter);
                     if (fracLine == null)
                         throw new FormatException("unexpected end of element");
                     String[] fields = fracLine.Split(delimeters, StringSplitOptions.RemoveEmptyEntries);
                     if (fields.Length < fracFormat)
-                      throw new FormatException(String.Format("element format error, line:{0}", lineCounter));
+                        throw new FormatException(String.Format("element format error, line:{0}", lineCounter));
 
                     int[] frac = new int[fracFormat];
                     for (int j = 0; j < fracFormat; j++)
@@ -159,19 +156,21 @@ namespace SimLab.SimGrid.Loader
                 src.FractureFormat = fracFormat;
                 src.FractureNum = fracNum;
                 src.Fractures = fractures;
-                src.NX = src.ElementNum+src.FractureNum;
+                src.NX = src.ElementNum + src.FractureNum;
                 src.NY = 1;
                 src.NZ = 1;
 
-                if(src.ElementNum<=0){
-                  src.ElementNum = 0;
-                  if(src.ElementFormat == 0)
-                    src.ElementFormat= ELEMENT_FORMAT4_TETRAHEDRON;
+                if (src.ElementNum <= 0)
+                {
+                    src.ElementNum = 0;
+                    if (src.ElementFormat == 0)
+                        src.ElementFormat = ELEMENT_FORMAT4_TETRAHEDRON;
                 }
-                if(src.FractureNum<=0){
-                  src.FractureNum =0;
-                  if(src.FractureFormat == 0)
-                     src.FractureFormat = FRACTURE_FORMAT3_TRIANGLE;
+                if (src.FractureNum <= 0)
+                {
+                    src.FractureNum = 0;
+                    if (src.FractureFormat == 0)
+                        src.FractureFormat = FRACTURE_FORMAT3_TRIANGLE;
                 }
                 return src;
             }
@@ -179,9 +178,6 @@ namespace SimLab.SimGrid.Loader
             {
                 reader.Close();
             }
-
-
-
         }
 
         /// <summary>
@@ -195,14 +191,14 @@ namespace SimLab.SimGrid.Loader
         public DynamicUnstructuredGridderSource LoadSource(string pathFileName, int nx, int ny, int nz)
         {
             DynamicUnstructuredGridderSource src = this.LoadSource(pathFileName);
-            if(src.NX!=nx||src.NY!=ny||src.NZ!=nz)
-               throw new ArgumentException(String.Format("grid dimens not match")); 
-            return src;  
+            if (src.NX != nx || src.NY != ny || src.NZ != nz)
+                throw new ArgumentException(String.Format("grid dimens not match"));
+            return src;
         }
 
         private StreamReader Open(String fileName)
         {
-            StreamReader reader = new StreamReader(new BufferedStream(new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite,512*1024)));
+            StreamReader reader = new StreamReader(new BufferedStream(new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, 512 * 1024)));
             return reader;
         }
 
@@ -238,7 +234,6 @@ namespace SimLab.SimGrid.Loader
                 var z = Math.Max(current.Z, other.Z);
                 return new Vertex(x, y, z);
             }
-
         }
     }
 }

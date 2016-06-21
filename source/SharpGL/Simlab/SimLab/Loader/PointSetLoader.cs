@@ -17,7 +17,7 @@ namespace SimLab.SimGrid.Loader
             StreamReader reader = new StreamReader(new FileStream(pathFileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
             try
             {
-                return DoLoadPointSet(reader, nx,ny,nz);
+                return DoLoadPointSet(reader, nx, ny, nz);
             }
             finally
             {
@@ -25,8 +25,8 @@ namespace SimLab.SimGrid.Loader
             }
         }
 
-        public PointGridderSource LoadFromFile(string pathFileName){
-
+        public PointGridderSource LoadFromFile(string pathFileName)
+        {
             StreamReader reader = new StreamReader(new FileStream(pathFileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
             try
             {
@@ -36,19 +36,17 @@ namespace SimLab.SimGrid.Loader
             {
                 reader.Close();
             }
-
         }
 
-        protected static PointGridderSource DoLoadPointSet(StreamReader reader){
-
-           
+        protected static PointGridderSource DoLoadPointSet(StreamReader reader)
+        {
             PointGridderSource ps = new PointGridderSource();
             Vertex minValue = new Vertex();
             Vertex maxValue = new Vertex();
             char[] delimeters = new char[] { ' ', '\t' };
             string line;
             List<Vertex> positions = new List<Vertex>();
-           
+
             int positionCount = 0;
             bool isSet = false;
             while ((line = reader.ReadLine()) != null)
@@ -77,23 +75,20 @@ namespace SimLab.SimGrid.Loader
                     positionCount++;
                 }
             }
-           
+
             ps.Max = maxValue;
             ps.Min = minValue;
-            ps.Positions = positions.ToArray<Vertex>(); 
+            ps.Positions = positions.ToArray<Vertex>();
             ps.NX = ps.Positions.Length;
             ps.NY = 1;
             ps.NZ = 1;
-            if(positions.Count <=0)
-              return null;
+            if (positions.Count <= 0)
+                return null;
             return ps;
-
-
         }
 
         protected static PointGridderSource DoLoadPointSet(StreamReader reader, int nx, int ny, int nz)
         {
-
             int dimenSize = nx * ny * nz;
             PointGridderSource ps = new PointGridderSource();
             ps.NX = nx;
@@ -130,12 +125,12 @@ namespace SimLab.SimGrid.Loader
 
                     positions[positionCount] = pt;
                     positionCount++;
-                    if(positionCount == dimenSize)
+                    if (positionCount == dimenSize)
                         break;
                 }
             }
-            if (positionCount!= dimenSize)
-                throw new ArgumentException(String.Format("file format error,points number:{0} not equals DIMENS",positionCount,dimenSize));
+            if (positionCount != dimenSize)
+                throw new ArgumentException(String.Format("file format error,points number:{0} not equals DIMENS", positionCount, dimenSize));
             ps.Max = maxValue;
             ps.Min = minValue;
             ps.Positions = positions;
