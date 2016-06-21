@@ -18,13 +18,6 @@ namespace SimLab.GridSource
         private Dictionary<int, bool> jSlices;
         private Dictionary<int, bool> kSlices;
 
-        private int[] sliceVisibles;
-
-        /// <summary>
-        /// 切片同ActNum的AND后的结果，表示某个网格是否画不画
-        /// </summary>
-        //private int[] bindVisibles;
-
         protected override GridBufferDataFactory Factory
         {
             get { return new HexahedronGridFactory(); }
@@ -40,17 +33,7 @@ namespace SimLab.GridSource
             return result;
         }
 
-        public int[] Slices
-        {
-            get
-            {
-                return this.sliceVisibles;
-            }
-            protected set
-            {
-                this.sliceVisibles = value;
-            }
-        }
+        public int[] Slices { get; protected set; }
 
         /// <summary>
         /// 切片同ActNum的AND后的结果，表示某个网格是否画不画
@@ -242,10 +225,8 @@ namespace SimLab.GridSource
             int i, j, k;
             for (int gridIndex = 0; gridIndex < this.DimenSize; gridIndex++)
             {
-
                 if (this.IsActiveBlock(gridIndex))
                 {
-
                     this.InvertIJK(gridIndex, out i, out j, out k);
                     if (!initFlag)
                     {
