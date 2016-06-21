@@ -9,7 +9,6 @@ namespace SimLab.SimGrid.helper
 {
     public class VertexHelper
     {
-
         public static Vertex MinVertex(Vertex min, Vertex value)
         {
             if (min.X > value.X)
