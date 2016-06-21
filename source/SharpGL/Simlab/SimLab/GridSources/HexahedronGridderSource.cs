@@ -13,7 +13,6 @@ namespace SimLab.GridSource
     /// </summary>
     public abstract class HexahedronGridderSource : GridderSource
     {
-
         protected override GridBufferDataFactory Factory
         {
             get { return new HexahedronGridFactory(); }
@@ -74,7 +73,6 @@ namespace SimLab.GridSource
                 this.kSlices = CreateSliceDict(value);
             }
         }
-
 
         /// <summary>
         /// 判断(I,J,K)是否是切片的网格块

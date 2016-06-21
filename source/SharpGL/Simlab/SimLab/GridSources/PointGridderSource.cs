@@ -15,8 +15,6 @@ namespace SimLab.GridSource
     public class PointGridderSource : GridderSource
     {
 
-        private float[] radius;
-
         protected override GridBufferDataFactory Factory
         {
             get
@@ -37,21 +35,12 @@ namespace SimLab.GridSource
 
         public Vertex[] Positions { get; set; }
 
-        public float OriginalRadius
-        {
-            get;
-            set;
-        }
-
+        public float OriginalRadius { get; set; }
 
         /// <summary>
         /// 对应的每个点的半径
         /// </summary>
-        public float[] Radius
-        {
-            get { return this.radius; }
-            set { this.radius = value; }
-        }
+        public float[] Radius { get; set; }
 
         public Vertex GetPosition(int i, int j, int k)
         {

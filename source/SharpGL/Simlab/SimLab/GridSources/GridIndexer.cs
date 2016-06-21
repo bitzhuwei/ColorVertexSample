@@ -46,7 +46,6 @@ namespace SimLab.SimGrid
 
         public int DimenSize { get; private set; }
 
-
         /// <summary>
         /// 将网格索引坐标转化为I,J,K表示的网格坐标
         /// </summary>
