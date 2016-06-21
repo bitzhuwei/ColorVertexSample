@@ -14,10 +14,6 @@ namespace SimLab.GridSource
     public abstract class HexahedronGridderSource : GridderSource
     {
 
-        private Dictionary<int, bool> iSlices;
-        private Dictionary<int, bool> jSlices;
-        private Dictionary<int, bool> kSlices;
-
         protected override GridBufferDataFactory Factory
         {
             get { return new HexahedronGridFactory(); }
@@ -41,6 +37,7 @@ namespace SimLab.GridSource
         public int[] BindVisibles { get; protected set; }
 
         private List<int> _iBlocks;
+        private Dictionary<int, bool> iSlices;
         public List<int> IBlocks
         {
             get { return this._iBlocks; }
@@ -52,6 +49,7 @@ namespace SimLab.GridSource
         }
 
         private List<int> _jBlocks;
+        private Dictionary<int, bool> jSlices;
         public List<int> JBlocks
         {
             get { return this._jBlocks; }
@@ -63,6 +61,7 @@ namespace SimLab.GridSource
         }
 
         private List<int> _kBlocks;
+        private Dictionary<int, bool> kSlices;
         public List<int> KBlocks
         {
             get
