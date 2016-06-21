@@ -203,32 +203,31 @@ namespace SimLab.GridSource
             return p;
         }
 
-
-        private bool MinMax(float[] values, out float minValue, out float maxValue){
-            
+        private bool MinMax(float[] values, out float minValue, out float maxValue)
+        {
             bool result = false;
-            if(values.Length <=0){
-               minValue =0;
-               maxValue = 0;
-               return result;
+            if (values.Length <= 0)
+            {
+                minValue = 0;
+                maxValue = 0;
+                return result;
             }
             minValue = values[0];
             maxValue = minValue;
-            for(int i=0; i<values.Length; i++){
-               if(values[i]<minValue)
-                 minValue = values[i];
-               if(values[i]>maxValue)
-                 maxValue = values[i];
-               
+            for (int i = 0; i < values.Length; i++)
+            {
+                if (values[i] < minValue)
+                    minValue = values[i];
+                if (values[i] > maxValue)
+                    maxValue = values[i];
+
             }
             result = true;
             return result;
-            
         }
 
         public override void Init()
         {
-          
             if (this.ZCORN != null)
             {
                 //检查双重介值
@@ -248,15 +247,17 @@ namespace SimLab.GridSource
                     }
                     this.ZCORN = newZcorn;
 
-                    if(this.activeBlocks.Length < this.DimenSize){
-                      int[] nactNums = new int[this.DimenSize];
-                      int oldSize = this.activeBlocks.Length;
-                      System.Array.Copy(this.activeBlocks,nactNums,oldSize);
-                      
-                      for(int j=oldSize; j<nactNums.Length;j++){
-                         nactNums[j] = 1;
-                      }
-                      this.activeBlocks = nactNums;
+                    if (this.activeBlocks.Length < this.DimenSize)
+                    {
+                        int[] nactNums = new int[this.DimenSize];
+                        int oldSize = this.activeBlocks.Length;
+                        System.Array.Copy(this.activeBlocks, nactNums, oldSize);
+
+                        for (int j = oldSize; j < nactNums.Length; j++)
+                        {
+                            nactNums[j] = 1;
+                        }
+                        this.activeBlocks = nactNums;
                     }
                 }
             }
@@ -264,5 +265,5 @@ namespace SimLab.GridSource
         }
 
     }
-    
+
 }
