@@ -32,9 +32,7 @@ namespace SimLab
 
         public HexahedronGrid(OpenGL gl, IScientificCamera camera)
             : base(gl, camera)
-        {
-
-        }
+        { }
 
         public void Init(HexahedronMeshGeometry3D geometry)
         {
@@ -91,20 +89,6 @@ namespace SimLab
 
         #region IRenderable 成员
 
-        //private BlendingSourceFactor sourceFactor = BlendingSourceFactor.One;
-
-        //public BlendingSourceFactor SourceFactor
-        //{
-        //    get { return sourceFactor; }
-        //    set { sourceFactor = value; }
-        //}
-        //private BlendingDestinationFactor destFactor = BlendingDestinationFactor.DestinationAlpha;
-
-        //public BlendingDestinationFactor DestFactor
-        //{
-        //    get { return destFactor; }
-        //    set { destFactor = value; }
-        //}
         void IRenderable.Render(OpenGL gl, RenderMode renderMode)
         {
             if (positionBuffer == null || colorBuffer == null) { return; }
@@ -119,11 +103,6 @@ namespace SimLab
             }
 
             BeforeRendering(gl, renderMode);
-
-            //gl.Disable(OpenGL.GL_DEPTH_TEST);
-            ////gl.DepthMask(0);
-            //gl.Enable(OpenGL.GL_BLEND);
-            //gl.BlendFunc(this.sourceFactor, this.destFactor);
 
             if (this.RenderGridWireframe && this.vertexArrayObject != null)
             {
@@ -158,7 +137,6 @@ namespace SimLab
 
                     gl.PolygonMode(SharpGL.Enumerations.FaceMode.FrontAndBack, SharpGL.Enumerations.PolygonMode.Filled);
                     gl.Disable(OpenGL.GL_POLYGON_SMOOTH);
-
                 }
             }
 
@@ -174,7 +152,7 @@ namespace SimLab
 
                     gl.Enable(OpenGL.GL_BLEND);
                     gl.BlendFunc(SharpGL.Enumerations.BlendingSourceFactor.SourceAlpha, SharpGL.Enumerations.BlendingDestinationFactor.OneMinusSourceAlpha);
-                 
+
                     gl.BindVertexArray(this.vertexArrayObject[0]);
                     gl.BindBuffer(OpenGL.GL_ELEMENT_ARRAY_BUFFER, indexBuffer[0]);
                     gl.DrawElements(OpenGL.GL_QUAD_STRIP, this.indexBufferLength, OpenGL.GL_UNSIGNED_INT, IntPtr.Zero);
@@ -185,10 +163,6 @@ namespace SimLab
                     gl.Disable(OpenGL.GL_PRIMITIVE_RESTART);
                 }
             }
-
-            //gl.Disable(OpenGL.GL_BLEND);
-            ////gl.DepthMask(1);
-            //gl.Enable(OpenGL.GL_DEPTH_TEST);
 
             AfterRendering(gl, renderMode);
         }
