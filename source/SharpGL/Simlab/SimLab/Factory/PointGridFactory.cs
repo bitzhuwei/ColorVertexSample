@@ -60,7 +60,6 @@ namespace SimLab.GridSource.Factory
 
         public PointRadiusBuffer CreateRadiusBufferData(PointGridderSource src, float radius)
         {
-
             PointRadiusBuffer radiusBuffer = new PointRadiusBuffer();
             unsafe
             {

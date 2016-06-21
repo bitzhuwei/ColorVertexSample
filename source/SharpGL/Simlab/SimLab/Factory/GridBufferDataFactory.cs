@@ -14,28 +14,6 @@ namespace SimLab.GridSource.Factory
     /// </summary>
     public abstract class GridBufferDataFactory
     {
-        // 在VertexHelper里有这两个方法了。
-        //protected Vertex MinVertex(Vertex min, Vertex value)
-        //{
-        //    if (min.X > value.X)
-        //        min.X = value.X;
-        //    if (min.Y > value.Y)
-        //        min.Y = value.Y;
-        //    if (min.Z > value.Z)
-        //        min.Z = value.Z;
-        //    return min;
-        //}
-
-        //protected Vertex MaxVertex(Vertex max, Vertex value)
-        //{
-        //    if (max.X < value.X)
-        //        max.X = value.X;
-        //    if (max.Y < value.Y)
-        //        max.Y = value.Y;
-        //    if (max.Z < value.Z)
-        //        max.Z = value.Z;
-        //    return max;
-        //}
 
         /// <summary>
         /// 通过网格数据源生成

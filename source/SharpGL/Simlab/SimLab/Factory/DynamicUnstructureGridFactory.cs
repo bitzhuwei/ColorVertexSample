@@ -14,8 +14,6 @@ namespace SimLab.SimGrid.Factory
     public  class DynamicUnstructureGridFactory : GridBufferDataFactory
     {
 
-
-
         private unsafe DynamicUnstructureGeometry DoCreateMesh(DynamicUnstructuredGridderSource src)
         {
             MatrixPositionBuffer matrixPositions = null;
@@ -25,7 +23,6 @@ namespace SimLab.SimGrid.Factory
             //生成母体
             if (src.ElementFormat == DynamicUnstructuredGridderSource.MATRIX_FORMAT4_TETRAHEDRON)
             {
-
                 matrixPositions = new TetrahedronMatrixPositionBuffer();
                 //matrixPositions.Shape = MatrixPositionBufferData.SHAPE_TETRAHEDRON;
 

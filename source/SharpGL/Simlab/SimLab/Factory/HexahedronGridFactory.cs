@@ -24,7 +24,6 @@ namespace SimLab.GridSource.Factory
             int I, J, K;
             unsafe
             {
-              
                 positions.AllocMem(dimSize);
 
                 HexahedronPosition* cell = (HexahedronPosition*)positions.Data;
@@ -78,7 +77,6 @@ namespace SimLab.GridSource.Factory
             }
         }
 
-
         public override TexCoordBuffer CreateTextureCoordinates(GridderSource source, int[] gridIndexes, float[] values, float minValue, float maxValue)
         {
             HexahedronGridderSource src = (HexahedronGridderSource)source;
@@ -101,7 +99,6 @@ namespace SimLab.GridSource.Factory
                    bindVisibles[gridIndex] = 0;
                 }
                 
-
                 if (bindVisibles[gridIndex] > 0)
                 {
                     if (!(distance <= 0.0f))
@@ -138,6 +135,5 @@ namespace SimLab.GridSource.Factory
             }
             return coordBuffer;
         }
-
     }
 }
