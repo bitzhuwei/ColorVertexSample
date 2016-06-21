@@ -10,7 +10,6 @@ namespace SimLab.Utils
 {
     public static class SceneExtension
     {
-
         /// <summary>
         /// 释放model Container中的对象
         /// </summary>
@@ -20,7 +19,8 @@ namespace SimLab.Utils
             scene.Scene.OpenGL.MakeCurrent();
             List<SceneElement> children = new List<SceneElement>();
             children.AddRange(scene.ModelContainer.Children);
-            foreach(SceneElement child in children){
+            foreach (SceneElement child in children)
+            {
                 ReleaseElement(child);
                 scene.ModelContainer.RemoveChild(child);
             }
