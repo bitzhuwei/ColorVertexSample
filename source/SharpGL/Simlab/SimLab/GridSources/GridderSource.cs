@@ -60,7 +60,7 @@ namespace SimLab.GridSource
         public bool IsDimensEmpty 
         { get { return (this.NX <= 0 || this.NY <= 0 || this.NZ <= 0); } }
 
-        public int[] activeBlocks { get; set; }
+        public int[] ActiveBlocks { get; set; }
 
         /// <summary>
         /// 将一维数组索引转化为三维（I,J,K）表示的网格索引号
@@ -116,7 +116,7 @@ namespace SimLab.GridSource
         /// <returns></returns>
         public bool IsActiveBlock(int gridIndex)
         {
-            return this.activeBlocks[gridIndex] > 0;
+            return this.ActiveBlocks[gridIndex] > 0;
         }
 
         protected abstract GridBufferDataFactory Factory { get; }
@@ -136,9 +136,9 @@ namespace SimLab.GridSource
                 this.gridIndexer = new GridIndexer(this.NX, this.NY, this.NZ);
             }
 
-            if (this.activeBlocks == null)
+            if (this.ActiveBlocks == null)
             {
-                this.activeBlocks = ArrayHelper.NewIntArray(this.DimenSize, 1);
+                this.ActiveBlocks = ArrayHelper.NewIntArray(this.DimenSize, 1);
             }
             if (this.zeroVisibles == null)
             {

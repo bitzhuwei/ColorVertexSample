@@ -175,7 +175,7 @@ namespace SimLab.GridSource
         protected void InitSliceVisibles()
         {
             this.Slices = CreateSliceVisibles();
-            this.BindVisibles = BindCellActive(this.Slices, this.activeBlocks);
+            this.BindVisibles = BindCellActive(this.Slices, this.ActiveBlocks);
         }
 
         /// <summary>

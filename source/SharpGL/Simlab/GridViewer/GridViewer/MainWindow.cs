@@ -352,7 +352,7 @@ namespace GridViewer
             cgs.DY = dy;
             cgs.DZ = dz;
             cgs.TOPS = inputData.RootDataFile.GetTOPS();
-            cgs.activeBlocks = inputData.RootDataFile.GetACTNUM();
+            cgs.ActiveBlocks = inputData.RootDataFile.GetACTNUM();
             cgs.IBlocks = CreateAllSlices(dimens.NI);
             cgs.JBlocks = CreateAllSlices(dimens.NJ);
             cgs.KBlocks = CreateAllSlices(dimens.NK);
@@ -362,7 +362,6 @@ namespace GridViewer
 
         private CornerPointGridderSource CreateCornerPointGridSource(SimulationInputData inputData, GridDimens dimens, float[] coord, float[] zcorn)
         {
-
             if (dimens == null)
                 throw new ArgumentException("Missing DIMENS or SPECGRID");
             if (coord == null)
@@ -376,7 +375,7 @@ namespace GridViewer
             cpg.NZ = dimens.NK;
             cpg.COORDS = coord;
             cpg.ZCORN = zcorn;
-            cpg.activeBlocks = inputData.RootDataFile.GetACTNUM();
+            cpg.ActiveBlocks = inputData.RootDataFile.GetACTNUM();
             cpg.IBlocks = CreateAllSlices(dimens.NI);
             cpg.JBlocks = CreateAllSlices(dimens.NJ);
             cpg.KBlocks = CreateAllSlices(dimens.NK);
@@ -1053,7 +1052,7 @@ namespace GridViewer
 
             String pathFileName = openFileDialog1.FileName;
             GridDimens dimens = new GridDimens(gridderSource.NX, gridderSource.NY, gridderSource.NZ);
-            int[] actNums = gridderSource.activeBlocks;
+            int[] actNums = gridderSource.ActiveBlocks;
             int activeCount = dimens.Size;
             if (actNums != null)
             {

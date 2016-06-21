@@ -78,7 +78,7 @@ namespace SimLab.GridSource
         public int[] BindResultsVisibles(int[] gridIndexes)
         {
             int[] resultHas = this.ExpandVisiblesForPointGrid(gridIndexes);
-            return this.BindCellActive(resultHas, this.activeBlocks);
+            return this.BindCellActive(resultHas, this.ActiveBlocks);
         }
 
         public PointRadiusBuffer CreateRadiusBuffer(float[] radius)
