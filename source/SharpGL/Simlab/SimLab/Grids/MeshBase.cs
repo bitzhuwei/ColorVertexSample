@@ -10,38 +10,25 @@ namespace SimLab
 {
     public abstract class MeshBase
     {
-         /// <summary>
-        /// 点的位置
-        /// </summary>
-        private PositionBuffer positions;
 
         public MeshBase(PositionBuffer positions)
         {
-             this.positions = positions;
+            this.Positions = positions;
         }
 
-
-        public PositionBuffer Positions
-        {
-            get { return this.positions; }
-        }
+        /// <summary>
+        /// 点的位置
+        /// </summary>
+        public PositionBuffer Positions { get; private set; }
 
         /// <summary>
         /// 最小边界坐标
         /// </summary>
-        public Vertex Min
-        {
-            get;
-            set;
-        }
+        public Vertex Min { get; set; }
 
         /// <summary>
         /// 最大边界坐标
         /// </summary>
-        public Vertex Max
-        {
-            get;
-            set;
-        }
+        public Vertex Max { get; set; }
     }
 }
