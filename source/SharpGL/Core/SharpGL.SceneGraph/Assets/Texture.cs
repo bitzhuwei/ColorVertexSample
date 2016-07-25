@@ -8,15 +8,15 @@ using System.Runtime.InteropServices;
 
 namespace SharpGL.SceneGraph.Assets
 {
-	/// <summary>
-	/// A Texture object is simply an array of bytes. It has OpenGL functions, but is
-	/// not limited to OpenGL, so DirectX or custom library functions could be later added.
-	/// </summary>
-	[Editor(typeof(NETDesignSurface.Editors.UITextureEditor), typeof(UITypeEditor))]
-	[TypeConverter(typeof(System.ComponentModel.ExpandableObjectConverter))]
-	[Serializable()]
-	public class Texture : Asset, IBindable
-	{
+    /// <summary>
+    /// A Texture object is simply an array of bytes. It has OpenGL functions, but is
+    /// not limited to OpenGL, so DirectX or custom library functions could be later added.
+    /// </summary>
+    [Editor(typeof(NETDesignSurface.Editors.UITextureEditor), typeof(UITypeEditor))]
+    [TypeConverter(typeof(System.ComponentModel.ExpandableObjectConverter))]
+    [Serializable()]
+    public class Texture : Asset, IBindable
+    {
         /// <summary>
         /// Initializes a new instance of the <see cref="Texture"/> class.
         /// </summary>
@@ -60,7 +60,7 @@ namespace SharpGL.SceneGraph.Assets
             //	Bind our texture object (make it the current texture).
             gl.BindTexture(OpenGL.GL_TEXTURE_2D, TextureName);
         }
-        
+
         /// <summary>
         /// This function creates the underlying OpenGL object.
         /// </summary>
@@ -83,7 +83,7 @@ namespace SharpGL.SceneGraph.Assets
         /// <param name="gl">The OpenGL object.</param>
         /// <param name="image">The image.</param>
         /// <returns>True if the texture was successfully loaded.</returns>
-        public virtual bool Create(OpenGL gl, Bitmap image)
+        public virtual bool Create(OpenGL gl, Bitmap image, uint textureParameter = OpenGL.GL_LINEAR)
         {
             //  Create the underlying OpenGL object.
             Create(gl);
@@ -154,8 +154,8 @@ namespace SharpGL.SceneGraph.Assets
             image.Dispose();
 
             //  Set linear filtering mode.
-            gl.TexParameter(OpenGL.GL_TEXTURE_2D, OpenGL.GL_TEXTURE_MIN_FILTER, OpenGL.GL_LINEAR);
-            gl.TexParameter(OpenGL.GL_TEXTURE_2D, OpenGL.GL_TEXTURE_MAG_FILTER, OpenGL.GL_LINEAR);
+            gl.TexParameter(OpenGL.GL_TEXTURE_2D, OpenGL.GL_TEXTURE_MIN_FILTER, textureParameter);
+            gl.TexParameter(OpenGL.GL_TEXTURE_2D, OpenGL.GL_TEXTURE_MAG_FILTER, textureParameter);
 
             //  We're done!
             return true;
@@ -180,14 +180,14 @@ namespace SharpGL.SceneGraph.Assets
             }
         }
 
-	
-		/// <summary>
-		/// This function destroys the OpenGL object that is a representation of this texture.
-		/// </summary>
-		public virtual void Destroy(OpenGL gl)
-		{
+
+        /// <summary>
+        /// This function destroys the OpenGL object that is a representation of this texture.
+        /// </summary>
+        public virtual void Destroy(OpenGL gl)
+        {
             //  Only destroy if we have a valid id.
-            if(glTextureArray[0] != 0)
+            if (glTextureArray[0] != 0)
             {
                 //	Delete the texture object.
                 gl.DeleteTextures(1, glTextureArray);
@@ -199,7 +199,7 @@ namespace SharpGL.SceneGraph.Assets
                 //  Reset width and height.
                 width = height = 0;
             }
-		}
+        }
 
         /// <summary>
         /// This function (attempts) to make a bitmap from the raw data. The fact that
@@ -226,25 +226,25 @@ namespace SharpGL.SceneGraph.Assets
             return bitmap;
         }
 
-		/// <summary>
-		/// This is an array of bytes (r, g, b, a) that represent the pixels in this
-		/// texture object.
-		/// </summary>
+        /// <summary>
+        /// This is an array of bytes (r, g, b, a) that represent the pixels in this
+        /// texture object.
+        /// </summary>
         private byte[] pixelData = null;
 
-		/// <summary>
-		/// The width of the texture image.
-		/// </summary>
+        /// <summary>
+        /// The width of the texture image.
+        /// </summary>
         private int width = 0;
 
-		/// <summary>
-		/// The height of the texture image.
-		/// </summary>
+        /// <summary>
+        /// The height of the texture image.
+        /// </summary>
         private int height = 0;
 
-		/// <summary>
-		/// This is for OpenGL textures, it is the unique ID for the OpenGL texture.
-		/// </summary>
+        /// <summary>
+        /// This is for OpenGL textures, it is the unique ID for the OpenGL texture.
+        /// </summary>
         private uint[] glTextureArray = new uint[1] { 0 };
 
         /// <summary>
@@ -253,10 +253,10 @@ namespace SharpGL.SceneGraph.Assets
         /// <value>
         /// The name of the texture.
         /// </value>
-		[Description("The internal texture code.."), Category("Texture")]
-		public uint TextureName
-		{
+        [Description("The internal texture code.."), Category("Texture")]
+        public uint TextureName
+        {
             get { return glTextureArray[0]; }
-		}
+        }
     }
 }

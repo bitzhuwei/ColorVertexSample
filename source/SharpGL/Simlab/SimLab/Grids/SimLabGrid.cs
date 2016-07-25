@@ -155,7 +155,7 @@ namespace SimLab
             //OpenGL gl = this.TraverseToRootElement().ParentScene.OpenGL;
 
             this.texture = new Texture();
-            this.texture.Create(gl, bitmap);
+            this.texture.Create(gl, bitmap, OpenGL.GL_NEAREST);
 
             //参数为GL_CLAMP，则缩限，所有大于1的纹理元素值置为1。所有小于0的纹理元素值置为0。
             gl.TexParameter(OpenGL.GL_TEXTURE_2D, OpenGL.GL_TEXTURE_WRAP_S, OpenGL.GL_CLAMP);
