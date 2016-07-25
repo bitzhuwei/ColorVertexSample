@@ -68,6 +68,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dialogs\DynamicSourceLayerEditDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\DynamicSourceLayerEditDialog.Designer.cs">
+      <DependentUpon>DynamicSourceLayerEditDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\WellEditorDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\WellEditorDialog.Designer.cs">
+      <DependentUpon>WellEditorDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\ZAxisDistortionEditorDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -106,6 +118,7 @@
     <Compile Include="GridSources\GridderSource.cs" />
     <Compile Include="GridSources\GridIndexer.cs" />
     <Compile Include="GridSources\HexahedronGridderSource.cs" />
+    <Compile Include="GridSources\IndexesMapper.cs" />
     <Compile Include="GridSources\PointGridderSource.cs" />
     <Compile Include="Grids\DynamicUnstructureGeometry.cs" />
     <Compile Include="Grids\DynamicUnstructureGrid.cs" />
@@ -181,6 +194,12 @@
     <None Include="VertexBuffers\VertexBuffers.cd" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Dialogs\DynamicSourceLayerEditDialog.resx">
+      <DependentUpon>DynamicSourceLayerEditDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\WellEditorDialog.resx">
+      <DependentUpon>WellEditorDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\ZAxisDistortionEditorDialog.resx">
       <DependentUpon>ZAxisDistortionEditorDialog.cs</DependentUpon>
     </EmbeddedResource>

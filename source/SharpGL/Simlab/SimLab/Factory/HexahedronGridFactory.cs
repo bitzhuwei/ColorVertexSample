@@ -1,4 +1,4 @@
-ï»¿using SharpGL.SceneGraph;
+using SharpGL.SceneGraph;
 using SimLab.SimGrid;
 using SimLab.SimGrid.Geometry;
 using SimLab.VertexBuffers;
@@ -31,17 +31,17 @@ namespace SimLab.GridSource.Factory
                 for (int gridIndex = 0; gridIndex < dimSize; gridIndex++)
                 {
                     src.InvertIJK(gridIndex, out I, out J, out K);
-                    cell[gridIndex].FLT = src.TranslateMatrix * src.PointFLT(I, J, K);
-                    cell[gridIndex].FRT = src.TranslateMatrix * src.PointFRT(I, J, K);
-                    cell[gridIndex].BRT = src.TranslateMatrix * src.PointBRT(I, J, K);
-                    cell[gridIndex].BLT = src.TranslateMatrix * src.PointBLT(I, J, K);
-                    cell[gridIndex].FLB = src.TranslateMatrix * src.PointFLB(I, J, K);
-                    cell[gridIndex].FRB = src.TranslateMatrix * src.PointFRB(I, J, K);
-                    cell[gridIndex].BRB = src.TranslateMatrix * src.PointBRB(I, J, K);
-                    cell[gridIndex].BLB = src.TranslateMatrix * src.PointBLB(I, J, K);
+                    cell[gridIndex].FLT = src.Transform * src.PointFLT(I, J, K);
+                    cell[gridIndex].FRT = src.Transform * src.PointFRT(I, J, K);
+                    cell[gridIndex].BRT = src.Transform * src.PointBRT(I, J, K);
+                    cell[gridIndex].BLT = src.Transform * src.PointBLT(I, J, K);
+                    cell[gridIndex].FLB = src.Transform * src.PointFLB(I, J, K);
+                    cell[gridIndex].FRB = src.Transform * src.PointFRB(I, J, K);
+                    cell[gridIndex].BRB = src.Transform * src.PointBRB(I, J, K);
+                    cell[gridIndex].BLB = src.Transform * src.PointBLB(I, J, K);
                 }
 
-                //ç½‘æ ¼ä¸ªæ•°*æ¯ä¸ªå…­é¢ä½“çš„é¢æ•°*æè¿°æ¯ä¸ªå…­é¢ä½“çš„ä¸‰è§’å½¢ä¸ªæ•°
+                //Íø¸ñ¸öÊý*Ã¿¸öÁùÃæÌåµÄÃæÊý*ÃèÊöÃ¿¸öÁùÃæÌåµÄÈý½ÇÐÎ¸öÊý
                 int halfHexahedronIndexCount = dimSize * 2;
                 //int memorySizeInBytes = halfHexahedronIndexCount * sizeof(HalfHexahedronIndex);
                 //halfHexahedronIndices.AllocMem(memorySizeInBytes);
@@ -83,7 +83,7 @@ namespace SimLab.GridSource.Factory
         {
             HexahedronGridderSource src = (HexahedronGridderSource)source;
             int[] resultsVisibles = src.ExpandVisibles(gridIndexes);
-            int[] bindVisibles = src.BindCellActive(src.BindVisibles, resultsVisibles);
+            int[] bindVisibles = src.BindVisibles(src.BindVisibles, resultsVisibles);
 
             int dimenSize = src.DimenSize;
             float[] textures = src.GetInvisibleTextureCoords();
@@ -118,7 +118,7 @@ namespace SimLab.GridSource.Factory
                     }
                     else
                     {
-                        //æœ€å°å€¼æœ€å¤§å€¼ç›¸ç­‰æ—¶ï¼Œæ˜¾ç¤ºæœ€å°å€¼çš„é¢œè‰²
+                        //×îÐ¡Öµ×î´óÖµÏàµÈÊ±£¬ÏÔÊ¾×îÐ¡ÖµµÄÑÕÉ«
                         //textures[gridIndex] = 0.01f;
                         textures[gridIndex] = 0.01f;
                     }

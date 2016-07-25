@@ -20,13 +20,9 @@ namespace SimLab.GridSource.Factory
         public override MeshBase CreateMesh(GridderSource source)
         {
             PointGridderSource src = (PointGridderSource)source;
-            Vertex minVertex = new Vertex();
-            Vertex maxVertex = new Vertex();
-            bool isSet = false;
             PointPositionBuffer positions = new PointPositionBuffer();
             PointRadiusBuffer radiusBuffer = null;
             int dimSize = src.DimenSize;
-            Random random = new Random();
             // setup positions
             unsafe
             {
@@ -34,11 +30,8 @@ namespace SimLab.GridSource.Factory
                 Vertex* cells = (Vertex*)positions.Data;
                 for (int gridIndex = 0; gridIndex < dimSize; gridIndex++)
                 {
-                    Vertex p = src.TranslateMatrix*src.Positions[gridIndex];
+                    Vertex p = src.Transform * src.Positions[gridIndex];
                     cells[gridIndex] = p;
-                   
-
-                 
                 }
             }
             radiusBuffer = this.CreateRadiusBufferData(src, src.Radius);
@@ -88,40 +81,49 @@ namespace SimLab.GridSource.Factory
         public override TexCoordBuffer CreateTextureCoordinates(GridderSource source, int[] gridIndexes, float[] values, float minValue, float maxValue)
         {
             PointGridderSource src = (PointGridderSource)source;
-            int[] visibles = src.BindResultsVisibles(gridIndexes);
+            int[] blockVisibles = src.BindResultsVisibles(gridIndexes);
             int dimenSize = src.DimenSize;
+
             float[] textures = src.GetInvisibleTextureCoords();
             float distance = Math.Abs(maxValue - minValue);
             for (int i = 0; i < gridIndexes.Length; i++)
             {
                 int gridIndex = gridIndexes[i];
-                if (visibles[gridIndex] > 0)
+                int[] mappedBlockIndexes = source.MapBlockIndexes(gridIndex);
+                for (int jblockIndex = 0; jblockIndex < mappedBlockIndexes.Length; jblockIndex++)
                 {
-                    float value = values[i];
-                    if (value < minValue)
-                        value = minValue;
-                    if (value > maxValue)
-                        value = maxValue;
+                    int block = mappedBlockIndexes[jblockIndex];
+                    if(block<0||block >=dimenSize)
+                       continue;
 
-                    if (!(distance <= 0.0f))
+                    if (blockVisibles[block] > 0)
                     {
-                        textures[gridIndex] = (value - minValue) / distance;
-                        if (textures[gridIndex] < 0.5f)
+                        float value = values[i];
+                        if (value < minValue)
+                            value = minValue;
+                        if (value > maxValue)
+                            value = maxValue;
+
+                        if (!(distance <= 0.0f))
                         {
-                            textures[gridIndex] = 0.5f - (0.5f - textures[gridIndex]) * 0.99f;
+                            textures[block] = (value - minValue) / distance;
+                            if (textures[block] < 0.5f)
+                            {
+                                textures[block] = 0.5f - (0.5f - textures[block]) * 0.99f;
+                            }
+                            else
+                            {
+                                textures[block] = (textures[block] - 0.5f) * 0.99f + 0.5f;
+                            }
                         }
                         else
                         {
-                            textures[gridIndex] = (textures[gridIndex] - 0.5f) * 0.99f + 0.5f;
+                            //最小值最大值相等时，显示最小值的颜色
+                            textures[block] = 0.01f;
+                            //textures[gridIndex] = 0;
                         }
                     }
-                    else
-                    {
-                        //最小值最大值相等时，显示最小值的颜色
-                        textures[gridIndex] = 0.01f;
-                        //textures[gridIndex] = 0;
-                    }
-                }
+                }//end for
             }
 
             PointTexCoordBuffer coordBuffer = new PointTexCoordBuffer();

@@ -14,9 +14,9 @@ namespace SimLab.GridSource
     /// </summary>
     public class PointGridderSource : GridderSource
     {
-       
 
-        
+
+
 
 
         private Vertex[] positions;
@@ -67,30 +67,30 @@ namespace SimLab.GridSource
 
         public Vertex GetPosition(int i, int j, int k)
         {
-            int gridIndex= this.GridIndexOf(i, j, k);
+            int gridIndex = this.GridIndexOf(i, j, k);
             return this.Positions[gridIndex];
         }
 
         protected int[] ExpandVisibles(int[] gridIndexes)
         {
-            if (gridIndexes.Length == this.DimenSize)
+
+            int dimenSize = this.DimenSize;
+            int[] visibles = InitIntArray(this.DimenSize, 0);
+            for (int i = 0; i < gridIndexes.Length; i++)
             {
-                return this.InitIntArray(this.DimenSize, 1);
-            }
-            else
-            {
-                int dimenSize = this.DimenSize;
-                int[] visibles = InitIntArray(this.DimenSize, 0);
-                for (int i = 0; i < gridIndexes.Length; i++)
+                int gridIndex = gridIndexes[i];
+                int[] mappedBlockIndexes = this.MapBlockIndexes(gridIndex);
+                for (int j = 0; j < mappedBlockIndexes.Length; j++)
                 {
-                    int gridIndex = gridIndexes[i];
-                    if (gridIndex >= 0 && gridIndex < dimenSize)
+                    int block = mappedBlockIndexes[j];
+                    if (block >= 0 && block < dimenSize)
                     {
-                        visibles[i] = 1;
+                        visibles[block] = 1;
                     }
                 }
-                return visibles;
             }
+            return visibles;
+
         }
 
         /// <summary>
@@ -100,21 +100,21 @@ namespace SimLab.GridSource
         /// <returns></returns>
         public int[] BindResultsVisibles(int[] gridIndexes)
         {
-            int[] resultHas =  this.ExpandVisibles(gridIndexes);
-            return this.BindCellActive(resultHas, this.ActNums);
+            int[] blockResultVisibles = this.ExpandVisibles(gridIndexes);
+            return this.BindVisibles(blockResultVisibles, this.ActNums);
         }
 
         public new PointGridFactory Factory
         {
             get
             {
-               return (PointGridFactory)base.Factory;
+                return (PointGridFactory)base.Factory;
             }
         }
 
         public PointRadiusBuffer CreateRadiusBuffer(float[] radius)
         {
-           return  this.Factory.CreateRadiusBufferData(this, radius);
+            return this.Factory.CreateRadiusBufferData(this, radius);
         }
 
         public PointRadiusBuffer CreateRadiusBuffer(float radius)
@@ -130,12 +130,13 @@ namespace SimLab.GridSource
 
         protected override SharpGL.SceneComponent.Rectangle3D InitSourceActiveBounds()
         {
-            if(positions == null||this.positions.Length <=0)
-              throw new ArgumentException("Points has No Value");
+            if (positions == null || this.positions.Length <= 0)
+                throw new ArgumentException("Points has No Value");
             Vertex v = positions[0];
-            SharpGL.SceneComponent.Rectangle3D rect3d = new SharpGL.SceneComponent.Rectangle3D(v,v);
-            for(int i=0; i<this.positions.Length; i++){
-               rect3d.Union(this.positions[i]);
+            SharpGL.SceneComponent.Rectangle3D rect3d = new SharpGL.SceneComponent.Rectangle3D(v, v);
+            for (int i = 0; i < this.positions.Length; i++)
+            {
+                rect3d.Union(this.positions[i]);
             }
             return rect3d;
         }

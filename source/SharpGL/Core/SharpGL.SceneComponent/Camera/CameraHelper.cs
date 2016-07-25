@@ -1,4 +1,4 @@
-ï»¿using GlmNet;
+using GlmNet;
 using SharpGL.SceneGraph;
 using System;
 using System.Collections.Generic;
@@ -112,7 +112,7 @@ namespace SharpGL.SceneComponent
         /// <para>  +-------+      </para>
         /// <para> /  |            </para>
         /// <para>Y   Z            </para>
-        /// <para>å…¶è¾¹é•¿ä¸º(2 * Math.Sqrt(3)), æ‰€åœ¨çš„åæ ‡ç³»å¦‚ä¸‹</para>
+        /// <para>Æä±ß³¤Îª(2 * Math.Sqrt(3)), ËùÔÚµÄ×ø±êÏµÈçÏÂ</para>
         /// <para>   O---X</para>
         /// <para>  /|    </para>
         /// <para> Y |    </para>
@@ -169,7 +169,7 @@ namespace SharpGL.SceneComponent
         /// <para>  +-------+      </para>
         /// <para> /  |            </para>
         /// <para>Y   Z            </para>
-        /// <para>å…¶è¾¹é•¿ä¸º(2 * Math.Sqrt(3)), æ‰€åœ¨çš„åæ ‡ç³»å¦‚ä¸‹</para>
+        /// <para>Æä±ß³¤Îª(2 * Math.Sqrt(3)), ËùÔÚµÄ×ø±êÏµÈçÏÂ</para>
         /// <para>   O---X</para>
         /// <para>  /|    </para>
         /// <para> Y |    </para>
@@ -232,7 +232,7 @@ namespace SharpGL.SceneComponent
             switch (viewType)
             {
                 case ViewTypes.UserView:
-                    //UserView å®šä¹‰ä¸ºä»é¡¶è§†å›¾å¼€å§‹ï¼Œç»•X è½´æ—‹è½¬30 åº¦ï¼Œåœ¨ç»•Z è½´45 åº¦ï¼Œå¹¶ä¸”èƒ½çœ‹åˆ°æ•´ä¸ªæ¨¡å‹çš„è™šæ‹Ÿæ¨¡å‹ç©ºé—´ã€‚
+                    //UserView ¶¨ÒåÎª´Ó¶¥ÊÓÍ¼¿ªÊ¼£¬ÈÆX ÖáĞı×ª30 ¶È£¬ÔÚÈÆZ Öá45 ¶È£¬²¢ÇÒÄÜ¿´µ½Õû¸öÄ£ĞÍµÄĞéÄâÄ£ĞÍ¿Õ¼ä¡£
                     if (coordinateSystem == CoordinateSystem.LeftHand)
                     {
                         target2Position = new Vertex(-1, -1, 1);
@@ -242,9 +242,9 @@ namespace SharpGL.SceneComponent
                     }
                     else
                     {
-                        target2Position = new Vertex(-1, -1, -1);
+                        target2Position = new Vertex(-1, -1, 1);
                         target2Position.Normalize();
-                        upVector = new Vertex(1, 1, -2);
+                        upVector = new Vertex(1, 1, 2);
                         upVector.Normalize();
                     }
                     break;
@@ -268,24 +268,20 @@ namespace SharpGL.SceneComponent
                     target2Position = new Vertex(
                         coordinateSystem == CoordinateSystem.LeftHand ? 1 : -1,
                         0, 0);
-                    upVector = new Vertex(0, 0,
-                        coordinateSystem == CoordinateSystem.LeftHand ? 1 : -1
-                        );
+                    upVector = new Vertex(0, 0, 1);
                     break;
                 case ViewTypes.Right:
                     target2Position = new Vertex(
                         coordinateSystem == CoordinateSystem.LeftHand ? -1 : 1,
                         0, 0);
-                    upVector = new Vertex(0, 0,
-                        coordinateSystem == CoordinateSystem.LeftHand ? 1 : -1
-                        );
+                    upVector = new Vertex(0, 0,1);
                     break;
                 case ViewTypes.Front:
                     target2Position = new Vertex(0,
                         coordinateSystem == CoordinateSystem.LeftHand ? 1 : 1,
                         0);
                     upVector = new Vertex(0, 0,
-                        coordinateSystem == CoordinateSystem.LeftHand ? 1 : -1
+                        coordinateSystem == CoordinateSystem.LeftHand ? 1 : 1
                         );
                     break;
                 case ViewTypes.Back:
@@ -293,7 +289,7 @@ namespace SharpGL.SceneComponent
                         coordinateSystem == CoordinateSystem.LeftHand ? -1 : -1,
                         0);
                     upVector = new Vertex(0, 0,
-                        coordinateSystem == CoordinateSystem.LeftHand ? 1 : -1
+                        coordinateSystem == CoordinateSystem.LeftHand ? 1 : 1
                         );
                     break;
                 default:
@@ -303,7 +299,7 @@ namespace SharpGL.SceneComponent
         }
 
         /// <summary>
-        /// æ ¹æ®æ‘„åƒæœºçš„ç±»å‹è·å–å…¶æŠ•å½±çŸ©é˜µ
+        /// ¸ù¾İÉãÏñ»úµÄÀàĞÍ»ñÈ¡ÆäÍ¶Ó°¾ØÕó
         /// </summary>
         /// <param name="camera"></param>
         /// <returns></returns>

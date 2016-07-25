@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Xml.Serialization;
 using SharpGL.SceneGraph.Primitives;
+
 
 namespace SharpGL.SceneGraph.Core
 {
@@ -31,9 +32,9 @@ namespace SharpGL.SceneGraph.Core
     public partial class SceneElement
     {
 
-        private float zAxisScale = -1.0f;
+        private float zAxisScale = 1.0f;
 
-        public float ZAxisScale
+        public virtual float ZAxisScale
         {
             get { return zAxisScale; }
             set { zAxisScale = value; }

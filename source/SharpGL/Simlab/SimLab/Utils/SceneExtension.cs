@@ -43,5 +43,23 @@ namespace SimLab.Utils
                 ((IDisposable)element).Dispose();
             }
         }
+
+        /// <summary>
+        /// release and remove element from the scene
+        /// </summary>
+        /// <param name="scene"></param>
+        /// <param name="element"></param>
+        public static void ReleaseElement(this ScientificVisual3DControl scene, SceneElement element){
+          
+            scene.OpenGL.MakeCurrent();
+            ReleaseElement(element);
+            if(element.Parent!=null){
+              SceneElement parent = element.Parent;
+              if(parent!= null){
+                parent.RemoveChild(element);
+              }
+            }
+          
+        }
     }
 }

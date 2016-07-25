@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,9 +13,9 @@ namespace GridViewer
 
         public static void WaitIdle(){
 
-           Application.UseWaitCursor = true;
-           Application.Idle -= OnIdle;
            Application.Idle += OnIdle;
+           Application.UseWaitCursor = true;
+           
         }
 
         private static void OnIdle(object sender, EventArgs e)

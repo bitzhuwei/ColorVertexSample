@@ -1,7 +1,8 @@
-ï»¿using GlmNet;
+using GlmNet;
 using SharpGL.SceneComponent;
 using SharpGL.SceneGraph;
 using SimLab.GridSource.Factory;
+using SimLab.GridSources;
 using SimLab.SimGrid;
 using SimLab.VertexBuffers;
 using System;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 namespace SimLab.GridSource
 {
     /// <summary>
-    /// ç½‘æ ¼æ•°æ®æº, èµ‹å€¼åè°ƒç”¨åˆå§‹åŒ–Initæ‰èƒ½ä½¿ç”¨:
+    /// Íø¸ñÊı¾İÔ´, ¸³Öµºóµ÷ÓÃ³õÊ¼»¯Init²ÅÄÜÊ¹ÓÃ:
     /// GridderSource src = new CatesianGridderSource()
     /// src.NX = 1;
     /// ....
@@ -27,24 +28,29 @@ namespace SimLab.GridSource
 
         private GridIndexer gridIndexer;
 
+        private float zscale=1.0f; //keep scale 
+
+
+        private int[] gridIndexMapper;
+        private GridIndexesMapper blockIndexesMapper = new GridIndexesMapper(null);
 
         /// <summary>
-        /// Xè½´æ–¹å‘ä¸Šçš„ç½‘æ ¼æ•°ã€‚
+        /// XÖá·½ÏòÉÏµÄÍø¸ñÊı¡£
         /// </summary>
         public int NX { get; set; }
 
         /// <summary>
-        /// Yè½´æ–¹å‘ä¸Šçš„ç½‘æ ¼æ•°ã€‚
+        /// YÖá·½ÏòÉÏµÄÍø¸ñÊı¡£
         /// </summary>
         public int NY { get; set; }
 
         /// <summary>
-        /// Zè½´æ–¹å‘ä¸Šçš„ç½‘æ ¼æ•°ã€‚
+        /// ZÖá·½ÏòÉÏµÄÍø¸ñÊı¡£
         /// </summary>
         public int NZ { get; set; }
 
         /// <summary>
-        /// è·å–ç½‘æ ¼åŒ…å«çš„å…ƒç´ æ€»æ•°ã€‚
+        /// »ñÈ¡Íø¸ñ°üº¬µÄÔªËØ×ÜÊı¡£
         /// </summary>
         public int DimenSize
         {
@@ -55,20 +61,20 @@ namespace SimLab.GridSource
         }
 
         /// <summary>
-        /// æ¯ä¸ªç½‘æ ¼ä¸€ä¸ªå€¼ï¼Œå…¨éƒ¨ä¸ºé›¶ï¼Œè¡¨ç¤ºå…¨éƒ¨ä¸å¯è§†
+        /// Ã¿¸öÍø¸ñÒ»¸öÖµ£¬È«²¿ÎªÁã£¬±íÊ¾È«²¿²»¿ÉÊÓ
         /// </summary>
         private int[] zeroVisibles;
 
 
         /// <summary>
-        /// é€æ˜texureåæ ‡,å¤§å°ä¸ºDimenSize
+        /// Í¸Ã÷texure×ø±ê,´óĞ¡ÎªDimenSize
         /// </summary>
         private float[] invisibleTextures;
 
        
 
         /// <summary>
-        /// æ­¤ç½‘æ ¼è‡³å°‘åŒ…å«1ä¸ªå…ƒç´ ï¼Œè¿”å›trueï¼›å¦åˆ™è¿”å›falseã€‚
+        /// ´ËÍø¸ñÖÁÉÙ°üº¬1¸öÔªËØ£¬·µ»Øtrue£»·ñÔò·µ»Øfalse¡£
         /// </summary>
         public bool IsDimensEmpty
         {
@@ -84,9 +90,9 @@ namespace SimLab.GridSource
 
 
         /// <summary>
-        /// å°†ä¸€ç»´æ•°ç»„ç´¢å¼•è½¬åŒ–ä¸ºä¸‰ç»´ï¼ˆI,J,Kï¼‰è¡¨ç¤ºçš„ç½‘æ ¼ç´¢å¼•å·
+        /// ½«Ò»Î¬Êı×éË÷Òı×ª»¯ÎªÈıÎ¬£¨I,J,K£©±íÊ¾µÄÍø¸ñË÷ÒıºÅ
         /// </summary>
-        /// <param name="index">0å¼€å§‹çš„ç½‘æ ¼ç´¢å¼•</param>
+        /// <param name="index">0¿ªÊ¼µÄÍø¸ñË÷Òı</param>
         /// <param name="iv"></param>
         /// <param name="jv"></param>
         /// <param name="kv"></param>
@@ -96,11 +102,11 @@ namespace SimLab.GridSource
         }
 
         /// <summary>
-        /// æ±‚å‡ºç½‘æ ¼ç´¢å¼•ä½ç½®
+        /// Çó³öÍø¸ñË÷ÒıÎ»ÖÃ
         /// </summary>
-        /// <param name="I">ç½‘æ ¼åæ ‡ Iæ–¹å‘ï¼Œ1èµ·å§‹</param>
-        /// <param name="J">ç½‘æ ¼åæ ‡ Jæ–¹å‘ï¼Œ1èµ·å§‹</param>
-        /// <param name="K">ç½‘æ ¼åæ ‡ Kæ–¹å‘ï¼Œ1èµ·å§‹</param>
+        /// <param name="I">Íø¸ñ×ø±ê I·½Ïò£¬1ÆğÊ¼</param>
+        /// <param name="J">Íø¸ñ×ø±ê J·½Ïò£¬1ÆğÊ¼</param>
+        /// <param name="K">Íø¸ñ×ø±ê K·½Ïò£¬1ÆğÊ¼</param>
         /// <returns></returns>
         protected int GridIndexOf(int I, int J, int K)
         {
@@ -114,11 +120,11 @@ namespace SimLab.GridSource
         }
 
         /// <summary>
-        /// åˆ¤æ–­ç½‘æ ¼æ˜¯å¦æ˜¯æ´»åŠ¨ç½‘æ ¼
+        /// ÅĞ¶ÏÍø¸ñÊÇ·ñÊÇ»î¶¯Íø¸ñ
         /// </summary>
-        /// <param name="i">ä¸‹æ ‡ä»1å¼€å§‹</param>
-        /// <param name="j">ä¸‹æ ‡ä»1å¼€å§‹</param>
-        /// <param name="k">ä¸‹æ ‡ä»1å¼€å§‹</param>
+        /// <param name="i">ÏÂ±ê´Ó1¿ªÊ¼</param>
+        /// <param name="j">ÏÂ±ê´Ó1¿ªÊ¼</param>
+        /// <param name="k">ÏÂ±ê´Ó1¿ªÊ¼</param>
         /// <returns></returns>
         public bool IsActiveBlock(int i, int j, int k)
         {
@@ -126,14 +132,14 @@ namespace SimLab.GridSource
             int gridIndex;
             this.IJK2Index(i, j, k, out gridIndex);
             int actnum = this.ActNums[gridIndex];
-            if (actnum <= 0) //å°äºæˆ–ç­‰äº0çš„ç½‘æ ¼å—éƒ½æ˜¯éæ´»åŠ¨çš„ç½‘æ ¼å—
+            if (actnum <= 0) //Ğ¡ÓÚ»òµÈÓÚ0µÄÍø¸ñ¿é¶¼ÊÇ·Ç»î¶¯µÄÍø¸ñ¿é
                 return false;
             return true;
         }
 
 
         /// <summary>
-        /// ç½‘æ ¼ç´¢å¼•
+        /// Íø¸ñË÷Òı
         /// </summary>
         /// <param name="gridIndex"></param>
         /// <returns></returns>
@@ -160,10 +166,10 @@ namespace SimLab.GridSource
 
 
         /// <summary>
-        /// åˆ›å»ºæ•°ç»„
+        /// ´´½¨Êı×é
         /// </summary>
-        /// <param name="dimenSize">æ•°ç»„å¤§å°</param>
-        /// <param name="value">åˆå§‹å€¼</param>
+        /// <param name="dimenSize">Êı×é´óĞ¡</param>
+        /// <param name="value">³õÊ¼Öµ</param>
         /// <returns></returns>
         protected int[] InitIntArray(int dimenSize, int value = 1)
         {
@@ -186,12 +192,12 @@ namespace SimLab.GridSource
         }
 
         /// <summary>
-        /// è®¡ç®—åˆå§‹Bounds,
+        /// ¼ÆËã³õÊ¼Bounds,
         /// </summary>
         protected abstract Rectangle3D InitSourceActiveBounds();
 
         /// <summary>
-        /// åˆå§‹åŒ–
+        /// ³õÊ¼»¯
         /// </summary>
         public virtual void Init()
         {
@@ -211,36 +217,63 @@ namespace SimLab.GridSource
             }
             if (this.invisibleTextures == null)
             {
-               //åˆå§‹åŒ–ä¸å¯è§†
+               //³õÊ¼»¯²»¿ÉÊÓ
                this.invisibleTextures = InitFloatArray(this.DimenSize, 2);
             }
 
             this.InitGridCoordinates();
 
             this.SourceActiveBounds = this.InitSourceActiveBounds();
-            //åˆå§‹åŒ–
-            mat4  identityMat = mat4.identity();
-            Vertex center =this.SourceActiveBounds.Center;
-            //çŸ©å½¢ä¸‰è§’å½¢ç§»åŠ¨åˆ°ä¸­å¿ƒç‚¹
-            float dx = 0.0f-center.X;
-            float dy = 0.0f-center.Y;
-            float dz = 0.0f-center.Z;
 
-            this.TranslateMatrix=  glm.translate(identityMat,new vec3(dx,dy,dz));
-           
+            this.InitTransform();
+        }
 
-            Vertex newcenter = this.TranslateMatrix*center;
-            //System.Console.WriteLine(center);
-            Vertex destMin = this.TranslateMatrix*this.SourceActiveBounds.Min;
-            Vertex destMax = this.TranslateMatrix*this.SourceActiveBounds.Max;
+        public void InitTransform(){
 
-            //å˜æ¢åçš„ä¸‰ç»´çŸ©å½¢å…­é¢ä½“
-            this.TransformedActiveBounds = new Rectangle3D(destMin,destMax);
+            Vertex srcMin = this.SourceActiveBounds.Min;
+            Vertex srcMax = this.SourceActiveBounds.Max;
+
+            float zflip = 1;
+            if(srcMin.Z >=0.0f&&srcMax.Z >=0.0f){
+              zflip = -1; //flip the z value
+            }
+
+            Vertex srcCenter = this.SourceActiveBounds.Center;
+
+            mat4 flipTransform = glm.scale(mat4.identity(), new vec3(1, 1, zflip));
+
+            mat4 scaleTransform = glm.scale(mat4.identity(),new vec3(1,1,this.ZScale));
+
+
+            Vertex scaleCenter = flipTransform*scaleTransform * srcCenter;
+            //¾ØĞÎÈı½ÇĞÎÒÆ¶¯µ½ÖĞĞÄµã
+            float dx = 0.0f - scaleCenter.X;
+            float dy = 0.0f - scaleCenter.Y;
+            float dz = 0.0f - scaleCenter.Z;
+
+            mat4 translate = glm.translate(mat4.identity(), new vec3(dx, dy, dz));
+
+            this.FlipTransform = flipTransform;
+            this.ScaleTransform = scaleTransform;
+            this.TranslateTransform = translate;
+
+            this.ScaleTranslateform =  scaleTransform*translate;
+
+            this.Transform = flipTransform*scaleTransform*translate;
+
+
+            //Vertex newcenter = this.Transform * srcCenter;
+            
+            Vertex destMin = this.Transform * this.SourceActiveBounds.Min;
+            Vertex destMax = this.Transform * this.SourceActiveBounds.Max;
+
+            //±ä»»ºóµÄÈıÎ¬¾ØĞÎÁùÃæÌå
+            this.TransformedActiveBounds = new Rectangle3D(destMin, destMax);
 
         }
 
         /// <summary>
-        /// åˆ›å»ºçº¹ç†æ˜ å°„åæ ‡
+        /// ´´½¨ÎÆÀíÓ³Éä×ø±ê
         /// </summary>
         /// <param name="gridIndexes"></param>
         /// <param name="values"></param>
@@ -261,8 +294,7 @@ namespace SimLab.GridSource
         }
 
       
-
-        public int[] BindCellActive(int[] a1, int[] a2)
+        public int[] BindVisibles(int[] a1, int[] a2)
         {
             if (a1.Length != a2.Length)
                 throw new ArgumentException("array size not equal");
@@ -280,7 +312,7 @@ namespace SimLab.GridSource
 
 
         /// <summary>
-        /// å°†ç½‘æ ¼ç´¢å¼•è½¬åŒ–ä¸ºå¯è§†ç»“æœ
+        /// ½«Íø¸ñË÷Òı×ª»¯Îª¿ÉÊÓ½á¹û
         /// </summary>
         /// <param name="gridIndexes"></param>
         /// <returns></returns>
@@ -296,12 +328,12 @@ namespace SimLab.GridSource
         }
 
         /// <summary>
-        /// åˆå§‹åŒ–æè¿°ç½‘æ ¼çš„åæ ‡
+        /// ³õÊ¼»¯ÃèÊöÍø¸ñµÄ×ø±ê
         /// </summary>
         protected abstract void InitGridCoordinates();
 
         /// <summary>
-        /// å¿«é€Ÿç”Ÿæˆé»˜è®¤çš„ç½‘æ ¼Texture,å€¼ä¸ºç©º(å€¼å¤§äº1ï¼‰
+        /// ¿ìËÙÉú³ÉÄ¬ÈÏµÄÍø¸ñTexture,ÖµÎª¿Õ(Öµ´óÓÚ1£©
         /// </summary>
         /// <returns></returns>
         public float[] GetInvisibleTextureCoords()
@@ -312,7 +344,7 @@ namespace SimLab.GridSource
         }
 
         /// <summary>
-        /// æ¨¡å‹èŒƒå›´çš„è¾¹ç•Œæœ€å°å€¼
+        /// Ä£ĞÍ·¶Î§µÄ±ß½ç×îĞ¡Öµ
         /// </summary>
         public Vertex Min
         {
@@ -321,7 +353,7 @@ namespace SimLab.GridSource
         }
 
         /// <summary>
-        /// æ¨¡å‹èŒƒå›´çš„è¾¹ç•Œæœ€å¤§å€¼
+        /// Ä£ĞÍ·¶Î§µÄ±ß½ç×î´óÖµ
         /// </summary>
         public Vertex Max
         {
@@ -331,7 +363,7 @@ namespace SimLab.GridSource
 
 
         /// <summary>
-        /// åŸå§‹æ•°æ®çš„ä¸‰ç»´çŸ©å½¢è¾¹ç•Œ
+        /// Ô­Ê¼Êı¾İµÄÈıÎ¬¾ØĞÎ±ß½ç
         /// </summary>
         public Rectangle3D SourceActiveBounds{
            get;
@@ -339,9 +371,39 @@ namespace SimLab.GridSource
         }
 
         /// <summary>
-        /// SourceActiveBoundsåˆ°DestActiveBoundsçš„
+        /// Ê¹Ä£ĞÍÊı¾İZ×Ô¶¯·­×ª
         /// </summary>
-        public mat4 TranslateMatrix{
+        public mat4 FlipTransform{
+           get;
+           internal set;
+        }
+
+        public mat4 ScaleTransform{
+           get;
+           internal set;
+        }
+
+        /// <summary>
+        /// µãÆ½ÒÆµÄ±ä»»¾ØÕó
+        /// </summary>
+        public mat4 TranslateTransform{
+          get;
+          internal set;
+        }
+
+
+        /// <summary>
+        /// ScaleTransform * TranslateFrom
+        /// </summary>
+        public mat4 ScaleTranslateform{
+          get;
+          internal set;
+        }
+
+        /// <summary>
+        /// SourceActiveBoundsµ½DestActiveBoundsµÄ±ä»»
+        /// </summary>
+        public mat4 Transform{
 
             get;
             internal set;
@@ -350,7 +412,7 @@ namespace SimLab.GridSource
 
 
         /// <summary>
-        /// ä¸­å¿ƒç‚¹åœ¨åæ ‡åŸç‚¹
+        /// ÖĞĞÄµãÔÚ×ø±êÔ­µã
         /// </summary>
         public Rectangle3D TransformedActiveBounds{
            get;
@@ -361,7 +423,28 @@ namespace SimLab.GridSource
           get;set;
         }
 
+        public float ZScale{
+          get{ return this.zscale;}
+          set{ 
+            this.zscale = value;
+          }
+        }
 
+        public int[] GridIndexMapper{
+           get{ return this.gridIndexMapper;}
+           set{ 
+             this.gridIndexMapper = value;
+             this.blockIndexesMapper = new GridIndexesMapper(this.gridIndexMapper);
+           }
+        }
+
+        
+
+        public int[] MapBlockIndexes(int blockIndex){
+         
+            return this.blockIndexesMapper.MapIndexes(blockIndex);
+
+        }
 
     }
 

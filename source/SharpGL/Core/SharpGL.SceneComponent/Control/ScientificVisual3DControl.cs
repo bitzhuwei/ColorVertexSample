@@ -1,4 +1,4 @@
-ï»¿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -18,7 +18,7 @@ namespace SharpGL.SceneComponent
     /// <summary>
     /// Scene control which contains axis, color indicator, etc.
     /// <para>Set the <see cref="ScientificModel"/> property to view a model.</para>
-    /// <para>è¿™ä¸ªæ§ä»¶åœ¨Perspectiveæ¨¡å¼çš„cameraä¸‹ï¼ŒLineä¼šè¢«å¤§é‡çš„ç‚¹è¦†ç›–ã€‚è¿™ä¸ªé—®é¢˜æ˜¯ç”±äºåœºæ™¯èŒƒå›´å¤ªå¤§é€ æˆçš„ï¼Œä¹Ÿå¯èƒ½æœ‰ä¸€äº›å…¶å®ƒåŸå› ï¼Œæš‚æ—¶ä¸çŸ¥é“å¦‚ä»Šå½»åº•è§£å†³ã€‚</para>
+    /// <para>Õâ¸ö¿Ø¼şÔÚPerspectiveÄ£Ê½µÄcameraÏÂ£¬Line»á±»´óÁ¿µÄµã¸²¸Ç¡£Õâ¸öÎÊÌâÊÇÓÉÓÚ³¡¾°·¶Î§Ì«´óÔì³ÉµÄ£¬Ò²¿ÉÄÜÓĞÒ»Ğ©ÆäËüÔ­Òò£¬ÔİÊ±²»ÖªµÀÈç½ñ³¹µ×½â¾ö¡£</para>
     /// </summary>
     public partial class ScientificVisual3DControl : ColorCodedPickingSceneControl
     {
@@ -88,7 +88,7 @@ namespace SharpGL.SceneComponent
         }
 
         /// <summary>
-        /// æ˜¯å¦å¯ç”¨Pickingã€‚
+        /// ÊÇ·ñÆôÓÃPicking¡£
         /// </summary>
         public bool EnablePicking { get; set; }
 

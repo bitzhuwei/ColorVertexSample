@@ -34,6 +34,16 @@ namespace SimLab.SimGrid
         public const int FRACTURE_FORMAT3_TRIANGLE = 3;
         public const int FRACTURE_FORMAT4_QUAD = 4;
 
+
+        /// <summary>
+        /// 当基质为三菱柱时有效，表示三菱柱基质有多少层，0为无效值
+        /// </summary>
+        private int matrixLayers = 0;
+
+
+        private List<int> visibleLayers = new List<int>();
+        private Dictionary<int, bool> visibleLayersDict = new Dictionary<int, bool>();
+
         /// <summary>
         /// 文件头定义: 点的个数
         /// </summary>
@@ -42,7 +52,7 @@ namespace SimLab.SimGrid
         public Vertex[] Nodes { get; set; }
 
         /// <summary>
-        /// 如果nodeInElem 为NODE_FORMAT3 时，element部分表示三角形，elem
+        /// 基质的个数， 如果nodeInElem 为NODE_FORMAT3 时，element部分表示三角形。
         /// </summary>
         public int ElementNum { get; internal set; }
 
@@ -76,19 +86,18 @@ namespace SimLab.SimGrid
         /// <summary>
         /// 母体不可见
         /// </summary>
-        public int[] MatrixInvisibles    { get; internal set; }
+        public int[] MatrixInvisibles { get; internal set; }
 
         /// <summary>
         /// 断层不可见
         /// </summary>
-        public int[] FracturesInvisible { get; internal set;}
+        public int[] FracturesInvisible { get; internal set; }
 
 
         /// <summary>
-        /// 不可见母体纹理,值全部为2
+        /// 不可见母体纹理,初始值值全部为2
         /// </summary>
         public float[] InvisibleMatrixTextures { get; internal set; }
-
 
 
         /// <summary>
@@ -99,6 +108,14 @@ namespace SimLab.SimGrid
 
         public int[] ActiveMatrix { get; internal set; }
         public int[] ActiveFractures { get; internal set; }
+
+        public int[] LayerVisibleMatrix { get; internal set; }
+
+        /// <summary>
+        /// active matrix  and layer visible matrix binding
+        /// </summary>
+        public int[] VisibleMatrix { get; internal set; }
+
 
         private int[] InitActiveMatrix()
         {
@@ -119,16 +136,16 @@ namespace SimLab.SimGrid
 
         private void InitMatrixFracturesInvisibles()
         {
-              int  matrixSize =   this.DimenSize - this.FractureNum;
-              this.MatrixInvisibles = this.InitIntArray(matrixSize, 0);
-              int fractureSize = this.FractureNum;
-              this.FracturesInvisible = this.InitIntArray(fractureSize, 0);
-              this.InvisibleMatrixTextures = this.InitFloatArray(matrixSize, 2.0f);
-              this.InvisibleFractureTextures = this.InitFloatArray(fractureSize, 2.0f);
+            int matrixSize = this.DimenSize - this.FractureNum;
+            this.MatrixInvisibles = this.InitIntArray(matrixSize, 0);
+            int fractureSize = this.FractureNum;
+            this.FracturesInvisible = this.InitIntArray(fractureSize, 0);
+            this.InvisibleMatrixTextures = this.InitFloatArray(matrixSize, 2.0f);
+            this.InvisibleFractureTextures = this.InitFloatArray(fractureSize, 2.0f);
         }
 
         /// <summary>
-        /// 将结果整理成转化为可见
+        /// 将结果整理成直接访问索引转化为可见
         /// </summary>
         /// <param name="gridIndexes">结果集合</param>
         /// <returns></returns>
@@ -138,13 +155,19 @@ namespace SimLab.SimGrid
             int dimenSize = this.DimenSize;
             int matrixStartIndex = this.FractureNum;
             int[] results = new int[matrixSize];
-            Array.Copy(this.MatrixInvisibles,results,results.Length);
+            Array.Copy(this.MatrixInvisibles, results, results.Length);
             for (int mixedIndex = 0; mixedIndex < gridIndexes.Length; mixedIndex++)
             {
                 int gridIndex = gridIndexes[mixedIndex];
-                if (gridIndex >= matrixStartIndex && gridIndex < dimenSize)
+                int[] mappedBlockIndexes = this.MapBlockIndexes(gridIndex);
+
+                for (int jblockIndex = 0; jblockIndex < mappedBlockIndexes.Length; jblockIndex++)
                 {
-                    results[gridIndex - matrixStartIndex] = 1;
+                    int jblock = mappedBlockIndexes[jblockIndex];
+                    if (jblock >= matrixStartIndex && jblock < dimenSize)
+                    {
+                        results[jblock - matrixStartIndex] = 1;
+                    }
                 }
             }
             return results;
@@ -155,51 +178,175 @@ namespace SimLab.SimGrid
             int fractureNum = this.FractureNum;
             int[] results = new int[fractureNum];
             Array.Copy(FracturesInvisible, results, fractureNum);
+
             for (int mixedIndex = 0; mixedIndex < gridIndexes.Length; mixedIndex++)
             {
                 int gridIndex = gridIndexes[mixedIndex];
-                if (gridIndex >= 0 && gridIndex < fractureNum)
+                int[] mappedBlockIndexes = this.MapBlockIndexes(gridIndex);
+                for (int jblockIndex = 0; jblockIndex < mappedBlockIndexes.Length; jblockIndex++)
                 {
-                    results[gridIndex] = 1;
+                    int mapBlock =mappedBlockIndexes[jblockIndex];
+                    if (mapBlock >= 0 && mapBlock < fractureNum)
+                    {
+                        results[mapBlock] = 1;
+                    }
                 }
             }
             return results;
         }
 
 
-        public int[] BindResultsAndActiveMatrix(int[] gridIndexes)
+        /// <summary>
+        /// 控制可显示的基质的层
+        /// </summary>
+        public int MatrixLayers
         {
-            int[] results =   this.ExpandMatrixVisibles(gridIndexes);
-            return this.BindCellActive(results, this.ActiveMatrix);
+
+            get
+            {
+                return this.matrixLayers;
+            }
+            set
+            {
+                if (value == 0)
+                {
+                    this.matrixLayers = 0;
+                    this.VisibleLayers = null;
+                    return;
+                }
+                int modValue = this.ElementNum % value;
+                if (modValue != 0)
+                    throw new ArgumentException("invalid matrix layers");
+                if (value > 300)
+                    throw new ArgumentException("invalid matrix layers to big");
+                this.matrixLayers = value;
+                this.VisibleLayers = this.CreateDefaultLayerVisibles(value);
+            }
+        }
+
+        private List<int> CreateDefaultLayerVisibles(int mxLayers)
+        {
+
+            List<int> list = new List<int>();
+            for (int i = 1; i <= mxLayers; i++)
+            {
+                list.Add(i);
+            }
+            return list;
+        }
+
+        private bool IsLayerVisible(int layerNumber)
+        {
+            bool value=false;
+            if (this.visibleLayersDict.TryGetValue(layerNumber, out value))
+                return true;
+            else
+                return value;
+        }
+
+        /// <summary>
+        /// start from
+        /// </summary>
+        /// <param name="matrixIndex"></param>
+        /// <returns></returns>
+        private int GetLayerNumber(int matrixIndex)
+        {
+            if (this.matrixLayers <= 0)
+                throw new ArgumentException("layers not defined");
+            int layerCount = this.ElementNum / this.matrixLayers;
+            int layerNumber = (matrixIndex / layerCount)+1;
+            return layerNumber;
+        }
+
+        private int[] InitLayerMatrixVisibles()
+        {
+
+            int[] mxLayerVisibles = this.InitIntArray(this.ElementNum, 1);
+            if (matrixLayers == 0)
+              return mxLayerVisibles;
+
+            for (int i = 0; i < mxLayerVisibles.Length; i++)
+            {
+                int matrixIndex = i;
+                int layerNumber = this.GetLayerNumber(matrixIndex);
+                bool isVisible = this.IsLayerVisible(layerNumber);
+                mxLayerVisibles[i] = isVisible ? 1 : 0;
+            }
+            return mxLayerVisibles;
+        }
+
+        /// <summary>
+        /// active nums and visible layer matrix bind
+        /// </summary>
+        public void BindVisibleMatrix()
+        {
+
+            this.LayerVisibleMatrix = this.InitLayerMatrixVisibles();
+            this.VisibleMatrix = this.BindVisibles(this.ActiveMatrix, this.LayerVisibleMatrix);
+
+        }
+
+        protected Dictionary<int, bool> CreateVisibleLayersDictionary(List<int> vLayers)
+        {
+            if (vLayers == null)
+                return null;
+            Dictionary<int, bool> dict = new Dictionary<int, bool>();
+            for (int i = 0; i < vLayers.Count; i++)
+            {
+                dict.Add(vLayers[i], true);
+            }
+            return dict;
+
+        }
+
+        public List<int> VisibleLayers
+        {
+            get
+            {
+                return this.visibleLayers;
+            }
+            set
+            {
+                this.visibleLayers = value;
+                this.visibleLayersDict = CreateVisibleLayersDictionary(value);
+            }
+        }
+
+
+        public int[] BindTextureVisibleMatrix(int[] gridIndexes)
+        {
+            int[] results = this.ExpandMatrixVisibles(gridIndexes);
+            return this.BindVisibles(results, this.VisibleMatrix);
         }
 
         public int[] BindResultsAndActiveFractures(int[] gridIndexes)
         {
             int[] results = this.ExpandFractureVisibles(gridIndexes);
-            return this.BindCellActive(results, this.ActiveFractures);
+            return this.BindVisibles(results, this.ActiveFractures);
         }
 
 
         public override void Init()
         {
-               base.Init();
-               this.InitMatrixFracturesInvisibles();
+            base.Init();
+            this.InitMatrixFracturesInvisibles();
+            if (this.ActiveMatrix == null)
+            {
+                this.ActiveMatrix = InitActiveMatrix();
+            }
+            this.BindVisibleMatrix();
 
-               if (this.ActiveMatrix == null)
-               {
-                   this.ActiveMatrix = InitActiveMatrix();
-               }
-               if (this.ActiveFractures == null)
-               {
-                   this.ActiveFractures = this.InitActiveFractures();
-               }
+            if (this.ActiveFractures == null)
+            {
+                this.ActiveFractures = this.InitActiveFractures();
+            }
         }
 
         public new Vertex Min
         {
             get
             {
-               return  base.Min;
+                return base.Min;
             }
             set
             {
@@ -228,12 +375,13 @@ namespace SimLab.SimGrid
 
         protected override SharpGL.SceneComponent.Rectangle3D InitSourceActiveBounds()
         {
-            if(this.NodeNum <=0)
-              throw new ArgumentException("No nodes found");
+            if (this.NodeNum <= 0)
+                throw new ArgumentException("No nodes found");
             Vertex[] nodes = this.Nodes;
-            SharpGL.SceneComponent.Rectangle3D rect = new SharpGL.SceneComponent.Rectangle3D(nodes[0],nodes[0]);
-            for(int i=0; i<nodes.Length; i++){
-               rect.Union(nodes[i]);
+            SharpGL.SceneComponent.Rectangle3D rect = new SharpGL.SceneComponent.Rectangle3D(nodes[0], nodes[0]);
+            for (int i = 0; i < nodes.Length; i++)
+            {
+                rect.Union(nodes[i]);
             }
             return rect;
         }
@@ -246,7 +394,7 @@ namespace SimLab.SimGrid
 
         public TexCoordBuffer CreateFractureTextureCoordinates(int[] gridIndexes, float[] values, float minValue, float maxValue)
         {
-           return  ((DynamicUnstructureGridFactory)this.Factory).CreateFractureTextureCoordinates(this, gridIndexes, values, minValue, maxValue);
-       }
+            return ((DynamicUnstructureGridFactory)this.Factory).CreateFractureTextureCoordinates(this, gridIndexes, values, minValue, maxValue);
+        }
     }
 }

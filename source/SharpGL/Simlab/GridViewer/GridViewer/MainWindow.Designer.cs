@@ -1,4 +1,4 @@
-﻿namespace GridViewer
+namespace GridViewer
 {
     partial class MainWindow
     {
@@ -46,13 +46,17 @@
             this.mniLoadCloudResults = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.mniLoadEclWells = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniLoadWellTrajectory = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniLoadWellInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mniSceneBackground = new System.Windows.Forms.ToolStripMenuItem();
             this.mniSceneColorBarRange = new System.Windows.Forms.ToolStripMenuItem();
             this.sceneColorBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mniIJKSlices = new System.Windows.Forms.ToolStripMenuItem();
             this.mniZAxisDistortion = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniWellSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.mniSceneClear = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniMatrixLayers = new System.Windows.Forms.ToolStripMenuItem();
             this.dViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mniUserView = new System.Windows.Forms.ToolStripMenuItem();
             this.topViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -82,11 +86,15 @@
             this.toolLoadProperty = new System.Windows.Forms.ToolStripButton();
             this.toolLoadCloudResutls = new System.Windows.Forms.ToolStripButton();
             this.toolLoadECLWells = new System.Windows.Forms.ToolStripButton();
+            this.toolLoadWellTrajectory = new System.Windows.Forms.ToolStripButton();
+            this.toolLoadWellInfo = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.toolSceneBackground = new System.Windows.Forms.ToolStripButton();
             this.toolSceneColorBarRange = new System.Windows.Forms.ToolStripButton();
             this.toolColorBar = new System.Windows.Forms.ToolStripButton();
             this.toolIJKSlices = new System.Windows.Forms.ToolStripButton();
+            this.toolZDistortion = new System.Windows.Forms.ToolStripButton();
+            this.toolWellSettings = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.toolUserView = new System.Windows.Forms.ToolStripButton();
             this.toolTopView = new System.Windows.Forms.ToolStripButton();
@@ -95,7 +103,7 @@
             this.toolRightView = new System.Windows.Forms.ToolStripButton();
             this.toolBackView = new System.Windows.Forms.ToolStripButton();
             this.toolFrontView = new System.Windows.Forms.ToolStripButton();
-            this.toolZDistortion = new System.Windows.Forms.ToolStripButton();
+            this.toolMatrixLayers = new System.Windows.Forms.ToolStripButton();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -170,7 +178,9 @@
             this.mniLoadProperty,
             this.mniLoadCloudResults,
             this.toolStripSeparator5,
-            this.mniLoadEclWells});
+            this.mniLoadEclWells,
+            this.mniLoadWellTrajectory,
+            this.mniLoadWellInfo});
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
             this.loadToolStripMenuItem.Size = new System.Drawing.Size(47, 21);
             this.loadToolStripMenuItem.Text = "Data";
@@ -178,61 +188,75 @@
             // mniLoadECLGrid
             // 
             this.mniLoadECLGrid.Name = "mniLoadECLGrid";
-            this.mniLoadECLGrid.Size = new System.Drawing.Size(188, 22);
+            this.mniLoadECLGrid.Size = new System.Drawing.Size(196, 22);
             this.mniLoadECLGrid.Text = "Load ECL Grid";
             this.mniLoadECLGrid.Click += new System.EventHandler(this.LoadEclGridClick);
             // 
             // mniLoadSimbaGrid
             // 
             this.mniLoadSimbaGrid.Name = "mniLoadSimbaGrid";
-            this.mniLoadSimbaGrid.Size = new System.Drawing.Size(188, 22);
+            this.mniLoadSimbaGrid.Size = new System.Drawing.Size(196, 22);
             this.mniLoadSimbaGrid.Text = "Load Simba Grid";
             this.mniLoadSimbaGrid.Click += new System.EventHandler(this.LoadSimbaGridClick);
             // 
             // mniLoadSimbaPoints
             // 
             this.mniLoadSimbaPoints.Name = "mniLoadSimbaPoints";
-            this.mniLoadSimbaPoints.Size = new System.Drawing.Size(188, 22);
+            this.mniLoadSimbaPoints.Size = new System.Drawing.Size(196, 22);
             this.mniLoadSimbaPoints.Text = "Load Simba Points";
             this.mniLoadSimbaPoints.Click += new System.EventHandler(this.LoadSimbaPointsCick);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(185, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(193, 6);
             // 
             // mniLoadEclProperty
             // 
             this.mniLoadEclProperty.Name = "mniLoadEclProperty";
-            this.mniLoadEclProperty.Size = new System.Drawing.Size(188, 22);
+            this.mniLoadEclProperty.Size = new System.Drawing.Size(196, 22);
             this.mniLoadEclProperty.Text = "Load ECL Property";
             this.mniLoadEclProperty.Click += new System.EventHandler(this.LoadECLPropertyClick);
             // 
             // mniLoadProperty
             // 
             this.mniLoadProperty.Name = "mniLoadProperty";
-            this.mniLoadProperty.Size = new System.Drawing.Size(188, 22);
+            this.mniLoadProperty.Size = new System.Drawing.Size(196, 22);
             this.mniLoadProperty.Text = "Load Property";
             this.mniLoadProperty.Click += new System.EventHandler(this.LoadPropertyFileClick);
             // 
             // mniLoadCloudResults
             // 
             this.mniLoadCloudResults.Name = "mniLoadCloudResults";
-            this.mniLoadCloudResults.Size = new System.Drawing.Size(188, 22);
+            this.mniLoadCloudResults.Size = new System.Drawing.Size(196, 22);
             this.mniLoadCloudResults.Text = "Load Cloud Results";
             this.mniLoadCloudResults.Click += new System.EventHandler(this.LoadCloudResultsClick);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(185, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(193, 6);
             // 
             // mniLoadEclWells
             // 
             this.mniLoadEclWells.Name = "mniLoadEclWells";
-            this.mniLoadEclWells.Size = new System.Drawing.Size(188, 22);
+            this.mniLoadEclWells.Size = new System.Drawing.Size(196, 22);
             this.mniLoadEclWells.Text = "Load ECL Wells";
             this.mniLoadEclWells.Click += new System.EventHandler(this.LoadEclWellsClick);
+            // 
+            // mniLoadWellTrajectory
+            // 
+            this.mniLoadWellTrajectory.Name = "mniLoadWellTrajectory";
+            this.mniLoadWellTrajectory.Size = new System.Drawing.Size(196, 22);
+            this.mniLoadWellTrajectory.Text = "Load Well Trajectory";
+            this.mniLoadWellTrajectory.Click += new System.EventHandler(this.LoadWellTrajectoryClick);
+            // 
+            // mniLoadWellInfo
+            // 
+            this.mniLoadWellInfo.Name = "mniLoadWellInfo";
+            this.mniLoadWellInfo.Size = new System.Drawing.Size(196, 22);
+            this.mniLoadWellInfo.Text = "Load Well Info";
+            this.mniLoadWellInfo.Click += new System.EventHandler(this.LoadWellInfoClick);
             // 
             // optionsToolStripMenuItem
             // 
@@ -241,7 +265,9 @@
             this.mniSceneColorBarRange,
             this.sceneColorBarToolStripMenuItem,
             this.mniIJKSlices,
+            this.mniMatrixLayers,
             this.mniZAxisDistortion,
+            this.mniWellSettings,
             this.mniSceneClear});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(54, 21);
@@ -281,12 +307,26 @@
             this.mniZAxisDistortion.Text = "Z-Distortion";
             this.mniZAxisDistortion.Click += new System.EventHandler(this.SceneZDistortionClick);
             // 
+            // mniWellSettings
+            // 
+            this.mniWellSettings.Name = "mniWellSettings";
+            this.mniWellSettings.Size = new System.Drawing.Size(173, 22);
+            this.mniWellSettings.Text = "Well Setting...";
+            this.mniWellSettings.Click += new System.EventHandler(this.SceneWellSettingsClick);
+            // 
             // mniSceneClear
             // 
             this.mniSceneClear.Name = "mniSceneClear";
             this.mniSceneClear.Size = new System.Drawing.Size(173, 22);
             this.mniSceneClear.Text = "Clear";
             this.mniSceneClear.Click += new System.EventHandler(this.SceneClearClick);
+            // 
+            // mniMatrixLayers
+            // 
+            this.mniMatrixLayers.Name = "mniMatrixLayers";
+            this.mniMatrixLayers.Size = new System.Drawing.Size(173, 22);
+            this.mniMatrixLayers.Text = "Matrix Layers...";
+            this.mniMatrixLayers.Click += new System.EventHandler(this.SceneMatrixLayersClick);
             // 
             // dViewToolStripMenuItem
             // 
@@ -471,12 +511,16 @@
             this.toolLoadProperty,
             this.toolLoadCloudResutls,
             this.toolLoadECLWells,
+            this.toolLoadWellTrajectory,
+            this.toolLoadWellInfo,
             this.toolStripSeparator6,
             this.toolSceneBackground,
             this.toolSceneColorBarRange,
             this.toolColorBar,
             this.toolIJKSlices,
+            this.toolMatrixLayers,
             this.toolZDistortion,
+            this.toolWellSettings,
             this.toolStripSeparator7,
             this.toolUserView,
             this.toolTopView,
@@ -590,6 +634,26 @@
             this.toolLoadECLWells.ToolTipText = "Load ECL Wells";
             this.toolLoadECLWells.Click += new System.EventHandler(this.LoadEclWellsClick);
             // 
+            // toolLoadWellTrajectory
+            // 
+            this.toolLoadWellTrajectory.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolLoadWellTrajectory.Image = ((System.Drawing.Image)(resources.GetObject("toolLoadWellTrajectory.Image")));
+            this.toolLoadWellTrajectory.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolLoadWellTrajectory.Name = "toolLoadWellTrajectory";
+            this.toolLoadWellTrajectory.Size = new System.Drawing.Size(24, 24);
+            this.toolLoadWellTrajectory.Text = "toolStripButton3";
+            this.toolLoadWellTrajectory.Click += new System.EventHandler(this.LoadWellTrajectoryClick);
+            // 
+            // toolLoadWellInfo
+            // 
+            this.toolLoadWellInfo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolLoadWellInfo.Image = ((System.Drawing.Image)(resources.GetObject("toolLoadWellInfo.Image")));
+            this.toolLoadWellInfo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolLoadWellInfo.Name = "toolLoadWellInfo";
+            this.toolLoadWellInfo.Size = new System.Drawing.Size(24, 24);
+            this.toolLoadWellInfo.Text = "toolStripButton3";
+            this.toolLoadWellInfo.Click += new System.EventHandler(this.LoadWellInfoClick);
+            // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
@@ -633,6 +697,26 @@
             this.toolIJKSlices.Size = new System.Drawing.Size(24, 24);
             this.toolIJKSlices.Text = "IJK Slices ";
             this.toolIJKSlices.Click += new System.EventHandler(this.SceneIJKSlicesClick);
+            // 
+            // toolZDistortion
+            // 
+            this.toolZDistortion.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolZDistortion.Image = ((System.Drawing.Image)(resources.GetObject("toolZDistortion.Image")));
+            this.toolZDistortion.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolZDistortion.Name = "toolZDistortion";
+            this.toolZDistortion.Size = new System.Drawing.Size(24, 24);
+            this.toolZDistortion.Text = "toolStripButton3";
+            this.toolZDistortion.Click += new System.EventHandler(this.SceneZDistortionClick);
+            // 
+            // toolWellSettings
+            // 
+            this.toolWellSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolWellSettings.Image = ((System.Drawing.Image)(resources.GetObject("toolWellSettings.Image")));
+            this.toolWellSettings.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolWellSettings.Name = "toolWellSettings";
+            this.toolWellSettings.Size = new System.Drawing.Size(24, 24);
+            this.toolWellSettings.Text = "toolStripButton3";
+            this.toolWellSettings.Click += new System.EventHandler(this.SceneWellSettingsClick);
             // 
             // toolStripSeparator7
             // 
@@ -709,15 +793,15 @@
             this.toolFrontView.Text = "Front view";
             this.toolFrontView.Click += new System.EventHandler(this.FrontViewClick);
             // 
-            // toolZDistortion
+            // toolMatrixLayers
             // 
-            this.toolZDistortion.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolZDistortion.Image = ((System.Drawing.Image)(resources.GetObject("toolZDistortion.Image")));
-            this.toolZDistortion.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolZDistortion.Name = "toolZDistortion";
-            this.toolZDistortion.Size = new System.Drawing.Size(24, 24);
-            this.toolZDistortion.Text = "toolStripButton3";
-            this.toolZDistortion.Click += new System.EventHandler(this.SceneZDistortionClick);
+            this.toolMatrixLayers.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolMatrixLayers.Image = ((System.Drawing.Image)(resources.GetObject("toolMatrixLayers.Image")));
+            this.toolMatrixLayers.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolMatrixLayers.Name = "toolMatrixLayers";
+            this.toolMatrixLayers.Size = new System.Drawing.Size(24, 24);
+            this.toolMatrixLayers.Text = "toolStripButton3";
+            this.toolMatrixLayers.Click += new System.EventHandler(this.SceneMatrixLayersClick);
             // 
             // MainWindow
             // 
@@ -818,6 +902,14 @@
         private System.Windows.Forms.ToolStripMenuItem mniZAxisDistortion;
         private System.Windows.Forms.ToolStripMenuItem mniSceneClear;
         private System.Windows.Forms.ToolStripButton toolZDistortion;
+        private System.Windows.Forms.ToolStripMenuItem mniWellSettings;
+        private System.Windows.Forms.ToolStripButton toolWellSettings;
+        private System.Windows.Forms.ToolStripMenuItem mniLoadWellTrajectory;
+        private System.Windows.Forms.ToolStripButton toolLoadWellTrajectory;
+        private System.Windows.Forms.ToolStripMenuItem mniLoadWellInfo;
+        private System.Windows.Forms.ToolStripButton toolLoadWellInfo;
+        private System.Windows.Forms.ToolStripMenuItem mniMatrixLayers;
+        private System.Windows.Forms.ToolStripButton toolMatrixLayers;
     }
 }
 

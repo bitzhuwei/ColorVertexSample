@@ -1,5 +1,6 @@
 ﻿using SharpGL.SceneGraph;
 using SimLab.Geometry;
+using SimLab.GridSource;
 using SimLab.GridSource.Factory;
 using SimLab.SimGrid.Geometry;
 using SimLab.VertexBuffers;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace SimLab.SimGrid.Factory
 {
-    public  class DynamicUnstructureGridFactory : GridBufferDataFactory
+    public class DynamicUnstructureGridFactory : GridBufferDataFactory
     {
 
 
@@ -38,10 +39,10 @@ namespace SimLab.SimGrid.Factory
                 Vertex[] positions = src.Nodes;
                 for (int i = 0; i < src.ElementNum; i++)
                 {
-                    tets[i].p1 = src.TranslateMatrix*positions[matrixIndices[i][0]-1];
-                    tets[i].p2 = src.TranslateMatrix*positions[matrixIndices[i][1]-1];
-                    tets[i].p3 = src.TranslateMatrix*positions[matrixIndices[i][2]-1];
-                    tets[i].p4 = src.TranslateMatrix*positions[matrixIndices[i][3]-1];
+                    tets[i].p1 = src.Transform * positions[matrixIndices[i][0] - 1];
+                    tets[i].p2 = src.Transform * positions[matrixIndices[i][1] - 1];
+                    tets[i].p3 = src.Transform * positions[matrixIndices[i][2] - 1];
+                    tets[i].p4 = src.Transform * positions[matrixIndices[i][3] - 1];
                 }
 
                 matrixIndicesBuffer = new TetrahedronMatrixIndexBuffer();
@@ -71,9 +72,9 @@ namespace SimLab.SimGrid.Factory
                 TrianglePosition* triangles = (TrianglePosition*)matrixPositions.Data;
                 for (int i = 0; i < src.ElementNum; i++)
                 {
-                    triangles[i].P1 = src.TranslateMatrix*positions[matrixIndices[i][0]-1];
-                    triangles[i].P2 = src.TranslateMatrix*positions[matrixIndices[i][1]-1];
-                    triangles[i].P3 = src.TranslateMatrix*positions[matrixIndices[i][2]-1];
+                    triangles[i].P1 = src.Transform * positions[matrixIndices[i][0] - 1];
+                    triangles[i].P2 = src.Transform * positions[matrixIndices[i][1] - 1];
+                    triangles[i].P3 = src.Transform * positions[matrixIndices[i][2] - 1];
                 }
             }
 
@@ -89,12 +90,12 @@ namespace SimLab.SimGrid.Factory
                 {
                     try
                     {
-                        prism[i].P1 = src.TranslateMatrix*positions[matrixIndices[i][0]-1];
-                        prism[i].P2 = src.TranslateMatrix*positions[matrixIndices[i][1]-1];
-                        prism[i].P3 = src.TranslateMatrix*positions[matrixIndices[i][2]-1];
-                        prism[i].P4 = src.TranslateMatrix*positions[matrixIndices[i][3]-1];
-                        prism[i].P5 = src.TranslateMatrix*positions[matrixIndices[i][4]-1];
-                        prism[i].P6 = src.TranslateMatrix*positions[matrixIndices[i][5]-1];
+                        prism[i].P1 = src.Transform * positions[matrixIndices[i][0] - 1];
+                        prism[i].P2 = src.Transform * positions[matrixIndices[i][1] - 1];
+                        prism[i].P3 = src.Transform * positions[matrixIndices[i][2] - 1];
+                        prism[i].P4 = src.Transform * positions[matrixIndices[i][3] - 1];
+                        prism[i].P5 = src.Transform * positions[matrixIndices[i][4] - 1];
+                        prism[i].P6 = src.Transform * positions[matrixIndices[i][5] - 1];
                     }
                     catch (IndexOutOfRangeException e)
                     {
@@ -138,9 +139,9 @@ namespace SimLab.SimGrid.Factory
                 TrianglePosition* triangles = (TrianglePosition*)fractionPositionsBuffer.Data;
                 for (int i = 0; i < triangleCount; i++)
                 {
-                    triangles[i].P1 = src.TranslateMatrix*positions[triangleIndices[i][0]-1];
-                    triangles[i].P2 = src.TranslateMatrix*positions[triangleIndices[i][1]-1];
-                    triangles[i].P3 = src.TranslateMatrix*positions[triangleIndices[i][2]-1];
+                    triangles[i].P1 = src.Transform * positions[triangleIndices[i][0] - 1];
+                    triangles[i].P2 = src.Transform * positions[triangleIndices[i][1] - 1];
+                    triangles[i].P3 = src.Transform * positions[triangleIndices[i][2] - 1];
                 }
             }
 
@@ -160,8 +161,8 @@ namespace SimLab.SimGrid.Factory
                 int[][] lineIndices = src.Fractures;
                 for (int i = 0; i < lineCount; i++)
                 {
-                    lines[i].P1 = src.TranslateMatrix*positions[lineIndices[i][0]-1];
-                    lines[i].P2 = src.TranslateMatrix*positions[lineIndices[i][1]-1];
+                    lines[i].P1 = src.Transform * positions[lineIndices[i][0] - 1];
+                    lines[i].P2 = src.Transform * positions[lineIndices[i][1] - 1];
                 }
             }
 
@@ -175,10 +176,10 @@ namespace SimLab.SimGrid.Factory
                 int[][] quadIndices = src.Fractures;
                 for (int i = 0; i < fractureCount; i++)
                 {
-                    quad[i].P1 = src.TranslateMatrix*positions[quadIndices[i][0]-1];
-                    quad[i].P2 = src.TranslateMatrix*positions[quadIndices[i][1]-1];
-                    quad[i].P3 = src.TranslateMatrix*positions[quadIndices[i][3]-1];
-                    quad[i].P4 = src.TranslateMatrix*positions[quadIndices[i][2]-1];
+                    quad[i].P1 = src.Transform * positions[quadIndices[i][0] - 1];
+                    quad[i].P2 = src.Transform * positions[quadIndices[i][1] - 1];
+                    quad[i].P3 = src.Transform * positions[quadIndices[i][3] - 1];
+                    quad[i].P4 = src.Transform * positions[quadIndices[i][2] - 1];
                 }
             }
 
@@ -200,7 +201,7 @@ namespace SimLab.SimGrid.Factory
         }
 
         /// <summary>
-        /// 
+        /// create matrix TextureCoordinates
         /// </summary>
         /// <param name="source"></param>
         /// <param name="gridIndexes"></param>
@@ -216,13 +217,14 @@ namespace SimLab.SimGrid.Factory
 
         public TexCoordBuffer CreateFractureTextureCoordinates(DynamicUnstructuredGridderSource src, int[] gridIndexes, float[] values, float minValue, float maxValue)
         {
-            return DoCreateFractureTextureCoordinates(src, gridIndexes, values, minValue, maxValue);
+            return this.DoCreateFractureTextureCoordinates(src, gridIndexes, values, minValue, maxValue);
         }
 
-        protected static unsafe TexCoordBuffer DoCreateFractureTextureCoordinates(DynamicUnstructuredGridderSource src, int[] gridIndexes, float[] values, float minValue, float maxValue)
+        protected unsafe TexCoordBuffer DoCreateFractureTextureCoordinates(DynamicUnstructuredGridderSource src, int[] gridIndexes, float[] values, float minValue, float maxValue)
         {
             int fractureStartIndex = 0;
             int fractureEndIndex = src.FractureNum - 1;
+
             int[] invisibles = src.BindResultsAndActiveFractures(gridIndexes);
             float[] textures = new float[src.InvisibleFractureTextures.Length];
             Array.Copy(src.InvisibleFractureTextures, textures, textures.Length);
@@ -230,34 +232,39 @@ namespace SimLab.SimGrid.Factory
             for (int mixedIndex = 0; mixedIndex < gridIndexes.Length; mixedIndex++)
             {
                 int gridIndex = gridIndexes[mixedIndex];
-                if (gridIndex >= fractureStartIndex && gridIndex <= fractureEndIndex)
+                int[] mapBlockIndexes = src.MapBlockIndexes(gridIndex);
+                for (int j = 0; j < mapBlockIndexes.Length; j++)
                 {
-                    float value = values[mixedIndex];
-                    if (value < minValue)
-                        value = minValue;
-                    if (value > maxValue)
-                        value = maxValue;
-                    int matrixIndex = gridIndex;
-                    if (invisibles[matrixIndex] > 0)
+                    int blockIndex = mapBlockIndexes[j];
+                    if (blockIndex >= fractureStartIndex && blockIndex <= fractureEndIndex)
                     {
-                        float distance = maxValue - minValue;
-                        if (!(distance <= 0.0f))
+                        float value = values[mixedIndex];
+                        if (value < minValue)
+                            value = minValue;
+                        if (value > maxValue)
+                            value = maxValue;
+                        int fracIndex = blockIndex;
+                        if (invisibles[fracIndex] > 0)
                         {
-                            textures[matrixIndex] = (value - minValue) / distance;
-                            if (textures[matrixIndex] < 0.5f)
+                            float distance = maxValue - minValue;
+                            if (!(distance <= 0.0f))
                             {
-                                textures[matrixIndex] = 0.5f - (0.5f - textures[matrixIndex]) * 0.99f;
+                                textures[fracIndex] = (value - minValue) / distance;
+                                if (textures[fracIndex] < 0.5f)
+                                {
+                                    textures[fracIndex] = 0.5f - (0.5f - textures[fracIndex]) * 0.99f;
+                                }
+                                else
+                                {
+                                    textures[fracIndex] = (textures[fracIndex] - 0.5f) * 0.99f + 0.5f;
+                                }
                             }
                             else
                             {
-                                textures[matrixIndex] = (textures[matrixIndex] - 0.5f) * 0.99f + 0.5f;
+                                //最小值最大值相等时，显示最小值的颜色
+                                textures[fracIndex] = 0.01f;
+                                //textures[matrixIndex] = 0.01f;
                             }
-                        }
-                        else
-                        {
-                            //最小值最大值相等时，显示最小值的颜色
-                            textures[matrixIndex] = 0.01f;
-                            //textures[matrixIndex] = 0.01f;
                         }
                     }
                 }
@@ -273,7 +280,7 @@ namespace SimLab.SimGrid.Factory
                 textureCoordinates.AllocMem(texturesCount);
 
                 TriangleTexCoord* pTextures = (TriangleTexCoord*)textureCoordinates.Data;
-                for (int i = 0; i <texturesCount; i++)
+                for (int i = 0; i < texturesCount; i++)
                 {
                     pTextures[i].SetTextureCoord(textures[i]);
                 }
@@ -301,6 +308,8 @@ namespace SimLab.SimGrid.Factory
             return textureCoordinates;
         }
 
+
+
         /// <summary>
         /// 生成基质的纹理映射坐标
         /// </summary>
@@ -314,41 +323,48 @@ namespace SimLab.SimGrid.Factory
         {
             int matrixStartIndex = src.FractureNum;
             int matrixEndIndex = src.DimenSize - 1;
-            int[] invisibles = src.BindResultsAndActiveMatrix(gridIndexes);
+
+            int[] textureVisibles = src.BindTextureVisibleMatrix(gridIndexes);
             float[] textures = new float[src.InvisibleMatrixTextures.Length];
             Array.Copy(src.InvisibleMatrixTextures, textures, textures.Length);
 
             for (int mixedIndex = 0; mixedIndex < gridIndexes.Length; mixedIndex++)
             {
                 int gridIndex = gridIndexes[mixedIndex];
-                if (gridIndex >= matrixStartIndex && gridIndex < src.DimenSize)
+                int[] mapBlockIndexes = src.MapBlockIndexes(gridIndex);
+
+                for (int j = 0; j < mapBlockIndexes.Length; j++)
                 {
-                    float value = values[mixedIndex];
-                    if (value < minValue)
-                        value = minValue;
-                    if (value > maxValue)
-                        value = maxValue;
-                    int matrixIndex = gridIndex - matrixStartIndex;
-                    if (invisibles[matrixIndex] > 0)
+                    int blockIndex = mapBlockIndexes[j];
+                    if (blockIndex >= matrixStartIndex && blockIndex < src.DimenSize)
                     {
-                        float distance = maxValue - minValue;
-                        if (!(distance <= 0.0f))
+                        float value = values[mixedIndex];
+                        if (value < minValue)
+                            value = minValue;
+                        if (value > maxValue)
+                            value = maxValue;
+                        int matrixIndex = blockIndex - matrixStartIndex;
+                        if (textureVisibles[matrixIndex] > 0)
                         {
-                            textures[matrixIndex] = (value - minValue) / distance;
-                            if (textures[matrixIndex] < 0.5f)
+                            float distance = maxValue - minValue;
+                            if (!(distance <= 0.0f))
                             {
-                                textures[matrixIndex] = 0.5f - (0.5f - textures[matrixIndex]) * 0.99f;
+                                textures[matrixIndex] = (value - minValue) / distance;
+                                if (textures[matrixIndex] < 0.5f)
+                                {
+                                    textures[matrixIndex] = 0.5f - (0.5f - textures[matrixIndex]) * 0.99f;
+                                }
+                                else
+                                {
+                                    textures[matrixIndex] = (textures[matrixIndex] - 0.5f) * 0.99f + 0.5f;
+                                }
                             }
                             else
                             {
-                                textures[matrixIndex] = (textures[matrixIndex] - 0.5f) * 0.99f + 0.5f;
+                                //最小值最大值相等时，显示最小值的颜色
+                                textures[matrixIndex] = 0.01f;
+                                //textures[gridIndex] = 0;
                             }
-                        }
-                        else
-                        {
-                            //最小值最大值相等时，显示最小值的颜色
-                            textures[matrixIndex] = 0.01f;
-                            //textures[gridIndex] = 0;
                         }
                     }
                 }
@@ -357,7 +373,7 @@ namespace SimLab.SimGrid.Factory
             //TextureCoordinatesBuffer textureCoordinates = new TextureCoordinatesBufferData();
             TexCoordBuffer textureCoordinates = null;
 
-          
+
             if (src.ElementFormat == DynamicUnstructuredGridderSource.MATRIX_FORMAT3_TRIANGLE)
             {
                 textureCoordinates = new TriangleMatrixTexCoordBuffer();

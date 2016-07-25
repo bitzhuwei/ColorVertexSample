@@ -1,4 +1,4 @@
-Ôªøusing SharpGL.SceneComponent;
+using SharpGL.SceneComponent;
 using SharpGL.SceneGraph;
 using SharpGL.SceneGraph.Core;
 using SimLab;
@@ -27,6 +27,9 @@ using SharpGL.SceneGraph.Primitives;
 using GridViewer.Dialogs;
 using SimLab.Utils;
 using SimLab.Dialogs;
+using TracyEnergy.Simba.Data.Well;
+using GlmNet;
+using System.IO;
 
 namespace GridViewer
 {
@@ -55,8 +58,8 @@ namespace GridViewer
             this.InitObjectsTree(this.objectsTreeView, this.scene.ModelContainer);
             this.BuildCommands();
 
-            this.scene.CoordinateSystem = CoordinateSystem.LeftHand;
-
+            this.scene.CoordinateSystem = CoordinateSystem.RightHand;
+            this.scene.ZAxisScale = 1;
             this.UpdateCommandUI(this.objectsTreeView.SelectedNode);
         }
 
@@ -82,7 +85,11 @@ namespace GridViewer
             Command cmdLoadEclWells = new Command(new ToolStripItem[] { this.toolLoadECLWells, this.mniLoadEclWells }, this.CanExecuteLoadEclWells);
             Command cmdSceneColorBarRange = new Command(new ToolStripItem[] { this.toolSceneColorBarRange, this.mniSceneColorBarRange }, this.CanExecuteChangeColorBarRange);
             Command cmdGridderIJKSlices = new Command(new ToolStripItem[] { this.toolIJKSlices, this.mniIJKSlices }, this.CanExecuteIJKSlices);
-            Command cmdZDistortion = new Command(new ToolStripItem[]{ this.toolZDistortion,this.mniZAxisDistortion}, this.CanExecuteZDistortion);
+            Command cmdZDistortion = new Command(new ToolStripItem[] { this.toolZDistortion, this.mniZAxisDistortion }, this.CanExecuteZDistortion);
+            Command cmdWellSettings = new Command(new ToolStripItem[] { this.toolWellSettings, this.mniWellSettings }, this.CanExecuteSceneWellSettings);
+            Command cmdLoadWellTrajectory = new Command(new ToolStripItem[] { this.toolLoadWellTrajectory, this.mniLoadWellTrajectory }, this.CanExecuteLoadWellTrajectory);
+            Command cmdLoadWellInfo  = new Command(new ToolStripItem[]{ this.toolLoadWellInfo, this.mniLoadWellInfo},this.CanExecuteLoadWellTrajectory);
+            Command cmdMatrixLayers  = new Command(new ToolStripItem[]{ this.toolMatrixLayers, this.mniMatrixLayers}, this.CanExecuteMatrixLayers);
 
             cmds.Add(cmdLoadEclGrid);
             cmds.Add(cmdLoadSimbaGrid);
@@ -94,12 +101,63 @@ namespace GridViewer
             cmds.Add(cmdSceneColorBarRange);
             cmds.Add(cmdGridderIJKSlices);
             cmds.Add(cmdZDistortion);
+            cmds.Add(cmdWellSettings);
+            cmds.Add(cmdLoadWellTrajectory);
+            cmds.Add(cmdLoadWellInfo);
+            cmds.Add(cmdMatrixLayers);
             this.Commands = cmds;
         }
 
         private bool CanExecuteLoadGrid(object param)
         {
             return true;
+        }
+
+
+        private bool CanExecuteSceneWellSettings(object param)
+        {
+
+            if (param == null)
+                return false;
+            if (!(param is TreeNode))
+                return false;
+
+            TreeNode node = (TreeNode)param;
+            if (node.Tag is Folder)
+            {
+                return node.Nodes.Count > 0;
+            }
+            return false;
+        }
+
+        private bool CanExecuteLoadWellTrajectory(object param)
+        {
+
+            if (param == null)
+                return false;
+            if (!(param is TreeNode))
+                return false;
+            TreeNode node = (TreeNode)param;
+            if (node.Tag is SimLabGrid)
+                return true;
+            return false;
+        }
+
+        private bool CanExecuteMatrixLayers(object param){
+
+            if (param == null)
+                return false;
+            if (!(param is TreeNode))
+                return false;
+            TreeNode node = (TreeNode)param;
+            if(node.Tag is GridBlockProperty){
+               
+              TreeNode gridderNode = this.GetParentNodeTag<DynamicUnstructureGrid>(node);
+              if(gridderNode!=null)
+                return true;
+              return false;
+            }
+            return false;
         }
 
         private bool CanExecuteLoadEclWells(object param)
@@ -112,7 +170,7 @@ namespace GridViewer
             if (node.Tag is HexahedronGrid)
                 return true;
 
-            //‰∏çÊîØÊåÅEclÊ†ºÂºèÁöÑ‰∫ïÂä†ËΩΩÂà∞Êó†ÁªìÊûÑÂåñÁΩëÁªú‰∏≠
+            //≤ª÷ß≥÷Ecl∏Ò ΩµƒæÆº”‘ÿµΩŒﬁΩ·ππªØÕ¯¬Á÷–
             if (node.Tag is DynamicUnstructureGrid)
                 return false;
             if (node.Tag is PointGrid)
@@ -151,19 +209,20 @@ namespace GridViewer
         }
 
 
-        private bool CanExecuteZDistortion(object param){
-           
-           if(param == null)
-             return false;
-           if(!(param is TreeNode)){
-             return false;
-           }
-           TreeNode node =(TreeNode)param;
-           if(node.Tag is SimLabGrid){
+        private bool CanExecuteZDistortion(object param)
+        {
 
+            if (param == null)
+                return false;
+            if (!(param is TreeNode))
+            {
+                return false;
+            }
+            TreeNode treeNode = (TreeNode)param;
+            if(treeNode.Tag is SimLabGrid){
               return true;
-           }
-           return false;
+            }
+            return false;
 
         }
 
@@ -204,7 +263,7 @@ namespace GridViewer
 
 
         /// <summary>
-        /// Ëé∑ÂæóÁà∂ËäÇÁÇπTagÊòØTÁ±ªÂûãÁöÑÂØπË±°ÁöÑËäÇÁÇπ
+        /// ªÒµ√∏∏Ω⁄µ„Tag «T¿‡–Õµƒ∂‘œÛµƒΩ⁄µ„
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="node"></param>
@@ -222,6 +281,53 @@ namespace GridViewer
                 parent = parent.Parent;
             }
             return parent;
+        }
+
+
+        /// <summary>
+        /// get the first child node tag is T, recursively
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        private TreeNode GetChildNodeTag<T>(TreeNode node){
+            
+          TreeNode result = null;
+          TreeNodeCollection children =   node.Nodes;
+          foreach(TreeNode child  in children){
+
+            if(child.Tag is T){
+              result = child;
+              break;
+            }
+            if(child.Nodes.Count > 0){
+
+              TreeNode found = GetChildNodeTag<T>(child);
+              if(found!=null){
+                result = found;
+                break;
+              }
+            }
+          }
+          return result;
+        }
+
+        private List<T> GetChildNodeTagObjects<T>(TreeNode node){
+           List<T> list = new List<T>();
+           foreach(TreeNode child in node.Nodes){
+              this.DoGetNodeChildTagObjects<T>(child,list);
+           }
+           return list;
+        }
+
+        private void DoGetNodeChildTagObjects<T>(TreeNode node,List<T> results){
+            
+            if(node.Tag is T){
+               results.Add((T)node.Tag);
+            }
+            foreach(TreeNode child in node.Nodes){
+               DoGetNodeChildTagObjects<T>(child,results);             
+            }
         }
 
         private void ApplyGridBlockPropertyToGridder(TreeNode gridPropNode)
@@ -411,7 +517,7 @@ namespace GridViewer
         }
 
 
-        private SimLabGrid CreateGridder(GridderSource src, GridBlockProperty gbp, out Vertex min, out Vertex max)
+        private SimLabGrid CreateGridder(GridderSource src, GridBlockProperty gbp)
         {
 
             if (src is HexahedronGridderSource)
@@ -429,8 +535,8 @@ namespace GridViewer
 
                 TexCoordBuffer textureCoords = src.CreateTextureCoordinates(gbp.Positions, gbp.Values, (float)axisMin, (float)axisMax);
                 gridder.SetTextureCoods(textureCoords);
-                min = src.TransformedActiveBounds.Min;
-                max = src.TransformedActiveBounds.Max;
+                
+                gridder.ZAxisScale = 1;
                 return gridder;
             }
 
@@ -452,9 +558,7 @@ namespace GridViewer
                 gridder.SetMatrixTextureCoords(matrixTextureCoords);
                 gridder.SetFractionTextureCoords(fracTextureCoords);
                 gridder.FractionLineWidth = 10;
-
-                min = geometry.Min;
-                max = geometry.Max;
+                gridder.ZAxisScale = 1;
                 return gridder;
             }
 
@@ -477,8 +581,8 @@ namespace GridViewer
                 gridder.SetRadius(radiusBuffer);
                 gridder.SetTexture(textureBitmap);
                 gridder.SetTextureCoods(textureCoords);
-                min = pgs.Min;
-                max = pgs.Max;
+                gridder.ZAxisScale = 1;
+                
                 return gridder;
             }
 
@@ -548,14 +652,13 @@ namespace GridViewer
                     propNode.Tag = gbp;
                 }
 
-                Vertex boundMin;
-                Vertex boundMax;
-                gridder = CreateGridder(gridderSource, gridProps[0], out boundMin, out boundMax);
+           
+                gridder = CreateGridder(gridderSource, gridProps[0]);
                 if (gridder != null)
                 {
                     this.objectsTreeView.ExpandAll();
                     modelContainer.AddChild(gridder);
-                    modelContainer.BoundingBox.SetBounds(gridderSource.TransformedActiveBounds.Min,gridderSource.TransformedActiveBounds.Max);
+                    modelContainer.BoundingBox.SetBounds(gridderSource.TransformedActiveBounds.Min, gridderSource.TransformedActiveBounds.Max);
                     this.scene.ViewType = ViewTypes.UserView;
                     gridderNode.Tag = gridder;
                     gridder.Tag = gridderSource;
@@ -586,25 +689,31 @@ namespace GridViewer
         private void AddWellNodes(TreeNode gridderNode, ScientificVisual3DControl sceneDisplay, List<Well> well3dList)
         {
 
-            Folder wellFolder = new Folder() { Name = "Wells" };
-            TreeNode wellsRootNode = new TreeNode(wellFolder.Name);
-            wellsRootNode.Tag = wellFolder;
+            Folder wellFolder = null;
+            TreeNode folderNode =  this.GetChildNodeTag<Folder>(gridderNode);
+            if(folderNode == null){
+
+                wellFolder = new Folder() { Name = "Wells" };
+                folderNode = new TreeNode(wellFolder.Name);
+                folderNode.Tag = wellFolder;
+                gridderNode.Nodes.Add(folderNode);
+                sceneDisplay.ModelContainer.AddChild(wellFolder);
+            }
+            wellFolder  = folderNode.Tag as Folder;
             foreach (Well well in well3dList)
             {
                 TreeNode wellNode = new TreeNode(well.WellName);
                 wellNode.Tag = well;
-                wellsRootNode.Nodes.Add(wellNode);
-                well.Initialize(this.scene.Scene.OpenGL);
+                folderNode.Nodes.Add(wellNode);
+                well.Initialize(this.scene.OpenGL);
                 wellFolder.AddChild(well);
             }
-            this.ModelContainer.AddChild(wellFolder);
-            gridderNode.Nodes.Add(wellsRootNode);
             sceneDisplay.Invalidate();
 
         }
 
         /// <summary>
-        /// Unstructed GridderSourceÁ≤óÊîØÊåÅ
+        /// Unstructed GridderSource¥÷÷ß≥÷
         /// </summary>
         /// <param name="gridderSource"></param>
         /// <param name="Camera"></param>
@@ -623,7 +732,7 @@ namespace GridViewer
             }
             if (gridderSource is PointGridderSource)
             {
-                return new PointSetGridderWell3DHelper((PointGridderSource)gridderSource,Camera);
+                return new PointSetGridderWell3DHelper((PointGridderSource)gridderSource, Camera);
             }
             if (gridderSource is DynamicUnstructuredGridderSource)
                 throw new ArgumentException("Simba grid can not support create well 3d display.");
@@ -729,11 +838,10 @@ namespace GridViewer
                 GridBlockProperty gbp = this.CreateGridSequenceGridBlockProperty(gridderSource, "INDEX");
                 TreeNode propNode = gridderNode.Nodes.Add(gbp.Name);
                 propNode.Tag = gbp;
-                Vertex min, max;
                 SimLabGrid gridder = null;
                 try
                 {
-                    gridder = this.CreateGridder(gridderSource, gbp, out min, out max);
+                    gridder = this.CreateGridder(gridderSource, gbp);
                 }
                 catch (Exception err)
                 {
@@ -747,7 +855,7 @@ namespace GridViewer
                     gridderNode.Tag = gridder;
                     gridder.Tag = gridderSource;
                     modelContainer.AddChild(gridder);
-                    modelContainer.BoundingBox.SetBounds(min, max);
+                    modelContainer.BoundingBox.SetBounds(gridderSource.TransformedActiveBounds.Min,gridderSource.TransformedActiveBounds.Max);
                     this.scene.ViewType = ViewTypes.UserView;
                     this.scene.Invalidate();
                 }
@@ -824,10 +932,9 @@ namespace GridViewer
             propNode.Tag = gbp;
 
             SimLabGrid gridder;
-            Vertex min, max;
             try
             {
-                gridder = this.CreateGridder(gridderSource, gbp, out min, out max);
+                gridder = this.CreateGridder(gridderSource, gbp);
             }
             catch (Exception err)
             {
@@ -840,8 +947,8 @@ namespace GridViewer
             {
                 gridderNode.Tag = gridder;
                 gridder.Tag = gridderSource;
+                modelContainer.BoundingBox.SetBounds(gridderSource.TransformedActiveBounds.Min, gridderSource.TransformedActiveBounds.Max);
                 modelContainer.AddChild(gridder);
-                modelContainer.BoundingBox.SetBounds(min, max);
                 this.scene.ViewType = ViewTypes.UserView;
                 this.scene.Invalidate();
                 this.objectsTreeView.ExpandAll();
@@ -1066,6 +1173,11 @@ namespace GridViewer
                 activeCount = statActCount;
             }
 
+            GridIndexMapLoader giml = new GridIndexMapLoader();
+            String searchDir = Path.GetDirectoryName(pathFileName);
+            int[] mapperIndexes =  giml.SmartRead(searchDir);
+            gridderSource.GridIndexMapper = mapperIndexes;
+
             SimulationCaseResult3DData resultLoader = new SimulationCaseResult3DData(null);
             try
             {
@@ -1255,23 +1367,40 @@ namespace GridViewer
             dlg.JSlices = gridderSource.JBlocks;
             dlg.KSlices = gridderSource.KBlocks;
             dlg.Show();
+        }
 
-
-
+        private void ApplyWellModelTransform(TreeNode gridderNode, mat4 modelMatrix){
+           
+           List<Well> wells = this.GetChildNodeTagObjects<Well>(gridderNode);
+           foreach(Well well in wells){
+             well.Transform = modelMatrix;
+             well.CreateVisualElements(this.scene.Scene.CurrentCamera);
+             well.Initialize(this.scene.OpenGL);
+           }
         }
 
         private void SceneZDistortionClick(object sender, EventArgs e)
         {
 
-            TreeNode node = this.objectsTreeView.SelectedNode;
-            SimLabGrid labGrid = node.Tag as SimLabGrid;
+            TreeNode gridderNode = this.objectsTreeView.SelectedNode;
+            SimLabGrid gridder = gridderNode.Tag as SimLabGrid;
+            GridderSource source = gridder.Tag as GridderSource;
             ZAxisDistortionEditorDialog dlg = new ZAxisDistortionEditorDialog();
             dlg.StartPosition = FormStartPosition.CenterParent;
-            dlg.Distortion = labGrid.ZAxisScale;
+            dlg.Distortion = source.ZScale;
             if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            { 
-               
-                labGrid.ZAxisScale = dlg.Distortion;
+            {
+                source.ZScale= dlg.Distortion;
+                source.InitTransform();
+
+                TreeNode propNode =  this.GetChildNodeTag<GridBlockProperty>(gridderNode);
+                GridBlockProperty gbp = propNode.Tag as GridBlockProperty;
+                SimLabGrid ngridder = this.CreateGridder(source,gbp);
+                ngridder.Tag = source;
+                gridderNode.Tag = ngridder;
+                this.scene.ReleaseElement(gridder);
+                this.scene.ModelContainer.AddChild(ngridder);
+                this.ApplyWellModelTransform(gridderNode,source.ScaleTranslateform);
                 this.scene.Invalidate();
             }
         }
@@ -1279,6 +1408,143 @@ namespace GridViewer
         private void SceneClearClick(object sender, EventArgs e)
         {
             this.scene.ReleaseContainerElements();
+        }
+
+        private void SceneWellSettingsClick(object sender, EventArgs e)
+        {
+
+            TreeNode node = this.objectsTreeView.SelectedNode;
+            TreeNode wellNode = node.Nodes[0];
+            Well well = (Well)wellNode.Tag;
+
+            WellEditorDialog dlg = new WellEditorDialog();
+            dlg.MinZValue = well.WellPathInitMinZ;
+            dlg.MaxZValue = well.WellPathInitMaxZ;
+            dlg.MaxDisplayZValue = well.WellPathMaxDisplayZ;
+            dlg.RadiusScale = well.WellRadiusScale;
+            if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                //apply to all wells;
+                float radiusScale = dlg.RadiusScale;
+                float maxWellDisplayZ = dlg.MaxDisplayZValue;
+                this.scene.OpenGL.MakeCurrent();
+                foreach (TreeNode wnode in node.Nodes)
+                {
+                    if (wnode.Tag is Well)
+                    {
+                        Well w = (Well)wnode.Tag;
+                        w.WellRadiusScale = radiusScale;
+                        w.WellPathMaxDisplayZ = maxWellDisplayZ;
+                        w.CreateVisualElements(this.scene.Scene.CurrentCamera);
+                        w.Initialize(this.scene.OpenGL);
+                    }
+                }
+                this.scene.Invalidate();
+            }
+        }
+
+        private void LoadWellTrajectoryClick(object sender, EventArgs e)
+        {
+
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.Filter = "Well Trajectory File (*.txt)|*.txt|All files (*.*)|*.*";
+            openFileDialog1.FilterIndex = 1;
+            openFileDialog1.RestoreDirectory = true;
+            if (openFileDialog1.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            String pathName = openFileDialog1.FileName;
+            WellTrajectoryReader reader = new WellTrajectoryReader();
+            WellTrajectory wellTrajectory;
+            try
+            {
+                wellTrajectory = reader.Load(pathName);
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(String.Format("load failed:{0}", err.Message), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            TreeNode gridderNode = objectsTreeView.SelectedNode;
+            SimLabGrid gridder = (SimLabGrid)gridderNode.Tag;
+            GridderSource source = (GridderSource)gridder.Tag;
+            List<WellTrajectory> wellTrajectories = new List<WellTrajectory>();
+            wellTrajectories.Add(wellTrajectory);
+
+            Well3DTrajectoryHelper helper = new Well3DTrajectoryHelper(source, this.scene.Scene.CurrentCamera, wellTrajectories);
+            List<Well> well3dList = helper.Convert();
+            if (well3dList.Count > 0)
+            {
+                this.AddWellNodes(gridderNode, this.scene, well3dList);
+            }
+            this.scene.Invalidate();
+        }
+
+        private void LoadWellInfoClick(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.Filter = "Well Trajectory File (*.txt)|*.txt|All files (*.*)|*.*";
+            openFileDialog1.FilterIndex = 1;
+            openFileDialog1.RestoreDirectory = true;
+            if (openFileDialog1.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            String pathName = openFileDialog1.FileName;
+            WellInfoReader reader = new WellInfoReader();
+            List<WellInfo> wellInfos;
+            try
+            {
+                wellInfos = reader.Load(pathName);
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(String.Format("load failed:{0}", err.Message), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            TrajectoryConvert convert = new TrajectoryConvert();
+            List<WellTrajectory> wellTrajectories = convert.ToTrajectories(wellInfos);
+
+            TreeNode gridderNode = objectsTreeView.SelectedNode;
+            SimLabGrid gridder = (SimLabGrid)gridderNode.Tag;
+            GridderSource source = (GridderSource)gridder.Tag;
+            Well3DTrajectoryHelper helper = new Well3DTrajectoryHelper(source, this.scene.Scene.CurrentCamera, wellTrajectories);
+            List<Well> well3dList = helper.Convert();
+            this.AddWellNodes(gridderNode, this.scene, well3dList);
+            this.scene.Invalidate();
+
+        }
+
+        private void SceneMatrixLayersClick(object sender, EventArgs e)
+        {
+            TreeNode propNode =   objectsTreeView.SelectedNode;
+            TreeNode gridderNode = GetParentNodeTag<SimLabGrid>(propNode);
+
+            GridBlockProperty gbp = propNode.Tag as GridBlockProperty;
+            SimLabGrid gridder  = gridderNode.Tag  as SimLabGrid;
+            DynamicUnstructuredGridderSource gridderSource = gridder.Tag as DynamicUnstructuredGridderSource;
+            
+            DynamicSourceLayerEditDialog dlg = new DynamicSourceLayerEditDialog();
+            dlg.MatrixCount = gridderSource.ElementNum;
+            dlg.MatrixLayers = gridderSource.MatrixLayers;
+            dlg.VisibleLayers = gridderSource.VisibleLayers;
+            
+            if(dlg.ShowDialog()==DialogResult.OK){
+               
+              List<int>  visibleMatrixLayers = dlg.VisibleLayers;
+              int matrixLayers = dlg.MatrixLayers;
+              gridderSource.MatrixLayers = matrixLayers;
+              gridderSource.VisibleLayers = visibleMatrixLayers;
+              gridderSource.BindVisibleMatrix();
+              TexCoordBuffer buffer =  gridderSource.CreateTextureCoordinates(gbp.Positions,gbp.Values,(float)gbp.MinValue,(float)gbp.MaxValue);
+              gridder.SetTextureCoods(buffer);
+              this.scene.Invalidate();      
+            }
         }
 
 

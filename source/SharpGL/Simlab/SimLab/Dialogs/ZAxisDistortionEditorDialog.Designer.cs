@@ -1,4 +1,4 @@
-﻿namespace SimLab.Dialogs
+namespace SimLab.Dialogs
 {
     partial class ZAxisDistortionEditorDialog
     {
@@ -71,14 +71,14 @@
             // nudDistortion
             // 
             this.nudDistortion.Location = new System.Drawing.Point(97, 8);
-            this.nudDistortion.Minimum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            -2147483648});
             this.nudDistortion.Name = "nudDistortion";
             this.nudDistortion.Size = new System.Drawing.Size(157, 21);
             this.nudDistortion.TabIndex = 3;
+            this.nudDistortion.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // ZAxisDistortionEditorDialog
             // 
