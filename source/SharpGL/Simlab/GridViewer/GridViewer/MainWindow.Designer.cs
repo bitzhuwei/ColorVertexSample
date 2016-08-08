@@ -53,10 +53,10 @@ namespace GridViewer
             this.mniSceneColorBarRange = new System.Windows.Forms.ToolStripMenuItem();
             this.sceneColorBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mniIJKSlices = new System.Windows.Forms.ToolStripMenuItem();
+            this.mniMatrixLayers = new System.Windows.Forms.ToolStripMenuItem();
             this.mniZAxisDistortion = new System.Windows.Forms.ToolStripMenuItem();
             this.mniWellSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.mniSceneClear = new System.Windows.Forms.ToolStripMenuItem();
-            this.mniMatrixLayers = new System.Windows.Forms.ToolStripMenuItem();
             this.dViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mniUserView = new System.Windows.Forms.ToolStripMenuItem();
             this.topViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -93,6 +93,7 @@ namespace GridViewer
             this.toolSceneColorBarRange = new System.Windows.Forms.ToolStripButton();
             this.toolColorBar = new System.Windows.Forms.ToolStripButton();
             this.toolIJKSlices = new System.Windows.Forms.ToolStripButton();
+            this.toolMatrixLayers = new System.Windows.Forms.ToolStripButton();
             this.toolZDistortion = new System.Windows.Forms.ToolStripButton();
             this.toolWellSettings = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
@@ -103,7 +104,6 @@ namespace GridViewer
             this.toolRightView = new System.Windows.Forms.ToolStripButton();
             this.toolBackView = new System.Windows.Forms.ToolStripButton();
             this.toolFrontView = new System.Windows.Forms.ToolStripButton();
-            this.toolMatrixLayers = new System.Windows.Forms.ToolStripButton();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -188,73 +188,73 @@ namespace GridViewer
             // mniLoadECLGrid
             // 
             this.mniLoadECLGrid.Name = "mniLoadECLGrid";
-            this.mniLoadECLGrid.Size = new System.Drawing.Size(196, 22);
-            this.mniLoadECLGrid.Text = "Load ECL Grid";
+            this.mniLoadECLGrid.Size = new System.Drawing.Size(207, 22);
+            this.mniLoadECLGrid.Text = "Load ECL Grid(*.DATA)";
             this.mniLoadECLGrid.Click += new System.EventHandler(this.LoadEclGridClick);
             // 
             // mniLoadSimbaGrid
             // 
             this.mniLoadSimbaGrid.Name = "mniLoadSimbaGrid";
-            this.mniLoadSimbaGrid.Size = new System.Drawing.Size(196, 22);
-            this.mniLoadSimbaGrid.Text = "Load Simba Grid";
+            this.mniLoadSimbaGrid.Size = new System.Drawing.Size(227, 22);
+            this.mniLoadSimbaGrid.Text = "Load Simba Grid(*.SFRAC)";
             this.mniLoadSimbaGrid.Click += new System.EventHandler(this.LoadSimbaGridClick);
             // 
             // mniLoadSimbaPoints
             // 
             this.mniLoadSimbaPoints.Name = "mniLoadSimbaPoints";
-            this.mniLoadSimbaPoints.Size = new System.Drawing.Size(196, 22);
-            this.mniLoadSimbaPoints.Text = "Load Simba Points";
+            this.mniLoadSimbaPoints.Size = new System.Drawing.Size(227, 22);
+            this.mniLoadSimbaPoints.Text = "Load Simba Points(*.xyz)";
             this.mniLoadSimbaPoints.Click += new System.EventHandler(this.LoadSimbaPointsCick);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(193, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(204, 6);
             // 
             // mniLoadEclProperty
             // 
             this.mniLoadEclProperty.Name = "mniLoadEclProperty";
-            this.mniLoadEclProperty.Size = new System.Drawing.Size(196, 22);
+            this.mniLoadEclProperty.Size = new System.Drawing.Size(207, 22);
             this.mniLoadEclProperty.Text = "Load ECL Property";
             this.mniLoadEclProperty.Click += new System.EventHandler(this.LoadECLPropertyClick);
             // 
             // mniLoadProperty
             // 
             this.mniLoadProperty.Name = "mniLoadProperty";
-            this.mniLoadProperty.Size = new System.Drawing.Size(196, 22);
+            this.mniLoadProperty.Size = new System.Drawing.Size(207, 22);
             this.mniLoadProperty.Text = "Load Property";
             this.mniLoadProperty.Click += new System.EventHandler(this.LoadPropertyFileClick);
             // 
             // mniLoadCloudResults
             // 
             this.mniLoadCloudResults.Name = "mniLoadCloudResults";
-            this.mniLoadCloudResults.Size = new System.Drawing.Size(196, 22);
+            this.mniLoadCloudResults.Size = new System.Drawing.Size(207, 22);
             this.mniLoadCloudResults.Text = "Load Cloud Results";
             this.mniLoadCloudResults.Click += new System.EventHandler(this.LoadCloudResultsClick);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(193, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(204, 6);
             // 
             // mniLoadEclWells
             // 
             this.mniLoadEclWells.Name = "mniLoadEclWells";
-            this.mniLoadEclWells.Size = new System.Drawing.Size(196, 22);
+            this.mniLoadEclWells.Size = new System.Drawing.Size(207, 22);
             this.mniLoadEclWells.Text = "Load ECL Wells";
             this.mniLoadEclWells.Click += new System.EventHandler(this.LoadEclWellsClick);
             // 
             // mniLoadWellTrajectory
             // 
             this.mniLoadWellTrajectory.Name = "mniLoadWellTrajectory";
-            this.mniLoadWellTrajectory.Size = new System.Drawing.Size(196, 22);
+            this.mniLoadWellTrajectory.Size = new System.Drawing.Size(207, 22);
             this.mniLoadWellTrajectory.Text = "Load Well Trajectory";
             this.mniLoadWellTrajectory.Click += new System.EventHandler(this.LoadWellTrajectoryClick);
             // 
             // mniLoadWellInfo
             // 
             this.mniLoadWellInfo.Name = "mniLoadWellInfo";
-            this.mniLoadWellInfo.Size = new System.Drawing.Size(196, 22);
+            this.mniLoadWellInfo.Size = new System.Drawing.Size(207, 22);
             this.mniLoadWellInfo.Text = "Load Well Info";
             this.mniLoadWellInfo.Click += new System.EventHandler(this.LoadWellInfoClick);
             // 
@@ -300,6 +300,13 @@ namespace GridViewer
             this.mniIJKSlices.Text = "IJK Slices";
             this.mniIJKSlices.Click += new System.EventHandler(this.SceneIJKSlicesClick);
             // 
+            // mniMatrixLayers
+            // 
+            this.mniMatrixLayers.Name = "mniMatrixLayers";
+            this.mniMatrixLayers.Size = new System.Drawing.Size(173, 22);
+            this.mniMatrixLayers.Text = "Matrix Layers...";
+            this.mniMatrixLayers.Click += new System.EventHandler(this.SceneMatrixLayersClick);
+            // 
             // mniZAxisDistortion
             // 
             this.mniZAxisDistortion.Name = "mniZAxisDistortion";
@@ -320,13 +327,6 @@ namespace GridViewer
             this.mniSceneClear.Size = new System.Drawing.Size(173, 22);
             this.mniSceneClear.Text = "Clear";
             this.mniSceneClear.Click += new System.EventHandler(this.SceneClearClick);
-            // 
-            // mniMatrixLayers
-            // 
-            this.mniMatrixLayers.Name = "mniMatrixLayers";
-            this.mniMatrixLayers.Size = new System.Drawing.Size(173, 22);
-            this.mniMatrixLayers.Text = "Matrix Layers...";
-            this.mniMatrixLayers.Click += new System.EventHandler(this.SceneMatrixLayersClick);
             // 
             // dViewToolStripMenuItem
             // 
@@ -698,6 +698,16 @@ namespace GridViewer
             this.toolIJKSlices.Text = "IJK Slices ";
             this.toolIJKSlices.Click += new System.EventHandler(this.SceneIJKSlicesClick);
             // 
+            // toolMatrixLayers
+            // 
+            this.toolMatrixLayers.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolMatrixLayers.Image = ((System.Drawing.Image)(resources.GetObject("toolMatrixLayers.Image")));
+            this.toolMatrixLayers.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolMatrixLayers.Name = "toolMatrixLayers";
+            this.toolMatrixLayers.Size = new System.Drawing.Size(24, 24);
+            this.toolMatrixLayers.Text = "toolStripButton3";
+            this.toolMatrixLayers.Click += new System.EventHandler(this.SceneMatrixLayersClick);
+            // 
             // toolZDistortion
             // 
             this.toolZDistortion.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -792,16 +802,6 @@ namespace GridViewer
             this.toolFrontView.Size = new System.Drawing.Size(24, 24);
             this.toolFrontView.Text = "Front view";
             this.toolFrontView.Click += new System.EventHandler(this.FrontViewClick);
-            // 
-            // toolMatrixLayers
-            // 
-            this.toolMatrixLayers.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolMatrixLayers.Image = ((System.Drawing.Image)(resources.GetObject("toolMatrixLayers.Image")));
-            this.toolMatrixLayers.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolMatrixLayers.Name = "toolMatrixLayers";
-            this.toolMatrixLayers.Size = new System.Drawing.Size(24, 24);
-            this.toolMatrixLayers.Text = "toolStripButton3";
-            this.toolMatrixLayers.Click += new System.EventHandler(this.SceneMatrixLayersClick);
             // 
             // MainWindow
             // 
