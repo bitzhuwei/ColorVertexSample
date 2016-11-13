@@ -1019,10 +1019,13 @@ namespace SharpGL
         }
         public void BufferData(uint target, float[] data, uint usage)
         {
-            IntPtr p = Marshal.AllocHGlobal(data.Length * sizeof(float));
-            Marshal.Copy(data, 0, p, data.Length);
+            GCHandle handle = GCHandle.Alloc(data, GCHandleType.Pinned);
+            //IntPtr p = Marshal.AllocHGlobal(data.Length * sizeof(float));
+            IntPtr addr = Marshal.UnsafeAddrOfPinnedArrayElement(data, 0);
+            //Marshal.Copy(data, 0, p, data.Length);
             GetDelegateFor<glBufferData>()(target, data.Length * sizeof(float), p, usage);
-            Marshal.FreeHGlobal(p);
+            //Marshal.FreeHGlobal(p);
+            handle.Free();
         }
         public void BufferData(uint target, ushort[] data, uint usage)
         {
